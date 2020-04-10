@@ -13,7 +13,7 @@ function EVENT:Begin()
 	local x = 0
 	local block = 0
 	for k, ply in RandomPairs(self:GetAlivePlayers(true)) do
-		if ply:GetRole() == ROLE_TRAITOR then
+		if ply:GetRole() == ROLE_TRAITOR or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ASSASSIN then
 			if block == 0 then
 				tgt = ply
 				tgt:PrintMessage(HUD_PRINTTALK, "You have been chosen to explode. Watch out, and stay close to innocents.")
@@ -54,7 +54,7 @@ end
 function EVENT:Condition()
 	local t = 0
 	for k, v in pairs(self:GetAlivePlayers()) do
-		if v:GetRole() == ROLE_TRAITOR then
+		if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN then
 			t = t+1
 		end
 	end

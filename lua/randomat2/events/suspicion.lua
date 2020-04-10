@@ -12,12 +12,12 @@ function EVENT:Begin()
 	local suspicionply = 0
 
 	for k, v in pairs(self:GetAlivePlayers(true)) do
-		if v:GetRole() == ROLE_TRAITOR then
+		if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN then
 			table.insert(traitor, v)
 			if suspicionply == 0 then
 				suspicionply = v
 			end
-		elseif v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_SURVIVALIST or v:GetRole() == ROLE_PHOENIX then
+		elseif v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
 			suspicionply = v
 		elseif suspicionply == 0 and v:GetRole() ~= ROLE_DETECTIVE then
 			suspicionply = v
@@ -48,7 +48,7 @@ end
 function EVENT:Condition()
 	local i = 0
 	for k, v in pairs(self:GetAlivePlayers()) do
-		if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_SURVIVALIST or v:GetRole() == ROLE_PHOENIX then
+        if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
 			i = 1
 		end
 	end

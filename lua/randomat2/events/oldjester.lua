@@ -4,7 +4,8 @@ EVENT.Title = "##BringBackOldJester"
 EVENT.id = "oldjester"
 
 function EVENT:Begin()
-	ws = GetConVar("jesterwinstate"):GetInt()
+	--[[
+    ws = GetConVar("jesterwinstate"):GetInt()
 	jt = GetConVar("jestertraitor"):GetInt()
 	RunConsoleCommand("jestertraitor", 0)
 	RunConsoleCommand("jesterwinstate", 1)
@@ -18,16 +19,19 @@ function EVENT:Begin()
 				end
 			end
 		end
-	end
+    end
+    --]]
 end
 
 function EVENT:End()
-	RunConsoleCommand("jesterwinstate", ws)
-	RunConsoleCommand("jestertraitor", jt)
+	--RunConsoleCommand("jesterwinstate", ws)
+	--RunConsoleCommand("jestertraitor", jt)
 end
 
 function EVENT:Condition()
-	local j = 0
+    -- Disable for Custom Roles for TTT
+    return false
+    --[[local j = 0
 	for k, v in pairs(player.GetAll()) do
 		if v:GetRole() == ROLE_JESTER and v:Alive() and not v:IsSpec() then
 			j = 1
@@ -38,7 +42,7 @@ function EVENT:Condition()
 		return true
 	else
 		return false
-	end
+	end]]--
 end
 
 Randomat:register(EVENT)

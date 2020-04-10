@@ -55,7 +55,7 @@ concommand.Add("ttt_randomat_trigger", function(ply, cc , arg)
 end,"Triggers a specific randomat event without conditions",FCVAR_SERVER_CAN_EXECUTE)
 
 concommand.Add("ttt_randomat_clearevents",function(ply)
-	if Randomat.ActiveEvents != {} then
+	if Randomat.ActiveEvents ~= {} then
 		for _, evt in pairs(Randomat.ActiveEvents) do
 			evt:End()
 		end
@@ -258,9 +258,9 @@ function Randomat:EventNotifySilent(title)
 	net.Broadcast()
 end
 
-/**
- * Randomat Meta
- */
+--[[
+ Randomat Meta
+]]--
 
 -- Valid players not spec
 function randomat_meta:GetPlayers(shuffle)
@@ -285,7 +285,7 @@ end
 
 if SERVER then
 	function randomat_meta:SmallNotify(msg, length, targ)
-		if !isnumber(length) then length = 0 end
+		if not isnumber(length) then length = 0 end
 		net.Start("randomat_message")
 		net.WriteBool(false)
 		net.WriteString(msg)
@@ -343,16 +343,15 @@ function randomat_meta:CreateCmd(str, val, desc, slider)
 	if not self.cmds then
 		self.cmds = {}
 	end
-	
 	table.insert(self.cmds, {})
 end
 
 
-/*
- * Override TTT Stuff
- */
+--[[
+ Override TTT Stuff
+]]--
 hook.Add("TTTEndRound", "RandomatEndRound", function()
-	if Randomat.ActiveEvents != {} then
+	if Randomat.ActiveEvents ~= {} then
 		for _, evt in pairs(Randomat.ActiveEvents) do
 			evt:End()
 		end
@@ -362,7 +361,7 @@ hook.Add("TTTEndRound", "RandomatEndRound", function()
 end)
 
 hook.Add("TTTPrepareRound", "RandomatEndRound", function()
-	if Randomat.ActiveEvents != {} then
+	if Randomat.ActiveEvents ~= {} then
 		for _, evt in pairs(Randomat.ActiveEvents) do
 			evt:End()
 		end

@@ -9,8 +9,9 @@ net.Receive("blindeventactive", function()
 end)
 
 function BlindPlayer()
-	if blindeventactive == 1 and LocalPlayer():Alive() then
-		if LocalPlayer():GetRole() == ROLE_TRAITOR then
+    if blindeventactive == 1 and LocalPlayer():Alive() then
+        local role = LocalPlayer():GetRole();
+		if role == ROLE_TRAITOR or role == ROLE_ASSASSIN or role == ROLE_HYPNOTIST then
 			surface.SetDrawColor(0,0,0,254);
 			surface.DrawRect(0,0,surface.ScreenWidth(),surface.ScreenHeight());
 		end

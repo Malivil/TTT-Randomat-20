@@ -7,7 +7,6 @@ util.AddNetworkString("DemocracyReset")
 CreateConVar("randomat_democracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Length of the democracy timer")
 CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "If 1, ties result in a coin toss; if 0, nobody dies in a tied vote.")
 CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Percent of total player votes required for a vote to pass, set to 0 to disable")
-local ROLE_JESTER = ROLE_JESTER or false
 
 EVENT.Title = "I love democracy, I love the republic."
 EVENT.id = "democracy"
@@ -76,10 +75,10 @@ function EVENT:Begin()
 				end
 
 				if skipkill == 0 then
-					if slainply:GetRole() == ROLE_JESTER then
+					if slainply:GetRole() == ROLE_JESTER or slainply:GetRole() == ROLE_SWAPPER then
 						local jesterrepeater = 0
 						for voter, tgt in RandomPairs(playersvoted) do
-							if jesterrepeater == 0 and voter:GetRole() ~= ROLE_JESTER and tgt == slainply then
+							if jesterrepeater == 0 and voter:GetRole() ~= ROLE_JESTER and voter:GetRole() ~= ROLE_SWAPPER and tgt == slainply then
 								jesterrepeater = 1
 								voter:Kill()
 								self:SmallNotify(voter:Nick().." was dumb enough to vote for the Jester!")

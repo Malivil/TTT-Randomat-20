@@ -23,25 +23,24 @@ function EVENT:Begin()
 		local wep = 0
 
 		if ply:GetRole() == ROLE_TRAITOR then
-			
-			role = "traitor"
-
+			role = "A traitor"
+		elseif ply:GetRole() == ROLE_HYPNOTIST then
+			role = "A hypnotist"
+		elseif ply:GetRole() == ROLE_ASSASSIN then
+			role = "An assassin"
 		elseif ply:GetRole() == ROLE_DETECTIVE then
-			
-			role = "detective"
-
-		elseif ply:GetRole() == ROLE_SURVIVALIST then
-			
-			role = "survivalist"
-
-		elseif ply:GetRole() == ROLE_SERIALKILLER then
-			
-			role = "serial killer"
-
+			role = "A detective"
+		elseif ply:GetRole() == ROLE_MERCENARY then
+			role = "A mercenary"
+		elseif ply:GetRole() == ROLE_ZOMBIE then
+			role = "A zombie"
+		elseif ply:GetRole() == ROLE_VAMPIRE then
+			role = "A vampire"
+		elseif ply:GetRole() == ROLE_KILLER then
+			role = "A killer"
 		end
-	
-		TriggerAlert(item, role, ply)
 
+		TriggerAlert(item, role, ply)
 	end)
 
 	net.Receive("AlertTriggerFinal", function()
@@ -49,7 +48,7 @@ function EVENT:Begin()
 		local role = net.ReadString()
 		name = renameWeps(name)
 
-		self:SmallNotify("A "..role.." has bought a "..name)
+		self:SmallNotify(role.." has bought a "..name)
 
 	end)
 

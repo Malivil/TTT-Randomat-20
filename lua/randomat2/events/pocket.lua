@@ -53,7 +53,10 @@ function EVENT:GiveWep(ply)
 end
 
 function EVENT:FindWep()
-  local tbl = math.random(1,2) == 1 and table.Copy(EquipmentItems[ROLE_TRAITOR]) or table.Copy(EquipmentItems[ROLE_DETECTIVE])
+  local roleswithshop = {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY}
+  local selected = math.random(1,#roleswithshop)
+  local tbl = table.Copy(EquipmentItems[roleswithshop[selected]])
+
   for k, v in pairs(weapons.GetList()) do
       if v and v.CanBuy then
         table.insert(tbl, v)
@@ -62,7 +65,7 @@ function EVENT:FindWep()
   table.Shuffle(tbl)
   local item = table.Random(tbl)
   local is_item = tonumber(item.id)
-  local swep_table = (!is_item) and weapons.GetStored(item.ClassName) or nil
+  local swep_table = (not is_item) and weapons.GetStored(item.ClassName) or nil
 
   return item, is_item, swep_table
 end

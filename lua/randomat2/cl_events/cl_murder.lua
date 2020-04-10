@@ -24,7 +24,7 @@ net.Receive("MurderEventActive", function()
 
 			local y = ScrH() - 55
 
-			if rl ~= ROLE_TRAITOR and rl ~= ROLE_INFECTED and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
+			if rl ~= ROLE_TRAITOR and rl ~= ROLE_ASSASSIN and rl ~= ROLE_HYPNOTIST and rl ~= ROLE_ZOMBIE and rl ~= ROLE_VAMPIRE and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
 				draw.RoundedBox(8, 19.6, y, 230, 25, Color(0, 0, 0, 175))
 				draw.RoundedBox(8, 19.6, y, (pks/maxpck)*230, 25, Color(205, 155, 0, 255))
 				ShadowedText(text, "HealthAmmo", 230, y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)

@@ -37,7 +37,7 @@ function EVENT:Begin()
 	timer.Create("RdmtFreezeTimer", tmr, 0, function()
 		self:SmallNotify("Freeze!")
 		for k, v in pairs(self:GetAlivePlayers(true)) do
-			if v:GetRole() == ROLE_INNOCENT then
+			if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
 				v:Freeze(true)
 				v.isFrozen = true
 				timer.Simple(GetConVar("randomat_freeze_duration"):GetInt(), function()

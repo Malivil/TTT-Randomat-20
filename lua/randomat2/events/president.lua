@@ -8,8 +8,6 @@ CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE
 function EVENT:Begin()
 	local owner
 	local d = 0
-	local ROLE_SURVIVALIST = ROLE_SURVIVALIST or 0
-	local ROLE_PHOENIX = ROLE_PHOENIX or 0
 	if self.owner:GetRole() ~= ROLE_DETECTIVE then
 		for k, v in pairs(self:GetAlivePlayers(true)) do
 			if v:GetRole() == ROLE_DETECTIVE then
@@ -30,8 +28,8 @@ function EVENT:Begin()
 
 	hook.Add("PlayerDeath", "RandomatPresident", function(tgt, dmg, ply)
 		if tgt:IsValid() and tgt == owner then
-			for k, v in pairs(self:GetAlivePlayers(true)) do
-				if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHOENIX or v:GetRole() == ROLE_SURVIVALIST then
+			for _, v in pairs(self:GetAlivePlayers(true)) do
+				if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_GLITCH or v:GetRole() == ROLE_DETECTIVE then
 					v:Kill()
 				end
 			end
