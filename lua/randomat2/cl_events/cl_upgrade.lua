@@ -2,7 +2,7 @@ include("shared.lua")
 
 net.Receive("UpgradeEventBegin", function()
 	--Frame Setup
-	local upgradeFrame = vgui.Create( "DFrame" )
+	upgradeFrame = vgui.Create( "DFrame" )
 	local ht = 190
 	local wt = 300
 	local gap = 20
