@@ -297,13 +297,13 @@ end
 function randomat_meta:AddHook(hooktype, callbackfunc)
 	callbackfunc = callbackfunc or self[hooktype]
 
-	hook.Add(hooktype, "RandomatEvent." .. self.Ident .. "." .. self.Id .. ":" .. hooktype, function(...)
+	hook.Add(hooktype, "RandomatEvent." .. self.Id .. ":" .. hooktype, function(...)
 		return callbackfunc(...)
 	end)
 
 	self.Hooks = self.Hooks or {}
 
-	table.insert(self.Hooks, {hooktype, "RandomatEvent." .. self.Ident .. "." .. self.Id .. ":" .. hooktype})
+	table.insert(self.Hooks, {hooktype, "RandomatEvent." .. self.Id .. ":" .. hooktype})
 end
 
 function randomat_meta:CleanUpHooks()
