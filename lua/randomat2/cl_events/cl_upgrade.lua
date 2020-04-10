@@ -1,6 +1,8 @@
+include("shared.lua")
+
 net.Receive("UpgradeEventBegin", function()
 	--Frame Setup
-	upgradeFrame = vgui.Create( "DFrame" )
+	local upgradeFrame = vgui.Create( "DFrame" )
 	local ht = 190
 	local wt = 300
 	local gap = 20
@@ -25,7 +27,7 @@ net.Receive("UpgradeEventBegin", function()
 	btn1:SetSize(bwt,bht)
 	btn1:SetText("Mercenary")
 	btn1.Paint = function(self, w, h)
-		draw.RoundedBox(8,0,0,w,h,Color(255, 102, 51))
+		draw.RoundedBox(8,0,0,w,h,ROLE_COLORS[ROLE_MERCENARY])
 	end
 	btn1.DoClick = function()
 		net.Start("rdmtPlayerChoseSur")
@@ -41,7 +43,7 @@ net.Receive("UpgradeEventBegin", function()
 	btn2:SetPos(gap, gap*2 + bht + 25)
 	btn2:SetSize(bwt,bht)
 	btn2.Paint = function(self, w, h)
-		draw.RoundedBox(8,0,0,w,h,Color(85, 26, 139))
+		draw.RoundedBox(8,0,0,w,h,ROLE_COLORS[ROLE_KILLER])
 	end
 	btn2.DoClick = function()
 		net.Start("rdmtPlayerChoseSk")

@@ -22,7 +22,7 @@ local function TriggerBarrels()
 
 				local ent = ents.Create( "prop_physics" )
 				
-				if ( !IsValid( ent ) ) then return end
+				if ( not IsValid( ent ) ) then return end
 
 				ent:SetModel( "models/props_c17/oildrum001_explosive.mdl" )
 				local sc = GetConVar("randomat_barrels_range"):GetInt()
@@ -30,7 +30,7 @@ local function TriggerBarrels()
 				ent:Spawn()
 
 				local phys = ent:GetPhysicsObject()
-				if ( !IsValid( phys ) ) then ent:Remove() return end
+				if ( not IsValid( phys ) ) then ent:Remove() return end
 			end
 		end
 	end
