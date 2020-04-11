@@ -16,11 +16,11 @@ function EVENT:Begin()
 	for k, v in pairs(self:GetAlivePlayers(true)) do
 		players = players+1
 	end
-	
+
 	for k, v in pairs(ents.GetAll()) do
 		if v.Base == "weapon_tttbase" and v.AutoSpawnable then
 			wepspawns = wepspawns+1
-		end	
+		end
 	end
 	print("wepspawns = "..wepspawns)
 	print("players = "..players)
@@ -38,7 +38,7 @@ function EVENT:Begin()
 				v:Give("weapon_ttt_randomatrevolver")
 				v:SetNWBool("RdmMurderRevolver", true)
 			end)
-        elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
+        elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
             v:SetRole(ROLE_TRAITOR)
 			timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
 				v:Give("weapon_ttt_randomatknife")
@@ -69,7 +69,7 @@ function EVENT:Begin()
 	end)
 
 	hook.Add("EntityTakeDamage", "RandomatMurderDMG", function(tgt, dmg)
-		if tgt:IsPlayer() and tgt:GetRole() ~= ROLE_TRAITOR and tgt:GetRole() ~= ROLE_HYPNOTIST and tgt:GetRole() ~= ROLE_ASSASSIN and dmg:IsBulletDamage() then
+		if tgt:IsPlayer() and tgt:GetRole() ~= ROLE_TRAITOR and dmg:IsBulletDamage() then
 			dmg:ScaleDamage(0.25)
 		end
 	end)
@@ -126,7 +126,7 @@ function EVENT:Condition()
 		if v:Alive() and not v:IsSpec() then
 			if v:GetRole() == ROLE_DETECTIVE then
 				d = d+1
-			elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN then
+			elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
 				t = t+1
 			end
 		end
