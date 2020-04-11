@@ -15,7 +15,7 @@ SWEP.AutoSpawnable = false
 SWEP.HoldType = "slam"
 SWEP.AdminSpawnable = true
 SWEP.Kind = WEAPON_EQUIP2
-SWEP.Target = 0
+SWEP.Target = nil
 
 SWEP.AllowDrop = false
 SWEP.NoSights = true

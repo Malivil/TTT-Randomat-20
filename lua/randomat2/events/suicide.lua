@@ -12,7 +12,7 @@ function EVENT:Begin()
 
 	plylist = {}
 
-	for k, v in pairs(self:GetAlivePlayers(true)) do
+	for _k, v in pairs(self:GetAlivePlayers(true)) do
 		plysize = plysize + 1
 
 		plylist[plysize] = {}
@@ -21,7 +21,7 @@ function EVENT:Begin()
 
 	end
 
-	for k, v in pairs(plylist) do
+	for k, _ in pairs(plylist) do
 
 		if plysize > 1 and k < plysize then
 			plylist[k]["tgt"] = plylist[k+1]["ply"]
@@ -46,7 +46,6 @@ function EVENT:Begin()
 end
 
 function PlayerDetonate(owner, ply)
-	local effectdata = EffectData()
 	if owner:GetRole() ~= ROLE_JESTER and owner:GetRole() ~= ROLE_SWAPPER then
 		local explode = ents.Create("env_explosion")
 		explode:SetPos(ply:GetPos())
