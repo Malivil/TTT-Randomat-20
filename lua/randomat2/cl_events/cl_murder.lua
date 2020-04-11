@@ -24,10 +24,17 @@ net.Receive("MurderEventActive", function()
 
 			local y = ScrH() - 55
 
-			if rl ~= ROLE_TRAITOR and rl ~= ROLE_ASSASSIN and rl ~= ROLE_HYPNOTIST and rl ~= ROLE_ZOMBIE and rl ~= ROLE_VAMPIRE and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
+            if rl ~= ROLE_TRAITOR and rl ~= ROLE_ASSASSIN and rl ~= ROLE_HYPNOTIST and rl ~= ROLE_ZOMBIE and rl ~= ROLE_VAMPIRE and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
+                local texttable = {}
+                texttable.font = "HealthAmmo"
+                texttable.color = COLOR_WHITE
+                texttable.pos = { 230, y }
+                texttable.text = text
+                texttable.xalign = TEXT_ALIGN_RIGHT
+                texttable.yalign = TEXT_ALIGN_BOTTOM
 				draw.RoundedBox(8, 19.6, y, 230, 25, Color(0, 0, 0, 175))
-				draw.RoundedBox(8, 19.6, y, (pks/maxpck)*230, 25, Color(205, 155, 0, 255))
-				draw.ShadowedText(text, "HealthAmmo", 230, y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
+                draw.RoundedBox(8, 19.6, y, (pks/maxpck)*230, 25, Color(205, 155, 0, 255))
+                draw.TextShadow(texttable, 2)
 			end
 		end)
 	else
