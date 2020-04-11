@@ -24,7 +24,7 @@ function EVENT:Begin()
 	for k, v in pairs(plylist) do
 
 		if plysize > 1 and k < plysize then
-			plylist[k]["tgt"] = plylist[k+1]["ply"]	
+			plylist[k]["tgt"] = plylist[k+1]["ply"]
 		elseif plysize > 1 then
 			plylist[k]["tgt"] = plylist[1]["ply"]
 		end

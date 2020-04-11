@@ -36,6 +36,11 @@ function SWEP:Initialize()
 	self.Weapon:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
 end
 
+function SWEP:Equip()
+    if not self.Target or not IsValid(self.Target) then return end
+	self.Owner:PrintMessage(HUD_PRINTTALK, "You have recieved the detonator for "..self.Target:Nick())
+end
+
 function SWEP:Deploy()
 	self.Weapon:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
 	return true
