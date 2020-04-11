@@ -28,7 +28,7 @@ net.Receive("MurderEventActive", function()
                 local texttable = {}
                 texttable.font = "HealthAmmo"
                 texttable.color = COLOR_WHITE
-                texttable.pos = { 230, y }
+                texttable.pos = { 230, y-24 }
                 texttable.text = text
                 texttable.xalign = TEXT_ALIGN_RIGHT
                 texttable.yalign = TEXT_ALIGN_BOTTOM
