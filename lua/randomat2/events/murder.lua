@@ -31,9 +31,7 @@ function EVENT:Begin()
 	net.WriteInt(pck, 32)
 	net.Broadcast()
 	for k, v in pairs(self.GetAlivePlayers(true)) do
-		if v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then --Remove special innocents
-			v:SetRole(ROLE_INNOCENT)
-		elseif v:GetRole() == ROLE_DETECTIVE then
+		if v:GetRole() == ROLE_DETECTIVE then
 			timer.Create("RandomatRevolverTimer", 0.15, 1, function()
 				v:Give("weapon_ttt_randomatrevolver")
 				v:SetNWBool("RdmMurderRevolver", true)
@@ -42,7 +40,10 @@ function EVENT:Begin()
             v:SetRole(ROLE_TRAITOR)
 			timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
 				v:Give("weapon_ttt_randomatknife")
-			end)
+            end)
+        -- Anyone else becomes an innocent
+        else
+            v:SetRole(ROLE_INNOCENT)
 		end
 		if v:GetRole() == ROLE_INNOCENT then
 			v:PrintMessage(HUD_PRINTTALK, "Stay alive and gather weapons! Gathering "..pck.." weapons will give you a revolver!")
