@@ -54,9 +54,9 @@ net.Receive("UpgradeEventBegin", function()
 end)
 
 net.Receive("RdmtCloseUpgradeFrame", function()
-	if upgradeFrame ~= nil then 
+	if upgradeFrame ~= nil then
 		if upgradeFrame:IsActive() then
 			upgradeFrame:Close()
 		end
 	end
-end)	
+end)
