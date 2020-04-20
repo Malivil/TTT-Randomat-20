@@ -10,35 +10,34 @@ util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
 
 function EVENT:Begin()
-	local players = 0
+	local players = #self:GetAlivePlayers(true)
 	local wepspawns = 0
 
-	for k, v in pairs(self:GetAlivePlayers(true)) do
-		players = players+1
-	end
-
-	for k, v in pairs(ents.GetAll()) do
+    for _, v in pairs(ents.GetAll()) do
 		if v.Base == "weapon_tttbase" and v.AutoSpawnable then
 			wepspawns = wepspawns+1
 		end
-	end
-	print("wepspawns = "..wepspawns)
-	print("players = "..players)
-	print("wepsneeded ="..wepspawns/players)
+    end
+
 	local pck = math.ceil(wepspawns/players)
 	net.Start("MurderEventActive")
 	net.WriteBool(true)
 	net.WriteInt(pck, 32)
-	net.Broadcast()
-	for k, v in pairs(self.GetAlivePlayers(true)) do
-		if v:GetRole() == ROLE_DETECTIVE then
+    net.Broadcast()
+
+	for _, v in pairs(self.GetAlivePlayers(true)) do
+        if v:GetRole() == ROLE_DETECTIVE then
 			timer.Create("RandomatRevolverTimer", 0.15, 1, function()
-				v:Give("weapon_ttt_randomatrevolver")
+                v:Give("weapon_ttt_randomatrevolver")
 				v:SetNWBool("RdmMurderRevolver", true)
 			end)
         elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
             v:SetRole(ROLE_TRAITOR)
-			timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
+            v:StripWeapon("weapon_hyp_brainwash")
+            v:StripWeapon("weapon_vam_fangs")
+            v:StripWeapon("weapon_zom_claws")
+
+            timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
 				v:Give("weapon_ttt_randomatknife")
             end)
         -- Anyone else becomes an innocent
@@ -52,7 +51,7 @@ function EVENT:Begin()
 	SendFullStateUpdate()
 
 	timer.Create("RandomatMurderTimer", 0.1, 0, function()
-		for k, v in pairs(self.GetAlivePlayers(true)) do
+		for _, v in pairs(self.GetAlivePlayers(true)) do
 			for _, wep in pairs(v:GetWeapons()) do
 				if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised"  then
 					v:StripWeapon(wep.ClassName)
@@ -61,9 +60,7 @@ function EVENT:Begin()
 			end
 			if v:GetNWInt("MurderWeaponsEquipped") >= pck then
 				v:SetNWInt("MurderWeaponsEquipped", 0)
-				if v:GetRole() ~= ROLE_ZOMBIE then
-					v:Give("weapon_ttt_randomatrevolver")
-				end
+                v:Give("weapon_ttt_randomatrevolver")
 				v:SetNWBool("RdmMurderRevolver", true)
 			end
 		end
@@ -83,8 +80,8 @@ function EVENT:Begin()
 
 	hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed" , function(ply)
 		if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatknife" then
-			return  GetConVar("randomat_murder_knifespeed"):GetFloat()
-		else 
+			return GetConVar("randomat_murder_knifespeed"):GetFloat()
+		else
 			return 1
 		end
 	end)
@@ -110,7 +107,7 @@ function EVENT:End()
 	hook.Remove("DrawOverlay", "RdmtMurderBlind")
 	hook.Remove("EntityTakeDamage", "RandomatMurderDMG")
 	hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed")
-	for k, v in pairs(player.GetAll()) do
+	for _, v in pairs(player.GetAll()) do
 		v:SetNWInt("MurderWeaponsEquipped", 0)
 		v:SetNWBool("RdmMurderRevolver", false)
 	end
@@ -123,7 +120,7 @@ end
 function EVENT:Condition()
 	local d = 0
 	local t = 0
-	for k, v in pairs(player.GetAll()) do
+	for _, v in pairs(player.GetAll()) do
 		if v:Alive() and not v:IsSpec() then
 			if v:GetRole() == ROLE_DETECTIVE then
 				d = d+1
