@@ -33,10 +33,6 @@ function EVENT:Begin()
 			end)
         elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
             v:SetRole(ROLE_TRAITOR)
-            v:StripWeapon("weapon_hyp_brainwash")
-            v:StripWeapon("weapon_vam_fangs")
-            v:StripWeapon("weapon_zom_claws")
-
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
 				v:Give("weapon_ttt_randomatknife")
             end)
@@ -51,7 +47,11 @@ function EVENT:Begin()
 	SendFullStateUpdate()
 
 	timer.Create("RandomatMurderTimer", 0.1, 0, function()
-		for _, v in pairs(self.GetAlivePlayers(true)) do
+        for _, v in pairs(self.GetAlivePlayers(true)) do
+            v:StripWeapon("weapon_hyp_brainwash")
+            v:StripWeapon("weapon_vam_fangs")
+            v:StripWeapon("weapon_zom_claws")
+
 			for _, wep in pairs(v:GetWeapons()) do
 				if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised"  then
 					v:StripWeapon(wep.ClassName)
