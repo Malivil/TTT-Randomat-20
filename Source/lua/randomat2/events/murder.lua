@@ -58,7 +58,7 @@ function EVENT:Begin()
 					v:SetFOV(0, 0.2)
 				end
 			end
-			if v:GetNWInt("MurderWeaponsEquipped") >= pck then
+			if v:GetRole() ~= ROLE_TRAITOR and v:GetRole() ~= ROLE_ASSASSIN and v:GetRole() ~= ROLE_HYPNOTIST and v:GetRole() ~= ROLE_ZOMBIE and v:GetRole() ~= ROLE_VAMPIRE and v:GetNWInt("MurderWeaponsEquipped") >= pck then
 				v:SetNWInt("MurderWeaponsEquipped", 0)
                 v:Give("weapon_ttt_randomatrevolver")
 				v:SetNWBool("RdmMurderRevolver", true)
