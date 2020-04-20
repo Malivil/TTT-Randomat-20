@@ -9,6 +9,16 @@ CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "
 util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
 
+local function StripBannedWeapons(ply)
+    for _, wep in pairs(ply:GetWeapons()) do
+        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised" or wep.ClassName == "weapon_ttt_crowbar_fast" or wep.ClassName == "weapon_ttt_innocent_knife" or wep.ClassName == "weapon_ttt_wrench" or wep.ClassName == "weapon_hyp_brainwash" or wep.ClassName == "weapon_vam_fangs" or wep.ClassName == "weapon_zom_claws"
+             then
+            ply:StripWeapon(wep.ClassName)
+            ply:SetFOV(0, 0.2)
+        end
+    end
+end
+
 function EVENT:Begin()
 	local players = #self:GetAlivePlayers(true)
 	local wepspawns = 0
@@ -28,12 +38,14 @@ function EVENT:Begin()
 	for _, v in pairs(self.GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_DETECTIVE then
 			timer.Create("RandomatRevolverTimer", 0.15, 1, function()
+                StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatrevolver")
 				v:SetNWBool("RdmMurderRevolver", true)
 			end)
         elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
             v:SetRole(ROLE_TRAITOR)
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
+                StripBannedWeapons(v)
 				v:Give("weapon_ttt_randomatknife")
             end)
         -- Anyone else becomes an innocent
@@ -48,16 +60,8 @@ function EVENT:Begin()
 
 	timer.Create("RandomatMurderTimer", 0.1, 0, function()
         for _, v in pairs(self.GetAlivePlayers(true)) do
-            v:StripWeapon("weapon_hyp_brainwash")
-            v:StripWeapon("weapon_vam_fangs")
-            v:StripWeapon("weapon_zom_claws")
-
-			for _, wep in pairs(v:GetWeapons()) do
-				if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised"  then
-					v:StripWeapon(wep.ClassName)
-					v:SetFOV(0, 0.2)
-				end
-			end
+            StripBannedWeapons(v)
+            
 			if v:GetRole() ~= ROLE_TRAITOR and v:GetRole() ~= ROLE_ASSASSIN and v:GetRole() ~= ROLE_HYPNOTIST and v:GetRole() ~= ROLE_ZOMBIE and v:GetRole() ~= ROLE_VAMPIRE and v:GetNWInt("MurderWeaponsEquipped") >= pck then
 				v:SetNWInt("MurderWeaponsEquipped", 0)
                 v:Give("weapon_ttt_randomatrevolver")
