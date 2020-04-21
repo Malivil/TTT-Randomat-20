@@ -12,7 +12,7 @@ function BlindPlayer()
     if blindeventactive == 1 and LocalPlayer():Alive() then
         local role = LocalPlayer():GetRole();
 		if role == ROLE_TRAITOR or role == ROLE_ASSASSIN or role == ROLE_HYPNOTIST then
-			surface.SetDrawColor(0,0,0,254);
+			surface.SetDrawColor(0,0,0,255);
 			surface.DrawRect(0,0,surface.ScreenWidth(),surface.ScreenHeight());
 		end
 	end
