@@ -20,124 +20,124 @@ local function StripBannedWeapons(ply)
 end
 
 function EVENT:Begin()
-	local players = #self:GetAlivePlayers(true)
-	local wepspawns = 0
+    local players = #self:GetAlivePlayers(true)
+    local wepspawns = 0
 
     for _, v in pairs(ents.GetAll()) do
-		if v.Base == "weapon_tttbase" and v.AutoSpawnable then
-			wepspawns = wepspawns+1
-		end
+        if v.Base == "weapon_tttbase" and v.AutoSpawnable then
+            wepspawns = wepspawns+1
+        end
     end
 
-	local pck = math.ceil(wepspawns/players)
-	net.Start("MurderEventActive")
-	net.WriteBool(true)
-	net.WriteInt(pck, 32)
+    local pck = math.ceil(wepspawns/players)
+    net.Start("MurderEventActive")
+    net.WriteBool(true)
+    net.WriteInt(pck, 32)
     net.Broadcast()
 
-	for _, v in pairs(self.GetAlivePlayers(true)) do
+    for _, v in pairs(self.GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_DETECTIVE then
-			timer.Create("RandomatRevolverTimer", 0.15, 1, function()
+            timer.Create("RandomatRevolverTimer", 0.15, 1, function()
                 StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatrevolver")
-				v:SetNWBool("RdmMurderRevolver", true)
-			end)
+                v:SetNWBool("RdmMurderRevolver", true)
+            end)
         elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
             v:SetRole(ROLE_TRAITOR)
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
                 StripBannedWeapons(v)
-				v:Give("weapon_ttt_randomatknife")
+                v:Give("weapon_ttt_randomatknife")
             end)
         -- Anyone else becomes an innocent
         else
             v:SetRole(ROLE_INNOCENT)
-		end
-		if v:GetRole() == ROLE_INNOCENT then
-			v:PrintMessage(HUD_PRINTTALK, "Stay alive and gather weapons! Gathering "..pck.." weapons will give you a revolver!")
-		end
-	end
-	SendFullStateUpdate()
+        end
+        if v:GetRole() == ROLE_INNOCENT then
+            v:PrintMessage(HUD_PRINTTALK, "Stay alive and gather weapons! Gathering "..pck.." weapons will give you a revolver!")
+        end
+    end
+    SendFullStateUpdate()
 
-	timer.Create("RandomatMurderTimer", 0.1, 0, function()
+    timer.Create("RandomatMurderTimer", 0.1, 0, function()
         for _, v in pairs(self.GetAlivePlayers(true)) do
             StripBannedWeapons(v)
             
-			if v:GetRole() ~= ROLE_TRAITOR and v:GetRole() ~= ROLE_ASSASSIN and v:GetRole() ~= ROLE_HYPNOTIST and v:GetRole() ~= ROLE_ZOMBIE and v:GetRole() ~= ROLE_VAMPIRE and v:GetNWInt("MurderWeaponsEquipped") >= pck then
-				v:SetNWInt("MurderWeaponsEquipped", 0)
+            if v:GetRole() ~= ROLE_TRAITOR and v:GetRole() ~= ROLE_ASSASSIN and v:GetRole() ~= ROLE_HYPNOTIST and v:GetRole() ~= ROLE_ZOMBIE and v:GetRole() ~= ROLE_VAMPIRE and v:GetNWInt("MurderWeaponsEquipped") >= pck then
+                v:SetNWInt("MurderWeaponsEquipped", 0)
                 v:Give("weapon_ttt_randomatrevolver")
-				v:SetNWBool("RdmMurderRevolver", true)
-			end
-		end
-	end)
+                v:SetNWBool("RdmMurderRevolver", true)
+            end
+        end
+    end)
 
-	hook.Add("EntityTakeDamage", "RandomatMurderDMG", function(tgt, dmg)
-		if tgt:IsPlayer() and tgt:GetRole() ~= ROLE_TRAITOR and dmg:IsBulletDamage() then
-			dmg:ScaleDamage(0.25)
-		end
-	end)
+    hook.Add("EntityTakeDamage", "RandomatMurderDMG", function(tgt, dmg)
+        if tgt:IsPlayer() and tgt:GetRole() ~= ROLE_TRAITOR and dmg:IsBulletDamage() then
+            dmg:ScaleDamage(0.25)
+        end
+    end)
 
-	hook.Add("WeaponEquip", "RandomatRevolverPickup", function(wep, ply)
-		if wep.ClassName ~= "weapon_ttt_randomatrevolver" and wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE then
-			ply:SetNWInt("MurderWeaponsEquipped", ply:GetNWInt("MurderWeaponsEquipped") +1)
-		end
-	end)
+    hook.Add("WeaponEquip", "RandomatRevolverPickup", function(wep, ply)
+        if wep.ClassName ~= "weapon_ttt_randomatrevolver" and wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE then
+            ply:SetNWInt("MurderWeaponsEquipped", ply:GetNWInt("MurderWeaponsEquipped") +1)
+        end
+    end)
 
-	hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed" , function(ply)
-		if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatknife" then
-			return GetConVar("randomat_murder_knifespeed"):GetFloat()
-		else
-			return 1
-		end
-	end)
+    hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed" , function(ply)
+        if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatknife" then
+            return GetConVar("randomat_murder_knifespeed"):GetFloat()
+        else
+            return 1
+        end
+    end)
 
-	hook.Add("PlayerDeath", "DropRdmtRevolver", function(tgt, wep, ply)
-		if table.HasValue(player.GetAll(), ply) then
-			if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
-			  if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" and not IsEvil(tgt) and not IsEvil(ply) then
-			     ply:DropWeapon(ply:GetActiveWeapon())
-			     ply:SetNWBool("RdmtShouldBlind", true)
-			     timer.Create("RdmtBlindEndDelay"..ply:Nick(), 5, 1, function()
-			        ply:SetNWBool("RdmtShouldBlind", false)
-			     end)
-			  end
-			end
-		end
-	end)
+    hook.Add("PlayerDeath", "DropRdmtRevolver", function(tgt, wep, ply)
+        if table.HasValue(player.GetAll(), ply) then
+            if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
+              if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" and not IsEvil(tgt) and not IsEvil(ply) then
+                 ply:DropWeapon(ply:GetActiveWeapon())
+                 ply:SetNWBool("RdmtShouldBlind", true)
+                 timer.Create("RdmtBlindEndDelay"..ply:Nick(), 5, 1, function()
+                    ply:SetNWBool("RdmtShouldBlind", false)
+                 end)
+              end
+            end
+        end
+    end)
 end
 
 function EVENT:End()
-	timer.Remove("RandomatMurderTimer")
-	hook.Remove("WeaponEquip", "RandomatRevolverPickup")
-	hook.Remove("DrawOverlay", "RdmtMurderBlind")
-	hook.Remove("EntityTakeDamage", "RandomatMurderDMG")
-	hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed")
-	for _, v in pairs(player.GetAll()) do
-		v:SetNWInt("MurderWeaponsEquipped", 0)
-		v:SetNWBool("RdmMurderRevolver", false)
-	end
-	net.Start("MurderEventActive")
-	net.WriteBool(false)
-	net.Broadcast()
-	hook.Remove("PlayerDeath", "DropRdmtRevolver")
+    timer.Remove("RandomatMurderTimer")
+    hook.Remove("WeaponEquip", "RandomatRevolverPickup")
+    hook.Remove("DrawOverlay", "RdmtMurderBlind")
+    hook.Remove("EntityTakeDamage", "RandomatMurderDMG")
+    hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed")
+    for _, v in pairs(player.GetAll()) do
+        v:SetNWInt("MurderWeaponsEquipped", 0)
+        v:SetNWBool("RdmMurderRevolver", false)
+    end
+    net.Start("MurderEventActive")
+    net.WriteBool(false)
+    net.Broadcast()
+    hook.Remove("PlayerDeath", "DropRdmtRevolver")
 end
 
 function EVENT:Condition()
-	local d = 0
-	local t = 0
-	for _, v in pairs(player.GetAll()) do
-		if v:Alive() and not v:IsSpec() then
-			if v:GetRole() == ROLE_DETECTIVE then
-				d = d+1
-			elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
-				t = t+1
-			end
-		end
-	end
-	if d > 0 and t > 1 then
-		return true
-	else
-		return false
-	end
+    local d = 0
+    local t = 0
+    for _, v in pairs(player.GetAll()) do
+        if v:Alive() and not v:IsSpec() then
+            if v:GetRole() == ROLE_DETECTIVE then
+                d = d+1
+            elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
+                t = t+1
+            end
+        end
+    end
+    if d > 0 and t > 1 then
+        return true
+    else
+        return false
+    end
 end
 
 Randomat:register(EVENT)

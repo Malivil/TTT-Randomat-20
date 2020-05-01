@@ -1,25 +1,25 @@
 if SERVER then
-	resource.AddWorkshop("662342819")
-	AddCSLuaFile("shared.lua")
-	resource.AddFile("materials/VGUI/ttt/icon_randomat.vmt")
-	util.AddNetworkString("RandomatRandomWeapons")
-	SWEP.LimitedStock = not GetConVar("ttt_randomat_rebuyable"):GetBool()
+    resource.AddWorkshop("662342819")
+    AddCSLuaFile("shared.lua")
+    resource.AddFile("materials/VGUI/ttt/icon_randomat.vmt")
+    util.AddNetworkString("RandomatRandomWeapons")
+    SWEP.LimitedStock = not GetConVar("ttt_randomat_rebuyable"):GetBool()
 end
 
 if CLIENT then
-	SWEP.PrintName = "Randomat-4000"
-	SWEP.Slot = 7
+    SWEP.PrintName = "Randomat-4000"
+    SWEP.Slot = 7
 
-	SWEP.ViewModelFOV = 60
-	SWEP.ViewModelFlip = false
+    SWEP.ViewModelFOV = 60
+    SWEP.ViewModelFlip = false
 
-	SWEP.Icon = "VGUI/ttt/icon_randomat"
-	SWEP.EquipMenuData = {
-		type = "weapon",
-		desc = "The Randomat-4000 will do something Random! \nWho guessed that!"
-	}
+    SWEP.Icon = "VGUI/ttt/icon_randomat"
+    SWEP.EquipMenuData = {
+        type = "weapon",
+        desc = "The Randomat-4000 will do something Random! \nWho guessed that!"
+    }
 
-	function SWEP:PrimaryAttack() end
+    function SWEP:PrimaryAttack() end
 end
 
 CreateConVar("ttt_randomat_chooseevent", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows you to choose out of a selection of events")
@@ -60,26 +60,26 @@ SWEP.Primary.Sound = ""
 
 
 function SWEP:Initialize()
-	util.PrecacheSound("weapons/c4_initiate.wav")
+    util.PrecacheSound("weapons/c4_initiate.wav")
 end
 
 function SWEP:OnRemove()
-	if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
-		RunConsoleCommand("lastinv")
-	end
+    if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+        RunConsoleCommand("lastinv")
+    end
 end
 
 function SWEP:PrimaryAttack()
-	if SERVER and IsFirstTimePredicted() then
-		if GetConVar("ttt_randomat_chooseevent"):GetBool() then
-			Randomat:SilentTriggerEvent("choose", self.Owner)
+    if SERVER and IsFirstTimePredicted() then
+        if GetConVar("ttt_randomat_chooseevent"):GetBool() then
+            Randomat:SilentTriggerEvent("choose", self.Owner)
 
-		else
-			Randomat:TriggerRandomEvent(self.Owner)
-		end
-		DamageLog("RANDOMAT: " .. self.Owner:Nick() .. " [" .. self.Owner:GetRoleString() .. "] used his Randomat")
-		self:SetNextPrimaryFire(CurTime() + 10)
+        else
+            Randomat:TriggerRandomEvent(self.Owner)
+        end
+        DamageLog("RANDOMAT: " .. self.Owner:Nick() .. " [" .. self.Owner:GetRoleString() .. "] used his Randomat")
+        self:SetNextPrimaryFire(CurTime() + 10)
 
-		self:Remove()
-	end
+        self:Remove()
+    end
 end

@@ -7,15 +7,15 @@ EVENT.Title = "Random Health for everyone!"
 EVENT.id = "randomhealth"
 
 function EVENT:Begin()
-	for _, ply in pairs(self:GetPlayers(true)) do
-		local newhealth = ply:Health() + math.random(GetConVar("randomat_randomhealth_lower"):GetInt(), GetConVar("randomat_randomhealth_upper"):GetInt())
+    for _, ply in pairs(self:GetPlayers(true)) do
+        local newhealth = ply:Health() + math.random(GetConVar("randomat_randomhealth_lower"):GetInt(), GetConVar("randomat_randomhealth_upper"):GetInt())
 
-		ply:SetHealth(newhealth)
+        ply:SetHealth(newhealth)
 
-		if ply:Health() > ply:GetMaxHealth() then
-			ply:SetMaxHealth(newhealth)
-		end
-	end
+        if ply:Health() > ply:GetMaxHealth() then
+            ply:SetMaxHealth(newhealth)
+        end
+    end
 end
 
 Randomat:register(EVENT)

@@ -7,24 +7,24 @@ EVENT.Title = "Butterfingers"
 EVENT.id = "butter"
 
 function EVENT:Begin()
-	local x = 0
-	timer.Create("weapondrop", GetConVar("randomat_butter_timer"):GetInt(), 0, function()
-		for k, ply in pairs( self:GetAlivePlayers(true)) do
-			x = x+1
-			if x == 1 or GetConVar("randomat_butter_affectall"):GetBool() then
-				if ply:GetActiveWeapon().AllowDrop then
-					ply:DropWeapon(ply:GetActiveWeapon())
-					ply:SetFOV(0, 0.2)
-					ply:EmitSound("vo/npc/Barney/ba_pain01.wav")
-				end
-			end
-		end
-		x = 0
-	end)
+    local x = 0
+    timer.Create("weapondrop", GetConVar("randomat_butter_timer"):GetInt(), 0, function()
+        for k, ply in pairs( self:GetAlivePlayers(true)) do
+            x = x+1
+            if x == 1 or GetConVar("randomat_butter_affectall"):GetBool() then
+                if ply:GetActiveWeapon().AllowDrop then
+                    ply:DropWeapon(ply:GetActiveWeapon())
+                    ply:SetFOV(0, 0.2)
+                    ply:EmitSound("vo/npc/Barney/ba_pain01.wav")
+                end
+            end
+        end
+        x = 0
+    end)
 end
 
 function EVENT:End()
-	timer.Remove("weapondrop")
+    timer.Remove("weapondrop")
 end
 
 Randomat:register(EVENT)

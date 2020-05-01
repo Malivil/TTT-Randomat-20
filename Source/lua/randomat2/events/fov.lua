@@ -6,42 +6,42 @@ EVENT.Title = "Quake Pro"
 EVENT.id = "fov"
 
 function EVENT:Begin()
-	StartingPlys = {}
-	local ChangedFOV = {}
+    StartingPlys = {}
+    local ChangedFOV = {}
 
-	for k, v in pairs(player.GetAll()) do
+    for k, v in pairs(player.GetAll()) do
 
-		StartingPlys[k] = v
+        StartingPlys[k] = v
 
-		ChangedFOV[v] = v:GetFOV()*GetConVar("randomat_fov_scale"):GetFloat()
+        ChangedFOV[v] = v:GetFOV()*GetConVar("randomat_fov_scale"):GetFloat()
 
-	end
+    end
 
-	timer.Create("RandomatFOVTimer", 0.1, 0, function()
+    timer.Create("RandomatFOVTimer", 0.1, 0, function()
 
-		for k, v in pairs(StartingPlys) do
-			
-			if v:Alive() and not v:IsSpec() then
-				v:SetFOV( ChangedFOV[v], 0 )
-			else
-				v:SetFOV(0,0)
-			end
+        for k, v in pairs(StartingPlys) do
+            
+            if v:Alive() and not v:IsSpec() then
+                v:SetFOV( ChangedFOV[v], 0 )
+            else
+                v:SetFOV(0,0)
+            end
 
-		end
+        end
 
-	end)
+    end)
 
 end
 
 function EVENT:End()
 
-	timer.Remove("RandomatFOVTimer")
+    timer.Remove("RandomatFOVTimer")
 
-	for k, v in pairs(StartingPlys) do
-		
-		v:SetFOV(0,0)
+    for k, v in pairs(StartingPlys) do
+        
+        v:SetFOV(0,0)
 
-	end
+    end
 
 end
 

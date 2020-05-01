@@ -7,13 +7,13 @@ util.AddNetworkString("haloeventtrigger")
 util.AddNetworkString("haloeventend")
 
 function EVENT:Begin()
-	net.Start("haloeventtrigger")
-	net.Broadcast()
+    net.Start("haloeventtrigger")
+    net.Broadcast()
 end
 
 function EVENT:End()
-	net.Start("haloeventend")
-	net.Broadcast()
+    net.Start("haloeventend")
+    net.Broadcast()
 end
 
 Randomat:register(EVENT)

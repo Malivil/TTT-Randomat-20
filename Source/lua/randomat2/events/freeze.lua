@@ -25,41 +25,41 @@ CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Durati
 CreateConVar("randomat_freeze_hint", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Explains the event after triggering")
 
 function EVENT:Begin()
-	
-	local tmr = GetConVar("randomat_freeze_timer"):GetInt()
+    
+    local tmr = GetConVar("randomat_freeze_timer"):GetInt()
 
-	if GetConVar("randomat_freeze_hint"):GetBool() then
-		timer.Simple(5, function()
-			self:SmallNotify("All Innocents will Freeze (and become immune) every "..tmr.." seconds")
-		end)
-	end
-	
-	timer.Create("RdmtFreezeTimer", tmr, 0, function()
-		self:SmallNotify("Freeze!")
-		for k, v in pairs(self:GetAlivePlayers(true)) do
-			if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
-				v:Freeze(true)
-				v.isFrozen = true
-				timer.Simple(GetConVar("randomat_freeze_duration"):GetInt(), function()
-					v:Freeze(false)
-					v.isFrozen = false
-				end)
-			end
-		end
+    if GetConVar("randomat_freeze_hint"):GetBool() then
+        timer.Simple(5, function()
+            self:SmallNotify("All Innocents will Freeze (and become immune) every "..tmr.." seconds")
+        end)
+    end
+    
+    timer.Create("RdmtFreezeTimer", tmr, 0, function()
+        self:SmallNotify("Freeze!")
+        for k, v in pairs(self:GetAlivePlayers(true)) do
+            if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
+                v:Freeze(true)
+                v.isFrozen = true
+                timer.Simple(GetConVar("randomat_freeze_duration"):GetInt(), function()
+                    v:Freeze(false)
+                    v.isFrozen = false
+                end)
+            end
+        end
 
-	end)
+    end)
 
-	hook.Add("EntityTakeDamage", "RdmtFreezeImmuneHook", function(ply, dmg)
-		if ply:IsValid() and ply.isFrozen then
-			dmg:ScaleDamage(0)
-		end
-	end)
+    hook.Add("EntityTakeDamage", "RdmtFreezeImmuneHook", function(ply, dmg)
+        if ply:IsValid() and ply.isFrozen then
+            dmg:ScaleDamage(0)
+        end
+    end)
 
 end
 
 function EVENT:End()
-	hook.Remove("EntityTakeDamage", "RdmtFreezeImmuneHook")
-	timer.Remove("RdmtFreezeTimer")
+    hook.Remove("EntityTakeDamage", "RdmtFreezeImmuneHook")
+    timer.Remove("RdmtFreezeTimer")
 end
 
 Randomat:register(EVENT)

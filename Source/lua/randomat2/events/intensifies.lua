@@ -6,13 +6,13 @@ EVENT.Title = "Randomness Intensifies"
 EVENT.id = "intensifies"
 
 function EVENT:Begin()
-	timer.Create("RandomatRandomatTimer", GetConVar("randomat_intensifies_timer"):GetInt() , 0, function()
-		Randomat:TriggerRandomEvent()
-	end)
+    timer.Create("RandomatRandomatTimer", GetConVar("randomat_intensifies_timer"):GetInt() , 0, function()
+        Randomat:TriggerRandomEvent()
+    end)
 end
 
 function EVENT:End()
-	timer.Remove("RandomatRandomatTimer")
+    timer.Remove("RandomatRandomatTimer")
 end
 
 Randomat:register(EVENT)

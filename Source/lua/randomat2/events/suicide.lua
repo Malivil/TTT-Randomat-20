@@ -8,60 +8,60 @@ EVENT.id = "suicide"
 plylist = {}
 
 function EVENT:Begin()
-	local plysize = 0
+    local plysize = 0
 
-	plylist = {}
+    plylist = {}
 
-	for _k, v in pairs(self:GetAlivePlayers(true)) do
-		plysize = plysize + 1
+    for _k, v in pairs(self:GetAlivePlayers(true)) do
+        plysize = plysize + 1
 
-		plylist[plysize] = {}
-		plylist[plysize]["ply"] = v
-		plylist[plysize]["tgt"] = v
+        plylist[plysize] = {}
+        plylist[plysize]["ply"] = v
+        plylist[plysize]["tgt"] = v
 
-	end
+    end
 
-	for k, _ in pairs(plylist) do
+    for k, _ in pairs(plylist) do
 
-		if plysize > 1 and k < plysize then
-			plylist[k]["tgt"] = plylist[k+1]["ply"]
-		elseif plysize > 1 then
-			plylist[k]["tgt"] = plylist[1]["ply"]
-		end
+        if plysize > 1 and k < plysize then
+            plylist[k]["tgt"] = plylist[k+1]["ply"]
+        elseif plysize > 1 then
+            plylist[k]["tgt"] = plylist[1]["ply"]
+        end
 
-		timer.Create("RandomatDetTimer", 1, 5, function() plylist[k]["ply"]:PrintMessage(HUD_PRINTCENTER, "You have a detonator for "..plylist[k]["tgt"]:Nick()) end)
+        timer.Create("RandomatDetTimer", 1, 5, function() plylist[k]["ply"]:PrintMessage(HUD_PRINTCENTER, "You have a detonator for "..plylist[k]["tgt"]:Nick()) end)
 
-		plylist[k]["ply"]:PrintMessage(HUD_PRINTTALK, "You have a detonator for "..plylist[k]["tgt"]:Nick())
+        plylist[k]["ply"]:PrintMessage(HUD_PRINTTALK, "You have a detonator for "..plylist[k]["tgt"]:Nick())
 
-		for i, wep in pairs(plylist[k]["ply"]:GetWeapons()) do
-			if wep.Kind == WEAPON_EQUIP2 then
-				plylist[k]["ply"]:StripWeapon(wep:GetClass())
-			end
-		end
+        for i, wep in pairs(plylist[k]["ply"]:GetWeapons()) do
+            if wep.Kind == WEAPON_EQUIP2 then
+                plylist[k]["ply"]:StripWeapon(wep:GetClass())
+            end
+        end
 
-		plylist[k]["ply"]:Give("weapon_ttt_randomatdet")
-		plylist[k]["ply"]:GetWeapon("weapon_ttt_randomatdet").Target = plylist[k]["tgt"]
+        plylist[k]["ply"]:Give("weapon_ttt_randomatdet")
+        plylist[k]["ply"]:GetWeapon("weapon_ttt_randomatdet").Target = plylist[k]["tgt"]
 
-	end
+    end
 end
 
 function PlayerDetonate(owner, ply)
-	if owner:GetRole() ~= ROLE_JESTER and owner:GetRole() ~= ROLE_SWAPPER then
-		local explode = ents.Create("env_explosion")
-		explode:SetPos(ply:GetPos())
-		explode:SetOwner(owner)
-		explode:Spawn()
-		explode:SetKeyValue("iMagnitude", "230")
-		explode:Fire("Explode", 0,0)
-		explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
-	end
-	for _, v in pairs(player.GetAll()) do
-		v:PrintMessage(HUD_PRINTTALK, owner:Nick().." has detonated "..ply:Nick())
-	end
+    if owner:GetRole() ~= ROLE_JESTER and owner:GetRole() ~= ROLE_SWAPPER then
+        local explode = ents.Create("env_explosion")
+        explode:SetPos(ply:GetPos())
+        explode:SetOwner(owner)
+        explode:Spawn()
+        explode:SetKeyValue("iMagnitude", "230")
+        explode:Fire("Explode", 0,0)
+        explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
+    end
+    for _, v in pairs(player.GetAll()) do
+        v:PrintMessage(HUD_PRINTTALK, owner:Nick().." has detonated "..ply:Nick())
+    end
 end
 
 function EVENT:End()
-	timer.Remove("RandomatDetTimer")
+    timer.Remove("RandomatDetTimer")
 end
 
 Randomat:register(EVENT)

@@ -10,48 +10,48 @@ EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_d
 EVENT.id = "blind"
 
 function TriggerBlind()
-	net.Start("blindeventactive")
-	net.WriteBool(true)
-	net.Broadcast()
+    net.Start("blindeventactive")
+    net.WriteBool(true)
+    net.Broadcast()
 
-	local duration = GetConVar("randomat_blind_duration"):GetInt()
+    local duration = GetConVar("randomat_blind_duration"):GetInt()
 
-	timer.Create("RandomatBlindTimer", duration, 1, function()
-		net.Start("blindeventactive")
-		net.WriteBool(false)
-		net.Broadcast()
-	end)
+    timer.Create("RandomatBlindTimer", duration, 1, function()
+        net.Start("blindeventactive")
+        net.WriteBool(false)
+        net.Broadcast()
+    end)
 end
 
 function RemoveBlind()
-	net.Start("blindeventactive")
-	net.WriteBool(false)
-	net.Broadcast()
+    net.Start("blindeventactive")
+    net.WriteBool(false)
+    net.Broadcast()
 end
 
 
 function EVENT:Begin()
-	EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"
-	TriggerBlind()
+    EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"
+    TriggerBlind()
 end
 
 function EVENT:End()
-	RemoveBlind()
+    RemoveBlind()
 end
 
 function EVENT:Condition()
-	local x = 0
-	for k, v in pairs(self:GetAlivePlayers(true)) do
-		if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
-			x = 1
-		end
-	end
+    local x = 0
+    for k, v in pairs(self:GetAlivePlayers(true)) do
+        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
+            x = 1
+        end
+    end
 
-	if x == 1 then
-		return true
-	else
-		return false
-	end
+    if x == 1 then
+        return true
+    else
+        return false
+    end
 end
 
 
