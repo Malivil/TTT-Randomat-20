@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+	$basetexture "871/cake3_baseColor"
+	$surfaceprop flesh
+	$bumpmap "871/cake3_normal"
+	$halflambert 1
+	$phong 1
+	$phongexponent 0.9
+	$phongboost	0.8
+	$phongfresnelranges	"[0.01 0.04 0.1]"
+}
