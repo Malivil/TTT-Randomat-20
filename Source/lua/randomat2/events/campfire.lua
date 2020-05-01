@@ -7,13 +7,15 @@ local playermovetime = {}
 local playermoveloc = {}
 
 CreateConVar("randomat_campfire_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Amount of time a player must camp before they are punished")
+CreateConVar("randomat_campfire_distance", 35, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The distance a player must move before they are considered not camping anymore")
 
 function EVENT:Begin()
     hook.Add("SetupMove", "RdmtCampfireMovementHook", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
             local loc = ply:GetPos()
+            local distance = GetConVar("randomat_campfire_distance"):GetInt()
             -- If we haven't seen the player move yet or they are now in a different location, save their location and update the movement time
-            if playermoveloc[ply:GetName()] == nil or playermoveloc[ply:GetName()]:Distance(loc) ~= 0 then
+            if playermoveloc[ply:GetName()] == nil or math.abs(playermoveloc[ply:GetName()]:Distance(loc)) > distance then
                 playermoveloc[ply:GetName()] = loc
                 playermovetime[ply:GetName()] = CurTime()
             end
