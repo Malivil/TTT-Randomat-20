@@ -36,6 +36,11 @@ function EVENT:Begin()
             ply1:SetFOV(0, 0.2)
         end
 
+        -- If the player that swapped to this player was a killer then they no longer have a crowbar
+        if ply2:GetRole() == ROLE_KILLER then
+            ply1:Give("weapon_zm_improvised")
+        end
+
         ply2:StripWeapons()
         -- Have zombies keep their claws
         if ply2:GetRole() == ROLE_ZOMBIE then
@@ -45,6 +50,11 @@ function EVENT:Begin()
         for _, v in pairs(ply1weps) do
             ply2:Give(v.ClassName)
             ply2:SetFOV(0, 0.2)
+        end
+
+        -- If the player that swapped to this player was a killer then they no longer have a crowbar
+        if ply1:GetRole() == ROLE_KILLER then
+            ply2:Give("weapon_zm_improvised")
         end
     end)
 end
