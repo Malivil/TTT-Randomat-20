@@ -6,7 +6,7 @@ EVENT.id = "oldjester"
 function EVENT:Begin()
     for _, j in pairs(self:GetAlivePlayers(true)) do
         if j:GetRole() == ROLE_SWAPPER then
-            j:SetRole(ROLE_JESTER)
+            Randomat:SetRole(j, ROLE_JESTER)
 
             for _, t in pairs(self:GetAlivePlayers(true)) do
                 if t:GetRole() == ROLE_TRAITOR then
@@ -15,6 +15,8 @@ function EVENT:Begin()
             end
         end
     end
+
+    SendFullStateUpdate()
 end
 
 function EVENT:End()

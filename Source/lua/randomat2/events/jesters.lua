@@ -6,7 +6,7 @@ EVENT.id = "jesters"
 function EVENT:Begin()
     local tx = 0
     local dx = 0
-    for k, ply in pairs(self:GetAlivePlayers(true)) do
+    for _, ply in pairs(self:GetAlivePlayers(true)) do
         if (ply:GetRole() == ROLE_TRAITOR and tx == 0) or (ply:GetRole() == ROLE_DETECTIVE and dx == 0) then
             if ply:GetRole() ~= ROLE_DETECTIVE then
                 tx = 1
@@ -16,8 +16,8 @@ function EVENT:Begin()
                 ply:SetMaxHealth(200)
             end
         else
-            ply:SetRole(ROLE_JESTER)
-            for k, wep in pairs(ply:GetWeapons()) do
+            Randomat:SetRole(ply, ROLE_JESTER)
+            for _, wep in pairs(ply:GetWeapons()) do
                 if wep.Kind == WEAPON_EQUIP1 or wep.Kind == WEAPON_EQUIP2 then
                     ply:StripWeapon(wep:GetClass())
                 end

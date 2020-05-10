@@ -1,5 +1,3 @@
-include("shared.lua")
-
 net.Receive("UpgradeEventBegin", function()
     --Frame Setup
     upgradeFrame = vgui.Create( "DFrame" )
@@ -54,7 +52,7 @@ net.Receive("UpgradeEventBegin", function()
 end)
 
 net.Receive("RdmtCloseUpgradeFrame", function()
-    if upgradeFrame ~= nil then
+    if upgradeFrame ~= nil and upgradeFrame.IsActive then
         if upgradeFrame:IsActive() then
             upgradeFrame:Close()
         end

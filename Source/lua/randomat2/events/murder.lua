@@ -43,14 +43,14 @@ function EVENT:Begin()
                 v:SetNWBool("RdmMurderRevolver", true)
             end)
         elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
-            v:SetRole(ROLE_TRAITOR)
+            Randomat:SetRole(v, ROLE_TRAITOR)
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
                 StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatknife")
             end)
         -- Anyone else becomes an innocent
         else
-            v:SetRole(ROLE_INNOCENT)
+            Randomat:SetRole(v, ROLE_INNOCENT)
         end
         if v:GetRole() == ROLE_INNOCENT then
             v:PrintMessage(HUD_PRINTTALK, "Stay alive and gather weapons! Gathering "..pck.." weapons will give you a revolver!")
@@ -61,8 +61,8 @@ function EVENT:Begin()
     timer.Create("RandomatMurderTimer", 0.1, 0, function()
         for _, v in pairs(self.GetAlivePlayers(true)) do
             StripBannedWeapons(v)
-            
-            if v:GetRole() ~= ROLE_TRAITOR and v:GetRole() ~= ROLE_ASSASSIN and v:GetRole() ~= ROLE_HYPNOTIST and v:GetRole() ~= ROLE_ZOMBIE and v:GetRole() ~= ROLE_VAMPIRE and v:GetNWInt("MurderWeaponsEquipped") >= pck then
+
+            if v:GetRole() ~= ROLE_TRAITOR and v:GetNWInt("MurderWeaponsEquipped") >= pck then
                 v:SetNWInt("MurderWeaponsEquipped", 0)
                 v:Give("weapon_ttt_randomatrevolver")
                 v:SetNWBool("RdmMurderRevolver", true)

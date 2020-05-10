@@ -1,3 +1,7 @@
+if SERVER then
+    util.AddNetworkString("TTT_Zombified")
+end
+
 local EVENT = {}
 
 EVENT.Title = "RISE FROM YOUR GRAVE"
@@ -9,6 +13,12 @@ function EVENT:Begin()
     timer.Create("infrespawntimer", 1, 0, function()
         for k, ply in pairs(player.GetAll()) do
             if not ply:Alive() and ply:GetRole() ~= ROLE_ZOMBIE then
+                if SERVER then
+                    net.Start("TTT_Zombified")
+					net.WriteString(ply:Nick())
+					net.Broadcast()
+                end
+
                 ply:SpawnForRound(true)
                 ply:SetCredits(0)
                 ply:SetRole(ROLE_ZOMBIE)

@@ -11,7 +11,7 @@ function EVENT:Begin()
     local traitor = {}
     local suspicionply = 0
 
-    for k, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in RandomPairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN then
             table.insert(traitor, v)
             if suspicionply == 0 then
@@ -28,14 +28,14 @@ function EVENT:Begin()
         Randomat:EventNotifySilent(suspicionply:Nick().." is acting suspicious...")
 
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
-            suspicionply:SetRole(ROLE_JESTER)
-            for k, v in pairs(traitor) do
+            Randomat:SetRole(suspicionply, ROLE_JESTER)
+            for _, v in pairs(traitor) do
                 v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick().." is a jester")
                 v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is a jester")
             end
         else
-            suspicionply:SetRole(ROLE_TRAITOR)
-            for k, v in pairs(traitor) do
+            Randomat:SetRole(suspicionply, ROLE_TRAITOR)
+            for _, v in pairs(traitor) do
                 v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick().." is a traitor")
                 v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is a traitor")
             end

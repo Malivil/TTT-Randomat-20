@@ -1,5 +1,8 @@
 util.AddNetworkString("randomat_message")
 util.AddNetworkString("randomat_message_silent")
+if SERVER then
+    util.AddNetworkString("TTT_RoleChanged")
+end
 
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = {}
@@ -90,6 +93,17 @@ local function eventIndex()
     end
 
     return result
+end
+
+function Randomat:SetRole(ply, role)
+    ply:SetRole(role)
+
+    if SERVER then
+        net.Start("TTT_RoleChanged")
+        net.WriteInt(ply:UserID(), 8)
+        net.WriteInt(role, 8)
+        net.Broadcast()
+    end
 end
 
 function Randomat:register(tbl)

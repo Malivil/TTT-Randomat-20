@@ -9,7 +9,7 @@ function EVENT:Begin()
     local owner
     local d = 0
     if self.owner:GetRole() ~= ROLE_DETECTIVE then
-        for k, v in pairs(self:GetAlivePlayers(true)) do
+        for _, v in pairs(self:GetAlivePlayers(true)) do
             if v:GetRole() == ROLE_DETECTIVE then
                 d = 1
                 owner = v
@@ -18,7 +18,7 @@ function EVENT:Begin()
         if d ~= 1 then
             owner = self.owner
         end
-        owner:SetRole(ROLE_DETECTIVE)
+        Randomat:SetRole(owner, ROLE_DETECTIVE)
         SendFullStateUpdate()
     else
         owner = self.owner

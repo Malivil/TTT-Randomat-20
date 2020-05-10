@@ -16,7 +16,7 @@ function EVENT:Begin()
                 net.Start("UpgradeEventBegin")
                 net.Send(ply)
             else
-                ply:SetRole(ROLE_MERCENARY)
+                Randomat:SetRole(ply, ROLE_MERCENARY)
                 ply:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
                 SendFullStateUpdate()
             end
@@ -31,19 +31,19 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    local s = 0
-    local i = 0
-    local sk = 0
-    for k, v in pairs(self:GetAlivePlayers()) do
+    local merc = 0
+    local inno = 0
+    local kil = 0
+    for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_MERCENARY then
-            s = 1
+            merc = 1
         elseif v:GetRole() == ROLE_KILLER then
-            sk = 1
-        elseif v:GetRole() == ROLE_INNOCENT then
-            i = 1
+            kil = 1
+        elseif v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM then
+            inno = 1
         end
     end
-    if s == 0 and sk == 0 and i == 1 then
+    if merc == 0 and kil == 0 and inno == 1 then
         return true
     else
         return false
@@ -52,7 +52,7 @@ end
 
 net.Receive("rdmtPlayerChoseSk", function()
     local v = net.ReadEntity()
-    v:SetRole(ROLE_KILLER)
+    Randomat:SetRole(v, ROLE_KILLER)
     SendFullStateUpdate()
     v:SetCredits(GetConVar("ttt_kil_credits_starting"):GetInt())
     v:StripWeapon("weapon_zm_improvised")
@@ -61,7 +61,7 @@ end)
 
 net.Receive("rdmtPlayerChoseSur", function()
     local v = net.ReadEntity()
-    v:SetRole(ROLE_MERCENARY)
+    Randomat:SetRole(v, ROLE_MERCENARY)
     SendFullStateUpdate()
     v:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
 end)
