@@ -1,8 +1,13 @@
 local EVENT = {}
 
-CreateConVar("randomat_cakes_count", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of cakes spawned per person")
-CreateConVar("randomat_cakes_range", 200, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Distance cakes spawn from the player")
-CreateConVar("randomat_cakes_timer", 60, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between cake spawns")
+CreateConVar("randomat_cakes_count", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of cakes spawned per person", 1, 10)
+CreateConVar("randomat_cakes_range", 200, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Distance cakes spawn from the player", 0, 1000)
+CreateConVar("randomat_cakes_timer", 60, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between cake spawns", 1, 600)
+CreateConVar("randomat_cakes_health", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will regain from eating a cake", 1, 100)
+CreateConVar("randomat_cakes_damage", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will lose from eating a cake", 1, 100)
+CreateConVar("randomat_cakes_damage_time", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of time the player will take damage after eating a cake", 1, 60)
+CreateConVar("randomat_cakes_damage_interval", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How often the player will take damage after eating a cake", 1, 60)
+CreateConVar("randomat_cakes_damage_over_time", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will lose each tick after eating a cake", 1, 100)
 
 EVENT.Title = "The Cake is a Lie!"
 EVENT.id = "cakes"
@@ -43,5 +48,24 @@ function EVENT:End()
     timer.Remove("RdmtCakeSpawnTimer")
 end
 
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"count", "range", "timer", "health", "damage", "damage_time", "damage_interval", "damage_over_time"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    local checks = {}
+    return sliders, checks
+end
 
 Randomat:register(EVENT)

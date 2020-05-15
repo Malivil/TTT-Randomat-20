@@ -133,6 +133,7 @@ function Randomat:unregister(id)
 end
 
 function Randomat:TriggerRandomEvent(ply, notify)
+    if notify == nil then notify = true end
     local events = Randomat.Events
 
     shuffleTable(events)
@@ -167,6 +168,7 @@ function Randomat:TriggerRandomEvent(ply, notify)
 end
 
 function Randomat:TriggerEvent(event, ply, notify)
+    if notify == nil then notify = true end
     local cmd = event
     if Randomat.Events[cmd] ~= nil then
         local index = #Randomat.ActiveEvents + 1
@@ -183,6 +185,7 @@ function Randomat:TriggerEvent(event, ply, notify)
 end
 
 function Randomat:SilentTriggerEvent(event, ply, notify)
+    if notify == nil then notify = true end
     local cmd = event
     if Randomat.Events[cmd] ~= nil then
         local index = #Randomat.ActiveEvents + 1
@@ -279,6 +282,8 @@ function randomat_meta:Enabled()
         return false
     end
 end
+
+function randomat_meta:GetConVars() end
 
 RDMT_BOOL = 0
 RDMT_INT = 1

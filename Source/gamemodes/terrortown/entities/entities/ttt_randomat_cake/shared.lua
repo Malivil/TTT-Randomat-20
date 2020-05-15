@@ -1,12 +1,6 @@
 AddCSLuaFile()
 ENT.Type = "anim"
 
-CreateConVar("randomat_cakes_health", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will regain from eating a cake")
-CreateConVar("randomat_cakes_damage", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will lose from eating a cake")
-CreateConVar("randomat_cakes_damage_time", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of time the player will take damage after eating a cake")
-CreateConVar("randomat_cakes_damage_interval", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How often the player will take damage after eating a cake")
-CreateConVar("randomat_cakes_damage_over_time", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will lose each tick after eating a cake")
-
 function ENT:Initialize()
 	self.Entity:SetModel("models/871/871.mdl")
     self.Entity:PhysicsInit(SOLID_VPHYSICS)

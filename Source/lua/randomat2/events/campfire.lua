@@ -6,8 +6,8 @@ EVENT.id = "campfire"
 local playermovetime = {}
 local playermoveloc = {}
 
-CreateConVar("randomat_campfire_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Amount of time a player must camp before they are punished")
-CreateConVar("randomat_campfire_distance", 35, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The distance a player must move before they are considered not camping anymore")
+CreateConVar("randomat_campfire_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Amount of time a player must camp before they are punished", 1, 600)
+CreateConVar("randomat_campfire_distance", 35, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Distance a player must move before they are not camping anymore", 1, 1000)
 
 function EVENT:Begin(notify)
     hook.Add("SetupMove", "RdmtCampfireMovementHook", function(ply, mv)
@@ -69,6 +69,26 @@ function EVENT:End()
     hook.Remove("SetupMove", "RdmtCampfireMovementHook")
     hook.Remove("Think", "RdmtCampfirePunishHook")
     hook.Remove("PlayerSpawn", "RdmtCampfireSpawnHook")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer", "distance"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    local checks = {}
+    return sliders, checks
 end
 
 Randomat:register(EVENT)
