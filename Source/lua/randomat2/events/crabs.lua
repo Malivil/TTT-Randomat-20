@@ -5,7 +5,7 @@ CreateConVar("randomat_crabs_count", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Changes 
 EVENT.Title = "Crabs are People"
 EVENT.id = "crabs"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local plys = {}
     for k, ply in pairs(player.GetAll()) do
         if not ply:IsSpec() then

@@ -20,24 +20,24 @@ local owner
 local EventVotes = {}
 local PlayersVoted = {}
 
-function EVENT:Begin()    
+function EVENT:Begin(notify)
     EventChoices = {}
     PlayersVoted = {}
     EventVotes = {}
-    owner = self.owner    
+    owner = Randomat:GetValidPlayer(self.Owner)
     local x = 0
-    for k, v in RandomPairs(Randomat.Events) do    
+    for _, v in RandomPairs(Randomat.Events) do
         if x < GetConVar("randomat_choose_choices"):GetInt() then
             if v:Condition() and v:Enabled() and v.id ~= "choose" then
                 x = x+1
-                if v.Title == "" then 
+                if v.Title == "" then
                     EventChoices[x] = v.AltTitle
                     EventVotes[v.AltTitle] = 0
                 else
                     EventChoices[x] = v.Title
                     EventVotes[v.Title] = 0
                 end
-            end            
+            end
         end
     end
 
@@ -56,11 +56,11 @@ function EVENT:Begin()
                     evnt = k
                 end
             end
-            for k, v in pairs(Randomat.Events) do
+            for _, v in pairs(Randomat.Events) do
                 if v.Title == evnt or v.AltTitle == evnt then
-                    Randomat:TriggerEvent(v.id, owner)
+                    Randomat:TriggerEvent(v.id, owner, notify)
                 end
-            end    
+            end
             net.Start("ChooseVoteEnd")
             net.Broadcast()
             EventVotes = {}
@@ -68,7 +68,8 @@ function EVENT:Begin()
     else
         net.Start("ChooseEventTrigger")
         net.WriteInt(GetConVarNumber("randomat_choose_choices"), 32)
-        net.WriteTable(EventChoices)    
+        net.WriteBool(notify)
+        net.WriteTable(EventChoices)
         net.Send(owner)
     end
 end
@@ -80,16 +81,17 @@ end
 
 net.Receive("PlayerChoseEvent", function()
     local str = net.ReadString()
-    for k, v in pairs(Randomat.Events) do
+    local notify = net.ReadBool()
+    for _, v in pairs(Randomat.Events) do
         if v.Title == str or v.AltTitle == str then
-            Randomat:TriggerEvent(v.id, owner)
+            Randomat:TriggerEvent(v.id, owner, notify)
         end
-    end    
+    end
 end)
 
 net.Receive("ChoosePlayerVoted", function(ln, ply)
     local t = 0
-    for k, v in pairs(PlayersVoted) do
+    for _, v in pairs(PlayersVoted) do
         if v == ply then
             t = 1
         end

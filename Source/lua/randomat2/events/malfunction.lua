@@ -8,7 +8,7 @@ CreateConVar("randomat_malfunction_lower", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Ch
 CreateConVar("randomat_malfunction_affectall", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Set to 1 for the event to affect everyone at once")
 CreateConVar("randomat_malfunction_duration", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of gun malfunction (set to 0 for 1 shot)")
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local x = 0
     local wep = 0
     timer.Create("RdmtMalfunctionMain", math.random(GetConVar("randomat_malfunction_lower"):GetInt(), GetConVar("randomat_malfunction_upper"):GetInt()), 0, function()

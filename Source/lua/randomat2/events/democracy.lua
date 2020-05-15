@@ -12,7 +12,7 @@ EVENT.Title = "I love democracy, I love the republic."
 EVENT.id = "democracy"
 
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     net.Start("DemocracyEventBegin")
     net.Broadcast()
     local democracytimer = GetConVar("randomat_democracy_timer"):GetInt()

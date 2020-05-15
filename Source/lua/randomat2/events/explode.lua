@@ -6,9 +6,10 @@ EVENT.Title = ""
 EVENT.AltTitle = "A Random Person will explode every "..GetConVar("randomat_explode_timer"):GetInt().." seconds! Watch out! (EXCEPT DETECTIVES)"
 EVENT.id = "explode"
 
-function EVENT:Begin()
-
-    Randomat:EventNotifySilent("A Random Person will explode every "..GetConVar("randomat_explode_timer"):GetInt().." seconds! Watch out! (EXCEPT DETECTIVES)")
+function EVENT:Begin(notify)
+    if notify then
+        Randomat:EventNotifySilent("A Random Person will explode every "..GetConVar("randomat_explode_timer"):GetInt().." seconds! Watch out! (EXCEPT DETECTIVES)")
+    end
 
     local effectdata = EffectData()
 

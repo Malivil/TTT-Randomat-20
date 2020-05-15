@@ -9,7 +9,7 @@ local playermoveloc = {}
 CreateConVar("randomat_campfire_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Amount of time a player must camp before they are punished")
 CreateConVar("randomat_campfire_distance", 35, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The distance a player must move before they are considered not camping anymore")
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     hook.Add("SetupMove", "RdmtCampfireMovementHook", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
             local loc = ply:GetPos()

@@ -6,7 +6,7 @@ CreateConVar("randomat_lifesteal_cap", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Sets t
 EVENT.Title = "Gaining life for killing people? Is it really worth it..."
 EVENT.id = "lifesteal"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     self:AddHook("PlayerDeath", function(victim, inflictor, attacker)
         attacker:SetHealth(attacker:Health() + GetConVar("randomat_lifesteal_health"):GetInt())
         if attacker:Health() > GetConVar("randomat_lifesteal_cap"):GetInt() and GetConVar("randomat_lifesteal_cap"):GetInt() ~= 0 then

@@ -208,7 +208,7 @@ end
 
 
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     for k, v in pairs(player.GetAll()) do
         v.inRagdoll = false
     end

@@ -6,7 +6,7 @@ EVENT.id = "blink"
 CreateConVar("randomat_blink_cap", 12, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Max angels spawned in \"Don't Blink\", set to 0 to disable")
 CreateConVar("randomat_blink_delay", 0.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Delay between angel spawns in \"Don't Blink\"")
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local plys = {}
     for k, v in pairs(self:GetAlivePlayers(true)) do
         table.insert(plys, v)

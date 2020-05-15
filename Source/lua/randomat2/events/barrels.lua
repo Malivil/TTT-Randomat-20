@@ -36,7 +36,7 @@ local function TriggerBarrels()
     end
 end
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     TriggerBarrels()
     timer.Create("RdmtBarrelSpawnTimer",GetConVar("randomat_barrels_timer"):GetInt(),0, TriggerBarrels)
 end

@@ -5,7 +5,7 @@ EVENT.id = "inventory"
 
 CreateConVar("randomat_inventory_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between inventory swaps")
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local ply1 = nil
     local ply2 = nil
     timer.Create("RdmtInventoryTimer", GetConVar("randomat_inventory_timer"):GetInt(), 0, function()

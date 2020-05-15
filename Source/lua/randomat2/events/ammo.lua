@@ -5,7 +5,7 @@ EVENT.id = "ammo"
 
 CreateConVar("randomat_ammo_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether it gives buy menu weapons infinite ammo too.")
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     hook.Add("Think", "RandomatAmmo", function()
         for k, v in pairs(self:GetAlivePlayers(true)) do
             if not v:GetActiveWeapon().CanBuy or GetConVar("randomat_ammo_affectbuymenu"):GetBool() then

@@ -19,7 +19,7 @@ local function StripBannedWeapons(ply)
     end
 end
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local players = #self:GetAlivePlayers(true)
     local wepspawns = 0
 

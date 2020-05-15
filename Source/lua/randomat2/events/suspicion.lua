@@ -6,8 +6,7 @@ EVENT.Title = ""
 EVENT.id = "suspicion"
 EVENT.AltTitle = "A player is acting suspicious"
 
-function EVENT:Begin()
-
+function EVENT:Begin(notify)
     local traitor = {}
     local suspicionply = 0
 
@@ -25,7 +24,9 @@ function EVENT:Begin()
     end
 
     if suspicionply ~= 0 then
-        Randomat:EventNotifySilent(suspicionply:Nick().." is acting suspicious...")
+        if notify then
+            Randomat:EventNotifySilent(suspicionply:Nick().." is acting suspicious...")
+        end
 
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
             Randomat:SetRole(suspicionply, ROLE_JESTER)
@@ -47,7 +48,7 @@ end
 
 function EVENT:Condition()
     local i = 0
-    for k, v in pairs(self:GetAlivePlayers()) do
+    for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
             i = 1
         end

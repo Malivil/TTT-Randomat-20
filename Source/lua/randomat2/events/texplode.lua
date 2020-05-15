@@ -7,17 +7,19 @@ EVENT.Title = ""
 EVENT.AltTitle = "A traitor will explode in "..GetConVar("randomat_texplode_timer"):GetInt().." seconds!"
 EVENT.id = "texplode"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local convarvalue = GetConVar("randomat_texplode_timer"):GetInt()
-    Randomat:EventNotifySilent("A traitor will explode in "..convarvalue.." seconds!")
+    if notify then
+        Randomat:EventNotifySilent("A traitor will explode in "..convarvalue.." seconds!")
+    end
+
     local x = 0
-    local block = 0
-    for k, ply in RandomPairs(self:GetAlivePlayers(true)) do
+    local tgt = nil
+    for _, ply in RandomPairs(self:GetAlivePlayers(true)) do
         if ply:GetRole() == ROLE_TRAITOR or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ASSASSIN then
-            if block == 0 then
+            if tgt == nil then
                 tgt = ply
                 tgt:PrintMessage(HUD_PRINTTALK, "You have been chosen to explode. Watch out, and stay close to innocents.")
-                block = 1
             else
                 ply:PrintMessage(HUD_PRINTTALK, tgt:Nick().." has been chosen to explode. Be careful.")
             end
@@ -42,7 +44,7 @@ function EVENT:Begin()
             effectdata:SetOrigin(tgt:GetPos() + Vector(0,0,10))
             effectdata:SetScale(1)
 
-            util.Effect("HelicopterMegaBomb", effectdata)            
+            util.Effect("HelicopterMegaBomb", effectdata)
         end
     end)
 end

@@ -7,7 +7,7 @@ EVENT.id = "regeneration"
 CreateConVar("randomat_regeneration_delay", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes how long after taking damage you will start to regen health in the event \"We learned how to heal over time\"")
 CreateConVar("randomat_regeneration_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes how much health per second you heal in the event \"We learned how to heal over time\"")
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     for i, ply in pairs(self:GetAlivePlayers()) do
         ply.rmdregeneration = CurTime() + 1
     end

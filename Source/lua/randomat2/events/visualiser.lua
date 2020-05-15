@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "I see dead people"
 EVENT.id = "visualiser"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     hook.Add("PlayerDeath", "RandomatVisualiser", function(ply)
         cse = ents.Create("ttt_cse_proj")
         if IsValid(cse) then

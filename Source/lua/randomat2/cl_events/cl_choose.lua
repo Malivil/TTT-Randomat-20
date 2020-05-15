@@ -30,6 +30,7 @@ net.Receive("ChooseEventTrigger", function()
     frames = frames+1
     --Frame Setup
     local x = net.ReadInt(32)
+    local notify = net.ReadBool()
     local tbl = net.ReadTable()
     Frame = vgui.Create( "DFrame" )
     Frame:SetPos( 10, ScrH()-800 )
@@ -54,6 +55,7 @@ net.Receive("ChooseEventTrigger", function()
     lst.OnRowSelected = function(lst, index, pnl)
         net.Start("PlayerChoseEvent")
         net.WriteString(pnl:GetColumnText(1))
+        net.WriteBool(notify)
         net.SendToServer()
         closeChooseFrame()
     end
@@ -114,5 +116,5 @@ net.Receive("ChooseVoteTrigger", function()
 
     net.Receive("ChooseVoteEnd", function()
         closeAllChooseFrame()
-    end)    
+    end)
 end)

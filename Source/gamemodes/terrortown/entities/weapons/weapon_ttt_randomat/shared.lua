@@ -72,10 +72,9 @@ end
 function SWEP:PrimaryAttack()
     if SERVER and IsFirstTimePredicted() then
         if GetConVar("ttt_randomat_chooseevent"):GetBool() then
-            Randomat:SilentTriggerEvent("choose", self.Owner)
-
+            Randomat:SilentTriggerEvent("choose", self.Owner, true)
         else
-            Randomat:TriggerRandomEvent(self.Owner)
+            Randomat:TriggerRandomEvent(self.Owner, true)
         end
         DamageLog("RANDOMAT: " .. self.Owner:Nick() .. " [" .. self.Owner:GetRoleString() .. "] used his Randomat")
         self:SetNextPrimaryFire(CurTime() + 10)

@@ -22,19 +22,15 @@ end
 if SERVER then
     concommand.Add("ttt_randomat_disableall", function()
         for _, fil in pairs(files) do
-
             local asrt = fil:match("(.+)%..+")
             RunConsoleCommand("ttt_randomat_"..asrt, 0)
-
         end
     end)
 
     concommand.Add("ttt_randomat_enableall", function()
         for _, fil in pairs(files) do
-
             local asrt = fil:match("(.+)%..+")
             RunConsoleCommand("ttt_randomat_"..asrt, 1)
-
         end
     end)
 
@@ -43,18 +39,13 @@ if SERVER then
     CreateConVar("ttt_randomat_rebuyable", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether you can buy more than one randomat")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
-    if GetConVar("ttt_randomat_auto"):GetBool() and math.random() <= GetConVar("randomat_auto_chance"):GetFloat() then
-        local ply 
-        for k, v in RandomPairs(player.GetAll()) do
-            ply = v
+        if GetConVar("ttt_randomat_auto"):GetBool() and math.random() <= GetConVar("randomat_auto_chance"):GetFloat() then
+            Randomat:TriggerRandomEvent(Randomat:GetValidPlayer(nil), true)
         end
-        Randomat:TriggerRandomEvent(ply)
-    end
-end)
+    end)
 end
 
-local files, _ = file.Find("randomat2/cl_events/*.lua", "LUA")
-
-for _, fil in pairs(files) do
+local clientfiles, _ = file.Find("randomat2/cl_events/*.lua", "LUA")
+for _, fil in pairs(clientfiles) do
     AddClient("randomat2/cl_events/" .. fil)
 end

@@ -5,7 +5,7 @@ EVENT.id = "sosig"
 
 util.AddNetworkString("TriggerSosig")
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     net.Start("TriggerSosig")
     net.Broadcast()
     for k, ply in pairs(player.GetAll()) do

@@ -6,7 +6,7 @@ CreateConVar("randomat_butter_affectall", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "Se
 EVENT.Title = "Butterfingers"
 EVENT.id = "butter"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local x = 0
     timer.Create("weapondrop", GetConVar("randomat_butter_timer"):GetInt(), 0, function()
         for k, ply in pairs( self:GetAlivePlayers(true)) do

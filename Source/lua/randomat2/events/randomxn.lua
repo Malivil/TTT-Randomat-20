@@ -6,8 +6,10 @@ EVENT.Title = ""
 EVENT.AltTitle = "Random x"..GetConVar("randomat_randomxn_triggers"):GetInt()
 EVENT.id = "randomxn"
 
-function EVENT:Begin()
-    Randomat:EventNotifySilent("Random x"..GetConVar("randomat_randomxn_triggers"):GetInt())
+function EVENT:Begin(notify)
+    if notify then
+        Randomat:EventNotifySilent("Random x"..GetConVar("randomat_randomxn_triggers"):GetInt())
+    end
     timer.Create("RandomxnTimer", 5, GetConVar("randomat_randomxn_triggers"):GetInt(), function()
         Randomat:TriggerRandomEvent()
     end)

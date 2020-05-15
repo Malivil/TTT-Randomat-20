@@ -6,7 +6,7 @@ CreateConVar("randomat_randomhealth_lower", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "C
 EVENT.Title = "Random Health for everyone!"
 EVENT.id = "randomhealth"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     for _, ply in pairs(self:GetPlayers(true)) do
         local newhealth = ply:Health() + math.random(GetConVar("randomat_randomhealth_lower"):GetInt(), GetConVar("randomat_randomhealth_upper"):GetInt())
 

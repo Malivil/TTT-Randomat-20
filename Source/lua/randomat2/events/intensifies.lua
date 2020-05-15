@@ -5,9 +5,9 @@ CreateConVar("randomat_intensifies_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "C
 EVENT.Title = "Randomness Intensifies"
 EVENT.id = "intensifies"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     timer.Create("RandomatRandomatTimer", GetConVar("randomat_intensifies_timer"):GetInt() , 0, function()
-        Randomat:TriggerRandomEvent()
+        Randomat:TriggerRandomEvent(self.Owner, notify)
     end)
 end
 

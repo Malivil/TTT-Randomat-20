@@ -7,7 +7,7 @@ CreateConVar("randomat_shrink_scale", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Chang
 
 local rat = GetConVar("randomat_shrink_scale"):GetFloat() --ratio used for event stacking
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     local sc = GetConVar("randomat_shrink_scale"):GetFloat() --scale factor
     for k, ply in pairs(self:GetAlivePlayers(true)) do
         ply:SetStepSize(ply:GetStepSize()*sc)

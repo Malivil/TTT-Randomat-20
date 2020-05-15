@@ -5,7 +5,7 @@ CreateConVar("randomat_moongravity_gravity", 0.1, {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 EVENT.Title = "What? Moon Gravity on Earth?"
 EVENT.id = "moongravity"
 
-function EVENT:Begin()
+function EVENT:Begin(notify)
     for _, ply in pairs(self:GetPlayers()) do
         ply:SetGravity(GetConVar("randomat_moongravity_gravity"):GetFloat())
     end
