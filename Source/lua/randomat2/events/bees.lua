@@ -6,7 +6,7 @@ EVENT.Title = "NOT THE BEES!"
 EVENT.id = "bees"
 BeeNPCClass         = "npc_manhack"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local x = 0
     local plys = {}
     for k, v in pairs(self:GetAlivePlayers()) do

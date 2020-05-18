@@ -16,18 +16,10 @@ concommand.Add("ttt_randomat_safetrigger", function(ply, cc , arg)
         local event = Randomat.Events[cmd]
         if event:Condition() and event:Enabled() then
             local index = #Randomat.ActiveEvents + 1
-            Randomat.ActiveEvents[index] = Randomat.Events[cmd]
-
-            local rdmply = {}
-            for k, v in RandomPairs(player.GetAll()) do
-                if v:Alive() and not v:IsSpec() then
-                    table.insert(rdmply, v)
-                end
-            end
-
-            Randomat.ActiveEvents[index].owner = rdmply[1]
-            Randomat:EventNotify(Randomat.ActiveEvents[index].Title)
-            Randomat.ActiveEvents[index]:Begin(true)
+            Randomat:EventNotify(event.Title)
+            Randomat.ActiveEvents[index] = event
+            Randomat.ActiveEvents[index].owner = Randomat:GetValidPlayer(nil)
+            Randomat.ActiveEvents[index]:Begin()
         else
             error("Conditions for event not met")
         end
@@ -40,18 +32,11 @@ concommand.Add("ttt_randomat_trigger", function(ply, cc , arg)
     local cmd = arg[1]
     if Randomat.Events[cmd] ~= nil then
         local index = #Randomat.ActiveEvents + 1
-        Randomat.ActiveEvents[index] = Randomat.Events[cmd]
-
-        local rdmply = {}
-        for k, v in RandomPairs(player.GetAll()) do
-            if v:Alive() and not v:IsSpec() then
-                table.insert(rdmply, v)
-            end
-        end
-
-        Randomat.ActiveEvents[index].owner = rdmply[1]
-        Randomat:EventNotify(Randomat.ActiveEvents[index].Title)
-        Randomat.ActiveEvents[index]:Begin(true)
+        local event = Randomat.Events[cmd]
+        Randomat:EventNotify(event.Title)
+        Randomat.ActiveEvents[index] = event
+        Randomat.ActiveEvents[index].owner = Randomat:GetValidPlayer(nil)
+        Randomat.ActiveEvents[index]:Begin()
     else
         error("Could not find event '"..cmd.."'")
     end
@@ -78,6 +63,22 @@ local function shuffleTable(t)
         j = rand(i)
         t[i], t[j] = t[j], t[i]
     end
+end
+
+local function isEventActive(id)
+    for _, v in pairs(Randomat.ActiveEvents) do
+        if v.id == id then
+            return true
+        end
+    end
+    return false
+end
+
+function Randomat:GetEventTitle(event)
+    if event.Title == "" then
+        return event.AltTitle
+    end
+    return event.Title
 end
 
 function Randomat:GetAlivePlayers(shuffle)
@@ -132,8 +133,7 @@ function Randomat:unregister(id)
     Randomat.Events[id] = nil
 end
 
-function Randomat:TriggerRandomEvent(ply, notify)
-    if notify == nil then notify = true end
+function Randomat:TriggerRandomEvent(ply)
     local events = Randomat.Events
 
     shuffleTable(events)
@@ -156,43 +156,32 @@ function Randomat:TriggerRandomEvent(ply, notify)
     end
 
     local index = #Randomat.ActiveEvents + 1
-
+    Randomat:EventNotify(event.Title)
     Randomat.ActiveEvents[index] = event
     Randomat.ActiveEvents[index].owner = ply
-
-    if notify then
-        Randomat:EventNotify(Randomat.ActiveEvents[index].Title)
-    end
-
-    Randomat.ActiveEvents[index]:Begin(notify)
+    Randomat.ActiveEvents[index]:Begin()
 end
 
-function Randomat:TriggerEvent(event, ply, notify)
-    if notify == nil then notify = true end
-    local cmd = event
+function Randomat:TriggerEvent(cmd, ply)
     if Randomat.Events[cmd] ~= nil then
         local index = #Randomat.ActiveEvents + 1
-        Randomat.ActiveEvents[index] = Randomat.Events[cmd]
-
+        local event = Randomat.Events[cmd]
+        Randomat:EventNotify(event.Title)
+        Randomat.ActiveEvents[index] = event
         Randomat.ActiveEvents[index].owner = ply
-        if notify then
-            Randomat:EventNotify(Randomat.ActiveEvents[index].Title)
-        end
-        Randomat.ActiveEvents[index]:Begin(notify)
+        Randomat.ActiveEvents[index]:Begin()
     else
         error("Could not find event '"..cmd.."'")
     end
 end
 
-function Randomat:SilentTriggerEvent(event, ply, notify)
-    if notify == nil then notify = true end
-    local cmd = event
+function Randomat:SilentTriggerEvent(cmd, ply)
     if Randomat.Events[cmd] ~= nil then
         local index = #Randomat.ActiveEvents + 1
         Randomat.ActiveEvents[index] = Randomat.Events[cmd]
 
         Randomat.ActiveEvents[index].owner = ply
-        Randomat.ActiveEvents[index]:Begin(notify)
+        Randomat.ActiveEvents[index]:Begin()
     else
         error("Could not find event '"..cmd.."'")
     end
@@ -200,10 +189,12 @@ end
 
 concommand.Add("ttt_randomat_triggerrandom", function()
     local rdmply = GetValidPlayer(nil)
-    Randomat:TriggerRandomEvent(rdmply, true)
+    Randomat:TriggerRandomEvent(rdmply)
 end)
 
 function Randomat:EventNotify(title)
+    -- Don't broadcast anything when "Secret" is running
+    if isEventActive("secret") then return end
     net.Start("randomat_message")
     net.WriteBool(true)
     net.WriteString(title)
@@ -212,6 +203,8 @@ function Randomat:EventNotify(title)
 end
 
 function Randomat:EventNotifySilent(title)
+    -- Don't broadcast anything when "Secret" is running
+    if isEventActive("secret") then return end
     net.Start("randomat_message_silent")
     net.WriteBool(true)
     net.WriteString(title)
@@ -265,7 +258,7 @@ function randomat_meta:CleanUpHooks()
     table.Empty(self.Hooks)
 end
 
-function randomat_meta:Begin(notify) end
+function randomat_meta:Begin() end
 
 function randomat_meta:End()
     self:CleanUpHooks()

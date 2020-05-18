@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Total Mayhem"
 EVENT.id = "mayhem"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     hook.Add("PlayerDeath", "RdmtBomb", function(tgt, src, ply)
         ExplodeTgt(tgt, ply)
     end)

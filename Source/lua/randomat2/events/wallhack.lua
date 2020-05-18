@@ -6,7 +6,7 @@ EVENT.id = "wallhack"
 util.AddNetworkString("haloeventtrigger")
 util.AddNetworkString("haloeventend")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     net.Start("haloeventtrigger")
     net.Broadcast()
 end

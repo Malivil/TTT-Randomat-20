@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "##BringBackOldJester"
 EVENT.id = "oldjester"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     for _, j in pairs(self:GetAlivePlayers(true)) do
         if j:GetRole() == ROLE_SWAPPER then
             Randomat:SetRole(j, ROLE_JESTER)

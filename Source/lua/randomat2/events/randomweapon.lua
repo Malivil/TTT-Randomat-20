@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Try your best..."
 EVENT.id = "randomweapon"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local tbl1 = {}
     local tbl2 = {}
 

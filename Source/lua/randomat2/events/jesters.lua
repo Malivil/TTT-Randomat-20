@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "One traitor, One Detective. Everyone else is a jester. Detective is stronger."
 EVENT.id = "jesters"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local tx = 0
     local dx = 0
     for _, ply in pairs(self:GetAlivePlayers(true)) do

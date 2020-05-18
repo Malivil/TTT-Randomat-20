@@ -6,7 +6,7 @@ EVENT.AltTitle = "Soulmates"
 
 CreateConVar("randomat_soulmates_affectall", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether everyone should have a soulmate")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local x = 0
 
     local ply1 = {}
@@ -25,9 +25,8 @@ function EVENT:Begin(notify)
     local size = 1
     if GetConVar("randomat_soulmates_affectall"):GetBool() then
         size = #ply2
-        if notify then
-            Randomat:EventNotifySilent("Soulmates")
-        end
+        Randomat:EventNotifySilent("Soulmates")
+
         for i = 1, #ply2 do
             ply1[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is "..ply2[i]:Nick())
             ply2[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is "..ply1[i]:Nick())
@@ -38,7 +37,7 @@ function EVENT:Begin(notify)
             ply1[#ply2+1]:PrintMessage(HUD_PRINTTALK, "You have no soulmate :(")
             ply1[#ply2+1]:PrintMessage(HUD_PRINTCENTER, "You have no soulmate :(")
         end
-    elseif notify then
+    else
         Randomat:EventNotifySilent(ply1[1]:Nick().." and "..ply2[1]:Nick().." are now soulmates.")
     end
 

@@ -8,7 +8,7 @@ CreateConVar("randomat_harpoon_weaponid", "ttt_m9k_harpoon", {FCVAR_ARCHIVE, FCV
 EVENT.Title = "Harpooooooooooooooooooooon!!"
 EVENT.id = "harpoon"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     timer.Create("RandomatPoonTimer", GetConVar("randomat_harpoon_timer"):GetInt(), 0, function()
         for i, ply in pairs(self:GetAlivePlayers(true)) do
             if table.Count(ply:GetWeapons()) ~= 1 or (table.Count(ply:GetWeapons()) == 1 and ply:GetActiveWeapon():GetClass() ~= "ttt_m9k_harpoon") then

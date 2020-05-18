@@ -5,7 +5,7 @@ EVENT.id = "switch"
 
 CreateConVar("randomat_switch_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the timer for the event \"it's called \'Switch\'")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     timer.Create("RandomatSwitchTimer", GetConVar("randomat_switch_timer"):GetInt(), 0, function()
         local i = 0
         local ply1 = 0

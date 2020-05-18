@@ -7,24 +7,21 @@ local t = {start=nil,endpos=nil,mask=MASK_PLAYERSOLID,filter=nil}
 local ply = nil
 
 local function PlayerNotStuck()
-
     t.start = ply:GetPos()
     t.endpos = t.start
     t.filter = ply
-    
+
     return util.TraceEntity(t,ply).StartSolid == false
-    
 end
 
 local function FindPassableSpace( direction, step )
-
     local i = 0
     while ( i < 100 ) do
         local origin = ply:GetPos()
 
         --origin = VectorMA( origin, step, direction )
         origin = origin + step * direction
-        
+
         ply:SetPos( origin )
         if PlayerNotStuck( ply ) then
             NewPos = ply:GetPos()
@@ -35,9 +32,7 @@ local function FindPassableSpace( direction, step )
     return false
 end
 
-
-
---     
+--
 --    Purpose: Unstucks player
 --    Note: Very expensive to call, you have been warned!
 --
@@ -46,28 +41,27 @@ local function UnstuckPlayer( pl )
 
     NewPos = ply:GetPos()
     local OldPos = NewPos
-    
+
     if not PlayerNotStuck( ply ) then
-    
         local angle = ply:GetAngles()
-        
+
         local forward = angle:Forward()
         local right = angle:Right()
         local up = angle:Up()
-        
+
         local SearchScale = 1 -- Increase and it will unstuck you from even harder places but with lost accuracy. Please, don't try higher values than 12
 
-        if    not FindPassableSpace( forward, SearchScale ) and    -- forward
+        if  not FindPassableSpace( forward, SearchScale ) and    -- forward
             not FindPassableSpace( right, SearchScale ) and      -- right
             not FindPassableSpace( right, -SearchScale ) and     -- left
             not FindPassableSpace( up, SearchScale ) and        -- up
             not FindPassableSpace( up, -SearchScale ) and       -- down
             not FindPassableSpace( forward, -SearchScale )       -- back
-        then                                
+        then
             --Msg( "Can't find the world for player "..tostring(ply).."\n" )
             return false
         end
-        
+
         if OldPos == NewPos then 
             return true -- Not stuck?
         else
@@ -78,13 +72,10 @@ local function UnstuckPlayer( pl )
                 end
                 ply:GetPhysicsObject():SetVelocity(vector_origin) -- prevents bugs :s
             end
-        
+
             return true
         end
-        
     end
-    
-    
 end
 
 local function unragdollPlayer( v )
@@ -108,7 +99,7 @@ local function unragdollPlayer( v )
     end
 
     v:SetHealth(v.spawnInfo.health)
-    for i, j in pairs(v.spawnInfo.weps) do
+    for i, _ in pairs(v.spawnInfo.weps) do
         v:Give(i)
         local wep = v:GetWeapon( i )
         if v.spawnInfo.weps[i].Clip then
@@ -118,7 +109,6 @@ local function unragdollPlayer( v )
         v:SelectWeapon(v.spawnInfo.activeWeapon)
     end
 
-    
     v:SetCredits(v.spawnInfo.credits)
 
     for i, j in pairs(v.spawnInfo.equipment) do
@@ -169,7 +159,7 @@ local function ragdollPlayer( v )
     info.credits = v:GetCredits()
     info.equipment = equipment
     v.spawnInfo = info
-    
+
     local ragdoll = ents.Create( "prop_ragdoll" )
     ragdoll.ragdolledPly = v
     ragdoll:SetPos( v:GetPos() )
@@ -187,11 +177,11 @@ local function ragdollPlayer( v )
 
     v:Spectate( OBS_MODE_CHASE )
     v:SpectateEntity( ragdoll )
-    v:StripWeapons() 
+    v:StripWeapons()
 
     ragdoll:DisallowDeleting( true, function( old, new )
         if v:IsValid() then v.ragdoll = new end
-    end )
+    end)
 
     v.ragdoll = ragdoll
     hook.Add("Think", v:Nick().."UnragdollTimer", function()
@@ -204,12 +194,8 @@ local function ragdollPlayer( v )
     end)
 end
 
-
-
-
-
-function EVENT:Begin(notify)
-    for k, v in pairs(player.GetAll()) do
+function EVENT:Begin()
+    for _, v in pairs(player.GetAll()) do
         v.inRagdoll = false
     end
     hook.Add("Think", "rdmtRagdollInAir", function()
@@ -222,18 +208,19 @@ function EVENT:Begin(notify)
 end
 
 function EVENT:End()
-    for k, v in pairs(player.GetAll()) do
+    for _, v in pairs(player.GetAll()) do
         if v.inRagdoll then
             Unragdoll(v)
             hook.Remove("Think", v:Nick().."UnragdollTimer")
-        end    
+        end
     end
     hook.Remove("Think", "rdmtRagdollInAir")
+    hook.Remove("EntityTakeDamage", "RdmtRagdollDMGTaken")
 end
 
 hook.Add("EntityTakeDamage", "RdmtRagdollDMGTaken", function(ent, dmg)
-    for k, v in pairs(player.GetAll()) do
-        for i, j in pairs(ent:GetChildren()) do
+    for _, v in pairs(player.GetAll()) do
+        for _, j in pairs(ent:GetChildren()) do
             if j == v then
                 v:TakeDamageInfo(dmg)
             end

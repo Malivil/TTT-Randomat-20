@@ -40,7 +40,7 @@ if SERVER then
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
         if GetConVar("ttt_randomat_auto"):GetBool() and math.random() <= GetConVar("randomat_auto_chance"):GetFloat() then
-            Randomat:TriggerRandomEvent(Randomat:GetValidPlayer(nil), true)
+            Randomat:TriggerRandomEvent(Randomat:GetValidPlayer(nil))
         end
     end)
 end

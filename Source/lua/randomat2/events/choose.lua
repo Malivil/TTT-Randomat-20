@@ -20,7 +20,7 @@ local owner
 local EventVotes = {}
 local PlayersVoted = {}
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     EventChoices = {}
     PlayersVoted = {}
     EventVotes = {}
@@ -30,13 +30,9 @@ function EVENT:Begin(notify)
         if x < GetConVar("randomat_choose_choices"):GetInt() then
             if v:Condition() and v:Enabled() and v.id ~= "choose" then
                 x = x+1
-                if v.Title == "" then
-                    EventChoices[x] = v.AltTitle
-                    EventVotes[v.AltTitle] = 0
-                else
-                    EventChoices[x] = v.Title
-                    EventVotes[v.Title] = 0
-                end
+                local title = Randomat:GetEventTitle(v)
+                EventChoices[x] = title
+                EventVotes[title] = 0
             end
         end
     end
@@ -57,8 +53,9 @@ function EVENT:Begin(notify)
                 end
             end
             for _, v in pairs(Randomat.Events) do
-                if v.Title == evnt or v.AltTitle == evnt then
-                    Randomat:TriggerEvent(v.id, owner, notify)
+                local title = Randomat:GetEventTitle(v)
+                if title == evnt then
+                    Randomat:TriggerEvent(v.id, owner)
                 end
             end
             net.Start("ChooseVoteEnd")
@@ -68,7 +65,6 @@ function EVENT:Begin(notify)
     else
         net.Start("ChooseEventTrigger")
         net.WriteInt(GetConVarNumber("randomat_choose_choices"), 32)
-        net.WriteBool(notify)
         net.WriteTable(EventChoices)
         net.Send(owner)
     end
@@ -81,10 +77,10 @@ end
 
 net.Receive("PlayerChoseEvent", function()
     local str = net.ReadString()
-    local notify = net.ReadBool()
     for _, v in pairs(Randomat.Events) do
-        if v.Title == str or v.AltTitle == str then
-            Randomat:TriggerEvent(v.id, owner, notify)
+        local title = Randomat:GetEventTitle(v)
+        if title == str then
+            Randomat:TriggerEvent(v.id, owner)
         end
     end
 end)

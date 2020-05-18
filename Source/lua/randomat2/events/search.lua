@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Dead Men Tell no Tales"
 EVENT.id = "search"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     hook.Add("TTTCanSearchCorpse", "BodySearchRandomat", function()
         return false
     end)

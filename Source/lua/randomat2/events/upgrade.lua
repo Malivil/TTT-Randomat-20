@@ -9,7 +9,7 @@ util.AddNetworkString("rdmtPlayerChoseSur")
 util.AddNetworkString("rdmtPlayerChoseSk")
 CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the innocent should choose their new role.")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     for _, ply in RandomPairs(self:GetAlivePlayers(true)) do
         if ply:GetRole() == ROLE_INNOCENT or ply:GetRole() == ROLE_PHANTOM then
             if GetConVar("randomat_upgrade_chooserole"):GetBool() then

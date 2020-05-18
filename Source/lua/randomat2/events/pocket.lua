@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "What did I find in my pocket?"
 EVENT.id = "pocket"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
   timer.Simple(0.1, function()
     for _, ply in pairs(self:GetAlivePlayers(true)) do
       ply.randomweptries = 0

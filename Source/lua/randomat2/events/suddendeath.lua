@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Sudden Death!"
 EVENT.id = "suddendeath"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     timer.Create("suddendeathtimer", 1, 0, function()
         for k, ply in pairs(self:GetAlivePlayers()) do
             ply:SetHealth(1)

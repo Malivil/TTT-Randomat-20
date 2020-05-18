@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "You can only jump once."
 EVENT.id = "jump"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     hook.Add("KeyPress", "RdmtJumpHook", function(ply, key)
 
         if key == IN_JUMP and ply:Alive() and not ply:IsSpec() then 

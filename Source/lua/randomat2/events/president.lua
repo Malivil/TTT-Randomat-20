@@ -5,7 +5,7 @@ EVENT.id = "president"
 
 CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local owner
     local d = 0
     if self.owner:GetRole() ~= ROLE_DETECTIVE then

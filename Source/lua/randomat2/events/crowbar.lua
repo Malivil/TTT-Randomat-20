@@ -8,7 +8,7 @@ CreateConVar("randomat_crowbar_push", 20, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Push f
 
 local push = 0
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     push = GetConVar("ttt_crowbar_pushforce"):GetInt()
     RunConsoleCommand("ttt_crowbar_pushforce", push*GetConVar("randomat_crowbar_push"):GetFloat())
     for k, v in pairs(player.GetAll()) do

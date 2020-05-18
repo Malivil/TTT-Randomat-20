@@ -39,7 +39,7 @@ local function TriggerCakes()
     end
 end
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     TriggerCakes()
     timer.Create("RdmtCakeSpawnTimer",GetConVar("randomat_cakes_timer"):GetInt(),0, TriggerCakes)
 end

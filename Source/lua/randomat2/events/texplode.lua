@@ -7,11 +7,9 @@ EVENT.Title = ""
 EVENT.AltTitle = "A traitor will explode in "..GetConVar("randomat_texplode_timer"):GetInt().." seconds!"
 EVENT.id = "texplode"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local convarvalue = GetConVar("randomat_texplode_timer"):GetInt()
-    if notify then
-        Randomat:EventNotifySilent("A traitor will explode in "..convarvalue.." seconds!")
-    end
+    Randomat:EventNotifySilent("A traitor will explode in "..convarvalue.." seconds!")
 
     local x = 0
     local tgt = nil

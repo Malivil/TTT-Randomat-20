@@ -5,7 +5,7 @@ EVENT.id = "cantstop"
 
 CreateConVar("randomat_cantstop_disableback", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Disables the \"s\" key")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local plys = {}
     for k, v in pairs(player.GetAll()) do
         plys[k] = v

@@ -6,10 +6,9 @@ EVENT.Title = ""
 EVENT.AltTitle = "Everything is as fast as Flash now! ("..GetConVar("randomat_flash_scale"):GetInt().."% faster)"
 EVENT.id = "flash"
 
-function EVENT:Begin(notify)
-    if notify then
-        Randomat:EventNotifySilent("Everything is as fast as Flash now! ("..GetConVar("randomat_flash_scale"):GetInt().."% faster)")
-    end
+function EVENT:Begin()
+    Randomat:EventNotifySilent("Everything is as fast as Flash now! ("..GetConVar("randomat_flash_scale"):GetInt().."% faster)")
+
     local ts = game.GetTimeScale()
     game.SetTimeScale(ts + GetConVar("randomat_flash_scale"):GetInt()/100)
 end

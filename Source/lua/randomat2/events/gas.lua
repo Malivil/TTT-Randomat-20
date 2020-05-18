@@ -11,7 +11,7 @@ potatoTable = {}
 EVENT.Title = "Bad Gas"
 EVENT.id = "gas"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     if GetConVar("randomat_gas_discombob"):GetBool() then
         potatoTable[1] = "ttt_confgrenade_proj"
     end

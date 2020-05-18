@@ -5,7 +5,7 @@ EVENT.id = "gungame"
 
 CreateConVar("randomat_gungame_timer", 5, {FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Time between weapon changes")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local weps = {}
     for k, ent in pairs(ents.GetAll()) do
         if ent.Base == "weapon_tttbase" and ent.AutoSpawnable then

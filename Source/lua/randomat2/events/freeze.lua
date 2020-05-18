@@ -24,7 +24,7 @@ CreateConVar("randomat_freeze_duration", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Dura
 CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of the Freeze")
 CreateConVar("randomat_freeze_hint", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Explains the event after triggering")
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     
     local tmr = GetConVar("randomat_freeze_timer"):GetInt()
 

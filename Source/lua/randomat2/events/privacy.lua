@@ -15,7 +15,7 @@ function TriggerAlert(item, role, ply)
     net.Send(ply)
 end
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
 
     hook.Add("TTTOrderedEquipment", "RandomatAlertHook", function(ply, item, isItem)
 

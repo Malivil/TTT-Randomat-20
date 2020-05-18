@@ -7,7 +7,7 @@ EVENT.id = "suicide"
 
 plylist = {}
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     local plysize = 0
 
     plylist = {}

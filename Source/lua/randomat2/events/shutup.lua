@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "SHUT UP!"
 EVENT.id = "shutup"
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     timer.Create("RandomatDeafDelay", 1, 1, function()
         hook.Add("Think", "RandomatDeaf", function()
             for k, v in pairs(player.GetAll()) do

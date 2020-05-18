@@ -30,7 +30,7 @@ function RemoveBlind()
 end
 
 
-function EVENT:Begin(notify)
+function EVENT:Begin()
     EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"
     TriggerBlind()
 end
