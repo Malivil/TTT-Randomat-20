@@ -30,6 +30,16 @@ function EVENT:End()
     timer.Remove("RandomatSlamTimer")
 end
 
+function EVENT:Condition()
+    for _, v in pairs(player.GetAll()) do
+        if (v:GetRole() == ROLE_SWAPPER or v:GetRole() == ROLE_JESTER) and v:Alive() and not v:IsSpec() then
+            return false
+        end
+    end
+
+    return true
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in pairs({"timer"}) do
