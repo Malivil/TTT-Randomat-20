@@ -64,8 +64,7 @@ function EVENT:GetConVars()
         end
     end
 
-    local checks = {}
-    return sliders, checks
+    return sliders
 end
 
 Randomat:register(EVENT)

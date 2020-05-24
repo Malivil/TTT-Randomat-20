@@ -10,12 +10,17 @@ EVENT.id = "harpoon"
 
 function EVENT:Begin()
     timer.Create("RandomatPoonTimer", GetConVar("randomat_harpoon_timer"):GetInt(), 0, function()
-        for i, ply in pairs(self:GetAlivePlayers(true)) do
-            if table.Count(ply:GetWeapons()) ~= 1 or (table.Count(ply:GetWeapons()) == 1 and ply:GetActiveWeapon():GetClass() ~= "ttt_m9k_harpoon") then
-                if GetConVar("randomat_harpoon_strip"):GetBool() then
-                    ply:StripWeapons()
+        local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
+        for _, ply in pairs(self:GetAlivePlayers(true)) do
+            for _, wep in pairs(ply:GetWeapons()) do
+                local weaponclass = WEPS.GetClass(wep)
+                if weaponclass ~= weaponid then
+                    ply:StripWeapon(weaponclass)
                 end
-                ply:Give(GetConVar("randomat_harpoon_weaponid"):GetString())
+            end
+
+            if not ply:HasWeapon(weaponid) then
+                ply:Give(weaponid)
             end
         end
     end)
