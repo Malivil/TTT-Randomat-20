@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_randomhealth_upper", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the upper limit of health gained in the event \"Random Health for everyone\"")
-CreateConVar("randomat_randomhealth_lower", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the lower limit of health gained in the event \"Random Health for everyone\"")
+CreateConVar("randomat_randomhealth_upper", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The upper limit of health gained")
+CreateConVar("randomat_randomhealth_lower", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The lower limit of health gained")
 
 EVENT.Title = "Random Health for everyone!"
 EVENT.id = "randomhealth"

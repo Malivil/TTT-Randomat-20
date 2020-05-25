@@ -2,11 +2,12 @@ AddCSLuaFile()
 
 local EVENT = {}
 
-CreateConVar("randomat_blind_duration", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "Changes the duration of the blind in the event \"All triators have been blinded\"")
+CreateConVar("randomat_blind_duration", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "The duration the players should be blinded for")
 
 util.AddNetworkString("blindeventactive")
 
 EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"
+EVENT.AltTitle = "Blind Traitors"
 EVENT.id = "blind"
 
 function TriggerBlind()
@@ -41,7 +42,7 @@ end
 
 function EVENT:Condition()
     local x = 0
-    for k, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in pairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
             x = 1
         end

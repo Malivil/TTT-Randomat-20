@@ -42,7 +42,7 @@ local function UnstuckPlayer( pl )
     NewPos = ply:GetPos()
     local OldPos = NewPos
 
-    if not PlayerNotStuck( ply ) then
+    if not PlayerNotStuck() then
         local angle = ply:GetAngles()
 
         local forward = angle:Forward()
@@ -62,7 +62,7 @@ local function UnstuckPlayer( pl )
             return false
         end
 
-        if OldPos == NewPos then 
+        if OldPos == NewPos then
             return true -- Not stuck?
         else
             ply:SetPos( NewPos )
@@ -131,7 +131,7 @@ local function ragdollPlayer( v )
     v.spawnInfo = {}
 
     local weps = {}
-    for i, j in pairs(v:GetWeapons()) do
+    for _, j in pairs(v:GetWeapons()) do
         weps[j.ClassName] = {}
         weps[j.ClassName].Clip = j:Clip1()
         weps[j.ClassName].Reserve = v:GetAmmoCount(j:GetPrimaryAmmoType())
@@ -199,7 +199,7 @@ function EVENT:Begin()
         v.inRagdoll = false
     end
     hook.Add("Think", "rdmtRagdollInAir", function()
-        for k, v in pairs(self:GetAlivePlayers(true)) do
+        for _, v in pairs(self:GetAlivePlayers(true)) do
             if not v:IsOnGround() and not v.inRagdoll and v:WaterLevel() == 0 then
                 ragdollPlayer(v)
             end

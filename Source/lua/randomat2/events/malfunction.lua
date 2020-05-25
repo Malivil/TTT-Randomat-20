@@ -3,8 +3,8 @@ local EVENT = {}
 EVENT.Title = "Malfunction"
 EVENT.id = "malfunction"
 
-CreateConVar("randomat_malfunction_upper", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the upper limit for the random timer for the event \"Malfunction\"")
-CreateConVar("randomat_malfunction_lower", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the lower limit for the random timer for the event \"Malfunction\"")    
+CreateConVar("randomat_malfunction_upper", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The upper limit for the random timer")
+CreateConVar("randomat_malfunction_lower", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The lower limit for the random timer")
 CreateConVar("randomat_malfunction_affectall", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Set to 1 for the event to affect everyone at once")
 CreateConVar("randomat_malfunction_duration", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of gun malfunction (set to 0 for 1 shot)")
 

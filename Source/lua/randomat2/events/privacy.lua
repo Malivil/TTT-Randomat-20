@@ -8,53 +8,7 @@ EVENT.id = "privacy"
 util.AddNetworkString("AlertTriggerFinal")
 util.AddNetworkString("alerteventtrigger")
 
-function TriggerAlert(item, role, ply)
-    net.Start("alerteventtrigger")
-    net.WriteString(item)
-    net.WriteString(role)
-    net.Send(ply)
-end
-
-function EVENT:Begin()
-
-    hook.Add("TTTOrderedEquipment", "RandomatAlertHook", function(ply, item, isItem)
-
-        local role = 0
-        local wep = 0
-
-        if ply:GetRole() == ROLE_TRAITOR then
-            role = "A traitor"
-        elseif ply:GetRole() == ROLE_HYPNOTIST then
-            role = "A hypnotist"
-        elseif ply:GetRole() == ROLE_ASSASSIN then
-            role = "An assassin"
-        elseif ply:GetRole() == ROLE_DETECTIVE then
-            role = "A detective"
-        elseif ply:GetRole() == ROLE_MERCENARY then
-            role = "A mercenary"
-        elseif ply:GetRole() == ROLE_ZOMBIE then
-            role = "A zombie"
-        elseif ply:GetRole() == ROLE_VAMPIRE then
-            role = "A vampire"
-        elseif ply:GetRole() == ROLE_KILLER then
-            role = "A killer"
-        end
-
-        TriggerAlert(item, role, ply)
-    end)
-
-    net.Receive("AlertTriggerFinal", function()
-        local name = net.ReadString()
-        local role = net.ReadString()
-        name = renameWeps(name)
-
-        self:SmallNotify(role.." has bought a "..name)
-
-    end)
-
-end
-
-function renameWeps(name)
+local function RenameWeps(name)
     if name == "sipistol_name" then
         return "Silenced Pistol"
     elseif name == "knife_name" then
@@ -84,6 +38,46 @@ function renameWeps(name)
     else
         return name
     end
+end
+
+local function TriggerAlert(item, role, ply)
+    net.Start("alerteventtrigger")
+    net.WriteString(item)
+    net.WriteString(role)
+    net.Send(ply)
+end
+
+function EVENT:Begin()
+    hook.Add("TTTOrderedEquipment", "RandomatAlertHook", function(ply, item, isItem)
+        local role = 0
+        if ply:GetRole() == ROLE_TRAITOR then
+            role = "A traitor"
+        elseif ply:GetRole() == ROLE_HYPNOTIST then
+            role = "A hypnotist"
+        elseif ply:GetRole() == ROLE_ASSASSIN then
+            role = "An assassin"
+        elseif ply:GetRole() == ROLE_DETECTIVE then
+            role = "A detective"
+        elseif ply:GetRole() == ROLE_MERCENARY then
+            role = "A mercenary"
+        elseif ply:GetRole() == ROLE_ZOMBIE then
+            role = "A zombie"
+        elseif ply:GetRole() == ROLE_VAMPIRE then
+            role = "A vampire"
+        elseif ply:GetRole() == ROLE_KILLER then
+            role = "A killer"
+        end
+
+        TriggerAlert(item, role, ply)
+    end)
+
+    net.Receive("AlertTriggerFinal", function()
+        local name = net.ReadString()
+        local role = net.ReadString()
+        name = RenameWeps(name)
+
+        self:SmallNotify(role.." has bought a "..name)
+    end)
 end
 
 function EVENT:End()

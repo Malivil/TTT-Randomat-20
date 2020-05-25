@@ -6,12 +6,11 @@ CreateConVar("randomat_gas_discombob", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whethe
 CreateConVar("randomat_gas_incendiary", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether incendiaries drop")
 CreateConVar("randomat_gas_smoke", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether smokes drop")
 
-potatoTable = {}
-
 EVENT.Title = "Bad Gas"
 EVENT.id = "gas"
 
 function EVENT:Begin()
+    local potatoTable = {}
     if GetConVar("randomat_gas_discombob"):GetBool() then
         potatoTable[1] = "ttt_confgrenade_proj"
     end
@@ -24,7 +23,7 @@ function EVENT:Begin()
 
     timer.Create("gastimer", GetConVar("randomat_gas_timer"):GetInt() , 0, function()
         local x = 0
-        for k, ply in pairs( self:GetAlivePlayers(true)) do
+        for _, ply in pairs( self:GetAlivePlayers(true)) do
             if x == 0 or GetConVar("randomat_gas_affectall"):GetBool() then
                 local gren = ents.Create(potatoTable[math.random(#potatoTable)])
                 if not IsValid(gren) then return end

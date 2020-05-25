@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Can't stop, won't stop."
 EVENT.id = "cantstop"
 
-CreateConVar("randomat_cantstop_disableback", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Disables the \"s\" key")
+CreateConVar("randomat_cantstop_disableback", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the \"s\" key is disabled")
 
 function EVENT:Begin()
     local plys = {}
@@ -27,7 +27,7 @@ end
 
 function EVENT:End()
     hook.Remove("Think", "ForceWalk")
-    for k, v in pairs(player.GetAll()) do
+    for _, v in pairs(player.GetAll()) do
         v:ConCommand("-forward")
     end
 end

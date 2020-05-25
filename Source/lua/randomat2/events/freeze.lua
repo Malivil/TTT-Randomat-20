@@ -20,12 +20,11 @@ table.insert(eventnames, "Freeze in hell, Batman!")
 EVENT.Title = table.Random(eventnames)
 EVENT.id = "freeze"
 
-CreateConVar("randomat_freeze_duration", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of the Freeze")
-CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of the Freeze")
-CreateConVar("randomat_freeze_hint", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Explains the event after triggering")
+CreateConVar("randomat_freeze_duration", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of the Freeze (in seconds)")
+CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) the Freeze occurs")
+CreateConVar("randomat_freeze_hint", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to explain the event after triggering")
 
 function EVENT:Begin()
-    
     local tmr = GetConVar("randomat_freeze_timer"):GetInt()
 
     if GetConVar("randomat_freeze_hint"):GetBool() then
@@ -33,7 +32,7 @@ function EVENT:Begin()
             self:SmallNotify("All Innocents will Freeze (and become immune) every "..tmr.." seconds")
         end)
     end
-    
+
     timer.Create("RdmtFreezeTimer", tmr, 0, function()
         self:SmallNotify("Freeze!")
         for k, v in pairs(self:GetAlivePlayers(true)) do
@@ -54,7 +53,6 @@ function EVENT:Begin()
             dmg:ScaleDamage(0)
         end
     end)
-
 end
 
 function EVENT:End()

@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_lifesteal_health", 25, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the health value per kill from the event \"Gaining life for killing people?\"")
-CreateConVar("randomat_lifesteal_cap", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Sets the health cap from killing people in the event \"Gaining life for killing people?\" (set to 0 to disable cap)")
+CreateConVar("randomat_lifesteal_health", 25, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health gained per kill")
+CreateConVar("randomat_lifesteal_cap", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum health a player can get from killing people. Set to 0 to disable")
 
 EVENT.Title = "Gaining life for killing people? Is it really worth it..."
 EVENT.id = "lifesteal"

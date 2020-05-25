@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_texplode_timer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the time before the traitor explodes in the event \"A traitor will explode in x seconds!\"")
+CreateConVar("randomat_texplode_timer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time before the traitor explodes")
 CreateConVar("randomat_texplode_radius", 600, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Radius of the traitor explosion")
 
 EVENT.Title = ""

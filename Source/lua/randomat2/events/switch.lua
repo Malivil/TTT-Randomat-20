@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "There's this game my father taught me years ago, it's called \"Switch\""
 EVENT.id = "switch"
 
-CreateConVar("randomat_switch_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the timer for the event \"it's called \'Switch\'")
+CreateConVar("randomat_switch_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often players are switched")
 
 function EVENT:Begin()
     timer.Create("RandomatSwitchTimer", GetConVar("randomat_switch_timer"):GetInt(), 0, function()

@@ -1,10 +1,11 @@
 local EVENT = {}
 
 EVENT.Title = "What gamemode is this again?"
+EVENT.AltTitle = "Murder"
 EVENT.id = "murder"
 
 CreateConVar("randomat_murder_pickups_pct", 1.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Weapons required to get a revolver = (ConVarValue*TotalWeapons)/Players")
-CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Player movespeed whilst knife is held.")
+CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Player move speed multiplier whilst knife is held.")
 
 util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")

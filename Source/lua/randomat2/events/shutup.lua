@@ -6,7 +6,7 @@ EVENT.id = "shutup"
 function EVENT:Begin()
     timer.Create("RandomatDeafDelay", 1, 1, function()
         hook.Add("Think", "RandomatDeaf", function()
-            for k, v in pairs(player.GetAll()) do
+            for _, v in pairs(player.GetAll()) do
                 v:ConCommand("soundfade 100 1")
             end
         end)

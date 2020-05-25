@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_explode_timer", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Changes the time between explosions in the event \"A Random Person will explode every x seconds\".")
+CreateConVar("randomat_explode_timer", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The time between explosions.")
 
 EVENT.Title = ""
 EVENT.AltTitle = "A Random Person will explode every "..GetConVar("randomat_explode_timer"):GetInt().." seconds! Watch out! (EXCEPT DETECTIVES)"

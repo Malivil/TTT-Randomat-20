@@ -1,6 +1,6 @@
 local EVENT = {}
 
-EVENT.Title = "One traitor, One Detective. Everyone else is a jester. Detective is stronger."
+EVENT.Title = "One traitor, One Detective. Everyone else is a Jester. Detective is stronger."
 EVENT.id = "jesters"
 
 function EVENT:Begin()
@@ -31,7 +31,7 @@ end
 function EVENT:Condition()
     local d = 0
     local t = 0
-    for k, v in pairs(self:GetAlivePlayers()) do
+    for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE then
             d = 1
         elseif v:GetRole() == ROLE_TRAITOR then

@@ -227,6 +227,8 @@ end
 
 if SERVER then
     function randomat_meta:SmallNotify(msg, length, targ)
+        -- Don't broadcast anything when "Secret" is running
+        if isEventActive("secret") then return end
         if not isnumber(length) then length = 0 end
         net.Start("randomat_message")
         net.WriteBool(false)

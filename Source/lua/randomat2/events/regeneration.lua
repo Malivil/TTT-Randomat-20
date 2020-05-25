@@ -2,13 +2,12 @@ local EVENT = {}
 
 EVENT.Title = "We learned how to heal over time, its hard, but definitely possible..."
 EVENT.id = "regeneration"
---EVENT.Time = 180
 
-CreateConVar("randomat_regeneration_delay", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes how long after taking damage you will start to regen health in the event \"We learned how to heal over time\"")
-CreateConVar("randomat_regeneration_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes how much health per second you heal in the event \"We learned how to heal over time\"")
+CreateConVar("randomat_regeneration_delay", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long after taking damage you will start to regen health")
+CreateConVar("randomat_regeneration_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health per second you heal")
 
 function EVENT:Begin()
-    for i, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in pairs(self:GetAlivePlayers()) do
         ply.rmdregeneration = CurTime() + 1
     end
 

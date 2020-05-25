@@ -6,7 +6,7 @@ EVENT.id = "campfire"
 local playermovetime = {}
 local playermoveloc = {}
 
-CreateConVar("randomat_campfire_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Amount of time a player must camp before they are punished", 1, 600)
+CreateConVar("randomat_campfire_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Seconds a player must camp before they are punished", 1, 600)
 CreateConVar("randomat_campfire_distance", 35, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Distance a player must move before they are not camping anymore", 1, 1000)
 
 function EVENT:Begin()

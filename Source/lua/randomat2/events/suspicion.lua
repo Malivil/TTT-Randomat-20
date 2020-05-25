@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes the chance of the player being a jester in the event \"player is acting suspicious\"")
+CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the player being a jester")
 
 EVENT.Title = ""
 EVENT.id = "suspicion"

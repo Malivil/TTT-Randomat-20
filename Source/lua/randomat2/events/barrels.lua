@@ -15,13 +15,13 @@ local function TriggerBarrels()
         end
     end
 
-    for k, ply in pairs(plys) do
+    for _, ply in pairs(plys) do
         if ply:Alive() and not ply:IsSpec() then
             for i = 1, GetConVar("randomat_barrels_count"):GetInt() do
                 if ( CLIENT ) then return end
 
                 local ent = ents.Create( "prop_physics" )
-                
+
                 if ( not IsValid( ent ) ) then return end
 
                 ent:SetModel( "models/props_c17/oildrum001_explosive.mdl" )
@@ -44,6 +44,5 @@ end
 function EVENT:End()
     timer.Remove("RdmtBarrelSpawnTimer")
 end
-
 
 Randomat:register(EVENT)

@@ -57,7 +57,7 @@ function EVENT:FindWep()
   local selected = math.random(1,#roleswithshop)
   local tbl = table.Copy(EquipmentItems[roleswithshop[selected]])
 
-  for k, v in pairs(weapons.GetList()) do
+  for _, v in pairs(weapons.GetList()) do
       if v and v.CanBuy then
         table.insert(tbl, v)
       end

@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_intensifies_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Changes how often you get a randomat in the event \"Randomness Intensifies\"")
+CreateConVar("randomat_intensifies_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) a random event will be triggered")
 
 EVENT.Title = "Randomness Intensifies"
 EVENT.id = "intensifies"

@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_randomxn_triggers", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Number of randomats activated.")
+CreateConVar("randomat_randomxn_triggers", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Number of Randomat events activated.")
 
 EVENT.Title = ""
 EVENT.AltTitle = "Random x"..GetConVar("randomat_randomxn_triggers"):GetInt()

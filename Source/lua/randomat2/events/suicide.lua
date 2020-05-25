@@ -3,16 +3,14 @@ AddCSLuaFile()
 local EVENT = {}
 
 EVENT.Title = "So that's it. What, we some kind of suicide squad?"
+EVENT.AltTitle = "Detonators"
 EVENT.id = "suicide"
-
-plylist = {}
 
 function EVENT:Begin()
     local plysize = 0
+    local plylist = {}
 
-    plylist = {}
-
-    for _k, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in pairs(self:GetAlivePlayers(true)) do
         plysize = plysize + 1
 
         plylist[plysize] = {}
@@ -33,7 +31,7 @@ function EVENT:Begin()
 
         plylist[k]["ply"]:PrintMessage(HUD_PRINTTALK, "You have a detonator for "..plylist[k]["tgt"]:Nick())
 
-        for i, wep in pairs(plylist[k]["ply"]:GetWeapons()) do
+        for _, wep in pairs(plylist[k]["ply"]:GetWeapons()) do
             if wep.Kind == WEAPON_EQUIP2 then
                 plylist[k]["ply"]:StripWeapon(wep:GetClass())
             end
