@@ -20,6 +20,19 @@ This one is pretty self-explanitory
 _randomat_explode_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_explode_timer_ - Default: 30 - The time between explosions.
 
+## Bad Gas
+Drops random enabled grenades are random players feet on a configurable interval
+\
+\
+**ConVars**
+\
+_randomat_gas_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_gas_timer_ - Default: 15 - Changes the time between grenade drops.\
+_randomat_gas_affectall_ - Default: 0 - Set to 1 for the event to drop a grenade at everyone's feet on trigger.\
+_randomat_gas_discombob_ - Default: 1 - Whether discombobs drop.\
+_randomat_gas_incendiary_ - Default: 0 - Whether incendiaries drop.\
+_randomat_gas_smoke_ - Default: 0 - Whether smokes drop.
+
 ## Blind Traitors (aka All traitors have been blinded for X seconds!)
 Blinds all traitors for a configurable amount of seconds
 \
@@ -89,6 +102,61 @@ _randomat_blink_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_blink_cap_ - Default: 12 - Maximum number of Weeping Angels spawned.\
 _randomat_blink_delay_ - Default: 0.5 - Delay before Weeping Angels are spawned.
 
+## Everything is as fast as Flash now! (XX% faster)
+Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal
+\
+\
+**ConVars**
+\
+_randomat_flash_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
+
+## FREEZE!
+aka Winter has come at last.\
+aka The Ice Man cometh.\
+aka In this universe, there is only one absolute: everything freezes!\
+aka Tonight, Hell freezes over.\
+aka I'm afraid my condition has left me cold to your pleas of mercy.\
+aka Cool party.\
+aka You are not sending me to the cooler.\
+aka Stay cool, bird boy.\
+aka Alright, everyone! Chill!\
+aka It's a cold town.\
+aka Tonight's forecast: a freeze is coming!\
+aka What killed the dinosaurs?! The ice age!\
+aka Let's kick some ice!\
+aka Can you feel it coming? The icy cold of space!\
+aka Freeze in hell, Batman!\
+\
+All Innocents will Freeze (and become immune) every X seconds
+\
+\
+**ConVars**
+\
+_randomat_freeze_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_freeze_duration_ - Default: 5 - Duration of the Freeze (in seconds).\
+_randomat_freeze_timer_ - Default: 30 - How often (in seconds) the Freeze occurs.\
+_randomat_freeze_hint_ - Default: 1 - Whether to explain the event after triggering.
+
+## Gaining life for killing people? Is it really worth it...
+Heals players who kill other players
+\
+\
+**ConVars**
+\
+_randomat_lifesteal_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_lifesteal_health_ - Default: 25 - The health gained per kill.\
+_randomat_lifesteal_cap_ - Default: 0 - The maximum health a player can get from killing people. Set to 0 to disable.
+
+## Gun Game
+Periodically gives players random weapons that would normally be found throughout the map
+\
+\
+**ConVars**
+\
+_randomat_gungame_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_gungame_timer_ - Default: 5 - Time between weapon changes.
+
 ## Gunpowder, Treason, and Plot
 Spawns barrels around every player repeatedly until the event ends
 \
@@ -99,6 +167,17 @@ _randomat_barrels_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_barrels_count_ - Default: 3 - Number of barrels spawned per person.\
 _randomat_barrels_range_ - Default: 100 - Distance barrels spawn from the player.\
 _randomat_barrels_timer_ - Default: 60 - Time between barrel spawns.
+
+## Harpooooooooooooooooooooon!!
+Gives everyone a Harpoon and only allows players to use the Harpoon for the duration of the event.
+\
+\
+**ConVars**
+\
+_randomat_harpoon_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_harpoon_timer_ - Default: 3 - Time between being given harpoons.\
+_randomat_harpoon_strip_ - Default: 1 - The event strips your other weapons.\
+_randomat_harpoon_weaponid_ - Default: ttt_m9k_harpoon - Id of the weapon given.
 
 ## I love democracy, I love the republic.
 Allows players to vote to kill someone repeatedly until the event ends
@@ -126,7 +205,15 @@ Gives all players essentially infinite credits for use in their shop menus (if t
 \
 **ConVars**
 \
-_randomat_credits_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_credits_enabled_ - Default: 1 - Whether this event is enabled.
+
+## No more Fall Damage!
+Prevents any player from taking damage when they fall
+\
+\
+**ConVars**
+\
+_randomat_falldamage_enabled_ - Default: 1 - Whether this event is enabled.
 
 ## NOT THE BEES!
 Spawns bees randomly around around players
@@ -136,6 +223,44 @@ Spawns bees randomly around around players
 \
 _randomat_bees_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
+
+## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
+This one is pretty self-explanitory except for the "Detective is stronger" part. That just means the detective has 200 health.
+\
+\
+**ConVars**
+\
+_randomat_jesters_enabled_ - Default: 1 - Whether this event is enabled.
+
+## Randomness Intensifies
+Periodically triggers random Randomat events for the duration of this event
+\
+\
+**ConVars**
+\
+_randomat_intensifies_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_intensifies_timer_ - Default: 20 - How often (in seconds) a random event will be triggered
+
+## RISE FROM YOUR GRAVE
+Causes anyone who dies to be resurrected as a Zombie
+\
+\
+**ConVars**
+\
+_randomat_grave_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.
+
+## Taking Inventory
+Swaps player inventories periodically throughout the round. There are some caveats to how this event interacts with special roles:
+- Non-prime Zombies are excluded
+- Prime Zombies will keep their claws
+- Players who received a Killer's inventory will be given a crowbar instead of the Killer's knife
+\
+\
+**ConVars**
+\
+_randomat_inventory_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_inventory_timer_ - Default: 15 - Time between inventory swaps.
 
 ## The 'bar has been raised!
 Increases the damage and push force of the crowbar
@@ -162,6 +287,23 @@ _randomat_cakes_damage_ - Default: 25 -  The amount of health the player will lo
 _randomat_cakes_damage_time_ - Default: 30 -  The amount of time the player will take damage after eating a cake, in seconds.\
 _randomat_cakes_damage_interval_ - Default: 1 -  How often the player will take damage after eating a cake, in seconds.\
 _randomat_cakes_damage_over_time_ - Default: 1 -  The amount of health the player will lose each tick after eating a cake.
+
+## Quake Pro
+Increases each player's Field of View (FOV) so it looks like you're playing Quake
+\
+\
+**ConVars**
+\
+_randomat_fov_enabled_ - Default: 1 -  Whether this event is enabled.\
+_randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.
+
+## You can only jump once.
+Kills any player who jumps a second time after this event has triggered
+\
+\
+**ConVars**
+\
+_randomat_jump_enabled_ - Default: 1 -  Whether this event is enabled.
 
 # ULX Support
 This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0
