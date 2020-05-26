@@ -473,6 +473,17 @@ Randomly switches positions of two players on a configurable interval
 _randomat_switch_enabled_ - Default: 1 -  Whether this event is enabled.\
 _randomat_switch_timer_ - Default: 15 - How often players are switched.
 
+## Time Warp
+Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal and intensifies on a configurable interval
+\
+\
+**ConVars**
+\
+_randomat_timewarp_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_timewarp_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5).\
+_randomat_timewarp_scale_max_ - Default: 8 - The maximum scale the speed should increase to.\
+_randomat_timewarp_timer_ - Default: 15 - How often (in seconds) the speed will be increased.
+
 ## Total Mayhem
 Causes players to explode when killed
 \
@@ -571,3 +582,4 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the 'The Cake is a Lie' event
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
+- u/zoxzix89 on Reddit for the idea for the "Time Warp" event
