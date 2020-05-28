@@ -603,3 +603,4 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
+- u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
