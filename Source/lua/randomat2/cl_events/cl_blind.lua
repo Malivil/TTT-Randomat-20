@@ -1,4 +1,4 @@
-blindeventactive = 0
+local blindeventactive = 0
 
 net.Receive("blindeventactive", function()
     if net.ReadBool() then

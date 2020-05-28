@@ -155,6 +155,17 @@ Prevents corpses from being searched
 \
 _randomat_search_enabled_ - Default: 1 - Whether this event is enabled.
 
+## Don't be so Sensitive
+Periodically changes each player's mouse sensitivity to a number within the configurable range
+\
+\
+**ConVars**
+\
+_randomat_sensitive_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_sensitive_change_interval_ - Default: 15 - How often to change each player's sensitivity.\
+_randomat_sensitive_scale_min_ - Default: 25 - The minimum sensitivity to use.\
+_randomat_sensitive_scale_max_ - Default: 500 - The maximum sensitivity to use.
+
 ## Don't. Blink.
 Spawns a configurable number of Weeping Angels, each attached to a different player. The Weepiong Angel  will kill their assigned player when the player's back is turned
 \
