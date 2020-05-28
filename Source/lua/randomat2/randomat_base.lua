@@ -52,19 +52,6 @@ concommand.Add("ttt_randomat_clearevents",function(ply)
     end
 end)
 
-local function shuffleTable(t)
-    math.randomseed(os.time())
-    local rand = math.random
-
-    local interactions = #t
-    local j
-
-    for i = interactions, 2, -1 do
-        j = rand(i)
-        t[i], t[j] = t[j], t[i]
-    end
-end
-
 local function isEventActive(id)
     for _, v in pairs(Randomat.ActiveEvents) do
         if v.id == id then
@@ -83,7 +70,6 @@ end
 
 function Randomat:GetAlivePlayers(shuffle)
     local plys = {}
-
     for _, ply in pairs(player.GetAll()) do
         if IsValid(ply) and (not ply:IsSpec()) and ply:Alive() then
             table.insert(plys, ply)
@@ -91,7 +77,7 @@ function Randomat:GetAlivePlayers(shuffle)
     end
 
     if shuffle then
-        shuffleTable(plys)
+        table.Shuffle(plys)
     end
 
     return plys

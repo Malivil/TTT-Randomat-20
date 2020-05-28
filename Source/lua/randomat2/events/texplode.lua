@@ -13,7 +13,7 @@ function EVENT:Begin()
 
     local x = 0
     local tgt = nil
-    for _, ply in RandomPairs(self:GetAlivePlayers(true)) do
+    for _, ply in pairs(self:GetAlivePlayers(true)) do
         if ply:GetRole() == ROLE_TRAITOR or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ASSASSIN then
             if tgt == nil then
                 tgt = ply

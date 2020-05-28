@@ -10,7 +10,7 @@ function EVENT:Begin()
         local i = 0
         local ply1 = 0
         local ply2 = 0
-        for k, v in RandomPairs(self:GetAlivePlayers()) do
+        for _, v in pairs(self:GetAlivePlayers()) do
             if i == 0 then
                 ply1 = v
                 i = i+1
@@ -20,7 +20,7 @@ function EVENT:Begin()
             end
         end
         i = 0
-        ply1pos = ply1:GetPos()
+        local ply1pos = ply1:GetPos()
         ply1:SetPos(ply2:GetPos())
         ply2:SetPos(ply1pos)
         self:SmallNotify("Go!")

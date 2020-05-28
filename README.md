@@ -220,6 +220,15 @@ Gives all Detectives extra health, but kills all members of the Innocent team if
 _randomat_president_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.
 
+## Glitch in the Matrix
+Randomly changes everyone's role to be either Glitch or Traitor based on the configurable Traitor percent
+\
+\
+**ConVars**
+\
+_randomat_glitch_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_glitch_traitor_pct_ - Default: 25 - The percentage of players that will be traitors.
+
 ## Gun Game
 Periodically gives players random weapons that would normally be found throughout the map
 \
