@@ -7,8 +7,11 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 # New Events
 - Camp Fire
 - Come on and SLAM!
+- Don't be so Sensitive
+- Glitch in the Matrix
 - Shh... It's a Secret!
 - The Cake is a Lie
+- Time Warp
 
 # Events
 ## \#BringBackOldJester

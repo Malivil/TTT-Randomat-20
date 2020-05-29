@@ -122,7 +122,7 @@ end
 function Randomat:TriggerRandomEvent(ply)
     local events = Randomat.Events
 
-    shuffleTable(events)
+    table.Shuffle(events)
 
     local x = 0
     for _, v in pairs(events) do
