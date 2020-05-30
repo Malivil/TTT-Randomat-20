@@ -10,7 +10,18 @@ Randomat.ActiveEvents = {}
 local randomat_meta =  {}
 randomat_meta.__index = randomat_meta
 
-concommand.Add("ttt_randomat_safetrigger", function(ply, cc , arg)
+local function CommandAutoComplete(cmd, args)
+    local name = string.lower(string.Trim(args))
+    local options = {}
+    for _, v in pairs(Randomat.Events) do
+        if string.find(string.lower(v.Id), name) then
+            table.insert(options, cmd .. " " .. v.Id)
+        end
+    end
+    return options
+end
+
+concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
     local cmd = arg[1]
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
@@ -26,9 +37,9 @@ concommand.Add("ttt_randomat_safetrigger", function(ply, cc , arg)
     else
         error("Could not find event '"..cmd.."'")
     end
-end,"Triggers a specific randomat event with conditions",FCVAR_SERVER_CAN_EXECUTE)
+end, CommandAutoComplete, "Triggers a specific randomat event with conditions",FCVAR_SERVER_CAN_EXECUTE)
 
-concommand.Add("ttt_randomat_trigger", function(ply, cc , arg)
+concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
     local cmd = arg[1]
     if Randomat.Events[cmd] ~= nil then
         local index = #Randomat.ActiveEvents + 1
@@ -40,7 +51,7 @@ concommand.Add("ttt_randomat_trigger", function(ply, cc , arg)
     else
         error("Could not find event '"..cmd.."'")
     end
-end,"Triggers a specific randomat event without conditions",FCVAR_SERVER_CAN_EXECUTE)
+end, CommandAutoComplete, "Triggers a specific randomat event without conditions",FCVAR_SERVER_CAN_EXECUTE)
 
 concommand.Add("ttt_randomat_clearevents",function(ply)
     if Randomat.ActiveEvents ~= {} then

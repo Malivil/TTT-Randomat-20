@@ -31,6 +31,9 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
+    if util.WeaponForClass(weaponid) == nil then return false end
+
     for _, v in pairs(player.GetAll()) do
         if (v:GetRole() == ROLE_SWAPPER or v:GetRole() == ROLE_JESTER) and v:Alive() and not v:IsSpec() then
             return false

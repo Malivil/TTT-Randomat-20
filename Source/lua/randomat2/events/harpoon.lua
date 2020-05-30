@@ -30,6 +30,11 @@ function EVENT:End()
     timer.Remove("RandomatPoonTimer")
 end
 
+function EVENT:Condition()
+    local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
+    return util.WeaponForClass(weaponid) ~= nil
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in pairs({"timer"}) do
