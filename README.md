@@ -9,6 +9,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - Come on and SLAM!
 - Don't be so Sensitive
 - Glitch in the Matrix
+- Prop Hunt
 - Shh... It's a Secret!
 - The Cake is a Lie
 - Time Warp
@@ -363,6 +364,17 @@ This one is pretty self-explanitory except for the "Detective is stronger" part.
 **ConVars**
 \
 _randomat_jesters_enabled_ - Default: 1 - Whether this event is enabled.
+
+**Prop Hunt**
+Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
+\
+\
+**ConVars**
+\
+_randomat_prophunt_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_prophunt_timer_ - Default: 3 - Time between being given prop disguisers.\
+_randomat_prophunt_strip_ - Default: 1 - The event strips your other weapons.\
+_randomat_prophunt_weaponid_ - Default: weapon_ttt_prophide - Id of the weapon given.
 
 ## Random Health for everyone!
 Gives everyone a random amount of health within the configurable boundaries
