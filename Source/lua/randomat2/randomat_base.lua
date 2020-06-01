@@ -185,7 +185,7 @@ function Randomat:SilentTriggerEvent(cmd, ply)
 end
 
 concommand.Add("ttt_randomat_triggerrandom", function()
-    local rdmply = GetValidPlayer(nil)
+    local rdmply = Randomat:GetValidPlayer(nil)
     Randomat:TriggerRandomEvent(rdmply)
 end)
 

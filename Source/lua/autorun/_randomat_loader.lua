@@ -21,16 +21,14 @@ end
 
 if SERVER then
     concommand.Add("ttt_randomat_disableall", function()
-        for _, fil in pairs(files) do
-            local asrt = fil:match("(.+)%..+")
-            RunConsoleCommand("ttt_randomat_"..asrt, 0)
+        for _, v in pairs(Randomat.Events) do
+            RunConsoleCommand("ttt_randomat_"..v.Id, 0)
         end
     end)
 
     concommand.Add("ttt_randomat_enableall", function()
-        for _, fil in pairs(files) do
-            local asrt = fil:match("(.+)%..+")
-            RunConsoleCommand("ttt_randomat_"..asrt, 1)
+        for _, v in pairs(Randomat.Events) do
+            RunConsoleCommand("ttt_randomat_"..v.Id, 1)
         end
     end)
 
