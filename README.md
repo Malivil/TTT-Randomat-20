@@ -9,6 +9,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - Camp Fire
 - Come on and SLAM!
 - Don't be so Sensitive
+- Double Cross
 - Glitch in the Matrix
 - Prop Hunt
 - Shh... It's a Secret!
@@ -189,6 +190,15 @@ Spawns a configurable number of Weeping Angels, each attached to a different pla
 _randomat_blink_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_blink_cap_ - Default: 12 - Maximum number of Weeping Angels spawned.\
 _randomat_blink_delay_ - Default: 0.5 - Delay before Weeping Angels are spawned.
+
+## Double Cross
+Changes a random vanilla Innocent into either a Glitch or a Traitor. There is a configurable chance that the player will be turned into a Glitch rather than a Traitor.
+\
+\
+**ConVars**
+\
+_randomat_doublecross_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_doublecross_chance_ - Default: 50 - The chance of the Innocent being made a Traitor.
 
 ## Everything is as fast as Flash now! (XX% faster)
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal
