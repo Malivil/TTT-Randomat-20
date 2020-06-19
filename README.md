@@ -642,3 +642,4 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
 - u/alt----f4 on Reddit for the idea for the "A Glitch has been patched" event
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
+- Tygron for providing feedback and verifying bug fixes
