@@ -13,6 +13,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - Glitch in the Matrix
 - Prop Hunt
 - Shh... It's a Secret!
+- Social Distancing
 - The Cake is a Lie
 - Time Warp
 
@@ -457,6 +458,18 @@ Gives everyone a detonator for a random other player. When that detonator is use
 \
 _randomat_suicide_enabled_ - Default: 1 - Whether this event is enabled.
 
+## Social Distancing
+Does a small amount of damage over time to players who spend too much time close to eachother.
+\
+\
+**ConVars**
+\
+_randomat_distancing_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_distancing_timer_ - Default: 10 - Seconds a player must be near another player before damage starts.\
+_randomat_distancing_interval_ - Default: 2 - How often damage is done when players are too close.\
+_randomat_distancing_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
+_randomat_distancing_damage_ - Default: 1 - Damage done to each player who is too close.
+
 ## Sosig.
 Changes all primary weapon shooting sounds to "Sosig"
 \
@@ -642,4 +655,5 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
 - u/alt----f4 on Reddit for the idea for the "A Glitch has been patched" event
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
+- u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - Tygron for providing feedback and verifying bug fixes

@@ -52,7 +52,7 @@ function ENT:Use(activator, caller)
         local totaltime = GetConVar("randomat_cakes_damage_time"):GetInt()
         local interval = GetConVar("randomat_cakes_damage_interval"):GetInt()
         local repetitions = totaltime / interval
-        timer.Create(activator:GetName() .. "RdmtCakeDamageTimer", interval, repetitions,function()
+        timer.Create(activator:GetName() .. "RdmtCakeDamageTimer", interval, repetitions, function()
             local dotAmount =  GetConVar("randomat_cakes_damage_over_time"):GetInt()
             activator:TakeDamage(dotAmount, nil, nil)
         end)
