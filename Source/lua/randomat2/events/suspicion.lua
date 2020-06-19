@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the player being a jester")
+CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the player being a Jester")
 
 EVENT.Title = ""
 EVENT.id = "suspicion"
@@ -45,17 +45,10 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
-    local i = 0
     for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
-            i = 1
+            return true
         end
-    end
-
-    if i == 1 then
-        return true
-    else
-        return false
     end
 end
 

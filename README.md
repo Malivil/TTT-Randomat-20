@@ -5,6 +5,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 **Edits the original version to support Custom Roles for TTT and add additional events**
 
 # New Events
+- A Glitch has been patched
 - Camp Fire
 - Come on and SLAM!
 - Don't be so Sensitive
@@ -23,6 +24,15 @@ Converts the Swapper to a Jester
 \
 _randomat_oldjester_enabled_ - Default: 1 - Whether this event is enabled.
 
+## A Glitch has been patched
+Changes a random Glitch into either an Innocent or a Traitor. There is a configurable chance that the player will be turned into an Innocent rather than a Traitor.
+\
+\
+**ConVars**
+\
+_randomat_patched_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_patched_chance_ - Default: 50 - The chance of the Glitch being made a Traitor.
+
 ## A player is acting suspicious
 Changes a random player to either a Jester or a Traitor. There is a configurable chance that the player will be turned into a Jester rather than a Traitor.
 \
@@ -30,7 +40,7 @@ Changes a random player to either a Jester or a Traitor. There is a configurable
 **ConVars**
 \
 _randomat_suspicion_enabled_ - Default: 1 - Whether this event is enabled.\
-_randomat_suspicion_chance_ - Default: 50 - The chance of the player being a jester.
+_randomat_suspicion_chance_ - Default: 50 - The chance of the player being a Jester.
 
 ## A Random Person will explode every X seconds! Watch out! (EXCEPT DETECTIVES)
 This one is pretty self-explanitory
