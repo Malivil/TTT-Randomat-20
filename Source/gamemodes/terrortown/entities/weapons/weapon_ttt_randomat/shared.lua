@@ -1,5 +1,4 @@
 if SERVER then
-    resource.AddWorkshop("662342819")
     AddCSLuaFile("shared.lua")
     resource.AddFile("materials/VGUI/ttt/icon_randomat.vmt")
     util.AddNetworkString("RandomatRandomWeapons")

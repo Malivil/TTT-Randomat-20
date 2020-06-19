@@ -10,6 +10,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - Come on and SLAM!
 - Don't be so Sensitive
 - Double Cross
+- Flu Season
 - Glitch in the Matrix
 - Prop Hunt
 - Shh... It's a Secret!
@@ -209,6 +210,18 @@ Causes everything (movement, firing speed, timers, etc.) to run a configurable a
 \
 _randomat_flash_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
+
+## Flu Season
+Randomly infects a player with the flu, causing them to sneeze occasionally. Also has a chance to spread to other players within a configurable distance
+\
+\
+**ConVars**
+\
+_randomat_flu_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_flu_timer_ - Default: 1 - Time a player must be near someone before it spreads.\
+_randomat_flu_interval_ - Default: 10 - How often effects happen to infected.\
+_randomat_flu_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
+_randomat_flu_chance_ - Default: 25 - Spreading chance.
 
 ## FREEZE!
 aka Winter has come at last.\
