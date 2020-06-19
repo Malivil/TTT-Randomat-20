@@ -24,17 +24,22 @@ end
 function EVENT:Condition()
     local i = 0
     local vanilla = false
+    local glitch = false
     for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_INNOCENT then
             vanilla = true
             i = i + 1
         end
-        if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_GLITCH or v:GetRole() == ROLE_PHANTOM then
+        if v:GetRole() == ROLE_GLITCH then
+            glitch = true
+            i = i + 1
+        end
+        if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM then
             i = i + 1
         end
     end
 
-    return vanilla and i > 1
+    return vanilla and glitch and i > 1
 end
 
 function EVENT:GetConVars()
