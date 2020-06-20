@@ -670,4 +670,5 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/alt----f4 on Reddit for the idea for the "A Glitch has been patched" event
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
+- Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Tygron for providing feedback and verifying bug fixes

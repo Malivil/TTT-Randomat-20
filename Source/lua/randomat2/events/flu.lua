@@ -9,6 +9,7 @@ local sneezecount = 17
 local playerthinktime = {}
 local playermoveloc = {}
 local playerflustatus = {}
+local playerhealth = {}
 
 CreateConVar("randomat_flu_timer", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time a player must be near someone before it spreads", 1, 600)
 CreateConVar("randomat_flu_interval", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often effects happen to infected", 1, 600)
@@ -20,7 +21,8 @@ for i = 1, sneezecount do
     util.PrecacheSound("sneezes/sneeze" .. i .. ".mp3")
 end
 
-local function ClearPlayerData(playername)
+local function ClearPlayerData(ply)
+    local playername = ply:GetName()
     timer.Remove(playername .. "RdmtFluSneezeTimer")
     if playerthinktime[playername] ~= nil then
         playerthinktime[playername] = nil
@@ -28,15 +30,24 @@ local function ClearPlayerData(playername)
     if playermoveloc[playername] ~= nil then
         playermoveloc[playername] = nil
     end
+    if playerhealth[playername] ~= nil then
+        playerhealth[playername] = nil
+    end
     if playerflustatus[playername] ~= nil then
         playerflustatus[playername] = false
     end
+
+    ply:SetPData("RmdtSpeedModifier", 1)
+    net.Start("RdmtFluSpeed")
+    net.WriteFloat(1)
+    net.Send(ply)
 end
 
 local function SpreadFlu(ply)
     local interval = GetConVar("randomat_flu_interval"):GetInt()
     local playername = ply:GetName()
     playerflustatus[playername] = true
+    playerhealth[playername] = ply:Health()
 
     -- Reduce the player speed
     local speed = GetConVar("randomat_flu_speed_factor"):GetFloat()
@@ -121,12 +132,18 @@ function EVENT:Begin()
                             playerthinktime[playername] = nil
                         end
                     end
+                -- Cure the player if they are healed
+                elseif v:Health() > playerhealth[playername] then
+                    ClearPlayerData(v)
+                -- Otherwise track their current health
+                else
+                    playerhealth[playername] = v:Health()
                 end
             else
                 if plys[playername] ~= nil then
                     plys[playername] = nil
                 end
-                ClearPlayerData(playername)
+                ClearPlayerData(v)
             end
         end
     end)
@@ -136,7 +153,7 @@ function EVENT:Begin()
         if plys[playername] ~= nil then
             plys[playername] = nil
         end
-        ClearPlayerData(playername)
+        ClearPlayerData(ply)
     end)
 end
 
@@ -145,13 +162,8 @@ function EVENT:End()
     hook.Remove("Think", "RdmtFluCheckHook")
     hook.Remove("PlayerSpawn", "RdmtFluSpawnHook")
 
-    net.Start("RdmtFluSpeed")
-    net.WriteFloat(1)
-    net.Broadcast()
-
     for _, v in pairs(player.GetAll()) do
         ClearPlayerData(v:GetName())
-        v:SetPData("RmdtSpeedModifier", 1)
     end
 end
 
