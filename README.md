@@ -221,7 +221,8 @@ _randomat_flu_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_flu_timer_ - Default: 1 - Time a player must be near someone before it spreads.\
 _randomat_flu_interval_ - Default: 10 - How often effects happen to infected.\
 _randomat_flu_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
-_randomat_flu_chance_ - Default: 25 - Spreading chance.
+_randomat_flu_chance_ - Default: 25 - Spreading chance.\
+_randomat_flu_speed_factor_ - Default: 0.8 - What speed the infected player should be reduced to.
 
 ## FREEZE!
 aka Winter has come at last.\

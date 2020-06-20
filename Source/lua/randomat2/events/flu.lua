@@ -3,15 +3,18 @@ local EVENT = {}
 EVENT.Title = "Flu Season"
 EVENT.id = "flu"
 
+util.AddNetworkString("RdmtFluSpeed")
+
 local sneezecount = 17
 local playerthinktime = {}
 local playermoveloc = {}
 local playerflustatus = {}
 
 CreateConVar("randomat_flu_timer", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time a player must be near someone before it spreads", 1, 600)
-CreateConVar("randomat_flu_interval", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often effects happen to infected", 1, 600)
+CreateConVar("randomat_flu_interval", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often effects happen to infected", 1, 600)
 CreateConVar("randomat_flu_distance", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Distance a player must be from another to be considered \"near\"", 1, 1000)
 CreateConVar("randomat_flu_chance", 25, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Spreading chance", 1, 100)
+CreateConVar("randomat_flu_speed_factor", 0.8, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "What speed the infected player should be reduced to", 0.5, 1)
 
 for i = 1, sneezecount do
     util.PrecacheSound("sneezes/sneeze" .. i .. ".mp3")
@@ -34,6 +37,14 @@ local function SpreadFlu(ply)
     local interval = GetConVar("randomat_flu_interval"):GetInt()
     local playername = ply:GetName()
     playerflustatus[playername] = true
+
+    -- Reduce the player speed
+    local speed = GetConVar("randomat_flu_speed_factor"):GetFloat()
+    ply:SetPData("RmdtSpeedModifier", speed)
+    net.Start("RdmtFluSpeed")
+    net.WriteFloat(speed)
+    net.Send(ply)
+
     timer.Create(playername .. "RdmtFluSneezeTimer", interval, 0, function()
         local sneeze = math.random(1, sneezecount)
         ply:EmitSound(Sound("sneezes/sneeze" .. sneeze .. ".mp3"))
@@ -134,14 +145,19 @@ function EVENT:End()
     hook.Remove("Think", "RdmtFluCheckHook")
     hook.Remove("PlayerSpawn", "RdmtFluSpawnHook")
 
+    net.Start("RdmtFluSpeed")
+    net.WriteFloat(1)
+    net.Broadcast()
+
     for _, v in pairs(player.GetAll()) do
         ClearPlayerData(v:GetName())
+        v:SetPData("RmdtSpeedModifier", 1)
     end
 end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer", "interval", "distance", "chance"}) do
+    for _, v in pairs({"timer", "interval", "distance", "chance", "speed_factor"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -150,7 +166,7 @@ function EVENT:GetConVars()
                 dsc = convar:GetHelpText(),
                 min = convar:GetMin(),
                 max = convar:GetMax(),
-                dcm = 0
+                dcm = v == "speed_factor" and 1 or 0
             })
         end
     end
