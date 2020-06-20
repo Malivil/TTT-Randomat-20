@@ -10,7 +10,7 @@ function EVENT:Begin()
         local i = 0
         local ply1 = 0
         local ply2 = 0
-        for _, v in pairs(self:GetAlivePlayers()) do
+        for _, v in pairs(self:GetAlivePlayers(true)) do
             if i == 0 then
                 ply1 = v
                 i = i+1
