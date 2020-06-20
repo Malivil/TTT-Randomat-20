@@ -1,7 +1,7 @@
 local EVENT = {}
 
 CreateConVar("randomat_timewarp_scale", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The percentage the speed should increase", 1, 200)
-CreateConVar("randomat_timewarp_scale_max", 8, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum scale the speed should increase to", 2, 50)
+CreateConVar("randomat_timewarp_scale_max", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum scale the speed should increase to", 2, 50)
 CreateConVar("randomat_timewarp_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) the speed will be increased", 1, 60)
 
 EVENT.Title = "Time Warp"
