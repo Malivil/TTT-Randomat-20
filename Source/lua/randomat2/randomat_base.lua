@@ -130,26 +130,31 @@ function Randomat:unregister(id)
     Randomat.Events[id] = nil
 end
 
+local function GetRandomEvent(events)
+    local count = table.Count(events)
+    local idx = math.random(count)
+    local key = table.GetKeys(events)[idx]
+    return events[key]
+end
+
 function Randomat:TriggerRandomEvent(ply)
     local events = Randomat.Events
 
-    table.Shuffle(events)
-
-    local x = 0
+    local found = false
     for _, v in pairs(events) do
         if v:Condition() and v:Enabled() then
-            x = 1
+            found = true
+            break
         end
     end
 
-    if x == 0 then
+    if not found then
         error("Could not find valid event, consider enabling more")
     end
 
-    local event = table.Random(events)
-
+    local event = GetRandomEvent(events)
     while not event:Condition() or not event:Enabled() do
-        event = table.Random(events)
+        event = GetRandomEvent(events)
     end
 
     local index = #Randomat.ActiveEvents + 1
