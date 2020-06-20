@@ -49,8 +49,8 @@ function EVENT:Begin()
                 StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatknife")
             end)
-        -- Anyone else becomes an innocent
-        else
+        -- Anyone else except Killers become Innocent
+        elseif v:GetRole() ~= ROLE_KILLER then
             Randomat:SetRole(v, ROLE_INNOCENT)
         end
         if v:GetRole() == ROLE_INNOCENT then
