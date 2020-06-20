@@ -6,16 +6,23 @@ EVENT.Title = ""
 EVENT.AltTitle = "Random x"..GetConVar("randomat_randomxn_triggers"):GetInt()
 EVENT.id = "randomxn"
 
+local timers = {}
+
 function EVENT:Begin()
     Randomat:EventNotifySilent("Random x"..GetConVar("randomat_randomxn_triggers"):GetInt())
 
-    timer.Create("RandomxnTimer", 5, GetConVar("randomat_randomxn_triggers"):GetInt(), function()
+    local timernum = table.Count(timers) + 1
+    local timername = "RandomxnTimer"..timernum
+    table.insert(timers, timername)
+    timer.Create(timername, 5, GetConVar("randomat_randomxn_triggers"):GetInt(), function()
         Randomat:TriggerRandomEvent(self.Owner)
     end)
 end
 
 function EVENT:End()
-    timer.Remove("RandomxnTimer")
+    for _, v in pairs(timers) do
+        timer.Remove(v)
+    end
 end
 
 Randomat:register(EVENT)
