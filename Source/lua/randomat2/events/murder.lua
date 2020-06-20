@@ -83,14 +83,6 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed" , function(ply)
-        if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatknife" then
-            return GetConVar("randomat_murder_knifespeed"):GetFloat()
-        else
-            return 1
-        end
-    end)
-
     hook.Add("PlayerDeath", "DropRdmtRevolver", function(tgt, wep, ply)
         if table.HasValue(player.GetAll(), ply) then
             if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
@@ -111,7 +103,6 @@ function EVENT:End()
     hook.Remove("WeaponEquip", "RandomatRevolverPickup")
     hook.Remove("DrawOverlay", "RdmtMurderBlind")
     hook.Remove("EntityTakeDamage", "RandomatMurderDMG")
-    hook.Add("TTTPlayerSpeed", "RdmtMurderSpeed")
     for _, v in pairs(player.GetAll()) do
         v:SetNWInt("MurderWeaponsEquipped", 0)
         v:SetNWBool("RdmMurderRevolver", false)
