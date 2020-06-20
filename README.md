@@ -12,6 +12,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - Double Cross
 - Flu Season
 - Glitch in the Matrix
+- NO NERD HEALING
 - Prop Hunt
 - Shh... It's a Secret!
 - Social Distancing
@@ -367,14 +368,6 @@ _randomat_malfunction_lower_ - Default: 1 - The lower limit for the random timer
 _randomat_malfunction_affectall_ - Default: 0 - Set to 1 for the event to affect everyone at once.\
 _randomat_malfunction_duration_ - Default: 0.5 - Duration of gun malfunction (set to 0 for 1 shot).
 
-## No one can hide from my sight
-Puts a green outline around every player
-\
-\
-**ConVars**
-\
-_randomat_wallhack_enabled_ - Default: 1 - Whether this event is enabled.
-
 ## No more Fall Damage!
 Prevents any player from taking damage when they fall
 \
@@ -382,6 +375,22 @@ Prevents any player from taking damage when they fall
 **ConVars**
 \
 _randomat_falldamage_enabled_ - Default: 1 - Whether this event is enabled.
+
+## NO NERD HEALING
+Prevents any player from regaining lost health
+\
+\
+**ConVars**
+\
+_randomat_noheal_enabled_ - Default: 1 - Whether this event is enabled.
+
+## No one can hide from my sight
+Puts a green outline around every player
+\
+\
+**ConVars**
+\
+_randomat_wallhack_enabled_ - Default: 1 - Whether this event is enabled.
 
 ## NOT THE BEES!
 Spawns bees randomly around around players
@@ -671,4 +680,5 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
+- Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
 - Tygron for providing feedback and verifying bug fixes
