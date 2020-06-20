@@ -163,7 +163,7 @@ function EVENT:End()
     hook.Remove("PlayerSpawn", "RdmtFluSpawnHook")
 
     for _, v in pairs(player.GetAll()) do
-        ClearPlayerData(v:GetName())
+        ClearPlayerData(v)
     end
 end
 
