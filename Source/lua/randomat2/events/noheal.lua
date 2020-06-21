@@ -20,10 +20,16 @@ function EVENT:Begin()
             end
         end
     end)
+
+    hook.Add("PlayerSpawn", "RdmtHealSpawnHook", function(ply)
+        -- Save the player's initial health on spawn so if they get ressed, it resets to full
+        playerhealth[ply:GetName()] = ply:Health()
+    end)
 end
 
 function EVENT:End()
     hook.Remove("Think", "RdmtHealCheckHook")
+    hook.Remove("PlayerSpawn", "RdmtHealSpawnHook")
 end
 
 Randomat:register(EVENT)
