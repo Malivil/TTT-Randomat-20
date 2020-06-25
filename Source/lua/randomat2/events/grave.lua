@@ -30,7 +30,7 @@ function EVENT:Begin()
                 ply:SetMaxHealth(GetConVar("randomat_grave_health"):GetInt())
                 ply:StripWeapons()
                 ply:Give("weapon_zom_claws")
-                if body ~= nil then
+                if IsValid(body) then
                     body:Remove()
                 end
                 SendFullStateUpdate()
