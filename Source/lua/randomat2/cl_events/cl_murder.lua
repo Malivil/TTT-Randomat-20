@@ -1,6 +1,7 @@
 local Revolvers = {}
 
 hook.Add("PreDrawHalos", "RandomatMurderGunHighlight", function()
+    if not GetGlobalBool("randomat_murder_highlight_gun", true) then return end
     for k, wep in pairs(ents.FindByClass("weapon_ttt_randomatrevolver")) do
         if #table.KeysFromValue(player.GetAll(), wep.Owner) ~= 0 then
             table.RemoveByValue(Revolvers, wep)

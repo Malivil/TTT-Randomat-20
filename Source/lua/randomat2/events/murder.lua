@@ -4,8 +4,9 @@ EVENT.Title = "What gamemode is this again?"
 EVENT.AltTitle = "Murder"
 EVENT.id = "murder"
 
-CreateConVar("randomat_murder_pickups_pct", 1.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Weapons required to get a revolver = (ConVarValue*TotalWeapons)/Players")
-CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Player move speed multiplier whilst knife is held.")
+CreateConVar("randomat_murder_pickups_pct", 1.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver", 1, 5)
+CreateConVar("randomat_murder_highlight_gun", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to highlight dropped revolvers.")
+CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Player move speed multiplier whilst knife is held.", 1, 2)
 
 util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
@@ -21,6 +22,9 @@ local function StripBannedWeapons(ply)
 end
 
 function EVENT:Begin()
+    -- Sync the convar for gun highlighting
+    SetGlobalBool("randomat_murder_highlight_gun", GetConVar("randomat_murder_highlight_gun"):GetBool())
+
     local players = #self:GetAlivePlayers(true)
     local wepspawns = 0
 
@@ -130,6 +134,37 @@ function EVENT:Condition()
     else
         return false
     end
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"pickups_pct", "knifespeed"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 1
+            })
+        end
+    end
+
+    local checks = {}
+    for _, v in pairs({"highlight_gun"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+
+    return sliders, checks
 end
 
 Randomat:register(EVENT)
