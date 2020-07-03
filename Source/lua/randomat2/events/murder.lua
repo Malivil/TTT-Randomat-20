@@ -4,7 +4,7 @@ EVENT.Title = "What gamemode is this again?"
 EVENT.AltTitle = "Murder"
 EVENT.id = "murder"
 
-CreateConVar("randomat_murder_pickups_pct", 1.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver", 1, 5)
+CreateConVar("randomat_murder_pickups_pct", 1.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver.", 1, 5)
 CreateConVar("randomat_murder_highlight_gun", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to highlight dropped revolvers.")
 CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Player move speed multiplier whilst knife is held.", 1, 2)
 
@@ -138,7 +138,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"pickups_pct", "knifespeed"}) do
+    for _, v in pairs({"pickups_pct", "knifespeed", "knifedmg"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -147,7 +147,7 @@ function EVENT:GetConVars()
                 dsc = convar:GetHelpText(),
                 min = convar:GetMin(),
                 max = convar:GetMax(),
-                dcm = 1
+                dcm = v == "knifedmg" and 0 or 1
             })
         end
     end

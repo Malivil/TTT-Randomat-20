@@ -650,9 +650,10 @@ Player roles are also adjusted when this event begins:
 **ConVars**
 \
 _randomat_murder_enabled_ - Default: 1 -  Whether this event is enabled.\
-_randomat_murder_pickups_pct_ - Default: 1.5 - Weapons required to get a revolver = (ConVarValue x TotalWeapons)/Players.\
+_randomat_murder_pickups_pct_ - Default: 1.5 - Ratio of weapons required to get a revolver. Value = (ConVarValue x TotalWeapons)/Players.\
 _randomat_murder_knifespeed_ - Default: 1.2 - Player move speed multiplier whilst knife is held.\
-_randomat_murder_knifedmg_ - Default: 50 - Damage of the traitor's knife.
+_randomat_murder_knifedmg_ - Default: 50 - Damage of the traitor's knife.\
+_randomat_murder_highlight_gun_ - Default: 1 - Whether to highlight dropped revolvers.
 
 ## You can only jump once.
 Kills any player who jumps a second time after this event has triggered
