@@ -1,57 +1,55 @@
-
-local Frame
-local lst
 local chooseTables = {}
 local frames = 0
 
 local function closeChooseFrame()
-    local x = 0
-    local y = 0
-    for k, v in pairs(chooseTables) do
-        y = k
+    local lastidx
+    -- Frames not not necessarily stored in order when multiple are shown at once
+    -- Find that last index since that will be the frame on top (visually)
+    for i, _ in pairs(chooseTables) do
+        lastidx = i
     end
-    for k, v in pairs(chooseTables) do
-        if k == y then
-            v:Close()
-            chooseTables[k] = nil
-        end
-    end
+
+    chooseTables[lastidx]:Close()
+    chooseTables[lastidx] = nil
 end
 
-local function closeAllChooseFrame()
+local function closeAllChooseFrames()
     for k, v in pairs(chooseTables) do
         v:Close()
         chooseTables[k] = nil
-        x = 1
     end
 end
 
+local function openFrame(x)
+    frames = frames + 1
+    local frame = vgui.Create("DFrame")
+    frame:SetPos(10, ScrH() - 500)
+    frame:SetSize(200, 17 * x + 51)
+    frame:SetTitle("Open Scoreboard to Interact")
+    frame:SetDraggable(false)
+    frame:ShowCloseButton(false)
+    frame:SetVisible(true)
+    frame:SetDeleteOnClose(true)
+    return frame
+end
+
 net.Receive("ChooseEventTrigger", function()
-    frames = frames+1
-    --Frame Setup
     local x = net.ReadInt(32)
     local tbl = net.ReadTable()
-    Frame = vgui.Create( "DFrame" )
-    Frame:SetPos( 10, ScrH()-800 )
-    Frame:SetSize( 200, 17*x + 51 )
-    Frame:SetTitle( "Open Scoreboard to Interact" )
-    Frame:SetDraggable( false )
-    Frame:ShowCloseButton( false )
-    Frame:SetVisible(true)
-    Frame:SetDeleteOnClose(true)
+    local frame = openFrame(x)
 
-    --Player List
-    lst = vgui.Create("DListView", Frame)
-    lst:Dock(FILL)
-    lst:SetMultiSelect(false)
-    lst:AddColumn("Events")
+    --Event List
+    local list = vgui.Create("DListView", frame)
+    list:Dock(FILL)
+    list:SetMultiSelect(false)
+    list:AddColumn("Events")
 
-    for k, v in pairs(tbl) do
-        lst:AddLine(v)
+    for _, v in pairs(tbl) do
+        list:AddLine(v)
     end
-    chooseTables[frames] = Frame
+    chooseTables[frames] = frame
 
-    lst.OnRowSelected = function(lst, index, pnl)
+    list.OnRowSelected = function(lst, index, pnl)
         net.Start("PlayerChoseEvent")
         net.WriteString(pnl:GetColumnText(1))
         net.SendToServer()
@@ -59,53 +57,42 @@ net.Receive("ChooseEventTrigger", function()
     end
 
     net.Receive("ChooseEventEnd", function()
-        if Frame ~= nil then
-            closeAllChooseFrame()
+        if frame ~= nil then
+            closeAllChooseFrames()
         end
     end)
 end)
 
 net.Receive("ChooseVoteTrigger", function()
-    frames = frames+1
-    --Frame Setup
     local x = net.ReadInt(32)
     local tbl = net.ReadTable()
-    Frame = vgui.Create( "DFrame" )
-    Frame:SetPos( 10, ScrH()-800 )
-    Frame:SetSize( 200, 17*x + 51 )
-    Frame:SetTitle( "Open Scoreboard to Interact" )
-    Frame:SetDraggable( false )
-    Frame:ShowCloseButton( false )
-    Frame:SetVisible(true)
-    Frame:SetDeleteOnClose(true)
+    local frame = openFrame(x)
 
     --Event List
-    lst = vgui.Create("DListView", Frame)
-    lst:Dock(FILL)
-    lst:SetMultiSelect(false)
-    lst:AddColumn("Events")
-    lst:AddColumn("Votes")
+    local list = vgui.Create("DListView", frame)
+    list:Dock(FILL)
+    list:SetMultiSelect(false)
+    list:AddColumn("Events")
+    list:AddColumn("Votes")
 
-    for k, v in pairs(tbl) do
-        lst:AddLine(v, 0)
+    for _, v in pairs(tbl) do
+        list:AddLine(v, 0)
     end
-    chooseTables[frames] = Frame
+    chooseTables[frames] = frame
 
-    lst.OnRowSelected = function(lst, index, pnl)
+    list.OnRowSelected = function(lst, index, pnl)
         net.Start("ChoosePlayerVoted")
         net.WriteString(pnl:GetColumnText(1))
         net.SendToServer()
     end
 
     net.Receive("ChooseEventEnd", function()
-        if Frame ~= nil then
-            closeAllChooseFrame()
-        end
+        closeAllChooseFrames()
     end)
 
     net.Receive("ChoosePlayerVoted", function()
         local votee = net.ReadString()
-        for k, v in pairs(lst:GetLines()) do
+        for _, v in pairs(list:GetLines()) do
             if v:GetColumnText(1) == votee then
                 v:SetColumnText(2, v:GetColumnText(2)+1)
             end
@@ -113,6 +100,6 @@ net.Receive("ChooseVoteTrigger", function()
     end)
 
     net.Receive("ChooseVoteEnd", function()
-        closeAllChooseFrame()
+        closeAllChooseFrames()
     end)
 end)

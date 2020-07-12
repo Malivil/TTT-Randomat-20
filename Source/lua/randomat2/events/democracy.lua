@@ -9,6 +9,7 @@ CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "I
 CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Percent of total player votes required for a vote to pass, set to 0 to disable")
 
 EVENT.Title = "I love democracy, I love the republic."
+EVENT.AltTitle = "Democracy"
 EVENT.id = "democracy"
 
 
