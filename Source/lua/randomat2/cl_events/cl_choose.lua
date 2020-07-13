@@ -15,8 +15,10 @@ end
 
 local function closeAllChooseFrames()
     for k, v in pairs(chooseTables) do
-        v:Close()
-        chooseTables[k] = nil
+        if v ~= nil then
+            v:Close()
+            chooseTables[k] = nil
+        end
     end
 end
 
@@ -57,9 +59,7 @@ net.Receive("ChooseEventTrigger", function()
     end
 
     net.Receive("ChooseEventEnd", function()
-        if frame ~= nil then
-            closeAllChooseFrames()
-        end
+        closeAllChooseFrames()
     end)
 end)
 
