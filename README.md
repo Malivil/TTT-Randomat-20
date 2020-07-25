@@ -154,7 +154,7 @@ Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the dur
 _randomat_slam_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_slam_timer_ - Default: 3 - Time between being given slams.\
 _randomat_slam_strip_ - Default: 1 - The event strips your other weapons.\
-_randomat_slam_weaponid_ - Default: ttt_m9k_harpoon - Id of the weapon given.
+_randomat_slam_weaponid_ - Default: weapon_ttt_slam - Id of the weapon given.
 
 ## Crabs are People
 Spawns a configurable number of hostile headcrabs when a player is killed
@@ -278,6 +278,7 @@ Randomly changes everyone's role to be either Glitch or Traitor based on the con
 **ConVars**
 \
 _randomat_glitch_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_glitch_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".\
 _randomat_glitch_traitor_pct_ - Default: 25 - The percentage of players that will be traitors.
 
 ## Gun Game
@@ -616,7 +617,7 @@ Alerts all players when an item is bought from a shop
 \
 **ConVars**
 \
-_randomat_privacy_enabled_ - Default: 1 -  Whether this event is enabled.\
+_randomat_privacy_enabled_ - Default: 1 -  Whether this event is enabled.
 
 ## What? Moon Gravity on Earth?
 Changes the gravity of each player to the configurable scale
@@ -634,6 +635,7 @@ Gives each player a random buyable weapon
 **ConVars**
 \
 _randomat_pocket_enabled_ - Default: 1 -  Whether this event is enabled.\
+_randomat_pocket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## What gamemode is this again? (aka Murder)
 Changes the rules so the round plays like the Murder gamemode:
