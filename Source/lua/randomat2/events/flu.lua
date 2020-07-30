@@ -37,10 +37,7 @@ local function ClearPlayerData(ply)
         playerflustatus[playername] = false
     end
 
-    ply:SetPData("RmdtSpeedModifier", 1)
-    net.Start("RdmtFluSpeed")
-    net.WriteFloat(1)
-    net.Send(ply)
+    ply:SetNWFloat("RmdtSpeedModifier", 1)
 end
 
 local function SpreadFlu(ply)
@@ -50,11 +47,8 @@ local function SpreadFlu(ply)
     playerhealth[playername] = ply:Health()
 
     -- Reduce the player speed
-    local speed = GetConVar("randomat_flu_speed_factor"):GetFloat()
-    ply:SetPData("RmdtSpeedModifier", speed)
-    net.Start("RdmtFluSpeed")
-    net.WriteFloat(speed)
-    net.Send(ply)
+    local speed = GetConVar("randomat_flu_speed_factor"):GetFloat() * ply:GetNWFloat("RmdtSpeedModifier", 1)
+    ply:SetNWFloat("RmdtSpeedModifier", speed)
 
     timer.Create(playername .. "RdmtFluSneezeTimer", interval, 0, function()
         local sneeze = math.random(1, sneezecount)
