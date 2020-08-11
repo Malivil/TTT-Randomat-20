@@ -272,14 +272,17 @@ _randomat_president_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.
 
 ## Glitch in the Matrix
-Randomly changes everyone's role to be either Glitch or Traitor based on the configurable Traitor percent
+Randomly changes everyone's role to be either Glitch or Traitor based on the configurable values
 \
 \
 **ConVars**
 \
 _randomat_glitch_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_glitch_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".\
-_randomat_glitch_traitor_pct_ - Default: 25 - The percentage of players that will be traitors.
+_randomat_glitch_traitor_pct_ - Default: 25 - The percentage of players that will be traitors.\
+_randomat_glitch_damage_scale_ - Default: 1.0 - The multiplier for damage that the Glitches will take.\
+_randomat_glitch_max_glitches_ - Default: 0 - The maximum number of Glitches this event will create. Setting to 0 will not limit the number of Glitches.\
+_randomat_glitch_starting_health_ - Default: 100 - The amount of health the Glitches should start with.
 
 ## Gun Game
 Periodically gives players random weapons that would normally be found throughout the map

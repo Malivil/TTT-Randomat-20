@@ -5,6 +5,9 @@ EVENT.id = "glitch"
 
 CreateConVar("randomat_glitch_traitor_pct", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The percentage of players that will be traitors", 1, 100)
 CreateConVar("randomat_glitch_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not give out")
+CreateConVar("randomat_glitch_damage_scale", 1.0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The multiplier for damage that the Glitches will take", 0.1, 2.0)
+CreateConVar("randomat_glitch_max_glitches", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The maximum number of Glitches this event will create", 0, 16)
+CreateConVar("randomat_glitch_starting_health", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the Glitches should start with", 1, 200)
 
 local function StripBannedWeapons(ply)
     if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -28,14 +31,36 @@ function EVENT:Begin()
         table.insert(blocklist, blocked_id:Trim())
     end
 
-    local players = self:GetAlivePlayers(true);
+    local players = self:GetAlivePlayers(true)
     local tcount = math.ceil(#players * (GetConVar("randomat_glitch_traitor_pct"):GetInt()/100))
+
+    -- Limit the number of Glitches to create
+    local maxglitch = GetConVar("randomat_glitch_max_glitches"):GetInt()
+    local gcount = nil
+    -- 0 means "unlimited"
+    if maxglitch > 0 then
+        gcount = maxglitch
+    end
+
     for _, v in pairs(players) do
-        if tcount > 0 then
+        -- If we have exceeded the maximum number of Glitches, make the remaining players Traitors, even if we have surpassed the configured percent
+        if tcount > 0 or (gcount ~= nil and gcount == 0) then
             Randomat:SetRole(v, ROLE_TRAITOR)
             tcount = tcount - 1
         else
             Randomat:SetRole(v, ROLE_GLITCH)
+            if gcount ~= nil then
+                gcount = gcount - 1
+            end
+
+            -- Update the Glitches' health to the configured max, but keep the amount of damage they've already taken
+            local glitchhealth = GetConVar("randomat_glitch_starting_health"):GetInt()
+            if glitchhealth ~= 100 then
+                local healthlost = v:GetMaxHealth() - v:Health()
+                local newhealth = glitchhealth - healthlost
+                v:SetMaxHealth(glitchhealth)
+                v:SetHealth(newhealth)
+            end
         end
 
         StripBannedWeapons(v)
@@ -45,7 +70,20 @@ function EVENT:Begin()
             self:GiveWep(v)
         end)
     end
+
+    hook.Add("ScalePlayerDamage", "RdmtGlitchDamageScale", function(ply, hitgroup, dmginfo)
+        if not IsValid(ply) then return end
+
+        if ply:IsGlitch() then
+            dmginfo:ScaleDamage(GetConVar("randomat_glitch_damage_scale"):GetFloat())
+        end
+    end)
+
     SendFullStateUpdate()
+end
+
+function EVENT:End()
+    hook.Remove("ScalePlayerDamage", "RdmtGlitchDamageScale")
 end
 
 function EVENT:CallHooks(isequip, id, ply)
@@ -104,7 +142,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"traitor_pct"}) do
+    for _, v in pairs({"traitor_pct", "damage_scale", "max_glitches", "starting_health"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -113,7 +151,7 @@ function EVENT:GetConVars()
                 dsc = convar:GetHelpText(),
                 min = convar:GetMin(),
                 max = convar:GetMax(),
-                dcm = 0
+                dcm = v == "damage_scale" and 1 or 0
             })
         end
     end
