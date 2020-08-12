@@ -163,7 +163,7 @@ Whenever anyone buys a weapon from a shop, all other players get that weapon too
 \
 **ConVars**
 \
-_randomat_communist_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_communist_enabled_ - Default: 1 - Whether this event is enabled.
 
 ## Crabs are People
 Spawns a configurable number of hostile headcrabs when a player is killed
