@@ -13,6 +13,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - Double Cross
 - Flu Season
 - Glitch in the Matrix
+- I don't think you realise the gravity of the situation.
 - NO NERD HEALING
 - Prop Hunt
 - Shh... It's a Secret!
@@ -332,6 +333,19 @@ Scales each player's size by a configurable ratio
 \
 _randomat_shrink_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_shrink_scale_ - Default: 0.5 - The shrinking scale factor.
+
+## I don't think you realise the gravity of the situation.
+Gravity is changed every few seconds for a short period of time before reverting to normal.  
+It goes gack and forth between being lowered and raised each time.
+\
+\
+**ConVars**
+\
+_randomat_gravity_enabled_ - Default: 1 - Whether this event is enabled.\
+_randomat_gravity_timer_ - Default: 30 - How long between changes.\
+_randomat_gravity_duration_ - Default: 3 - How many seconds the change lasts.\
+_randomat_gravity_minimum_ - Default: 70 - The gravity when it is lowered.\
+_randomat_gravity_maximum_ - Default: 2000 - The gravity when it is raised.
 
 ## I love democracy, I love the republic.
 Allows players to vote to kill someone repeatedly until the event ends
@@ -696,6 +710,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
-- [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event and
- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting it for use with "Custom Roles for TTT" instead of "Town of Terror"
+- [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
+ for the "I don't think you realise the gravity of the situation." event.
 - Tygron for providing feedback and verifying bug fixes
