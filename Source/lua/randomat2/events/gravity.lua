@@ -1,9 +1,9 @@
 local EVENT = {}
 
-CreateConVar("randomat_gravity_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Timer (def. 30)", 5,90)
-CreateConVar("randomat_gravity_duration", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration (def. 3)", 1,15)
-CreateConVar("randomat_gravity_minimum", 70, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum gravity (def. 70)",10,500)
-CreateConVar("randomat_gravity_maximum", 2000, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum gravity (def. 70)",700,4000)
+CreateConVar("randomat_gravity_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Timer", 5,90)
+CreateConVar("randomat_gravity_duration", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration", 1,15)
+CreateConVar("randomat_gravity_minimum", 70, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum gravity",10,500)
+CreateConVar("randomat_gravity_maximum", 2000, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum gravity",700,4000)
 
 EVENT.Title = "I don't think you realise the gravity of the situation."
 EVENT.id = "gravity"
@@ -21,10 +21,10 @@ local function SetGravity(increase)
 end
 
 function EVENT:Begin()
-    defaultGravity = GetConVar("sv_gravity"):GetFloat()
     if SERVER then
+        defaultGravity = GetConVar("sv_gravity"):GetFloat()
         SetGravity(true)
-        timer.Simple(duration, function()
+        timer.Simple(GetConVar("randomat_gravity_duration"):GetFloat(), function()
             RunConsoleCommand("sv_gravity", defaultGravity)
         end)
     end
@@ -48,7 +48,6 @@ function EVENT:Timer()
 end
 
 function EVENT:End()
-    self:CleanUpHooks()
     timer.Remove("RandomatGravityChange")
     if SERVER then
         RunConsoleCommand("sv_gravity", defaultGravity)

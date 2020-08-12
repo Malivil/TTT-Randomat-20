@@ -710,7 +710,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
-- [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event and
- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting it for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
+- [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
  for the "I don't think you realise the gravity of the situation." event.
 - Tygron for providing feedback and verifying bug fixes
