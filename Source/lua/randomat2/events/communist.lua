@@ -9,6 +9,38 @@ EVENT.id = "communist"
 util.AddNetworkString("AlertTriggerFinal")
 util.AddNetworkString("alerteventtrigger")
 
+local function RenameWeps(name)
+    if name == "sipistol_name" then
+        return "Silenced Pistol"
+    elseif name == "knife_name" then
+        return "Knife"
+    elseif name == "newton_name" then
+        return "Newton Launcher"
+    elseif name == "tele_name" then
+        return "Teleporter"
+    elseif name == "hstation_name" then
+        return "Health Station"
+    elseif name == "flare_name" then
+        return "Flare Gun"
+    elseif name == "decoy_name" then
+        return "Decoy"
+    elseif name == "radio_name" then
+        return "Radio"
+    elseif name == "polter_name" then
+        return "Poltergeist"
+    elseif name == "vis_name" then
+        return "Visualizer"
+    elseif name == "defuser_name" then
+        return "Defuser"
+    elseif name == "stungun_name" then
+        return "UMP Prototype"
+    elseif name == "binoc_name" then
+        return "Binoculars"
+    else
+        return name
+    end
+end
+
 function TriggerAlert(item, role, ply)
     net.Start("alerteventtrigger")
     net.WriteString(item)
@@ -42,16 +74,17 @@ function EVENT:Begin()
     
         TriggerAlert(item, role, ply)
 
-        for i, ply in pairs(player.GetAll()) do
-            ply:Give(item)
+        for i, p in pairs(player.GetAll()) do
+            p:Give(item)
         end
     end)
 
     net.Receive("AlertTriggerFinal", function()
         local name = net.ReadString()
         local role = net.ReadString()
+		name = RenameWeps(name)
         
-        self:SmallNotify("Sharing gave everyone a "..name)
+        self:SmallNotify(role.." gave everyone a "..name)
         
     end)
 
