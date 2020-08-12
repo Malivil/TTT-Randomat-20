@@ -13,7 +13,7 @@ function EVENT:Begin()
 end
 
 function EVENT:Timer()
-    timer.Create("RandomatGravity", 1,0, function()
+    timer.Create("RandomatMoonGravityTimer", 1,0, function()
         for _, ply in pairs(self:GetPlayers()) do
             ply:SetGravity(GetConVar("randomat_moongravity_gravity"):GetFloat())
         end
@@ -21,8 +21,7 @@ function EVENT:Timer()
 end
 
 function EVENT:End()
-    self:CleanUpHooks()
-    timer.Remove("RandomatGravity")
+    timer.Remove("RandomatMoonGravityTimer")
     for _, ply in pairs(player.GetAll()) do
         ply:SetGravity(1)
     end

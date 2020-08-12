@@ -35,7 +35,7 @@ function EVENT:Timer()
     local delay = GetConVar("randomat_gravity_timer"):GetFloat()
     local duration = GetConVar("randomat_gravity_duration"):GetFloat()
     local increase = false -- false for min, true for max
-    
+
     timer.Create("RandomatGravityChange", delay,0, function()
         if SERVER then
             increase = SetGravity(increase)
@@ -43,7 +43,6 @@ function EVENT:Timer()
                 RunConsoleCommand("sv_gravity", defaultGravity)
             end)
         end
-        
     end)
 end
 
@@ -69,7 +68,7 @@ function EVENT:GetConVars()
             })
         end
     end
-    
+
     return sliders, {}, {}
 end
 
