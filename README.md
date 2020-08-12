@@ -8,6 +8,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - A Glitch has been patched
 - Camp Fire
 - Come on and SLAM!
+- Communism! Time to learn how to share...
 - Don't be so Sensitive
 - Double Cross
 - Flu Season
@@ -155,6 +156,14 @@ _randomat_slam_enabled_ - Default: 1 - Whether this event is enabled.\
 _randomat_slam_timer_ - Default: 3 - Time between being given slams.\
 _randomat_slam_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_slam_weaponid_ - Default: weapon_ttt_slam - Id of the weapon given.
+
+## Communism! Time to learn how to share...!
+Whenever anyone buys a weapon from a shop, all other players get that weapon too. They must not have anything in that slot already.
+\
+\
+**ConVars**
+\
+_randomat_communist_enabled_ - Default: 1 - Whether this event is enabled.
 
 ## Crabs are People
 Spawns a configurable number of hostile headcrabs when a player is killed
@@ -687,4 +696,6 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
+- [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event and
+ [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting it for use with "Custom Roles for TTT" instead of "Town of Terror"
 - Tygron for providing feedback and verifying bug fixes

@@ -1,5 +1,8 @@
 util.AddNetworkString("randomat_message")
 util.AddNetworkString("randomat_message_silent")
+util.AddNetworkString("AlertTriggerFinal")
+util.AddNetworkString("alerteventtrigger")
+
 if SERVER then
     util.AddNetworkString("TTT_RoleChanged")
 end
@@ -281,6 +284,70 @@ function randomat_meta:Enabled()
 end
 
 function randomat_meta:GetConVars() end
+
+-- What role is a player?
+function randomat_meta:GetRoleName(ply)
+
+    if ply:GetRole() == ROLE_TRAITOR then
+        return "A traitor"
+    elseif ply:GetRole() == ROLE_HYPNOTIST then
+        return "A hypnotist"
+    elseif ply:GetRole() == ROLE_ASSASSIN then
+        return "An assassin"
+    elseif ply:GetRole() == ROLE_DETECTIVE then
+        return "A detective"
+    elseif ply:GetRole() == ROLE_MERCENARY then
+        return "A mercenary"
+    elseif ply:GetRole() == ROLE_ZOMBIE then
+        return "A zombie"
+    elseif ply:GetRole() == ROLE_VAMPIRE then
+        return "A vampire"
+    elseif ply:GetRole() == ROLE_KILLER then
+        return "A killer"
+    elseif ply:GetRole() == ROLE_INNOCENT then
+        return "An innocent"
+    elseif ply:GetRole() == ROLE_GLITCH then
+        return "A glitch"
+    elseif ply:GetRole() == ROLE_PHANTOM then
+        return "A phantom"
+    end
+    
+    return "Someone"
+end
+
+-- Rename stock weapons so they are readable
+function randomat_meta:RenameWeps(name)
+
+    if name == "sipistol_name" then
+        return "Silenced Pistol"
+    elseif name == "knife_name" then
+        return "Knife"
+    elseif name == "newton_name" then
+        return "Newton Launcher"
+    elseif name == "tele_name" then
+        return "Teleporter"
+    elseif name == "hstation_name" then
+        return "Health Station"
+    elseif name == "flare_name" then
+        return "Flare Gun"
+    elseif name == "decoy_name" then
+        return "Decoy"
+    elseif name == "radio_name" then
+        return "Radio"
+    elseif name == "polter_name" then
+        return "Poltergeist"
+    elseif name == "vis_name" then
+        return "Visualizer"
+    elseif name == "defuser_name" then
+        return "Defuser"
+    elseif name == "stungun_name" then
+        return "UMP Prototype"
+    elseif name == "binoc_name" then
+        return "Binoculars"
+    end
+    
+    return name
+end
 
 RDMT_BOOL = 0
 RDMT_INT = 1
