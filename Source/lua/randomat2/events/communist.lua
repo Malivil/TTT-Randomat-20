@@ -5,7 +5,7 @@ local EVENT = {}
 EVENT.Title = "Communism! Time to learn how to share..."
 EVENT.id = "communist"
 
-function TriggerAlert(item, role, ply)
+local function TriggerAlert(item, role, ply)
     --Event handler located in cl_networkstrings
     net.Start("alerteventtrigger")
     net.WriteString(item)
@@ -14,12 +14,10 @@ function TriggerAlert(item, role, ply)
 end
 
 function EVENT:Begin()
-
     hook.Add("TTTOrderedEquipment", "RandomatCommunismHook", function(ply, item, isItem)
-
         TriggerAlert(item, self:GetRoleName(ply), ply)
-        
-        for i, p in pairs(player.GetAll()) do
+
+        for _, p in pairs(player.GetAll()) do
             p:Give(item)
         end
     end)
@@ -29,13 +27,10 @@ function EVENT:Begin()
         local name = net.ReadString()
         local role = net.ReadString()
         name = self:RenameWeps(name)
-        
+
         self:SmallNotify(role.." gave everyone a "..name)
-        
     end)
-
 end
-
 
 function EVENT:End()
     hook.Remove("TTTOrderedEquipment", "RandomatCommunismHook")
