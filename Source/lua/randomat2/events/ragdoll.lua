@@ -54,7 +54,6 @@ local function UnstuckPlayer(ply)
         if not success then success, pos = FindPassableSpace(ply, up, -SearchScale) end -- Down
         if not success then success, pos = FindPassableSpace(ply, forward, -SearchScale) end -- Back
         if not success then
-            --print("Can't find the location for player "..ply:Nick().."\n")
             return false
         end
 

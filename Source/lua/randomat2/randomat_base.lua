@@ -287,7 +287,6 @@ function randomat_meta:GetConVars() end
 
 -- What role is a player?
 function randomat_meta:GetRoleName(ply)
-
     if ply:GetRole() == ROLE_TRAITOR then
         return "A traitor"
     elseif ply:GetRole() == ROLE_HYPNOTIST then
@@ -311,13 +310,12 @@ function randomat_meta:GetRoleName(ply)
     elseif ply:GetRole() == ROLE_PHANTOM then
         return "A phantom"
     end
-    
+
     return "Someone"
 end
 
 -- Rename stock weapons so they are readable
 function randomat_meta:RenameWeps(name)
-
     if name == "sipistol_name" then
         return "Silenced Pistol"
     elseif name == "knife_name" then
@@ -345,7 +343,7 @@ function randomat_meta:RenameWeps(name)
     elseif name == "binoc_name" then
         return "Binoculars"
     end
-    
+
     return name
 end
 

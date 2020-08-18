@@ -72,7 +72,6 @@ function EVENT:Begin()
                     skipkill = 1
                 else
                     slainply = votableplayers[maxk[1]]
-                    print(votableplayers[maxk[1]]:Nick())
                 end
 
                 if skipkill == 0 then

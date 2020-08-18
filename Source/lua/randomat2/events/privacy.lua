@@ -5,26 +5,26 @@ local EVENT = {}
 EVENT.Title = "We've updated our privacy policy."
 EVENT.id = "privacy"
 
-local function TriggerAlert(item, role, ply)
+local function TriggerAlert(item, role, is_item, ply)
     --Event handler located in cl_networkstrings
     net.Start("alerteventtrigger")
     net.WriteString(item)
     net.WriteString(role)
+    net.WriteInt(is_item ~= nil and is_item or 0, 8)
     net.Send(ply)
 end
 
 function EVENT:Begin()
-    hook.Add("TTTOrderedEquipment", "RandomatAlertHook", function(ply, item, isItem)
-        TriggerAlert(item, self:GetRoleName(ply), ply)
+    hook.Add("TTTOrderedEquipment", "RandomatAlertHook", function(ply, item, is_item)
+        TriggerAlert(item, self:GetRoleName(ply), is_item, ply)
     end)
 
     --Event started in cl_networkstrings
     net.Receive("AlertTriggerFinal", function()
-        local name = net.ReadString()
+        local name = self:RenameWeps(net.ReadString())
         local role = net.ReadString()
-        name = self:RenameWeps(name)
 
-        self:SmallNotify(role.." has bought a "..name)
+        self:SmallNotify(role .. " has bought a " .. name)
     end)
 end
 
