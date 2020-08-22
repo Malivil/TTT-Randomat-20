@@ -7,7 +7,7 @@ EVENT.id = "intensifies"
 
 function EVENT:Begin()
     timer.Create("RandomatIntensifiesTimer", GetConVar("randomat_intensifies_timer"):GetInt() , 0, function()
-        Randomat:TriggerRandomEvent(self.Owner)
+        Randomat:TriggerRandomEvent(self.owner)
     end)
 end
 

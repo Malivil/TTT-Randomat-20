@@ -15,7 +15,7 @@ function EVENT:Begin()
     local timername = "RandomxnTimer"..timernum
     table.insert(timers, timername)
     timer.Create(timername, 5, GetConVar("randomat_randomxn_triggers"):GetInt(), function()
-        Randomat:TriggerRandomEvent(self.Owner)
+        Randomat:TriggerRandomEvent(self.owner)
     end)
 end
 

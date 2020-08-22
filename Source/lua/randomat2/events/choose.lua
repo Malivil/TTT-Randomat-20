@@ -24,7 +24,7 @@ function EVENT:Begin()
     EventChoices = {}
     PlayersVoted = {}
     EventVotes = {}
-    owner = Randomat:GetValidPlayer(self.Owner)
+    owner = Randomat:GetValidPlayer(self.owner)
     local x = 0
     for _, v in RandomPairs(Randomat.Events) do
         if x < GetConVar("randomat_choose_choices"):GetInt() then
