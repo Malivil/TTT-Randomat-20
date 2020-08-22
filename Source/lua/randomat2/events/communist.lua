@@ -26,7 +26,7 @@ function EVENT:Begin()
 
         for _, p in pairs(player.GetAll()) do
             if is_item then
-                p:GiveEquipmentItem(item)
+                p:GiveEquipmentItem(tonumber(item))
             else
                 p:Give(item)
             end
