@@ -66,7 +66,7 @@ concommand.Add("ttt_randomat_clearevents",function(ply)
     end
 end)
 
-local function isEventActive(id)
+ function Randomat:IsEventActive(id)
     for _, v in pairs(Randomat.ActiveEvents) do
         if v.id == id then
             return true
@@ -199,7 +199,7 @@ end)
 
 function Randomat:EventNotify(title)
     -- Don't broadcast anything when "Secret" is running
-    if isEventActive("secret") then return end
+    if Randomat:IsEventActive("secret") then return end
     net.Start("randomat_message")
     net.WriteBool(true)
     net.WriteString(title)
@@ -209,7 +209,7 @@ end
 
 function Randomat:EventNotifySilent(title)
     -- Don't broadcast anything when "Secret" is running
-    if isEventActive("secret") then return end
+    if Randomat:IsEventActive("secret") then return end
     net.Start("randomat_message_silent")
     net.WriteBool(true)
     net.WriteString(title)
@@ -233,7 +233,7 @@ end
 if SERVER then
     function randomat_meta:SmallNotify(msg, length, targ)
         -- Don't broadcast anything when "Secret" is running
-        if isEventActive("secret") then return end
+        if Randomat:IsEventActive("secret") then return end
         if not isnumber(length) then length = 0 end
         net.Start("randomat_message")
         net.WriteBool(false)
