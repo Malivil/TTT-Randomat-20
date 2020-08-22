@@ -45,11 +45,15 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
+    local i = false
     for _, v in pairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
-            return true
+        if v:GetRole() == ROLE_JESTER or v:GetRole() == ROLE_SWAPPER then
+            return false
+        elseif v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
+            i = true
         end
     end
+    return i
 end
 
 Randomat:register(EVENT)
