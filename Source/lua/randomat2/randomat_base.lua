@@ -13,7 +13,7 @@ Randomat.ActiveEvents = {}
 local randomat_meta =  {}
 randomat_meta.__index = randomat_meta
 
-local function CommandAutoComplete(cmd, args)
+local function TriggerAutoComplete(cmd, args)
     local name = string.lower(string.Trim(args))
     local options = {}
     for _, v in pairs(Randomat.Events) do
@@ -38,9 +38,9 @@ concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
             error("Conditions for event not met")
         end
     else
-        error("Could not find event '"..cmd.."'")
+        error("Could not find event '" .. cmd .. "'")
     end
-end, CommandAutoComplete, "Triggers a specific randomat event with conditions",FCVAR_SERVER_CAN_EXECUTE)
+end, TriggerAutoComplete, "Triggers a specific randomat event with conditions", FCVAR_SERVER_CAN_EXECUTE)
 
 concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
     local cmd = arg[1]
@@ -52,11 +52,35 @@ concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
         Randomat.ActiveEvents[index].owner = Randomat:GetValidPlayer(nil)
         Randomat.ActiveEvents[index]:Begin()
     else
-        error("Could not find event '"..cmd.."'")
+        error("Could not find event '" .. cmd .. "'")
     end
-end, CommandAutoComplete, "Triggers a specific randomat event without conditions",FCVAR_SERVER_CAN_EXECUTE)
+end, TriggerAutoComplete, "Triggers a specific randomat event without conditions", FCVAR_SERVER_CAN_EXECUTE)
 
-concommand.Add("ttt_randomat_clearevents",function(ply)
+local function ClearAutoComplete(cmd, args)
+    local name = string.lower(string.Trim(args))
+    local options = {}
+    for _, v in pairs(Randomat.ActiveEvents) do
+        if string.find(string.lower(v.Id), name) then
+            table.insert(options, cmd .. " " .. v.Id)
+        end
+    end
+    return options
+end
+
+concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
+    local cmd = arg[1]
+    for k, evt in pairs(Randomat.ActiveEvents) do
+        if evt.Id == cmd then
+            evt:End()
+            table.remove(Randomat.ActiveEvents, k)
+            return
+        end
+    end
+
+    error("Could not find active event '" .. cmd .. "'")
+end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
+
+concommand.Add("ttt_randomat_clearevents",function(ply, cc, arg)
     if Randomat.ActiveEvents ~= {} then
         for _, evt in pairs(Randomat.ActiveEvents) do
             evt:End()
@@ -64,7 +88,7 @@ concommand.Add("ttt_randomat_clearevents",function(ply)
 
         Randomat.ActiveEvents = {}
     end
-end)
+end, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 
  function Randomat:IsEventActive(id)
     for _, v in pairs(Randomat.ActiveEvents) do
@@ -176,7 +200,7 @@ function Randomat:TriggerEvent(cmd, ply)
         Randomat.ActiveEvents[index].owner = ply
         Randomat.ActiveEvents[index]:Begin()
     else
-        error("Could not find event '"..cmd.."'")
+        error("Could not find event '" .. cmd .. "'")
     end
 end
 
@@ -188,14 +212,14 @@ function Randomat:SilentTriggerEvent(cmd, ply)
         Randomat.ActiveEvents[index].owner = ply
         Randomat.ActiveEvents[index]:Begin()
     else
-        error("Could not find event '"..cmd.."'")
+        error("Could not find event '" .. cmd .. "'")
     end
 end
 
 concommand.Add("ttt_randomat_triggerrandom", function()
     local rdmply = Randomat:GetValidPlayer(nil)
     Randomat:TriggerRandomEvent(rdmply)
-end)
+end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
 function Randomat:EventNotify(title)
     -- Don't broadcast anything when "Secret" is running

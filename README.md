@@ -4,6 +4,13 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 \
 **Edits the original version to support Custom Roles for TTT and add additional events**
 
+# General Commands
+_ttt_randomat_trigger EVENT_ - Triggers a specific randomat event without checking conditions.\
+_ttt_randomat_safetrigger EVENT_ - Triggers a specific randomat event after checking conditions.\
+_ttt_randomat_clearevent EVENT_ - Clears a specific randomat active event.\
+_ttt_randomat_clearevents_ - Clears all active events.\
+_ttt_randomat_triggerrandom_ - Triggers a random  randomat event.
+
 # New Events
 - A Glitch has been patched
 - Camp Fire
