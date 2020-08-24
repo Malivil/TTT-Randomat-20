@@ -49,6 +49,8 @@ net.Receive("DemocracyEventBegin", function()
     end)
 
     net.Receive("DemocracyEventEnd", function()
-        frame:Close()
+        if frame ~= nil and IsValid(frame) then
+            frame:Close()
+        end
     end)
 end)
