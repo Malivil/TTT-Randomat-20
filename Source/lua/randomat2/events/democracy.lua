@@ -112,23 +112,26 @@ end
 
 function EVENT:End()
     timer.Remove("votekilltimer")
-    hook.Remove("VoteKillHook")
     net.Start("DemocracyEventEnd")
     net.Broadcast()
 end
 
-net.Receive("DemocracyPlayerVoted", function(ln, ply)
-    local voterepeatblock = 0
-    local votee = net.ReadString()
-    local num
+function EVENT:Condition()
+    return not Randomat:IsEventActive("election")
+end
 
+net.Receive("DemocracyPlayerVoted", function(ln, ply)
     for k, _ in pairs(playersvoted) do
-        if k == ply then voterepeatblock = 1 end
-        ply:PrintMessage(HUD_PRINTTALK, "you have already voted.")
+        if k == ply then
+            ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
+            return
+        end
     end
 
+    local votee = net.ReadString()
+    local num
     for k, v in pairs(votableplayers) do
-        if v:Nick() == votee and voterepeatblock == 0 then --find which player was voted for
+        if v:Nick() == votee then --find which player was voted for
             playersvoted[ply] = v --insert player and target into table
 
             for _, va in pairs(player.GetAll()) do
