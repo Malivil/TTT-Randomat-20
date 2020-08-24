@@ -174,7 +174,7 @@ function EVENT:StartNominations()
 end
 
 function EVENT:SwearIn(winner)
-    self:SmallNotify(winner:Nick() .. " has been elected President!")
+    self:SmallNotify(winner:Nick() .. " has been elected President!", 3)
 
     local credits = GetConVar("randomat_election_winner_credits"):GetInt()
     -- Wait 3 seconds before applying the affect
@@ -183,9 +183,10 @@ function EVENT:SwearIn(winner)
         if winner:GetRole() == ROLE_INNOCENT or winner:GetRole() == ROLE_MERCENARY or winner:GetRole() == ROLE_PHANTOM or winner:GetRole() == ROLE_GLITCH then
             Randomat:SetRole(winner, ROLE_DETECTIVE)
             winner:AddCredits(credits)
+            SendFullStateUpdate()
         -- Traitor - Announce their role, and give their whole team free credits
         elseif winner:GetRole() == ROLE_TRAITOR or winner:GetRole() == ROLE_ASSASSIN or winner:GetRole() == ROLE_HYPNOTIST then
-            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "!")
+            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their team has been paid for their support.")
 
             for _, v in pairs(self:GetAlivePlayers(false)) do
                 if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
@@ -221,9 +222,26 @@ function EVENT:SwearIn(winner)
         elseif winner:GetRole() == ROLE_ZOMBIE then
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "!")
             Randomat:SilentTriggerEvent("grave", winner)
+        -- Vampire - Convert all of the configured team to vampires
         elseif winner:GetRole() == ROLE_VAMPIRE then
-            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "!")
-            -- TODO: Convert all of the configured team to vampires. Be sure to strip special weapons and give claws
+            local turninnocents = GetConVar("randomat_election_vamp_turn_innocents"):GetBool()
+            local team = turninnocents and "innocents" or "traitors"
+            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! The " .. team .. " have been converted to their thalls.")
+
+            for _, v in pairs(self:GetAlivePlayers(false)) do
+                if turninnocents then
+                    if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
+                        v:StripWeapon("weapon_ttt_wtester")
+                        Randomat:SetRole(v, ROLE_VAMPIRE)
+                    end
+                else
+                    if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
+                        v:StripWeapon("weapon_hyp_brainwash")
+                        Randomat:SetRole(v, ROLE_VAMPIRE)
+                    end
+                end
+            end
+            SendFullStateUpdate()
         end
     end)
 end

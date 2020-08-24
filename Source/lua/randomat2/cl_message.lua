@@ -8,29 +8,26 @@ surface.CreateFont("RandomatSmallMsg", {
     size = 32
 })
 
-net.Receive("randomat_message", function()
-    local Big = net.ReadBool()
-    local msg = net.ReadString()
-    local length = net.ReadUInt(8)
+local function ShowMessage(big, msg, length)
     if length == 0 then length = 5 end
 
-    local NotifyPanel = vgui.Create("DNotify")
+    local panel = vgui.Create("DNotify")
 
-    if Big then
+    if big then
         surface.SetFont("RandomatHeader")
     else
         surface.SetFont("RandomatSmallMsg")
     end
-    NotifyPanel:SetSize(surface.GetTextSize(msg))
-    NotifyPanel:Center()
+    panel:SetSize(surface.GetTextSize(msg))
+    panel:Center()
 
-    local bg = vgui.Create("DPanel", NotifyPanel)
+    local bg = vgui.Create("DPanel", panel)
     bg:SetBackgroundColor(Color(0, 0, 0, 200))
     bg:Dock(FILL)
 
     local lbl = vgui.Create("DLabel", bg)
     lbl:SetText(msg)
-    if Big then
+    if big then
         lbl:SetFont("RandomatHeader")
     else
         lbl:SetFont("RandomatSmallMsg")
@@ -39,50 +36,24 @@ net.Receive("randomat_message", function()
     lbl:SetWrap(true)
     lbl:Dock(FILL)
 
-    local w, h = lbl:GetSize()
-    local tw, th = lbl:GetTextSize()
-
     lbl:SetText(msg)
 
-    NotifyPanel:AddItem(bg, 5)
+    panel:AddItem(bg, length)
+end
+
+net.Receive("randomat_message", function()
+    local big = net.ReadBool()
+    local msg = net.ReadString()
+    local length = net.ReadUInt(8)
+
+    ShowMessage(big, msg, length)
     surface.PlaySound("weapons/c4_initiate.wav")
 end)
 
 net.Receive("randomat_message_silent", function()
-    local Big = net.ReadBool()
+    local big = net.ReadBool()
     local msg = net.ReadString()
     local length = net.ReadUInt(8)
-    if length == 0 then length = 5 end
 
-    local NotifyPanel = vgui.Create("DNotify")
-
-    if Big then
-        surface.SetFont("RandomatHeader")
-    else
-        surface.SetFont("RandomatSmallMsg")
-    end
-    NotifyPanel:SetSize(surface.GetTextSize(msg))
-    NotifyPanel:Center()
-
-    local bg = vgui.Create("DPanel", NotifyPanel)
-    bg:SetBackgroundColor(Color(0, 0, 0, 200))
-    bg:Dock(FILL)
-
-    local lbl = vgui.Create("DLabel", bg)
-    lbl:SetText(msg)
-    if Big then
-        lbl:SetFont("RandomatHeader")
-    else
-        lbl:SetFont("RandomatSmallMsg")
-    end
-    lbl:SetTextColor(Color(255, 200, 0))
-    lbl:SetWrap(true)
-    lbl:Dock(FILL)
-
-    local w, h = lbl:GetSize()
-    local tw, th = lbl:GetTextSize()
-
-    lbl:SetText(msg)
-
-    NotifyPanel:AddItem(bg, 5)
+    ShowMessage(big, msg, length)
 end)

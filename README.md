@@ -11,6 +11,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 - Communism! Time to learn how to share...
 - Don't be so Sensitive
 - Double Cross
+- Election Day
 - Flu Season
 - Glitch in the Matrix
 - I don't think you realise the gravity of the situation.
@@ -213,6 +214,25 @@ Changes a random vanilla Innocent into either a Glitch or a Traitor. There is a 
 \
 _ttt_randomat_doublecross_ - Default: 1 - Whether this event is enabled.\
 _randomat_doublecross_chance_ - Default: 50 - The chance of the Innocent being made a Traitor.
+
+## Election Day
+Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\
+In the second part of the election, the two nominees with the most nominations will take part in a run-off vote, winner takes all.\
+If a member of the innocent team wins the presidency, they are promoted to a Detective and given credits as a reward.\
+If a member of the traitor team wins the presidency, all traitors are given credits as a reward, but the new President's role is revealed.\
+If a Jester wins the presidency, they are killed by whoever owned the Randomat, winning the round.\
+If a Swapper wins the presidency, they are killed by a random player, after which they swap roles.\
+If a Killer wins the presidency, all non-Jester/Swapper players are killed, winning the round for the Killer.\
+If a Zombie wins the presidency, the RISE FROM YOUR GRAVE event is triggered, silently.\
+If a Vampire wins the presidency, the configured team (see _randomat_election_vamp_turn_innocents_ below) are converted to Vampires.
+\
+\
+**ConVars**
+\
+_ttt_randomat_election_ - Default: 1 - Whether this event is enabled.\
+_randomat_election_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
+_randomat_election_winner_credits_ - Default: 2 - The number of credits given as a reward, if appropriate.\
+_randomat_election_vamp_turn_innocents_ - Default: 0 - Whether Vampires turn innocents. Otherwise, turns traitors.
 
 ## Everything is as fast as Flash now! (XX% faster)
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal
