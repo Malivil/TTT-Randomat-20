@@ -9,21 +9,6 @@ CreateConVar("randomat_glitch_damage_scale", 1.0, {FCVAR_NOTIFY, FCVAR_ARCHIVE},
 CreateConVar("randomat_glitch_max_glitches", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The maximum number of Glitches this event will create", 0, 16)
 CreateConVar("randomat_glitch_starting_health", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the Glitches should start with", 1, 200)
 
-local function StripBannedWeapons(ply)
-    if ply:HasWeapon("weapon_hyp_brainwash") then
-        ply:StripWeapon("weapon_hyp_brainwash")
-    end
-    if ply:HasWeapon("weapon_vam_fangs") then
-        ply:StripWeapon("weapon_vam_fangs")
-    end
-    if ply:HasWeapon("weapon_zom_claws") then
-        ply:StripWeapon("weapon_zom_claws")
-    end
-    if ply:HasWeapon("weapon_kil_knife") then
-        ply:StripWeapon("weapon_kil_knife")
-    end
-end
-
 local blocklist = {}
 
 function EVENT:Begin()
@@ -63,7 +48,7 @@ function EVENT:Begin()
             end
         end
 
-        StripBannedWeapons(v)
+        self:StripRoleWeapons(v)
 
         timer.Simple(0.1, function()
             v.glitchweptries = 0

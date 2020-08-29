@@ -22,6 +22,8 @@ function EVENT:Begin()
             v:SetCredits(0)
             v:PrintMessage(HUD_PRINTTALK, "Use the Prop Disguiser to hide from the Traitors!")
         end
+
+        self:StripRoleWeapons(v)
     end
     SendFullStateUpdate()
 
@@ -70,8 +72,9 @@ function EVENT:Condition()
     -- Only run if there is at least one innocent or jester/swapper living
     for _, v in pairs(player.GetAll()) do
         if (v:GetRole() == ROLE_SWAPPER or v:GetRole() == ROLE_JESTER or
-        v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_GLITCH) and
-        v:Alive() and not v:IsSpec() then
+            v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_INNOCENT or
+            v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or
+            v:GetRole() == ROLE_GLITCH) and v:Alive() and not v:IsSpec() then
             return true
         end
     end

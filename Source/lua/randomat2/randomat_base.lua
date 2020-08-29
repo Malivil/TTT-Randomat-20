@@ -371,6 +371,25 @@ function randomat_meta:RenameWeps(name)
     return name
 end
 
+function randomat_meta:StripRoleWeapons(ply)
+    if not IsValid(ply) then return end
+    if ply:HasWeapon("weapon_hyp_brainwash") then
+        ply:StripWeapon("weapon_hyp_brainwash")
+    end
+    if ply:HasWeapon("weapon_vam_fangs") then
+        ply:StripWeapon("weapon_vam_fangs")
+    end
+    if ply:HasWeapon("weapon_zom_claws") then
+        ply:StripWeapon("weapon_zom_claws")
+    end
+    if ply:HasWeapon("weapon_kil_knife") then
+        ply:StripWeapon("weapon_kil_knife")
+    end
+    if ply:HasWeapon("weapon_ttt_wtester") then
+        ply:StripWeapon("weapon_ttt_wtester")
+    end
+end
+
 RDMT_BOOL = 0
 RDMT_INT = 1
 RDMT_FLOAT = 2

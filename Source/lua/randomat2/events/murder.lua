@@ -11,9 +11,10 @@ CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "
 util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
 
-local function StripBannedWeapons(ply)
+function EVENT:StripBannedWeapons(ply)
+    self:StripRoleWeapons(ply)
     for _, wep in pairs(ply:GetWeapons()) do
-        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised" or wep.ClassName == "weapon_ttt_crowbar_fast" or wep.ClassName == "weapon_ttt_innocent_knife" or wep.ClassName == "weapon_ttt_wrench" or wep.ClassName == "weapon_hyp_brainwash" or wep.ClassName == "weapon_vam_fangs" or wep.ClassName == "weapon_zom_claws"
+        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised" or wep.ClassName == "weapon_ttt_crowbar_fast" or wep.ClassName == "weapon_ttt_innocent_knife" or wep.ClassName == "weapon_ttt_wrench"
              then
             ply:StripWeapon(wep.ClassName)
             ply:SetFOV(0, 0.2)
@@ -43,14 +44,14 @@ function EVENT:Begin()
     for _, v in pairs(self.GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_DETECTIVE then
             timer.Create("RandomatRevolverTimer", 0.15, 1, function()
-                StripBannedWeapons(v)
+                self:StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatrevolver")
                 v:SetNWBool("RdmMurderRevolver", true)
             end)
         elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE then
             Randomat:SetRole(v, ROLE_TRAITOR)
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
-                StripBannedWeapons(v)
+                self:StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatknife")
             end)
         -- Anyone else except Killers become Innocent
@@ -65,7 +66,7 @@ function EVENT:Begin()
 
     timer.Create("RandomatMurderTimer", 0.1, 0, function()
         for _, v in pairs(self.GetAlivePlayers(true)) do
-            StripBannedWeapons(v)
+            self:StripBannedWeapons(v)
 
             if v:GetRole() ~= ROLE_TRAITOR and v:GetNWInt("MurderWeaponsEquipped") >= pck then
                 v:SetNWInt("MurderWeaponsEquipped", 0)
