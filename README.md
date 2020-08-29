@@ -384,7 +384,8 @@ Allows players to vote to kill someone repeatedly until the event ends
 _ttt_randomat_democracy_ - Default: 1 - Whether this event is enabled.\
 _randomat_democracy_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_democracy_tiekills_ - Default: 1 - If 1, ties result in a coin toss; if 0, nobody dies in a tied vote.\
-_randomat_democracy_totalpct_ - Default: 50 - Percent of total player votes required for a vote to pass, set to 0 to disable.
+_randomat_democracy_totalpct_ - Default: 50 - Percent of total player votes required for a vote to pass, set to 0 to disable.\
+_randomat_democracy_jesterwins_ - Default: 0 - Whether the Jester/Swapper wins the round if they are voted for.
 
 ## I see dead people
 Drops a Visualizer whenever a player is killed

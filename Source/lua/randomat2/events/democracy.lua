@@ -4,14 +4,19 @@ util.AddNetworkString("DemocracyEventBegin")
 util.AddNetworkString("DemocracyEventEnd")
 util.AddNetworkString("DemocracyPlayerVoted")
 util.AddNetworkString("DemocracyReset")
-CreateConVar("randomat_democracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts")
-CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "If 1, ties result in a coin toss; if 0, nobody dies in a tied vote.")
-CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Percent of total player votes required for a vote to pass, set to 0 to disable")
+CreateConVar("randomat_democracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 10, 90)
+CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody dies")
+CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
+CreateConVar("randomat_democracy_jesterwins", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether the Jester/Swapper wins the round if they are voted for")
 
 EVENT.Title = "I love democracy, I love the republic."
 EVENT.AltTitle = "Democracy"
 EVENT.id = "democracy"
 
+local playervotes = {}
+local votableplayers = {}
+local playersvoted = {}
+local aliveplys = {}
 
 function EVENT:Begin()
     net.Start("DemocracyEventBegin")
@@ -80,8 +85,20 @@ function EVENT:Begin()
                         for voter, tgt in RandomPairs(playersvoted) do
                             if voter:Alive() and not voter:IsSpec() and jesterrepeater == 0 and voter:GetRole() ~= ROLE_JESTER and voter:GetRole() ~= ROLE_SWAPPER and tgt == slainply then
                                 jesterrepeater = 1
-                                voter:Kill()
                                 self:SmallNotify(voter:Nick().." was dumb enough to vote for the Jester!")
+
+                                if GetConVar("randomat_democracy_jesterwins"):GetBool() then
+                                    local dmginfo = DamageInfo()
+                                    dmginfo:SetDamage(10000)
+                                    dmginfo:SetAttacker(voter)
+                                    dmginfo:SetInflictor(game.GetWorld())
+                                    dmginfo:SetDamageType(DMG_BULLET)
+                                    dmginfo:SetDamageForce(Vector(0, 0, 0))
+                                    dmginfo:SetDamagePosition(voter:GetPos())
+                                    slainply:TakeDamageInfo(dmginfo)
+                                else
+                                    voter:Kill()
+                                end
                             end
                         end
                     else
@@ -118,6 +135,37 @@ end
 
 function EVENT:Condition()
     return not Randomat:IsEventActive("election")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer", "totalpct"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    local checks = {}
+    for _, v in pairs({"tiekills", "jesterwins"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+
+    return sliders, checks
 end
 
 net.Receive("DemocracyPlayerVoted", function(ln, ply)
