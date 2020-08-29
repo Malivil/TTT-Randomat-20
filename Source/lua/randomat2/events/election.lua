@@ -12,6 +12,7 @@ util.AddNetworkString("ElectionVoteEnd")
 CreateConVar("randomat_election_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 30, 180)
 CreateConVar("randomat_election_winner_credits", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of credits given as a reward, if appropriate", 1, 10)
 CreateConVar("randomat_election_vamp_turn_innocents", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether Vampires turn innocents. Otherwise, turns traitors")
+CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show who each player voted for in chat")
 
 EVENT.Title = "Election Day"
 EVENT.AltTitle = ""
@@ -287,7 +288,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"vamp_turn_innocents"}) do
+    for _, v in pairs({"vamp_turn_innocents", "show_votes"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -316,6 +317,12 @@ net.Receive("ElectionNominateVoted", function(ln, ply)
             playersvoted[ply] = v
             playervotes[votee] = playervotes[votee] + 1
             num = playervotes[votee]
+
+            if GetConVar("randomat_election_show_votes"):GetBool() then
+                for _, va in pairs(player.GetAll()) do
+                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted for "..votee)
+                end
+            end
         end
     end
 
@@ -340,6 +347,12 @@ net.Receive("ElectionVoteVoted", function(ln, ply)
             playersvoted[ply] = v
             playervotes[votee] = playervotes[votee] + 1
             num = playervotes[votee]
+
+            if GetConVar("randomat_election_show_votes"):GetBool() then
+                for _, va in pairs(player.GetAll()) do
+                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted for "..votee)
+                end
+            end
         end
     end
 
