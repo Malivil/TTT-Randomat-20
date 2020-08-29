@@ -28,7 +28,7 @@ function EVENT:Begin()
 
     hook.Add("PlayerDeath", "RandomatPresident", function(tgt, dmg, ply)
         if tgt:IsValid() and tgt == owner then
-            for _, v in pairs(self:GetAlivePlayers(true)) do
+            for _, v in pairs(self:GetAlivePlayers()) do
                 if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_GLITCH or v:GetRole() == ROLE_DETECTIVE then
                     v:Kill()
                 end
@@ -43,7 +43,7 @@ end
 
 function EVENT:Condition()
     local d = 0
-    for k, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE then
             d = 1
         end

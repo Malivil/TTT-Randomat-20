@@ -42,7 +42,7 @@ end
 
 function EVENT:Condition()
     local x = 0
-    for _, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
             x = 1
         end

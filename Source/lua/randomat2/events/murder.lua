@@ -26,7 +26,7 @@ function EVENT:Begin()
     -- Sync the convar for gun highlighting
     SetGlobalBool("randomat_murder_highlight_gun", GetConVar("randomat_murder_highlight_gun"):GetBool())
 
-    local players = #self:GetAlivePlayers(true)
+    local players = #self:GetAlivePlayers()
     local wepspawns = 0
 
     for _, v in pairs(ents.GetAll()) do
@@ -41,7 +41,7 @@ function EVENT:Begin()
     net.WriteInt(pck, 32)
     net.Broadcast()
 
-    for _, v in pairs(self.GetAlivePlayers(true)) do
+    for _, v in pairs(self.GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE then
             timer.Create("RandomatRevolverTimer", 0.15, 1, function()
                 self:StripBannedWeapons(v)
@@ -65,7 +65,7 @@ function EVENT:Begin()
     SendFullStateUpdate()
 
     timer.Create("RandomatMurderTimer", 0.1, 0, function()
-        for _, v in pairs(self.GetAlivePlayers(true)) do
+        for _, v in pairs(self.GetAlivePlayers()) do
             self:StripBannedWeapons(v)
 
             if v:GetRole() ~= ROLE_TRAITOR and v:GetNWInt("MurderWeaponsEquipped") >= pck then

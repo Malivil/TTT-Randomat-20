@@ -8,7 +8,7 @@ CreateConVar("randomat_blink_delay", 0.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Delay 
 
 function EVENT:Begin()
     local plys = {}
-    for _, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in pairs(self:GetAlivePlayers()) do
         table.insert(plys, v)
     end
     local k = 1

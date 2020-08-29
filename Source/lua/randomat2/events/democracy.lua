@@ -44,7 +44,7 @@ function EVENT:Begin()
             for _, v in pairs(playervotes) do -- Tally up votes
                 votenumber = votenumber + v
             end
-            for _, v in pairs(self:GetAlivePlayers(true)) do
+            for _, v in pairs(self:GetAlivePlayers()) do
                 table.insert(aliveplys, v)
             end
 

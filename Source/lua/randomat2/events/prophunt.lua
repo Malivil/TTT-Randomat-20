@@ -9,7 +9,7 @@ EVENT.Title = "Prop Hunt"
 EVENT.id = "prophunt"
 
 function EVENT:Begin()
-    for _, v in pairs(self.GetAlivePlayers(true)) do
+    for _, v in pairs(self.GetAlivePlayers()) do
         -- All bad guys are traitors
         if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_KILLER then
             Randomat:SetRole(v, ROLE_TRAITOR)
@@ -29,7 +29,7 @@ function EVENT:Begin()
 
     timer.Create("RandomatPropHuntTimer", GetConVar("randomat_prophunt_timer"):GetInt(), 0, function()
         local weaponid = GetConVar("randomat_prophunt_weaponid"):GetString()
-        for _, ply in pairs(self:GetAlivePlayers(true)) do
+        for _, ply in pairs(self:GetAlivePlayers()) do
             if ply:GetRole() == ROLE_INNOCENT then
                 if GetConVar("randomat_prophunt_strip"):GetBool() then
                     for _, wep in pairs(ply:GetWeapons()) do

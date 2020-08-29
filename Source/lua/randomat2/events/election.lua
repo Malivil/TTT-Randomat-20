@@ -188,7 +188,7 @@ function EVENT:SwearIn(winner)
         elseif winner:GetRole() == ROLE_TRAITOR or winner:GetRole() == ROLE_ASSASSIN or winner:GetRole() == ROLE_HYPNOTIST then
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their team has been paid for their support.")
 
-            for _, v in pairs(self:GetAlivePlayers(false)) do
+            for _, v in pairs(self:GetAlivePlayers()) do
                 if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
                     v:AddCredits(credits)
                 end
@@ -213,7 +213,7 @@ function EVENT:SwearIn(winner)
             winner:TakeDamageInfo(dmginfo)
         -- Killer - Kill all non-Jesters/Swappers so they win the round
         elseif winner:GetRole() == ROLE_KILLER then
-            for _, v in pairs(self:GetAlivePlayers(false)) do
+            for _, v in pairs(self:GetAlivePlayers()) do
                 if v:GetRole() ~= ROLE_JESTER and v:GetRole() ~= ROLE_SWAPPER and v ~= winner then
                     v:Kill()
                 end
@@ -228,7 +228,7 @@ function EVENT:SwearIn(winner)
             local team = turninnocents and "innocents" or "traitors"
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! The " .. team .. " have been converted to their thalls.")
 
-            for _, v in pairs(self:GetAlivePlayers(false)) do
+            for _, v in pairs(self:GetAlivePlayers()) do
                 if turninnocents then
                     if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
                         v:StripWeapon("weapon_ttt_wtester")

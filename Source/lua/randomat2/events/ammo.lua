@@ -7,7 +7,7 @@ CreateConVar("randomat_ammo_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "W
 
 function EVENT:Begin()
     hook.Add("Think", "RandomatAmmo", function()
-        for _, v in pairs(self:GetAlivePlayers(true)) do
+        for _, v in pairs(self:GetAlivePlayers()) do
             if not v:GetActiveWeapon().CanBuy or GetConVar("randomat_ammo_affectbuymenu"):GetBool() then
                 v:GetActiveWeapon():SetClip1(v:GetActiveWeapon().Primary.ClipSize)
             end

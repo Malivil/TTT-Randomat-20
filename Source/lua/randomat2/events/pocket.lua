@@ -13,7 +13,7 @@ function EVENT:Begin()
     end
 
     timer.Simple(0.1, function()
-        for _, ply in pairs(self:GetAlivePlayers(true)) do
+        for _, ply in pairs(self:GetAlivePlayers()) do
             ply.pocketweptries = 0
             self:GiveWep(ply)
         end
