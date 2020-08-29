@@ -8,9 +8,18 @@ EVENT.Title = "Harpooooooooooooooooooooon!!"
 EVENT.id = "harpoon"
 
 function EVENT:Begin()
+    for _, v in pairs(self.GetAlivePlayers()) do
+        -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
+        if v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_KILLER then
+            Randomat:SetRole(v, ROLE_TRAITOR)
+            self:StripRoleWeapons(v)
+        end
+    end
+    SendFullStateUpdate()
+
     timer.Create("RandomatPoonTimer", GetConVar("randomat_harpoon_timer"):GetInt(), 0, function()
         local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
-        for _, ply in pairs(self:GetAlivePlayers(true)) do
+        for _, ply in pairs(self:GetAlivePlayers()) do
             if GetConVar("randomat_harpoon_strip"):GetBool() then
                 for _, wep in pairs(ply:GetWeapons()) do
                     local weaponclass = WEPS.GetClass(wep)
