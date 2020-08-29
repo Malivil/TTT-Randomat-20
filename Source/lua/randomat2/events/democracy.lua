@@ -78,7 +78,7 @@ function EVENT:Begin()
                     if slainply:GetRole() == ROLE_JESTER or slainply:GetRole() == ROLE_SWAPPER then
                         local jesterrepeater = 0
                         for voter, tgt in RandomPairs(playersvoted) do
-                            if jesterrepeater == 0 and voter:GetRole() ~= ROLE_JESTER and voter:GetRole() ~= ROLE_SWAPPER and tgt == slainply then
+                            if voter:Alive() and not voter:IsSpec() and jesterrepeater == 0 and voter:GetRole() ~= ROLE_JESTER and voter:GetRole() ~= ROLE_SWAPPER and tgt == slainply then
                                 jesterrepeater = 1
                                 voter:Kill()
                                 self:SmallNotify(voter:Nick().." was dumb enough to vote for the Jester!")
