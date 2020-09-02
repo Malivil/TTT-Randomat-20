@@ -244,6 +244,8 @@ function EVENT:SwearIn(winner)
             end
             SendFullStateUpdate()
         end
+
+        Randomat:EndActiveEvent(self.id)
     end)
 end
 
@@ -303,12 +305,12 @@ function EVENT:GetConVars()
 end
 
 net.Receive("ElectionNominateVoted", function(ln, ply)
-    for k, _ in pairs(playersvoted) do
-        if k == ply then
-            ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
-            return
-        end
-    end
+    --for k, _ in pairs(playersvoted) do
+    --    if k == ply then
+    --        ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
+    --        return
+    --    end
+    --end
 
     local num = 0
     local votee = net.ReadString()
@@ -333,12 +335,12 @@ net.Receive("ElectionNominateVoted", function(ln, ply)
 end)
 
 net.Receive("ElectionVoteVoted", function(ln, ply)
-    for k, _ in pairs(playersvoted) do
-        if k == ply then
-            ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
-            return
-        end
-    end
+    --for k, _ in pairs(playersvoted) do
+    --    if k == ply then
+    --        ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
+    --        return
+    --    end
+    --end
 
     local num = 0
     local votee = net.ReadString()

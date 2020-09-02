@@ -69,15 +69,7 @@ end
 
 concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
     local cmd = arg[1]
-    for k, evt in pairs(Randomat.ActiveEvents) do
-        if evt.Id == cmd then
-            evt:End()
-            table.remove(Randomat.ActiveEvents, k)
-            return
-        end
-    end
-
-    error("Could not find active event '" .. cmd .. "'")
+    Randomat:EndActiveEvent(cmd)
 end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
 
 concommand.Add("ttt_randomat_clearevents",function(ply, cc, arg)
@@ -90,7 +82,19 @@ concommand.Add("ttt_randomat_clearevents",function(ply, cc, arg)
     end
 end, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 
- function Randomat:IsEventActive(id)
+function Randomat:EndActiveEvent(id)
+    for k, evt in pairs(Randomat.ActiveEvents) do
+        if evt.Id == id then
+            evt:End()
+            table.remove(Randomat.ActiveEvents, k)
+            return
+        end
+    end
+
+    error("Could not find active event '" .. id .. "'")
+end
+
+function Randomat:IsEventActive(id)
     for _, v in pairs(Randomat.ActiveEvents) do
         if v.id == id then
             return true
