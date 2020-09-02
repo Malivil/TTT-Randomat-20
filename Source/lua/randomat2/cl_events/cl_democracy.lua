@@ -1,15 +1,18 @@
+local voteframe = nil
+local jesterframe = nil
+
 net.Receive("DemocracyEventBegin", function()
-    local frame = vgui.Create("DFrame")
-    frame:SetPos(10, ScrH() - 800)
-    frame:SetSize(200, 300)
-    frame:SetTitle("Open Scoreboard to Interact")
-    frame:SetDraggable(false)
-    frame:ShowCloseButton(false)
-    frame:SetVisible(true)
-    frame:SetDeleteOnClose(true)
+    voteframe = vgui.Create("DFrame")
+    voteframe:SetPos(10, ScrH() - 800)
+    voteframe:SetSize(200, 300)
+    voteframe:SetTitle("Vote to Kill")
+    voteframe:SetDraggable(false)
+    voteframe:ShowCloseButton(false)
+    voteframe:SetVisible(true)
+    voteframe:SetDeleteOnClose(true)
 
     --Player List
-    local list = vgui.Create("DListView", frame)
+    local list = vgui.Create("DListView", voteframe)
     list:Dock(FILL)
     list:SetMultiSelect(false)
     list:AddColumn("Players")
@@ -47,10 +50,44 @@ net.Receive("DemocracyEventBegin", function()
             v:SetColumnText(2, 0)
         end
     end)
+end)
 
-    net.Receive("DemocracyEventEnd", function()
-        if frame ~= nil and IsValid(frame) then
-            frame:Close()
+net.Receive("DemocracyJesterRevenge", function()
+    jesterframe = vgui.Create("DFrame")
+    jesterframe:SetPos(10, ScrH() - 800)
+    jesterframe:SetSize(200, 300)
+    jesterframe:SetTitle("Choose Your Revenge")
+    jesterframe:SetDraggable(false)
+    jesterframe:ShowCloseButton(false)
+    jesterframe:SetVisible(true)
+    jesterframe:SetDeleteOnClose(true)
+
+    --Player List
+    local list = vgui.Create("DListView", jesterframe)
+    list:Dock(FILL)
+    list:SetMultiSelect(false)
+    list:AddColumn("Players")
+
+    local voters = net.ReadTable()
+    for _, v in pairs(voters) do
+        if v:Alive() and not v:IsSpec() then
+            list:AddLine(v:Nick())
         end
-    end)
+    end
+
+    list.OnRowSelected = function(lst, index, pnl)
+        net.Start("DemocracyJesterVoted")
+        net.WriteString(pnl:GetColumnText(1))
+        net.SendToServer()
+        jesterframe:Close()
+    end
+end)
+
+net.Receive("DemocracyEventEnd", function()
+    if voteframe ~= nil and IsValid(voteframe) then
+        voteframe:Close()
+    end
+    if jesterframe ~= nil and IsValid(jesterframe) then
+        jesterframe:Close()
+    end
 end)
