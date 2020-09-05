@@ -7,18 +7,25 @@ CreateConVar("randomat_harpoon_weaponid", "ttt_m9k_harpoon", {FCVAR_ARCHIVE, FCV
 EVENT.Title = "Harpooooooooooooooooooooon!!"
 EVENT.id = "harpoon"
 
+function EVENT:HandleRoleWeapons(ply)
+    -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
+    if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER then
+        Randomat:SetRole(ply, ROLE_TRAITOR)
+        self:StripRoleWeapons(ply)
+        return true
+    end
+    return false
+end
+
 function EVENT:Begin()
     for _, v in pairs(self.GetAlivePlayers()) do
-        -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-        if v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_KILLER then
-            Randomat:SetRole(v, ROLE_TRAITOR)
-            self:StripRoleWeapons(v)
-        end
+        self:HandleRoleWeapons(v)
     end
     SendFullStateUpdate()
 
     timer.Create("RandomatPoonTimer", GetConVar("randomat_harpoon_timer"):GetInt(), 0, function()
         local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
+        local updated = false
         for _, ply in pairs(self:GetAlivePlayers()) do
             if GetConVar("randomat_harpoon_strip"):GetBool() then
                 for _, wep in pairs(ply:GetWeapons()) do
@@ -32,6 +39,14 @@ function EVENT:Begin()
             if not ply:HasWeapon(weaponid) then
                 ply:Give(weaponid)
             end
+
+            -- Workaround the case where people can respawn as Zombies while this is running
+            updated = updated or self:HandleRoleWeapons(ply)
+        end
+
+        -- If anyone's role changed, send the update
+        if updated then
+            SendFullStateUpdate()
         end
     end)
 
