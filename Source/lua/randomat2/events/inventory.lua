@@ -8,7 +8,7 @@ CreateConVar("randomat_inventory_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Tim
 local function HandleWeapons(ply, weapons, from_killer)
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
     local active_class = nil
-    local active_kind = WEAPON_MELEE
+    local active_kind = WEAPON_UNARMED
     if IsValid(ply:GetActiveWeapon()) then
         active_class = WEPS.GetClass(ply:GetActiveWeapon())
         active_kind = WEPS.TypeForWeapon(active_class)
@@ -40,15 +40,18 @@ local function HandleWeapons(ply, weapons, from_killer)
     for _, w in ipairs(ply:GetWeapons()) do
         local w_class = WEPS.GetClass(w)
         local w_kind = WEPS.TypeForWeapon(w_class)
-        if w_class == active_class or w_kind == active_kind then
+        if (active_class ~= nil and w_class == active_class) or w_kind == active_kind then
             select_class = w_class
         end
     end
 
-    -- Delay seems to be necessary to reliably change weapons after having them all added
-    timer.Simple(0.25, function()
-        ply:SelectWeapon(select_class)
-    end)
+    -- Only try to select a weapon if one was found
+    if select_class ~= nil then
+        -- Delay seems to be necessary to reliably change weapons after having them all added
+        timer.Simple(0.25, function()
+            ply:SelectWeapon(select_class)
+        end)
+    end
 end
 
 function EVENT:Begin()
