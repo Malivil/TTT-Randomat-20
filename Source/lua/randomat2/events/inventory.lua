@@ -7,9 +7,15 @@ CreateConVar("randomat_inventory_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Tim
 
 local function HandleWeapons(ply, weapons, from_killer)
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
+    local active_class = nil
+    local active_kind = WEAPON_MELEE
+    if IsValid(ply:GetActiveWeapon()) then
+        active_class = WEPS.GetClass(ply:GetActiveWeapon())
+        active_kind = WEPS.TypeForWeapon(active_class)
+    end
     ply:StripWeapons()
 
-    for _, v in pairs(weapons) do
+    for _, v in ipairs(weapons) do
         ply:Give(WEPS.GetClass(v))
         ply:SetFOV(0, 0.2)
     end
@@ -28,6 +34,21 @@ local function HandleWeapons(ply, weapons, from_killer)
 
     -- Immediately switch to unarmed to we don't show other players our potentially-illegal first weapon (e.g. Killer's knife)
     ply:SelectWeapon("weapon_ttt_unarmed")
+
+    -- Try to find the correct weapon to select so the transition is less jarring
+    local select_class = nil
+    for _, w in ipairs(ply:GetWeapons()) do
+        local w_class = WEPS.GetClass(w)
+        local w_kind = WEPS.TypeForWeapon(w_class)
+        if w_class == active_class or w_kind == active_kind then
+            select_class = w_class
+        end
+    end
+
+    -- Delay seems to be necessary to reliably change weapons after having them all added
+    timer.Simple(0.25, function()
+        ply:SelectWeapon(select_class)
+    end)
 end
 
 function EVENT:Begin()
