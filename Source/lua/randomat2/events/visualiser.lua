@@ -5,7 +5,7 @@ EVENT.id = "visualiser"
 
 function EVENT:Begin()
     hook.Add("PlayerDeath", "RandomatVisualiser", function(ply)
-        cse = ents.Create("ttt_cse_proj")
+        local cse = ents.Create("ttt_cse_proj")
         if IsValid(cse) then
             cse:SetPos(ply:GetPos())
             cse:SetOwner(ply)

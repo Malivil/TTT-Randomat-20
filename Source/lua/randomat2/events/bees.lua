@@ -18,7 +18,7 @@ function EVENT:Begin()
             rdmply = plys[math.random(1,#plys)]
         end
         local spos = rdmply:GetPos() + Vector(math.random(-75,75),math.random(-75,75),math.random(200,250))
-        local headBee = SpawnNPC(ply, spos, "npc_manhack")
+        local headBee = SpawnNPC(rdmply, spos, "npc_manhack")
         headBee:SetNPCState(2)
         local bee = ents.Create("prop_dynamic")
         bee:SetModel("models/lucian/props/stupid_bee.mdl")
