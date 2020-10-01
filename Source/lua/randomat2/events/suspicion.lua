@@ -28,6 +28,7 @@ function EVENT:Begin()
 
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
             Randomat:SetRole(suspicionply, ROLE_JESTER)
+            suspicionply:SetCredits(0)
             for _, v in pairs(traitor) do
                 v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick().." is a jester")
                 v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is a jester")

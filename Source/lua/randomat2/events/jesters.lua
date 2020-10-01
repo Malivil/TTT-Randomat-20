@@ -17,6 +17,7 @@ function EVENT:Begin()
             end
         else
             Randomat:SetRole(ply, ROLE_JESTER)
+            ply:SetCredits(0)
             for _, wep in pairs(ply:GetWeapons()) do
                 if wep.Kind == WEAPON_EQUIP1 or wep.Kind == WEAPON_EQUIP2 then
                     ply:StripWeapon(wep:GetClass())
