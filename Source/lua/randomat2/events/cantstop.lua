@@ -11,7 +11,7 @@ function EVENT:Begin()
         plys[k] = v
     end
     hook.Add("Think", "ForceWalk", function()
-        for k, v in pairs(plys) do
+        for _, v in pairs(plys) do
             if v:Alive() and not v:IsSpec() then
                 v:ConCommand("+forward")
                 if GetConVar("randomat_cantstop_disableback"):GetBool() then
@@ -19,7 +19,6 @@ function EVENT:Begin()
                 end
             else
                 v:ConCommand("-forward")
-                plys[k] = nil
             end
         end
     end)
