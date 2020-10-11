@@ -337,6 +337,8 @@ function randomat_meta:GetRoleName(ply)
         return "A glitch"
     elseif ply:GetRole() == ROLE_PHANTOM then
         return "A phantom"
+    elseif ply:GetRole() == ROLE_DETRAITOR then
+        return "A detraitor"
     end
 
     return "Someone"

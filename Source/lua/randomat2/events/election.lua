@@ -186,11 +186,11 @@ function EVENT:SwearIn(winner)
             winner:AddCredits(credits)
             SendFullStateUpdate()
         -- Traitor - Announce their role, and give their whole team free credits
-        elseif winner:GetRole() == ROLE_TRAITOR or winner:GetRole() == ROLE_ASSASSIN or winner:GetRole() == ROLE_HYPNOTIST then
+        elseif winner:GetRole() == ROLE_TRAITOR or winner:GetRole() == ROLE_ASSASSIN or winner:GetRole() == ROLE_HYPNOTIST or winner:GetRole() == ROLE_DETRAITOR then
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their team has been paid for their support.")
 
             for _, v in pairs(self:GetAlivePlayers()) do
-                if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
+                if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_DETRAITOR then
                     v:AddCredits(credits)
                 end
             end
@@ -236,7 +236,7 @@ function EVENT:SwearIn(winner)
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end
                 else
-                    if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST then
+                    if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_DETRAITOR then
                         v:StripWeapon("weapon_hyp_brainwash")
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end

@@ -70,7 +70,7 @@ end
 
 function IsEvil(ply)
    local rl = ply:GetRole()
-   if rl == ROLE_TRAITOR or rl == ROLE_HYPNOTIST or rl == ROLE_ASSASSIN or rl == ROLE_ZOMBIE or rl == ROLE_VAMPIRE or rl == ROLE_KILLER then
+   if rl == ROLE_TRAITOR or rl == ROLE_HYPNOTIST or rl == ROLE_ASSASSIN or rl == ROLE_ZOMBIE or rl == ROLE_VAMPIRE or rl == ROLE_KILLER or rl == ROLE_DETRAITOR then
       return true
    else
       return false

@@ -11,7 +11,7 @@ function EVENT:Begin()
     local suspicionply = 0
 
     for _, v in pairs(self:GetAlivePlayers(true)) do
-        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN then
+        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_DETRAITOR then
             table.insert(traitor, v)
             if suspicionply == 0 then
                 suspicionply = v

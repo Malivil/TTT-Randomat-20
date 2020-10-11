@@ -9,7 +9,7 @@ EVENT.id = "harpoon"
 
 function EVENT:HandleRoleWeapons(ply)
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER then
+    if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER or ply:GetRole() == ROLE_DETRAITOR then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         self:StripRoleWeapons(ply)
         return true

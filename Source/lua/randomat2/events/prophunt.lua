@@ -10,7 +10,7 @@ EVENT.id = "prophunt"
 
 function EVENT:HandleRoleWeapons(ply)
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER then
+    if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER or ply:GetRole() == ROLE_DETRAITOR then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         self:StripRoleWeapons(ply)
         return true
@@ -21,7 +21,7 @@ end
 function EVENT:Begin()
     for _, v in pairs(self.GetAlivePlayers()) do
         -- All bad guys are traitors
-        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_KILLER then
+        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_KILLER or v:GetRole() == ROLE_DETRAITOR then
             Randomat:SetRole(v, ROLE_TRAITOR)
             if v:GetCredits() == 0 then
                 v:SetCredits(1)

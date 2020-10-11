@@ -25,7 +25,7 @@ net.Receive("MurderEventActive", function()
 
             local y = ScrH() - 55
 
-            if rl ~= ROLE_TRAITOR and rl ~= ROLE_ASSASSIN and rl ~= ROLE_HYPNOTIST and rl ~= ROLE_ZOMBIE and rl ~= ROLE_VAMPIRE and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
+            if rl ~= ROLE_TRAITOR and rl ~= ROLE_DETRAITOR and rl ~= ROLE_ASSASSIN and rl ~= ROLE_HYPNOTIST and rl ~= ROLE_ZOMBIE and rl ~= ROLE_VAMPIRE and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
                 local texttable = {}
                 texttable.font = "HealthAmmo"
                 texttable.color = COLOR_WHITE

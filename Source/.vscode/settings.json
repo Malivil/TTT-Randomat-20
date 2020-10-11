@@ -103,6 +103,7 @@
         "DMG_CRUSH",
         "HUD_PRINTCENTER",
         "FCVAR_SERVER_CAN_EXECUTE",
-        "isnumber"
+        "isnumber",
+        "ROLE_DETRAITOR"
     ]
 }
