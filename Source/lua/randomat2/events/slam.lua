@@ -52,7 +52,7 @@ function EVENT:Begin()
     end)
 
     hook.Add("PlayerCanPickupWeapon", "RdmtSlamPickupHook", function(ply, wep)
-        if not GetConVar("randomat_slam_strip"):GetBool() then return true end
+        if not GetConVar("randomat_slam_strip"):GetBool() then return end
         return IsValid(wep) and WEPS.GetClass(wep) == GetConVar("randomat_slam_weaponid"):GetString()
     end)
 end
