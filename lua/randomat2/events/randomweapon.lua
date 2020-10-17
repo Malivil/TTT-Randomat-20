@@ -18,23 +18,27 @@ function EVENT:Begin()
     end
 
     for _, ply in pairs(self:GetPlayers()) do
-        for _, wep in pairs(ply:GetWeapons()) do
-            if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL then
-                ply:StripWeapon(wep:GetClass())
+        self:HandleWeaponAddAndSelect(ply, function(active_class, active_kind)
+            for _, wep in pairs(ply:GetWeapons()) do
+                if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL then
+                    ply:StripWeapon(wep:GetClass())
+                end
             end
-        end
 
-        -- Reset FOV to unscope
-        ply:SetFOV(0, 0.2)
+            -- Reset FOV to unscope weapons if they were possibly scoped in
+            if active_kind == WEAPON_HEAVY or active_kind == WEAPON_PISTOL then
+                ply:SetFOV(0, 0.2)
+            end
 
-        local rdmwep1 = table.Random(tbl1)
-        local rdmwep2 = table.Random(tbl2)
+            local rdmwep1 = table.Random(tbl1)
+            local rdmwep2 = table.Random(tbl2)
 
-        local wep1 = ply:Give(rdmwep1.ClassName)
-        local wep2 = ply:Give(rdmwep2.ClassName)
+            local wep1 = ply:Give(rdmwep1.ClassName)
+            local wep2 = ply:Give(rdmwep2.ClassName)
 
-        wep1.AllowDrop = false
-        wep2.AllowDrop = false
+            wep1.AllowDrop = false
+            wep2.AllowDrop = false
+        end)
     end
 end
 

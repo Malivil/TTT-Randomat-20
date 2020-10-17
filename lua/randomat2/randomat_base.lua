@@ -408,6 +408,35 @@ function randomat_meta:CreateCmd(str, val, desc, slider)
     table.insert(self.cmds, {})
 end
 
+function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
+    local active_class = nil
+    local active_kind = WEAPON_UNARMED
+    if IsValid(ply:GetActiveWeapon()) then
+        active_class = WEPS.GetClass(ply:GetActiveWeapon())
+        active_kind = WEPS.TypeForWeapon(active_class)
+    end
+
+    -- Handle adding weapons
+    addweapons(active_class, active_kind)
+
+    -- Try to find the correct weapon to select so the transition is less jarring
+    local select_class = nil
+    for _, w in ipairs(ply:GetWeapons()) do
+        local w_class = WEPS.GetClass(w)
+        local w_kind = WEPS.TypeForWeapon(w_class)
+        if (active_class ~= nil and w_class == active_class) or w_kind == active_kind then
+            select_class = w_class
+        end
+    end
+
+    -- Only try to select a weapon if one was found
+    if select_class ~= nil then
+        -- Delay seems to be necessary to reliably change weapons after having them all added
+        timer.Simple(0.25, function()
+            ply:SelectWeapon(select_class)
+        end)
+    end
+end
 
 --[[
  Override TTT Stuff
