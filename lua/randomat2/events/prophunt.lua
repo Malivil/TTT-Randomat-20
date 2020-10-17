@@ -49,6 +49,9 @@ function EVENT:Begin()
                             ply:StripWeapon(weaponclass)
                         end
                     end
+
+                    -- Reset FOV to unscope
+                    ply:SetFOV(0, 0.2)
                 end
 
                 if not ply:HasWeapon(weaponid) then

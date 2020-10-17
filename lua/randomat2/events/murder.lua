@@ -17,6 +17,7 @@ function EVENT:StripBannedWeapons(ply)
         if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised" or wep.ClassName == "weapon_ttt_crowbar_fast" or wep.ClassName == "weapon_ttt_innocent_knife" or wep.ClassName == "weapon_ttt_wrench"
              then
             ply:StripWeapon(wep.ClassName)
+            -- Reset FOV to unscope
             ply:SetFOV(0, 0.2)
         end
     end

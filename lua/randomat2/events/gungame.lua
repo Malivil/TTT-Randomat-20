@@ -30,7 +30,9 @@ function EVENT:Begin()
             end
             local wepGiven = table.Random(weps)
             v:Give(wepGiven.ClassName)
+            -- Reset FOV to unscope
             v:SetFOV(0, 0.2)
+
             if ac then
                 v:SelectWeapon(wepGiven.ClassName)
             end

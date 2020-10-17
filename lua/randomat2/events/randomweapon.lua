@@ -24,6 +24,9 @@ function EVENT:Begin()
             end
         end
 
+        -- Reset FOV to unscope
+        ply:SetFOV(0, 0.2)
+
         local rdmwep1 = table.Random(tbl1)
         local rdmwep2 = table.Random(tbl2)
 
