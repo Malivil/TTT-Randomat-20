@@ -10,7 +10,7 @@ function EVENT:Begin()
         playerhealth[v:GetName()] = v:Health()
     end
 
-    hook.Add("Think", "RdmtHealCheckHook", function()
+    self:AddHook("Think", function()
         for _, v in pairs(self:GetAlivePlayers()) do
             local playername = v:GetName()
             if v:Health() > playerhealth[playername] then
@@ -21,15 +21,10 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("PlayerSpawn", "RdmtHealSpawnHook", function(ply)
+    self:AddHook("PlayerSpawn", function(ply)
         -- Save the player's initial health on spawn so if they get ressed, it resets to full
         playerhealth[ply:GetName()] = ply:Health()
     end)
-end
-
-function EVENT:End()
-    hook.Remove("Think", "RdmtHealCheckHook")
-    hook.Remove("PlayerSpawn", "RdmtHealSpawnHook")
 end
 
 Randomat:register(EVENT)

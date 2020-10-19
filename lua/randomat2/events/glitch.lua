@@ -56,7 +56,7 @@ function EVENT:Begin()
         end)
     end
 
-    hook.Add("ScalePlayerDamage", "RdmtGlitchDamageScale", function(ply, hitgroup, dmginfo)
+    self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
         if not IsValid(ply) then return end
 
         if ply:IsGlitch() then
@@ -65,10 +65,6 @@ function EVENT:Begin()
     end)
 
     SendFullStateUpdate()
-end
-
-function EVENT:End()
-    hook.Remove("ScalePlayerDamage", "RdmtGlitchDamageScale")
 end
 
 function EVENT:CallHooks(isequip, id, ply)

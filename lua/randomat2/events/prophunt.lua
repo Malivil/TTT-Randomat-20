@@ -68,7 +68,7 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("PlayerCanPickupWeapon", "RdmtPropHuntPickupHook", function(ply, wep)
+    self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         if not GetConVar("randomat_prophunt_strip"):GetBool() then return end
         -- Invalid, dead, spectator, and traitor players can pickup whatever they want
         if not IsValid(ply) or not ply:Alive() or ply:IsSpec() or ply:GetRole() == ROLE_TRAITOR then
@@ -81,7 +81,6 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatPropHuntTimer")
-    hook.Remove("PlayerCanPickupWeapon", "RdmtPropHuntPickupHook")
 end
 
 function EVENT:Condition()

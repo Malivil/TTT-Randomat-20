@@ -1,17 +1,5 @@
 local Revolvers = {}
 
-hook.Add("PreDrawHalos", "RandomatMurderGunHighlight", function()
-    if not GetGlobalBool("randomat_murder_highlight_gun", true) then return end
-    for k, wep in pairs(ents.FindByClass("weapon_ttt_randomatrevolver")) do
-        if #table.KeysFromValue(player.GetAll(), wep.Owner) ~= 0 then
-            table.RemoveByValue(Revolvers, wep)
-        elseif #table.KeysFromValue(Revolvers,wep) == 0 then
-            table.insert(Revolvers, wep)
-        end
-    end
-    halo.Add(Revolvers, Color(0,255,0), 1, 1, 10)
-end)
-
 net.Receive("MurderEventActive", function()
     if net.ReadBool() then
         local maxpck = net.ReadInt(32)
@@ -38,7 +26,20 @@ net.Receive("MurderEventActive", function()
                 draw.TextShadow(texttable, 2)
             end
         end)
+
+        hook.Add("PreDrawHalos", "RandomatMurderGunHighlight", function()
+            if not GetGlobalBool("randomat_murder_highlight_gun", true) then return end
+            for _, wep in pairs(ents.FindByClass("weapon_ttt_randomatrevolver")) do
+                if #table.KeysFromValue(player.GetAll(), wep.Owner) ~= 0 then
+                    table.RemoveByValue(Revolvers, wep)
+                elseif #table.KeysFromValue(Revolvers,wep) == 0 then
+                    table.insert(Revolvers, wep)
+                end
+            end
+            halo.Add(Revolvers, Color(0,255,0), 1, 1, 10)
+        end)
     else
         hook.Remove("DrawOverlay", "RandomatMurderUI")
+        hook.Remove("PreDrawHalos", "RandomatMurderGunHighlight")
     end
 end)

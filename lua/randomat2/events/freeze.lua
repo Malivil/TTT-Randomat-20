@@ -48,7 +48,7 @@ function EVENT:Begin()
 
     end)
 
-    hook.Add("EntityTakeDamage", "RdmtFreezeImmuneHook", function(ply, dmg)
+    self:AddHook("EntityTakeDamage", function(ply, dmg)
         if ply:IsValid() and ply.isFrozen then
             dmg:ScaleDamage(0)
         end
@@ -56,7 +56,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    hook.Remove("EntityTakeDamage", "RdmtFreezeImmuneHook")
     timer.Remove("RdmtFreezeTimer")
 end
 

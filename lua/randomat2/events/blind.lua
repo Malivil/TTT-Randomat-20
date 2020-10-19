@@ -11,29 +11,23 @@ EVENT.AltTitle = "Blind Traitors"
 EVENT.id = "blind"
 EVENT.SingleUse = false
 
-function TriggerBlind()
-    net.Start("blindeventactive")
-    net.WriteBool(true)
-    net.Broadcast()
-
-    local duration = GetConVar("randomat_blind_duration"):GetInt()
-
-    timer.Create("RandomatBlindTimer", duration, 1, function()
-        net.Start("blindeventactive")
-        net.WriteBool(false)
-        net.Broadcast()
-    end)
-end
-
-function RemoveBlind()
+local function RemoveBlind()
     net.Start("blindeventactive")
     net.WriteBool(false)
     net.Broadcast()
 end
 
 function EVENT:Begin()
-    EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"
-    TriggerBlind()
+    local duration = GetConVar("randomat_blind_duration"):GetInt()
+    EVENT.Title = "All traitors have been blinded for "..duration.." seconds!"
+
+    net.Start("blindeventactive")
+    net.WriteBool(true)
+    net.Broadcast()
+
+    timer.Create("RandomatBlindTimer", duration, 1, function()
+        RemoveBlind()
+    end)
 end
 
 function EVENT:End()

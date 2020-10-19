@@ -10,7 +10,7 @@ function EVENT:Begin()
     for k, v in pairs(player.GetAll()) do
         plys[k] = v
     end
-    hook.Add("Think", "ForceWalk", function()
+    self:AddHook("Think", function()
         for _, v in pairs(plys) do
             if v:Alive() and not v:IsSpec() then
                 v:ConCommand("+forward")
@@ -25,7 +25,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    hook.Remove("Think", "ForceWalk")
     for _, v in pairs(player.GetAll()) do
         v:ConCommand("-forward")
     end

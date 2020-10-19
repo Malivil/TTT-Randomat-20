@@ -22,7 +22,7 @@ local function ClearPlayerData(uid)
 end
 
 function EVENT:Begin()
-    hook.Add("SetupMove", "RdmtDistancingMovementHook", function(ply, mv)
+    self:AddHook("SetupMove", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
             playermoveloc[ply:UniqueID()] = ply:GetPos()
         end
@@ -37,7 +37,7 @@ function EVENT:Begin()
     local interval = GetConVar("randomat_distancing_interval"):GetInt()
     local distance = GetConVar("randomat_distancing_distance"):GetInt()
     local damage = GetConVar("randomat_distancing_damage"):GetInt()
-    hook.Add("Think", "RdmtDistancingPunishHook", function()
+    self:AddHook("Think", function()
         for _, v in pairs(plys) do
             local playeruid = v:UniqueID()
             if v:Alive() and not v:IsSpec() then
@@ -81,7 +81,7 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("PlayerSpawn", "RdmtDistancingSpawnHook", function(ply)
+    self:AddHook("PlayerSpawn", function(ply)
         local uid = ply:UniqueID()
         if plys[uid] ~= nil then
             plys[uid] = nil
@@ -91,10 +91,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    hook.Remove("SetupMove", "RdmtDistancingMovementHook")
-    hook.Remove("Think", "RdmtDistancingPunishHook")
-    hook.Remove("PlayerSpawn", "RdmtDistancingSpawnHook")
-
     for _, v in pairs(player.GetAll()) do
         ClearPlayerData(v:UniqueID())
     end

@@ -4,7 +4,7 @@ EVENT.Title = "I see dead people"
 EVENT.id = "visualiser"
 
 function EVENT:Begin()
-    hook.Add("PlayerDeath", "RandomatVisualiser", function(ply)
+    self:AddHook("PlayerDeath", function(ply)
         local cse = ents.Create("ttt_cse_proj")
         if IsValid(cse) then
             cse:SetPos(ply:GetPos())
@@ -18,10 +18,6 @@ function EVENT:Begin()
             end
         end
     end)
-end
-
-function EVENT:End()
-    hook.Remove("PlayerDeath", "RandomatVisualiser")
 end
 
 Randomat:register(EVENT)

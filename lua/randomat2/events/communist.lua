@@ -17,7 +17,7 @@ local function TriggerAlert(item, role, is_item, ply)
 end
 
 function EVENT:Begin()
-    hook.Add("TTTOrderedEquipment", "RandomatCommunismHook", function(ply, item, is_item)
+    self:AddHook("TTTOrderedEquipment", function(ply, item, is_item)
         local role_name = self:GetRoleName(ply)
         if not GetConVar("randomat_communist_show_roles"):GetBool() then
             role_name = "Someone"
@@ -40,10 +40,6 @@ function EVENT:Begin()
 
         self:SmallNotify(role .. " gave everyone a " .. name)
     end)
-end
-
-function EVENT:End()
-    hook.Remove("TTTOrderedEquipment", "RandomatCommunismHook")
 end
 
 function EVENT:GetConVars()

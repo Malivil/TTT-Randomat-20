@@ -53,7 +53,7 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("PlayerCanPickupWeapon", "RdmtSlamPickupHook", function(ply, wep)
+    self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         if not GetConVar("randomat_slam_strip"):GetBool() then return end
         return IsValid(wep) and WEPS.GetClass(wep) == GetConVar("randomat_slam_weaponid"):GetString()
     end)
@@ -61,7 +61,6 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatSlamTimer")
-    hook.Remove("PlayerCanPickupWeapon", "RdmtSlamPickupHook")
 end
 
 function EVENT:Condition()

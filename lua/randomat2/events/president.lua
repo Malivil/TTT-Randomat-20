@@ -26,7 +26,7 @@ function EVENT:Begin()
     owner:SetMaxHealth(owner:GetMaxHealth()+GetConVar("randomat_president_bonushealth"):GetInt())
     owner:SetHealth(owner:GetMaxHealth())
 
-    hook.Add("PlayerDeath", "RandomatPresident", function(tgt, dmg, ply)
+    self:AddHook("PlayerDeath", function(tgt, dmg, ply)
         if tgt:IsValid() and tgt == owner then
             for _, v in pairs(self:GetAlivePlayers()) do
                 if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_GLITCH or v:GetRole() == ROLE_DETECTIVE then
@@ -35,10 +35,6 @@ function EVENT:Begin()
             end
         end
     end)
-end
-
-function EVENT:End()
-    hook.Remove("PlayerDeath", "RandomatPresident")
 end
 
 function EVENT:Condition()

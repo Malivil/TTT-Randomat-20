@@ -11,16 +11,6 @@ function ENT:Initialize()
 	if phys:IsValid() then
         phys:Wake()
     end
-
-    hook.Add("TTTEndRound", "RdmtCakeTimerRoundEndRemove", function()
-        for _, ply in pairs(player.GetAll()) do
-            timer.Remove(ply:GetName() .. "RdmtCakeDamageTimer")
-        end
-    end)
-    hook.Add("PlayerDeath", "RdmtCakeTimerDeathRemove", function(victim, entity, killer)
-        if not IsValid(victim) then return end
-        timer.Remove(victim:GetName() .. "RdmtCakeDamageTimer")
-    end)
 end
 
 function ENT:OnRemove()

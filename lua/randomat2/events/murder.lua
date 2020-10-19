@@ -77,19 +77,19 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("EntityTakeDamage", "RandomatMurderDMG", function(tgt, dmg)
+    self:AddHook("EntityTakeDamage", function(tgt, dmg)
         if tgt:IsPlayer() and tgt:GetRole() ~= ROLE_TRAITOR and dmg:IsBulletDamage() then
             dmg:ScaleDamage(0.25)
         end
     end)
 
-    hook.Add("WeaponEquip", "RandomatRevolverPickup", function(wep, ply)
+    self:AddHook("WeaponEquip", function(wep, ply)
         if wep.ClassName ~= "weapon_ttt_randomatrevolver" and wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE then
             ply:SetNWInt("MurderWeaponsEquipped", ply:GetNWInt("MurderWeaponsEquipped") +1)
         end
     end)
 
-    hook.Add("PlayerDeath", "DropRdmtRevolver", function(tgt, wep, ply)
+    self:AddHook("PlayerDeath", function(tgt, wep, ply)
         if table.HasValue(player.GetAll(), ply) then
             if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
               if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" and not IsEvil(tgt) and not IsEvil(ply) then
@@ -106,9 +106,8 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatMurderTimer")
-    hook.Remove("WeaponEquip", "RandomatRevolverPickup")
+    -- Added by the revolver weapon
     hook.Remove("DrawOverlay", "RdmtMurderBlind")
-    hook.Remove("EntityTakeDamage", "RandomatMurderDMG")
     for _, v in pairs(player.GetAll()) do
         v:SetNWInt("MurderWeaponsEquipped", 0)
         v:SetNWBool("RdmMurderRevolver", false)
@@ -116,7 +115,6 @@ function EVENT:End()
     net.Start("MurderEventActive")
     net.WriteBool(false)
     net.Broadcast()
-    hook.Remove("PlayerDeath", "DropRdmtRevolver")
 end
 
 function EVENT:Condition()

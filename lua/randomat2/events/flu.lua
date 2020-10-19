@@ -67,7 +67,7 @@ local function SpreadFlu(ply)
 end
 
 function EVENT:Begin()
-    hook.Add("SetupMove", "RdmtFluMovementHook", function(ply, mv)
+    self:AddHook("SetupMove", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
             playermoveloc[ply:GetName()] = ply:GetPos()
         end
@@ -91,7 +91,7 @@ function EVENT:Begin()
     local checktime = GetConVar("randomat_flu_timer"):GetInt()
     local distance = GetConVar("randomat_flu_distance"):GetInt()
     local chance = GetConVar("randomat_flu_chance"):GetInt()
-    hook.Add("Think", "RdmtFluCheckHook", function()
+    self:AddHook("Think", function()
         for _, v in pairs(plys) do
             local playername = v:GetName()
             if v:Alive() and not v:IsSpec() then
@@ -142,7 +142,7 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("PlayerSpawn", "RdmtFluSpawnHook", function(ply)
+    self:AddHook("PlayerSpawn", function(ply)
         local playername = ply:GetName()
         if plys[playername] ~= nil then
             plys[playername] = nil
@@ -152,10 +152,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    hook.Remove("SetupMove", "RdmtFluMovementHook")
-    hook.Remove("Think", "RdmtFluCheckHook")
-    hook.Remove("PlayerSpawn", "RdmtFluSpawnHook")
-
     for _, v in pairs(player.GetAll()) do
         ClearPlayerData(v)
     end

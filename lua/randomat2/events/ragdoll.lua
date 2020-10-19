@@ -191,7 +191,7 @@ function EVENT:Begin()
         v.inRagdoll = false
         v.lastRagdoll = nil
     end
-    hook.Add("Think", "rdmtRagdollInAir", function()
+    self:AddHook("Think", function()
         for _, v in pairs(self:GetAlivePlayers()) do
             -- Turn a player into a ragdoll if they are in the air, not already a ragdoll, not in the water, and haven't been ragdolled recently
             if not v:IsOnGround() and not v.inRagdoll and v:WaterLevel() == 0 and (v.lastRagdoll == nil or (CurTime() - v.lastRagdoll) > (ragdolltime + ragdolldelay)) then
@@ -200,7 +200,7 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("EntityTakeDamage", "RdmtRagdollDMGTaken", function(ent, dmg)
+    self:AddHook("EntityTakeDamage", function(ent, dmg)
         if not IsValid(ent) or ent:GetClass() ~= "prop_ragdoll" then return end
         -- Skip crush damage. This is to prevent taking damage just by turning into a ragdoll
         if dmg:IsDamageType(DMG_CRUSH) then return end
@@ -223,8 +223,6 @@ function EVENT:End()
         end
         hook.Remove("Think", v:Nick().."UnragdollTimer")
     end
-    hook.Remove("Think", "rdmtRagdollInAir")
-    hook.Remove("EntityTakeDamage", "RdmtRagdollDMGTaken")
 end
 
 Randomat:register(EVENT)

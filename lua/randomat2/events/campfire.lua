@@ -10,7 +10,7 @@ CreateConVar("randomat_campfire_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Seco
 CreateConVar("randomat_campfire_distance", 35, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Distance a player must move before they are not camping anymore", 1, 1000)
 
 function EVENT:Begin()
-    hook.Add("SetupMove", "RdmtCampfireMovementHook", function(ply, mv)
+    self:AddHook("SetupMove", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
             local loc = ply:GetPos()
             local distance = GetConVar("randomat_campfire_distance"):GetInt()
@@ -28,7 +28,7 @@ function EVENT:Begin()
     end
 
     local tmr = GetConVar("randomat_campfire_timer"):GetInt()
-    hook.Add("Think", "RdmtCampfirePunishHook", function()
+    self:AddHook("Think", function()
         for _, v in pairs(plys) do
             if v:Alive() and not v:IsSpec() then
                 -- If we haven't seen this player move yet, save the current time
@@ -58,17 +58,11 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("PlayerSpawn", "RdmtCampfireSpawnHook", function(ply)
+    self:AddHook("PlayerSpawn", function(ply)
         if plys[ply:GetName()] == nil then
             plys[ply:GetName()] = ply
         end
     end)
-end
-
-function EVENT:End()
-    hook.Remove("SetupMove", "RdmtCampfireMovementHook")
-    hook.Remove("Think", "RdmtCampfirePunishHook")
-    hook.Remove("PlayerSpawn", "RdmtCampfireSpawnHook")
 end
 
 function EVENT:GetConVars()

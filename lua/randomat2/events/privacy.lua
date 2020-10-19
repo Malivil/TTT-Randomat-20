@@ -15,7 +15,7 @@ local function TriggerAlert(item, role, is_item, ply)
 end
 
 function EVENT:Begin()
-    hook.Add("TTTOrderedEquipment", "RandomatAlertHook", function(ply, item, is_item)
+    self:AddHook("TTTOrderedEquipment", function(ply, item, is_item)
         TriggerAlert(item, self:GetRoleName(ply), is_item, ply)
     end)
 
@@ -26,10 +26,6 @@ function EVENT:Begin()
 
         self:SmallNotify(role .. " has bought a " .. name)
     end)
-end
-
-function EVENT:End()
-    hook.Remove("TTTOrderedEquipment", "RandomatAlertHook")
 end
 
 Randomat:register(EVENT)

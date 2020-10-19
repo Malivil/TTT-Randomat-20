@@ -4,7 +4,7 @@ EVENT.Title = "Total Mayhem"
 EVENT.id = "mayhem"
 
 function EVENT:Begin()
-    hook.Add("PlayerDeath", "RdmtBomb", function(tgt, src, ply)
+    self:AddHook("PlayerDeath", function(tgt, src, ply)
         ExplodeTgt(tgt, ply)
     end)
 end
@@ -18,11 +18,8 @@ function ExplodeTgt(tgt, ply)
         explode:SetKeyValue("iMagnitude", "150")
         explode:Fire("Explode", 0,0)
         explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
+        timer.Remove("RdmtBombDelay"..tgt:Nick())
     end)
-end
-
-function EVENT:End()
-    hook.Remove("PlayerDeath", "RdmtBomb")
 end
 
 Randomat:register(EVENT)

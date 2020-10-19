@@ -42,6 +42,16 @@ end
 function EVENT:Begin()
     TriggerCakes()
     timer.Create("RdmtCakeSpawnTimer",GetConVar("randomat_cakes_timer"):GetInt(),0, TriggerCakes)
+
+    self:AddHook("TTTEndRound", function()
+        for _, ply in pairs(player.GetAll()) do
+            timer.Remove(ply:GetName() .. "RdmtCakeDamageTimer")
+        end
+    end)
+    self:AddHook("PlayerDeath", function(victim, entity, killer)
+        if not IsValid(victim) then return end
+        timer.Remove(victim:GetName() .. "RdmtCakeDamageTimer")
+    end)
 end
 
 function EVENT:End()
