@@ -4,6 +4,7 @@ CreateConVar("randomat_pocket_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Th
 
 EVENT.Title = "What did I find in my pocket?"
 EVENT.id = "pocket"
+EVENT.SingleUse = false
 
 local blocklist = {}
 

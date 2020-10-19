@@ -28,7 +28,7 @@ concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
     local cmd = arg[1]
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
-        if event:Condition() and event:Enabled() then
+        if Randomat:CanEventRun(event) then
             local index = #Randomat.ActiveEvents + 1
             Randomat:EventNotify(event.Title)
             Randomat.ActiveEvents[index] = event
@@ -110,10 +110,10 @@ function Randomat:GetEventTitle(event)
     return event.Title
 end
 
-function Randomat:GetAlivePlayers(shuffle)
+function Randomat:GetPlayers(shuffle, alive)
     local plys = {}
     for _, ply in pairs(player.GetAll()) do
-        if IsValid(ply) and (not ply:IsSpec()) and ply:Alive() then
+        if IsValid(ply) and (not ply:IsSpec()) and (not alive or ply:Alive()) then
             table.insert(plys, ply)
         end
     end
@@ -130,8 +130,7 @@ function Randomat:GetValidPlayer(ply)
         return ply
     end
 
-    local rdmply = Randomat:GetAlivePlayers(true)
-    return rdmply[1]
+    return Randomat:GetPlayers(true, true)[1]
 end
 
 function Randomat:SetRole(ply, role)
@@ -149,6 +148,10 @@ function Randomat:register(tbl)
     local id = tbl.id
     tbl.Id = id
     tbl.__index = tbl
+    -- Default SingleUse to true if it isn't specified
+    if tbl.SingleUse ~= false then
+        tbl.SingleUse = true
+    end
     setmetatable(tbl, randomat_meta)
 
     Randomat.Events[id] = tbl
@@ -168,12 +171,16 @@ local function GetRandomEvent(events)
     return events[key]
 end
 
+function Randomat:CanEventRun(event)
+    return event:Enabled() and event:Condition() and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
+end
+
 function Randomat:TriggerRandomEvent(ply)
     local events = Randomat.Events
 
     local found = false
     for _, v in pairs(events) do
-        if v:Condition() and v:Enabled() then
+        if Randomat:CanEventRun(v) then
             found = true
             break
         end
@@ -184,7 +191,7 @@ function Randomat:TriggerRandomEvent(ply)
     end
 
     local event = GetRandomEvent(events)
-    while not event:Condition() or not event:Enabled() do
+    while not Randomat:CanEventRun(event) do
         event = GetRandomEvent(events)
     end
 
@@ -251,11 +258,11 @@ end
 
 -- Valid players not spec
 function randomat_meta:GetPlayers(shuffle)
-    return self:GetAlivePlayers(shuffle)
+    return Randomat:GetPlayers(shuffle, false)
 end
 
 function randomat_meta:GetAlivePlayers(shuffle)
-    return Randomat:GetAlivePlayers(shuffle)
+    return Randomat:GetPlayers(shuffle, true)
 end
 
 if SERVER then

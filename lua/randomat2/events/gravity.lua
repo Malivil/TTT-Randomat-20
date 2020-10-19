@@ -59,11 +59,6 @@ else
     function EVENT:End() end
 end
 
-function EVENT:Condition()
-    -- Don't let this happen twice, it causes weird loops
-    return not Randomat:IsEventActive("gravity")
-end
-
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in pairs({"timer", "duration", "minimum", "maximum"}) do

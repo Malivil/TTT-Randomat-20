@@ -9,6 +9,7 @@ util.AddNetworkString("blindeventactive")
 EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"
 EVENT.AltTitle = "Blind Traitors"
 EVENT.id = "blind"
+EVENT.SingleUse = false
 
 function TriggerBlind()
     net.Start("blindeventactive")
@@ -29,7 +30,6 @@ function RemoveBlind()
     net.WriteBool(false)
     net.Broadcast()
 end
-
 
 function EVENT:Begin()
     EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"

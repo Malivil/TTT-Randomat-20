@@ -5,6 +5,7 @@ CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Th
 EVENT.Title = ""
 EVENT.id = "suspicion"
 EVENT.AltTitle = "A player is acting suspicious"
+EVENT.SingleUse = false
 
 function EVENT:Begin()
     local traitor = {}
@@ -42,7 +43,6 @@ function EVENT:Begin()
         end
         SendFullStateUpdate()
     end
-
 end
 
 function EVENT:Condition()

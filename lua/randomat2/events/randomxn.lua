@@ -5,6 +5,7 @@ CreateConVar("randomat_randomxn_triggers", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Nu
 EVENT.Title = ""
 EVENT.AltTitle = "Random x"..GetConVar("randomat_randomxn_triggers"):GetInt()
 EVENT.id = "randomxn"
+EVENT.SingleUse = false
 
 local timers = {}
 
