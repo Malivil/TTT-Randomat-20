@@ -49,7 +49,6 @@ function EVENT:Begin()
                 ply1[i]:Kill()
             end
         end
-
     end)
 end
 

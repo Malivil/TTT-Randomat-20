@@ -4,7 +4,6 @@ CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time 
 CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The event strips your other weapons")
 CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prophide", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 
-
 EVENT.Title = "Prop Hunt"
 EVENT.id = "prophunt"
 

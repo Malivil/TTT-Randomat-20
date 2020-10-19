@@ -6,7 +6,7 @@ EVENT.Title = "What? Moon Gravity on Earth?"
 EVENT.id = "moongravity"
 
 function EVENT:Begin()
-    for _, ply in pairs(self:GetPlayers()) do
+    for _, ply in pairs(self:GetAlivePlayers()) do
         ply:SetGravity(GetConVar("randomat_moongravity_gravity"):GetFloat())
     end
     self:Timer()
@@ -14,7 +14,7 @@ end
 
 function EVENT:Timer()
     timer.Create("RandomatMoonGravityTimer", 1,0, function()
-        for _, ply in pairs(self:GetPlayers()) do
+        for _, ply in pairs(self:GetAlivePlayers()) do
             ply:SetGravity(GetConVar("randomat_moongravity_gravity"):GetFloat())
         end
     end)
