@@ -10,6 +10,7 @@ function EVENT:Begin()
         if (ply:GetRole() == ROLE_TRAITOR and tx == 0) or (ply:GetRole() == ROLE_DETECTIVE and dx == 0) then
             if ply:GetRole() ~= ROLE_DETECTIVE then
                 tx = 1
+                ply:SetMaxHealth(100)
             else
                 dx = 1
                 ply:SetHealth(200)
@@ -18,6 +19,7 @@ function EVENT:Begin()
         else
             Randomat:SetRole(ply, ROLE_JESTER)
             ply:SetCredits(0)
+            ply:SetMaxHealth(100)
             for _, wep in pairs(ply:GetWeapons()) do
                 if wep.Kind == WEAPON_EQUIP1 or wep.Kind == WEAPON_EQUIP2 then
                     ply:StripWeapon(wep:GetClass())
