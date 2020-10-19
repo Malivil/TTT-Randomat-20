@@ -7,6 +7,4 @@ function EVENT:Begin()
     Randomat:TriggerRandomEvent(self.owner)
 end
 
-function EVENT:End() end
-
 Randomat:register(EVENT)

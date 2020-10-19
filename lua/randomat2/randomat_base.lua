@@ -13,6 +13,11 @@ Randomat.ActiveEvents = {}
 local randomat_meta =  {}
 randomat_meta.__index = randomat_meta
 
+local function EndEvent(evt)
+    evt:End()
+    evt:CleanUpHooks()
+end
+
 local function TriggerAutoComplete(cmd, args)
     local name = string.lower(string.Trim(args))
     local options = {}
@@ -75,7 +80,7 @@ end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_
 concommand.Add("ttt_randomat_clearevents",function(ply, cc, arg)
     if Randomat.ActiveEvents ~= {} then
         for _, evt in pairs(Randomat.ActiveEvents) do
-            evt:End()
+            EndEvent(evt)
         end
 
         Randomat.ActiveEvents = {}
@@ -85,7 +90,7 @@ end, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 function Randomat:EndActiveEvent(id)
     for k, evt in pairs(Randomat.ActiveEvents) do
         if evt.Id == id then
-            evt:End()
+            EndEvent(evt)
             table.remove(Randomat.ActiveEvents, k)
             return
         end
@@ -302,9 +307,7 @@ end
 
 function randomat_meta:Begin() end
 
-function randomat_meta:End()
-    self:CleanUpHooks()
-end
+function randomat_meta:End() end
 
 function randomat_meta:Condition()
     return true
@@ -451,7 +454,7 @@ end
 hook.Add("TTTEndRound", "RandomatEndRound", function()
     if Randomat.ActiveEvents ~= {} then
         for _, evt in pairs(Randomat.ActiveEvents) do
-            evt:End()
+            EndEvent(evt)
         end
 
         Randomat.ActiveEvents = {}
@@ -461,7 +464,7 @@ end)
 hook.Add("TTTPrepareRound", "RandomatEndRound", function()
     if Randomat.ActiveEvents ~= {} then
         for _, evt in pairs(Randomat.ActiveEvents) do
-            evt:End()
+            EndEvent(evt)
         end
 
         Randomat.ActiveEvents = {}

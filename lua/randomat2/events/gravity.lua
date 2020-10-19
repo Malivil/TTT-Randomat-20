@@ -54,9 +54,6 @@ if SERVER then
         timer.Remove("RandomatGravityChange")
         SetGravity(defaultGravity)
     end
-else
-    function EVENT:Begin() end
-    function EVENT:End() end
 end
 
 function EVENT:GetConVars()
