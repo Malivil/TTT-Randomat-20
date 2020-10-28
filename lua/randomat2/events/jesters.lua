@@ -32,20 +32,21 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
-    local d = 0
-    local t = 0
-    for _, v in pairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_DETECTIVE then
-            d = 1
-        elseif v:GetRole() == ROLE_TRAITOR then
-            t = 1
-        end
-    end
-    if t + d == 2 then
-        return true
-    else
+    -- Don't run this event if Jesters don't win when they are killed by traitors
+    if ConVarExists("ttt_jester_win_by_traitors") and not GetConVar("ttt_jester_win_by_traitors"):GetBool() then
         return false
     end
+
+    local has_detective = false
+    local has_traitor = false
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if v:GetRole() == ROLE_DETECTIVE then
+            has_detective = true
+        elseif v:GetRole() == ROLE_TRAITOR then
+            has_traitor = true
+        end
+    end
+    return has_traitor and has_detective
 end
 
 Randomat:register(EVENT)
