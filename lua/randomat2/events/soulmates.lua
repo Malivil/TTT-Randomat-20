@@ -5,21 +5,39 @@ EVENT.id = "soulmates"
 EVENT.AltTitle = "Soulmates"
 
 CreateConVar("randomat_soulmates_affectall", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether everyone should have a soulmate")
+CreateConVar("randomat_soulmates_sharedhealth", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether soulmates should have shared health")
+
+local ply1 = {}
+local ply1_health = {}
+local ply2 = {}
+local ply2_health = {}
+
+local function SetSharedHealth(i, shared_health)
+    ply1[i]:SetHealth(shared_health)
+    ply1_health[i] = shared_health
+    ply2[i]:SetHealth(shared_health)
+    ply2_health[i] = shared_health
+end
+
+local function InitializeSharedHealth(i)
+    ply1[i]:SetMaxHealth(200)
+    ply2[i]:SetMaxHealth(200)
+
+    local shared_health = ply1_health[i] + ply2_health[i]
+    SetSharedHealth(i, shared_health)
+end
 
 function EVENT:Begin()
     local x = 0
-
-    local ply1 = {}
-    local ply2 = {}
-
     for _, v in pairs(self:GetAlivePlayers(true)) do
         x = x+1
-        if math.floor(x/2) ~= x/2 then
+        if x % 2 == 0 then
             table.insert(ply1, v)
+            table.insert(ply1_health, v:Health())
         else
             table.insert(ply2, v)
+            table.insert(ply2_health, v:Health())
         end
-
     end
 
     local size = 1
@@ -32,12 +50,20 @@ function EVENT:Begin()
             ply2[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is "..ply1[i]:Nick())
             ply1[i]:PrintMessage(HUD_PRINTCENTER, "Your soulmate is "..ply2[i]:Nick())
             ply2[i]:PrintMessage(HUD_PRINTCENTER, "Your soulmate is "..ply1[i]:Nick())
+
+            if GetConVar("randomat_soulmates_sharedhealth"):GetBool() then
+                InitializeSharedHealth(i)
+            end
         end
+
         if ply1[#ply2+1] then
             ply1[#ply2+1]:PrintMessage(HUD_PRINTTALK, "You have no soulmate :(")
             ply1[#ply2+1]:PrintMessage(HUD_PRINTCENTER, "You have no soulmate :(")
         end
     else
+        if GetConVar("randomat_soulmates_sharedhealth"):GetBool() then
+            InitializeSharedHealth(1)
+        end
         Randomat:EventNotifySilent(ply1[1]:Nick().." and "..ply2[1]:Nick().." are now soulmates.")
     end
 
@@ -47,6 +73,18 @@ function EVENT:Begin()
                 ply2[i]:Kill()
             elseif not ply2[i]:Alive() and ply1[i]:Alive() then
                 ply1[i]:Kill()
+            elseif GetConVar("randomat_soulmates_sharedhealth"):GetBool() then
+                if ply1[i]:Health() ~= ply1_health[i] or ply2[i]:Health() ~= ply2_health[i] then
+                    -- Calculate how much each player's health has changed
+                    local ply1_diff = ply1[i]:Health() - ply1_health[i]
+                    local ply2_diff = ply2[i]:Health() - ply2_health[i]
+                    -- Calculate the new shared health based on both diffs
+                    local total_diff = ply1_diff + ply2_diff
+                    local total_health = ply1_health[1] + total_diff
+
+                    -- Set and save the changed health
+                    SetSharedHealth(i, total_health)
+                end
             end
         end
     end)
@@ -54,6 +92,22 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtLinkTimer")
+end
+
+function EVENT:GetConVars()
+    local checks = {}
+    for _, v in pairs({"affectall", "sharedhealth"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+
+    return {}, checks, {}
 end
 
 Randomat:register(EVENT)

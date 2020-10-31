@@ -565,7 +565,8 @@ Pairs random players together. When either of the paired players is killed, the 
 **ConVars**
 \
 _ttt_randomat_soulmates_ - Default: 1 - Whether this event is enabled.\
-_randomat_soulmates_affectall_ - Default: 0 - Whether everyone should have a soulmate.
+_randomat_soulmates_affectall_ - Default: 0 - Whether everyone should have a soulmate.\
+_randomat_soulmates_sharedhealth_ - Default: 0 - Whether soulmates should have shared health.
 
 ## Sudden Death!
 Changes everyone to have only 1 health
@@ -739,6 +740,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
+- u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
