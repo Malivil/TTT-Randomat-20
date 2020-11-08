@@ -8,8 +8,8 @@ EVENT.AltTitle = "A traitor will explode in "..GetConVar("randomat_texplode_time
 EVENT.id = "texplode"
 
 function EVENT:Begin()
-    local convarvalue = GetConVar("randomat_texplode_timer"):GetInt()
-    Randomat:EventNotifySilent("A traitor will explode in "..convarvalue.." seconds!")
+    local explodetimer = GetConVar("randomat_texplode_timer"):GetInt()
+    Randomat:EventNotifySilent("A traitor will explode in "..explodetimer.." seconds!")
 
     local x = 0
     local tgt = nil
@@ -26,20 +26,31 @@ function EVENT:Begin()
 
     local effectdata = EffectData()
 
-    timer.Create("RandomatTraitorExplode",1,convarvalue, function()
+    timer.Create("RandomatTraitorExplode", 1, explodetimer, function()
         x = x+1
-        if convarvalue >= 45 and x == convarvalue - 30 then
+        if explodetimer >= 45 and x == explodetimer - 30 then
             self:SmallNotify("30 seconds until the traitor explodes!")
-        elseif convarvalue >= 20 and x == convarvalue - 10 then
+        elseif explodetimer >= 20 and x == explodetimer - 10 then
             self:SmallNotify("10 seconds remaining!")
-        elseif x == convarvalue then
+        elseif x == explodetimer then
             self:SmallNotify("The traitor has exploded!")
             tgt:EmitSound(Sound("ambient/explosions/explode_4.wav"))
 
-            util.BlastDamage(tgt, tgt, tgt:GetPos(), GetConVar("randomat_texplode_radius"):GetInt(), 10000)
+            local pos = nil
+            if tgt:Alive() then
+                pos = tgt:GetPos()
+            else
+                local body = tgt.server_ragdoll or tgt:GetRagdollEntity()
+                if IsValid(body) then
+                    pos = body:GetPos()
+                    body:Remove()
+                end
+            end
 
-            effectdata:SetStart(tgt:GetPos() + Vector(0,0,10))
-            effectdata:SetOrigin(tgt:GetPos() + Vector(0,0,10))
+            util.BlastDamage(tgt, tgt, pos, GetConVar("randomat_texplode_radius"):GetInt(), 10000)
+
+            effectdata:SetStart(pos + Vector(0,0,10))
+            effectdata:SetOrigin(pos + Vector(0,0,10))
             effectdata:SetScale(1)
 
             util.Effect("HelicopterMegaBomb", effectdata)
@@ -53,8 +64,8 @@ end
 
 function EVENT:Condition()
     local t = 0
-    for k, v in pairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_DETRAITOR then
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if v:Alive() and (v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_DETRAITOR) then
             t = t+1
         end
     end
