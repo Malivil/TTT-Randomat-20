@@ -16,7 +16,7 @@ end
 
 function EVENT:Begin()
     self:AddHook("TTTOrderedEquipment", function(ply, item, is_item)
-        TriggerAlert(item, self:GetRoleName(ply), is_item, ply)
+        TriggerAlert(item, self:GetRoleName(ply, true), is_item, ply)
     end)
 
     --Event started in cl_networkstrings

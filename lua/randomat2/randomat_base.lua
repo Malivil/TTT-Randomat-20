@@ -324,14 +324,14 @@ end
 function randomat_meta:GetConVars() end
 
 -- What role is a player?
-function randomat_meta:GetRoleName(ply)
+function randomat_meta:GetRoleName(ply, hide_detraitor)
     if ply:GetRole() == ROLE_TRAITOR then
         return "A traitor"
     elseif ply:GetRole() == ROLE_HYPNOTIST then
         return "A hypnotist"
     elseif ply:GetRole() == ROLE_ASSASSIN then
         return "An assassin"
-    elseif ply:GetRole() == ROLE_DETECTIVE then
+    elseif ply:GetRole() == ROLE_DETECTIVE or (ply:GetRole() == ROLE_DETRAITOR and hide_detraitor) then
         return "A detective"
     elseif ply:GetRole() == ROLE_MERCENARY then
         return "A mercenary"

@@ -18,7 +18,7 @@ end
 
 function EVENT:Begin()
     self:AddHook("TTTOrderedEquipment", function(ply, item, is_item)
-        local role_name = self:GetRoleName(ply)
+        local role_name = self:GetRoleName(ply, true)
         if not GetConVar("randomat_communist_show_roles"):GetBool() then
             role_name = "Someone"
         end
