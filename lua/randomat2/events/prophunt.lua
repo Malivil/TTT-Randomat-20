@@ -7,6 +7,7 @@ CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prophide", {FCVAR_ARCHIVE
 EVENT.Title = "Prop Hunt"
 EVENT.id = "prophunt"
 
+local cvar_state
 function EVENT:HandleRoleWeapons(ply)
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
     if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER or ply:GetRole() == ROLE_DETRAITOR then
@@ -18,13 +19,31 @@ function EVENT:HandleRoleWeapons(ply)
 end
 
 function EVENT:Begin()
+    if SERVER then
+        -- Disable prop possession
+        cvar_state = GetConVar("ttt_spec_prop_control"):GetString()
+        RunConsoleCommand("ttt_spec_prop_control", "0")
+    end
+
     for _, v in pairs(self.GetAlivePlayers()) do
+        local had_armor = false
+        local had_disguise = false
         -- All bad guys are traitors
         if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_KILLER or v:GetRole() == ROLE_DETRAITOR then
             Randomat:SetRole(v, ROLE_TRAITOR)
-            if v:GetCredits() == 0 then
-                v:SetCredits(1)
+
+            -- Give the player enough credits to compensate for the equipment they can no longer use
+            local credits = v:GetCredits()
+            if credits == 0 then
+                credits = 1
             end
+            if v:HasEquipmentItem(EQUIP_RADAR) then
+                credits = credits + 1
+            end
+
+            had_armor = v:HasEquipmentItem(EQUIP_ARMOR)
+            had_disguise = v:HasEquipmentItem(EQUIP_DISGUISE)
+            v:SetCredits(credits)
         -- Everyone else is innocent
         else
             Randomat:SetRole(v, ROLE_INNOCENT)
@@ -33,6 +52,15 @@ function EVENT:Begin()
         end
 
         self:StripRoleWeapons(v)
+        -- Remove all their equipment
+        v:ResetEquipment()
+        -- Add back the other two (since we only want to remove radar)
+        if had_armor then
+            v:GiveEquipmentItem(EQUIP_ARMOR)
+        end
+        if had_disguise then
+            v:GiveEquipmentItem(EQUIP_DISGUISE)
+        end
     end
     SendFullStateUpdate()
 
@@ -77,9 +105,18 @@ function EVENT:Begin()
         -- Everyone else can only pick up the assigned weapon
         return IsValid(wep) and WEPS.GetClass(wep) == GetConVar("randomat_prophunt_weaponid"):GetString()
     end)
+
+    self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
+        if not IsValid(ply) then return end
+        if is_item == EQUIP_RADAR then return false end
+    end)
 end
 
 function EVENT:End()
+    if SERVER then
+        -- Change the prop possession setting back to normal
+        RunConsoleCommand("ttt_spec_prop_control", cvar_state)
+    end
     timer.Remove("RandomatPropHuntTimer")
 end
 
