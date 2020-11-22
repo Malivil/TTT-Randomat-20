@@ -11,7 +11,7 @@ net.Receive("MurderEventActive", function()
             local pks = pl:GetNWInt("MurderWeaponsEquipped")
             local text = string.format("%i / %02i", pks, maxpck)
 
-            local y = ScrH() - 55
+            local y = ScrH() - 60
 
             if rl ~= ROLE_TRAITOR and rl ~= ROLE_DETRAITOR and rl ~= ROLE_ASSASSIN and rl ~= ROLE_HYPNOTIST and rl ~= ROLE_ZOMBIE and rl ~= ROLE_VAMPIRE and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
                 local texttable = {}

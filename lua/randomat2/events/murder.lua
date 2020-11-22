@@ -14,9 +14,10 @@ util.AddNetworkString("MurderEventActive")
 function EVENT:StripBannedWeapons(ply)
     self:StripRoleWeapons(ply)
     for _, wep in pairs(ply:GetWeapons()) do
-        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.ClassName == "weapon_zm_improvised" or wep.ClassName == "weapon_ttt_crowbar_fast" or wep.ClassName == "weapon_ttt_innocent_knife" or wep.ClassName == "weapon_ttt_wrench"
+        local class_name = WEPS.GetClass(wep)
+        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE or class_name == "weapon_zm_improvised" or class_name == "weapon_ttt_crowbar_fast" or class_name == "weapon_ttt_innocent_knife" or class_name == "weapon_ttt_wrench"
              then
-            ply:StripWeapon(wep.ClassName)
+            ply:StripWeapon(class_name)
             -- Reset FOV to unscope
             ply:SetFOV(0, 0.2)
         end
@@ -84,15 +85,22 @@ function EVENT:Begin()
     end)
 
     self:AddHook("WeaponEquip", function(wep, ply)
-        if wep.ClassName ~= "weapon_ttt_randomatrevolver" and wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE then
+        -- Let the player pick up weapons and nades and count them toward the pieces found
+        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE then
             ply:SetNWInt("MurderWeaponsEquipped", ply:GetNWInt("MurderWeaponsEquipped") +1)
         end
+    end)
+
+    self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
+        print(ply:Nick() .. " " .. WEPS.GetClass(wep) .. " " .. wep.Kind)
+        -- Don't let the player pick up more weapons if they already have the revolver
+        if ply:HasWeapon("weapon_ttt_randomatrevolver") then return false end
     end)
 
     self:AddHook("PlayerDeath", function(tgt, wep, ply)
         if table.HasValue(player.GetAll(), ply) then
             if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
-              if ply:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" and not IsEvil(tgt) and not IsEvil(ply) then
+              if WEPS.GetClass(ply:GetActiveWeapon()) == "weapon_ttt_randomatrevolver" and not IsEvil(tgt) and not IsEvil(ply) then
                  ply:DropWeapon(ply:GetActiveWeapon())
                  ply:SetNWBool("RdmtShouldBlind", true)
                  timer.Create("RdmtBlindEndDelay"..ply:Nick(), 5, 1, function()
