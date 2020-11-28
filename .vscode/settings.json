@@ -104,6 +104,11 @@
         "HUD_PRINTCENTER",
         "FCVAR_SERVER_CAN_EXECUTE",
         "isnumber",
-        "ROLE_DETRAITOR"
+        "ROLE_DETRAITOR",
+        "WEAPON_NONE",
+        "ROLE_SURVIVALIST",
+        "ROLE_PHOENIX",
+        "ROLE_SERIALKILLER",
+        "ROLE_INFECTED"
     ]
 }

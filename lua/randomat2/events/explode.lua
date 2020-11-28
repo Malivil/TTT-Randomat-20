@@ -14,7 +14,7 @@ function EVENT:Begin()
     timer.Create("RandomatExplode",GetConVar("randomat_explode_timer"):GetInt() ,0, function()
         local plys = {}
         for _, ply in pairs(self:GetAlivePlayers(true)) do
-            if not ply:GetDetective() then
+            if ply:GetRole() ~= ROLE_DETECTIVE and ply:GetRole() ~= ROLE_DETRAITOR then
                 table.insert(plys, ply)
             end
         end

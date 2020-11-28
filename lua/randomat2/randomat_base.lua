@@ -7,6 +7,17 @@ if SERVER then
     util.AddNetworkString("TTT_RoleChanged")
 end
 
+ROLE_MERCENARY = ROLE_MERCENARY or ROLE_SURVIVALIST or -1
+ROLE_PHANTOM = ROLE_PHANTOM or ROLE_PHOENIX or -1
+ROLE_KILLER = ROLE_KILLER or ROLE_SERIALKILLER or -1
+ROLE_ZOMBIE = ROLE_ZOMBIE or ROLE_INFECTED or -1
+ROLE_SWAPPER = ROLE_SWAPPER or -1
+ROLE_GLITCH = ROLE_GLITCH or -1
+ROLE_HYPNOTIST = ROLE_HYPNOTIST or -1
+ROLE_ASSASSIN = ROLE_ASSASSIN or -1
+ROLE_DETRAITOR = ROLE_DETRAITOR or -1
+ROLE_VAMPIRE = ROLE_VAMPIRE or -1
+
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = {}
 
@@ -405,10 +416,6 @@ function randomat_meta:StripRoleWeapons(ply)
         ply:StripWeapon("weapon_ttt_wtester")
     end
 end
-
-RDMT_BOOL = 0
-RDMT_INT = 1
-RDMT_FLOAT = 2
 
 function randomat_meta:CreateCmd(str, val, desc, slider)
     CreateConVar("randomat_"..self.id..str, val, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, desc)
