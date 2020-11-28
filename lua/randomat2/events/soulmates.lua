@@ -37,11 +37,9 @@ function EVENT:Begin()
     for _, v in pairs(self:GetAlivePlayers(true)) do
         x = x+1
         if x % 2 == 0 then
-            print("Adding " .. v:Nick() .. " to 1")
             table.insert(ply1, v)
             table.insert(ply1_health, v:Health())
         else
-            print("Adding " .. v:Nick() .. " to 2")
             table.insert(ply2, v)
             table.insert(ply2_health, v:Health())
         end
@@ -52,9 +50,7 @@ function EVENT:Begin()
         size = #ply2
         Randomat:EventNotifySilent("Soulmates")
 
-        print("Checking " .. size .. " players")
         for i = 1, #ply2 do
-            print("Checking " .. ply1[i]:Nick() .. " and " .. ply2[i]:Nick())
             ply1[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is "..ply2[i]:Nick())
             ply2[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is "..ply1[i]:Nick())
             ply1[i]:PrintMessage(HUD_PRINTCENTER, "Your soulmate is "..ply2[i]:Nick())
