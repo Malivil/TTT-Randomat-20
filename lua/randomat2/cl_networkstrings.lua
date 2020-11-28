@@ -4,23 +4,10 @@ net.Receive("RandomatRandomWeapons",function()
   hook.Run("TTTBoughtItem", is_item, id)
 end)
 
-local function GetItemName(item)
-    if CLIENT then
-        local id = tonumber(item)
-        if id == EQUIP_ARMOR then
-            return LANG.GetTranslation("item_armor")
-        elseif id == EQUIP_RADAR then
-            return LANG.GetTranslation("item_radar")
-        elseif id == EQUIP_REGEN then
-            return LANG.GetTranslation("item_regen")
-        elseif id == EQUIP_DISGUISE then
-            return LANG.GetTranslation("item_disg")
-        elseif id == EQUIP_SPEED then
-            return LANG.GetTranslation("item_speed")
-        end
-    end
-
-    return item
+local function GetItemName(item, role)
+    local id = tonumber(item)
+    local info = GetEquipmentItem(role, id)
+    return info and LANG.TryTranslation(info.name) or item
 end
 
 local function GetWeaponName(item)
@@ -34,18 +21,21 @@ local function GetWeaponName(item)
 end
 
 net.Receive("alerteventtrigger", function()
+    local event = net.ReadString()
     local item = net.ReadString()
-    local role = net.ReadString()
+    local role_string = net.ReadString()
     local is_item = net.ReadInt(8)
+    local role = net.ReadInt(16)
     local name
     if is_item == 0 then
         name = GetWeaponName(item)
     else
-        name = GetItemName(item)
+        name = GetItemName(item, role)
     end
 
     net.Start("AlertTriggerFinal")
+    net.WriteString(event)
     net.WriteString(name)
-    net.WriteString(role)
+    net.WriteString(role_string)
     net.SendToServer()
 end)
