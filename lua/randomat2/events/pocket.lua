@@ -23,7 +23,7 @@ end
 
 function EVENT:CallHooks(isequip, id, ply)
     hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, isequip)
-    net.Start("RandomatRandomWeapons")
+    net.Start("TTT_BoughtItem")
     net.WriteBit(isequip)
     if isequip then
         net.WriteInt(id, 16)

@@ -1,7 +1,6 @@
 if SERVER then
     AddCSLuaFile("shared.lua")
     resource.AddFile("materials/VGUI/ttt/icon_randomat.vmt")
-    util.AddNetworkString("RandomatRandomWeapons")
     SWEP.LimitedStock = not GetConVar("ttt_randomat_rebuyable"):GetBool()
 end
 

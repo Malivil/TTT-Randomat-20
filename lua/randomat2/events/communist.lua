@@ -18,6 +18,17 @@ local function TriggerAlert(item, role, is_item, ply)
     net.Send(ply)
 end
 
+local function CallHooks(ply, item, is_item)
+    net.Start("TTT_BoughtItem")
+    net.WriteBit(is_item)
+    if is_item then
+        net.WriteInt(item, 16)
+    else
+        net.WriteString(item)
+    end
+    net.Send(ply)
+end
+
 function EVENT:Begin()
     self:AddHook("TTTOrderedEquipment", function(ply, item, is_item)
         local role_name = self:GetRoleName(ply, true)
@@ -32,6 +43,8 @@ function EVENT:Begin()
             else
                 p:Give(item)
             end
+
+            CallHooks(p, item, is_item)
         end
     end)
 
