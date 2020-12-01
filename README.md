@@ -13,6 +13,7 @@ _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.
 
 # New Events
 - A Glitch has been patched
+- Big Head Mode
 - Camp Fire
 - Come on and SLAM!
 - Communism! Time to learn how to share...
@@ -104,6 +105,16 @@ Causes any player who is off the ground (by jumping, falling, etc.) to turn into
 **ConVars**
 \
 _ttt_randomat_ragdoll_ - Default: 1 - Whether this event is enabled.
+
+## Big Head Mode
+Causes all players to have their heads grow to massive proportions.\
+NOTE: Not all custom models are supported -- some have their hair detached from their head which looks creepy when the head scales the hair doesn't. I tried a few ways to fix it but that ended up breaking other stuff.
+\
+\
+**ConVars**
+\
+_ttt_randomat_bighead_ - Default: 1 - Whether this event is enabled.\
+_randomat_bighead_scale_ - Default: 2 - Head size multiplier.
 
 ## Blind Traitors (aka All traitors have been blinded for X seconds!)
 Blinds all traitors for a configurable amount of seconds
@@ -741,6 +752,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
+- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
