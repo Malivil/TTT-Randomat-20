@@ -108,7 +108,8 @@ _ttt_randomat_ragdoll_ - Default: 1 - Whether this event is enabled.
 
 ## Big Head Mode
 Causes all players to have their heads grow to massive proportions.\
-NOTE: Not all custom models are supported -- some have their hair detached from their head which looks creepy when the head scales the hair doesn't. I tried a few ways to fix it but that ended up breaking other stuff.
+**NOTE**: This does _not_ increase the size of the head hitbox. Unfortunately that cannot be done without editing the models so this event is purely for the laughs.\
+**NOTE**: Not all custom models are supported -- some have their hair detached from their head which looks creepy when the head scales the hair doesn't. I tried a few ways to fix it but that ended up breaking other stuff.
 \
 \
 **ConVars**

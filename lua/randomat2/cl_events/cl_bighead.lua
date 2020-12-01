@@ -1,18 +1,17 @@
-local function ScalePlayerHead(mult)
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
+local function ScalePlayerHeads(mult)
+    for _, p in pairs(player.GetAll()) do
+        local boneId = p:LookupBone("ValveBiped.Bip01_Head1")
+        if boneId == nil then return end
 
-    local boneId = client:LookupBone("ValveBiped.Bip01_Head1")
-    if boneId == nil then return end
-
-    local scale = Vector(mult, mult, mult)
-    client:ManipulateBoneScale(boneId, scale)
+        local scale = Vector(mult, mult, mult)
+        p:ManipulateBoneScale(boneId, scale)
+    end
 end
 
 net.Receive("BigHeadActivate", function()
-    ScalePlayerHead(net.ReadFloat())
+    ScalePlayerHeads(net.ReadFloat())
 end)
 
 net.Receive("BigHeadStop", function()
-    ScalePlayerHead(1)
+    ScalePlayerHeads(1)
 end)
