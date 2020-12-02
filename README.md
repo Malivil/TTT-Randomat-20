@@ -18,6 +18,7 @@ _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.
 - Careful...
 - Come on and SLAM!
 - Communism! Time to learn how to share...
+- Derptective
 - Don't be so Sensitive
 - Double Cross
 - Election Day
@@ -59,7 +60,7 @@ _ttt_randomat_suspicion_ - Default: 1 - Whether this event is enabled.\
 _randomat_suspicion_chance_ - Default: 50 - The chance of the player being a Jester.
 
 ## A Random Person will explode every X seconds! Watch out! (EXCEPT DETECTIVES)
-This one is pretty self-explanitory
+This one is pretty self-explanitory. Detraitors are also excluded from explosion.
 \
 \
 **ConVars**
@@ -213,6 +214,15 @@ Prevents corpses from being searched
 **ConVars**
 \
 _ttt_randomat_search_ - Default: 1 - Whether this event is enabled.
+
+## Derptective
+Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire.
+\
+\
+**ConVars**
+\
+_ttt_randomat_derptective_ - Default: 1 - Whether this event is enabled.\
+_randomat_derptective_rate_of_fire_ - Default: 2 - Rate of Fire multiplier for the H.U.G.E..
 
 ## Don't be so Sensitive
 Periodically changes each player's mouse sensitivity to a number within the configurable range
@@ -764,7 +774,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" event
-- u/Speedlovar on Reddit for the idea for the "Careful..." event
+- u/Speedlovar on Reddit for the idea for the "Careful..." and "Derptective" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
