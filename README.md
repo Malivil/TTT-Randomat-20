@@ -15,6 +15,7 @@ _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.
 - A Glitch has been patched
 - Big Head Mode
 - Camp Fire
+- Careful...
 - Come on and SLAM!
 - Communism! Time to learn how to share...
 - Don't be so Sensitive
@@ -154,6 +155,15 @@ Causes every player to constantly move forward
 \
 _ttt_randomat_cantstop_ - Default: 1 - Whether this event is enabled.\
 _randomat_cantstop_disableback_ - Default: 1 - Whether the "s" key is disabled.
+
+## Careful...
+Set all Jesters annd Swappers to a reduced (and configurable) amount of health.
+\
+\
+**ConVars**
+\
+_ttt_randomat_careful_ - Default: 1 - Whether this event is enabled.\
+_randomat_careful_health_ - Default: 1 - Health to set Jester/Swapper to.
 
 ## Choose an Event!
 Presents random events to be chosen, either by a single player or by vote
@@ -739,10 +749,10 @@ This version of the Randomat 2.0 should be compatible with all versions of the U
 That being said, I have created my [own version of the ULX Module](https://steamcommunity.com/sharedfiles/filedetails/?id=2096758509) which supports these new events as well as dynamic event loading with little-to-no developer interaction
 
 # Special Thanks
-- [Dem](https://steamcommunity.com/profiles/76561198076733538) for the 'TTT Randomat 2.0' mod which this is an update to.
-- [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT Randomat' mod which THAT was an update to.
+- [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to.
+- [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the "TTT Randomat" mod which THAT was an update to.
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded.
-- [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the 'The Cake is a Lie' event
+- [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the "The Cake is a Lie" event
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
@@ -754,9 +764,13 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" event
+- u/Speedlovar on Reddit for the idea for the "Careful..." event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
  for the "I don't think you realise the gravity of the situation." event.
 - Tygron for providing feedback and verifying bug fixes
+
+# Steam Workshop
+https://steamcommunity.com/sharedfiles/filedetails/?id=2055805086
