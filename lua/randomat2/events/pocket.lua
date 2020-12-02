@@ -34,47 +34,19 @@ function EVENT:CallHooks(isequip, id, ply)
 end
 
 function EVENT:GiveWep(ply)
-    if ply.pocketweptries >= 100 then ply.pocketweptries = nil return end
-    ply.pocketweptries = ply.pocketweptries + 1
-
-    local item, item_id, swep_table = self:FindWep()
-    if item_id then
-        if ply:HasEquipmentItem(item_id) then
-            self:GiveWep(ply)
-        else
-            ply:GiveEquipmentItem(item_id)
-            self:CallHooks(true, item_id, ply)
-            ply.pocketweptries = 0
-        end
-    elseif swep_table then
-        if ply:CanCarryWeapon(swep_table) then
-            ply:Give(item.ClassName)
-            self:CallHooks(false, item.ClassName, ply)
-            if swep_table.WasBought then
-                swep_table:WasBought(ply)
-            end
-            ply.pocketweptries = 0
-        else
-            self:GiveWep(ply)
-        end
-    end
-end
-
-function EVENT:FindWep()
-    local roleswithshop = {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY}
-    local selected = math.random(1,#roleswithshop)
-    local tbl = table.Copy(EquipmentItems[roleswithshop[selected]])
-    for _, v in pairs(weapons.GetList()) do
-        if v and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
-            table.insert(tbl, v)
-        end
-    end
-    table.Shuffle(tbl)
-
-    local item = table.Random(tbl)
-    local item_id = tonumber(item.id)
-    local swep_table = (not item_id) and weapons.GetStored(item.ClassName) or nil
-    return item, item_id, swep_table
+    Randomat:GiveRandomShopItem(ply, {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY}, blocklist, true,
+        -- gettrackingvar
+        function()
+            return ply.pocketweptries
+        end,
+        -- settrackingvar
+        function(value)
+            ply.pocketweptries = value
+        end,
+        -- onitemgiven
+        function(isequip, id)
+            self:CallHooks(isequip, id, ply)
+        end)
 end
 
 function EVENT:GetConVars()

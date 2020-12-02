@@ -268,6 +268,55 @@ function Randomat:EventNotifySilent(title)
     net.Broadcast()
 end
 
+local function GetRandomRoleWeapon(roles, blocklist)
+    local selected = math.random(1,#roles)
+    local tbl = table.Copy(EquipmentItems[roles[selected]])
+    for _, v in pairs(weapons.GetList()) do
+        if v and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
+            table.insert(tbl, v)
+        end
+    end
+    table.Shuffle(tbl)
+
+    local item = table.Random(tbl)
+    local item_id = tonumber(item.id)
+    local swep_table = (not item_id) and weapons.GetStored(item.ClassName) or nil
+    return item, item_id, swep_table
+end
+
+local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settrackingvar, onitemgiven)
+    if tracking == nil then tracking = 0 end
+    if tracking >= 500 then return end
+    tracking = tracking + 1
+    settrackingvar(tracking)
+
+    local item, item_id, swep_table = GetRandomRoleWeapon(roles, blocklist)
+    if item_id then
+        if not include_equipment or ply:HasEquipmentItem(item_id) then
+            GiveWep(ply, tracking, settrackingvar)
+        else
+            ply:GiveEquipmentItem(item_id)
+            onitemgiven(true, item_id)
+            settrackingvar(0)
+        end
+    elseif swep_table then
+        if ply:CanCarryWeapon(swep_table) then
+            ply:Give(item.ClassName)
+            onitemgiven(false, item.ClassName)
+            if swep_table.WasBought then
+                swep_table:WasBought(ply)
+            end
+            settrackingvar(0)
+        else
+            GiveWep(ply, tracking, settrackingvar)
+        end
+    end
+end
+
+function Randomat:GiveRandomShopItem(ply, roles, blocklist, include_equipment, gettrackingvar, settrackingvar, onitemgiven)
+    GiveWep(ply, roles, blocklist, include_equipment, gettrackingvar(), settrackingvar, onitemgiven)
+end
+
 --[[
  Randomat Meta
 ]]--

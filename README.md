@@ -15,6 +15,7 @@ _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.
 - A Glitch has been patched
 - Big Head Mode
 - Camp Fire
+- Care Package
 - Careful...
 - Come on and SLAM!
 - Communism! Time to learn how to share...
@@ -156,6 +157,15 @@ Causes every player to constantly move forward
 \
 _ttt_randomat_cantstop_ - Default: 1 - Whether this event is enabled.\
 _randomat_cantstop_disableback_ - Default: 1 - Whether the "s" key is disabled.
+
+## Care Package
+Spawns an ammo crate somewhere in the map that contains a free item from the various role shops.
+\
+\
+**ConVars**
+\
+_ttt_randomat_package_ - Default: 1 - Whether this event is enabled.\
+_randomat_package_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## Careful...
 Set all Jesters annd Swappers to a reduced (and configurable) amount of health.
@@ -774,7 +784,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" event
-- u/Speedlovar on Reddit for the idea for the "Careful..." and "Derptective" events
+- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", and "Derptective" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event

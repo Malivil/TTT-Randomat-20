@@ -80,45 +80,19 @@ function EVENT:CallHooks(isequip, id, ply)
 end
 
 function EVENT:GiveWep(ply)
-    if ply.glitchweptries >= 100 then ply.glitchweptries = nil return end
-    ply.glitchweptries = ply.glitchweptries + 1
-
-    local item, item_id, swep_table = self:FindWep()
-    if item_id then
-        if ply:HasEquipmentItem(item_id) then
-            self:GiveWep(ply)
-        else
-            ply:GiveEquipmentItem(item_id)
-            self:CallHooks(true, item_id, ply)
-            ply.glitchweptries = 0
-        end
-    elseif swep_table then
-        if ply:CanCarryWeapon(swep_table) then
-            ply:Give(item.ClassName)
-            self:CallHooks(false, item.ClassName, ply)
-            if swep_table.WasBought then
-                swep_table:WasBought(ply)
-            end
-            ply.glitchweptries = 0
-        else
-            self:GiveWep(ply)
-        end
-    end
-end
-
-function EVENT:FindWep()
-    local tbl = table.Copy(EquipmentItems[ROLE_TRAITOR])
-    for _, v in pairs(weapons.GetList()) do
-        if v and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
-            table.insert(tbl, v)
-        end
-    end
-    table.Shuffle(tbl)
-
-    local item = table.Random(tbl)
-    local item_id = tonumber(item.id)
-    local swep_table = (not item_id) and weapons.GetStored(item.ClassName) or nil
-    return item, item_id, swep_table
+    Randomat:GiveRandomShopItem(ply, {ROLE_TRAITOR}, blocklist, true,
+        -- gettrackingvar
+        function()
+            return ply.glitchweptries
+        end,
+        -- settrackingvar
+        function(value)
+            ply.glitchweptries = value
+        end,
+        -- onitemgiven
+        function(isequip, id)
+            self:CallHooks(isequip, id, ply)
+        end)
 end
 
 function EVENT:GetConVars()
