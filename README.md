@@ -19,6 +19,7 @@ _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.
 - Careful...
 - Come on and SLAM!
 - Communism! Time to learn how to share...
+- Compulsive Reloading
 - Derptective
 - Don't be so Sensitive
 - Double Cross
@@ -208,6 +209,18 @@ Whenever anyone buys a weapon from a shop, all other players get that weapon too
 \
 _ttt_randomat_communist_ - Default: 1 - Whether this event is enabled.\
 _randomat_communist_show_roles_ - Default: 1 - Whether to show the role of the purchasing player.
+
+## Compulsive Reloading
+Slowly drains a user's ammo over time if they haven't fired recently.
+\
+\
+**ConVars**
+\
+_ttt_randomat_reload_ - Default: 1 - Whether this event is enabled.\
+_randomat_reload_wait_time_ - Default: 5.0 - Seconds after last shot to wait before draining.\
+_randomat_reload_drain_time_ - Default: 2.0 - Seconds between each ammo drain.\
+_randomat_reload_keep_ammo_ - Default: 1 - Whether drained ammo is kept (1) or destroyed (0).\
+_randomat_reload_affectbuymenu_ - Default: 0 - Whether buy menu weapons lose ammo too.
 
 ## Crabs are People
 Spawns a configurable number of hostile headcrabs when a player is killed
@@ -792,7 +805,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" event
-- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Derptective", and "Opposite Day" events
+- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
