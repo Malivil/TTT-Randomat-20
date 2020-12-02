@@ -6,6 +6,9 @@ function ENT:Initialize()
     self.Entity:PhysicsInit(SOLID_VPHYSICS)
     self.Entity:SetModelScale(1)
     self.Entity:SetHealth(250)
+    if SERVER then
+        self.Entity:PrecacheGibs()
+    end
 
 	local phys = self.Entity:GetPhysicsObject()
 	if phys:IsValid() then
@@ -22,6 +25,7 @@ end
 function ENT:OnTakeDamage(dmgInfo)
     self.Entity:SetHealth(self.Entity:Health() - dmgInfo:GetDamage())
     if self.Entity:Health() <= 0 then
+        self.Entity:GibBreakServer(Vector(1, 1, 1))
         self.Entity:Remove()
     end
     return true
