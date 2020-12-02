@@ -110,6 +110,8 @@
         "ROLE_PHOENIX",
         "ROLE_SERIALKILLER",
         "ROLE_INFECTED",
-        "GetEquipmentItem"
+        "GetEquipmentItem",
+        "IN_ATTACK",
+        "IN_RELOAD"
     ]
 }

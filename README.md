@@ -27,6 +27,7 @@ _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.
 - Glitch in the Matrix
 - I don't think you realise the gravity of the situation.
 - NO NERD HEALING
+- Opposite Day
 - Prop Hunt
 - Shh... It's a Secret!
 - Social Distancing
@@ -508,6 +509,14 @@ This one is pretty self-explanitory except for the "Detective is stronger" part.
 \
 _ttt_randomat_jesters_ - Default: 1 - Whether this event is enabled.
 
+## Opposite Day
+Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.
+\
+\
+**ConVars**
+\
+_ttt_randomat_opposite_ - Default: 1 - Whether this event is enabled.
+
 **Prop Hunt**
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
 \
@@ -771,7 +780,6 @@ That being said, I have created my [own version of the ULX Module](https://steam
 # Special Thanks
 - [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to.
 - [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the "TTT Randomat" mod which THAT was an update to.
-- Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded.
 - [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the "The Cake is a Lie" event
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
@@ -784,9 +792,11 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" event
-- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", and "Derptective" events
+- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Derptective", and "Opposite Day" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
+- Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
+- CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
  for the "I don't think you realise the gravity of the situation." event.
