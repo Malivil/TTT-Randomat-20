@@ -1,10 +1,10 @@
 local EVENT = {}
 
+CreateConVar("randomat_ragdoll_time", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time the player is ragdolled", 0.5, 10)
+CreateConVar("randomat_ragdoll_delay", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time between ragdolls", 0.5, 10)
+
 EVENT.Title = "Bad Trip"
 EVENT.id = "ragdoll"
-
-local ragdolltime = 1.5
-local ragdolldelay = 1.5
 
 local function PlayerNotStuck(ply)
     local pos = ply:GetPos()
@@ -177,6 +177,7 @@ local function ragdollPlayer(v)
     end)
 
     v.ragdoll = ragdoll
+    local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
     hook.Add("Think", v:Nick().."UnragdollTimer", function()
         -- Turn a ragdoll back into a player if they have essentially stopped moving and have been a ragdoll "long enoughj"
         if ragdoll:IsValid() and ragdoll:GetPhysicsObjectNum(1):GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
@@ -191,6 +192,9 @@ function EVENT:Begin()
         v.inRagdoll = false
         v.lastRagdoll = nil
     end
+
+    local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
+    local ragdolldelay = GetConVar("randomat_ragdoll_delay"):GetFloat()
     self:AddHook("Think", function()
         for _, v in pairs(self:GetAlivePlayers()) do
             -- Turn a player into a ragdoll if they are in the air, not already a ragdoll, not in the water, and haven't been ragdolled recently
@@ -223,6 +227,25 @@ function EVENT:End()
         end
         hook.Remove("Think", v:Nick().."UnragdollTimer")
     end
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"time", "delay"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 1
+            })
+        end
+    end
+
+    return sliders
 end
 
 Randomat:register(EVENT)
