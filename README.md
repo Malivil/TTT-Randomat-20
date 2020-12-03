@@ -109,7 +109,9 @@ Causes any player who is off the ground (by jumping, falling, etc.) to turn into
 \
 **ConVars**
 \
-_ttt_randomat_ragdoll_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_ragdoll_ - Default: 1 - Whether this event is enabled.\
+_randomat_ragdoll_time_ - Default: 1.5 - The time the player is ragdolled.\
+_randomat_ragdoll_delay_ - Default: 1.5 - The time between ragdolls.
 
 ## Big Head Mode
 Causes all players to have their heads grow to massive proportions.\
