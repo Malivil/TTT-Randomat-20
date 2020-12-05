@@ -6,12 +6,12 @@ EVENT.Title = "Big Head Mode"
 EVENT.id = "bighead"
 
 local function ScalePlayerHeads(mult)
+    local scale = Vector(mult, mult, mult)
     for _, p in pairs(player.GetAll()) do
         local boneId = p:LookupBone("ValveBiped.Bip01_Head1")
-        if boneId == nil then return end
-
-        local scale = Vector(mult, mult, mult)
-        p:ManipulateBoneScale(boneId, scale)
+        if boneId ~= nil then
+            p:ManipulateBoneScale(boneId, scale)
+        end
     end
 end
 
