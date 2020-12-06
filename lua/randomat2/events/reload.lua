@@ -100,4 +100,8 @@ function EVENT:GetConVars()
     return sliders, checks
 end
 
+function EVENT:Condition()
+    return not Randomat:IsEventActive("ammo")
+end
+
 Randomat:register(EVENT)

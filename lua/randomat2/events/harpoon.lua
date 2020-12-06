@@ -64,7 +64,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    if Randomat:IsEventActive("slam") or Randomat:IsEventActive("prophunt") then return false end
+    if Randomat:IsEventActive("slam") or Randomat:IsEventActive("prophunt") or Randomat:IsEventActive("grave") then return false end
 
     local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
     return util.WeaponForClass(weaponid) ~= nil

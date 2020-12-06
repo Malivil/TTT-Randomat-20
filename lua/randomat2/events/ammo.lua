@@ -15,4 +15,8 @@ function EVENT:Begin()
     end)
 end
 
+function EVENT:Condition()
+    return not Randomat:IsEventActive("reload")
+end
+
 Randomat:register(EVENT)

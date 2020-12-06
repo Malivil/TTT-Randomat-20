@@ -43,4 +43,8 @@ function EVENT:End()
     timer.Remove("infrespawntimer")
 end
 
+function EVENT:Condition()
+    return not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam")
+end
+
 Randomat:register(EVENT)
