@@ -89,6 +89,7 @@ function EVENT:StartVotes(first, second)
                 for _, v in pairs(votableplayers) do
                     if v:Nick() == firstcandidate then
                         self:SwearIn(v)
+                        break
                     end
                 end
             else
