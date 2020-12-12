@@ -44,7 +44,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    return not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam")
+    return not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam") and not Randomat:IsEventActive("murder")
 end
 
 Randomat:register(EVENT)
