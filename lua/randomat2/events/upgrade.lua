@@ -31,6 +31,11 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    -- Don't allow this if Mercenary is disabled
+    if ConVarExists("ttt_mercenary_enabled") and not GetConVar("ttt_mercenary_enabled"):GetBool() then
+        return false
+    end
+
     local merc = 0
     local inno = 0
     local kil = 0
