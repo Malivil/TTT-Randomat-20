@@ -199,7 +199,7 @@ function EVENT:SwearIn(winner)
         -- Swapper - Kill them with a random player as the "attacker", swapping their roles
         elseif winner:GetRole() == ROLE_JESTER or winner:GetRole() == ROLE_SWAPPER then
             local attacker = self.owner
-            if winner:GetRole() == ROLE_SWAPPER then
+            if winner:GetRole() == ROLE_SWAPPER or attacker == winner then
                 repeat
                     attacker = self:GetAlivePlayers(true)[1]
                 until attacker ~= winner
