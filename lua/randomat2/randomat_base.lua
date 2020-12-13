@@ -5,6 +5,7 @@ util.AddNetworkString("alerteventtrigger")
 
 if SERVER then
     util.AddNetworkString("TTT_RoleChanged")
+    util.AddNetworkString("TTT_LogInfo")
 end
 
 ROLE_MERCENARY = ROLE_MERCENARY or ROLE_SURVIVALIST or -1
@@ -29,6 +30,23 @@ local function EndEvent(evt)
     evt:CleanUpHooks()
 end
 
+local function TriggerEvent(event, ply, silent)
+    if not silent then
+        Randomat:EventNotify(event.Title)
+    end
+
+    if SERVER then
+        net.Start("TTT_LogInfo")
+        net.WriteString("Randomat event '" .. event.Title .. "' (" .. event.Id .. ") started by " .. ply:Nick())
+        net.Broadcast()
+    end
+
+    local index = #Randomat.ActiveEvents + 1
+    Randomat.ActiveEvents[index] = event
+    Randomat.ActiveEvents[index].owner = ply
+    Randomat.ActiveEvents[index]:Begin()
+end
+
 local function TriggerAutoComplete(cmd, args)
     local name = string.lower(string.Trim(args))
     local options = {}
@@ -45,11 +63,7 @@ concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
         if Randomat:CanEventRun(event) then
-            local index = #Randomat.ActiveEvents + 1
-            Randomat:EventNotify(event.Title)
-            Randomat.ActiveEvents[index] = event
-            Randomat.ActiveEvents[index].owner = Randomat:GetValidPlayer(nil)
-            Randomat.ActiveEvents[index]:Begin()
+            TriggerEvent(event, Randomat:GetValidPlayer(nil), false)
         else
             error("Conditions for event not met")
         end
@@ -61,12 +75,8 @@ end, TriggerAutoComplete, "Triggers a specific randomat event with conditions", 
 concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
     local cmd = arg[1]
     if Randomat.Events[cmd] ~= nil then
-        local index = #Randomat.ActiveEvents + 1
         local event = Randomat.Events[cmd]
-        Randomat:EventNotify(event.Title)
-        Randomat.ActiveEvents[index] = event
-        Randomat.ActiveEvents[index].owner = Randomat:GetValidPlayer(nil)
-        Randomat.ActiveEvents[index]:Begin()
+        TriggerEvent(event, Randomat:GetValidPlayer(nil), false)
     else
         error("Could not find event '" .. cmd .. "'")
     end
@@ -211,21 +221,13 @@ function Randomat:TriggerRandomEvent(ply)
         event = GetRandomEvent(events)
     end
 
-    local index = #Randomat.ActiveEvents + 1
-    Randomat:EventNotify(event.Title)
-    Randomat.ActiveEvents[index] = event
-    Randomat.ActiveEvents[index].owner = ply
-    Randomat.ActiveEvents[index]:Begin()
+    TriggerEvent(event, ply, false)
 end
 
 function Randomat:TriggerEvent(cmd, ply)
     if Randomat.Events[cmd] ~= nil then
-        local index = #Randomat.ActiveEvents + 1
         local event = Randomat.Events[cmd]
-        Randomat:EventNotify(event.Title)
-        Randomat.ActiveEvents[index] = event
-        Randomat.ActiveEvents[index].owner = ply
-        Randomat.ActiveEvents[index]:Begin()
+        TriggerEvent(event, ply, false)
     else
         error("Could not find event '" .. cmd .. "'")
     end
@@ -233,11 +235,8 @@ end
 
 function Randomat:SilentTriggerEvent(cmd, ply)
     if Randomat.Events[cmd] ~= nil then
-        local index = #Randomat.ActiveEvents + 1
-        Randomat.ActiveEvents[index] = Randomat.Events[cmd]
-
-        Randomat.ActiveEvents[index].owner = ply
-        Randomat.ActiveEvents[index]:Begin()
+        local event = Randomat.Events[cmd]
+        TriggerEvent(event, ply, true)
     else
         error("Could not find event '" .. cmd .. "'")
     end
