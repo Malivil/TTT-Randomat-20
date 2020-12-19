@@ -37,7 +37,7 @@ local function TriggerEvent(event, ply, silent)
 
     if SERVER then
         net.Start("TTT_LogInfo")
-        net.WriteString("Randomat event '" .. event.Title .. "' (" .. event.Id .. ") started by " .. ply:Nick())
+        net.WriteString("Randomat event '" .. Randomat:GetEventTitle(event) .. "' (" .. event.Id .. ") started by " .. ply:Nick())
         net.Broadcast()
     end
 
