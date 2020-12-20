@@ -7,9 +7,9 @@ util.AddNetworkString("ChooseVoteTrigger")
 util.AddNetworkString("ChoosePlayerVoted")
 util.AddNetworkString("ChooseVoteEnd")
 
-CreateConVar("randomat_choose_choices", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of events you can choose from")
+CreateConVar("randomat_choose_choices", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of events you can choose from", 2, 5)
 CreateConVar("randomat_choose_vote", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows all players to vote on the event")
-CreateConVar("randomat_choose_votetimer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long players have to vote on the event")
+CreateConVar("randomat_choose_votetimer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long players have to vote on the event", 5, 60)
 CreateConVar("randomat_choose_deadvoters", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Dead people can vote")
 
 local EventChoices = {}
@@ -89,6 +89,36 @@ end
 function EVENT:End()
     net.Start("ChooseEventEnd")
     net.Send(owner)
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"choices", "votetimer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    local checks = {}
+    for _, v in pairs({"vote", "deadvoters"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return sliders, checks
 end
 
 net.Receive("PlayerChoseEvent", function()

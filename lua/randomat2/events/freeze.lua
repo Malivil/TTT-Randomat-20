@@ -17,8 +17,8 @@ table.insert(eventnames, "Let's kick some ice!")
 table.insert(eventnames, "Can you feel it coming? The icy cold of space!")
 table.insert(eventnames, "Freeze in hell, Batman!")
 
-CreateConVar("randomat_freeze_duration", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of the Freeze (in seconds)")
-CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) the Freeze occurs")
+CreateConVar("randomat_freeze_duration", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of the Freeze (in seconds)", 1, 60)
+CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) the Freeze occurs", 5, 60)
 
 local function GetEventDescription()
     return "All Innocents will Freeze (and become immune) every "..GetConVar("randomat_freeze_timer"):GetInt().." seconds"
@@ -57,6 +57,24 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtFreezeTimer")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"duration", "timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

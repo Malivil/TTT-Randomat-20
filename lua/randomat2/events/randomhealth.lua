@@ -1,15 +1,22 @@
 local EVENT = {}
 
-CreateConVar("randomat_randomhealth_upper", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The upper limit of health gained")
-CreateConVar("randomat_randomhealth_lower", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The lower limit of health gained")
+CreateConVar("randomat_randomhealth_upper", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The upper limit of health gained", 10, 200)
+CreateConVar("randomat_randomhealth_lower", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The lower limit of health gained", 0, 100)
 
 EVENT.Title = "Random Health for everyone!"
 EVENT.id = "randomhealth"
 EVENT.SingleUse = false
 
 function EVENT:Begin()
+    local lower = GetConVar("randomat_randomhealth_lower"):GetInt()
+    local upper = GetConVar("randomat_randomhealth_upper"):GetInt()
+    -- For sanity
+    if lower > upper then
+        upper = lower + 1
+    end
+
     for _, ply in pairs(self:GetAlivePlayers(true)) do
-        local newhealth = ply:Health() + math.random(GetConVar("randomat_randomhealth_lower"):GetInt(), GetConVar("randomat_randomhealth_upper"):GetInt())
+        local newhealth = ply:Health() + math.random(lower, upper)
 
         ply:SetHealth(newhealth)
 
@@ -17,6 +24,25 @@ function EVENT:Begin()
             ply:SetMaxHealth(newhealth)
         end
     end
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"upper", "lower"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    return sliders
 end
 
 Randomat:register(EVENT)

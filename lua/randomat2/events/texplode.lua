@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_texplode_timer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time before the traitor explodes")
-CreateConVar("randomat_texplode_radius", 600, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Radius of the traitor explosion")
+CreateConVar("randomat_texplode_timer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time before the traitor explodes", 1, 120)
+CreateConVar("randomat_texplode_radius", 600, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Radius of the traitor explosion", 50, 1000)
 
 EVENT.Title = ""
 EVENT.AltTitle = "A traitor will explode in "..GetConVar("randomat_texplode_timer"):GetInt().." seconds!"
@@ -63,18 +63,29 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    local t = 0
     for _, v in pairs(self:GetAlivePlayers()) do
-        if v:Alive() and (v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_DETRAITOR) then
-            t = t+1
+        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_DETRAITOR then
+            return true
         end
     end
+end
 
-    if t > 1 then
-        return true
-    else
-        return false
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer", "radius"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
     end
+    return sliders
 end
 
 Randomat:register(EVENT)

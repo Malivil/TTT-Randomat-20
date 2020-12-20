@@ -798,7 +798,7 @@ Kills any player who jumps a second time after this event has triggered
 _ttt_randomat_jump_ - Default: 1 -  Whether this event is enabled.
 
 # ULX Support
-This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0
+This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0 (other than any new events or ConVars).\
 That being said, I have created my [own version of the ULX Module](https://steamcommunity.com/sharedfiles/filedetails/?id=2096758509) which supports these new events as well as dynamic event loading with little-to-no developer interaction
 
 # Special Thanks

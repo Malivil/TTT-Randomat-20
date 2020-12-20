@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_crabs_count", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of crabs spawned when someone dies")
+CreateConVar("randomat_crabs_count", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of crabs spawned when someone dies", 1, 10)
 
 EVENT.Title = "Crabs are People"
 EVENT.Description = "Spawns hostile headcrabs when a player is killed"
@@ -30,6 +30,24 @@ end
 
 function EVENT:End()
     timer.Remove("headcrabtimer")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"count"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

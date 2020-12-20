@@ -4,7 +4,7 @@ EVENT.Title = "Taking Inventory"
 EVENT.Description = "Swaps player inventories periodically throughout the round"
 EVENT.id = "inventory"
 
-CreateConVar("randomat_inventory_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between inventory swaps")
+CreateConVar("randomat_inventory_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between inventory swaps", 5, 60)
 
 function EVENT:HandleWeapons(ply, weapons, from_killer)
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
@@ -61,6 +61,24 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtInventoryTimer")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

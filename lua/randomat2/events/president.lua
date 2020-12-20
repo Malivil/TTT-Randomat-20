@@ -4,7 +4,7 @@ EVENT.Title = "Get Down Mr President!"
 EVENT.Description = "Gives all Detectives extra health, but kills all members of the Innocent team if they get killed"
 EVENT.id = "president"
 
-CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective")
+CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
 
 function EVENT:Begin()
     local owner
@@ -39,16 +39,34 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
-    local d = 0
+    local has_detective = false
     for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE then
-            d = 1
+            has_detective = true
+        elseif v:GetRole() == ROLE_DETRAITOR then
+            return false
         end
     end
 
-    if d == 1 then
-        return true
+    return has_detective
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"bonushealth"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
     end
+    return sliders
 end
 
 Randomat:register(EVENT)

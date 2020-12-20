@@ -31,4 +31,19 @@ function EVENT:End()
     end
 end
 
+function EVENT:GetConVars()
+    local checks = {}
+    for _, v in pairs({"disableback"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return {}, checks
+end
+
 Randomat:register(EVENT)

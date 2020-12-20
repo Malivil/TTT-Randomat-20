@@ -1,31 +1,63 @@
 local EVENT = {}
 
-CreateConVar("randomat_butter_timer", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The time between each weapon drop.")
-CreateConVar("randomat_butter_affectall", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "Whether to affect every player at once rather than just a single random player.")
+CreateConVar("randomat_butter_timer", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The time between each weapon drop.", 5, 60)
+CreateConVar("randomat_butter_affectall", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "Whether to affect everyone or just a single random player.")
 
 EVENT.Title = "Butterfingers"
 EVENT.Description = "Causes weapons to periodically slip out of players' hands"
 EVENT.id = "butter"
 
 function EVENT:Begin()
-    local x = 0
+    local affect_all = GetConVar("randomat_butter_affectall"):GetBool()
+    local affected = false
     timer.Create("weapondrop", GetConVar("randomat_butter_timer"):GetInt(), 0, function()
         for _, ply in pairs(self:GetAlivePlayers(true)) do
-            x = x+1
-            if x == 1 or GetConVar("randomat_butter_affectall"):GetBool() then
-                if ply:GetActiveWeapon().AllowDrop then
-                    ply:DropWeapon(ply:GetActiveWeapon())
+            if not affected or affect_all then
+                local wep = ply:GetActiveWeapon()
+                if IsValid(wep) and wep.AllowDrop then
+                    affected = true
+                    ply:DropWeapon(wep)
                     ply:SetFOV(0, 0.2)
                     ply:EmitSound("vo/npc/Barney/ba_pain01.wav")
                 end
             end
         end
-        x = 0
+        affected = false
     end)
 end
 
 function EVENT:End()
     timer.Remove("weapondrop")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    local checks = {}
+    for _, v in pairs({"affectall"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return sliders, checks
 end
 
 Randomat:register(EVENT)

@@ -64,11 +64,11 @@ function EVENT:GetConVars()
         if ConVarExists(name) then
             local convar = GetConVar(name)
             table.insert(sliders, {
-                cmd = v,                    -- The command extension (e.g. everything after "randomat_example_")
-                dsc = convar:GetHelpText(), -- The description of the ConVar
-                min = convar:GetMin(),      -- The minimum value for this slider-based ConVar
-                max = convar:GetMax(),      -- The maximum value for this slider-based ConVar
-                dcm = 0                     -- The number of decimal points to support in this slider-based ConVar
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
             })
         end
     end

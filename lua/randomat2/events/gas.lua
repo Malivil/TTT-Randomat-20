@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_gas_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Changes the time between grenade drops")
+CreateConVar("randomat_gas_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Changes the time between grenade drops", 5, 60)
 CreateConVar("randomat_gas_affectall", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Set to 1 for the event to drop a grenade at everyone's feet on trigger")
 CreateConVar("randomat_gas_discombob", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether discombobs drop")
 CreateConVar("randomat_gas_incendiary", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether incendiaries drop")
@@ -45,6 +45,36 @@ end
 
 function EVENT:End()
     timer.Remove("gastimer")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    local checks = {}
+    for _, v in pairs({"affectall", "discombob", "incendiary", "smoke"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return sliders, checks
 end
 
 Randomat:register(EVENT)

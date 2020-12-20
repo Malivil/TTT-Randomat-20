@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 local EVENT = {}
 
-CreateConVar("randomat_blind_duration", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "The duration the players should be blinded for")
+CreateConVar("randomat_blind_duration", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "The duration the players should be blinded for", 5, 60)
 
 util.AddNetworkString("blindeventactive")
 
@@ -35,19 +35,31 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    local x = 0
     for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_DETRAITOR then
-            x = 1
+            return true
         end
     end
 
-    if x == 1 then
-        return true
-    else
-        return false
-    end
+    return false
 end
 
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"duration"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
+end
 
 Randomat:register(EVENT)

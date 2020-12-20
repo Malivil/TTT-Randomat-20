@@ -73,6 +73,21 @@ function EVENT:Condition()
     end
 end
 
+function EVENT:GetConVars()
+    local checks = {}
+    for _, v in pairs({"chooserole"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return {}, checks
+end
+
 net.Receive("rdmtPlayerChoseSk", function()
     local v = net.ReadEntity()
     Randomat:SetRole(v, ROLE_KILLER)

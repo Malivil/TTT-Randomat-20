@@ -4,7 +4,7 @@ EVENT.Title = "Gun Game"
 EVENT.Description = "Periodically gives players random weapons that would normally be found throughout the map"
 EVENT.id = "gungame"
 
-CreateConVar("randomat_gungame_timer", 5, {FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Time between weapon changes")
+CreateConVar("randomat_gungame_timer", 5, {FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Time between weapon changes", 5, 60)
 
 function EVENT:Begin()
     local weps = {}
@@ -43,6 +43,24 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtWeaponShuffle")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

@@ -1,6 +1,4 @@
-if SERVER then
-    util.AddNetworkString("TTT_Zombified")
-end
+util.AddNetworkString("TTT_Zombified")
 
 local EVENT = {}
 
@@ -8,7 +6,7 @@ EVENT.Title = "RISE FROM YOUR GRAVE"
 EVENT.Description = "Causes anyone who dies to be resurrected as a Zombie"
 EVENT.id = "grave"
 
-CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with")
+CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with", 10, 100)
 
 function EVENT:Begin()
     timer.Create("infrespawntimer", 1, 0, function()
@@ -46,6 +44,24 @@ end
 
 function EVENT:Condition()
     return not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam") and not Randomat:IsEventActive("murder")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"health"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

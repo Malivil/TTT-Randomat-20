@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_fov_scale", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Scale of the FOV increase")
+CreateConVar("randomat_fov_scale", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Scale of the FOV increase", 1.1, 2.0)
 
 EVENT.Title = "Quake Pro"
 EVENT.Description = "Increases each player's Field of View (FOV) so it looks like you're playing Quake"
@@ -8,20 +8,19 @@ EVENT.id = "fov"
 EVENT.SingleUse = false
 
 function EVENT:Begin()
-    StartingPlys = {}
+    local scale = GetConVar("randomat_fov_scale"):GetFloat()
     local changedFOV = {}
-
-    for k, v in pairs(player.GetAll()) do
-        StartingPlys[k] = v
-        changedFOV[v] = v:GetFOV()*GetConVar("randomat_fov_scale"):GetFloat()
-    end
-
     timer.Create("RandomatFOVTimer", 0.1, 0, function()
-        for _, v in pairs(StartingPlys) do
+        for _, v in pairs(player.GetAll()) do
             if v:Alive() and not v:IsSpec() then
-                v:SetFOV( changedFOV[v], 0 )
+                -- Save the player's scaled FOV the first time we see them
+                if changedFOV[v:UniqueID()] == nil then
+                    changedFOV[v:UniqueID()] = v:GetFOV() * scale
+                end
+
+                v:SetFOV(changedFOV[v:UniqueID()], 0)
             else
-                v:SetFOV(0,0)
+                v:SetFOV(0, 0)
             end
         end
     end)
@@ -29,9 +28,27 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatFOVTimer")
-    for _, v in pairs(StartingPlys) do
-        v:SetFOV(0,0)
+    for _, v in pairs(player.GetAll()) do
+        v:SetFOV(0, 0)
     end
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"scale"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 1
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

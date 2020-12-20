@@ -113,5 +113,8 @@
         "GetEquipmentItem",
         "IN_ATTACK",
         "IN_RELOAD"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-field"
     ]
 }

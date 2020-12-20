@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_barrels_count", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of barrels spawned per person")
-CreateConVar("randomat_barrels_range", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Distance barrels spawn from the player")
-CreateConVar("randomat_barrels_timer", 60, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between barrel spawns")
+CreateConVar("randomat_barrels_count", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of barrels spawned per person", 1, 5)
+CreateConVar("randomat_barrels_range", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Distance barrels spawn from the player", 50, 200)
+CreateConVar("randomat_barrels_timer", 60, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between barrel spawns", 10, 120)
 
 EVENT.Title = "Gunpowder, Treason, and Plot"
 EVENT.Description = "Spawns explosive barrels around every player repeatedly until the event ends"
@@ -44,6 +44,24 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtBarrelSpawnTimer")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"count", "range", "timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

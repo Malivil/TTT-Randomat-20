@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the player being a Jester")
+CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the player being a Jester", 0, 100)
 
 EVENT.Title = ""
 EVENT.Description = "Changes a random player to either a Jester or a Traitor"
@@ -56,6 +56,24 @@ function EVENT:Condition()
         end
     end
     return i
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"chance"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

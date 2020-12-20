@@ -19,4 +19,19 @@ function EVENT:Condition()
     return not Randomat:IsEventActive("reload") and not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam")
 end
 
+function EVENT:GetConVars()
+    local checks = {}
+    for _, v in pairs({"affectbuymenu"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return {}, checks
+end
+
 Randomat:register(EVENT)

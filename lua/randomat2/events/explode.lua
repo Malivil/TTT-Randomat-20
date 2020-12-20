@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_explode_timer", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The time between explosions.")
+CreateConVar("randomat_explode_timer", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The time between explosions.", 5, 60)
 
 EVENT.Title = ""
 EVENT.AltTitle = "A Random Person will explode every "..GetConVar("randomat_explode_timer"):GetInt().." seconds! Watch out! (EXCEPT DETECTIVES)"
@@ -39,6 +39,24 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatExplode")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)

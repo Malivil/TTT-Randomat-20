@@ -4,7 +4,7 @@ EVENT.Title = "There's this game my father taught me years ago, it's called \"Sw
 EVENT.Description = "Randomly switches positions of two players on a configurable interval"
 EVENT.id = "switch"
 
-CreateConVar("randomat_switch_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often players are switched")
+CreateConVar("randomat_switch_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often players are switched", 5, 60)
 
 function EVENT:Begin()
     timer.Create("RandomatSwitchTimer", GetConVar("randomat_switch_timer"):GetInt(), 0, function()
@@ -30,6 +30,24 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatSwitchTimer")
+end
+
+function EVENT:GetConVars()
+    local sliders = {}
+    for _, v in pairs({"timer"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+    return sliders
 end
 
 Randomat:register(EVENT)
