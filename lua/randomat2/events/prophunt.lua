@@ -4,8 +4,8 @@ CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time 
 CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The event strips your other weapons")
 CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 
-local cvar_state
-local backup_default = "weapon_ttt_prophide"
+local cvar_states = {}
+local default_weaponids = {"weapon_ttt_prop_disguiser", "weapon_ttt_prophide"}
 local weaponid = nil
 
 EVENT.Title = "Prop Hunt"
@@ -15,9 +15,27 @@ EVENT.id = "prophunt"
 local function PopulateWeaponId()
     if weaponid ~= nil then return end
 
-    weaponid = GetConVar("randomat_prophunt_weaponid"):GetString()
-    -- Fall back to the old prop disguiser if the set one doesn't exist
-    if util.WeaponForClass(weaponid) == nil then weaponid = backup_default end
+    local config_weapon = GetConVar("randomat_prophunt_weaponid"):GetString()
+    local weapon_options = table.Add({}, default_weaponids)
+    -- Insert this ID at the start of the table if it's not already there
+    if not table.HasValue(weapon_options, config_weapon) then
+        table.insert(weapon_options, 0, config_weapon)
+    end
+
+    -- Find the first weapon in the list (which has the config value first) that exists
+    for _, v in pairs(weapon_options) do
+        if util.WeaponForClass(v) ~= nil then
+            weaponid = v
+            break
+        end
+    end
+end
+
+local function OverrideCvar(name, value)
+    if not ConVarExists(name) then return end
+
+    cvar_states[name] = GetConVar(name):GetInt()
+    RunConsoleCommand(name, value)
 end
 
 function EVENT:HandleRoleWeapons(ply)
@@ -34,8 +52,10 @@ function EVENT:Begin()
     PopulateWeaponId()
 
     -- Disable prop possession
-    cvar_state = GetConVar("ttt_spec_prop_control"):GetString()
-    RunConsoleCommand("ttt_spec_prop_control", "0")
+    OverrideCvar("ttt_spec_prop_control", 0)
+    -- Change CVar values back to their old defaults to make the prop disguiser weapon more usable for this event
+    OverrideCvar("ttt_prop_disguiser_time", 30)
+    OverrideCvar("ttt_prop_disguiser_cooldown", 2)
 
     for _, v in pairs(self.GetAlivePlayers()) do
         local had_armor = false
@@ -137,8 +157,11 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    -- Change the prop possession setting back to normal
-    RunConsoleCommand("ttt_spec_prop_control", cvar_state)
+    -- Reset CVars back to normal
+    for k, v in pairs(cvar_states) do
+        RunConsoleCommand(k, v)
+    end
+
     timer.Remove("RandomatPropHuntTimer")
 end
 
