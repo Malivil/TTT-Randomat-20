@@ -16,7 +16,7 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
-    return not Randomat:IsEventActive("reload")
+    return not Randomat:IsEventActive("reload") and not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam")
 end
 
 Randomat:register(EVENT)

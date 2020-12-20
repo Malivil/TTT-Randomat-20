@@ -102,7 +102,7 @@ function EVENT:GetConVars()
 end
 
 function EVENT:Condition()
-    return not Randomat:IsEventActive("ammo")
+    return not Randomat:IsEventActive("ammo") and not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam")
 end
 
 Randomat:register(EVENT)

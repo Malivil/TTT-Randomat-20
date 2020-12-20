@@ -205,7 +205,8 @@ function Randomat:unregister(id)
 end
 
 local function GetRandomEvent(events)
-    local idx = math.random(#events)
+    local count = table.Count(events)
+    local idx = math.random(count)
     local key = table.GetKeys(events)[idx]
     return events[key]
 end
