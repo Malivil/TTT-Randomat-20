@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "There's this game my father taught me years ago, it's called \"Switch\""
+EVENT.AltTitle = "Switch"
 EVENT.Description = "Randomly switches positions of two players on a configurable interval"
 EVENT.id = "switch"
 
