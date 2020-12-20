@@ -2,13 +2,24 @@ local EVENT = {}
 
 CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time between being given prop disguisers")
 CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The event strips your other weapons")
-CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prophide", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
+CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
+
+local cvar_state
+local backup_default = "weapon_ttt_prophide"
+local weaponid = nil
 
 EVENT.Title = "Prop Hunt"
 EVENT.Description = "Forces Innocents to use a Prop Disguiser, changing this to play like the popular gamemode Prop Hunt"
 EVENT.id = "prophunt"
 
-local cvar_state
+local function PopulateWeaponId()
+    if weaponid ~= nil then return end
+
+    weaponid = GetConVar("randomat_prophunt_weaponid"):GetString()
+    -- Fall back to the old prop disguiser if the set one doesn't exist
+    if util.WeaponForClass(weaponid) == nil then weaponid = backup_default end
+end
+
 function EVENT:HandleRoleWeapons(ply)
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
     if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER or ply:GetRole() == ROLE_DETRAITOR then
@@ -20,6 +31,8 @@ function EVENT:HandleRoleWeapons(ply)
 end
 
 function EVENT:Begin()
+    PopulateWeaponId()
+
     -- Disable prop possession
     cvar_state = GetConVar("ttt_spec_prop_control"):GetString()
     RunConsoleCommand("ttt_spec_prop_control", "0")
@@ -43,6 +56,7 @@ function EVENT:Begin()
             had_armor = v:HasEquipmentItem(EQUIP_ARMOR)
             had_disguise = v:HasEquipmentItem(EQUIP_DISGUISE)
             v:SetCredits(credits)
+            v:PrintMessage(HUD_PRINTTALK, "Hunt Innocents disguised as props, but be careful -- shooting non-player props will cause you to take damage!")
         -- Everyone else is innocent
         else
             Randomat:SetRole(v, ROLE_INNOCENT)
@@ -64,7 +78,6 @@ function EVENT:Begin()
     SendFullStateUpdate()
 
     timer.Create("RandomatPropHuntTimer", GetConVar("randomat_prophunt_timer"):GetInt(), 0, function()
-        local weaponid = GetConVar("randomat_prophunt_weaponid"):GetString()
         local updated = false
         for _, ply in pairs(self:GetAlivePlayers()) do
             if ply:GetRole() == ROLE_INNOCENT then
@@ -102,12 +115,24 @@ function EVENT:Begin()
             return
         end
         -- Everyone else can only pick up the assigned weapon
-        return IsValid(wep) and WEPS.GetClass(wep) == GetConVar("randomat_prophunt_weaponid"):GetString()
+        return IsValid(wep) and WEPS.GetClass(wep) == weaponid
     end)
 
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
         if not IsValid(ply) then return end
         if is_item == EQUIP_RADAR then return false end
+    end)
+
+    self:AddHook("EntityTakeDamage", function(ent, dmginfo)
+        if not IsValid(ent) or ent:GetClass() ~= "prop_physics" then return end
+        local att = dmginfo:GetAttacker()
+        if not IsValid(att) or not att:IsPlayer() then return end
+
+        -- If the thing they attacked is not a disguise then they should take the damage
+        -- This property is added by the Prop Disguiser [310403737] (and the Prop Disguiser Improved [2127939503])
+        if not ent.IsADisguise then
+            att:TakeDamage(dmginfo:GetDamage(), att, att:GetActiveWeapon())
+        end
     end)
 end
 
@@ -120,7 +145,7 @@ end
 function EVENT:Condition()
     if Randomat:IsEventActive("slam") or Randomat:IsEventActive("harpoon") or Randomat:IsEventActive("ragdoll") or Randomat:IsEventActive("grave") then return false end
 
-    local weaponid = GetConVar("randomat_prophunt_weaponid"):GetString()
+    PopulateWeaponId()
     if util.WeaponForClass(weaponid) == nil then return false end
 
     -- Only run if there is at least one innocent or jester/swapper living
