@@ -13,11 +13,9 @@ function EVENT:Begin()
         for _, ply in pairs(player.GetAll()) do
             -- If a player has died and they weren't a zombie or zombifying, zombify them
             if not ply:Alive() and ply:GetRole() ~= ROLE_ZOMBIE and ply:GetPData("IsZombifying", 0) ~= 1 then
-                if SERVER then
-                    net.Start("TTT_Zombified")
-					net.WriteString(ply:Nick())
-					net.Broadcast()
-                end
+                net.Start("TTT_Zombified")
+                net.WriteString(ply:Nick())
+                net.Broadcast()
 
                 local body = ply.server_ragdoll or ply:GetRagdollEntity()
                 ply:SpawnForRound(true)

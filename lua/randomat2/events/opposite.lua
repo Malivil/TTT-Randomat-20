@@ -1,5 +1,3 @@
-AddCSLuaFile()
-
 local EVENT = {}
 
 util.AddNetworkString("OppositeDayBegin")

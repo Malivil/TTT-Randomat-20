@@ -20,11 +20,9 @@ function EVENT:HandleRoleWeapons(ply)
 end
 
 function EVENT:Begin()
-    if SERVER then
-        -- Disable prop possession
-        cvar_state = GetConVar("ttt_spec_prop_control"):GetString()
-        RunConsoleCommand("ttt_spec_prop_control", "0")
-    end
+    -- Disable prop possession
+    cvar_state = GetConVar("ttt_spec_prop_control"):GetString()
+    RunConsoleCommand("ttt_spec_prop_control", "0")
 
     for _, v in pairs(self.GetAlivePlayers()) do
         local had_armor = false
@@ -114,10 +112,8 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    if SERVER then
-        -- Change the prop possession setting back to normal
-        RunConsoleCommand("ttt_spec_prop_control", cvar_state)
-    end
+    -- Change the prop possession setting back to normal
+    RunConsoleCommand("ttt_spec_prop_control", cvar_state)
     timer.Remove("RandomatPropHuntTimer")
 end
 

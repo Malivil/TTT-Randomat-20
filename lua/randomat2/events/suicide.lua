@@ -1,5 +1,3 @@
-AddCSLuaFile()
-
 local EVENT = {}
 
 EVENT.Title = "So that's it. What, we some kind of suicide squad?"

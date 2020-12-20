@@ -54,23 +54,22 @@ function EVENT:Condition()
         return false
     end
 
-    local merc = 0
-    local inno = 0
-    local kil = 0
+    local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
+    local has_merc = false
+    local has_inno = false
+    local has_kil = false
     for _, v in pairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_MERCENARY then
-            merc = 1
+            has_merc = true
         elseif v:GetRole() == ROLE_KILLER then
-            kil = 1
+            has_kil = true
         elseif v:GetRole() == ROLE_INNOCENT then
-            inno = 1
+            has_inno = true
         end
     end
-    if merc == 0 and kil == 0 and inno == 1 then
-        return true
-    else
-        return false
-    end
+
+    -- Only run this event if we have Innocents, don't have a Mercenary, and either aren't letting the target choose or don't have a Killer
+    return has_inno and not has_merc and (not choose or not has_kil)
 end
 
 function EVENT:GetConVars()

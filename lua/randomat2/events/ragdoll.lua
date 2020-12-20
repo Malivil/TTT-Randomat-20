@@ -63,7 +63,7 @@ local function UnstuckPlayer(ply)
             return true
         else
             ply:SetPos(pos)
-            if SERVER and ply and ply:IsValid() and ply:GetPhysicsObject():IsValid() then
+            if ply:IsValid() and ply:GetPhysicsObject():IsValid() then
                 if ply:IsPlayer() then
                     ply:SetVelocity(vector_origin)
                 end

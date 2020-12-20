@@ -1,5 +1,3 @@
-AddCSLuaFile()
-
 local EVENT = {}
 
 EVENT.Title = "We've updated our privacy policy."

@@ -68,6 +68,8 @@ function EVENT:Condition()
             return true
         end
     end
+
+    return false
 end
 
 function EVENT:GetConVars()

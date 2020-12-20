@@ -10,51 +10,49 @@ EVENT.AltTitle = "Gravity Changer"
 EVENT.Description = "Gravity is changed every few seconds for a short period of time before reverting to normal"
 EVENT.id = "gravity"
 
-if SERVER then
-    local defaultGravity = 600
-    local function SetGravity(gravity)
-        RunConsoleCommand("sv_gravity", gravity)
+local defaultGravity = 600
+local function SetGravity(gravity)
+    RunConsoleCommand("sv_gravity", gravity)
+end
+
+local function ChangeGravity(increase)
+    if increase then
+        SetGravity(GetConVar("randomat_gravity_maximum"):GetFloat())
+    else
+        SetGravity(GetConVar("randomat_gravity_minimum"):GetFloat())
     end
+    return not increase
+end
 
-    local function ChangeGravity(increase)
-        if increase then
-            SetGravity(GetConVar("randomat_gravity_maximum"):GetFloat())
-        else
-            SetGravity(GetConVar("randomat_gravity_minimum"):GetFloat())
-        end
-        return not increase
-    end
+function EVENT:Begin()
+    defaultGravity = GetConVar("sv_gravity"):GetFloat()
 
-    function EVENT:Begin()
-        defaultGravity = GetConVar("sv_gravity"):GetFloat()
+    -- Change the gravity immediately
+    ChangeGravity(true)
+    -- Reset back to default after the configured amount of time
+    self:StartResetTimer(true)
+end
 
-        -- Change the gravity immediately
-        ChangeGravity(true)
-        -- Reset back to default after the configured amount of time
-        self:StartResetTimer(true)
-    end
+function EVENT:StartChangeTimer()
+    local increase = false -- false for min, true for max
+    timer.Create("RandomatGravityChange", GetConVar("randomat_gravity_timer"):GetFloat(), 0, function()
+        increase = ChangeGravity(increase)
+        self:StartResetTimer(false)
+    end)
+end
 
-    function EVENT:StartChangeTimer()
-        local increase = false -- false for min, true for max
-        timer.Create("RandomatGravityChange", GetConVar("randomat_gravity_timer"):GetFloat(), 0, function()
-            increase = ChangeGravity(increase)
-            self:StartResetTimer(false)
-        end)
-    end
-
-    function EVENT:StartResetTimer(start)
-        timer.Simple(GetConVar("randomat_gravity_duration"):GetFloat(), function()
-            SetGravity(defaultGravity)
-            if start then
-                self:StartChangeTimer()
-            end
-        end)
-    end
-
-    function EVENT:End()
-        timer.Remove("RandomatGravityChange")
+function EVENT:StartResetTimer(start)
+    timer.Simple(GetConVar("randomat_gravity_duration"):GetFloat(), function()
         SetGravity(defaultGravity)
-    end
+        if start then
+            self:StartChangeTimer()
+        end
+    end)
+end
+
+function EVENT:End()
+    timer.Remove("RandomatGravityChange")
+    SetGravity(defaultGravity)
 end
 
 function EVENT:GetConVars()

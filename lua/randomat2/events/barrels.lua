@@ -18,20 +18,18 @@ local function TriggerBarrels()
 
     for _, ply in pairs(plys) do
         if ply:Alive() and not ply:IsSpec() then
-            for i = 1, GetConVar("randomat_barrels_count"):GetInt() do
-                if ( CLIENT ) then return end
+            for _ = 1, GetConVar("randomat_barrels_count"):GetInt() do
+                local ent = ents.Create("prop_physics")
 
-                local ent = ents.Create( "prop_physics" )
+                if (not IsValid(ent)) then return end
 
-                if ( not IsValid( ent ) ) then return end
-
-                ent:SetModel( "models/props_c17/oildrum001_explosive.mdl" )
+                ent:SetModel("models/props_c17/oildrum001_explosive.mdl")
                 local sc = GetConVar("randomat_barrels_range"):GetInt()
-                ent:SetPos( ply:GetPos() + Vector(math.random(-sc, sc), math.random(-sc, sc), math.random(5, sc)) )
+                ent:SetPos(ply:GetPos() + Vector(math.random(-sc, sc), math.random(-sc, sc), math.random(5, sc)))
                 ent:Spawn()
 
                 local phys = ent:GetPhysicsObject()
-                if ( not IsValid( phys ) ) then ent:Remove() return end
+                if (not IsValid(phys)) then ent:Remove() return end
             end
         end
     end
@@ -39,7 +37,7 @@ end
 
 function EVENT:Begin()
     TriggerBarrels()
-    timer.Create("RdmtBarrelSpawnTimer",GetConVar("randomat_barrels_timer"):GetInt(),0, TriggerBarrels)
+    timer.Create("RdmtBarrelSpawnTimer",GetConVar("randomat_barrels_timer"):GetInt(), 0, TriggerBarrels)
 end
 
 function EVENT:End()

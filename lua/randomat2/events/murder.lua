@@ -127,22 +127,19 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    local d = 0
+    local has_detective = false
     local t = 0
     for _, v in pairs(player.GetAll()) do
         if v:Alive() and not v:IsSpec() then
             if v:GetRole() == ROLE_DETECTIVE then
-                d = d+1
+                has_detective = true
             elseif v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_DETRAITOR then
                 t = t+1
             end
         end
     end
-    if d > 0 and t > 1 then
-        return true
-    else
-        return false
-    end
+
+    return has_detective and t > 1
 end
 
 function EVENT:GetConVars()

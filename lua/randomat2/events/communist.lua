@@ -1,5 +1,3 @@
-AddCSLuaFile()
-
 local EVENT = {}
 
 CreateConVar("randomat_communist_show_roles", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to show the role of the purchasing player")
