@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "The 'bar has been raised!"
+EVENT.Description = "Increases the damage and push force of the crowbar"
 EVENT.id = "crowbar"
 EVENT.SingleUse = false
 

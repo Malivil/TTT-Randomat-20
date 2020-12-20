@@ -32,13 +32,15 @@ if SERVER then
         end
     end)
 
-    CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the randomat should automatically trigger on round start.")
-    CreateConVar("randomat_auto_chance", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Chance of the auto-randomat triggering.")
-    CreateConVar("ttt_randomat_rebuyable", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether you can buy more than one randomat")
+    CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should automatically trigger on round start.")
+    CreateConVar("ttt_randomat_auto_chance", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Chance of the auto-Randomat triggering.")
+    CreateConVar("ttt_randomat_rebuyable", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether you can buy more than one Randomat.")
+    CreateConVar("ttt_randomat_event_hint", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should print what each event does when they start.")
+    CreateConVar("ttt_randomat_event_hint_chat", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether hints should also be put in chat.")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
         if GetConVar("ttt_randomat_auto"):GetBool() and math.random() <= GetConVar("randomat_auto_chance"):GetFloat() then
-            Randomat:TriggerRandomEvent(Randomat:GetValidPlayer(nil))
+            Randomat:TriggerRandomEvent(nil)
         end
     end)
 end

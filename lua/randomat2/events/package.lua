@@ -1,8 +1,9 @@
-EVENT = {}
+local EVENT = {}
 
 CreateConVar("randomat_package_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not give out")
 
 EVENT.Title = "Care Package"
+EVENT.Description = "Spawns an ammo crate somewhere in the map that contains a free item from the various role shops"
 EVENT.id = "package"
 
 function EVENT:Begin()

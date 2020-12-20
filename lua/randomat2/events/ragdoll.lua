@@ -4,6 +4,7 @@ CreateConVar("randomat_ragdoll_time", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The t
 CreateConVar("randomat_ragdoll_delay", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time between ragdolls", 0.5, 10)
 
 EVENT.Title = "Bad Trip"
+EVENT.Description = "Causes any player who is off the ground (by jumping, falling, etc.) to turn into a ragdoll temporarily"
 EVENT.id = "ragdoll"
 
 local function PlayerNotStuck(ply)

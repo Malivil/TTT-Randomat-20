@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "##BringBackOldJester"
+EVENT.Description = "Converts the Swapper to a Jester"
 EVENT.id = "oldjester"
 
 function EVENT:Begin()

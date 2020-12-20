@@ -35,16 +35,30 @@ local function TriggerEvent(event, ply, silent)
         Randomat:EventNotify(event.Title)
     end
 
-    if SERVER then
-        net.Start("TTT_LogInfo")
-        net.WriteString("Randomat event '" .. Randomat:GetEventTitle(event) .. "' (" .. event.Id .. ") started by " .. ply:Nick())
-        net.Broadcast()
-    end
-
+    local owner = Randomat:GetValidPlayer(ply)
     local index = #Randomat.ActiveEvents + 1
     Randomat.ActiveEvents[index] = event
-    Randomat.ActiveEvents[index].owner = ply
+    Randomat.ActiveEvents[index].owner = owner
     Randomat.ActiveEvents[index]:Begin()
+
+    -- Run this after the "Begin" so we have the latest title and description
+    if SERVER then
+        local title = Randomat:GetEventTitle(event)
+        net.Start("TTT_LogInfo")
+        net.WriteString("Randomat event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
+        net.Broadcast()
+
+        if not silent and event.Description ~= nil and string.len(event.Description) > 0 then
+            if GetConVar("ttt_randomat_event_hint"):GetBool() then
+                Randomat:SmallNotify(event.Description)
+            end
+            if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
+                for _, p in pairs(player.GetAll()) do
+                    p:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] " .. title .. " | " .. event.Description)
+                end
+            end
+        end
+    end
 end
 
 local function TriggerAutoComplete(cmd, args)
@@ -63,7 +77,7 @@ concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
         if Randomat:CanEventRun(event) then
-            TriggerEvent(event, Randomat:GetValidPlayer(nil), false)
+            TriggerEvent(event, nil, false)
         else
             error("Conditions for event not met")
         end
@@ -76,7 +90,7 @@ concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
     local cmd = arg[1]
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
-        TriggerEvent(event, Randomat:GetValidPlayer(nil), false)
+        TriggerEvent(event, nil, false)
     else
         error("Could not find event '" .. cmd .. "'")
     end
@@ -191,8 +205,7 @@ function Randomat:unregister(id)
 end
 
 local function GetRandomEvent(events)
-    local count = table.Count(events)
-    local idx = math.random(count)
+    local idx = math.random(#events)
     local key = table.GetKeys(events)[idx]
     return events[key]
 end
@@ -246,6 +259,19 @@ concommand.Add("ttt_randomat_triggerrandom", function()
     local rdmply = Randomat:GetValidPlayer(nil)
     Randomat:TriggerRandomEvent(rdmply)
 end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
+
+if SERVER then
+    function Randomat:SmallNotify(msg, length, targ)
+        -- Don't broadcast anything when "Secret" is running
+        if Randomat:IsEventActive("secret") then return end
+        if not isnumber(length) then length = 0 end
+        net.Start("randomat_message")
+        net.WriteBool(false)
+        net.WriteString(msg)
+        net.WriteUInt(length, 8)
+        if not targ then net.Broadcast() else net.Send(targ) end
+    end
+end
 
 function Randomat:EventNotify(title)
     -- Don't broadcast anything when "Secret" is running
@@ -331,14 +357,7 @@ end
 
 if SERVER then
     function randomat_meta:SmallNotify(msg, length, targ)
-        -- Don't broadcast anything when "Secret" is running
-        if Randomat:IsEventActive("secret") then return end
-        if not isnumber(length) then length = 0 end
-        net.Start("randomat_message")
-        net.WriteBool(false)
-        net.WriteString(msg)
-        net.WriteUInt(length, 8)
-        if not targ then net.Broadcast() else net.Send(targ) end
+        Randomat:SmallNotify(msg, length, targ)
     end
 end
 

@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_fov_scale", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Scale of the FOV increase")
 
 EVENT.Title = "Quake Pro"
+EVENT.Description = "Increases each player's Field of View (FOV) so it looks like you're playing Quake"
 EVENT.id = "fov"
 EVENT.SingleUse = false
 

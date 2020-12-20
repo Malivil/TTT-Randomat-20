@@ -15,7 +15,7 @@ CreateConVar("randomat_election_vamp_turn_innocents", 0, {FCVAR_NOTIFY, FCVAR_AR
 CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show who each player voted for in chat")
 
 EVENT.Title = "Election Day"
-EVENT.AltTitle = ""
+EVENT.Description = "Nominate and then elect players to become President. Each role gets a different reward for being elected"
 EVENT.id = "election"
 
 local playersvoted = {}

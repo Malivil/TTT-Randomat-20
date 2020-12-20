@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Honey, I shrunk the terrorists"
+EVENT.Description = "Scales each player's size by a configurable ratio"
 EVENT.id = "shrink"
 
 CreateConVar("randomat_shrink_scale", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The shrinking scale factor")

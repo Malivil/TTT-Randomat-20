@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Sudden Death!"
+EVENT.Description = "Changes everyone to have only 1 health"
 EVENT.id = "suddendeath"
 
 function EVENT:Begin()

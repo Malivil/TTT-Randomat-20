@@ -12,6 +12,7 @@ local function ShowMessage(big, msg, length)
     if length == 0 then length = 5 end
 
     local panel = vgui.Create("DNotify")
+    panel:SetLife(length)
 
     if big then
         surface.SetFont("RandomatHeader")
@@ -20,6 +21,9 @@ local function ShowMessage(big, msg, length)
     end
     panel:SetSize(surface.GetTextSize(msg))
     panel:Center()
+    if not big then
+        panel:CenterVertical(0.55)
+    end
 
     local bg = vgui.Create("DPanel", panel)
     bg:SetBackgroundColor(Color(0, 0, 0, 200))
@@ -38,7 +42,7 @@ local function ShowMessage(big, msg, length)
 
     lbl:SetText(msg)
 
-    panel:AddItem(bg, length)
+    panel:AddItem(bg)
 end
 
 net.Receive("randomat_message", function()

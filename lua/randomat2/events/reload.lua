@@ -6,6 +6,7 @@ CreateConVar("randomat_reload_keep_ammo", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whe
 CreateConVar("randomat_reload_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether buy menu weapons lose ammo too")
 
 EVENT.Title = "Compulsive Reloading"
+EVENT.Description = "Slowly drains a user's ammo over time if they haven't fired a gun recently"
 EVENT.id = "reload"
 
 local playerlastshottime = {}

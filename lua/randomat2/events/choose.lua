@@ -1,14 +1,12 @@
 local EVENT = {}
 
-EVENT.Title = "Choose an Event!"
-EVENT.id = "choose"
-
 util.AddNetworkString("ChooseEventTrigger")
 util.AddNetworkString("PlayerChoseEvent")
 util.AddNetworkString("ChooseEventEnd")
 util.AddNetworkString("ChooseVoteTrigger")
 util.AddNetworkString("ChoosePlayerVoted")
 util.AddNetworkString("ChooseVoteEnd")
+
 CreateConVar("randomat_choose_choices", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of events you can choose from")
 CreateConVar("randomat_choose_vote", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows all players to vote on the event")
 CreateConVar("randomat_choose_votetimer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long players have to vote on the event")
@@ -20,11 +18,29 @@ local owner
 local EventVotes = {}
 local PlayersVoted = {}
 
+local function GetEventDescription()
+    local target
+    if GetConVar("randomat_choose_vote"):GetBool() then
+        target = "vote"
+    elseif IsValid(owner) then
+        target = owner:Nick()
+    else
+        target = "someone"
+    end
+    return "Presents random events to be chosen by " .. target
+end
+
+EVENT.Title = "Choose an Event!"
+EVENT.Description = GetEventDescription()
+EVENT.id = "choose"
+
 function EVENT:Begin()
+    owner = self.owner
+    EVENT.Description = GetEventDescription()
+
     EventChoices = {}
     PlayersVoted = {}
     EventVotes = {}
-    owner = Randomat:GetValidPlayer(self.owner)
     local x = 0
     for _, v in RandomPairs(Randomat.Events) do
         if x < GetConVar("randomat_choose_choices"):GetInt() then

@@ -1,5 +1,12 @@
 local upgradeFrame
 
+local function closeFrame()
+    if upgradeFrame ~= nil then
+        upgradeFrame:Close()
+        upgradeFrame = nil
+    end
+end
+
 net.Receive("UpgradeEventBegin", function()
     --Frame Setup
     upgradeFrame = vgui.Create( "DFrame" )
@@ -33,15 +40,15 @@ net.Receive("UpgradeEventBegin", function()
         net.Start("rdmtPlayerChoseSur")
         net.WriteEntity(LocalPlayer())
         net.SendToServer()
-        upgradeFrame:Close()
+        closeFrame()
     end
 
     local btn2 = vgui.Create("DButton", upgradeFrame)
-    btn2:SetTextColor(Color(255,255,255))
     btn2:SetFont("TraitorState")
-    btn2:SetText("Killer")
+    btn2:SetTextColor(Color(255,255,255))
     btn2:SetPos(gap, gap*2 + bht + 25)
     btn2:SetSize(bwt,bht)
+    btn2:SetText("Killer")
     btn2.Paint = function(self, w, h)
         draw.RoundedBox(8,0,0,w,h,ROLE_COLORS[ROLE_KILLER])
     end
@@ -49,12 +56,10 @@ net.Receive("UpgradeEventBegin", function()
         net.Start("rdmtPlayerChoseSk")
         net.WriteEntity(LocalPlayer())
         net.SendToServer()
-        upgradeFrame:Close()
+        closeFrame()
     end
 end)
 
 net.Receive("RdmtCloseUpgradeFrame", function()
-    if upgradeFrame ~= nil then
-        upgradeFrame:Close()
-    end
+    closeFrame()
 end)

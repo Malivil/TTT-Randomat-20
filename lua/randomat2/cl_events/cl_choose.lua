@@ -1,7 +1,16 @@
 local chooseTables = {}
 local frames = 0
 
+local function closeFrame(frame, idx)
+    if frame ~= nil then
+        frame:Close()
+        chooseTables[idx] = nil
+    end
+end
+
 local function closeChooseFrame()
+    if #chooseTables == 0 then return end
+
     local lastidx
     -- Frames not not necessarily stored in order when multiple are shown at once
     -- Find that last index since that will be the frame on top (visually)
@@ -9,16 +18,13 @@ local function closeChooseFrame()
         lastidx = i
     end
 
-    chooseTables[lastidx]:Close()
-    chooseTables[lastidx] = nil
+    local frame = chooseTables[lastidx]
+    closeFrame(frame, lastidx)
 end
 
 local function closeAllChooseFrames()
     for k, v in pairs(chooseTables) do
-        if v ~= nil then
-            v:Close()
-            chooseTables[k] = nil
-        end
+        closeFrame(v, k)
     end
 end
 

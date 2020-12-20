@@ -6,8 +6,9 @@ CreateConVar("randomat_gravity_minimum", 70, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The
 CreateConVar("randomat_gravity_maximum", 2000, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum gravity", 700, 4000)
 
 EVENT.Title = "I don't think you realise the gravity of the situation."
-EVENT.id = "gravity"
 EVENT.AltTitle = "Gravity Changer"
+EVENT.Description = "Gravity is changed every few seconds for a short period of time before reverting to normal"
+EVENT.id = "gravity"
 
 if SERVER then
     local defaultGravity = 600

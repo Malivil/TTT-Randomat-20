@@ -13,6 +13,7 @@ CreateConVar("randomat_democracy_jestermode", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, 
 
 EVENT.Title = "I love democracy, I love the republic."
 EVENT.AltTitle = "Democracy"
+EVENT.Description = "Cast your vote to kill a player. Votes continue until the round ends"
 EVENT.id = "democracy"
 
 local playervotes = {}

@@ -10,6 +10,7 @@ CreateConVar("randomat_cakes_damage_interval", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE},
 CreateConVar("randomat_cakes_damage_over_time", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will lose each tick after eating a cake", 1, 100)
 
 EVENT.Title = "The Cake is a Lie!"
+EVENT.Description = "Rains cakes down around players which have a 50/50 chance or either healing or hurting when eaten"
 EVENT.id = "cakes"
 
 local function TriggerCakes()

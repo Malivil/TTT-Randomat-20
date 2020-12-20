@@ -3,6 +3,7 @@ AddCSLuaFile()
 local EVENT = {}
 
 EVENT.Title = "So that's it. What, we some kind of suicide squad?"
+EVENT.Description = "Gives everyone a detonator for a random other player. When that detonator is used, the target player is exploded"
 EVENT.AltTitle = "Detonators"
 EVENT.id = "suicide"
 

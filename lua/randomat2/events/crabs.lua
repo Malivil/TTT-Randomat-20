@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_crabs_count", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of crabs spawned when someone dies")
 
 EVENT.Title = "Crabs are People"
+EVENT.Description = "Spawns hostile headcrabs when a player is killed"
 EVENT.id = "crabs"
 
 function EVENT:Begin()

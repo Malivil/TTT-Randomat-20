@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "We learned how to heal over time, its hard, but definitely possible..."
+EVENT.Description = "Causes players to slowly regenerate lost health over time"
 EVENT.id = "regeneration"
 
 CreateConVar("randomat_regeneration_delay", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long after taking damage you will start to regen health")

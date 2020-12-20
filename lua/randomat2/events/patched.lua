@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_patched_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the Glitch being made a Traitor", 0, 100)
 
 EVENT.Title = "A Glitch has been patched"
+EVENT.Description = "Changes a random Glitch into either an Innocent or a Traitor"
 EVENT.id = "patched"
 EVENT.AltTitle = "Patched"
 

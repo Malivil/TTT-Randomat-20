@@ -4,6 +4,7 @@ CreateConVar("randomat_butter_timer", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The ti
 CreateConVar("randomat_butter_affectall", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "Whether to affect every player at once rather than just a single random player.")
 
 EVENT.Title = "Butterfingers"
+EVENT.Description = "Causes weapons to periodically slip out of players' hands"
 EVENT.id = "butter"
 
 function EVENT:Begin()

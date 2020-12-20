@@ -1,8 +1,9 @@
-EVENT = {}
+local EVENT = {}
 
 CreateConVar("randomat_careful_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Health to set Jester/Swapper to", 1, 10)
 
 EVENT.Title = "Careful..."
+EVENT.Description = "Set all Jesters and Swappers to a reduced amount of health"
 EVENT.id = "careful"
 
 function EVENT:Begin()

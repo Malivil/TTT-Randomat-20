@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Try your best..."
+EVENT.Description = "Gives each player a random pistol and main weapon that they cannot drop"
 EVENT.id = "randomweapon"
 
 function EVENT:Begin()

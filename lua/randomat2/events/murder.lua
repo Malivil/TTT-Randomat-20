@@ -2,6 +2,7 @@ local EVENT = {}
 
 EVENT.Title = "What gamemode is this again?"
 EVENT.AltTitle = "Murder"
+EVENT.Description = "Innocents gather pieces to get a revolver while traitors try to murder the innocents like the popular gamemodes Murder and Homicide"
 EVENT.id = "murder"
 
 CreateConVar("randomat_murder_pickups_pct", 1.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver.", 1, 5)

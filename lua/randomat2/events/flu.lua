@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Flu Season"
+EVENT.Description = "Randomly infects a player with the flu, causing them to move more slowly and sneeze occasionally"
 EVENT.id = "flu"
 
 util.AddNetworkString("RdmtFluSpeed")

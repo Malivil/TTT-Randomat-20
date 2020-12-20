@@ -3,8 +3,8 @@ local EVENT = {}
 CreateConVar("randomat_doublecross_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the Innocent being made a Traitor", 0, 100)
 
 EVENT.Title = "Double Cross"
+EVENT.Description = "Changes a random vanilla Innocent into either a Glitch or a Traitor"
 EVENT.id = "doublecross"
-EVENT.AltTitle = ""
 
 function EVENT:Begin()
     for _, v in pairs(self:GetAlivePlayers(true)) do

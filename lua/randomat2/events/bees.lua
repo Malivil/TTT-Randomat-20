@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_bees_count", 4, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of bees spawned per player")
 
 EVENT.Title = "NOT THE BEES!"
+EVENT.Description = "Spawns hostile bees randomly around around players"
 EVENT.id = "bees"
 
 function EVENT:Begin()

@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Don't. Blink."
+EVENT.Description = "Spawns Weeping Angels that follow players around, killing them when their back is turned"
 EVENT.id = "blink"
 
 CreateConVar("randomat_blink_cap", 12, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Maximum number of Weeping Angels spawned")

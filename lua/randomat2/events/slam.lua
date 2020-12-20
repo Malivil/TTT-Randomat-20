@@ -5,6 +5,7 @@ CreateConVar("randomat_slam_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The event
 CreateConVar("randomat_slam_weaponid", "weapon_ttt_slam", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 
 EVENT.Title = "Come on and SLAM!"
+EVENT.Description = "Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the duration of the event"
 EVENT.id = "slam"
 
 function EVENT:HandleRoleWeapons(ply)

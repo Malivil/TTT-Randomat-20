@@ -17,22 +17,22 @@ table.insert(eventnames, "Let's kick some ice!")
 table.insert(eventnames, "Can you feel it coming? The icy cold of space!")
 table.insert(eventnames, "Freeze in hell, Batman!")
 
-EVENT.Title = table.Random(eventnames)
-EVENT.id = "freeze"
-
 CreateConVar("randomat_freeze_duration", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of the Freeze (in seconds)")
 CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) the Freeze occurs")
-CreateConVar("randomat_freeze_hint", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to explain the event after triggering")
+
+local function GetEventDescription()
+    return "All Innocents will Freeze (and become immune) every "..GetConVar("randomat_freeze_timer"):GetInt().." seconds"
+end
+
+EVENT.Title = table.Random(eventnames)
+EVENT.Description = GetEventDescription()
+EVENT.id = "freeze"
 
 function EVENT:Begin()
+    -- Update this in case the CVar has been changed
+    EVENT.Description = GetEventDescription()
+
     local tmr = GetConVar("randomat_freeze_timer"):GetInt()
-
-    if GetConVar("randomat_freeze_hint"):GetBool() then
-        timer.Simple(5, function()
-            self:SmallNotify("All Innocents will Freeze (and become immune) every "..tmr.." seconds")
-        end)
-    end
-
     timer.Create("RdmtFreezeTimer", tmr, 0, function()
         self:SmallNotify("Freeze!")
         for _, v in pairs(self:GetAlivePlayers()) do

@@ -5,6 +5,7 @@ end
 local EVENT = {}
 
 EVENT.Title = "RISE FROM YOUR GRAVE"
+EVENT.Description = "Causes anyone who dies to be resurrected as a Zombie"
 EVENT.id = "grave"
 
 CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with")

@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_suspicion_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the player being a Jester")
 
 EVENT.Title = ""
+EVENT.Description = "Changes a random player to either a Jester or a Traitor"
 EVENT.id = "suspicion"
 EVENT.AltTitle = "A player is acting suspicious"
 EVENT.SingleUse = false

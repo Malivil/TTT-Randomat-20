@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "I see dead people"
+EVENT.Description = "Drops a Visualizer whenever a player is killed"
 EVENT.id = "visualiser"
 
 function EVENT:Begin()

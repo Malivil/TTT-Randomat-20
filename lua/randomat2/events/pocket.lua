@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_pocket_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not give out")
 
 EVENT.Title = "What did I find in my pocket?"
+EVENT.Description = "Gives each player a random buyable weapon"
 EVENT.id = "pocket"
 EVENT.SingleUse = false
 

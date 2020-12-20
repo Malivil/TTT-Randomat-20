@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Social Distancing"
+EVENT.Description = "Does a small amount of damage over time to players who spend too much time close to eachother"
 EVENT.id = "distancing"
 
 local playerthinktime = {}

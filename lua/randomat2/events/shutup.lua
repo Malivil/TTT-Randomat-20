@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "SHUT UP!"
+EVENT.Description = "Disables all sounds for the duration of the event"
 EVENT.id = "shutup"
 
 function EVENT:Begin()

@@ -4,6 +4,7 @@ CreateConVar("randomat_flash_scale", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The per
 
 EVENT.Title = ""
 EVENT.AltTitle = "Everything is as fast as Flash now! ("..GetConVar("randomat_flash_scale"):GetInt().."% faster)"
+EVENT.Description = "Causes everything (movement, firing speed, timers, etc.) to run faster than normal"
 EVENT.id = "flash"
 EVENT.SingleUse = false
 

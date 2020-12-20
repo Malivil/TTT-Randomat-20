@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = ""
+EVENT.Description = "Pairs random players together. When either of the paired players is killed, the other is automatically killed as well"
 EVENT.id = "soulmates"
 EVENT.AltTitle = "Soulmates"
 

@@ -1,8 +1,9 @@
-EVENT = {}
+local EVENT = {}
 
 CreateConVar("randomat_derptective_rate_of_fire", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Rate of Fire multiplier for the H.U.G.E.", 2, 5)
 
 EVENT.Title = "Derptective"
+EVENT.Description = "Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire"
 EVENT.id = "derptective"
 
 function EVENT:Begin()

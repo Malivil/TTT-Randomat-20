@@ -1,20 +1,38 @@
 local EVENT = {}
 
-EVENT.Title = "An innocent has been upgraded!"
-EVENT.id = "upgrade"
-
 util.AddNetworkString("UpgradeEventBegin")
 util.AddNetworkString("RdmtCloseUpgradeFrame")
 util.AddNetworkString("rdmtPlayerChoseSur")
 util.AddNetworkString("rdmtPlayerChoseSk")
+
 CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the innocent should choose their new role.")
 
+EVENT.Title = "An innocent has been upgraded!"
+EVENT.id = "upgrade"
+
+local function GetEventDescription()
+    local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
+    local action
+    if choose then
+        action = "given the choice of becoming a Mercenary or a Killer"
+    else
+        action = "upgraded to a Mercenary"
+    end
+    return "A random vanilla Innocent is " .. action
+end
+
+EVENT.Description = GetEventDescription()
+
 function EVENT:Begin()
+    local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
     for _, ply in pairs(self:GetAlivePlayers(true)) do
-        if ply:GetRole() == ROLE_INNOCENT or ply:GetRole() == ROLE_PHANTOM then
-            if GetConVar("randomat_upgrade_chooserole"):GetBool() then
-                net.Start("UpgradeEventBegin")
-                net.Send(ply)
+        if ply:GetRole() == ROLE_INNOCENT then
+            if choose then
+                -- Wait for the notification to go away first
+                timer.Simple(5, function()
+                    net.Start("UpgradeEventBegin")
+                    net.Send(ply)
+                end)
             else
                 Randomat:SetRole(ply, ROLE_MERCENARY)
                 ply:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
@@ -44,7 +62,7 @@ function EVENT:Condition()
             merc = 1
         elseif v:GetRole() == ROLE_KILLER then
             kil = 1
-        elseif v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM then
+        elseif v:GetRole() == ROLE_INNOCENT then
             inno = 1
         end
     end

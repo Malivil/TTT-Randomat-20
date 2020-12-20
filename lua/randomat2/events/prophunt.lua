@@ -5,6 +5,7 @@ CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The e
 CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prophide", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 
 EVENT.Title = "Prop Hunt"
+EVENT.Description = "Forces Innocents to use a Prop Disguiser, changing this to play like the popular gamemode Prop Hunt"
 EVENT.id = "prophunt"
 
 local cvar_state

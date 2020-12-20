@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Sosig."
+EVENT.Description = "Sosig."
 EVENT.id = "sosig"
 
 util.AddNetworkString("TriggerSosig")
