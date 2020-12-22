@@ -38,7 +38,7 @@ if SERVER then
     CreateConVar("ttt_randomat_event_hint_chat", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether hints should also be put in chat.")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
-        if GetConVar("ttt_randomat_auto"):GetBool() and math.random() <= GetConVar("randomat_auto_chance"):GetFloat() then
+        if GetConVar("ttt_randomat_auto"):GetBool() and math.random() <= GetConVar("ttt_randomat_auto_chance"):GetFloat() then
             Randomat:TriggerRandomEvent(nil)
         end
     end)
