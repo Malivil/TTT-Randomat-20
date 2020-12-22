@@ -93,7 +93,6 @@ function EVENT:Begin()
     end)
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
-        print(ply:Nick() .. " " .. WEPS.GetClass(wep) .. " " .. wep.Kind)
         -- Don't let the player pick up more weapons if they already have the revolver
         if ply:HasWeapon("weapon_ttt_randomatrevolver") then return false end
     end)
