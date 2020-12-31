@@ -307,7 +307,8 @@ _ttt_randomat_election_ - Default: 1 - Whether this event is enabled.\
 _randomat_election_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_election_winner_credits_ - Default: 2 - The number of credits given as a reward, if appropriate.\
 _randomat_election_vamp_turn_innocents_ - Default: 0 - Whether Vampires turn innocents. Otherwise, turns traitors.\
-_randomat_election_show_votes_ - Default: 1 - Whether to show who each player voted for in chat.
+_randomat_election_show_votes_ - Default: 1 - Whether to show who each player voted for in chat.\
+_randomat_election_trigger_mrpresident_ - Default: 0 - Whether to trigger Get Down Mr. President if an Innocent wins.
 
 ## Everything is as fast as Flash now! (XX% faster)
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal

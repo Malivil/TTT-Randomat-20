@@ -30,7 +30,7 @@ local function EndEvent(evt)
     evt:CleanUpHooks()
 end
 
-local function TriggerEvent(event, ply, silent)
+local function TriggerEvent(event, ply, silent, ...)
     if not silent then
         Randomat:EventNotify(event.Title)
     end
@@ -39,7 +39,7 @@ local function TriggerEvent(event, ply, silent)
     local index = #Randomat.ActiveEvents + 1
     Randomat.ActiveEvents[index] = event
     Randomat.ActiveEvents[index].owner = owner
-    Randomat.ActiveEvents[index]:Begin()
+    Randomat.ActiveEvents[index]:Begin(...)
 
     -- Run this after the "Begin" so we have the latest title and description
     if SERVER then
@@ -60,41 +60,6 @@ local function TriggerEvent(event, ply, silent)
         end
     end
 end
-
-local function TriggerAutoComplete(cmd, args)
-    local name = string.lower(string.Trim(args))
-    local options = {}
-    for _, v in pairs(Randomat.Events) do
-        if string.find(string.lower(v.Id), name) then
-            table.insert(options, cmd .. " " .. v.Id)
-        end
-    end
-    return options
-end
-
-concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
-    local cmd = arg[1]
-    if Randomat.Events[cmd] ~= nil then
-        local event = Randomat.Events[cmd]
-        if Randomat:CanEventRun(event) then
-            TriggerEvent(event, nil, false)
-        else
-            error("Conditions for event not met")
-        end
-    else
-        error("Could not find event '" .. cmd .. "'")
-    end
-end, TriggerAutoComplete, "Triggers a specific randomat event with conditions", FCVAR_SERVER_CAN_EXECUTE)
-
-concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
-    local cmd = arg[1]
-    if Randomat.Events[cmd] ~= nil then
-        local event = Randomat.Events[cmd]
-        TriggerEvent(event, nil, false)
-    else
-        error("Could not find event '" .. cmd .. "'")
-    end
-end, TriggerAutoComplete, "Triggers a specific randomat event without conditions", FCVAR_SERVER_CAN_EXECUTE)
 
 local function ClearAutoComplete(cmd, args)
     local name = string.lower(string.Trim(args))
@@ -238,23 +203,55 @@ function Randomat:TriggerRandomEvent(ply)
     TriggerEvent(event, ply, false)
 end
 
-function Randomat:TriggerEvent(cmd, ply)
+function Randomat:TriggerEvent(cmd, ply, ...)
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
-        TriggerEvent(event, ply, false)
+        TriggerEvent(event, ply, false, ...)
     else
         error("Could not find event '" .. cmd .. "'")
     end
 end
 
-function Randomat:SilentTriggerEvent(cmd, ply)
+function Randomat:SafeTriggerEvent(cmd, ply, error_if_unsafe, ...)
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
-        TriggerEvent(event, ply, true)
+        if Randomat:CanEventRun(event) then
+            TriggerEvent(event, ply, false, ...)
+        elseif error_if_unsafe then
+            error("Conditions for event not met")
+        end
     else
         error("Could not find event '" .. cmd .. "'")
     end
 end
+
+function Randomat:SilentTriggerEvent(cmd, ply, ...)
+    if Randomat.Events[cmd] ~= nil then
+        local event = Randomat.Events[cmd]
+        TriggerEvent(event, ply, true, ...)
+    else
+        error("Could not find event '" .. cmd .. "'")
+    end
+end
+
+local function TriggerAutoComplete(cmd, args)
+    local name = string.lower(string.Trim(args))
+    local options = {}
+    for _, v in pairs(Randomat.Events) do
+        if string.find(string.lower(v.Id), name) then
+            table.insert(options, cmd .. " " .. v.Id)
+        end
+    end
+    return options
+end
+
+concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
+    Randomat:SafeTriggerEvent(arg[1], nil, true)
+end, TriggerAutoComplete, "Triggers a specific randomat event with conditions", FCVAR_SERVER_CAN_EXECUTE)
+
+concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
+    Randomat:TriggerEvent(arg[1], nil)
+end, TriggerAutoComplete, "Triggers a specific randomat event without conditions", FCVAR_SERVER_CAN_EXECUTE)
 
 concommand.Add("ttt_randomat_triggerrandom", function()
     local rdmply = Randomat:GetValidPlayer(nil)
@@ -384,7 +381,7 @@ function randomat_meta:CleanUpHooks()
     table.Empty(self.Hooks)
 end
 
-function randomat_meta:Begin() end
+function randomat_meta:Begin(...) end
 
 function randomat_meta:End() end
 

@@ -13,6 +13,7 @@ CreateConVar("randomat_election_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The 
 CreateConVar("randomat_election_winner_credits", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of credits given as a reward, if appropriate", 1, 10)
 CreateConVar("randomat_election_vamp_turn_innocents", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether Vampires turn innocents. Otherwise, turns traitors")
 CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show who each player voted for in chat")
+CreateConVar("randomat_election_trigger_mrpresident", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to trigger Get Down Mr. President if an Innocent wins")
 
 EVENT.Title = "Election Day"
 EVENT.Description = "Nominate and then elect players to become President. Each role gets a different reward for being elected"
@@ -186,6 +187,12 @@ function EVENT:SwearIn(winner)
             Randomat:SetRole(winner, ROLE_DETECTIVE)
             winner:AddCredits(credits)
             SendFullStateUpdate()
+
+            -- Trigger "Get Down Mr. President" with the winner as the target, if this feature is enabled
+            -- This DOES expose Detraitors if people are paying attention -- This won't trigger if there is a Detraitor because that makes it too easy for them to win
+            if GetConVar("randomat_election_trigger_mrpresident"):GetBool() then
+                Randomat:SafeTriggerEvent("president", winner, false, {winner})
+            end
         -- Traitor - Announce their role, and give their whole team free credits
         elseif winner:GetRole() == ROLE_TRAITOR or winner:GetRole() == ROLE_ASSASSIN or winner:GetRole() == ROLE_HYPNOTIST or winner:GetRole() == ROLE_DETRAITOR then
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their team has been paid for their support.")
@@ -291,7 +298,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"vamp_turn_innocents", "show_votes"}) do
+    for _, v in pairs({"vamp_turn_innocents", "show_votes", "trigger_mrpresident"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

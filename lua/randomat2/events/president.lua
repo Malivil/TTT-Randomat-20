@@ -6,29 +6,34 @@ EVENT.id = "president"
 
 CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
 
-function EVENT:Begin()
-    local owner
-    local d = 0
-    if self.owner:GetRole() ~= ROLE_DETECTIVE then
+function EVENT:Begin(...)
+    local params = ...
+    local target = self.owner
+    local has_detective = false
+
+    -- Default to the player passed as a paramter, if there is one
+    if params[1] ~= nil then
+        target = params[1]
+    end
+
+    if not IsValid(target) or not target:Alive() or target:GetRole() ~= ROLE_DETECTIVE then
         for _, v in pairs(self:GetAlivePlayers(true)) do
             if v:GetRole() == ROLE_DETECTIVE then
-                d = 1
-                owner = v
+                has_detective = true
+                target = v
             end
         end
-        if d ~= 1 then
-            owner = self.owner
+        if not has_detective then
+            target = self.owner
         end
-        Randomat:SetRole(owner, ROLE_DETECTIVE)
+        Randomat:SetRole(target, ROLE_DETECTIVE)
         SendFullStateUpdate()
-    else
-        owner = self.owner
     end
-    owner:SetMaxHealth(owner:GetMaxHealth()+GetConVar("randomat_president_bonushealth"):GetInt())
-    owner:SetHealth(owner:GetMaxHealth())
+    target:SetMaxHealth(target:GetMaxHealth()+GetConVar("randomat_president_bonushealth"):GetInt())
+    target:SetHealth(target:GetMaxHealth())
 
     self:AddHook("PlayerDeath", function(tgt, dmg, ply)
-        if tgt:IsValid() and tgt == owner then
+        if tgt:IsValid() and tgt == target then
             for _, v in pairs(self:GetAlivePlayers()) do
                 if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_GLITCH or v:GetRole() == ROLE_DETECTIVE then
                     v:Kill()
