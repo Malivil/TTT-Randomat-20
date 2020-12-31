@@ -12,7 +12,7 @@ function EVENT:Begin(...)
     local has_detective = false
 
     -- Default to the player passed as a paramter, if there is one
-    if params[1] ~= nil then
+    if params ~= nil and params[1] ~= nil then
         target = params[1]
     end
 
