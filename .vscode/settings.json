@@ -112,7 +112,8 @@
         "ROLE_INFECTED",
         "GetEquipmentItem",
         "IN_ATTACK",
-        "IN_RELOAD"
+        "IN_RELOAD",
+        "Key"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

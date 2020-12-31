@@ -9,19 +9,19 @@ end
 
 net.Receive("UpgradeEventBegin", function()
     --Frame Setup
-    upgradeFrame = vgui.Create( "DFrame" )
+    upgradeFrame = vgui.Create("DFrame")
     local ht = 190
     local wt = 300
     local gap = 20
-    upgradeFrame:SetSize( 300, 190 )
+    upgradeFrame:SetSize(300, 190)
     upgradeFrame:Center()
-    upgradeFrame:SetTitle( "Open Scoreboard to Interact" )
-    upgradeFrame:SetDraggable( false )
-    upgradeFrame:ShowCloseButton( false )
+    upgradeFrame:SetTitle("Choose a New Role (Hold " .. string.lower(Key("+showscores", "tab")) .. ")")
+    upgradeFrame:SetDraggable(false)
+    upgradeFrame:ShowCloseButton(false)
     upgradeFrame:SetVisible(true)
     upgradeFrame:SetDeleteOnClose(true)
-    upgradeFrame.Paint = function( self, w, h ) 
-        draw.RoundedBox( 8, 0, 0, w, h, Color( 0, 0, 10, 200 ) )
+    upgradeFrame.Paint = function(self, w, h)
+        draw.RoundedBox(8, 0, 0, w, h, Color(0, 0, 10, 200))
     end
 
     --Player List
@@ -34,7 +34,7 @@ net.Receive("UpgradeEventBegin", function()
     btn1:SetSize(bwt,bht)
     btn1:SetText("Mercenary")
     btn1.Paint = function(self, w, h)
-        draw.RoundedBox(8,0,0,w,h,ROLE_COLORS[ROLE_MERCENARY])
+        draw.RoundedBox(8, 0, 0, w, h, ROLE_COLORS[ROLE_MERCENARY])
     end
     btn1.DoClick = function()
         net.Start("rdmtPlayerChoseSur")
@@ -46,11 +46,11 @@ net.Receive("UpgradeEventBegin", function()
     local btn2 = vgui.Create("DButton", upgradeFrame)
     btn2:SetFont("TraitorState")
     btn2:SetTextColor(Color(255,255,255))
-    btn2:SetPos(gap, gap*2 + bht + 25)
+    btn2:SetPos(gap, gap * 2 + bht + 25)
     btn2:SetSize(bwt,bht)
     btn2:SetText("Killer")
     btn2.Paint = function(self, w, h)
-        draw.RoundedBox(8,0,0,w,h,ROLE_COLORS[ROLE_KILLER])
+        draw.RoundedBox(8, 0, 0, w, h, ROLE_COLORS[ROLE_KILLER])
     end
     btn2.DoClick = function()
         net.Start("rdmtPlayerChoseSk")
