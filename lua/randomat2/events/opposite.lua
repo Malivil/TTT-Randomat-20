@@ -12,6 +12,18 @@ function EVENT:Begin()
         net.Start("OppositeDayBegin")
         net.Send(p)
     end
+
+    self:AddHook("PlayerDeath", function(victim, entity, killer)
+        if not IsValid(victim) then return end
+        net.Start("OppositeDayEnd")
+        net.Send(victim)
+    end)
+
+    self:AddHook("PlayerSpawn", function(ply)
+        if not IsValid(ply) then return end
+        net.Start("OppositeDayBegin")
+        net.Send(ply)
+    end)
 end
 
 function EVENT:End()
