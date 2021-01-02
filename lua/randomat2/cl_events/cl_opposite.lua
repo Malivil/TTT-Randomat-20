@@ -12,8 +12,14 @@ net.Receive("OppositeDayBegin", function()
             cmd:SetButtons(cmd:GetButtons() + IN_ATTACK)
         end
     end)
+
+    -- Override the sprint key so players can sprint forward while holding the back key
+    hook.Add("TTTSprintKey", "RdmtOppositeSprintKeyHook", function(ply)
+        return IN_BACK
+    end)
 end)
 
 net.Receive("OppositeDayEnd", function()
     hook.Remove("StartCommand", "RdmtOppositeCommandHook")
+    hook.Remove("TTTSprintKey", "RdmtOppositeSprintKeyHook")
 end)
