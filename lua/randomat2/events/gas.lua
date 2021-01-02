@@ -7,7 +7,7 @@ CreateConVar("randomat_gas_incendiary", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Wheth
 CreateConVar("randomat_gas_smoke", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether smokes drop")
 
 EVENT.Title = "Bad Gas"
-EVENT.Description = "Drops grenades at random players feet periodically"
+EVENT.Description = "Drops grenades at random players' feet periodically"
 EVENT.id = "gas"
 
 function EVENT:Begin()
