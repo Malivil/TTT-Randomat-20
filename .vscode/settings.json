@@ -114,7 +114,8 @@
         "IN_ATTACK",
         "IN_RELOAD",
         "Key",
-        "IN_BACK"
+        "IN_BACK",
+        "MOVETYPE_LADDER"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

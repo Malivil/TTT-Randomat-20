@@ -1,7 +1,9 @@
 net.Receive("OppositeDayBegin", function()
     hook.Add("StartCommand", "RdmtOppositeCommandHook", function(ply, cmd)
-        -- Make the player move the opposite direction
-        cmd:SetForwardMove(-cmd:GetForwardMove())
+        -- Make the player move the opposite direction, but only if they aren't on a ladder
+        if ply:GetMoveType() ~= MOVETYPE_LADDER then
+            cmd:SetForwardMove(-cmd:GetForwardMove())
+        end
         cmd:SetSideMove(-cmd:GetSideMove())
         -- Attack reloads, reload attacks
         if cmd:KeyDown(IN_ATTACK) then
