@@ -535,7 +535,8 @@ This one is pretty self-explanitory except for the "Detective is stronger" part.
 _ttt_randomat_jesters_ - Default: 1 - Whether this event is enabled.
 
 ## Opposite Day
-Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.
+Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.\
+NOTE: It is currently not possible to climb ladders when this event is running.
 \
 \
 **ConVars**
