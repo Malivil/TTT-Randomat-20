@@ -315,14 +315,17 @@ local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settr
 
     local item, item_id, swep_table = GetRandomRoleWeapon(roles, blocklist)
     if item_id then
+        -- If this is an item and we shouldn't give players items or the player already has this item, try again
         if not include_equipment or ply:HasEquipmentItem(item_id) then
-            GiveWep(ply, tracking, settrackingvar)
+            GiveWep(ply, roles, blocklist, include_equipment, tracking, settrackingvar, onitemgiven)
+        -- Otherwise give it to them
         else
             ply:GiveEquipmentItem(item_id)
             onitemgiven(true, item_id)
             settrackingvar(0)
         end
     elseif swep_table then
+        -- If this player can use this weapon, give it to them
         if ply:CanCarryWeapon(swep_table) then
             ply:Give(item.ClassName)
             onitemgiven(false, item.ClassName)
@@ -330,8 +333,9 @@ local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settr
                 swep_table:WasBought(ply)
             end
             settrackingvar(0)
+        -- Otherwise try again
         else
-            GiveWep(ply, tracking, settrackingvar)
+            GiveWep(ply, roles, blocklist, include_equipment, tracking, settrackingvar, onitemgiven)
         end
     end
 end
