@@ -39,8 +39,9 @@ function EVENT:Begin()
     -- Disallow them from picking up new weapons
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         if not IsValid(ply) then return end
-        local weapon_class = WEPS.GetClass(wep)
-        return not (ply:GetRole() == ROLE_DETECTIVE or ply:GetRole() == ROLE_DETRAITOR) or (weapon_class == "weapon_zm_sledge")
+        if ply:GetRole() == ROLE_DETECTIVE or ply:GetRole() == ROLE_DETRAITOR then
+            return WEPS.GetClass(wep) == "weapon_zm_sledge"
+        end
     end)
 end
 
