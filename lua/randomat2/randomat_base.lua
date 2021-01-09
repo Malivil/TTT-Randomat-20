@@ -59,7 +59,7 @@ local function TriggerEvent(event, ply, silent, ...)
                     if has_description then
                         description = " | " .. event.Description
                     end
-                    p:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] " .. title .. description)
+                    Randomat:ChatNotify(p, "[RANDOMAT] " .. title .. description)
                 end
             end
         end
@@ -273,6 +273,12 @@ if SERVER then
         net.WriteString(msg)
         net.WriteUInt(length, 8)
         if not targ then net.Broadcast() else net.Send(targ) end
+    end
+
+    function Randomat:ChatNotify(ply, msg)
+        if Randomat:IsEventActive("secret") then return end
+        if not IsValid(ply) then return end
+        ply:PrintMessage(HUD_PRINTTALK, msg)
     end
 end
 
