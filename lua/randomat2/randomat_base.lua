@@ -44,9 +44,7 @@ local function TriggerEvent(event, ply, silent, ...)
     -- Run this after the "Begin" so we have the latest title and description
     if SERVER then
         local title = Randomat:GetEventTitle(event)
-        net.Start("TTT_LogInfo")
-        net.WriteString("Randomat event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
-        net.Broadcast()
+        Randomat:LogEvent("[RANDOMAT] Event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
 
         if not silent then
             local has_description = event.Description ~= nil and string.len(event.Description) > 0
@@ -279,6 +277,12 @@ if SERVER then
         if Randomat:IsEventActive("secret") then return end
         if not IsValid(ply) then return end
         ply:PrintMessage(HUD_PRINTTALK, msg)
+    end
+
+    function Randomat:LogEvent(msg)
+        net.Start("TTT_LogInfo")
+        net.WriteString(msg)
+        net.Broadcast()
     end
 end
 

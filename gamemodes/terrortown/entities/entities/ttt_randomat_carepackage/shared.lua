@@ -41,6 +41,10 @@ function ENT:CallHooks(isequip, id, ply)
         net.WriteString(id)
     end
     net.Send(ply)
+
+    if SERVER then
+        Randomat:LogEvent("[RANDOMAT] " .. ply:Nick() .. " picked up the Care Package")
+    end
 end
 
 function ENT:Use(activator, caller)
