@@ -15,7 +15,7 @@ function EVENT:Begin()
         if cap > 0 and new_health > cap then
             new_health = cap
         end
-        attacker:SetHealth(cap)
+        attacker:SetHealth(new_health)
     end)
 end
 
