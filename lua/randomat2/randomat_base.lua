@@ -48,13 +48,18 @@ local function TriggerEvent(event, ply, silent, ...)
         net.WriteString("Randomat event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
         net.Broadcast()
 
-        if not silent and event.Description ~= nil and string.len(event.Description) > 0 then
-            if GetConVar("ttt_randomat_event_hint"):GetBool() then
+        if not silent then
+            local has_description = event.Description ~= nil and string.len(event.Description) > 0
+            if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() then
                 Randomat:SmallNotify(event.Description)
             end
             if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
                 for _, p in pairs(player.GetAll()) do
-                    p:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] " .. title .. " | " .. event.Description)
+                    local description = ""
+                    if has_description then
+                        description = " | " .. event.Description
+                    end
+                    p:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] " .. title .. description)
                 end
             end
         end
