@@ -32,6 +32,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Compulsive Reloading
 - Derptective
 - Don't be so Sensitive
+- Don't Let it Go to Your Head
 - Double Cross
 - Election Day
 - Flu Season
@@ -279,6 +280,17 @@ Spawns a configurable number of Weeping Angels, each attached to a different pla
 _ttt_randomat_blink_ - Default: 1 - Whether this event is enabled.\
 _randomat_blink_cap_ - Default: 12 - Maximum number of Weeping Angels spawned.\
 _randomat_blink_delay_ - Default: 0.5 - Delay before Weeping Angels are spawned.
+
+## Don't Let it Go to Your Head
+Grows a player's head by a set amount each time they kill. Also grows by the same size of their victim's head.
+\
+\
+**ConVars**
+\
+_ttt_randomat_headgrow_ - Default: 1 - Whether this event is enabled.\
+_randomat_headgrow_max_ - Default: 2.5 - The maximum head size multiplier.\
+_randomat_headgrow_per_kill_ - Default: 0.25 - The head size increase per kill.\
+_randomat_headgrow_steal_ - Default: 1 - Whether to steal a player's head size on kill.
 
 ## Double Cross
 Changes a random vanilla Innocent into either a Glitch or a Traitor. There is a configurable chance that the player will be turned into a Glitch rather than a Traitor.
@@ -822,7 +834,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded
-- Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" event
+- Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
