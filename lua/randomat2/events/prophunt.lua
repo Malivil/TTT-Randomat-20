@@ -1,7 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time between being given prop disguisers")
-CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The event strips your other weapons")
+CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time between being given prop disguisers", 1, 15)
+CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether the event strips your other weapons")
+CreateConVar("randomat_prophunt_blind_time", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long to blind the hunters for at the start", 0, 60)
 CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 
 local cvar_states = {}
@@ -97,7 +98,16 @@ function EVENT:Begin()
     end
     SendFullStateUpdate()
 
+    local traitors_blinded = false
     timer.Create("RandomatPropHuntTimer", GetConVar("randomat_prophunt_timer"):GetInt(), 0, function()
+        if not traitors_blinded then
+            local blind_time = GetConVar("randomat_prophunt_blind_time"):GetInt()
+            if blind_time > 0 then
+                Randomat:SilentTriggerEvent("blind", self.owner, {blind_time})
+            end
+            traitors_blinded = true
+        end
+        
         local updated = false
         for _, ply in pairs(self:GetAlivePlayers()) do
             if ply:GetRole() == ROLE_INNOCENT then
@@ -186,7 +196,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer"}) do
+    for _, v in pairs({"timer", "blind_time"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

@@ -552,6 +552,7 @@ Converts all Jester/Swapper and innocent team members to the Innocent role, stri
 _ttt_randomat_prophunt_ - Default: 1 - Whether this event is enabled.\
 _randomat_prophunt_timer_ - Default: 3 - Time between being given prop disguisers.\
 _randomat_prophunt_strip_ - Default: 1 - The event strips your other weapons.\
+_randomat_prophunt_blind_time_ = Default: 0 - How long to blind the hunters for at the start.\
 _randomat_prophunt_weaponid_ - Default: weapon_ttt_prophide - Id of the weapon given.
 
 ## Random Health for everyone!
