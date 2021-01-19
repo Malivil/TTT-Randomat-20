@@ -813,8 +813,13 @@ Kills any player who jumps a second time after this event has triggered
 _ttt_randomat_jump_ - Default: 1 -  Whether this event is enabled.
 
 # ULX Support
-This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0 (other than any new events or ConVars).\
-That being said, I have created my [own version of the ULX Module](https://steamcommunity.com/sharedfiles/filedetails/?id=2096758509) which supports these new events as well as dynamic event loading with little-to-no developer interaction
+This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0 (other than any new events or ConVars or renamed ConVars).\
+That being said, I have created my [own version of the ULX Module](https://steamcommunity.com/sharedfiles/filedetails/?id=2096758509) which supports these new events as well as dynamic event loading with little-to-no developer interaction.
+
+# Description Support
+One of the additions made in this version of the Randomat 2.0 is the ability to print a description of an event on screen and/or in chat when the event starts.\
+All existing events have been updated to support this functionality and any external events that exist will still operate as they have done before.\
+If a developer of an external Randomat event would like to add support for this functionality, simply add a `Description` property to the event definition.
 
 # Special Thanks
 - [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to.
