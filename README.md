@@ -567,6 +567,15 @@ _randomat_prophunt_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_prophunt_blind_time_ = Default: 0 - How long to blind the hunters for at the start.\
 _randomat_prophunt_weaponid_ - Default: weapon_ttt_prophide - Id of the weapon given.
 
+## Quake Pro
+Increases each player's Field of View (FOV) so it looks like you're playing Quake
+\
+\
+**ConVars**
+\
+_ttt_randomat_fov_ - Default: 1 -  Whether this event is enabled.\
+_randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.
+
 ## Random Health for everyone!
 Gives everyone a random amount of health within the configurable boundaries
 \
@@ -584,7 +593,10 @@ Triggers a configurable number of random events, one every 5 seconds
 **ConVars**
 \
 _ttt_randomat_randomxn_ - Default: 1 - Whether this event is enabled.\
-_randomat_randomxn_triggers_ - Default: 5 - Number of Randomat events activated.
+_randomat_randomxn_triggers_ - Default: 5 - Number of Randomat events activated.\
+_randomat_randomxn_timer_ - Default: 5 - How often (in seconds) a random event will be triggered.\
+_randomat_randomxn_multiple_ - Default: 1 - Allow event to run multiple times.\
+_randomat_randomxn_triggerbyotherrandom_ - Default: 1 - Allow being triggered by other events like Randomness Intensifies.
 
 ## Randomness Intensifies
 Periodically triggers random Randomat events for the duration of this event
@@ -593,7 +605,8 @@ Periodically triggers random Randomat events for the duration of this event
 **ConVars**
 \
 _ttt_randomat_intensifies_ - Default: 1 - Whether this event is enabled.\
-_randomat_intensifies_timer_ - Default: 20 - How often (in seconds) a random event will be triggered
+_randomat_intensifies_timer_ - Default: 20 - How often (in seconds) a random event will be triggered.\
+_randomat_intensifies_triggerbyotherrandom_ - Default: 1 - Allow being triggered by other events like Random xN.
 
 ## RISE FROM YOUR GRAVE
 Causes anyone who dies to be resurrected as a Zombie
@@ -738,15 +751,6 @@ Gives each player a random pistol and main weapon that they cannot drop
 **ConVars**
 \
 _ttt_randomat_randomweapon_ - Default: 1 -  Whether this event is enabled.
-
-## Quake Pro
-Increases each player's Field of View (FOV) so it looks like you're playing Quake
-\
-\
-**ConVars**
-\
-_ttt_randomat_fov_ - Default: 1 -  Whether this event is enabled.\
-_randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.
 
 ## We learned how to heal over time, its hard, but definitely possible... (aka Regeneration)
 Causes players to slowly regenerate lost health over time

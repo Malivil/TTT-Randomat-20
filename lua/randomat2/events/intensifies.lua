@@ -1,8 +1,10 @@
 local EVENT = {}
 
-CreateConVar("randomat_intensifies_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) a random event will be triggered", 5, 60)
+CreateConVar("randomat_intensifies_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) a random event will be triggered.", 5, 60)
+CreateConVar("randomat_intensifies_triggerbyotherrandom", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allow being triggered by other events like Random xN.")
 
 EVENT.Title = "Randomness Intensifies"
+EVENT.Description = "Continuously triggers random events for the rest of the round"
 EVENT.id = "intensifies"
 
 function EVENT:Begin()
@@ -13,6 +15,12 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatIntensifiesTimer")
+end
+
+function EVENT:Condition()
+    -- Don't allow this event to be triggered by other Random-inducing events like Randomn xN
+    if not GetConVar("randomat_intensifies_triggerbyotherrandom"):GetBool() and Randomat:IsEventActive("randomxn") then return false end
+    return true
 end
 
 function EVENT:GetConVars()
@@ -30,7 +38,20 @@ function EVENT:GetConVars()
             })
         end
     end
-    return sliders
+
+    local checks = {}
+    for _, v in pairs({"triggerbyotherrandom"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+
+    return sliders, checks
 end
 
 Randomat:register(EVENT)
