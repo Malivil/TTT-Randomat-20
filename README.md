@@ -540,6 +540,7 @@ _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
 
 ## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
 This one is pretty self-explanitory except for the "Detective is stronger" part. That just means the detective has 200 health.
+NOTE: The round may not properly end when a Jester is killed if my version of [Custom Roles for TTT](https://steamcommunity.com/sharedfiles/filedetails/?id=2045444087) is not used.
 \
 \
 **ConVars**
@@ -548,7 +549,8 @@ _ttt_randomat_jesters_ - Default: 1 - Whether this event is enabled.
 
 ## Opposite Day
 Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.\
-NOTE: It is currently not possible to climb ladders when this event is running.
+NOTE: It is currently not possible to climb ladders when this event is running.\
+NOTE: Sprinting may only work when going backwards if my version of [Custom Roles for TTT](https://steamcommunity.com/sharedfiles/filedetails/?id=2045444087) is not used.
 \
 \
 **ConVars**
