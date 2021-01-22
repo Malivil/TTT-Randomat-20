@@ -539,7 +539,7 @@ _ttt_randomat_bees_ - Default: 1 - Whether this event is enabled.\
 _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
 
 ## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
-This one is pretty self-explanitory except for the "Detective is stronger" part. That just means the detective has 200 health.
+This one is pretty self-explanitory except for the "Detective is stronger" part. That just means the detective has 200 health.\
 NOTE: The round may not properly end when a Jester is killed if my version of [Custom Roles for TTT](https://steamcommunity.com/sharedfiles/filedetails/?id=2045444087) is not used.
 \
 \
