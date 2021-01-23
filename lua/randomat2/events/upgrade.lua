@@ -25,11 +25,12 @@ EVENT.Description = GetEventDescription()
 
 function EVENT:Begin()
     local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
+    local target = nil
     for _, ply in pairs(self:GetAlivePlayers(true)) do
         if ply:GetRole() == ROLE_INNOCENT then
             if choose then
                 -- Wait for the notification to go away first
-                timer.Simple(5, function()
+                timer.Create("UpgradeBegin", 5, 1, function()
                     net.Start("UpgradeEventBegin")
                     net.Send(ply)
                 end)
@@ -38,12 +39,21 @@ function EVENT:Begin()
                 ply:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
                 SendFullStateUpdate()
             end
-            return
+            target = ply
+            break
         end
     end
+
+    self:AddHook("PlayerDeath", function(ply)
+        if not IsValid(ply) or target ~= ply then return end
+        timer.Remove("UpgradeBegin")
+        net.Start("RdmtCloseUpgradeFrame")
+        net.Send(ply)
+    end)
 end
 
 function EVENT:End()
+    timer.Remove("UpgradeBegin")
     net.Start("RdmtCloseUpgradeFrame")
     net.Broadcast()
 end
