@@ -83,10 +83,10 @@ function EVENT:Begin()
                 end
 
                 if skipkill == 0 then
-                    if slainply:GetRole() == ROLE_JESTER or slainply:GetRole() == ROLE_SWAPPER then
+                    if Randomat:IsJesterTeam(slainply) then
                         local jestervoters = {}
                         for voter, tgt in RandomPairs(playersvoted) do
-                            if voter:Alive() and not voter:IsSpec() and voter:GetRole() ~= ROLE_JESTER and voter:GetRole() ~= ROLE_SWAPPER and tgt == slainply then
+                            if voter:Alive() and not voter:IsSpec() and not Randomat:IsJesterTeam(voter) and tgt == slainply then
                                 table.insert(jestervoters, voter)
                             end
                         end

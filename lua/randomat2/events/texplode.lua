@@ -14,7 +14,7 @@ function EVENT:Begin()
     local x = 0
     local tgt = nil
     for _, ply in pairs(self:GetAlivePlayers(true)) do
-        if ply:GetRole() == ROLE_TRAITOR or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsTraitorTeam(ply) then
             if tgt == nil then
                 tgt = ply
                 tgt:PrintMessage(HUD_PRINTTALK, "You have been chosen to explode. Watch out, and stay close to innocents.")
@@ -47,6 +47,8 @@ function EVENT:Begin()
                 end
             end
 
+            if pos == nil then return end
+
             util.BlastDamage(tgt, tgt, pos, GetConVar("randomat_texplode_radius"):GetInt(), 10000)
 
             effectdata:SetStart(pos + Vector(0,0,10))
@@ -64,7 +66,7 @@ end
 
 function EVENT:Condition()
     for _, v in pairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsTraitorTeam(v) then
             return true
         end
     end

@@ -39,7 +39,7 @@ end
 
 function EVENT:Condition()
     for _, v in pairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsTraitorTeam(v) then
             return true
         end
     end

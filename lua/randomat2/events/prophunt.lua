@@ -41,7 +41,7 @@ end
 
 function EVENT:HandleRoleWeapons(ply)
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER or ply:GetRole() == ROLE_DETRAITOR then
+    if Randomat:IsTraitorTeam(ply) or Randomat:IsMonsterTeam(ply) or ply:GetRole() == ROLE_KILLER then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         self:StripRoleWeapons(ply)
         return true
@@ -62,7 +62,7 @@ function EVENT:Begin()
         local had_armor = false
         local had_disguise = false
         -- All bad guys are traitors
-        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ZOMBIE or v:GetRole() == ROLE_VAMPIRE or v:GetRole() == ROLE_KILLER or v:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or v:GetRole() == ROLE_KILLER then
             Randomat:SetRole(v, ROLE_TRAITOR)
 
             -- Give the player enough credits to compensate for the equipment they can no longer use
@@ -183,10 +183,7 @@ function EVENT:Condition()
 
     -- Only run if there is at least one innocent or jester/swapper living
     for _, v in pairs(player.GetAll()) do
-        if (v:GetRole() == ROLE_SWAPPER or v:GetRole() == ROLE_JESTER or
-            v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_INNOCENT or
-            v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or
-            v:GetRole() == ROLE_GLITCH) and v:Alive() and not v:IsSpec() then
+        if (Randomat:IsJesterTeam(v) or Randomat:IsInnocentTeam(v)) and v:Alive() and not v:IsSpec() then
             return true
         end
     end

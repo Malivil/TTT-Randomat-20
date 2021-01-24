@@ -35,7 +35,7 @@ function EVENT:Begin(...)
     self:AddHook("PlayerDeath", function(tgt, dmg, ply)
         if tgt:IsValid() and tgt == target then
             for _, v in pairs(self:GetAlivePlayers()) do
-                if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_GLITCH or v:GetRole() == ROLE_DETECTIVE then
+                if Randomat:IsInnocentTeam(v) then
                     v:Kill()
                 end
             end

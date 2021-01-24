@@ -13,12 +13,12 @@ function EVENT:Begin()
     local suspicionply = 0
 
     for _, v in pairs(self:GetAlivePlayers(true)) do
-        if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsTraitorTeam(v) then
             table.insert(traitor, v)
             if suspicionply == 0 then
                 suspicionply = v
             end
-        elseif v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
+        elseif Randomat:IsInnocentTeam(v, true) then
             suspicionply = v
         elseif suspicionply == 0 and v:GetRole() ~= ROLE_DETECTIVE then
             suspicionply = v
@@ -49,9 +49,9 @@ end
 function EVENT:Condition()
     local has_innocent = false
     for _, v in pairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_JESTER or v:GetRole() == ROLE_SWAPPER then
+        if Randomat:IsJesterTeam(v) then
             return false
-        elseif v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
+        elseif Randomat:IsInnocentTeam(v, true) then
             has_innocent = true
         end
     end

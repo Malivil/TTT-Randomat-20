@@ -9,7 +9,7 @@ EVENT.id = "careful"
 function EVENT:Begin()
     local health = GetConVar("randomat_careful_health"):GetInt()
     for _, ply in pairs(self:GetAlivePlayers()) do
-        if ply:GetRole() == ROLE_JESTER or ply:GetRole() == ROLE_SWAPPER then
+        if Randomat:IsJesterTeam(ply) then
             ply:SetHealth(health)
             ply:SetMaxHealth(health)
         end
@@ -19,7 +19,7 @@ end
 function EVENT:Condition()
     -- Only run if there is at least one jester/swapper living
     for _, v in pairs(player.GetAll()) do
-        if (v:GetRole() == ROLE_SWAPPER or v:GetRole() == ROLE_JESTER) and v:Alive() and not v:IsSpec() then
+        if Randomat:IsJesterTeam(v) and v:Alive() and not v:IsSpec() then
             return true
         end
     end

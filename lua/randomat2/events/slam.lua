@@ -10,7 +10,7 @@ EVENT.id = "slam"
 
 function EVENT:HandleRoleWeapons(ply)
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE or ply:GetRole() == ROLE_KILLER or ply:GetRole() == ROLE_DETRAITOR then
+    if Randomat:IsTraitorTeam(ply) or Randomat:IsMonsterTeam(ply) or ply:GetRole() == ROLE_KILLER then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         self:StripRoleWeapons(ply)
         return true
@@ -71,7 +71,7 @@ function EVENT:Condition()
     if util.WeaponForClass(weaponid) == nil then return false end
 
     for _, v in pairs(player.GetAll()) do
-        if (v:GetRole() == ROLE_SWAPPER or v:GetRole() == ROLE_JESTER) and v:Alive() and not v:IsSpec() then
+        if Randomat:IsJesterTeam(v) and v:Alive() and not v:IsSpec() then
             return false
         end
     end

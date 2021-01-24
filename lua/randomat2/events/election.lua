@@ -183,7 +183,7 @@ function EVENT:SwearIn(winner)
     -- Wait 3 seconds before applying the affect
     timer.Simple(3, function()
         -- Innocent - Promote to Detective, give credits
-        if winner:GetRole() == ROLE_INNOCENT or winner:GetRole() == ROLE_MERCENARY or winner:GetRole() == ROLE_PHANTOM or winner:GetRole() == ROLE_GLITCH then
+        if Randomat:IsInnocentTeam(winner) then
             Randomat:SetRole(winner, ROLE_DETECTIVE)
             winner:AddCredits(credits)
             SendFullStateUpdate()
@@ -194,17 +194,17 @@ function EVENT:SwearIn(winner)
                 Randomat:SafeTriggerEvent("president", winner, false, {winner})
             end
         -- Traitor - Announce their role, and give their whole team free credits
-        elseif winner:GetRole() == ROLE_TRAITOR or winner:GetRole() == ROLE_ASSASSIN or winner:GetRole() == ROLE_HYPNOTIST or winner:GetRole() == ROLE_DETRAITOR then
+        elseif Randomat:IsTraitorTeam(winner) then
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their team has been paid for their support.")
 
             for _, v in pairs(self:GetAlivePlayers()) do
-                if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_DETRAITOR then
+                if Randomat:IsTraitorTeam(v) then
                     v:AddCredits(credits)
                 end
             end
         -- Jester - Kill them, winning the round
         -- Swapper - Kill them with a random player as the "attacker", swapping their roles
-        elseif winner:GetRole() == ROLE_JESTER or winner:GetRole() == ROLE_SWAPPER then
+        elseif Randomat:IsJesterTeam(winner) then
             local attacker = self.owner
             if winner:GetRole() == ROLE_SWAPPER or attacker == winner then
                 repeat
@@ -239,12 +239,12 @@ function EVENT:SwearIn(winner)
 
             for _, v in pairs(self:GetAlivePlayers()) do
                 if turninnocents then
-                    if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
+                    if Randomat:IsInnocentTeam(v) then
                         v:StripWeapon("weapon_ttt_wtester")
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end
                 else
-                    if v:GetRole() == ROLE_TRAITOR or v:GetRole() == ROLE_ASSASSIN or v:GetRole() == ROLE_HYPNOTIST or v:GetRole() == ROLE_DETRAITOR then
+                    if Randomat:IsTraitorTeam(v) then
                         v:StripWeapon("weapon_hyp_brainwash")
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end

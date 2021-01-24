@@ -359,6 +359,23 @@ function Randomat:GiveRandomShopItem(ply, roles, blocklist, include_equipment, g
     GiveWep(ply, roles, blocklist, include_equipment, gettrackingvar(), settrackingvar, onitemgiven)
 end
 
+function Randomat:IsInnocentTeam(ply, skip_detective)
+    return (not skip_detective and ply:GetRole() == ROLE_DETECTIVE) or ply:GetRole() == ROLE_INNOCENT or ply:GetRole() == ROLE_MERCENARY or ply:GetRole() == ROLE_PHANTOM or ply:GetRole() == ROLE_GLITCH
+end
+
+function Randomat:IsTraitorTeam(ply)
+    if player.IsTraitorTeam then return player.IsTraitorTeam(ply) end
+    return ply:GetRole() == ROLE_TRAITOR or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_DETRAITOR
+end
+
+function Randomat:IsMonsterTeam(ply)
+    return ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE
+end
+
+function Randomat:IsJesterTeam(ply)
+    return ply:GetRole() == ROLE_JESTER or ply:GetRole() == ROLE_SWAPPER
+end
+
 --[[
  Randomat Meta
 ]]--

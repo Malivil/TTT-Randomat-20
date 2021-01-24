@@ -25,6 +25,7 @@ local function GetEventDescription()
 end
 
 EVENT.Title = table.Random(eventnames)
+EVENT.AltTitle = "Freeze"
 EVENT.Description = GetEventDescription()
 EVENT.id = "freeze"
 
@@ -36,7 +37,7 @@ function EVENT:Begin()
     timer.Create("RdmtFreezeTimer", tmr, 0, function()
         self:SmallNotify("Freeze!")
         for _, v in pairs(self:GetAlivePlayers()) do
-            if v:GetRole() == ROLE_INNOCENT or v:GetRole() == ROLE_MERCENARY or v:GetRole() == ROLE_PHANTOM or v:GetRole() == ROLE_GLITCH then
+            if Randomat:IsInnocentTeam(v, true) then
                 v:Freeze(true)
                 v.isFrozen = true
                 timer.Simple(GetConVar("randomat_freeze_duration"):GetInt(), function()
