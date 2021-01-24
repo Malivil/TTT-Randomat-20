@@ -33,10 +33,8 @@ function EVENT:Begin()
         elseif explodetimer >= 20 and x == explodetimer - 10 then
             self:SmallNotify("10 seconds remaining!")
         elseif x == explodetimer then
-            self:SmallNotify("The traitor has exploded!")
-            tgt:EmitSound(Sound("ambient/explosions/explode_4.wav"))
-
             local pos = nil
+            local target_string = "traitor"
             if tgt:Alive() then
                 pos = tgt:GetPos()
             else
@@ -44,11 +42,17 @@ function EVENT:Begin()
                 if IsValid(body) then
                     pos = body:GetPos()
                     body:Remove()
+                    target_string = "traitor's corpse"
                 end
             end
 
-            if pos == nil then return end
+            if pos == nil then
+                self:SmallNotify("The traitor's body bomb was destroyed before it could explode! Phew...")    
+                return
+            end
 
+            self:SmallNotify("The " .. target_string .. " has exploded!")
+            tgt:EmitSound(Sound("ambient/explosions/explode_4.wav"))
             util.BlastDamage(tgt, tgt, pos, GetConVar("randomat_texplode_radius"):GetInt(), 10000)
 
             effectdata:SetStart(pos + Vector(0,0,10))
