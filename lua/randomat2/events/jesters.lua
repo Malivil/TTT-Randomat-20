@@ -34,8 +34,14 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
+    -- Don't run this event if this ConVar doesn't exist
+    -- It indicates that the version of Custom Roles being run doesn't support multiple Jesters
+    if not ConVarExists("ttt_jester_win_by_traitors") then
+        return false
+    end
+
     -- Don't run this event if Jesters don't win when they are killed by traitors
-    if ConVarExists("ttt_jester_win_by_traitors") and not GetConVar("ttt_jester_win_by_traitors"):GetBool() then
+    if not GetConVar("ttt_jester_win_by_traitors"):GetBool() then
         return false
     end
 
