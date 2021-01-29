@@ -564,4 +564,4 @@ end
 
 hook.Add("TTTEndRound", "RandomatEndRound", EndActiveEvents)
 hook.Add("TTTPrepareRound", "RandomatPrepareRound", EndActiveEvents)
-hook.Add("MapVoteChange", "RandomatMapVoteChange", EndActiveEvents)
+hook.Add("ShutDown", "RandomatMapChange", EndActiveEvents)
