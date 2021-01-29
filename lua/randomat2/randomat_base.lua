@@ -30,6 +30,16 @@ local function EndEvent(evt)
     evt:CleanUpHooks()
 end
 
+local function EndActiveEvents()
+    if Randomat.ActiveEvents ~= {} then
+        for _, evt in pairs(Randomat.ActiveEvents) do
+            EndEvent(evt)
+        end
+
+        Randomat.ActiveEvents = {}
+    end
+end
+
 local function TriggerEvent(event, ply, silent, ...)
     if not silent then
         Randomat:EventNotify(event.Title)
@@ -80,15 +90,7 @@ concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
     Randomat:EndActiveEvent(cmd)
 end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
 
-concommand.Add("ttt_randomat_clearevents",function(ply, cc, arg)
-    if Randomat.ActiveEvents ~= {} then
-        for _, evt in pairs(Randomat.ActiveEvents) do
-            EndEvent(evt)
-        end
-
-        Randomat.ActiveEvents = {}
-    end
-end, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
+concommand.Add("ttt_randomat_clearevents", EndActiveEvents, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 
 function Randomat:EndActiveEvent(id)
     for k, evt in pairs(Randomat.ActiveEvents) do
@@ -559,23 +561,7 @@ end
 --[[
  Override TTT Stuff
 ]]--
-hook.Add("TTTEndRound", "RandomatEndRound", function()
-    if Randomat.ActiveEvents ~= {} then
-        for _, evt in pairs(Randomat.ActiveEvents) do
-            EndEvent(evt)
-        end
 
-        Randomat.ActiveEvents = {}
-    end
-end)
-
-hook.Add("TTTPrepareRound", "RandomatEndRound", function()
-    if Randomat.ActiveEvents ~= {} then
-        for _, evt in pairs(Randomat.ActiveEvents) do
-            EndEvent(evt)
-        end
-
-        Randomat.ActiveEvents = {}
-    end
-end)
-
+hook.Add("TTTEndRound", "RandomatEndRound", EndActiveEvents)
+hook.Add("TTTPrepareRound", "RandomatPrepareRound", EndActiveEvents)
+hook.Add("MapVoteChange", "RandomatMapVoteChange", EndActiveEvents)
