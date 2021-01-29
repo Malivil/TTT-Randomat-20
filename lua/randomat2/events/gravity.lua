@@ -10,7 +10,7 @@ EVENT.AltTitle = "Gravity Changer"
 EVENT.Description = "Gravity is changed every few seconds for a short period of time before reverting to normal"
 EVENT.id = "gravity"
 
-local defaultGravity = 600
+local defaultGravity = nil
 local function SetGravity(gravity)
     RunConsoleCommand("sv_gravity", gravity)
 end
@@ -51,6 +51,8 @@ function EVENT:StartResetTimer(start)
 end
 
 function EVENT:End()
+    if defaultGravity == nil then return end
+
     timer.Remove("RandomatGravityChange")
     SetGravity(defaultGravity)
 end

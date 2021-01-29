@@ -13,7 +13,7 @@ CreateConVar("randomat_choose_votetimer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Ho
 CreateConVar("randomat_choose_deadvoters", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Dead people can vote")
 
 local EventChoices = {}
-local owner
+local owner = nil
 
 local EventVotes = {}
 local PlayersVoted = {}
@@ -87,6 +87,8 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
+    if owner == nil then return end
+
     net.Start("ChooseEventEnd")
     net.Send(owner)
 end

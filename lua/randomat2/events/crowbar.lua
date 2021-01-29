@@ -8,7 +8,7 @@ EVENT.SingleUse = false
 CreateConVar("randomat_crowbar_damage", 2.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Damage multiplier for the crowbar", 1.1, 3.0)
 CreateConVar("randomat_crowbar_push", 20, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Push force multiplier for the crowbar", 5, 50)
 
-local original_push = 0
+local original_push = nil
 function EVENT:Begin()
     original_push = GetConVar("ttt_crowbar_pushforce"):GetInt()
     RunConsoleCommand("ttt_crowbar_pushforce", original_push * GetConVar("randomat_crowbar_push"):GetFloat())
@@ -25,6 +25,8 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
+    if original_push == nil then return end
+
     RunConsoleCommand("ttt_crowbar_pushforce", original_push)
     for _, v in pairs(player.GetAll()) do
         for _, wep in pairs(v:GetWeapons()) do

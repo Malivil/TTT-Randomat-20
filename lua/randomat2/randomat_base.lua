@@ -26,8 +26,8 @@ local randomat_meta =  {}
 randomat_meta.__index = randomat_meta
 
 local function EndEvent(evt)
-    evt:End()
     evt:CleanUpHooks()
+    evt:End()
 end
 
 local function EndActiveEvents()
@@ -563,5 +563,10 @@ end
 ]]--
 
 hook.Add("TTTEndRound", "RandomatEndRound", EndActiveEvents)
-hook.Add("TTTPrepareRound", "RandomatPrepareRound", EndActiveEvents)
+hook.Add("TTTPrepareRound", "RandomatPrepareRound", function()
+    -- End ALL events rather than just active ones to prevent some event effects which maintain over map changes
+    for _, v in pairs(Randomat.Events) do
+        EndEvent(v)
+    end
+end)
 hook.Add("ShutDown", "RandomatMapChange", EndActiveEvents)
