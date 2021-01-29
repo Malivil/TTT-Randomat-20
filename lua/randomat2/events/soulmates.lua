@@ -36,7 +36,6 @@ function EVENT:Begin()
 
     local x = 0
     for _, v in pairs(self:GetAlivePlayers(true)) do
-        x = x+1
         if x % 2 == 0 then
             table.insert(ply1, v)
             table.insert(ply1_health, v:Health())
@@ -44,6 +43,7 @@ function EVENT:Begin()
             table.insert(ply2, v)
             table.insert(ply2_health, v:Health())
         end
+        x = x+1
     end
 
     local size = 1
@@ -66,7 +66,7 @@ function EVENT:Begin()
         if ply1[#ply2+1] then
             ply1[#ply2+1]:PrintMessage(HUD_PRINTTALK, "You have no soulmate :(")
             ply1[#ply2+1]:PrintMessage(HUD_PRINTCENTER, "You have no soulmate :(")
-            Randomat:LogEvent("[RANDOMAT] " .. ply1[#ply2+1] .. " has no soulmate :(")
+            Randomat:LogEvent("[RANDOMAT] " .. ply1[#ply2+1]:Nick() .. " has no soulmate :(")
         end
     else
         if GetConVar("randomat_soulmates_sharedhealth"):GetBool() then
