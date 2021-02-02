@@ -13,7 +13,10 @@ util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
 
 function EVENT:StripBannedWeapons(ply)
-    self:StripRoleWeapons(ply)
+    -- Let the killer keep their knife since their role does not change
+    if ply:GetRole() ~= ROLE_KILLER then
+        self:StripRoleWeapons(ply)
+    end
     for _, wep in pairs(ply:GetWeapons()) do
         local class_name = WEPS.GetClass(wep)
         if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE or class_name == "weapon_zm_improvised" or class_name == "weapon_ttt_crowbar_fast" or class_name == "weapon_ttt_innocent_knife" or class_name == "weapon_ttt_wrench"
