@@ -2,8 +2,8 @@ local EVENT = {}
 
 util.AddNetworkString("UpgradeEventBegin")
 util.AddNetworkString("RdmtCloseUpgradeFrame")
-util.AddNetworkString("rdmtPlayerChoseSur")
-util.AddNetworkString("rdmtPlayerChoseSk")
+util.AddNetworkString("RdmtPlayerChoseMercenary")
+util.AddNetworkString("RdmtPlayerChoseKiller")
 
 CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the innocent should choose their new role.")
 
@@ -97,7 +97,7 @@ function EVENT:GetConVars()
     return {}, checks
 end
 
-net.Receive("rdmtPlayerChoseSk", function()
+net.Receive("RdmtPlayerChoseKiller", function()
     local v = net.ReadEntity()
     Randomat:SetRole(v, ROLE_KILLER)
     SendFullStateUpdate()
@@ -106,7 +106,7 @@ net.Receive("rdmtPlayerChoseSk", function()
     v:Give("weapon_kil_knife")
 end)
 
-net.Receive("rdmtPlayerChoseSur", function()
+net.Receive("RdmtPlayerChoseMercenary", function()
     local v = net.ReadEntity()
     Randomat:SetRole(v, ROLE_MERCENARY)
     SendFullStateUpdate()
