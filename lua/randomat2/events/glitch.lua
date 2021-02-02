@@ -9,6 +9,7 @@ CreateConVar("randomat_glitch_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Th
 CreateConVar("randomat_glitch_damage_scale", 1.0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The multiplier for damage that the Glitches will take", 0.1, 2.0)
 CreateConVar("randomat_glitch_max_glitches", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The maximum number of Glitches this event will create", 0, 16)
 CreateConVar("randomat_glitch_starting_health", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the Glitches should start with", 1, 200)
+CreateConVar("randomat_glitch_min_traitors", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The minimum number of Traitors before this event will run", 0, 32)
 
 local blocklist = {}
 
@@ -96,9 +97,23 @@ function EVENT:GiveWep(ply)
         end)
 end
 
+function EVENT:Condition()
+    local min_traitors = GetConVar("randomat_glitch_min_traitors"):GetInt()
+    if min_traitors <= 0 then return true end
+
+    local t = 0
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if Randomat:IsTraitorTeam(v) then
+            t = t + 1
+        end
+    end
+
+    return t >= min_traitors
+end
+
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"traitor_pct", "damage_scale", "max_glitches", "starting_health"}) do
+    for _, v in pairs({"traitor_pct", "damage_scale", "max_glitches", "starting_health", "min_traitors"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

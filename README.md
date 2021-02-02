@@ -401,7 +401,8 @@ _randomat_glitch_blocklist_ - Default: - The comma-separated list of weapon IDs 
 _randomat_glitch_traitor_pct_ - Default: 25 - The percentage of players that will be traitors.\
 _randomat_glitch_damage_scale_ - Default: 1.0 - The multiplier for damage that the Glitches will take.\
 _randomat_glitch_max_glitches_ - Default: 0 - The maximum number of Glitches this event will create. Setting to 0 will not limit the number of Glitches.\
-_randomat_glitch_starting_health_ - Default: 100 - The amount of health the Glitches should start with.
+_randomat_glitch_starting_health_ - Default: 100 - The amount of health the Glitches should start with.\
+_randomat_glitch_min_traitors_ - Default: 0 - The minimum number of Traitors before this event will run.
 
 ## Gun Game
 Periodically gives players random weapons that would normally be found throughout the map
