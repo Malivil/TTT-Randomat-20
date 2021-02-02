@@ -14,6 +14,7 @@ CreateConVar("randomat_election_winner_credits", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE
 CreateConVar("randomat_election_vamp_turn_innocents", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether Vampires turn innocents. Otherwise, turns traitors")
 CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show who each player voted for in chat")
 CreateConVar("randomat_election_trigger_mrpresident", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to trigger Get Down Mr. President if an Innocent wins")
+CreateConVar("randomat_election_break_ties", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to break ties by choosing a random winner")
 
 EVENT.Title = "Election Day"
 EVENT.Description = "Nominate and then elect players to become President. Each role gets a different reward for being elected"
@@ -65,21 +66,33 @@ function EVENT:StartVotes(first, second)
                 -- Get the top two candidates by the vote count
                 local firstcandidate = nil
                 local firstvotes = -1
+                local secondcandidate = nil
                 local secondvotes = -1
                 for k, v in SortedPairsByValue(playervotes, true) do
                     if firstvotes < 0 then
                         firstcandidate = k
                         firstvotes = v
                     elseif secondvotes < 0 then
+                        secondcandidate = k
                         secondvotes = v
                     end
                 end
 
+                local winner = nil
+
                 -- Make sure there isn't a tie
                 if firstvotes == secondvotes then
-                    self:SmallNotify("There was a tie! A new round of voting will begin.")
-                    ResetVotes()
-                    return
+                    if GetConVar("randomat_election_break_ties"):GetBool() then
+                        if math.random(2) == 1 then
+                            winner = firstcandidate
+                        else
+                            winner = secondcandidate
+                        end
+                    else
+                        self:SmallNotify("There was a tie! A new round of voting will begin.")
+                        ResetVotes()
+                        return
+                    end
                 end
 
                 timer.Remove("ElectionVoteTimer")
@@ -88,7 +101,7 @@ function EVENT:StartVotes(first, second)
 
                 -- Swear the president in
                 for _, v in pairs(votableplayers) do
-                    if v:Nick() == firstcandidate then
+                    if v:Nick() == winner then
                         self:SwearIn(v)
                         break
                     end
@@ -298,7 +311,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"vamp_turn_innocents", "show_votes", "trigger_mrpresident"}) do
+    for _, v in pairs({"vamp_turn_innocents", "show_votes", "trigger_mrpresident", "break_ties"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
