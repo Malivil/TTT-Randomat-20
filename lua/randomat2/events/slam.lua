@@ -9,13 +9,18 @@ EVENT.Description = "Gives everyone an M4 SLAM and only allows players to use th
 EVENT.id = "slam"
 
 function EVENT:HandleRoleWeapons(ply)
+    local updated = false
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if Randomat:IsTraitorTeam(ply) or Randomat:IsMonsterTeam(ply) or ply:GetRole() == ROLE_KILLER then
+    if (Randomat:IsTraitorTeam(ply) and not ply:GetRole() == ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or ply:GetRole() == ROLE_KILLER then
         Randomat:SetRole(ply, ROLE_TRAITOR)
-        self:StripRoleWeapons(ply)
-        return true
+        updated = true
     end
-    return false
+
+    -- Remove role weapons from anyone on the traitor team now
+    if Randomat:IsTraitorTeam(ply) then
+        self:StripRoleWeapons(ply)
+    end
+    return updated
 end
 
 function EVENT:Begin()
