@@ -575,7 +575,7 @@ Increases each player's Field of View (FOV) so it looks like you're playing Quak
 \
 **ConVars**
 \
-_ttt_randomat_fov_ - Default: 1 -  Whether this event is enabled.\
+_ttt_randomat_fov_ - Default: 1 - Whether this event is enabled.\
 _randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.
 
 ## Random Health for everyone!
@@ -708,15 +708,15 @@ Rains cakes down around players which have a 50/50 chance or either healing or h
 \
 **ConVars**
 \
-_ttt_randomat_cakes_ - Default: 1 -  Whether this event is enabled.\
-_randomat_cakes_count_ - Default: 2 -  Number of cakes spawned per person.\
-_randomat_cakes_range_ - Default: 200 -  Distance cakes spawn from the player.\
-_randomat_cakes_timer_ - Default: 60 -  Time between cake spawns, in seconds.\
-_randomat_cakes_health_ - Default: 25 -  The amount of health the player will regain from eating a cake.\
-_randomat_cakes_damage_ - Default: 25 -  The amount of health the player will lose from eating a cake.\
-_randomat_cakes_damage_time_ - Default: 30 -  The amount of time the player will take damage after eating a cake, in seconds.\
-_randomat_cakes_damage_interval_ - Default: 1 -  How often the player will take damage after eating a cake, in seconds.\
-_randomat_cakes_damage_over_time_ - Default: 1 -  The amount of health the player will lose each tick after eating a cake.
+_ttt_randomat_cakes_ - Default: 1 - Whether this event is enabled.\
+_randomat_cakes_count_ - Default: 2 - Number of cakes spawned per person.\
+_randomat_cakes_range_ - Default: 200 - Distance cakes spawn from the player.\
+_randomat_cakes_timer_ - Default: 60 - Time between cake spawns, in seconds.\
+_randomat_cakes_health_ - Default: 25 - The amount of health the player will regain from eating a cake.\
+_randomat_cakes_damage_ - Default: 25 - The amount of health the player will lose from eating a cake.\
+_randomat_cakes_damage_time_ - Default: 30 - The amount of time the player will take damage after eating a cake, in seconds.\
+_randomat_cakes_damage_interval_ - Default: 1 - How often the player will take damage after eating a cake, in seconds.\
+_randomat_cakes_damage_over_time_ - Default: 1 - The amount of health the player will lose each tick after eating a cake.
 
 ## There's this game my father taught me years ago, it's called "Switch"
 Randomly switches positions of two players on a configurable interval
@@ -724,7 +724,7 @@ Randomly switches positions of two players on a configurable interval
 \
 **ConVars**
 \
-_ttt_randomat_switch_ - Default: 1 -  Whether this event is enabled.\
+_ttt_randomat_switch_ - Default: 1 - Whether this event is enabled.\
 _randomat_switch_timer_ - Default: 15 - How often players are switched.
 
 ## Time Warp
@@ -744,7 +744,7 @@ Causes players to explode when killed
 \
 **ConVars**
 \
-_ttt_randomat_mayhem_ - Default: 1 -  Whether this event is enabled.
+_ttt_randomat_mayhem_ - Default: 1 - Whether this event is enabled.
 
 ## Try your best...
 Gives each player a random pistol and main weapon that they cannot drop
@@ -752,7 +752,7 @@ Gives each player a random pistol and main weapon that they cannot drop
 \
 **ConVars**
 \
-_ttt_randomat_randomweapon_ - Default: 1 -  Whether this event is enabled.
+_ttt_randomat_randomweapon_ - Default: 1 - Whether this event is enabled.
 
 ## We learned how to heal over time, its hard, but definitely possible... (aka Regeneration)
 Causes players to slowly regenerate lost health over time
@@ -760,7 +760,7 @@ Causes players to slowly regenerate lost health over time
 \
 **ConVars**
 \
-_ttt_randomat_regeneration_ - Default: 1 -  Whether this event is enabled.\
+_ttt_randomat_regeneration_ - Default: 1 - Whether this event is enabled.\
 _randomat_regeneration_delay_ - Default: 10 - How long after taking damage you will start to regen health.\
 _randomat_regeneration_health_ - Default: 1 - How much health per second you heal.
 
@@ -770,7 +770,7 @@ Alerts all players when an item is bought from a shop
 \
 **ConVars**
 \
-_ttt_randomat_privacy_ - Default: 1 -  Whether this event is enabled.
+_ttt_randomat_privacy_ - Default: 1 - Whether this event is enabled.
 
 ## What? Moon Gravity on Earth?
 Changes the gravity of each player to the configurable scale
@@ -778,7 +778,7 @@ Changes the gravity of each player to the configurable scale
 \
 **ConVars**
 \
-_ttt_randomat_moongravity_ - Default: 1 -  Whether this event is enabled.\
+_ttt_randomat_moongravity_ - Default: 1 - Whether this event is enabled.\
 _randomat_moongravity_gravity_ - Default: 0.1 - The gravity scale.
 
 ## What did I find in my pocket?
@@ -787,7 +787,7 @@ Gives each player a random buyable weapon
 \
 **ConVars**
 \
-_ttt_randomat_pocket_ - Default: 1 -  Whether this event is enabled.\
+_ttt_randomat_pocket_ - Default: 1 - Whether this event is enabled.\
 _randomat_pocket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## What gamemode is this again? (aka Murder)
@@ -804,7 +804,7 @@ Player roles are also adjusted when this event begins:
 
 **ConVars**
 \
-_ttt_randomat_murder_ - Default: 1 -  Whether this event is enabled.\
+_ttt_randomat_murder_ - Default: 1 - Whether this event is enabled.\
 _randomat_murder_pickups_pct_ - Default: 1.5 - Ratio of weapons required to get a revolver. Value = (ConVarValue x TotalWeapons)/Players.\
 _randomat_murder_knifespeed_ - Default: 1.2 - Player move speed multiplier whilst knife is held.\
 _randomat_murder_knifedmg_ - Default: 50 - Damage of the traitor's knife.\
@@ -816,7 +816,8 @@ Kills any player who jumps a second time after this event has triggered
 \
 **ConVars**
 \
-_ttt_randomat_jump_ - Default: 1 -  Whether this event is enabled.
+_ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
+_randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.
 
 # ULX Support
 This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0 (other than any new events or ConVars or renamed ConVars).\
