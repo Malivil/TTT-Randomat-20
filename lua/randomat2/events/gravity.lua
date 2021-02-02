@@ -42,7 +42,7 @@ function EVENT:StartChangeTimer()
 end
 
 function EVENT:StartResetTimer(start)
-    timer.Simple(GetConVar("randomat_gravity_duration"):GetFloat(), function()
+    timer.Create("RandomatGravityReset", GetConVar("randomat_gravity_duration"):GetFloat(), 1, function()
         SetGravity(defaultGravity)
         if start then
             self:StartChangeTimer()
@@ -53,6 +53,7 @@ end
 function EVENT:End()
     if defaultGravity == nil then return end
 
+    timer.Remove("RandomatGravityReset")
     timer.Remove("RandomatGravityChange")
     SetGravity(defaultGravity)
 end
