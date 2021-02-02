@@ -808,7 +808,8 @@ _ttt_randomat_murder_ - Default: 1 - Whether this event is enabled.\
 _randomat_murder_pickups_pct_ - Default: 1.5 - Ratio of weapons required to get a revolver. Value = (ConVarValue x TotalWeapons)/Players.\
 _randomat_murder_knifespeed_ - Default: 1.2 - Player move speed multiplier whilst knife is held.\
 _randomat_murder_knifedmg_ - Default: 50 - Damage of the traitor's knife.\
-_randomat_murder_highlight_gun_ - Default: 1 - Whether to highlight dropped revolvers.
+_randomat_murder_highlight_gun_ - Default: 1 - Whether to highlight dropped revolvers.\
+_randomat_murder_allow_shop_ - Default: 0 - Whether to allow the shop to be used.
 
 ## You can only jump once.
 Kills any player who jumps a second time after this event has triggered

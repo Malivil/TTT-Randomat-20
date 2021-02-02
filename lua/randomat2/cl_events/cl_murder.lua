@@ -1,12 +1,15 @@
 local Revolvers = {}
 
 net.Receive("MurderEventActive", function()
-    if net.ReadBool() then
+    local active = net.ReadBool()
+    if active then
+        local pl = LocalPlayer()
+        local allow_shop = net.ReadBool()
+
         local maxpck = net.ReadInt(32)
         surface.CreateFont("HealthAmmo", {font = "Trebuchet24", size = 24, weight = 750})
 
         hook.Add("DrawOverlay", "RandomatMurderUI", function()
-            local pl = LocalPlayer()
             local rl = pl:GetRole()
             local pks = pl:GetNWInt("MurderWeaponsEquipped")
             local text = string.format("%i / %02i", pks, maxpck)
@@ -27,19 +30,30 @@ net.Receive("MurderEventActive", function()
             end
         end)
 
+        local highlight = net.ReadBool()
         hook.Add("PreDrawHalos", "RandomatMurderGunHighlight", function()
-            if not GetGlobalBool("randomat_murder_highlight_gun", true) then return end
+            if not highlight then return end
             for _, wep in pairs(ents.FindByClass("weapon_ttt_randomatrevolver")) do
                 if #table.KeysFromValue(player.GetAll(), wep.Owner) ~= 0 then
                     table.RemoveByValue(Revolvers, wep)
-                elseif #table.KeysFromValue(Revolvers,wep) == 0 then
+                elseif #table.KeysFromValue(Revolvers, wep) == 0 then
                     table.insert(Revolvers, wep)
                 end
             end
             halo.Add(Revolvers, Color(0,255,0), 1, 1, 10)
         end)
+
+        -- Close any menu they may have open and block opening a new one
+        if not allow_shop then
+            pl:ConCommand("ttt_cl_traitorpopup_close")
+
+            hook.Add("OnContextMenuOpen", "RandomatMurderBlockShop", function()
+                return false
+            end)
+        end
     else
         hook.Remove("DrawOverlay", "RandomatMurderUI")
         hook.Remove("PreDrawHalos", "RandomatMurderGunHighlight")
+        hook.Remove("OnContextMenuOpen", "RandomatMurderBlockShop")
     end
 end)
