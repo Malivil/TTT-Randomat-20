@@ -98,7 +98,8 @@ function EVENT:Begin()
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         -- Don't let the player pick up more weapons if they already have the revolver
-        if ply:HasWeapon("weapon_ttt_randomatrevolver") then return false end
+        -- Also don't let bad players pick up weapon pieces
+        if ply:HasWeapon("weapon_ttt_randomatrevolver") or IsEvil(ply) then return false end
     end)
 
     self:AddHook("PlayerDeath", function(tgt, wep, ply)

@@ -40,7 +40,6 @@ SWEP.NoSights = false
 local LastOwner = 0
 
 function SWEP:PrimaryAttack(worldsnd)
-
    LastOwner = self.Owner
    self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
@@ -56,25 +55,19 @@ function SWEP:PrimaryAttack(worldsnd)
    local owner = self:GetOwner()
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
-   owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
+   owner:ViewPunch(Angle(util.SharedRandom(self:GetClass(), -0.2, -0.1, 0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),  -0.1, 0.1, 1) * self.Primary.Recoil, 0))
 
    timer.Create("RandomatRevolverReload", 0.5, 1, function()
       if LastOwner:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" then
          self.Owner:GetViewModel():SetPlaybackRate(0.5)
       end
       self:SendWeaponAnim(self.ReloadAnim)
-      self:SetIronsights( false )    
+      self:SetIronsights(false)
    end)
 end
 
-
 function IsEvil(ply)
-   local rl = ply:GetRole()
-   if rl == ROLE_TRAITOR or rl == ROLE_HYPNOTIST or rl == ROLE_ASSASSIN or rl == ROLE_ZOMBIE or rl == ROLE_VAMPIRE or rl == ROLE_KILLER or rl == ROLE_DETRAITOR then
-      return true
-   else
-      return false
-   end
+   return Randomat:IsTraitorTeam(ply) or ply:GetRole() == ROLE_KILLER
 end
 
 if CLIENT then
