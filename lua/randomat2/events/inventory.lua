@@ -8,25 +8,29 @@ CreateConVar("randomat_inventory_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Tim
 
 function EVENT:HandleWeapons(ply, weapons, from_killer)
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
+    local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
     self:HandleWeaponAddAndSelect(ply, function()
         ply:StripWeapons()
         -- Reset FOV to unscope
         ply:SetFOV(0, 0.2)
 
-        for _, v in ipairs(weapons) do
-            ply:Give(WEPS.GetClass(v))
-        end
-
-        -- Have zombies keep their claws and hypnotists keep their brainwashing device
+        -- Have Zombies keep their claws, Hypnotists keep their brainwashing device, and Detective/Detraitors keep their DNA Scanners
         if ply:IsZombie() then
             ply:Give("weapon_zom_claws")
         elseif had_brainwash then
             ply:Give("weapon_hyp_brainwash")
+        elseif had_scanner then
+            ply:Give("weapon_ttt_wtester")
         end
 
         -- If the player that swapped to this player was a killer then they no longer have a crowbar
         if from_killer then
             ply:Give("weapon_zm_improvised")
+        end
+
+        -- Handle inventory weapons last to make sure the roles get their specials
+        for _, v in ipairs(weapons) do
+            ply:Give(WEPS.GetClass(v))
         end
 
         -- Immediately switch to unarmed to we don't show other players our potentially-illegal first weapon (e.g. Killer's knife)
