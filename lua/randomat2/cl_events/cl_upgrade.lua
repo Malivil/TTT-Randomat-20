@@ -20,6 +20,7 @@ net.Receive("UpgradeEventBegin", function()
     upgradeFrame:ShowCloseButton(false)
     upgradeFrame:SetVisible(true)
     upgradeFrame:SetDeleteOnClose(true)
+    upgradeFrame:SetZPos(32767)
     upgradeFrame.Paint = function(self, w, h)
         draw.RoundedBox(8, 0, 0, w, h, Color(0, 0, 10, 200))
     end
