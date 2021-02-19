@@ -36,7 +36,8 @@ function EVENT:Begin()
         local sound = data.SoundName:lower()
         local weap_start, _ = string.find(sound, "weapons/")
         local fire_start, _ = string.find(sound, "fire")
-        if weap_start and fire_start then
+        local shot_start, _ = string.find(sound, "shot")
+        if weap_start and (fire_start or shot_start) then
             data.SoundName = sosig_sound
             return true
         end
