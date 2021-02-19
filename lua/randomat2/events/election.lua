@@ -78,7 +78,7 @@ function EVENT:StartVotes(first, second)
                     end
                 end
 
-                local winner = nil
+                local winner = firstcandidate
 
                 -- Make sure there isn't a tie
                 if firstvotes == secondvotes then
