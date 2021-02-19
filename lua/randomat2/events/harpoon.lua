@@ -13,6 +13,9 @@ function EVENT:HandleRoleWeapons(ply)
     if (Randomat:IsTraitorTeam(ply) and not ply:GetRole() == ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or ply:GetRole() == ROLE_KILLER then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         updated = true
+    elseif Randomat:IsJesterTeam(ply) then
+        Randomat:SetRole(ply, ROLE_INNOCENT)
+        updated = true
     end
 
     -- Remove role weapons from anyone on the traitor team now

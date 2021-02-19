@@ -14,6 +14,9 @@ function EVENT:HandleRoleWeapons(ply)
     if (Randomat:IsTraitorTeam(ply) and not ply:GetRole() == ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or ply:GetRole() == ROLE_KILLER then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         updated = true
+    elseif Randomat:IsJesterTeam(ply) then
+        Randomat:SetRole(ply, ROLE_INNOCENT)
+        updated = true
     end
 
     -- Remove role weapons from anyone on the traitor team now
@@ -73,15 +76,7 @@ function EVENT:Condition()
     if Randomat:IsEventActive("prophunt") or Randomat:IsEventActive("harpoon") or Randomat:IsEventActive("grave") then return false end
 
     local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
-    if util.WeaponForClass(weaponid) == nil then return false end
-
-    for _, v in pairs(player.GetAll()) do
-        if Randomat:IsJesterTeam(v) and v:Alive() and not v:IsSpec() then
-            return false
-        end
-    end
-
-    return true
+    return util.WeaponForClass(weaponid) ~= nil
 end
 
 function EVENT:GetConVars()
