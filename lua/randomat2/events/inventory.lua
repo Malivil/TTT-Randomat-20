@@ -30,7 +30,11 @@ function EVENT:HandleWeapons(ply, weapons, from_killer)
 
         -- Handle inventory weapons last to make sure the roles get their specials
         for _, v in ipairs(weapons) do
-            ply:Give(WEPS.GetClass(v))
+            local wep_class = WEPS.GetClass(v)
+            -- Don't give players the detective's tester
+            if wep_class ~= "weapon_ttt_wtester" then
+                ply:Give(wep_class)
+            end
         end
 
         -- Immediately switch to unarmed to we don't show other players our potentially-illegal first weapon (e.g. Killer's knife)
