@@ -23,7 +23,9 @@ end)
 
 net.Receive("EndSosig", function()
     for _, wep in pairs(LocalPlayer():GetWeapons()) do
-        wep.Primary.Sound = wep.Primary.OriginalSound
+        if wep.Primary then
+            wep.Primary.Sound = wep.Primary.OriginalSound
+        end
     end
     hook.Remove("EntityEmitSound", "SosigOverrideHook")
 end)

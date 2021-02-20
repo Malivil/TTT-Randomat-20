@@ -10,6 +10,7 @@ util.AddNetworkString("EndSosig")
 local sosig_sound = "weapons/sosig.mp3"
 
 local function FixWeapon(wep)
+    if not IsValid(wep) or not wep.Primary then return end
     wep.Primary.OriginalSound = wep.Primary.Sound
     wep.Primary.Sound = sosig_sound
 end
