@@ -532,7 +532,7 @@ Puts a green outline around every player
 _ttt_randomat_wallhack_ - Default: 1 - Whether this event is enabled.
 
 ## NOT THE BEES!
-Spawns bees randomly around around players
+Spawns bees randomly around players
 \
 \
 **ConVars**
