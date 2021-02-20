@@ -11,7 +11,8 @@ function EVENT:Begin()
     end
 
     self:AddHook("KeyPress", function(ply, key)
-        if key == IN_JUMP and ply:Alive() and not ply:IsSpec() then
+        -- Don't count "jumps" if the player is underwater
+        if key == IN_JUMP and ply:Alive() and not ply:IsSpec() and (ply:WaterLevel() < 3) then
             if ply.rdmtJumps > 0 then
                 if ply.rdmtJumps == 1 or not Randomat:IsJesterTeam(ply) or GetConVar("randomat_jump_jesterspam"):GetBool() then
                     util.BlastDamage(ply, ply, ply:GetPos(), 100, 500)
@@ -21,7 +22,6 @@ function EVENT:Begin()
 
             ply.rdmtJumps = ply.rdmtJumps + 1
         end
-
     end)
 end
 
