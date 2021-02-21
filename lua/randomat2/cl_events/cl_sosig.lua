@@ -1,11 +1,20 @@
 
 local sosig_sound = "weapons/sosig.mp3"
+local hooked = false
+
+local function FixWeapon(wep)
+    if not IsValid(wep) or not wep.Primary then return end
+    wep.Primary.OriginalSound = wep.Primary.Sound
+    wep.Primary.Sound = sosig_sound
+end
 
 net.Receive("TriggerSosig", function()
     for _, wep in pairs(LocalPlayer():GetWeapons()) do
-        wep.Primary.OriginalSound = wep.Primary.Sound
-        wep.Primary.Sound = sosig_sound
+        FixWeapon(wep)
     end
+
+    -- This even can be called multiple times but we only want to add the hook once
+    if hooked then return end
 
     hook.Add("EntityEmitSound", "SosigOverrideHook", function(data)
         local owner = data.Entity
@@ -19,13 +28,15 @@ net.Receive("TriggerSosig", function()
             return true
         end
     end)
+    hooked = true
 end)
 
 net.Receive("EndSosig", function()
     for _, wep in pairs(LocalPlayer():GetWeapons()) do
-        if wep.Primary then
+        if wep.Primary and wep.Primary.OriginalSound then
             wep.Primary.Sound = wep.Primary.OriginalSound
         end
     end
     hook.Remove("EntityEmitSound", "SosigOverrideHook")
+    hooked = false
 end)

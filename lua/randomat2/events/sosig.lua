@@ -23,6 +23,7 @@ function EVENT:Begin()
             FixWeapon(wep)
         end
     end
+
     self:AddHook("WeaponEquip", function(wep, ply)
         timer.Create("SosigDelay", 0.1, 1, function()
             net.Start("TriggerSosig")
@@ -48,6 +49,7 @@ end
 function EVENT:End()
     net.Start("EndSosig")
     net.Broadcast()
+    timer.Remove("SosigDelay")
 end
 
 Randomat:register(EVENT)
