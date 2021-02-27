@@ -14,11 +14,11 @@ function EVENT:Begin()
         for _, v in pairs(player.GetAll()) do
             if v:Alive() and not v:IsSpec() then
                 -- Save the player's scaled FOV the first time we see them
-                if changedFOV[v:UniqueID()] == nil then
-                    changedFOV[v:UniqueID()] = v:GetFOV() * scale
+                if changedFOV[v:SteamID64()] == nil then
+                    changedFOV[v:SteamID64()] = v:GetFOV() * scale
                 end
 
-                v:SetFOV(changedFOV[v:UniqueID()], 0)
+                v:SetFOV(changedFOV[v:SteamID64()], 0)
             else
                 v:SetFOV(0, 0)
             end

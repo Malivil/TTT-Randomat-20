@@ -25,13 +25,13 @@ end
 function EVENT:Begin()
     self:AddHook("SetupMove", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
-            playermoveloc[ply:UniqueID()] = ply:GetPos()
+            playermoveloc[ply:SteamID64()] = ply:GetPos()
         end
     end);
 
     local plys = {}
     for _, v in pairs(player.GetAll()) do
-        plys[v:UniqueID()] = v
+        plys[v:SteamID64()] = v
     end
 
     local damagetime = GetConVar("randomat_distancing_timer"):GetInt()
@@ -40,14 +40,14 @@ function EVENT:Begin()
     local damage = GetConVar("randomat_distancing_damage"):GetInt()
     self:AddHook("Think", function()
         for _, v in pairs(plys) do
-            local playeruid = v:UniqueID()
+            local playeruid = v:SteamID64()
             if v:Alive() and not v:IsSpec() then
                 local playerloc = v:GetPos()
                 local closeplayer = nil
                 -- Check if this player is within the configurable distance of any other player
                 for uid, loc in pairs(playermoveloc) do
                     if uid ~= playeruid and math.abs(playerloc:Distance(loc)) < distance then
-                        closeplayer = player.GetByUniqueID(uid)
+                        closeplayer = player.GetBySteamID64(uid)
                         break
                     end
                 end
@@ -83,7 +83,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("PlayerSpawn", function(ply)
-        local uid = ply:UniqueID()
+        local uid = ply:SteamID64()
         if plys[uid] ~= nil then
             plys[uid] = nil
         end
@@ -93,7 +93,7 @@ end
 
 function EVENT:End()
     for _, v in pairs(player.GetAll()) do
-        ClearPlayerData(v:UniqueID())
+        ClearPlayerData(v:SteamID64())
     end
 end
 
