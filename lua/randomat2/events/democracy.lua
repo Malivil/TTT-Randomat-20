@@ -233,7 +233,7 @@ net.Receive("DemocracyJesterVoted", function(ln, ply)
 end)
 
 function ClearTable(table)
-    for k, v in pairs(table) do
+    for k, _ in pairs(table) do
         table[k] = nil
     end
 end
