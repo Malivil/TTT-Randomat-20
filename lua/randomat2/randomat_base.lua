@@ -148,7 +148,7 @@ function Randomat:SetRole(ply, role)
 
     if SERVER then
         net.Start("TTT_RoleChanged")
-        net.WriteString(ply:UniqueID())
+        net.WriteString(ply:SteamID64())
         net.WriteUInt(role, 8)
         net.Broadcast()
     end
