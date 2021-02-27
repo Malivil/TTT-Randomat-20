@@ -27,7 +27,7 @@ function EVENT:Condition()
     local glitch = false
     for _, v in pairs(self:GetAlivePlayers()) do
         if Randomat:IsInnocentTeam(v) then
-            i = i + 1    
+            i = i + 1
             if v:GetRole() == ROLE_GLITCH then
                 glitch = true
             end

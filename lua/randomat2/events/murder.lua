@@ -133,13 +133,11 @@ end
 function EVENT:Condition()
     local has_detective = false
     local t = 0
-    for _, v in pairs(player.GetAll()) do
-        if v:Alive() and not v:IsSpec() then
-            if v:GetRole() == ROLE_DETECTIVE then
-                has_detective = true
-            elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) then
-                t = t+1
-            end
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if v:GetRole() == ROLE_DETECTIVE then
+            has_detective = true
+        elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) then
+            t = t+1
         end
     end
 

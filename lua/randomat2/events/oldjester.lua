@@ -24,8 +24,8 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    for _, v in pairs(player.GetAll()) do
-        if v:GetRole() == ROLE_SWAPPER and v:Alive() and not v:IsSpec() then
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if v:GetRole() == ROLE_SWAPPER then
             return true
         end
     end

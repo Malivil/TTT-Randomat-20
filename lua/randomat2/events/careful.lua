@@ -18,8 +18,8 @@ end
 
 function EVENT:Condition()
     -- Only run if there is at least one jester/swapper living
-    for _, v in pairs(player.GetAll()) do
-        if Randomat:IsJesterTeam(v) and v:Alive() and not v:IsSpec() then
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if Randomat:IsJesterTeam(v) then
             return true
         end
     end

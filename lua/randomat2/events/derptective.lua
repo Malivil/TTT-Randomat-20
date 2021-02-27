@@ -63,8 +63,8 @@ end
 
 function EVENT:Condition()
     -- Only run if there is at least one detective/detraitor living
-    for _, v in pairs(player.GetAll()) do
-        if (v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_DETRAITOR) and v:Alive() and not v:IsSpec() then
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_DETRAITOR then
             return true
         end
     end

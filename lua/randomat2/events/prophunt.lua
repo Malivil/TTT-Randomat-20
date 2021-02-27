@@ -187,8 +187,8 @@ function EVENT:Condition()
     if util.WeaponForClass(weaponid) == nil then return false end
 
     -- Only run if there is at least one innocent or jester/swapper living
-    for _, v in pairs(player.GetAll()) do
-        if (Randomat:IsJesterTeam(v) or Randomat:IsInnocentTeam(v)) and v:Alive() and not v:IsSpec() then
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if (Randomat:IsJesterTeam(v) or Randomat:IsInnocentTeam(v)) then
             return true
         end
     end
