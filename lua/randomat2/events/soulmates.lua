@@ -28,26 +28,39 @@ local function InitializeSharedHealth(i)
     SetSharedHealth(i, shared_health)
 end
 
-function EVENT:Begin()
+function EVENT:Begin(...)
+    local params = ...
     ply1 = {}
     ply1_health = {}
     ply2 = {}
     ply2_health = {}
 
-    local x = 0
-    for _, v in pairs(self:GetAlivePlayers(true)) do
-        if x % 2 == 0 then
-            table.insert(ply1, v)
-            table.insert(ply1_health, v:Health())
-        else
-            table.insert(ply2, v)
-            table.insert(ply2_health, v:Health())
+    local affect_all = GetConVar("randomat_soulmates_affectall"):GetBool()
+    -- Allow the players to be overwritten if this is called from another event
+    if params ~= nil and params[1] ~= nil and params[2] ~= nil then
+        affect_all = false
+
+        ply1[1] = params[1]
+        ply1_health[1] = params[1]:Health()
+
+        ply2[1] = params[2]
+        ply2_health[1] = params[2]:Health()
+    else
+        local x = 0
+        for _, v in pairs(self:GetAlivePlayers(true)) do
+            if x % 2 == 0 then
+                table.insert(ply1, v)
+                table.insert(ply1_health, v:Health())
+            else
+                table.insert(ply2, v)
+                table.insert(ply2_health, v:Health())
+            end
+            x = x+1
         end
-        x = x+1
     end
 
     local size = 1
-    if GetConVar("randomat_soulmates_affectall"):GetBool() then
+    if affect_all then
         size = #ply2
         Randomat:EventNotifySilent("Soulmates")
 

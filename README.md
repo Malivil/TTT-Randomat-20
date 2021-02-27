@@ -41,6 +41,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - NO NERD HEALING
 - Opposite Day
 - Prop Hunt
+- Rock, Paper, Scissors
 - Shh... It's a Secret!
 - Social Distancing
 - The Cake is a Lie
@@ -621,6 +622,15 @@ Causes anyone who dies to be resurrected as a Zombie
 _ttt_randomat_grave_ - Default: 1 - Whether this event is enabled.\
 _randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.
 
+## Rock, Paper, Scissors
+Starts a game of Rock, Paper, Scissors between two players... to the death! A tie results in the players being soulbound to eachother.
+\
+\
+**ConVars**
+\
+_ttt_randomat_rockpaperscissors_ - Default: 1 - Whether this event is enabled.\
+_randomat_rockpaperscissors_bestof_ - Default: 3 - How many rounds to play.
+
 ## Shh... It's a Secret!
 Runs another random Randomat event without notifying the players. Also silences all future Randomat events while this event is active.
 \
@@ -637,7 +647,7 @@ Disables all sounds for the duration of the event
 \
 _ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.
 
-## So that's it. What, we some kind of suicide squad? (aka Detonators)
+## So that's it. What, we're some kind of suicide squad? (aka Detonators)
 Gives everyone a detonator for a random other player. When that detonator is used, the target player is exploded.
 \
 \
@@ -845,7 +855,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
-- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" event
+- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" and "Rock, Paper, Scissors" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded
@@ -854,7 +864,9 @@ If a developer of an external Randomat event would like to add support for this 
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
  for the "I don't think you realise the gravity of the situation." event.
-- Tygron and The Stig for providing feedback and verifying bug fixes
+- [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
+- [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
+- [Tygron](https://steamcommunity.com/id/Tygron) and [The Stig](https://steamcommunity.com/id/The_stig_981) for providing feedback and verifying bug fixes
 
 # Steam Workshop
 https://steamcommunity.com/sharedfiles/filedetails/?id=2055805086

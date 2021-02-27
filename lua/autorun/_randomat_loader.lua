@@ -19,6 +19,10 @@ for _, fil in pairs(files) do
 end
 
 if SERVER then
+    resource.AddSingleFile("materials/icon32/copy.png")
+    resource.AddSingleFile("materials/icon32/cut.png")
+    resource.AddSingleFile("materials/icon32/stones.png")
+
     concommand.Add("ttt_randomat_disableall", function()
         for _, v in pairs(Randomat.Events) do
             RunConsoleCommand("ttt_randomat_"..v.Id, 0)
