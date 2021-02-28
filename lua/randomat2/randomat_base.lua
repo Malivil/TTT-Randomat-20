@@ -167,6 +167,7 @@ function Randomat:register(tbl)
     Randomat.Events[id] = tbl
 
     CreateConVar("ttt_randomat_"..id, 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    CreateConVar("ttt_randomat_"..id.."_min_players", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 end
 
 function Randomat:unregister(id)
@@ -182,7 +183,9 @@ local function GetRandomEvent(events)
 end
 
 function Randomat:CanEventRun(event)
-    return event:Enabled() and event:Condition() and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
+    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
+    local player_count = player.GetCount()
+    return event:Enabled() and event:Condition() and (min_players <= 0 or player_count >= min_players) and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
 end
 
 function Randomat:TriggerRandomEvent(ply)
@@ -518,14 +521,6 @@ function randomat_meta:StripRoleWeapons(ply)
     if ply:HasWeapon("weapon_ttt_wtester") then
         ply:StripWeapon("weapon_ttt_wtester")
     end
-end
-
-function randomat_meta:CreateCmd(str, val, desc, slider)
-    CreateConVar("randomat_"..self.id..str, val, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, desc)
-    if not self.cmds then
-        self.cmds = {}
-    end
-    table.insert(self.cmds, {})
 end
 
 function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)

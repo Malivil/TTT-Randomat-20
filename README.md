@@ -54,7 +54,8 @@ Converts the Swapper to a Jester
 \
 **ConVars**
 \
-_ttt_randomat_oldjester_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_oldjester_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_oldjester_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## A Glitch has been patched
 Changes a random Glitch into either an Innocent or a Traitor. There is a configurable chance that the player will be turned into an Innocent rather than a Traitor.
@@ -63,6 +64,7 @@ Changes a random Glitch into either an Innocent or a Traitor. There is a configu
 **ConVars**
 \
 _ttt_randomat_patched_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_patched_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_patched_chance_ - Default: 50 - The chance of the Glitch being made a Traitor.
 
 ## A player is acting suspicious
@@ -72,6 +74,7 @@ Changes a random player to either a Jester or a Traitor. There is a configurable
 **ConVars**
 \
 _ttt_randomat_suspicion_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_suspicion_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_suspicion_chance_ - Default: 50 - The chance of the player being a Jester.
 
 ## A Random Person will explode every X seconds! Watch out! (EXCEPT DETECTIVES)
@@ -81,6 +84,7 @@ This one is pretty self-explanitory. Detraitors are also excluded from explosion
 **ConVars**
 \
 _ttt_randomat_explode_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_explode_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_explode_timer_ - Default: 30 - The time between explosions.
 
 ## A traitor will explode in X seconds!
@@ -90,6 +94,7 @@ This one is pretty self-explanitory
 **ConVars**
 \
 _ttt_randomat_texplode_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_texplode_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_texplode_timer_ - Default: 60 - The time before the traitor explodes.\
 _randomat_texplode_radius_ - Default: 600 - Radius of the traitor explosion.
 
@@ -100,6 +105,7 @@ A random vanilla innocent is upgraded to a Mercenary or is given the choice of b
 **ConVars**
 \
 _ttt_randomat_upgrade_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_upgrade_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_upgrade_chooserole_ - Default: 1 - Whether the innocent should choose their new role.
 
 ## Bad Gas
@@ -109,6 +115,7 @@ Drops random grenades (from the enabled types) at random players' feet on a conf
 **ConVars**
 \
 _ttt_randomat_gas_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_gas_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_gas_timer_ - Default: 15 - Changes the time between grenade drops.\
 _randomat_gas_affectall_ - Default: 0 - Set to 1 for the event to drop a grenade at everyone's feet on trigger.\
 _randomat_gas_discombob_ - Default: 1 - Whether discombobs drop.\
@@ -122,6 +129,7 @@ Causes any player who is off the ground (by jumping, falling, etc.) to turn into
 **ConVars**
 \
 _ttt_randomat_ragdoll_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_ragdoll_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_ragdoll_time_ - Default: 1.5 - The time the player is ragdolled.\
 _randomat_ragdoll_delay_ - Default: 1.5 - The time between ragdolls.
 
@@ -133,6 +141,7 @@ Causes all players to have their heads grow to massive proportions.\
 **ConVars**
 \
 _ttt_randomat_bighead_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_bighead_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_bighead_scale_ - Default: 2 - Head size multiplier.
 
 ## Blind Traitors (aka All traitors have been blinded for X seconds!)
@@ -142,6 +151,7 @@ Blinds all traitors for a configurable amount of seconds
 **ConVars**
 \
 _ttt_randomat_blind_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_blind_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_blind_duration_ - Default: 39 - The duration the players should be blinded for.
 
 ## Butterfingers
@@ -151,6 +161,7 @@ Causes weapons to periodically slip out of players' hands
 **ConVars**
 \
 _ttt_randomat_butter_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_butter_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_butter_timer_ - Default: 10 - The time between each weapon drop.\
 _randomat_butter_affectall_ - Default: 0 -Whether to affect every player at once rather than just a single random player.
 
@@ -161,6 +172,7 @@ Sets any player that is camping (has not moved far enough in the configurable ti
 **ConVars**
 \
 _ttt_randomat_campfire_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_campfire_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_campfire_timer_ - Default: 20 - Amount of time (in seconds) a player must camp before they are punished.\
 _randomat_campfire_distance_ - Default: 35 - The distance a player must move before they are considered not camping anymore.
 
@@ -171,6 +183,7 @@ Causes every player to constantly move forward
 **ConVars**
 \
 _ttt_randomat_cantstop_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_cantstop_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_cantstop_disableback_ - Default: 1 - Whether the "s" key is disabled.
 
 ## Care Package
@@ -180,6 +193,7 @@ Spawns an ammo crate somewhere in the map that contains a free item from the var
 **ConVars**
 \
 _ttt_randomat_package_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_package_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_package_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## Careful...
@@ -189,6 +203,7 @@ Set all Jesters and Swappers to a reduced (and configurable) amount of health.
 **ConVars**
 \
 _ttt_randomat_careful_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_careful_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_careful_health_ - Default: 1 - Health to set Jester/Swapper to.
 
 ## Choose an Event!
@@ -198,6 +213,7 @@ Presents random events to be chosen, either by a single player or by vote
 **ConVars**
 \
 _ttt_randomat_choose_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_choose_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_choose_choices_ - Default: 3 - Number of events you can choose from.\
 _randomat_choose_vote_ - Default: 0 - Allows all players to vote on the event.\
 _randomat_choose_votetimer_ - Default: 10 - How long players have to vote on the event.\
@@ -210,6 +226,7 @@ Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the dur
 **ConVars**
 \
 _ttt_randomat_slam_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_slam_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_slam_timer_ - Default: 3 - Time between being given slams.\
 _randomat_slam_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_slam_weaponid_ - Default: weapon_ttt_slam - Id of the weapon given.
@@ -221,6 +238,7 @@ Whenever anyone buys a weapon from a shop, all other players get that weapon too
 **ConVars**
 \
 _ttt_randomat_communist_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_communist_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_communist_show_roles_ - Default: 1 - Whether to show the role of the purchasing player.
 
 ## Compulsive Reloading
@@ -230,6 +248,7 @@ Slowly drains a user's ammo over time if they haven't fired recently.
 **ConVars**
 \
 _ttt_randomat_reload_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_reload_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_reload_wait_time_ - Default: 5.0 - Seconds after last shot to wait before draining.\
 _randomat_reload_drain_time_ - Default: 2.0 - Seconds between each ammo drain.\
 _randomat_reload_keep_ammo_ - Default: 1 - Whether drained ammo is kept (1) or destroyed (0).\
@@ -242,6 +261,7 @@ Spawns a configurable number of hostile headcrabs when a player is killed
 **ConVars**
 \
 _ttt_randomat_crabs_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_crabs_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_crabs_count_ - Default: 5 - The amount of crabs spawned when someone dies.
 
 ## Dead Men Tell no Tales
@@ -250,7 +270,8 @@ Prevents corpses from being searched
 \
 **ConVars**
 \
-_ttt_randomat_search_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_search_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_search_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Derptective
 Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire.
@@ -259,6 +280,7 @@ Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite 
 **ConVars**
 \
 _ttt_randomat_derptective_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_derptective_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_derptective_rate_of_fire_ - Default: 2 - Rate of Fire multiplier for the H.U.G.E..
 
 ## Don't be so Sensitive
@@ -268,6 +290,7 @@ Periodically changes each player's mouse sensitivity to a number within the conf
 **ConVars**
 \
 _ttt_randomat_sensitive_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_sensitive_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_sensitive_change_interval_ - Default: 15 - How often to change each player's sensitivity.\
 _randomat_sensitive_scale_min_ - Default: 25 - The minimum sensitivity to use.\
 _randomat_sensitive_scale_max_ - Default: 500 - The maximum sensitivity to use.
@@ -279,6 +302,7 @@ Spawns a configurable number of Weeping Angels, each attached to a different pla
 **ConVars**
 \
 _ttt_randomat_blink_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_blink_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_blink_cap_ - Default: 12 - Maximum number of Weeping Angels spawned.\
 _randomat_blink_delay_ - Default: 0.5 - Delay before Weeping Angels are spawned.
 
@@ -289,6 +313,7 @@ Grows a player's head by a set amount each time they kill. Also grows by the sam
 **ConVars**
 \
 _ttt_randomat_headgrow_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_headgrow_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_headgrow_max_ - Default: 2.5 - The maximum head size multiplier.\
 _randomat_headgrow_per_kill_ - Default: 0.25 - The head size increase per kill.\
 _randomat_headgrow_steal_ - Default: 1 - Whether to steal a player's head size on kill.
@@ -300,6 +325,7 @@ Changes a random vanilla Innocent into either a Glitch or a Traitor. There is a 
 **ConVars**
 \
 _ttt_randomat_doublecross_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_doublecross_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_doublecross_chance_ - Default: 50 - The chance of the Innocent being made a Traitor.
 
 ## Election Day
@@ -317,6 +343,7 @@ If a Vampire wins the presidency, the configured team (see _randomat_election_va
 **ConVars**
 \
 _ttt_randomat_election_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_election_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_election_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_election_winner_credits_ - Default: 2 - The number of credits given as a reward, if appropriate.\
 _randomat_election_vamp_turn_innocents_ - Default: 0 - Whether Vampires turn innocents. Otherwise, turns traitors.\
@@ -331,6 +358,7 @@ Causes everything (movement, firing speed, timers, etc.) to run a configurable a
 **ConVars**
 \
 _ttt_randomat_flash_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_flash_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
 
 ## Flu Season
@@ -340,6 +368,7 @@ Randomly infects a player with the flu, causing them to sneeze occasionally. Als
 **ConVars**
 \
 _ttt_randomat_flu_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_flu_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_flu_timer_ - Default: 1 - Time a player must be near someone before it spreads.\
 _randomat_flu_interval_ - Default: 10 - How often effects happen to infected.\
 _randomat_flu_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
@@ -369,6 +398,7 @@ All Innocents will Freeze (and become immune) every X seconds
 **ConVars**
 \
 _ttt_randomat_freeze_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_freeze_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_freeze_duration_ - Default: 5 - Duration of the Freeze (in seconds).\
 _randomat_freeze_timer_ - Default: 30 - How often (in seconds) the Freeze occurs.\
 _randomat_freeze_hint_ - Default: 1 - Whether to explain the event after triggering.
@@ -380,6 +410,7 @@ Heals players who kill other players
 **ConVars**
 \
 _ttt_randomat_lifesteal_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_lifesteal_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_lifesteal_health_ - Default: 25 - The health gained per kill.\
 _randomat_lifesteal_cap_ - Default: 0 - The maximum health a player can get from killing people. Set to 0 to disable.
 
@@ -390,6 +421,7 @@ Gives all Detectives extra health, but kills all members of the Innocent team if
 **ConVars**
 \
 _ttt_randomat_president_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_president_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.
 
 ## Glitch in the Matrix
@@ -399,6 +431,7 @@ Randomly changes everyone's role to be either Glitch or Traitor based on the con
 **ConVars**
 \
 _ttt_randomat_glitch_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_glitch_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_glitch_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".\
 _randomat_glitch_traitor_pct_ - Default: 25 - The percentage of players that will be traitors.\
 _randomat_glitch_damage_scale_ - Default: 1.0 - The multiplier for damage that the Glitches will take.\
@@ -413,6 +446,7 @@ Periodically gives players random weapons that would normally be found throughou
 **ConVars**
 \
 _ttt_randomat_gungame_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_gungame_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_gungame_timer_ - Default: 5 - Time between weapon changes.
 
 ## Gunpowder, Treason, and Plot
@@ -422,6 +456,7 @@ Spawns explosive barrels around every player repeatedly until the event ends
 **ConVars**
 \
 _ttt_randomat_barrels_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_barrels_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_barrels_count_ - Default: 3 - Number of barrels spawned per person.\
 _randomat_barrels_range_ - Default: 100 - Distance barrels spawn from the player.\
 _randomat_barrels_timer_ - Default: 60 - Time between barrel spawns.
@@ -433,6 +468,7 @@ Gives everyone a Harpoon and only allows players to use the Harpoon for the dura
 **ConVars**
 \
 _ttt_randomat_harpoon_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_harpoon_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_harpoon_timer_ - Default: 3 - Time between being given harpoons.\
 _randomat_harpoon_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_harpoon_weaponid_ - Default: ttt_m9k_harpoon - Id of the weapon given.
@@ -444,6 +480,7 @@ Scales each player's size by a configurable ratio
 **ConVars**
 \
 _ttt_randomat_shrink_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_shrink_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_shrink_scale_ - Default: 0.5 - The shrinking scale factor.
 
 ## I don't think you realise the gravity of the situation.
@@ -454,6 +491,7 @@ It goes gack and forth between being lowered and raised each time.
 **ConVars**
 \
 _ttt_randomat_gravity_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_gravity_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_gravity_timer_ - Default: 30 - How long between changes.\
 _randomat_gravity_duration_ - Default: 3 - How many seconds the change lasts.\
 _randomat_gravity_minimum_ - Default: 70 - The gravity when it is lowered.\
@@ -466,6 +504,7 @@ Allows players to vote to kill someone repeatedly until the event ends
 **ConVars**
 \
 _ttt_randomat_democracy_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_democracy_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_democracy_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_democracy_tiekills_ - Default: 1 - If 1, ties result in a coin toss; if 0, nobody dies in a tied vote.\
 _randomat_democracy_totalpct_ - Default: 50 - Percent of total player votes required for a vote to pass, set to 0 to disable.\
@@ -477,7 +516,8 @@ Drops a Visualizer whenever a player is killed
 \
 **ConVars**
 \
-_ttt_randomat_visualiser_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_visualiser_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_visualiser_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Infinite Ammo!
 Gives all weapons infinite ammo, allowing players to constantly shoot without reloading
@@ -486,6 +526,7 @@ Gives all weapons infinite ammo, allowing players to constantly shoot without re
 **ConVars**
 \
 _ttt_randomat_ammo_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_ammo_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_ammo_affectbuymenu_ - Default: 0 - Whether it gives buy menu weapons infinite ammo too.
 
 ## Infinite Credits for Everyone!
@@ -494,7 +535,8 @@ Gives all players essentially infinite credits for use in their shop menus (if t
 \
 **ConVars**
 \
-_ttt_randomat_credits_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_credits_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_credits_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Malfunction
 Causes players to randomly shoot their gun
@@ -503,6 +545,7 @@ Causes players to randomly shoot their gun
 **ConVars**
 \
 _ttt_randomat_malfunction_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_malfunction_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_malfunction_upper_ - Default: 15 - The upper limit for the random timer.\
 _randomat_malfunction_lower_ - Default: 1 - The lower limit for the random timer.\
 _randomat_malfunction_affectall_ - Default: 0 - Set to 1 for the event to affect everyone at once.\
@@ -514,7 +557,8 @@ Prevents any player from taking damage when they fall
 \
 **ConVars**
 \
-_ttt_randomat_falldamage_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_falldamage_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_falldamage_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## NO NERD HEALING
 Prevents any player from regaining lost health
@@ -522,7 +566,8 @@ Prevents any player from regaining lost health
 \
 **ConVars**
 \
-_ttt_randomat_noheal_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_noheal_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_noheal_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## No one can hide from my sight
 Puts a green outline around every player
@@ -530,7 +575,8 @@ Puts a green outline around every player
 \
 **ConVars**
 \
-_ttt_randomat_wallhack_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_wallhack_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_wallhack_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## NOT THE BEES!
 Spawns bees randomly around players
@@ -539,6 +585,7 @@ Spawns bees randomly around players
 **ConVars**
 \
 _ttt_randomat_bees_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_bees_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
 
 ## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
@@ -548,7 +595,8 @@ NOTE: This event is automatically disabled if my version of [Custom Roles for TT
 \
 **ConVars**
 \
-_ttt_randomat_jesters_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_jesters_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_jesters_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Opposite Day
 Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.\
@@ -558,7 +606,8 @@ NOTE: Sprinting may only work when going backwards if my version of [Custom Role
 \
 **ConVars**
 \
-_ttt_randomat_opposite_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_opposite_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_opposite_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Prop Hunt
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
@@ -567,6 +616,7 @@ Converts all Jester/Swapper and innocent team members to the Innocent role, stri
 **ConVars**
 \
 _ttt_randomat_prophunt_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_prophunt_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_prophunt_timer_ - Default: 3 - Time between being given prop disguisers.\
 _randomat_prophunt_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_prophunt_blind_time_ = Default: 0 - How long to blind the hunters for at the start.\
@@ -579,6 +629,7 @@ Increases each player's Field of View (FOV) so it looks like you're playing Quak
 **ConVars**
 \
 _ttt_randomat_fov_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_fov_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.
 
 ## Random Health for everyone!
@@ -588,6 +639,7 @@ Gives everyone a random amount of health within the configurable boundaries
 **ConVars**
 \
 _ttt_randomat_randomhealth_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_randomhealth_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_randomhealth_upper_ - Default: 100 - The upper limit of health gained.\
 _randomat_randomhealth_lower_ - Default: 0 - The lower limit of health gained.
 
@@ -598,6 +650,7 @@ Triggers a configurable number of random events, one every 5 seconds
 **ConVars**
 \
 _ttt_randomat_randomxn_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_randomxn_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_randomxn_triggers_ - Default: 5 - Number of Randomat events activated.\
 _randomat_randomxn_timer_ - Default: 5 - How often (in seconds) a random event will be triggered.\
 _randomat_randomxn_multiple_ - Default: 1 - Allow event to run multiple times.\
@@ -610,6 +663,7 @@ Periodically triggers random Randomat events for the duration of this event
 **ConVars**
 \
 _ttt_randomat_intensifies_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_intensifies_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_intensifies_timer_ - Default: 20 - How often (in seconds) a random event will be triggered.\
 _randomat_intensifies_triggerbyotherrandom_ - Default: 1 - Allow being triggered by other events like Random xN.
 
@@ -620,6 +674,7 @@ Causes anyone who dies to be resurrected as a Zombie
 **ConVars**
 \
 _ttt_randomat_grave_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_grave_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.
 
 ## Rock, Paper, Scissors
@@ -629,6 +684,7 @@ Starts a game of Rock, Paper, Scissors between two players... to the death! A ti
 **ConVars**
 \
 _ttt_randomat_rockpaperscissors_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_rockpaperscissors_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_rockpaperscissors_bestof_ - Default: 3 - How many rounds to play.
 
 ## Shh... It's a Secret!
@@ -637,7 +693,8 @@ Runs another random Randomat event without notifying the players. Also silences 
 \
 **ConVars**
 \
-_ttt_randomat_secret_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_secret_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_secret_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## SHUT UP!
 Disables all sounds for the duration of the event
@@ -645,7 +702,8 @@ Disables all sounds for the duration of the event
 \
 **ConVars**
 \
-_ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_shutup_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## So that's it. What, we're some kind of suicide squad? (aka Detonators)
 Gives everyone a detonator for a random other player. When that detonator is used, the target player is exploded.
@@ -653,7 +711,8 @@ Gives everyone a detonator for a random other player. When that detonator is use
 \
 **ConVars**
 \
-_ttt_randomat_suicide_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_suicide_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_suicide_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Social Distancing
 Does a small amount of damage over time to players who spend too much time close to eachother.
@@ -662,6 +721,7 @@ Does a small amount of damage over time to players who spend too much time close
 **ConVars**
 \
 _ttt_randomat_distancing_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_distancing_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_distancing_timer_ - Default: 10 - Seconds a player must be near another player before damage starts.\
 _randomat_distancing_interval_ - Default: 2 - How often damage is done when players are too close.\
 _randomat_distancing_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
@@ -673,7 +733,8 @@ Changes all primary weapon shooting sounds to "Sosig"
 \
 **ConVars**
 \
-_ttt_randomat_sosig_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_sosig_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_sosig_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Soulmates
 Pairs random players together. When either of the paired players is killed, the other is automatically killed as well
@@ -682,6 +743,7 @@ Pairs random players together. When either of the paired players is killed, the 
 **ConVars**
 \
 _ttt_randomat_soulmates_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_soulmates_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_soulmates_affectall_ - Default: 0 - Whether everyone should have a soulmate.\
 _randomat_soulmates_sharedhealth_ - Default: 0 - Whether soulmates should have shared health.
 
@@ -691,7 +753,8 @@ Changes everyone to have only 1 health
 \
 **ConVars**
 \
-_ttt_randomat_suddendeath_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_suddendeath_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_suddendeath_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Taking Inventory
 Swaps player inventories periodically throughout the round. There are some caveats to how this event interacts with special roles:
@@ -702,6 +765,7 @@ Swaps player inventories periodically throughout the round. There are some cavea
 **ConVars**
 \
 _ttt_randomat_inventory_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_inventory_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_inventory_timer_ - Default: 15 - Time between inventory swaps.
 
 ## The 'bar has been raised!
@@ -711,6 +775,7 @@ Increases the damage and push force of the crowbar
 **ConVars**
 \
 _ttt_randomat_crowbar_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_crowbar_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_crowbar_damage_ - Default: 2.5 - Damage multiplier for the crowbar.\
 _randomat_crowbar_push_ - Default: 30 - Push force multiplier for the crowbar.
 
@@ -721,6 +786,7 @@ Rains cakes down around players which have a 50/50 chance or either healing or h
 **ConVars**
 \
 _ttt_randomat_cakes_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_cakes_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_cakes_count_ - Default: 2 - Number of cakes spawned per person.\
 _randomat_cakes_range_ - Default: 200 - Distance cakes spawn from the player.\
 _randomat_cakes_timer_ - Default: 60 - Time between cake spawns, in seconds.\
@@ -737,6 +803,7 @@ Randomly switches positions of two players on a configurable interval
 **ConVars**
 \
 _ttt_randomat_switch_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_switch_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_switch_timer_ - Default: 15 - How often players are switched.
 
 ## Time Warp
@@ -746,6 +813,7 @@ Causes everything (movement, firing speed, timers, etc.) to run a configurable a
 **ConVars**
 \
 _ttt_randomat_timewarp_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_timewarp_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_timewarp_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5).\
 _randomat_timewarp_scale_max_ - Default: 8 - The maximum scale the speed should increase to.\
 _randomat_timewarp_timer_ - Default: 15 - How often (in seconds) the speed will be increased.
@@ -756,7 +824,8 @@ Causes players to explode when killed
 \
 **ConVars**
 \
-_ttt_randomat_mayhem_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_mayhem_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_mayhem_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## Try your best...
 Gives each player a random pistol and main weapon that they cannot drop
@@ -764,7 +833,8 @@ Gives each player a random pistol and main weapon that they cannot drop
 \
 **ConVars**
 \
-_ttt_randomat_randomweapon_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_randomweapon_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_randomweapon_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## We learned how to heal over time, its hard, but definitely possible... (aka Regeneration)
 Causes players to slowly regenerate lost health over time
@@ -773,6 +843,7 @@ Causes players to slowly regenerate lost health over time
 **ConVars**
 \
 _ttt_randomat_regeneration_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_regeneration_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_regeneration_delay_ - Default: 10 - How long after taking damage you will start to regen health.\
 _randomat_regeneration_health_ - Default: 1 - How much health per second you heal.
 
@@ -782,7 +853,8 @@ Alerts all players when an item is bought from a shop
 \
 **ConVars**
 \
-_ttt_randomat_privacy_ - Default: 1 - Whether this event is enabled.
+_ttt_randomat_privacy_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_privacy_min_players - Default: 0 - The minimum number of players required for this event to start.
 
 ## What? Moon Gravity on Earth?
 Changes the gravity of each player to the configurable scale
@@ -791,6 +863,7 @@ Changes the gravity of each player to the configurable scale
 **ConVars**
 \
 _ttt_randomat_moongravity_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_moongravity_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_moongravity_gravity_ - Default: 0.1 - The gravity scale.
 
 ## What did I find in my pocket?
@@ -800,6 +873,7 @@ Gives each player a random buyable weapon
 **ConVars**
 \
 _ttt_randomat_pocket_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_pocket_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_pocket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## What gamemode is this again? (aka Murder)
@@ -817,6 +891,7 @@ Player roles are also adjusted when this event begins:
 **ConVars**
 \
 _ttt_randomat_murder_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_murder_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_murder_pickups_pct_ - Default: 1.5 - Ratio of weapons required to get a revolver. Value = (ConVarValue x TotalWeapons)/Players.\
 _randomat_murder_knifespeed_ - Default: 1.2 - Player move speed multiplier whilst knife is held.\
 _randomat_murder_knifedmg_ - Default: 50 - Damage of the traitor's knife.\
@@ -830,6 +905,7 @@ Kills any player who jumps a second time after this event has triggered
 **ConVars**
 \
 _ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_jump_min_players - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.
 
 # ULX Support
