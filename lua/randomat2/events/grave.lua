@@ -21,7 +21,9 @@ function EVENT:Begin()
                 ply:SpawnForRound(true)
                 ply:SetCredits(0)
                 ply:SetRole(ROLE_ZOMBIE)
-                ply:SetZombiePrime(false)
+                if ply.SetZombiePrime then
+                    ply:SetZombiePrime(false)
+                end
                 ply:SetHealth(GetConVar("randomat_grave_health"):GetInt())
                 ply:SetMaxHealth(GetConVar("randomat_grave_health"):GetInt())
                 ply:StripWeapons()
