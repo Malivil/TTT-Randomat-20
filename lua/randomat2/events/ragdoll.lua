@@ -91,7 +91,9 @@ local function unragdollPlayer(v)
         v:SetVelocity(ragdoll:GetVelocity())
         local yaw = ragdoll:GetAngles().yaw
         v:SetAngles(Angle(0, yaw, 0))
-        ragdoll:DisallowDeleting(false)
+        if ragdoll.DisallowDeleting then
+            ragdoll:DisallowDeleting(false)
+        end
         ragdoll:Remove()
     end
 
@@ -173,9 +175,11 @@ local function ragdollPlayer(v)
     v:SpectateEntity(ragdoll)
     v:StripWeapons()
 
-    ragdoll:DisallowDeleting(true, function(old, new)
-        if v:IsValid() then v.ragdoll = new end
-    end)
+    if ragdoll.DisallowDeleting then
+        ragdoll:DisallowDeleting(true, function(old, new)
+            if v:IsValid() then v.ragdoll = new end
+        end)
+    end
 
     v.ragdoll = ragdoll
     local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
