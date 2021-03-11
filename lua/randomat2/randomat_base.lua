@@ -315,7 +315,7 @@ local function GetRandomRoleWeapon(roles, blocklist)
     local selected = math.random(1,#roles)
     local tbl = table.Copy(EquipmentItems[roles[selected]])
     for _, v in pairs(weapons.GetList()) do
-        if v and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
+        if v and not v.Spawnable and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
             table.insert(tbl, v)
         end
     end
