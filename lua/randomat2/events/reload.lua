@@ -23,6 +23,7 @@ function EVENT:Begin()
 
     local wait_time = GetConVar("randomat_reload_wait_time"):GetFloat()
     local drain_time = GetConVar("randomat_reload_drain_time"):GetFloat()
+    local affects_buy = GetConVar("randomat_reload_affectbuymenu"):GetBool()
     self:AddHook("Think", function()
         for _, v in pairs(self:GetAlivePlayers()) do
             local playername = v:GetName()
@@ -48,7 +49,7 @@ function EVENT:Begin()
                     if CurTime() - playerlastdraintime[playername] > drain_time then
                         playerlastdraintime[playername] = CurTime()
                         local active_weapon = v:GetActiveWeapon()
-                        if IsValid(active_weapon) and not active_weapon.CanBuy or GetConVar("randomat_reload_affectbuymenu"):GetBool() then
+                        if IsValid(active_weapon) and (active_weapon.Spawnable or (not active_weapon.CanBuy or affects_buy)) then
                             local current_clip = active_weapon:Clip1() - 1
                             if current_clip >= 0 then
                                 active_weapon:SetClip1(current_clip)
