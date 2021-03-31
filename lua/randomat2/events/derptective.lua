@@ -2,11 +2,24 @@ local EVENT = {}
 
 CreateConVar("randomat_derptective_rate_of_fire", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Rate of Fire multiplier for the H.U.G.E.", 2, 5)
 
+local function GetEventDescription(has_detraitor)
+    local msg = "Forces the detective(s)"
+
+    -- Only mention Detraitors if that role actually exists
+    if has_detraitor then
+        msg = msg .. " and detraitor(s)"
+    end
+
+    return msg .. " to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire"
+end
+
 EVENT.Title = "Derptective"
-EVENT.Description = "Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire"
+EVENT.Description = GetEventDescription(true)
 EVENT.id = "derptective"
 
 function EVENT:Begin()
+    EVENT.Description = GetEventDescription(ROLE_DETRAITOR ~= -1)
+
     local rof = GetConVar("randomat_derptective_rate_of_fire"):GetInt()
     self:AddHook("Think", function()
         for _, ply in pairs(self:GetAlivePlayers()) do
