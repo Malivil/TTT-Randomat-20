@@ -10,14 +10,19 @@ CreateConVar("randomat_crowbar_push", 20, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Push f
 
 local original_push = nil
 function EVENT:Begin()
-    original_push = GetConVar("ttt_crowbar_pushforce"):GetInt()
-    RunConsoleCommand("ttt_crowbar_pushforce", original_push * GetConVar("randomat_crowbar_push"):GetFloat())
+    if original_push == nil then
+        original_push = GetConVar("ttt_crowbar_pushforce"):GetInt()
+    end
+    local current_push = GetConVar("ttt_crowbar_pushforce"):GetInt();
+    RunConsoleCommand("ttt_crowbar_pushforce", current_push * GetConVar("randomat_crowbar_push"):GetFloat())
 
     local damage = GetConVar("randomat_crowbar_damage"):GetFloat()
     for _, v in pairs(player.GetAll()) do
         for _, wep in pairs(v:GetWeapons()) do
             if wep:GetClass() == "weapon_zm_improvised" then
-                wep.Primary.OriginalDamage = wep.Primary.Damage
+                if wep.Primary.OriginalDamage == nil then
+                    wep.Primary.OriginalDamage = wep.Primary.Damage
+                end
                 wep.Primary.Damage = wep.Primary.Damage * damage
             end
         end
@@ -25,12 +30,12 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    if original_push == nil then return end
-
-    RunConsoleCommand("ttt_crowbar_pushforce", original_push)
+    if original_push ~= nil then
+        RunConsoleCommand("ttt_crowbar_pushforce", original_push)
+    end
     for _, v in pairs(player.GetAll()) do
         for _, wep in pairs(v:GetWeapons()) do
-            if wep:GetClass() == "weapon_zm_improvised" then
+            if wep:GetClass() == "weapon_zm_improvised" and wep.Primary.OriginalDamage ~= nil then
                 wep.Primary.Damage = wep.Primary.OriginalDamage
             end
         end
