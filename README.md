@@ -934,7 +934,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" and "Rock, Paper, Scissors" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
-- Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded
+- Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
@@ -942,7 +942,7 @@ If a developer of an external Randomat event would like to add support for this 
  for the "I don't think you realise the gravity of the situation." event.
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
-- [Tygron](https://steamcommunity.com/id/Tygron) and [The Stig](https://steamcommunity.com/id/The_stig_981) for providing feedback and verifying bug fixes
+- [Tygron](https://steamcommunity.com/id/Tygron), [The Stig](https://steamcommunity.com/id/The_stig_981), and [TilSchwantje](https://github.com/TilSchwantje) for providing feedback and verifying bug fixes
 
 # Steam Workshop
 https://steamcommunity.com/sharedfiles/filedetails/?id=2055805086
