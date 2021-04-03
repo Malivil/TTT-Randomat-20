@@ -11,7 +11,9 @@ local sosig_sound = "weapons/sosig.mp3"
 
 local function FixWeapon(wep)
     if not IsValid(wep) or not wep.Primary then return end
-    wep.Primary.OriginalSound = wep.Primary.Sound
+    if wep.Primary.OriginalSound == nil then
+        wep.Primary.OriginalSound = wep.Primary.Sound
+    end
     wep.Primary.Sound = sosig_sound
 end
 
@@ -50,6 +52,13 @@ function EVENT:End()
     net.Start("EndSosig")
     net.Broadcast()
     timer.Remove("SosigDelay")
+    for _, ply in pairs(player.GetAll()) do
+        for _, wep in pairs(ply:GetWeapons()) do
+            if wep.Primary and wep.Primary.OriginalSound then
+                wep.Primary.Sound = wep.Primary.OriginalSound
+            end
+        end
+    end
 end
 
 Randomat:register(EVENT)
