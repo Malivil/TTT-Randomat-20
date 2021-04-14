@@ -2,11 +2,8 @@ util.AddNetworkString("randomat_message")
 util.AddNetworkString("randomat_message_silent")
 util.AddNetworkString("AlertTriggerFinal")
 util.AddNetworkString("alerteventtrigger")
-
-if SERVER then
-    util.AddNetworkString("TTT_RoleChanged")
-    util.AddNetworkString("TTT_LogInfo")
-end
+util.AddNetworkString("TTT_RoleChanged")
+util.AddNetworkString("TTT_LogInfo")
 
 ROLE_MERCENARY = ROLE_MERCENARY or ROLE_SURVIVALIST or -1
 ROLE_PHANTOM = ROLE_PHANTOM or ROLE_PHOENIX or -1
@@ -52,23 +49,21 @@ local function TriggerEvent(event, ply, silent, ...)
     Randomat.ActiveEvents[index]:Begin(...)
 
     -- Run this after the "Begin" so we have the latest title and description
-    if SERVER then
-        local title = Randomat:GetEventTitle(event)
-        Randomat:LogEvent("[RANDOMAT] Event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
+    local title = Randomat:GetEventTitle(event)
+    Randomat:LogEvent("[RANDOMAT] Event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
 
-        if not silent then
-            local has_description = event.Description ~= nil and string.len(event.Description) > 0
-            if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() then
-                Randomat:SmallNotify(event.Description)
-            end
-            if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
-                for _, p in pairs(player.GetAll()) do
-                    local description = ""
-                    if has_description then
-                        description = " | " .. event.Description
-                    end
-                    Randomat:ChatNotify(p, "[RANDOMAT] " .. title .. description)
+    if not silent then
+        local has_description = event.Description ~= nil and string.len(event.Description) > 0
+        if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() then
+            Randomat:SmallNotify(event.Description)
+        end
+        if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
+            for _, p in pairs(player.GetAll()) do
+                local description = ""
+                if has_description then
+                    description = " | " .. event.Description
                 end
+                Randomat:ChatNotify(p, "[RANDOMAT] " .. title .. description)
             end
         end
     end
@@ -146,12 +141,10 @@ end
 function Randomat:SetRole(ply, role)
     ply:SetRole(role)
 
-    if SERVER then
-        net.Start("TTT_RoleChanged")
-        net.WriteString(ply:SteamID64())
-        net.WriteUInt(role, 8)
-        net.Broadcast()
-    end
+    net.Start("TTT_RoleChanged")
+    net.WriteString(ply:SteamID64())
+    net.WriteUInt(role, 8)
+    net.Broadcast()
 end
 
 function Randomat:register(tbl)
@@ -266,29 +259,27 @@ concommand.Add("ttt_randomat_triggerrandom", function()
     Randomat:TriggerRandomEvent(rdmply)
 end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
-if SERVER then
-    function Randomat:SmallNotify(msg, length, targ)
-        -- Don't broadcast anything when "Secret" is running
-        if Randomat:IsEventActive("secret") then return end
-        if not isnumber(length) then length = 0 end
-        net.Start("randomat_message")
-        net.WriteBool(false)
-        net.WriteString(msg)
-        net.WriteUInt(length, 8)
-        if not targ then net.Broadcast() else net.Send(targ) end
-    end
+function Randomat:SmallNotify(msg, length, targ)
+    -- Don't broadcast anything when "Secret" is running
+    if Randomat:IsEventActive("secret") then return end
+    if not isnumber(length) then length = 0 end
+    net.Start("randomat_message")
+    net.WriteBool(false)
+    net.WriteString(msg)
+    net.WriteUInt(length, 8)
+    if not targ then net.Broadcast() else net.Send(targ) end
+end
 
-    function Randomat:ChatNotify(ply, msg)
-        if Randomat:IsEventActive("secret") then return end
-        if not IsValid(ply) then return end
-        ply:PrintMessage(HUD_PRINTTALK, msg)
-    end
+function Randomat:ChatNotify(ply, msg)
+    if Randomat:IsEventActive("secret") then return end
+    if not IsValid(ply) then return end
+    ply:PrintMessage(HUD_PRINTTALK, msg)
+end
 
-    function Randomat:LogEvent(msg)
-        net.Start("TTT_LogInfo")
-        net.WriteString(msg)
-        net.Broadcast()
-    end
+function Randomat:LogEvent(msg)
+    net.Start("TTT_LogInfo")
+    net.WriteString(msg)
+    net.Broadcast()
 end
 
 function Randomat:EventNotify(title)
@@ -394,10 +385,8 @@ function randomat_meta:GetAlivePlayers(shuffle)
     return Randomat:GetPlayers(shuffle, true)
 end
 
-if SERVER then
-    function randomat_meta:SmallNotify(msg, length, targ)
-        Randomat:SmallNotify(msg, length, targ)
-    end
+function randomat_meta:SmallNotify(msg, length, targ)
+    Randomat:SmallNotify(msg, length, targ)
 end
 
 function randomat_meta:AddHook(hooktype, callbackfunc)

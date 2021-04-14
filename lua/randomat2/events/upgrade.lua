@@ -23,6 +23,12 @@ end
 
 EVENT.Description = GetEventDescription()
 
+local function UpdateToMerc(ply)
+    Randomat:SetRole(ply, ROLE_MERCENARY)
+    ply:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
+    SendFullStateUpdate()
+end
+
 function EVENT:Begin()
     local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
     local target = nil
@@ -35,9 +41,7 @@ function EVENT:Begin()
                     net.Send(ply)
                 end)
             else
-                Randomat:SetRole(ply, ROLE_MERCENARY)
-                ply:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
-                SendFullStateUpdate()
+                UpdateToMerc(ply)
             end
             target = ply
             break
@@ -98,19 +102,19 @@ function EVENT:GetConVars()
 end
 
 net.Receive("RdmtPlayerChoseKiller", function()
-    local v = net.ReadEntity()
-    Randomat:SetRole(v, ROLE_KILLER)
+    local ply = net.ReadEntity()
+    Randomat:SetRole(ply, ROLE_KILLER)
     SendFullStateUpdate()
-    v:SetCredits(GetConVar("ttt_kil_credits_starting"):GetInt())
-    v:StripWeapon("weapon_zm_improvised")
-    v:Give("weapon_kil_knife")
+    ply:SetCredits(GetConVar("ttt_kil_credits_starting"):GetInt())
+    -- Only run this if the version of Custom Roles with a knife exists and it is enabled
+    if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
+        ply:StripWeapon("weapon_zm_improvised")
+        ply:Give("weapon_kil_knife")
+    end
 end)
 
 net.Receive("RdmtPlayerChoseMercenary", function()
-    local v = net.ReadEntity()
-    Randomat:SetRole(v, ROLE_MERCENARY)
-    SendFullStateUpdate()
-    v:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
+    UpdateToMerc(net.ReadEntity())
 end)
 
 Randomat:register(EVENT)

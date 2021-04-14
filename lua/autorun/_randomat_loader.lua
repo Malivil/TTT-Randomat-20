@@ -10,6 +10,7 @@ local function AddClient(fil)
 end
 
 AddServer("randomat2/randomat_base.lua")
+AddClient("randomat2/cl_colors.lua")
 AddClient("randomat2/cl_message.lua")
 AddClient("randomat2/cl_networkstrings.lua")
 
