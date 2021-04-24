@@ -401,6 +401,17 @@ function randomat_meta:AddHook(hooktype, callbackfunc)
     table.insert(self.Hooks, {hooktype, "RandomatEvent." .. self.Id .. ":" .. hooktype})
 end
 
+function randomat_meta:RemoveHook(hooktype)
+    local id = "RandomatEvent." .. self.Id .. ":" .. hooktype
+    for idx, ahook in pairs(self.Hooks) do
+        if ahook[1] == hooktype and ahook[2] == id then
+            hook.Remove(ahook[1], ahook[2])
+            table.remove(self.Hooks, idx)
+            return
+        end
+    end
+end
+
 function randomat_meta:CleanUpHooks()
     if not self.Hooks then return end
 

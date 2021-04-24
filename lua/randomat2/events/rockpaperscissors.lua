@@ -32,6 +32,25 @@ local score
 local rounds_total
 local rounds_left
 
+local function HandlePlayerDeath()
+    local ply1_alive = ply1:Alive()
+    local ply2_alive = ply2:Alive()
+
+    if not ply1_alive and not ply2_alive then
+        Randomat:EventNotify("Nobody wins Rock, Paper, Scissors!")
+        Randomat:SmallNotify("Both players have died =(")
+        Randomat:LogEvent("[RANDOMAT] Ending early because both players are dead")
+    elseif not ply1_alive then
+        Randomat:EventNotify(ply2:Nick() .. " wins Rock, Paper, Scissors!")
+        Randomat:SmallNotify(ply1:Nick() .. " has died =(")
+        Randomat:LogEvent("[RANDOMAT] Ending early because " .. ply1:Nick() .. " is dead")
+    elseif not ply2_alive then
+        Randomat:EventNotify(ply1:Nick() .. " wins Rock, Paper, Scissors!")
+        Randomat:SmallNotify(ply2:Nick() .. " has died =(")
+        Randomat:LogEvent("[RANDOMAT] Ending early because " .. ply2:Nick() .. " is dead")
+    end
+end
+
 function EVENT:Begin()
     local players = self:GetAlivePlayers(true)
     ply1 = players[1]
@@ -63,10 +82,21 @@ function EVENT:Begin()
         local steam64 = net.ReadString()
         self:HandleRound(steam64, CHOSEN_SCISSORS)
     end)
+
+    -- If one of the players is dead, score the round and end the game that way
+    self:AddHook("PlayerDeath", function(victim, entity, killer)
+        if not IsValid(victim) or (victim ~= ply1 and victim ~= ply2) then return end
+        HandlePlayerDeath()
+        self:RemoveHook("PlayerDeath")
+        self:End()
+    end)
 end
 
 function EVENT:End()
-    timer.Remove("RdmtRockPaperScissorsEndTimer")
+    timer.Remove("RdmtRockPaperScissorsEndMessageTimer")
+    timer.Remove("RdmtRockPaperScissorsEndScoreTimer")
+    timer.Remove("RdmtRockPaperScissorsEndSoulTimer")
+    timer.Remove("RdmtRockPaperScissorsNextRoundMessageTimer")
     timer.Remove("RdmtRockPaperScissorsNextRoundTimer")
     net.Start("RdmtCloseRockPaperScissorsFrame")
     net.Broadcast()
@@ -164,7 +194,7 @@ function EVENT:ScoreRound()
 
     -- If there are more rounds left, wait a few seconds and then start the next round
     if rounds_left > 0 then
-        timer.Create("RdmtRockPaperScissorsNextRoundTimer", 5, 1, function()
+        timer.Create("RdmtRockPaperScissorsNextRoundMessageTimer", 5, 1, function()
             Randomat:SmallNotify("Starting the next round shortly...", 3)
             timer.Create("RdmtRockPaperScissorsNextRoundTimer", 3, 1, function()
                 net.Start("RockPaperScissorsEventBegin")
@@ -176,9 +206,9 @@ function EVENT:ScoreRound()
         return
     end
 
-    timer.Create("RdmtRockPaperScissorsEndTimer", 5, 1, function()
+    timer.Create("RdmtRockPaperScissorsEndMessageTimer", 5, 1, function()
         Randomat:SmallNotify("Game over... checking the scores!", 3)
-        timer.Create("RdmtRockPaperScissorsEndTimer", 3, 1, function()
+        timer.Create("RdmtRockPaperScissorsEndScoreTimer", 3, 1, function()
             -- Player 1 wins
             if score > 0 then
                 Randomat:EventNotify(ply1:Nick() .. " wins Rock, Paper, Scissors!")
@@ -196,7 +226,7 @@ function EVENT:ScoreRound()
                 Randomat:EventNotifySilent("It's a Rock, Paper, Scissors tie!")
                 Randomat:SmallNotify("As a result, both players are forever bound!")
                 Randomat:LogEvent("[RANDOMAT] Rock, Paper, Scissors ended in a tie!")
-                timer.Create("RdmtRockPaperScissorsEndTimer", 5, 1, function()
+                timer.Create("RdmtRockPaperScissorsEndSoulTimer", 5, 1, function()
                     -- Start the "Soul Mates" event after a short delay
                     Randomat:SafeTriggerEvent("soulmates", self.owner, false, {ply1, ply2})
                 end)
@@ -206,13 +236,6 @@ function EVENT:ScoreRound()
 end
 
 function EVENT:CheckRound()
-    if ply1_last_chosen == CHOSEN_NONE then
-        ply1_last_chosen = CHOSEN_ROCK
-    end
-    if ply2_last_chosen == CHOSEN_NONE then
-        ply2_last_chosen = CHOSEN_ROCK
-    end
-
     if ply1_last_chosen == CHOSEN_NONE or ply2_last_chosen == CHOSEN_NONE then return end
     self:ScoreRound()
 end
