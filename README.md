@@ -600,7 +600,6 @@ _ttt_randomat_jesters_min_players_ - Default: 0 - The minimum number of players 
 
 ## Opposite Day
 Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.\
-NOTE: It is currently not possible to climb ladders when this event is running.\
 NOTE: Sprinting may only work when going backwards if my version of [Custom Roles for TTT](https://steamcommunity.com/sharedfiles/filedetails/?id=2045444087) is not used.
 \
 \
