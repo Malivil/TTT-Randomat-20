@@ -619,6 +619,7 @@ _ttt_randomat_prophunt_min_players_ - Default: 0 - The minimum number of players
 _randomat_prophunt_timer_ - Default: 3 - Time between being given prop disguisers.\
 _randomat_prophunt_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_prophunt_blind_time_ = Default: 0 - How long to blind the hunters for at the start.\
+_randomat_prophunt_round_time_ = Default: 0 - How many seconds the Prop Hunt round should last.\
 _randomat_prophunt_weaponid_ - Default: weapon_ttt_prophide - Id of the weapon given.
 
 ## Quake Pro
@@ -939,6 +940,7 @@ If a developer of an external Randomat event would like to add support for this 
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
  for the "I don't think you realise the gravity of the situation." event.
+- [The Stig](https://steamcommunity.com/id/The_stig_981) for the idea of adding a round time ConVar to the "Prop Hunt" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
 - [Tygron](https://steamcommunity.com/id/Tygron), [The Stig](https://steamcommunity.com/id/The_stig_981), and [TilSchwantje](https://github.com/TilSchwantje) for providing feedback and verifying bug fixes

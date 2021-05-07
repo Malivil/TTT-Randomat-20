@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time between being given prop disguisers", 1, 15)
 CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether the event strips your other weapons")
 CreateConVar("randomat_prophunt_blind_time", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long to blind the hunters for at the start", 0, 60)
+CreateConVar("randomat_prophunt_round_time", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How many seconds the Prop Hunt round should last", 0, 600)
 CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 
 local cvar_states = {}
@@ -56,6 +57,12 @@ end
 
 function EVENT:Begin()
     PopulateWeaponId()
+
+    -- Set the round time if that CVar is being used
+    local round_time = GetConVar("randomat_prophunt_round_time"):GetInt()
+    if round_time > 0 then
+        SetGlobalFloat("ttt_round_end", CurTime() + round_time)
+    end
 
     -- Disable prop possession
     OverrideCvar("ttt_spec_prop_control", 0)
@@ -198,7 +205,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer", "blind_time"}) do
+    for _, v in pairs({"timer", "blind_time", "round_time"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

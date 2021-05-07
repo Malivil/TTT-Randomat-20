@@ -117,7 +117,8 @@
         "IN_BACK",
         "MOVETYPE_LADDER",
         "GM",
-        "cvars"
+        "cvars",
+        "SetGlobalFloat"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
