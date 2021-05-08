@@ -42,6 +42,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Opposite Day
 - Prop Hunt
 - Rock, Paper, Scissors
+- Run For Your Life!
 - Shh... It's a Secret!
 - Social Distancing
 - The Cake is a Lie
@@ -687,6 +688,17 @@ _ttt_randomat_rockpaperscissors_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_rockpaperscissors_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_rockpaperscissors_bestof_ - Default: 3 - How many rounds to play.
 
+## Run For Your Life!
+Hurts a player while they are sprinting
+\
+\
+**ConVars**
+\
+_ttt_randomat_runforyourlife_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_runforyourlife_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_randomat_runforyourlife_delay_ - Default: 0.2 - Time between player taking damage.\
+_randomat_runforyourlife_damage_ - Default: 3 - Amount of damage a player takes.
+
 ## Shh... It's a Secret!
 Runs another random Randomat event without notifying the players. Also silences all future Randomat events while this event is active.
 \
@@ -931,7 +943,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
-- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode" and "Rock, Paper, Scissors" events
+- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
