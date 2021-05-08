@@ -45,7 +45,7 @@ end
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if (Randomat:IsTraitorTeam(ply) and not ply:GetRole() == ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or ply:GetRole() == ROLE_KILLER then
+    if (Randomat:IsTraitorTeam(ply) and not ply:GetRole() == ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply) then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         updated = true
     end
@@ -76,7 +76,7 @@ function EVENT:Begin()
         local equip = {}
         local messages = {}
         -- All bad guys are traitors
-        if Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or v:GetRole() == ROLE_KILLER then
+        if Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or Randomat:IsIndependentTeam(v) then
             Randomat:SetRole(v, ROLE_TRAITOR)
 
             local credits = v:GetCredits()

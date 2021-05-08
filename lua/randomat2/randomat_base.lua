@@ -15,6 +15,12 @@ ROLE_HYPNOTIST = ROLE_HYPNOTIST or -1
 ROLE_ASSASSIN = ROLE_ASSASSIN or -1
 ROLE_DETRAITOR = ROLE_DETRAITOR or -1
 ROLE_VAMPIRE = ROLE_VAMPIRE or -1
+ROLE_ROMANTIC = ROLE_ROMANTIC or -1
+ROLE_DRUNK = ROLE_DRUNK or -1
+ROLE_CLOWN = ROLE_CLOWN or -1
+ROLE_DEPUTY = ROLE_DEPUTY or -1
+ROLE_IMPERSONATOR = ROLE_IMPERSONATOR or -1
+ROLE_BEGGAR = ROLE_BEGGAR or -1
 
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = {}
@@ -356,20 +362,29 @@ function Randomat:GiveRandomShopItem(ply, roles, blocklist, include_equipment, g
 end
 
 function Randomat:IsInnocentTeam(ply, skip_detective)
-    return (not skip_detective and ply:GetRole() == ROLE_DETECTIVE) or ply:GetRole() == ROLE_INNOCENT or ply:GetRole() == ROLE_MERCENARY or ply:GetRole() == ROLE_PHANTOM or ply:GetRole() == ROLE_GLITCH
+    local role = ply:GetRole()
+    return (not skip_detective and role == ROLE_DETECTIVE) or role == ROLE_INNOCENT or role == ROLE_MERCENARY or role == ROLE_PHANTOM or role == ROLE_GLITCH or role == ROLE_ROMANTIC or role == ROLE_DEPUTY
 end
 
 function Randomat:IsTraitorTeam(ply)
     if player.IsTraitorTeam then return player.IsTraitorTeam(ply) end
-    return ply:GetRole() == ROLE_TRAITOR or ply:GetRole() == ROLE_HYPNOTIST or ply:GetRole() == ROLE_ASSASSIN or ply:GetRole() == ROLE_DETRAITOR
+    local role = ply:GetRole()
+    return role == ROLE_TRAITOR or role == ROLE_HYPNOTIST or role == ROLE_ASSASSIN or role == ROLE_DETRAITOR or role == ROLE_IMPERSONATOR
 end
 
 function Randomat:IsMonsterTeam(ply)
-    return ply:GetRole() == ROLE_ZOMBIE or ply:GetRole() == ROLE_VAMPIRE
+    local role = ply:GetRole()
+    return role == ROLE_ZOMBIE or role == ROLE_VAMPIRE
 end
 
 function Randomat:IsJesterTeam(ply)
-    return ply:GetRole() == ROLE_JESTER or ply:GetRole() == ROLE_SWAPPER
+    local role = ply:GetRole()
+    return role == ROLE_JESTER or role == ROLE_SWAPPER
+end
+
+function Randomat:IsIndependentTeam(ply)
+    local role = ply:GetRole()
+    return role == ROLE_KILLER or role == ROLE_DRUNK or role == ROLE_CLOWN or role == ROLE_BEGGAR
 end
 
 --[[
@@ -466,6 +481,18 @@ function randomat_meta:GetRoleName(ply, hide_detraitor)
         return "A phantom"
     elseif ply:GetRole() == ROLE_DETRAITOR then
         return "A detraitor"
+    elseif ply:GetRole() == ROLE_ROMANTIC then
+        return "A romantic"
+    elseif ply:GetRole() == ROLE_DRUNK then
+        return "A drunk"
+    elseif ply:GetRole() == ROLE_CLOWN then
+        return "A clown"
+    elseif ply:GetRole() == ROLE_DEPUTY then
+        return "A deputy"
+    elseif ply:GetRole() == ROLE_IMPERSONATOR then
+        return "An impersonator"
+    elseif ply:GetRole() == ROLE_BEGGAR then
+        return "A beggar"
     end
 
     return "Someone"

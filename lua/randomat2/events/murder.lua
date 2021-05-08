@@ -55,7 +55,7 @@ function EVENT:Begin()
                 v:Give("weapon_ttt_randomatrevolver")
                 v:SetNWBool("RdmMurderRevolver", true)
             end)
-        elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) then
+        elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or (Randomat:IsIndependentTeam(v) and v:GetRole() ~= ROLE_KILLER) then
             Randomat:SetRole(v, ROLE_TRAITOR)
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
                 self:StripBannedWeapons(v)

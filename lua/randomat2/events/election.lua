@@ -234,7 +234,7 @@ function EVENT:SwearIn(winner)
             dmginfo:SetDamagePosition(attacker:GetPos())
             winner:TakeDamageInfo(dmginfo)
         -- Killer - Kill all non-Jesters/Swappers so they win the round
-        elseif winner:GetRole() == ROLE_KILLER then
+        elseif Randomat:IsIndependentTeam(winner) then
             for _, v in pairs(self:GetAlivePlayers()) do
                 if v:GetRole() ~= ROLE_JESTER and v:GetRole() ~= ROLE_SWAPPER and v ~= winner then
                     v:Kill()

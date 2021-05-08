@@ -67,7 +67,7 @@ function SWEP:PrimaryAttack(worldsnd)
 end
 
 function IsEvil(ply)
-   return Randomat:IsTraitorTeam(ply) or ply:GetRole() == ROLE_KILLER
+   return Randomat:IsTraitorTeam(ply) or Randomat:IsIndependentTeam(ply)
 end
 
 if CLIENT then

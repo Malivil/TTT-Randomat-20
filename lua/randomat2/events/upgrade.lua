@@ -10,8 +10,12 @@ CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "W
 EVENT.Title = "An innocent has been upgraded!"
 EVENT.id = "upgrade"
 
+local function CanChooseRole()
+    return ConVarExists("ttt_killer_enabled") and GetConVar("ttt_killer_enabled"):GetBool() and GetConVar("randomat_upgrade_chooserole"):GetBool()
+end
+
 local function GetEventDescription()
-    local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
+    local choose = CanChooseRole()
     local action
     if choose then
         action = "given the choice of becoming a Mercenary or a Killer"
@@ -30,7 +34,7 @@ local function UpdateToMerc(ply)
 end
 
 function EVENT:Begin()
-    local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
+    local choose = CanChooseRole()
     local target = nil
     for _, ply in pairs(self:GetAlivePlayers(true)) do
         if ply:GetRole() == ROLE_INNOCENT then
@@ -68,7 +72,7 @@ function EVENT:Condition()
         return false
     end
 
-    local choose = GetConVar("randomat_upgrade_chooserole"):GetBool()
+    local choose = CanChooseRole()
     local has_merc = false
     local has_inno = false
     local has_kil = false
