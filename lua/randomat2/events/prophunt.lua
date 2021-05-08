@@ -1,5 +1,7 @@
 local EVENT = {}
 
+util.AddNetworkString("PropHuntRemoveRadar")
+
 CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time between being given prop disguisers", 1, 15)
 CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether the event strips your other weapons")
 CreateConVar("randomat_prophunt_blind_time", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long to blind the hunters for at the start", 0, 60)
@@ -71,42 +73,64 @@ function EVENT:Begin()
     OverrideCvar("ttt_prop_disguiser_cooldown", 2)
 
     for _, v in pairs(self.GetAlivePlayers()) do
-        local had_armor = false
-        local had_disguise = false
+        local equip = {}
+        local messages = {}
         -- All bad guys are traitors
         if Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or v:GetRole() == ROLE_KILLER then
             Randomat:SetRole(v, ROLE_TRAITOR)
 
-            -- Give the player enough credits to compensate for the equipment they can no longer use
             local credits = v:GetCredits()
+            -- Any player who has no credits most-likely was just transformed from a role without any credits so give them one to start with
+            -- If a traitor already spent all their credits this will give them one too but that's fine
             if credits == 0 then
                 credits = 1
             end
+            -- Refund any radar that was purchased
             if v:HasEquipmentItem(EQUIP_RADAR) then
+                table.insert(messages, "Radars are disabled while Prop Hunt is active! Your purchase has been refunded.")
                 credits = credits + 1
             end
 
-            had_armor = v:HasEquipmentItem(EQUIP_ARMOR)
-            had_disguise = v:HasEquipmentItem(EQUIP_DISGUISE)
+            -- Keep track of what equipment the player had
+            local i = 1
+            while i < EQUIP_MAX do
+                if v:HasEquipmentItem(i) then
+                    if i == EQUIP_RADAR then
+                        net.Start("PropHuntRemoveRadar")
+                        net.Send(v)
+                    else
+                        table.insert(equip, i)
+                    end
+                end
+                -- Double the index since this is a bit-mask
+                i = i * 2
+            end
+
+            -- Give the player enough credits to compensate for the equipment they can no longer use
             v:SetCredits(credits)
-            v:PrintMessage(HUD_PRINTTALK, "Hunt Innocents disguised as props, but be careful -- shooting non-player props will cause you to take damage!")
+            table.insert(messages, 1, "Hunt Innocents disguised as props, but be careful -- shooting non-player props will cause you to take damage!")
         -- Everyone else is innocent
         else
             Randomat:SetRole(v, ROLE_INNOCENT)
             v:SetCredits(0)
-            v:PrintMessage(HUD_PRINTTALK, "Use the Prop Disguiser to hide from the Traitors!")
+            table.insert(messages, "Use the Prop Disguiser to hide from the Traitors!")
         end
 
         self:StripRoleWeapons(v)
         -- Remove all their equipment
         v:ResetEquipment()
-        -- Add back the other two (since we only want to remove radar)
-        if had_armor then
-            v:GiveEquipmentItem(EQUIP_ARMOR)
+
+        -- Add back the others (since we only want to remove radar)
+        for _, id in ipairs(equip) do
+            v:GiveEquipmentItem(id)
         end
-        if had_disguise then
-            v:GiveEquipmentItem(EQUIP_DISGUISE)
-        end
+
+        -- Delay the messages so they come after the event notification in chat
+        timer.Create(v:Nick() .. "RandomatPropHuntMessageTimer", 1, 1, function()
+            for _, msg in ipairs(messages) do
+                v:ChatPrint(msg)
+            end
+        end)
     end
     SendFullStateUpdate()
 
@@ -162,7 +186,10 @@ function EVENT:Begin()
 
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
         if not IsValid(ply) then return end
-        if is_item == EQUIP_RADAR then return false end
+        if is_item == EQUIP_RADAR then
+            ply:ChatPrint("Radars are disabled while Prop Hunt is active! Your purchase has been refunded.")
+            return false
+        end
     end)
 
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
@@ -182,6 +209,10 @@ function EVENT:End()
     -- Reset CVars back to normal
     for k, v in pairs(cvar_states) do
         RunConsoleCommand(k, v)
+    end
+
+    for _, ply in pairs(player.GetAll()) do
+        timer.Remove(ply:GetName() .. "RandomatPropHuntMessageTimer")
     end
 
     timer.Remove("RandomatPropHuntTimer")

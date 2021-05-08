@@ -118,7 +118,9 @@
         "MOVETYPE_LADDER",
         "GM",
         "cvars",
-        "SetGlobalFloat"
+        "SetGlobalFloat",
+        "EQUIP_MAX",
+        "RADAR"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
