@@ -85,17 +85,15 @@ function EVENT:Begin()
             if credits == 0 then
                 credits = 1
             end
-            -- Refund any radar that was purchased
-            if v:HasEquipmentItem(EQUIP_RADAR) then
-                table.insert(messages, "Radars are disabled while Prop Hunt is active! Your purchase has been refunded.")
-                credits = credits + 1
-            end
 
             -- Keep track of what equipment the player had
             local i = 1
             while i < EQUIP_MAX do
                 if v:HasEquipmentItem(i) then
+                    -- Remove and refund any radar that was purchased
                     if i == EQUIP_RADAR then
+                        table.insert(messages, "Radars are disabled while Prop Hunt is active! Your purchase has been refunded.")
+                        credits = credits + 1
                         net.Start("PropHuntRemoveRadar")
                         net.Send(v)
                     else
