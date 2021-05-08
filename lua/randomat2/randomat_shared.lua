@@ -1,7 +1,36 @@
+function Randomat:IsInnocentTeam(ply, skip_detective)
+    local role = ply:GetRole()
+    return (not skip_detective and role == ROLE_DETECTIVE) or role == ROLE_INNOCENT or role == ROLE_MERCENARY or role == ROLE_PHANTOM or role == ROLE_GLITCH or role == ROLE_ROMANTIC or role == ROLE_DEPUTY
+end
+
+function Randomat:IsTraitorTeam(ply)
+    if player.IsTraitorTeam then return player.IsTraitorTeam(ply) end
+    local role = ply:GetRole()
+    return role == ROLE_TRAITOR or role == ROLE_HYPNOTIST or role == ROLE_ASSASSIN or role == ROLE_DETRAITOR or role == ROLE_IMPERSONATOR
+end
+
+function Randomat:IsMonsterTeam(ply)
+    local role = ply:GetRole()
+    return role == ROLE_ZOMBIE or role == ROLE_VAMPIRE
+end
+
+function Randomat:IsJesterTeam(ply)
+    local role = ply:GetRole()
+    return role == ROLE_JESTER or role == ROLE_SWAPPER
+end
+
+function Randomat:IsIndependentTeam(ply)
+    local role = ply:GetRole()
+    return role == ROLE_KILLER or role == ROLE_DRUNK or role == ROLE_CLOWN or role == ROLE_BEGGAR
+end
+
 function Randomat:GetRoleColor(role)
+    local color = nil
     if type(ROLE_COLORS) == "table" then
-        return ROLE_COLORS[role];
+        color = ROLE_COLORS[role];
     end
+    if color then return color end
+
     local role_colors = {
         [ROLE_INNOCENT] = Color(55, 170, 50, 255),
         [ROLE_TRAITOR] = Color(180, 50, 40, 255),
