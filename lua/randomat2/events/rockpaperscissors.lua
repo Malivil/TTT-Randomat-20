@@ -214,12 +214,14 @@ function EVENT:ScoreRound()
                 Randomat:EventNotify(ply1:Nick() .. " wins Rock, Paper, Scissors!")
                 Randomat:SmallNotify(ply2:Nick() .. " has been killed")
                 Randomat:LogEvent("[RANDOMAT] " .. ply1:Nick() .. " wins Rock, Paper, Scissors!")
+                self:RemoveHook("PlayerDeath")
                 KillPlayer(ply1, ply2)
             -- Player 2 wins
             elseif score < 0 then
                 Randomat:EventNotify(ply2:Nick() .. " wins Rock, Paper, Scissors!")
                 Randomat:SmallNotify(ply1:Nick() .. " has been killed")
                 Randomat:LogEvent("[RANDOMAT] " .. ply2:Nick() .. " wins Rock, Paper, Scissors!")
+                self:RemoveHook("PlayerDeath")
                 KillPlayer(ply2, ply1)
             -- It's a tie!
             else
