@@ -5,7 +5,7 @@ EVENT.Description = "Spawns bees who spread zombiism to their victims"
 EVENT.id = "zombees"
 
 function EVENT:Begin()
-    Randomat:SilentTriggerEvent("bees", self.owner)
+    Randomat:SilentTriggerEvent("bees", self.owner, {Randomat:GetRoleColor(ROLE_ZOMBIE)})
     Randomat:SilentTriggerEvent("grave", self.owner, {"npc_manhack"})
 end
 
