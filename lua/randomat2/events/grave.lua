@@ -8,42 +8,50 @@ EVENT.id = "grave"
 
 CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with", 10, 100)
 
-function EVENT:Begin()
-    timer.Create("infrespawntimer", 1, 0, function()
-        for _, ply in pairs(player.GetAll()) do
-            -- If a player has died and they weren't a zombie or zombifying, zombify them
-            if not ply:Alive() and ply:GetRole() ~= ROLE_ZOMBIE and ply:GetPData("IsZombifying", 0) ~= 1 then
+function EVENT:Begin(...)
+    local params = ...
+    local filter_class = nil
+    if params ~= nil and params[1] ~= nil then
+        filter_class = params[1]
+    end
+
+    self:AddHook("PlayerDeath", function(victim, entity, killer)
+        if not IsValid(victim) then return end
+        timer.Create(victim:SteamID64() .. "RdmtZombieTimer", 0.25, 1, function()
+            if (filter_class == nil or (IsValid(killer) and killer:GetClass() == filter_class)) and not victim:Alive() and victim:GetRole() ~= ROLE_ZOMBIE and victim:GetPData("IsZombifying", 0) ~= 1 then
                 net.Start("TTT_Zombified")
-                net.WriteString(ply:Nick())
+                net.WriteString(victim:Nick())
                 net.Broadcast()
 
-                local body = ply.server_ragdoll or ply:GetRagdollEntity()
-                ply:SpawnForRound(true)
-                ply:SetCredits(0)
-                ply:SetRole(ROLE_ZOMBIE)
-                if ply.SetZombiePrime then
-                    ply:SetZombiePrime(false)
+                local body = victim.server_ragdoll or victim:GetRagdollEntity()
+                victim:SpawnForRound(true)
+                victim:SetCredits(0)
+                victim:SetRole(ROLE_ZOMBIE)
+                if victim.SetZombiePrime then
+                    victim:SetZombiePrime(false)
                 end
-                ply:SetHealth(GetConVar("randomat_grave_health"):GetInt())
-                ply:SetMaxHealth(GetConVar("randomat_grave_health"):GetInt())
-                ply:StripWeapons()
-                ply:Give("weapon_zom_claws")
+                victim:SetHealth(GetConVar("randomat_grave_health"):GetInt())
+                victim:SetMaxHealth(GetConVar("randomat_grave_health"):GetInt())
+                victim:StripWeapons()
+                victim:Give("weapon_zom_claws")
                 if IsValid(body) then
-                    ply:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
+                    victim:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
                     body:Remove()
                 end
                 SendFullStateUpdate()
             end
-        end
+        end)
     end)
 end
 
 function EVENT:End()
-    timer.Remove("infrespawntimer")
+    for _, v in pairs(player.GetAll()) do
+        timer.Remove(v:SteamID64() .. "RdmtZombieTimer")
+    end
 end
 
 function EVENT:Condition()
-    return not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam") and not Randomat:IsEventActive("murder")
+    return ConVarExists("ttt_zombie_enabled") and not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam") and not Randomat:IsEventActive("murder")
 end
 
 function EVENT:GetConVars()
