@@ -1,4 +1,17 @@
 local last_hurt_time = CurTime()
+local last_sprint_meter = 100
+
+local function IsSprinting(ply)
+    local sprintMeter = ply:GetNWFloat("sprintMeter", 100)
+    local sprinting = false
+    if sprintMeter < last_sprint_meter then
+        sprinting = true
+    end
+
+    last_sprint_meter = sprintMeter
+    return sprinting
+end
+
 net.Receive("RandomatRunForYourLifeStart", function()
     local ply = LocalPlayer()
     if ply == nil or not IsValid(ply) then return end
@@ -8,8 +21,7 @@ net.Receive("RandomatRunForYourLifeStart", function()
         if ply == nil or not IsValid(ply) or not ply:Alive() then return end
         if Randomat:IsJesterTeam(ply) then return end
 
-        local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply, false, nil) or 1
-        if mul > 1 and last_hurt_time + delay < CurTime() then
+        if (last_hurt_time + delay) < CurTime() and IsSprinting(ply) then
             last_hurt_time = CurTime()
             net.Start("RandomatRunForYourLifeDamage")
             net.WriteEntity(ply)
