@@ -47,6 +47,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Social Distancing
 - The Cake is a Lie
 - Time Warp
+- Zom-Bees!
 
 # Events
 ## \#BringBackOldJester
@@ -920,6 +921,15 @@ _ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jump_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.
 
+## Zom-Bees!
+Spawns bees who spread zombiism to their victims. See "NOT THE BEES!" and "RISE FROM YOUR GRAVE" events for additional configuration.
+\
+\
+**ConVars**
+\
+_ttt_randomat_zombees_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_zombees_min_players_ - Default: 0 - The minimum number of players required for this event to start.
+
 # ULX Support
 This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0 (other than any new events or ConVars or renamed ConVars).\
 That being said, I have created my [own version of the ULX Module](https://steamcommunity.com/sharedfiles/filedetails/?id=2096758509) which supports these new events as well as dynamic event loading with little-to-no developer interaction.
@@ -945,6 +955,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
+- u/haladur on Reddit for the idea for the "Zom-Bees!" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
