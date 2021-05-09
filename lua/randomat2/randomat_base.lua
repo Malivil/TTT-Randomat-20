@@ -182,6 +182,11 @@ local function GetRandomEvent(events)
 end
 
 function Randomat:CanEventRun(event)
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return false end
+
     local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
     local player_count = player.GetCount()
     return event:Enabled() and event:Condition() and (min_players <= 0 or player_count >= min_players) and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
