@@ -16,12 +16,12 @@ end
 
 function Randomat:IsJesterTeam(ply)
     local role = ply:GetRole()
-    return role == ROLE_JESTER or role == ROLE_SWAPPER
+    return role == ROLE_JESTER or role == ROLE_SWAPPER or role == ROLE_BEGGAR
 end
 
 function Randomat:IsIndependentTeam(ply)
     local role = ply:GetRole()
-    return role == ROLE_KILLER or role == ROLE_DRUNK or role == ROLE_CLOWN or role == ROLE_BEGGAR
+    return role == ROLE_KILLER or role == ROLE_DRUNK or role == ROLE_CLOWN
 end
 
 function Randomat:GetRoleColor(role)
