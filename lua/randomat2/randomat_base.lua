@@ -43,6 +43,30 @@ local function EndActiveEvents()
     end
 end
 
+local function NotifyDescription(event)
+    -- Show this if "secret" is active if we're specifically showing the description for "secret"
+    if event.Id ~= "secret" and Randomat:IsEventActive("secret") then return end
+    net.Start("randomat_message")
+    net.WriteBool(false)
+    net.WriteString(event.Description)
+    net.WriteUInt(0, 8)
+    net.Broadcast()
+end
+
+local function ChatDescription(ply, event, has_description)
+    -- Show this if "secret" is active if we're specifically showing the description for "secret"
+    if event.Id ~= "secret" and Randomat:IsEventActive("secret") then return end
+    if not IsValid(ply) then return end
+
+    local title = Randomat:GetEventTitle(event)
+    local description = ""
+    if has_description then
+        description = " | " .. event.Description
+    end
+
+    ply:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] " .. title .. description)
+end
+
 local function TriggerEvent(event, ply, silent, ...)
     if not silent then
         Randomat:EventNotify(event.Title)
@@ -61,15 +85,12 @@ local function TriggerEvent(event, ply, silent, ...)
     if not silent then
         local has_description = event.Description ~= nil and string.len(event.Description) > 0
         if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() then
-            Randomat:SmallNotify(event.Description)
+            -- Show the small description message but don't use SmallNotify because it specifically mutes when "secret" is running and we want to show this if this event IS "secret"
+            NotifyDescription(event)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
             for _, p in pairs(player.GetAll()) do
-                local description = ""
-                if has_description then
-                    description = " | " .. event.Description
-                end
-                Randomat:ChatNotify(p, "[RANDOMAT] " .. title .. description)
+                ChatDescription(p, event, has_description)
             end
         end
     end
