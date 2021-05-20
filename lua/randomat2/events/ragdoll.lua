@@ -142,11 +142,13 @@ local function ragdollPlayer(v)
     end
 
     local equipment = {}
-    equipment[EQUIP_RADAR] = v:HasEquipmentItem(EQUIP_RADAR)
-    equipment[EQUIP_ARMOR] = v:HasEquipmentItem(EQUIP_ARMOR)
-    equipment[EQUIP_DISGUISE] = v:HasEquipmentItem(EQUIP_DISGUISE)
-    equipment[EQUIP_SPEED] = v:HasEquipmentItem(EQUIP_SPEED)
-    equipment[EQUIP_REGEN] = v:HasEquipmentItem(EQUIP_REGEN)
+    -- Keep track of what equipment the player had
+    local i = 1
+    while i < EQUIP_MAX do
+        equipment[i] = v:HasEquipmentItem(i)
+        -- Double the index since this is a bit-mask
+        i = i * 2
+    end
 
     local info = {}
     info.weps = weps
@@ -184,7 +186,7 @@ local function ragdollPlayer(v)
     v.ragdoll = ragdoll
     local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
     hook.Add("Think", v:Nick().."UnragdollTimer", function()
-        -- Turn a ragdoll back into a player if they have essentially stopped moving and have been a ragdoll "long enoughj"
+        -- Turn a ragdoll back into a player if they have essentially stopped moving and have been a ragdoll "long enough"
         if ragdoll:IsValid() and ragdoll:GetPhysicsObjectNum(1):GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
             hook.Remove("Think", v:Nick().."UnragdollTimer")
             unragdollPlayer(v)
@@ -204,7 +206,16 @@ function EVENT:Begin()
         for _, v in pairs(self:GetAlivePlayers()) do
             -- Turn a player into a ragdoll if they are in the air, not already a ragdoll, not in the water, and haven't been ragdolled recently
             if not v:IsOnGround() and not v.inRagdoll and v:WaterLevel() == 0 and (v.lastRagdoll == nil or (CurTime() - v.lastRagdoll) > (ragdolltime + ragdolldelay)) then
-                ragdollPlayer(v)
+                local parent = v:GetParent()
+                -- Find out if something else is creating a ragdoll like the Taser/Stun Gun or Moon Ball
+                local has_ragdoll = (IsValid(parent) and parent:GetClass() == "prop_ragdoll") or IsValid(v.tazeragdoll) or IsValid(v.moonragdoll)
+
+                -- Don't create a ragdoll for this player if something else already is, just add to the delay and check again later
+                if has_ragdoll then
+                    v.lastRagdoll = CurTime()
+                else
+                    ragdollPlayer(v)
+                end
             end
         end
     end)
