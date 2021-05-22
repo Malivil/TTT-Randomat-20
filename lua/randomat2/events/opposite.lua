@@ -30,7 +30,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, p in pairs(self:GetAlivePlayers()) do
+    for _, p in pairs(player.GetAll()) do
         p:SetLadderClimbSpeed(200)
     end
     net.Start("OppositeDayEnd")
