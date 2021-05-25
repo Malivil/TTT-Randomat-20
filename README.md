@@ -34,6 +34,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Don't be so Sensitive
 - Don't Let it Go to Your Head
 - Double Cross
+- Double-Edged Sword
 - Election Day
 - Flu Season
 - Glitch in the Matrix
@@ -329,6 +330,17 @@ Changes a random vanilla Innocent into either a Glitch or a Traitor. There is a 
 _ttt_randomat_doublecross_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_doublecross_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_doublecross_chance_ - Default: 50 - The chance of the Innocent being made a Traitor.
+
+## Double-Edged Sword
+Reflects 1/2 of the damage you do back on yourself, but you also heal self-damage slowly.
+\
+\
+**ConVars**
+\
+_ttt_randomat_doubleedge_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_doubleedge_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_randomat_doubleedge_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
+_randomat_doubleedge_amount_ - Default: 2 - How much self-damage to heal per interval.
 
 ## Election Day
 Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\
@@ -956,6 +968,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
+- u/Ill_Worry7895 on Reddit for the idea for the "Double-Edged Sword" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
