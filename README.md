@@ -44,6 +44,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Prop Hunt
 - Rock, Paper, Scissors
 - Run For Your Life!
+- Sharing is Caring
 - Shh... It's a Secret!
 - Social Distancing
 - The Cake is a Lie
@@ -712,6 +713,15 @@ _ttt_randomat_runforyourlife_min_players_ - Default: 0 - The minimum number of p
 _randomat_runforyourlife_delay_ - Default: 0.2 - Time between player taking damage.\
 _randomat_runforyourlife_damage_ - Default: 3 - Amount of damage a player takes.
 
+## Sharing is Caring
+When a player kills another, their inventory is swapped with thier victim's.
+\
+\
+**ConVars**
+\
+_ttt_randomat_sharingiscaring_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_sharingiscaring_min_players_ - Default: 0 - The minimum number of players required for this event to start.
+
 ## Shh... It's a Secret!
 Runs another random Randomat event without notifying the players. Also silences all future Randomat events while this event is active.
 \
@@ -968,7 +978,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
-- u/Ill_Worry7895 on Reddit for the idea for the "Double-Edged Sword" event
+- u/Ill_Worry7895 on Reddit for the idea for the "Double-Edged Sword" and "Sharing is Caring" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
