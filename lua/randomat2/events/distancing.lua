@@ -1,16 +1,16 @@
 local EVENT = {}
 
+CreateConVar("randomat_distancing_timer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time a player must be near someone before damage starts", 1, 600)
+CreateConVar("randomat_distancing_interval", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often damage is done when players are too close", 1, 600)
+CreateConVar("randomat_distancing_distance", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Distance a player must be from another to be considered \"near\"", 1, 1000)
+CreateConVar("randomat_distancing_damage", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Damage done to each player who is too close", 1, 100)
+
 EVENT.Title = "Social Distancing"
 EVENT.Description = "Does a small amount of damage over time to players who spend too much time close to eachother"
 EVENT.id = "distancing"
 
 local playerthinktime = {}
 local playermoveloc = {}
-
-CreateConVar("randomat_distancing_timer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time a player must be near someone before damage starts", 1, 600)
-CreateConVar("randomat_distancing_interval", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often damage is done when players are too close", 1, 600)
-CreateConVar("randomat_distancing_distance", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Distance a player must be from another to be considered \"near\"", 1, 1000)
-CreateConVar("randomat_distancing_damage", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Damage done to each player who is too close", 1, 100)
 
 local function ClearPlayerData(sid)
     timer.Remove(sid .. "RdmtDistanceDamageTimer")
@@ -59,7 +59,7 @@ function EVENT:Begin()
                         playerthinktime[playersid] = CurTime()
                     end
 
-                    --- If they have been near other players for more than the configurable amount of time and they aren't already taking damage, start damage
+                    -- If they have been near other players for more than the configurable amount of time and they aren't already taking damage, start damage
                     if (CurTime() - playerthinktime[playersid]) > damagetime and not timer.Exists(playersid .. "RdmtDistanceDamageTimer") then
                         timer.Create(playersid .. "RdmtDistanceDamageTimer", interval, 0, function()
                             v:TakeDamage(damage, closeplayer, nil)

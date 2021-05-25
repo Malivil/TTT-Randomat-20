@@ -39,6 +39,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Flu Season
 - Glitch in the Matrix
 - I don't think you realise the gravity of the situation.
+- Lonely Yogs
 - NO NERD HEALING
 - Opposite Day
 - Prop Hunt
@@ -553,6 +554,17 @@ Gives all players essentially infinite credits for use in their shop menus (if t
 _ttt_randomat_credits_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_credits_min_players_ - Default: 0 - The minimum number of players required for this event to start.
 
+## Lonely Yogs
+Drops a discombob between two players who get too close.
+\
+\
+**ConVars**
+\
+_ttt_randomat_lonelyyogs_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_lonelyyogs_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_randomat_lonelyyogs_distance_ - Default: 200 - The minimum distance allowed between players.\
+_randomat_lonelyyogs_interval_ - Default: 2 - The number of seconds between discombob blasts.
+
 ## Malfunction
 Causes players to randomly shoot their gun
 \
@@ -979,6 +991,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
 - u/Ill_Worry7895 on Reddit for the idea for the "Double-Edged Sword" and "Sharing is Caring" events
+- u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
