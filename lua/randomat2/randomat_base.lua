@@ -577,7 +577,45 @@ function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
         timer.Simple(0.25, function()
             ply:SelectWeapon(select_class)
         end)
+    -- Otherwise switch to unarmed to we don't show other players our potentially-illegal first weapon (e.g. Killer's knife)
+    else
+        ply:SelectWeapon("weapon_ttt_unarmed")
     end
+end
+
+function randomat_meta:SwapWeapons(ply, weapons, from_killer)
+    local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
+    local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
+    self:HandleWeaponAddAndSelect(ply, function()
+        ply:StripWeapons()
+        -- Reset FOV to unscope
+        ply:SetFOV(0, 0.2)
+
+        -- Have Zombies keep their claws, Hypnotists keep their brainwashing device, and Detective/Detraitors keep their DNA Scanners
+        if ply:GetRole() == ROLE_ZOMBIE then
+            ply:Give("weapon_zom_claws")
+        elseif had_brainwash then
+            ply:Give("weapon_hyp_brainwash")
+        elseif had_scanner then
+            ply:Give("weapon_ttt_wtester")
+        elseif ply:GetRole() == ROLE_KILLER and ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
+            ply:Give("weapon_kil_knife")
+        end
+
+        -- If the player that swapped to this player was a killer then they no longer have a crowbar
+        if from_killer then
+            ply:Give("weapon_zm_improvised")
+        end
+
+        -- Handle inventory weapons last to make sure the roles get their specials
+        for _, v in ipairs(weapons) do
+            local wep_class = WEPS.GetClass(v)
+            -- Don't give players the detective's tester
+            if wep_class ~= "weapon_ttt_wtester" then
+                ply:Give(wep_class)
+            end
+        end
+    end)
 end
 
 --[[
