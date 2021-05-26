@@ -120,7 +120,8 @@
         "cvars",
         "SetGlobalFloat",
         "EQUIP_MAX",
-        "RADAR"
+        "RADAR",
+        "FindMetaTable"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

@@ -22,18 +22,6 @@ function EVENT:Begin()
     end)
 end
 
-function EVENT:CallHooks(isequip, id, ply)
-    hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, isequip)
-    net.Start("TTT_BoughtItem")
-    net.WriteBit(isequip)
-    if isequip then
-        net.WriteInt(id, 16)
-    else
-        net.WriteString(id)
-    end
-    net.Send(ply)
-end
-
 function EVENT:GiveWep(ply)
     Randomat:GiveRandomShopItem(ply, {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY}, blocklist, true,
         -- gettrackingvar
@@ -46,7 +34,7 @@ function EVENT:GiveWep(ply)
         end,
         -- onitemgiven
         function(isequip, id)
-            self:CallHooks(isequip, id, ply)
+            Randomat:CallShopHooks(isequip, id, ply)
         end)
 end
 

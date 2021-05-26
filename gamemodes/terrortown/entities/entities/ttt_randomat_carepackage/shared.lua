@@ -31,22 +31,6 @@ function ENT:OnTakeDamage(dmgInfo)
     return true
 end
 
-function ENT:CallHooks(isequip, id, ply)
-    hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, isequip)
-    net.Start("TTT_BoughtItem")
-    net.WriteBit(isequip)
-    if isequip then
-        net.WriteInt(id, 16)
-    else
-        net.WriteString(id)
-    end
-    net.Send(ply)
-
-    if SERVER then
-        Randomat:LogEvent("[RANDOMAT] " .. ply:Nick() .. " picked up the Care Package")
-    end
-end
-
 function ENT:Use(activator, caller)
     if not IsValid(activator) or not activator:Alive() or activator:IsSpec() then return end
 
@@ -66,7 +50,10 @@ function ENT:Use(activator, caller)
         end,
         -- onitemgiven
         function(isequip, id)
-            self:CallHooks(isequip, id, activator)
+            Randomat:CallShopHooks(isequip, id, activator)
+            if SERVER then
+                Randomat:LogEvent("[RANDOMAT] " .. activator:Nick() .. " picked up the Care Package")
+            end
         end)
 
 	self:Remove()

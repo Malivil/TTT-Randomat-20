@@ -387,6 +387,24 @@ function Randomat:GiveRandomShopItem(ply, roles, blocklist, include_equipment, g
     GiveWep(ply, roles, blocklist, include_equipment, gettrackingvar(), settrackingvar, onitemgiven)
 end
 
+function Randomat:CallShopHooks(isequip, id, ply)
+    hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, isequip)
+    net.Start("TTT_BoughtItem")
+    net.WriteBit(isequip)
+    if isequip then
+        local bits = 16
+        -- Only use 32 bits if the number of equipment items we have requires it
+        if EQUIP_MAX >= 2^bits then
+            bits = 32
+        end
+
+        net.WriteInt(id, bits)
+    else
+        net.WriteString(id)
+    end
+    net.Send(ply)
+end
+
 --[[
  Randomat Meta
 ]]--
