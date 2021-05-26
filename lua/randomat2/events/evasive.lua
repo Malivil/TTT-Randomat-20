@@ -32,6 +32,17 @@ function EVENT:Begin()
         -- Don't make the player jump any more than they already are
         vel.z = current_vel.z
 
+        -- Dodge in a random left-or-right
+        if math.random(0, 1) == 0 then
+            local x = vel.x
+            vel.x = -vel.y
+            vel.y = x
+        else
+            local y = vel.y
+            vel.y = -vel.x
+            vel.x = y
+        end
+
         -- Push the victim
         ent:SetVelocity(vel)
     end)
