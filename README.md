@@ -24,6 +24,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 # New Events
 - A Glitch has been patched
 - Big Head Mode
+- Black Market Buyout
 - Camp Fire
 - Care Package
 - Careful...
@@ -150,6 +151,18 @@ Causes all players to have their heads grow to massive proportions.\
 _ttt_randomat_bighead_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_bighead_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_bighead_scale_ - Default: 2 - Head size multiplier.
+
+## Black Market Buyout
+Disables Traitor and Detective shop, but periodically gives out free items from both
+\
+\
+**ConVars**
+\
+_ttt_randomat_blackmarket_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_blackmarket_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_randomat_blackmarket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
+_randomat_blackmarket_timer_traitor_ - Default: 25 - How often (in seconds) traitors should get items.\
+_randomat_blackmarket_timer_detective_ - Default: 15 - How often (in seconds) detectives should get items.
 
 ## Blind Traitors (aka All traitors have been blinded for X seconds!)
 Blinds all traitors for a configurable amount of seconds
@@ -1013,7 +1026,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
-- u/Ill_Worry7895 on Reddit for the idea for the "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
+- u/Ill_Worry7895 on Reddit for the idea for the "Black Market Buyout", "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
