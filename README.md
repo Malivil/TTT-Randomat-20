@@ -51,6 +51,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Social Distancing
 - The Cake is a Lie
 - Time Warp
+- Total Magnetism
 - Zom-Bees!
 
 # Events
@@ -877,6 +878,16 @@ _randomat_timewarp_scale_ - Default: 50 - The percentage the speed should increa
 _randomat_timewarp_scale_max_ - Default: 8 - The maximum scale the speed should increase to.\
 _randomat_timewarp_timer_ - Default: 15 - How often (in seconds) the speed will be increased.
 
+## Total Magnetism
+When a player dies, all nearby players will be pulled toward their corpse
+\
+\
+**ConVars**
+\
+_ttt_randomat_magnetism_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_magnetism_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_randomat_magnetism_radius_ - Default: 1000 - The radius around the dead player for magnetism.
+
 ## Total Mayhem
 Causes players to explode when killed
 \
@@ -1002,7 +1013,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
-- u/Ill_Worry7895 on Reddit for the idea for the "Double-Edged Sword", "Evasive Maneuvers", and "Sharing is Caring" events
+- u/Ill_Worry7895 on Reddit for the idea for the "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
