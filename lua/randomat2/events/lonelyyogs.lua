@@ -86,6 +86,17 @@ function EVENT:End()
     end
 end
 
+function EVENT:Condition()
+    -- Don't run this if there is a Vampire because they won't be able to use their fangs
+    for _, v in pairs(self:GetAlivePlayers()) do
+        if v:GetRole() == ROLE_VAMPIRE then
+            return false
+        end
+    end
+
+    return true
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in pairs({"interval", "distance"}) do
