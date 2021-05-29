@@ -4,8 +4,6 @@ EVENT.Title = "Flu Season"
 EVENT.Description = "Randomly infects a player with the flu, causing them to move more slowly and sneeze occasionally"
 EVENT.id = "flu"
 
-util.AddNetworkString("RdmtFluSpeed")
-
 local sneezecount = 17
 local playerthinktime = {}
 local playermoveloc = {}
@@ -37,8 +35,6 @@ local function ClearPlayerData(ply)
     if playerflustatus[playername] ~= nil then
         playerflustatus[playername] = false
     end
-
-    ply:SetNWFloat("RmdtSpeedModifier", 1)
 end
 
 local function SpreadFlu(ply)
@@ -47,9 +43,12 @@ local function SpreadFlu(ply)
     playerflustatus[playername] = true
     playerhealth[playername] = ply:Health()
 
-    -- Reduce the player speed
-    local speed = GetConVar("randomat_flu_speed_factor"):GetFloat() * ply:GetNWFloat("RmdtSpeedModifier", 1)
-    ply:SetNWFloat("RmdtSpeedModifier", speed)
+    -- Reduce the player speed on the client
+    local speed_factor = GetConVar("randomat_flu_speed_factor"):GetFloat()
+    net.Start("RdmtSetSpeedMultiplier")
+    net.WriteFloat(speed_factor)
+    net.WriteString("RdmtFluSpeed")
+    net.Send(ply)
 
     timer.Create(playername .. "RdmtFluSneezeTimer", interval, 0, function()
         local sneeze = math.random(1, sneezecount)
@@ -73,6 +72,16 @@ function EVENT:Begin()
             playermoveloc[ply:GetName()] = ply:GetPos()
         end
     end);
+
+    -- Reduce the player speed on the server
+    local speed_factor = GetConVar("randomat_flu_speed_factor"):GetFloat()
+    self:AddHook("TTTSpeedMultiplier", function(ply, mults)
+        if not ply:Alive() or ply:IsSpec() then return end
+        local playername = ply:GetName()
+        if playerflustatus[playername] then
+            table.insert(mults, speed_factor)
+        end
+    end)
 
     local plys = {}
     local first = true
@@ -156,6 +165,11 @@ function EVENT:End()
     for _, v in pairs(player.GetAll()) do
         ClearPlayerData(v)
     end
+
+    -- Reset the player speed on the client
+    net.Start("RdmtRemoveSpeedMultiplier")
+    net.WriteString("RdmtFluSpeed")
+    net.Broadcast()
 end
 
 function EVENT:GetConVars()

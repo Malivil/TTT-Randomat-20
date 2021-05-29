@@ -30,6 +30,7 @@ function EVENT:StripBannedWeapons(ply)
 end
 
 function EVENT:Begin()
+    local speed_factor = GetConVar("randomat_murder_knifespeed"):GetFloat()
     local allow_shop = GetConVar("randomat_murder_allow_shop"):GetBool()
     local players = #self:GetAlivePlayers()
     local wepspawns = 0
@@ -60,6 +61,13 @@ function EVENT:Begin()
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
                 self:StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatknife")
+
+                -- Increase the player speed on the client
+                net.Start("RdmtSetSpeedMultiplier_WithWeapon")
+                net.WriteFloat(speed_factor)
+                net.WriteString("RdmtMurderSpeed")
+                net.WriteString("weapon_ttt_randomatknife")
+                net.Send(v)
             end)
         -- Anyone else except Killers become Innocent
         elseif v:GetRole() ~= ROLE_KILLER then
@@ -115,6 +123,15 @@ function EVENT:Begin()
             end
         end
     end)
+
+    -- Increase the player speed on the server
+    self:AddHook("TTTSpeedMultiplier", function(ply, mults)
+        if not ply:Alive() or ply:IsSpec() then return end
+        local wep = ply:GetActiveWeapon()
+        if wep and IsValid(wep) and wep:GetClass() == "weapon_ttt_randomatknife" then
+            table.insert(mults, speed_factor)
+        end
+    end)
 end
 
 function EVENT:End()
@@ -127,6 +144,11 @@ function EVENT:End()
     end
     net.Start("MurderEventActive")
     net.WriteBool(false)
+    net.Broadcast()
+
+    -- Reset the player speed on the client
+    net.Start("RdmtRemoveSpeedMultiplier")
+    net.WriteString("RdmtMurderSpeed")
     net.Broadcast()
 end
 

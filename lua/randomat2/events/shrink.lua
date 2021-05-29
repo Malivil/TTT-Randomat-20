@@ -33,8 +33,20 @@ function EVENT:Begin()
         a, b = ply:GetHullDuck()
         ply:SetHullDuck(a * sc, b * sc)
 
-        ply:SetNWFloat("RmdtSpeedModifier", math.Clamp(ply:GetStepSize() / 9, 0.25, 1) * ply:GetNWFloat("RmdtSpeedModifier", 1))
+        -- Reduce the player speed on the client
+        local speed_factor = math.Clamp(ply:GetStepSize() / 9, 0.25, 1)
+        net.Start("RdmtSetSpeedMultiplier")
+        net.WriteFloat(speed_factor)
+        net.WriteString("RdmtShrinkSpeed")
+        net.Send(ply)
     end
+
+    -- Reduce the player speed on the server
+    self:AddHook("TTTSpeedMultiplier", function(ply, mults)
+        if not ply:Alive() or ply:IsSpec() then return end
+        local speed_factor = math.Clamp(ply:GetStepSize() / 9, 0.25, 1)
+        table.insert(mults, speed_factor)
+    end)
 
     timer.Create("RdmtTimerShrinkHp", 1, 0, function()
         for _, ply in pairs(self:GetAlivePlayers()) do
@@ -76,9 +88,13 @@ function EVENT:End()
         end
         ply:ResetHull()
         ply:SetStepSize(18)
-        ply:SetNWFloat("RmdtSpeedModifier", 1)
     end
     timer.Remove("RdmtTimerShrinkHp")
+
+    -- Reset the player speed on the client
+    net.Start("RdmtRemoveSpeedMultiplier")
+    net.WriteString("RdmtShrinkSpeed")
+    net.Broadcast()
 end
 
 function EVENT:GetConVars()
