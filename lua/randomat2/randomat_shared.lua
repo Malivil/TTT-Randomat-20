@@ -16,6 +16,7 @@ function Randomat:IsTraitorTeam(ply)
 end
 
 function Randomat:IsMonsterTeam(ply)
+    if ply.IsMonsterTeam then return ply:IsMonsterTeam() end
     local role = ply:GetRole()
     return role == ROLE_ZOMBIE or role == ROLE_VAMPIRE
 end
