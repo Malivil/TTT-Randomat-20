@@ -25,8 +25,6 @@ ROLE_DEPUTY = ROLE_DEPUTY or -1
 ROLE_IMPERSONATOR = ROLE_IMPERSONATOR or -1
 ROLE_BEGGAR = ROLE_BEGGAR or -1
 ROLE_OLDMAN = ROLE_OLDMAN or -1
--- TODO: Remove this (and all Romantic references) once Romantic -> Revenger change has been pushed
-ROLE_ROMANTIC = ROLE_ROMANTIC or -1
 
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = {}
@@ -505,8 +503,6 @@ function randomat_meta:GetRoleName(ply, hide_detraitor)
         return "A phantom"
     elseif ply:GetRole() == ROLE_DETRAITOR then
         return "A detraitor"
-    elseif ply:GetRole() == ROLE_ROMANTIC then
-        return "A romantic"
     elseif ply:GetRole() == ROLE_REVENGER then
         return "A revenger"
     elseif ply:GetRole() == ROLE_DRUNK then
