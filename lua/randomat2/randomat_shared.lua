@@ -12,7 +12,7 @@ function Randomat:IsTraitorTeam(ply)
     if player.IsTraitorTeam then return player.IsTraitorTeam(ply) end
     if ply.IsTraitorTeam then return ply:IsTraitorTeam() end
     local role = ply:GetRole()
-    return role == ROLE_TRAITOR or role == ROLE_HYPNOTIST or role == ROLE_ASSASSIN or role == ROLE_DETRAITOR or role == ROLE_IMPERSONATOR
+    return role == ROLE_TRAITOR or role == ROLE_HYPNOTIST or role == ROLE_ASSASSIN or role == ROLE_DETRAITOR
 end
 
 function Randomat:IsMonsterTeam(ply)
