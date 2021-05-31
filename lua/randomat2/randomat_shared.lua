@@ -1,10 +1,16 @@
 function Randomat:IsInnocentTeam(ply, skip_detective)
     local role = ply:GetRole()
-    return (not skip_detective and role == ROLE_DETECTIVE) or role == ROLE_INNOCENT or role == ROLE_MERCENARY or role == ROLE_PHANTOM or role == ROLE_GLITCH or role == ROLE_ROMANTIC or role == ROLE_DEPUTY
+    -- Handle this early because IsInnocentTeam doesn't
+    if skip_detective and role == ROLE_DETECTIVE then
+        return false
+    end
+    if ply.IsInnocentTeam then return ply:IsInnocentTeam() end
+    return role == ROLE_DETECTIVE or role == ROLE_INNOCENT or role == ROLE_MERCENARY or role == ROLE_PHANTOM or role == ROLE_GLITCH
 end
 
 function Randomat:IsTraitorTeam(ply)
     if player.IsTraitorTeam then return player.IsTraitorTeam(ply) end
+    if ply.IsTraitorTeam then return ply:IsTraitorTeam() end
     local role = ply:GetRole()
     return role == ROLE_TRAITOR or role == ROLE_HYPNOTIST or role == ROLE_ASSASSIN or role == ROLE_DETRAITOR or role == ROLE_IMPERSONATOR
 end
@@ -15,13 +21,15 @@ function Randomat:IsMonsterTeam(ply)
 end
 
 function Randomat:IsJesterTeam(ply)
+    if ply.IsJesterTeam then return ply:IsJesterTeam() end
     local role = ply:GetRole()
-    return role == ROLE_JESTER or role == ROLE_SWAPPER or role == ROLE_BEGGAR or (role == ROLE_CLOWN and not ply:GetNWBool("KillerClownActive", false))
+    return role == ROLE_JESTER or role == ROLE_SWAPPER
 end
 
 function Randomat:IsIndependentTeam(ply)
+    if ply.IsIndependentTeam then return ply:IsIndependentTeam() end
     local role = ply:GetRole()
-    return role == ROLE_KILLER or role == ROLE_DRUNK or (role == ROLE_CLOWN and ply:GetNWBool("KillerClownActive", false))
+    return role == ROLE_KILLER
 end
 
 function Randomat:GetRoleColor(role)
@@ -29,6 +37,7 @@ function Randomat:GetRoleColor(role)
     if type(ROLE_COLORS) == "table" then
         color = ROLE_COLORS[role];
     end
+    -- Don't return the table directly because if the table exists but is missing a role we need to handle that
     if color then return color end
 
     local role_colors = {
