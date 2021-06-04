@@ -340,7 +340,7 @@ end
 
 local function GetRandomRoleWeapon(roles, blocklist)
     local selected = math.random(1,#roles)
-    local tbl = table.Copy(EquipmentItems[roles[selected]])
+    local tbl = table.Copy(EquipmentItems[roles[selected]]) or {}
     for _, v in ipairs(weapons.GetList()) do
         if v and not v.Spawnable and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
             table.insert(tbl, v)
@@ -367,15 +367,15 @@ local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settr
             GiveWep(ply, roles, blocklist, include_equipment, tracking, settrackingvar, onitemgiven)
         -- Otherwise give it to them
         else
-            ply:GiveEquipmentItem(item_id)
             onitemgiven(true, item_id)
+            ply:GiveEquipmentItem(item_id)
             settrackingvar(0)
         end
     elseif swep_table then
         -- If this player can use this weapon, give it to them
         if ply:CanCarryWeapon(swep_table) then
-            ply:Give(item.ClassName)
             onitemgiven(false, item.ClassName)
+            ply:Give(item.ClassName)
             if swep_table.WasBought then
                 swep_table:WasBought(ply)
             end

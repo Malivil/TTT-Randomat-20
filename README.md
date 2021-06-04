@@ -362,13 +362,17 @@ _randomat_doubleedge_amount_ - Default: 2 - How much self-damage to heal per int
 ## Election Day
 Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\
 In the second part of the election, the two nominees with the most nominations will take part in a run-off vote, winner takes all.\
-If a member of the innocent team wins the presidency, they are promoted to a Detective and given credits as a reward.\
-If a member of the traitor team wins the presidency, all traitors are given credits as a reward, but the new President's role is revealed.\
-If a Jester wins the presidency, they are killed by whoever owned the Randomat, winning the round.\
-If a Swapper wins the presidency, they are killed by a random player, after which they swap roles.\
-If a Killer wins the presidency, all non-Jester/Swapper players are killed, winning the round for the Killer.\
-If a Zombie wins the presidency, the RISE FROM YOUR GRAVE event is triggered, silently.\
-If a Vampire wins the presidency, the configured team (see _randomat_election_vamp_turn_innocents_ below) are converted to Vampires.
+If a member of the innocent team wins, they are promoted to a Detective and given credits as a reward.\
+If a member of the traitor team wins, all traitors are given credits as a reward, but the new President's role is revealed.\
+If a Jester wins, they are killed by whoever owned the Randomat, winning the round.\
+If a Swapper wins, they are killed by a random player, after which they swap roles.\
+If a Killer wins, all non-Jester/Swapper players are killed, winning the round for the Killer.\
+If a Zombie wins, the RISE FROM YOUR GRAVE event is triggered, silently.\
+If a Vampire wins, the configured team (see _randomat_election_vamp_turn_innocents_ below) are converted to Vampires.\
+If a Drunk wins, they will instantly remember what role they are supposed to be.\
+If the Old Man wins, everyone else will become as frail as they are (e.g. reduced to 1 health).\
+If the Clown wins, whichever team (Innocent or Traitor) has more players will be killed, causing the Clown to instantly trigger and go on a rampage. If only one team has players alive, a random living player from that team will be sacrificed to help the Clown toward victory.\
+If the Beggar wins, an innocent or traitor team member will be chosen randomly to give the beggar a random shop weapon, causing the beggar to join that team.
 \
 \
 **ConVars**
