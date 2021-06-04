@@ -11,7 +11,7 @@ function EVENT:Begin()
     local scale = GetConVar("randomat_fov_scale"):GetFloat()
     local changedFOV = {}
     timer.Create("RandomatFOVTimer", 0.1, 0, function()
-        for _, v in pairs(player.GetAll()) do
+        for _, v in ipairs(player.GetAll()) do
             if v:Alive() and not v:IsSpec() then
                 -- Save the player's scaled FOV the first time we see them
                 if changedFOV[v:SteamID64()] == nil then
@@ -28,14 +28,14 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatFOVTimer")
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         v:SetFOV(0, 0)
     end
 end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"scale"}) do
+    for _, v in ipairs({"scale"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

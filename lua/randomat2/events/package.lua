@@ -9,7 +9,7 @@ EVENT.id = "package"
 function EVENT:Begin()
     local all_entities = ents.GetAll()
     local spawns = {}
-    for _, e in pairs(all_entities) do
+    for _, e in ipairs(all_entities) do
         local entity_class = e:GetClass()
         if string.StartWith(entity_class, "info_") or string.StartWith(entity_class, "weapon_") or string.StartWith(entity_class, "item_") then
             table.insert(spawns, e)
@@ -25,7 +25,7 @@ end
 
 function EVENT:GetConVars()
     local textboxes = {}
-    for _, v in pairs({"blocklist"}) do
+    for _, v in ipairs({"blocklist"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

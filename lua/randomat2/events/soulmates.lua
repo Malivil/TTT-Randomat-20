@@ -47,7 +47,7 @@ function EVENT:Begin(...)
         ply2_health[1] = params[2]:Health()
     else
         local x = 0
-        for _, v in pairs(self:GetAlivePlayers(true)) do
+        for _, v in ipairs(self:GetAlivePlayers(true)) do
             if x % 2 == 0 then
                 table.insert(ply1, v)
                 table.insert(ply1_health, v:Health())
@@ -118,7 +118,7 @@ end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in pairs({"affectall", "sharedhealth"}) do
+    for _, v in ipairs({"affectall", "sharedhealth"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

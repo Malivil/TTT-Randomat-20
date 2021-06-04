@@ -11,7 +11,7 @@ local offsets_ducked = {}
 
 function EVENT:Begin()
     local sc = GetConVar("randomat_shrink_scale"):GetFloat()
-    for _, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(self:GetAlivePlayers()) do
         ply:SetStepSize(ply:GetStepSize() * sc)
         ply:SetModelScale(ply:GetModelScale() * sc, 1)
 
@@ -49,7 +49,7 @@ function EVENT:Begin()
     end)
 
     timer.Create("RdmtTimerShrinkHp", 1, 0, function()
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             local rat = ply:GetStepSize() / 18
             if ply:Health() > math.floor(rat * 100) then
                 ply:SetHealth(math.floor(rat * 100))
@@ -60,7 +60,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, ply in pairs(player.GetAll()) do
+    for _, ply in ipairs(player.GetAll()) do
         ply:SetModelScale(1, 1)
 
         -- Retrieve the saved offsets
@@ -99,7 +99,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"scale"}) do
+    for _, v in ipairs({"scale"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

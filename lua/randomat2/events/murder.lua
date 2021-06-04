@@ -18,7 +18,7 @@ function EVENT:StripBannedWeapons(ply)
     if ply:GetRole() ~= ROLE_KILLER then
         self:StripRoleWeapons(ply)
     end
-    for _, wep in pairs(ply:GetWeapons()) do
+    for _, wep in ipairs(ply:GetWeapons()) do
         local class_name = WEPS.GetClass(wep)
         if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE or class_name == "weapon_zm_improvised" or class_name == "weapon_ttt_crowbar_fast" or class_name == "weapon_ttt_innocent_knife" or class_name == "weapon_ttt_wrench"
              then
@@ -35,7 +35,7 @@ function EVENT:Begin()
     local players = #self:GetAlivePlayers()
     local wepspawns = 0
 
-    for _, v in pairs(ents.GetAll()) do
+    for _, v in ipairs(ents.GetAll()) do
         if v.Base == "weapon_tttbase" and v.AutoSpawnable then
             wepspawns = wepspawns+1
         end
@@ -49,7 +49,7 @@ function EVENT:Begin()
     net.WriteBool(GetConVar("randomat_murder_highlight_gun"):GetBool())
     net.Broadcast()
 
-    for _, v in pairs(self.GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE then
             timer.Create("RandomatRevolverTimer", 0.15, 1, function()
                 self:StripBannedWeapons(v)
@@ -80,7 +80,7 @@ function EVENT:Begin()
     SendFullStateUpdate()
 
     timer.Create("RandomatMurderTimer", 0.1, 0, function()
-        for _, v in pairs(self.GetAlivePlayers()) do
+        for _, v in ipairs(self:GetAlivePlayers()) do
             self:StripBannedWeapons(v)
 
             if v:GetRole() ~= ROLE_TRAITOR and v:GetNWInt("MurderWeaponsEquipped") >= pck then
@@ -138,7 +138,7 @@ function EVENT:End()
     timer.Remove("RandomatMurderTimer")
     -- Added by the revolver weapon
     hook.Remove("DrawOverlay", "RdmtMurderBlind")
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         v:SetNWInt("MurderWeaponsEquipped", 0)
         v:SetNWBool("RdmMurderRevolver", false)
     end
@@ -155,7 +155,7 @@ end
 function EVENT:Condition()
     local has_detective = false
     local t = 0
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE then
             has_detective = true
         elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) then
@@ -168,7 +168,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"pickups_pct", "knifespeed", "knifedmg"}) do
+    for _, v in ipairs({"pickups_pct", "knifespeed", "knifedmg"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -183,7 +183,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"highlight_gun", "allow_shop"}) do
+    for _, v in ipairs({"highlight_gun", "allow_shop"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

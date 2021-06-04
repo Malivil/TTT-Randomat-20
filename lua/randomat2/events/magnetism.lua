@@ -14,7 +14,7 @@ function EVENT:Begin()
         if not IsValid(victim) then return end
 
         local pos = victim:GetPos()
-        for _, ent in pairs(ents.FindInSphere(pos, radius)) do
+        for _, ent in ipairs(ents.FindInSphere(pos, radius)) do
             if IsValid(ent) and ent:IsPlayer() and ent:Alive() and not ent:IsSpec() then
                 -- Get the direction toward the player who died
                 local dir = (pos - ent:GetPos()):GetNormal()
@@ -42,7 +42,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"radius"}) do
+    for _, v in ipairs({"radius"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

@@ -18,7 +18,7 @@ net.Receive("DemocracyEventBegin", function()
     list:AddColumn("Players")
     list:AddColumn("Votes")
 
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         if (v:Alive() and not v:IsSpec()) or not v:Alive() then
             list:AddLine(v:Nick(), 0)
         end
@@ -38,7 +38,7 @@ net.Receive("DemocracyEventBegin", function()
     net.Receive("DemocracyPlayerVoted", function()
         local votee = net.ReadString()
         local num = net.ReadInt(32)
-        for _, v in pairs(list:GetLines()) do
+        for _, v in ipairs(list:GetLines()) do
             if v:GetColumnText(1) == votee then
                 v:SetColumnText(2, num)
             end
@@ -46,7 +46,7 @@ net.Receive("DemocracyEventBegin", function()
     end)
 
     net.Receive("DemocracyReset", function()
-        for _, v in pairs(list:GetLines()) do
+        for _, v in ipairs(list:GetLines()) do
             v:SetColumnText(2, 0)
         end
     end)
@@ -69,7 +69,7 @@ net.Receive("DemocracyJesterRevenge", function()
     list:AddColumn("Players")
 
     local voters = net.ReadTable()
-    for _, v in pairs(voters) do
+    for _, v in ipairs(voters) do
         if v:Alive() and not v:IsSpec() then
             list:AddLine(v:Nick())
         end

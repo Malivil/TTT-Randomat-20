@@ -72,7 +72,7 @@ function EVENT:Begin()
     OverrideCvar("ttt_prop_disguiser_time", 30)
     OverrideCvar("ttt_prop_disguiser_cooldown", 2)
 
-    for _, v in pairs(self.GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         local equip = {}
         local messages = {}
         -- All bad guys are traitors
@@ -143,10 +143,10 @@ function EVENT:Begin()
         end
 
         local updated = false
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             if ply:GetRole() == ROLE_INNOCENT then
                 if GetConVar("randomat_prophunt_strip"):GetBool() then
-                    for _, wep in pairs(ply:GetWeapons()) do
+                    for _, wep in ipairs(ply:GetWeapons()) do
                         local weaponclass = WEPS.GetClass(wep)
                         if weaponclass ~= weaponid then
                             ply:StripWeapon(weaponclass)
@@ -209,7 +209,7 @@ function EVENT:End()
         RunConsoleCommand(k, v)
     end
 
-    for _, ply in pairs(player.GetAll()) do
+    for _, ply in ipairs(player.GetAll()) do
         timer.Remove(ply:GetName() .. "RandomatPropHuntMessageTimer")
     end
 
@@ -226,7 +226,7 @@ function EVENT:Condition()
     if table.Count(ents.FindByClass("prop_physics*")) == 0 and table.Count(ents.FindByClass("prop_dynamic")) == 0 then return false end
 
     -- Only run if there is at least one innocent or jester/swapper living
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if (Randomat:IsJesterTeam(v) or Randomat:IsInnocentTeam(v)) then
             return true
         end
@@ -237,7 +237,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer", "blind_time", "round_time"}) do
+    for _, v in ipairs({"timer", "blind_time", "round_time"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -252,7 +252,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"strip"}) do
+    for _, v in ipairs({"strip"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -264,7 +264,7 @@ function EVENT:GetConVars()
     end
 
     local textboxes = {}
-    for _, v in pairs({"weaponid"}) do
+    for _, v in ipairs({"weaponid"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

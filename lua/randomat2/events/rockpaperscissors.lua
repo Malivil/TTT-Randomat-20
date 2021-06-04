@@ -103,7 +103,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_JESTER then
             return false
         end
@@ -114,7 +114,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"bestof"}) do
+    for _, v in ipairs({"bestof"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

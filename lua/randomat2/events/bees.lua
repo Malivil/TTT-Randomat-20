@@ -14,7 +14,7 @@ function EVENT:Begin(...)
     end
     local x = 0
     local plys = {}
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         x = x+1
         table.insert(plys, v)
     end
@@ -44,7 +44,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"count"}) do
+    for _, v in ipairs({"count"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

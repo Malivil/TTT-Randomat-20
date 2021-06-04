@@ -15,7 +15,7 @@ net.Receive("ElectionNominateBegin", function()
     list:AddColumn("Players")
     list:AddColumn("Votes")
 
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         -- Don't allow dead people, spectators, detectives, and detraitors to get nominated
         if v:Alive() and not v:IsSpec() and v:GetRole() ~= ROLE_DETECTIVE and v:GetRole() ~= ROLE_DETRAITOR then
             list:AddLine(v:Nick(), 0)
@@ -36,7 +36,7 @@ net.Receive("ElectionNominateBegin", function()
     net.Receive("ElectionNominateVoted", function()
         local votee = net.ReadString()
         local num = net.ReadInt(32)
-        for _, v in pairs(list:GetLines()) do
+        for _, v in ipairs(list:GetLines()) do
             if v:GetColumnText(1) == votee then
                 v:SetColumnText(2, num)
             end
@@ -44,7 +44,7 @@ net.Receive("ElectionNominateBegin", function()
     end)
 
     net.Receive("ElectionNominateReset", function()
-        for _, v in pairs(list:GetLines()) do
+        for _, v in ipairs(list:GetLines()) do
             v:SetColumnText(2, 0)
         end
     end)
@@ -91,7 +91,7 @@ net.Receive("ElectionVoteBegin", function()
     net.Receive("ElectionVoteVoted", function()
         local votee = net.ReadString()
         local num = net.ReadInt(32)
-        for _, v in pairs(list:GetLines()) do
+        for _, v in ipairs(list:GetLines()) do
             if v:GetColumnText(1) == votee then
                 v:SetColumnText(2, num)
             end
@@ -99,7 +99,7 @@ net.Receive("ElectionVoteBegin", function()
     end)
 
     net.Receive("ElectionVoteReset", function()
-        for _, v in pairs(list:GetLines()) do
+        for _, v in ipairs(list:GetLines()) do
             v:SetColumnText(2, 0)
         end
     end)

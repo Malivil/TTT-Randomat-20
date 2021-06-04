@@ -36,7 +36,7 @@ function EVENT:Begin()
     local tmr = GetConVar("randomat_freeze_timer"):GetInt()
     timer.Create("RdmtFreezeTimer", tmr, 0, function()
         self:SmallNotify("Freeze!")
-        for _, v in pairs(self:GetAlivePlayers()) do
+        for _, v in ipairs(self:GetAlivePlayers()) do
             if Randomat:IsInnocentTeam(v, true) then
                 v:Freeze(true)
                 v.isFrozen = true
@@ -62,7 +62,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"duration", "timer"}) do
+    for _, v in ipairs({"duration", "timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

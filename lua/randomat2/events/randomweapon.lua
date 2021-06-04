@@ -18,9 +18,9 @@ function EVENT:Begin()
         end
     end
 
-    for _, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(self:GetAlivePlayers()) do
         self:HandleWeaponAddAndSelect(ply, function(active_class, active_kind)
-            for _, wep in pairs(ply:GetWeapons()) do
+            for _, wep in ipairs(ply:GetWeapons()) do
                 if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL then
                     ply:StripWeapon(wep:GetClass())
                 end

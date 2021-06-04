@@ -50,7 +50,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"force", "jumping_force"}) do
+    for _, v in ipairs({"force", "jumping_force"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

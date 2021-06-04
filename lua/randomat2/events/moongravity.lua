@@ -8,7 +8,7 @@ EVENT.id = "moongravity"
 
 local function SetGravity(alive_players)
     local gravity = GetConVar("randomat_moongravity_gravity"):GetFloat()
-    for _, ply in pairs(alive_players) do
+    for _, ply in ipairs(alive_players) do
         ply:SetGravity(gravity)
     end
 end
@@ -26,14 +26,14 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatMoonGravityTimer")
-    for _, ply in pairs(player.GetAll()) do
+    for _, ply in ipairs(player.GetAll()) do
         ply:SetGravity(1)
     end
 end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"gravity"}) do
+    for _, v in ipairs({"gravity"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

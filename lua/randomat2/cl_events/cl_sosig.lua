@@ -11,7 +11,7 @@ local function FixWeapon(wep)
 end
 
 net.Receive("TriggerSosig", function()
-    for _, wep in pairs(LocalPlayer():GetWeapons()) do
+    for _, wep in ipairs(LocalPlayer():GetWeapons()) do
         FixWeapon(wep)
     end
 
@@ -34,7 +34,7 @@ net.Receive("TriggerSosig", function()
 end)
 
 net.Receive("EndSosig", function()
-    for _, wep in pairs(LocalPlayer():GetWeapons()) do
+    for _, wep in ipairs(LocalPlayer():GetWeapons()) do
         if wep.Primary and wep.Primary.OriginalSound then
             wep.Primary.Sound = wep.Primary.OriginalSound
         end

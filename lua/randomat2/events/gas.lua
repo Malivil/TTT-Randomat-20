@@ -24,7 +24,7 @@ function EVENT:Begin()
 
     timer.Create("gastimer", GetConVar("randomat_gas_timer"):GetInt() , 0, function()
         local x = 0
-        for _, ply in pairs( self:GetAlivePlayers(true)) do
+        for _, ply in ipairs(self:GetAlivePlayers(true)) do
             if x == 0 or GetConVar("randomat_gas_affectall"):GetBool() then
                 local gren = ents.Create(potatoTable[math.random(#potatoTable)])
                 if not IsValid(gren) then return end
@@ -49,7 +49,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer"}) do
+    for _, v in ipairs({"timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -64,7 +64,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"affectall", "discombob", "incendiary", "smoke"}) do
+    for _, v in ipairs({"affectall", "discombob", "incendiary", "smoke"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

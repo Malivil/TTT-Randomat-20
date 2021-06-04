@@ -20,8 +20,8 @@ end
 function EVENT:Begin()
     net.Start("TriggerSosig")
     net.Broadcast()
-    for _, ply in pairs(player.GetAll()) do
-        for _, wep in pairs(ply:GetWeapons()) do
+    for _, ply in ipairs(player.GetAll()) do
+        for _, wep in ipairs(ply:GetWeapons()) do
             FixWeapon(wep)
         end
     end
@@ -52,8 +52,8 @@ function EVENT:End()
     net.Start("EndSosig")
     net.Broadcast()
     timer.Remove("SosigDelay")
-    for _, ply in pairs(player.GetAll()) do
-        for _, wep in pairs(ply:GetWeapons()) do
+    for _, ply in ipairs(player.GetAll()) do
+        for _, wep in ipairs(ply:GetWeapons()) do
             if wep.Primary and wep.Primary.OriginalSound then
                 wep.Primary.Sound = wep.Primary.OriginalSound
             end

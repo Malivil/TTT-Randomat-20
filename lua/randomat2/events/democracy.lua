@@ -33,7 +33,7 @@ function EVENT:Begin()
     local skipkill = 0
     local slainply = 0
 
-    for k, v in pairs(player.GetAll()) do
+    for k, v in ipairs(player.GetAll()) do
         if not (v:Alive() and v:IsSpec()) then
             votableplayers[k] = v
             playervotes[k] = 0
@@ -52,7 +52,7 @@ function EVENT:Begin()
             for _, v in pairs(playervotes) do -- Tally up votes
                 votenumber = votenumber + v
             end
-            for _, v in pairs(self:GetAlivePlayers()) do
+            for _, v in ipairs(self:GetAlivePlayers()) do
                 table.insert(aliveplys, v)
             end
 
@@ -159,7 +159,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer", "totalpct", "jestermode"}) do
+    for _, v in ipairs({"timer", "totalpct", "jestermode"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -174,7 +174,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"tiekills"}) do
+    for _, v in ipairs({"tiekills"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -202,7 +202,7 @@ net.Receive("DemocracyPlayerVoted", function(ln, ply)
         if v:Nick() == votee then --find which player was voted for
             playersvoted[ply] = v --insert player and target into table
 
-            for _, va in pairs(player.GetAll()) do
+            for _, va in ipairs(player.GetAll()) do
                 va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted to kill "..votee) --tell everyone who they voted for
             end
 
@@ -224,7 +224,7 @@ net.Receive("DemocracyJesterVoted", function(ln, ply)
         if v:Nick() == votee then
             v:Kill()
 
-            for _, va in pairs(player.GetAll()) do
+            for _, va in ipairs(player.GetAll()) do
                 va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has decided to take revenge on "..votee.." for their vote")
             end
             return

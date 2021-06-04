@@ -8,7 +8,7 @@ function EVENT:Begin()
     -- Wait a second before implementing this
     timer.Simple(1, function()
         self:AddHook("Think", function()
-            for _, v in pairs(player.GetAll()) do
+            for _, v in ipairs(player.GetAll()) do
                 v:ConCommand("soundfade 100 1")
             end
         end)

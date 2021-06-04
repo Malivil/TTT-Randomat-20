@@ -38,7 +38,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsTraitorTeam(v) then
             return true
         end
@@ -49,7 +49,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"duration"}) do
+    for _, v in ipairs({"duration"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

@@ -5,7 +5,7 @@ local function GetItemName(item, role)
 end
 
 local function GetWeaponName(item)
-    for _, v in pairs(weapons.GetList()) do
+    for _, v in ipairs(weapons.GetList()) do
         if item == v.ClassName then
             return v.PrintName
         end

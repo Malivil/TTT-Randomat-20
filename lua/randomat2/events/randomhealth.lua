@@ -15,7 +15,7 @@ function EVENT:Begin()
         upper = lower + 1
     end
 
-    for _, ply in pairs(self:GetAlivePlayers(true)) do
+    for _, ply in ipairs(self:GetAlivePlayers(true)) do
         local newhealth = ply:Health() + math.random(lower, upper)
 
         ply:SetHealth(newhealth)
@@ -28,7 +28,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"upper", "lower"}) do
+    for _, v in ipairs({"upper", "lower"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

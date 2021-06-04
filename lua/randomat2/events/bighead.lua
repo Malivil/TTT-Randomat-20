@@ -7,7 +7,7 @@ EVENT.id = "bighead"
 
 local function ScalePlayerHeads(mult)
     local scale = Vector(mult, mult, mult)
-    for _, p in pairs(player.GetAll()) do
+    for _, p in ipairs(player.GetAll()) do
         local boneId = p:LookupBone("ValveBiped.Bip01_Head1")
         if boneId ~= nil then
             p:ManipulateBoneScale(boneId, scale)
@@ -25,7 +25,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"scale"}) do
+    for _, v in ipairs({"scale"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

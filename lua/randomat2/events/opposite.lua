@@ -8,7 +8,7 @@ EVENT.Description = "Swaps movement keys to their opposites (e.g. Left is Right,
 EVENT.id = "opposite"
 
 function EVENT:Begin()
-    for _, p in pairs(self:GetAlivePlayers()) do
+    for _, p in ipairs(self:GetAlivePlayers()) do
         p:SetLadderClimbSpeed(-200)
         net.Start("OppositeDayBegin")
         net.Send(p)
@@ -30,7 +30,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, p in pairs(player.GetAll()) do
+    for _, p in ipairs(player.GetAll()) do
         p:SetLadderClimbSpeed(200)
     end
     net.Start("OppositeDayEnd")

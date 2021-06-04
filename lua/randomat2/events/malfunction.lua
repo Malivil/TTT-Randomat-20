@@ -19,7 +19,7 @@ function EVENT:Begin()
 
     local x = 0
     timer.Create("RdmtMalfunctionMain", math.random(lower, upper), 0, function()
-        for _, ply in pairs(self:GetAlivePlayers(true)) do
+        for _, ply in ipairs(self:GetAlivePlayers(true)) do
             if x == 0 or GetConVar("randomat_malfunction_affectall"):GetBool() then
                 local wep = ply:GetActiveWeapon()
                 if wep ~= nil then
@@ -47,7 +47,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"upper", "lower", "duration"}) do
+    for _, v in ipairs({"upper", "lower", "duration"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -62,7 +62,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"affectall"}) do
+    for _, v in ipairs({"affectall"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

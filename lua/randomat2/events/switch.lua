@@ -12,7 +12,7 @@ function EVENT:Begin()
         local i = 0
         local ply1 = 0
         local ply2 = 0
-        for _, v in pairs(self:GetAlivePlayers(true)) do
+        for _, v in ipairs(self:GetAlivePlayers(true)) do
             if i == 0 then
                 ply1 = v
                 i = i+1
@@ -35,7 +35,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer"}) do
+    for _, v in ipairs({"timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

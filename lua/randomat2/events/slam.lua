@@ -27,7 +27,7 @@ function EVENT:HandleRoleWeapons(ply)
 end
 
 function EVENT:Begin()
-    for _, v in pairs(self.GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         self:HandleRoleWeapons(v)
     end
     SendFullStateUpdate()
@@ -35,9 +35,9 @@ function EVENT:Begin()
     timer.Create("RandomatSlamTimer", GetConVar("randomat_slam_timer"):GetInt(), 0, function()
         local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
         local updated = false
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             if GetConVar("randomat_slam_strip"):GetBool() then
-                for _, wep in pairs(ply:GetWeapons()) do
+                for _, wep in ipairs(ply:GetWeapons()) do
                     local weaponclass = WEPS.GetClass(wep)
                     if weaponclass ~= weaponid then
                         ply:StripWeapon(weaponclass)
@@ -81,7 +81,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer"}) do
+    for _, v in ipairs({"timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -96,7 +96,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"strip"}) do
+    for _, v in ipairs({"strip"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -108,7 +108,7 @@ function EVENT:GetConVars()
     end
 
     local textboxes = {}
-    for _, v in pairs({"weaponid"}) do
+    for _, v in ipairs({"weaponid"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

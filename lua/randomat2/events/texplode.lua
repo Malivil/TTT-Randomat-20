@@ -13,7 +13,7 @@ function EVENT:Begin()
 
     local x = 0
     local tgt = nil
-    for _, ply in pairs(self:GetAlivePlayers(true)) do
+    for _, ply in ipairs(self:GetAlivePlayers(true)) do
         if Randomat:IsTraitorTeam(ply) then
             if tgt == nil then
                 tgt = ply
@@ -69,7 +69,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsTraitorTeam(v) then
             return true
         end
@@ -80,7 +80,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer", "radius"}) do
+    for _, v in ipairs({"timer", "radius"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

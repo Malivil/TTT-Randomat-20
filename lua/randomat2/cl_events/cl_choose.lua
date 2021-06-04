@@ -98,7 +98,7 @@ net.Receive("ChooseVoteTrigger", function()
 
     net.Receive("ChoosePlayerVoted", function()
         local votee = net.ReadString()
-        for _, v in pairs(list:GetLines()) do
+        for _, v in ipairs(list:GetLines()) do
             if v:GetColumnText(1) == votee then
                 v:SetColumnText(2, v:GetColumnText(2)+1)
             end

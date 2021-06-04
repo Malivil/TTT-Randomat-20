@@ -17,8 +17,8 @@ function EVENT:Begin()
     RunConsoleCommand("ttt_crowbar_pushforce", current_push * GetConVar("randomat_crowbar_push"):GetFloat())
 
     local damage = GetConVar("randomat_crowbar_damage"):GetFloat()
-    for _, v in pairs(player.GetAll()) do
-        for _, wep in pairs(v:GetWeapons()) do
+    for _, v in ipairs(player.GetAll()) do
+        for _, wep in ipairs(v:GetWeapons()) do
             if wep:GetClass() == "weapon_zm_improvised" then
                 if wep.Primary.OriginalDamage == nil then
                     wep.Primary.OriginalDamage = wep.Primary.Damage
@@ -33,8 +33,8 @@ function EVENT:End()
     if original_push ~= nil then
         RunConsoleCommand("ttt_crowbar_pushforce", original_push)
     end
-    for _, v in pairs(player.GetAll()) do
-        for _, wep in pairs(v:GetWeapons()) do
+    for _, v in ipairs(player.GetAll()) do
+        for _, wep in ipairs(v:GetWeapons()) do
             if wep:GetClass() == "weapon_zm_improvised" and wep.Primary.OriginalDamage ~= nil then
                 wep.Primary.Damage = wep.Primary.OriginalDamage
             end
@@ -44,7 +44,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"damage", "push"}) do
+    for _, v in ipairs({"damage", "push"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

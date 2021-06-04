@@ -12,7 +12,7 @@ function EVENT:Begin()
     local traitor = {}
     local suspicionply = 0
 
-    for _, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in ipairs(self:GetAlivePlayers(true)) do
         if Randomat:IsTraitorTeam(v) then
             table.insert(traitor, v)
             if suspicionply == 0 then
@@ -31,13 +31,13 @@ function EVENT:Begin()
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
             Randomat:SetRole(suspicionply, ROLE_JESTER)
             suspicionply:SetCredits(0)
-            for _, v in pairs(traitor) do
+            for _, v in ipairs(traitor) do
                 v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick().." is a jester")
                 v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is a jester")
             end
         else
             Randomat:SetRole(suspicionply, ROLE_TRAITOR)
-            for _, v in pairs(traitor) do
+            for _, v in ipairs(traitor) do
                 v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick().." is a traitor")
                 v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is a traitor")
             end
@@ -48,7 +48,7 @@ end
 
 function EVENT:Condition()
     local has_innocent = false
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsJesterTeam(v) then
             return false
         elseif Randomat:IsInnocentTeam(v, true) then
@@ -60,7 +60,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"chance"}) do
+    for _, v in ipairs({"chance"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

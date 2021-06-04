@@ -9,7 +9,7 @@ function EVENT:Begin()
     local plysize = 0
     local plylist = {}
 
-    for _, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in ipairs(self:GetAlivePlayers(true)) do
         plysize = plysize + 1
 
         plylist[plysize] = {}
@@ -65,7 +65,7 @@ function PlayerDetonate(owner, ply)
             explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
         end
     end
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         v:PrintMessage(HUD_PRINTTALK, owner:Nick().." has detonated "..ply:Nick())
     end
 end

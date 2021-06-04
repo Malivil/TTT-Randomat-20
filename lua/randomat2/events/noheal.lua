@@ -7,12 +7,12 @@ EVENT.id = "noheal"
 local playerhealth = {}
 
 function EVENT:Begin()
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         playerhealth[v:GetName()] = v:Health()
     end
 
     self:AddHook("Think", function()
-        for _, v in pairs(self:GetAlivePlayers()) do
+        for _, v in ipairs(self:GetAlivePlayers()) do
             local playername = v:GetName()
             if v:Health() > playerhealth[playername] then
                 v:SetHealth(playerhealth[playername])

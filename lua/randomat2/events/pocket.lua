@@ -15,7 +15,7 @@ function EVENT:Begin()
     end
 
     timer.Simple(0.1, function()
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             ply.pocketweptries = 0
             self:GiveWep(ply)
         end
@@ -40,7 +40,7 @@ end
 
 function EVENT:GetConVars()
     local textboxes = {}
-    for _, v in pairs({"blocklist"}) do
+    for _, v in ipairs({"blocklist"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

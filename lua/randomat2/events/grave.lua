@@ -45,7 +45,7 @@ function EVENT:Begin(...)
 end
 
 function EVENT:End()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         timer.Remove(v:SteamID64() .. "RdmtZombieTimer")
     end
 end
@@ -56,7 +56,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"health"}) do
+    for _, v in ipairs({"health"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

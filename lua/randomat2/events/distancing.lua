@@ -30,7 +30,7 @@ function EVENT:Begin()
     end);
 
     local plys = {}
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         plys[v:SteamID64()] = v
     end
 
@@ -92,14 +92,14 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         ClearPlayerData(v:SteamID64())
     end
 end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer", "interval", "distance", "damage"}) do
+    for _, v in ipairs({"timer", "interval", "distance", "damage"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

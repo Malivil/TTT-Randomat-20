@@ -8,7 +8,7 @@ CreateConVar("randomat_regeneration_delay", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 CreateConVar("randomat_regeneration_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health per second you heal", 1, 10)
 
 function EVENT:Begin()
-    for _, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(self:GetAlivePlayers()) do
         ply.rmdregeneration = CurTime() + 1
     end
 
@@ -22,7 +22,7 @@ function EVENT:Begin()
 end
 
 function EVENT:Regeneration()
-    for _, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(self:GetAlivePlayers()) do
         if ply.rmdregeneration <= CurTime() then
             ply:SetHealth(math.Clamp(ply:Health() + GetConVar("randomat_regeneration_health"):GetInt(), 0, ply:GetMaxHealth()))
             ply.rmdregeneration = CurTime() + 1
@@ -32,7 +32,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"delay", "health"}) do
+    for _, v in ipairs({"delay", "health"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

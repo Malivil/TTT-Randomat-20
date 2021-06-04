@@ -25,7 +25,7 @@ function EVENT:Begin()
     local drain_time = GetConVar("randomat_reload_drain_time"):GetFloat()
     local affects_buy = GetConVar("randomat_reload_affectbuymenu"):GetBool()
     self:AddHook("Think", function()
-        for _, v in pairs(self:GetAlivePlayers()) do
+        for _, v in ipairs(self:GetAlivePlayers()) do
             local playername = v:GetName()
             if v:Alive() and not v:IsSpec() then
                 if playerdraining[playername] == nil then
@@ -73,7 +73,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"wait_time", "drain_time"}) do
+    for _, v in ipairs({"wait_time", "drain_time"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -88,7 +88,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"keep_ammo", "affectbuymenu"}) do
+    for _, v in ipairs({"keep_ammo", "affectbuymenu"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

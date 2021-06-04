@@ -93,7 +93,7 @@ local function TriggerEvent(event, ply, silent, ...)
             NotifyDescription(event)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
-            for _, p in pairs(player.GetAll()) do
+            for _, p in ipairs(player.GetAll()) do
                 ChatDescription(p, event, has_description)
             end
         end
@@ -148,7 +148,7 @@ end
 
 function Randomat:GetPlayers(shuffle, alive)
     local plys = {}
-    for _, ply in pairs(player.GetAll()) do
+    for _, ply in ipairs(player.GetAll()) do
         if IsValid(ply) and (not ply:IsSpec()) and (not alive or ply:Alive()) then
             table.insert(plys, ply)
         end
@@ -341,7 +341,7 @@ end
 local function GetRandomRoleWeapon(roles, blocklist)
     local selected = math.random(1,#roles)
     local tbl = table.Copy(EquipmentItems[roles[selected]])
-    for _, v in pairs(weapons.GetList()) do
+    for _, v in ipairs(weapons.GetList()) do
         if v and not v.Spawnable and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
             table.insert(tbl, v)
         end
@@ -440,7 +440,7 @@ end
 
 function randomat_meta:RemoveHook(hooktype)
     local id = "RandomatEvent." .. self.Id .. ":" .. hooktype
-    for idx, ahook in pairs(self.Hooks) do
+    for idx, ahook in ipairs(self.Hooks) do
         if ahook[1] == hooktype and ahook[2] == id then
             hook.Remove(ahook[1], ahook[2])
             table.remove(self.Hooks, idx)
@@ -452,7 +452,7 @@ end
 function randomat_meta:CleanUpHooks()
     if not self.Hooks then return end
 
-    for _, ahook in pairs(self.Hooks) do
+    for _, ahook in ipairs(self.Hooks) do
         hook.Remove(ahook[1], ahook[2])
     end
 

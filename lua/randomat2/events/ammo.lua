@@ -8,7 +8,7 @@ CreateConVar("randomat_ammo_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "W
 function EVENT:Begin()
     local affects_buy = GetConVar("randomat_ammo_affectbuymenu"):GetBool()
     self:AddHook("Think", function()
-        for _, v in pairs(self:GetAlivePlayers()) do
+        for _, v in ipairs(self:GetAlivePlayers()) do
             local active_weapon = v:GetActiveWeapon()
             if IsValid(active_weapon) and (active_weapon.Spawnable or (not active_weapon.CanBuy or affects_buy)) then
                 active_weapon:SetClip1(active_weapon.Primary.ClipSize)
@@ -23,7 +23,7 @@ end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in pairs({"affectbuymenu"}) do
+    for _, v in ipairs({"affectbuymenu"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

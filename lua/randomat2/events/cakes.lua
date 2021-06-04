@@ -15,7 +15,7 @@ EVENT.id = "cakes"
 
 local function TriggerCakes()
     local plys = {}
-    for k, ply in pairs(player.GetAll()) do
+    for k, ply in ipairs(player.GetAll()) do
         if not ply:IsSpec() then
             plys[k] = ply
         end
@@ -52,14 +52,14 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtCakeSpawnTimer")
-    for _, ply in pairs(player.GetAll()) do
+    for _, ply in ipairs(player.GetAll()) do
         timer.Remove(ply:GetName() .. "RdmtCakeDamageTimer")
     end
 end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"count", "range", "timer", "health", "damage", "damage_time", "damage_interval", "damage_over_time"}) do
+    for _, v in ipairs({"count", "range", "timer", "health", "damage", "damage_time", "damage_interval", "damage_over_time"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

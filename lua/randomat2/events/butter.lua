@@ -11,7 +11,7 @@ function EVENT:Begin()
     local affect_all = GetConVar("randomat_butter_affectall"):GetBool()
     local affected = false
     timer.Create("weapondrop", GetConVar("randomat_butter_timer"):GetInt(), 0, function()
-        for _, ply in pairs(self:GetAlivePlayers(true)) do
+        for _, ply in ipairs(self:GetAlivePlayers(true)) do
             if not affected or affect_all then
                 local wep = ply:GetActiveWeapon()
                 if IsValid(wep) and wep.AllowDrop then
@@ -32,7 +32,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer"}) do
+    for _, v in ipairs({"timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -47,7 +47,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"affectall"}) do
+    for _, v in ipairs({"affectall"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

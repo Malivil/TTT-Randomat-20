@@ -135,7 +135,7 @@ local function ragdollPlayer(v)
     v.spawnInfo = {}
 
     local weps = {}
-    for _, j in pairs(v:GetWeapons()) do
+    for _, j in ipairs(v:GetWeapons()) do
         weps[j.ClassName] = {}
         weps[j.ClassName].Clip = j:Clip1()
         weps[j.ClassName].Reserve = v:GetAmmoCount(j:GetPrimaryAmmoType())
@@ -195,7 +195,7 @@ local function ragdollPlayer(v)
 end
 
 function EVENT:Begin()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         v.inRagdoll = false
         v.lastRagdoll = nil
     end
@@ -203,7 +203,7 @@ function EVENT:Begin()
     local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
     local ragdolldelay = GetConVar("randomat_ragdoll_delay"):GetFloat()
     self:AddHook("Think", function()
-        for _, v in pairs(self:GetAlivePlayers()) do
+        for _, v in ipairs(self:GetAlivePlayers()) do
             -- Turn a player into a ragdoll if they are in the air, not already a ragdoll, not in the water, and haven't been ragdolled recently
             if not v:IsOnGround() and not v.inRagdoll and v:WaterLevel() == 0 and (v.lastRagdoll == nil or (CurTime() - v.lastRagdoll) > (ragdolltime + ragdolldelay)) then
                 local parent = v:GetParent()
@@ -224,8 +224,8 @@ function EVENT:Begin()
         if not IsValid(ent) or ent:GetClass() ~= "prop_ragdoll" then return end
         -- Skip crush damage. This is to prevent taking damage just by turning into a ragdoll
         if dmg:IsDamageType(DMG_CRUSH) then return end
-        for _, v in pairs(player.GetAll()) do
-            for _, j in pairs(ent:GetChildren()) do
+        for _, v in ipairs(player.GetAll()) do
+            for _, j in ipairs(ent:GetChildren()) do
                 if j == v then
                     v.spawnInfo.health = v.spawnInfo.health - dmg:GetDamage()
                     -- Each ragdoll can only represent a single player so stop both loops early
@@ -237,7 +237,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         if v.inRagdoll then
             unragdollPlayer(v)
         end
@@ -247,7 +247,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"time", "delay"}) do
+    for _, v in ipairs({"time", "delay"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

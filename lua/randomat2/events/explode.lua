@@ -13,7 +13,7 @@ function EVENT:Begin()
 
     timer.Create("RandomatExplode",GetConVar("randomat_explode_timer"):GetInt() ,0, function()
         local plys = {}
-        for _, ply in pairs(self:GetAlivePlayers(true)) do
+        for _, ply in ipairs(self:GetAlivePlayers(true)) do
             if ply:GetRole() ~= ROLE_DETECTIVE and ply:GetRole() ~= ROLE_DETRAITOR then
                 table.insert(plys, ply)
             end
@@ -43,7 +43,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer"}) do
+    for _, v in ipairs({"timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

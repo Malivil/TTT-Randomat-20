@@ -8,7 +8,7 @@ EVENT.id = "crabs"
 
 function EVENT:Begin()
     local plys = {}
-    for k, ply in pairs(player.GetAll()) do
+    for k, ply in ipairs(player.GetAll()) do
         if not ply:IsSpec() then
             plys[k] = ply
         end
@@ -34,7 +34,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"count"}) do
+    for _, v in ipairs({"count"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

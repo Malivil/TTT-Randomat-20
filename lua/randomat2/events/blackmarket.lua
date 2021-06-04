@@ -20,7 +20,7 @@ function EVENT:Begin()
     end
 
     -- Reset all target players to 0 credits
-    for _, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsTraitorTeam(ply) or ply:GetRole() == ROLE_DETECTIVE then
             ply:SetCredits(0)
         end
@@ -33,7 +33,7 @@ function EVENT:Begin()
     end
 
     timer.Create("RdmtBlackMarketTraitor", GetConVar("randomat_blackmarket_timer_traitor"):GetInt(), 0, function()
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             if Randomat:IsTraitorTeam(ply) then
                 ply.blackmarketweptries = 0
                 self:GiveWep(ply)
@@ -42,7 +42,7 @@ function EVENT:Begin()
     end)
 
     timer.Create("RdmtBlackMarketDetective", GetConVar("randomat_blackmarket_timer_detective"):GetInt(), 0, function()
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             if ply:GetRole() == ROLE_DETECTIVE then
                 ply.blackmarketweptries = 0
                 self:GiveWep(ply)
@@ -83,7 +83,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer_traitor", "timer_detective"}) do
+    for _, v in ipairs({"timer_traitor", "timer_detective"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -98,7 +98,7 @@ function EVENT:GetConVars()
     end
 
     local textboxes = {}
-    for _, v in pairs({"blocklist"}) do
+    for _, v in ipairs({"blocklist"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

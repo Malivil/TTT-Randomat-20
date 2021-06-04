@@ -8,7 +8,7 @@ CreateConVar("randomat_cantstop_disableback", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, 
 
 function EVENT:Begin()
     local plys = {}
-    for k, v in pairs(player.GetAll()) do
+    for k, v in ipairs(player.GetAll()) do
         plys[k] = v
     end
     self:AddHook("Think", function()
@@ -26,14 +26,14 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         v:ConCommand("-forward")
     end
 end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in pairs({"disableback"}) do
+    for _, v in ipairs({"disableback"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

@@ -16,7 +16,7 @@ AddClient("randomat2/cl_message.lua")
 AddClient("randomat2/cl_networkstrings.lua")
 
 local files, _ = file.Find("randomat2/events/*.lua", "LUA")
-for _, fil in pairs(files) do
+for _, fil in ipairs(files) do
     AddServer("randomat2/events/" .. fil)
 end
 
@@ -51,6 +51,6 @@ if SERVER then
 end
 
 local clientfiles, _ = file.Find("randomat2/cl_events/*.lua", "LUA")
-for _, fil in pairs(clientfiles) do
+for _, fil in ipairs(clientfiles) do
     AddClient("randomat2/cl_events/" .. fil)
 end

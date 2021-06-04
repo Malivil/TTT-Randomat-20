@@ -46,7 +46,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, p in pairs(player.GetAll()) do
+    for _, p in ipairs(player.GetAll()) do
         p.HeadScale = 0
         ScalePlayerHead(p, 1)
     end
@@ -54,7 +54,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"max", "per_kill"}) do
+    for _, v in ipairs({"max", "per_kill"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -69,7 +69,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"steal"}) do
+    for _, v in ipairs({"steal"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

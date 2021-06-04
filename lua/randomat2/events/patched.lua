@@ -8,7 +8,7 @@ EVENT.id = "patched"
 EVENT.AltTitle = "Patched"
 
 function EVENT:Begin()
-    for _, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_GLITCH then
             if math.random(1,100) <= GetConVar("randomat_patched_chance"):GetInt() then
                 Randomat:SetRole(v, ROLE_INNOCENT)
@@ -25,7 +25,7 @@ end
 function EVENT:Condition()
     local i = 0
     local glitch = false
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsInnocentTeam(v) then
             i = i + 1
             if v:GetRole() == ROLE_GLITCH then
@@ -39,7 +39,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"chance"}) do
+    for _, v in ipairs({"chance"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

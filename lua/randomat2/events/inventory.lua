@@ -11,7 +11,7 @@ function EVENT:Begin()
     local ply2 = nil
     timer.Create("RdmtInventoryTimer", GetConVar("randomat_inventory_timer"):GetInt(), 0, function()
         local x = 0
-        for _, v in pairs(self:GetAlivePlayers(true)) do
+        for _, v in ipairs(self:GetAlivePlayers(true)) do
             -- Skip non-prime zombies since they only have claws
             if v:GetRole() ~= ROLE_ZOMBIE or (v.IsZombiePrime and v:IsZombiePrime()) then
                 x = x + 1
@@ -37,7 +37,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"timer"}) do
+    for _, v in ipairs({"timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

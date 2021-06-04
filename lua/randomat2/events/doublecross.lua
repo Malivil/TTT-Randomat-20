@@ -7,7 +7,7 @@ EVENT.Description = "Changes a random vanilla Innocent into either a Glitch or a
 EVENT.id = "doublecross"
 
 function EVENT:Begin()
-    for _, v in pairs(self:GetAlivePlayers(true)) do
+    for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_INNOCENT then
             if math.random(1,100) <= GetConVar("randomat_doublecross_chance"):GetInt() then
                 Randomat:SetRole(v, ROLE_GLITCH)
@@ -25,7 +25,7 @@ function EVENT:Condition()
     local i = 0
     local vanilla = false
     local glitch = false
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsInnocentTeam(v) then
             i = i + 1
 
@@ -43,7 +43,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"chance"}) do
+    for _, v in ipairs({"chance"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

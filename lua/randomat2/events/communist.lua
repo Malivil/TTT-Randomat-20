@@ -25,7 +25,7 @@ function EVENT:Begin()
         end
         TriggerAlert(item, role_name, is_item, ply)
 
-        for _, p in pairs(player.GetAll()) do
+        for _, p in ipairs(player.GetAll()) do
             if is_item then
                 p:GiveEquipmentItem(tonumber(item))
             else
@@ -50,7 +50,7 @@ end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in pairs({"show_roles"}) do
+    for _, v in ipairs({"show_roles"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

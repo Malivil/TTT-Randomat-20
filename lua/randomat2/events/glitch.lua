@@ -29,7 +29,7 @@ function EVENT:Begin()
         gcount = maxglitch
     end
 
-    for _, v in pairs(players) do
+    for _, v in ipairs(players) do
         -- If we have exceeded the maximum number of Glitches, make the remaining players Traitors, even if we have surpassed the configured percent
         if tcount > 0 or (gcount ~= nil and gcount == 0) then
             Randomat:SetRole(v, ROLE_TRAITOR)
@@ -90,7 +90,7 @@ function EVENT:Condition()
     if min_traitors <= 0 then return true end
 
     local t = 0
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsTraitorTeam(v) then
             t = t + 1
         end
@@ -101,7 +101,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"traitor_pct", "damage_scale", "max_glitches", "starting_health", "min_traitors"}) do
+    for _, v in ipairs({"traitor_pct", "damage_scale", "max_glitches", "starting_health", "min_traitors"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -116,7 +116,7 @@ function EVENT:GetConVars()
     end
 
     local textboxes = {}
-    for _, v in pairs({"blocklist"}) do
+    for _, v in ipairs({"blocklist"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

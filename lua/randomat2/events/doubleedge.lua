@@ -11,7 +11,7 @@ local self_damage = {}
 local last_heal = {}
 
 function EVENT:Begin()
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         self_damage[v:SteamID64()] = 0
         last_heal[v:SteamID64()] = nil
     end
@@ -71,7 +71,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"interval", "amount"}) do
+    for _, v in ipairs({"interval", "amount"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

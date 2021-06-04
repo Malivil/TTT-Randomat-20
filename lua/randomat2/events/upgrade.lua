@@ -36,7 +36,7 @@ end
 function EVENT:Begin()
     local choose = CanChooseRole()
     local target = nil
-    for _, ply in pairs(self:GetAlivePlayers(true)) do
+    for _, ply in ipairs(self:GetAlivePlayers(true)) do
         if ply:GetRole() == ROLE_INNOCENT then
             if choose then
                 -- Wait for the notification to go away first
@@ -76,7 +76,7 @@ function EVENT:Condition()
     local has_merc = false
     local has_inno = false
     local has_kil = false
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_MERCENARY then
             has_merc = true
         elseif v:GetRole() == ROLE_KILLER then
@@ -92,7 +92,7 @@ end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in pairs({"chooserole"}) do
+    for _, v in ipairs({"chooserole"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

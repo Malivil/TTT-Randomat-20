@@ -1,7 +1,7 @@
 net.Receive("haloeventtrigger", function()
     hook.Add("PreDrawHalos", "RandomatHalos", function()
         local alivePlys = {}
-        for k, v in pairs(player.GetAll()) do
+        for k, v in ipairs(player.GetAll()) do
             if v:Alive() and not v:IsSpec() then
                 alivePlys[k] = v
             end

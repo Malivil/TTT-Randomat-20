@@ -6,7 +6,7 @@ EVENT.id = "jump"
 CreateConVar("randomat_jump_jesterspam", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show the message multiple times for a Jester/Swapper")
 
 function EVENT:Begin()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         v.rdmtJumps = 0
     end
 
@@ -26,14 +26,14 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         v.rdmtJumps = nil
     end
 end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in pairs({"jesterspam"}) do
+    for _, v in ipairs({"jesterspam"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

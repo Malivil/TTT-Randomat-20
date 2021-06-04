@@ -6,7 +6,7 @@ EVENT.id = "suddendeath"
 
 function EVENT:Begin()
     timer.Create("suddendeathtimer", 1, 0, function()
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             ply:SetHealth(1)
             ply:SetMaxHealth(1)
         end

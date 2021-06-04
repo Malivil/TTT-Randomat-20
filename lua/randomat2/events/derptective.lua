@@ -22,7 +22,7 @@ function EVENT:Begin()
 
     local rof = GetConVar("randomat_derptective_rate_of_fire"):GetInt()
     self:AddHook("Think", function()
-        for _, ply in pairs(self:GetAlivePlayers()) do
+        for _, ply in ipairs(self:GetAlivePlayers()) do
             if ply:GetRole() == ROLE_DETECTIVE or ply:GetRole() == ROLE_DETRAITOR then
                 -- Force the player to use the H.U.G.E.
                 if not ply:HasWeapon("weapon_zm_sledge")  then
@@ -59,7 +59,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(self:GetAlivePlayers()) do
         if ply:GetRole() == ROLE_DETECTIVE or ply:GetRole() == ROLE_DETRAITOR then
             local wep = ply:GetActiveWeapon()
             -- Reverse the changes to the H.U.G.E. if they have one
@@ -76,7 +76,7 @@ end
 
 function EVENT:Condition()
     -- Only run if there is at least one detective/detraitor living
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_DETRAITOR then
             return true
         end
@@ -87,7 +87,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"rate_of_fire"}) do
+    for _, v in ipairs({"rate_of_fire"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

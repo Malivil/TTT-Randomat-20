@@ -17,7 +17,7 @@ function EVENT:Begin(...)
     end
 
     if not IsValid(target) or not target:Alive() or target:GetRole() ~= ROLE_DETECTIVE then
-        for _, v in pairs(self:GetAlivePlayers(true)) do
+        for _, v in ipairs(self:GetAlivePlayers(true)) do
             if v:GetRole() == ROLE_DETECTIVE then
                 has_detective = true
                 target = v
@@ -34,7 +34,7 @@ function EVENT:Begin(...)
 
     self:AddHook("PlayerDeath", function(tgt, dmg, ply)
         if tgt:IsValid() and tgt == target then
-            for _, v in pairs(self:GetAlivePlayers()) do
+            for _, v in ipairs(self:GetAlivePlayers()) do
                 if Randomat:IsInnocentTeam(v) then
                     v:Kill()
                 end
@@ -45,7 +45,7 @@ end
 
 function EVENT:Condition()
     local has_detective = false
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_DETECTIVE then
             has_detective = true
         elseif v:GetRole() == ROLE_DETRAITOR then
@@ -58,7 +58,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"bonushealth"}) do
+    for _, v in ipairs({"bonushealth"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

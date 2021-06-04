@@ -33,7 +33,7 @@ net.Receive("MurderEventActive", function()
         local highlight = net.ReadBool()
         hook.Add("PreDrawHalos", "RandomatMurderGunHighlight", function()
             if not highlight then return end
-            for _, wep in pairs(ents.FindByClass("weapon_ttt_randomatrevolver")) do
+            for _, wep in ipairs(ents.FindByClass("weapon_ttt_randomatrevolver")) do
                 if #table.KeysFromValue(player.GetAll(), wep.Owner) ~= 0 then
                     table.RemoveByValue(Revolvers, wep)
                 elseif #table.KeysFromValue(Revolvers, wep) == 0 then

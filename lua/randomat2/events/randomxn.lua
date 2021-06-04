@@ -25,7 +25,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in pairs(timers) do
+    for _, v in ipairs(timers) do
         timer.Remove(v)
     end
 end
@@ -40,7 +40,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"triggers", "timer"}) do
+    for _, v in ipairs({"triggers", "timer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -55,7 +55,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in pairs({"multiple", "triggerbyotherrandom"}) do
+    for _, v in ipairs({"multiple", "triggerbyotherrandom"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

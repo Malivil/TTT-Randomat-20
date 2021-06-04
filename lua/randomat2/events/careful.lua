@@ -8,7 +8,7 @@ EVENT.id = "careful"
 
 function EVENT:Begin()
     local health = GetConVar("randomat_careful_health"):GetInt()
-    for _, ply in pairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsJesterTeam(ply) then
             ply:SetHealth(health)
             ply:SetMaxHealth(health)
@@ -18,7 +18,7 @@ end
 
 function EVENT:Condition()
     -- Only run if there is at least one jester/swapper living
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsJesterTeam(v) then
             return true
         end
@@ -29,7 +29,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"health"}) do
+    for _, v in ipairs({"health"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

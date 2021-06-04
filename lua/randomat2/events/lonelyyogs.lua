@@ -27,7 +27,7 @@ function EVENT:Begin()
     end);
 
     local plys = {}
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         plys[v:SteamID64()] = v
     end
 
@@ -81,14 +81,14 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in pairs(player.GetAll()) do
+    for _, v in ipairs(player.GetAll()) do
         ClearPlayerData(v:SteamID64())
     end
 end
 
 function EVENT:Condition()
     -- Don't run this if there is a Vampire because they won't be able to use their fangs
-    for _, v in pairs(self:GetAlivePlayers()) do
+    for _, v in ipairs(self:GetAlivePlayers()) do
         if v:GetRole() == ROLE_VAMPIRE then
             return false
         end
@@ -99,7 +99,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in pairs({"interval", "distance"}) do
+    for _, v in ipairs({"interval", "distance"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
