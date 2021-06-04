@@ -15,6 +15,7 @@ local weaponid = nil
 EVENT.Title = "Prop Hunt"
 EVENT.Description = "Forces Innocents to use a Prop Disguiser, changing this to play like the popular gamemode Prop Hunt"
 EVENT.id = "prophunt"
+EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 local function PopulateWeaponId()
     if weaponid ~= nil then return end
@@ -217,7 +218,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    if Randomat:IsEventActive("slam") or Randomat:IsEventActive("harpoon") or Randomat:IsEventActive("ragdoll") or Randomat:IsEventActive("grave") then return false end
+    if Randomat:IsEventActive("ragdoll") then return false end
 
     PopulateWeaponId()
     if util.WeaponForClass(weaponid) == nil then return false end

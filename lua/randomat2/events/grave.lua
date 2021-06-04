@@ -5,6 +5,7 @@ local EVENT = {}
 EVENT.Title = "RISE FROM YOUR GRAVE"
 EVENT.Description = "Causes anyone who dies to be resurrected as a Zombie"
 EVENT.id = "grave"
+EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with", 10, 100)
 
@@ -51,7 +52,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    return ConVarExists("ttt_zombie_enabled") and not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam") and not Randomat:IsEventActive("murder")
+    return ConVarExists("ttt_zombie_enabled")
 end
 
 function EVENT:GetConVars()

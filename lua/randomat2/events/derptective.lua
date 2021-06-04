@@ -16,6 +16,7 @@ end
 EVENT.Title = "Derptective"
 EVENT.Description = GetEventDescription(true)
 EVENT.id = "derptective"
+EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 function EVENT:Begin()
     EVENT.Description = GetEventDescription(ROLE_DETRAITOR ~= -1)

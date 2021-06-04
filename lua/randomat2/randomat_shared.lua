@@ -1,3 +1,8 @@
+-- Event Types
+EVENT_TYPE_DEFAULT = 0
+EVENT_TYPE_WEAPON_OVERRIDE = 1
+
+-- Shared Functions
 function Randomat:IsInnocentTeam(ply, skip_detective)
     local role = ply:GetRole()
     -- Handle this early because IsInnocentTeam doesn't

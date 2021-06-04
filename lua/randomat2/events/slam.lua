@@ -7,6 +7,7 @@ CreateConVar("randomat_slam_weaponid", "weapon_ttt_slam", {FCVAR_ARCHIVE, FCVAR_
 EVENT.Title = "Come on and SLAM!"
 EVENT.Description = "Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the duration of the event"
 EVENT.id = "slam"
+EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
@@ -73,8 +74,6 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    if Randomat:IsEventActive("prophunt") or Randomat:IsEventActive("harpoon") or Randomat:IsEventActive("grave") then return false end
-
     local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
     return util.WeaponForClass(weaponid) ~= nil
 end

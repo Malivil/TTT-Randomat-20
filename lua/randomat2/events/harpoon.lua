@@ -6,6 +6,7 @@ CreateConVar("randomat_harpoon_weaponid", "ttt_m9k_harpoon", {FCVAR_ARCHIVE, FCV
 
 EVENT.Title = "Harpooooooooooooooooooooon!!"
 EVENT.id = "harpoon"
+EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
@@ -72,8 +73,6 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    if Randomat:IsEventActive("slam") or Randomat:IsEventActive("prophunt") or Randomat:IsEventActive("grave") then return false end
-
     local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
     return util.WeaponForClass(weaponid) ~= nil
 end

@@ -8,6 +8,8 @@ CreateConVar("randomat_reload_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, 
 EVENT.Title = "Compulsive Reloading"
 EVENT.Description = "Slowly drains a user's ammo over time if they haven't fired a gun recently"
 EVENT.id = "reload"
+-- Mark this as a weapon override type because the weapons used in weapon override types aren't reloadable
+EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 local playerlastshottime = {}
 local playerlastdraintime = {}
@@ -100,10 +102,6 @@ function EVENT:GetConVars()
     end
 
     return sliders, checks
-end
-
-function EVENT:Condition()
-    return not Randomat:IsEventActive("ammo") and not Randomat:IsEventActive("prophunt") and not Randomat:IsEventActive("harpoon") and not Randomat:IsEventActive("slam")
 end
 
 Randomat:register(EVENT)

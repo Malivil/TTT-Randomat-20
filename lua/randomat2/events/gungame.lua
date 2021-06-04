@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Gun Game"
 EVENT.Description = "Periodically gives players random weapons that would normally be found throughout the map"
 EVENT.id = "gungame"
+EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 CreateConVar("randomat_gungame_timer", 5, {FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Time between weapon changes", 5, 60)
 

@@ -186,6 +186,10 @@ function Randomat:register(tbl)
     if tbl.SingleUse ~= false then
         tbl.SingleUse = true
     end
+    -- Default the event type if it's not specified
+    if tbl.Type == nil then
+        tbl.Type = EVENT_TYPE_DEFAULT
+    end
     setmetatable(tbl, randomat_meta)
 
     Randomat.Events[id] = tbl
@@ -211,6 +215,15 @@ function Randomat:CanEventRun(event)
         event = Randomat.Events[event]
     end
     if event == nil then return false end
+
+    -- Don't allow multiple weapon override events to run at once
+    if event.Type == EVENT_TYPE_WEAPON_OVERRIDE then
+        for _, evt in pairs(Randomat.ActiveEvents) do
+            if evt.Type == EVENT_TYPE_WEAPON_OVERRIDE then
+                return false
+            end
+        end
+    end
 
     local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
     local player_count = player.GetCount()
