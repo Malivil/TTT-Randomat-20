@@ -149,7 +149,7 @@ end
 function Randomat:GetPlayers(shuffle, alive)
     local plys = {}
     for _, ply in ipairs(player.GetAll()) do
-        if IsValid(ply) and (not ply:IsSpec()) and (not alive or ply:Alive()) then
+        if IsValid(ply) and (ply:Alive() or ply:IsSpec() or not alive) then
             table.insert(plys, ply)
         end
     end
