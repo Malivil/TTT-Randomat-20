@@ -149,12 +149,14 @@ end
 function Randomat:GetPlayers(shuffle, alive_only, dead_only)
     local plys = {}
     for _, ply in ipairs(player.GetAll()) do
-        if IsValid(ply) then
-            if (not alive_only and not dead_only) or
-                (alive_only and (ply:Alive() and not ply:IsSpec())) or
-                (dead_only and (not ply:Alive() or ply:IsSpec())) then
-                table.insert(plys, ply)
-            end
+        if IsValid(ply) and
+           -- Anybody
+           ((not alive_only and not dead_only) or
+           -- Alive and non-spec
+            (alive_only and (ply:Alive() and not ply:IsSpec())) or
+           -- Dead or spec
+            (dead_only and (not ply:Alive() or ply:IsSpec()))) then
+            table.insert(plys, ply)
         end
     end
 
