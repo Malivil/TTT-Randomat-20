@@ -146,11 +146,15 @@ function Randomat:GetEventTitle(event)
     return event.Title
 end
 
-function Randomat:GetPlayers(shuffle, alive)
+function Randomat:GetPlayers(shuffle, alive_only, dead_only)
     local plys = {}
     for _, ply in ipairs(player.GetAll()) do
-        if IsValid(ply) and (ply:Alive() or ply:IsSpec() or not alive) then
-            table.insert(plys, ply)
+        if IsValid(ply) then
+            if (not alive_only and not dead_only) or
+                (alive_only and (ply:Alive() and not ply:IsSpec())) or
+                (dead_only and (not ply:Alive() or ply:IsSpec())) then
+                table.insert(plys, ply)
+            end
         end
     end
 
@@ -428,11 +432,19 @@ end
 
 -- Valid players not spec
 function randomat_meta:GetPlayers(shuffle)
-    return Randomat:GetPlayers(shuffle, false)
+    return Randomat:GetPlayers(shuffle)
 end
 
 function randomat_meta:GetAlivePlayers(shuffle)
     return Randomat:GetPlayers(shuffle, true)
+end
+
+function randomat_meta:GetDeadPlayers(shuffle)
+    return Randomat:GetPlayers(shuffle, false, true)
+end
+
+function randomat_meta:SmallNotify(msg, length, targ)
+    Randomat:SmallNotify(msg, length, targ)
 end
 
 function randomat_meta:SmallNotify(msg, length, targ)
