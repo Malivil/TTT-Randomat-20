@@ -447,10 +447,6 @@ function randomat_meta:SmallNotify(msg, length, targ)
     Randomat:SmallNotify(msg, length, targ)
 end
 
-function randomat_meta:SmallNotify(msg, length, targ)
-    Randomat:SmallNotify(msg, length, targ)
-end
-
 function randomat_meta:AddHook(hooktype, callbackfunc)
     callbackfunc = callbackfunc or self[hooktype]
 
