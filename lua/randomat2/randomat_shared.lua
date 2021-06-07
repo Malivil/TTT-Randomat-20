@@ -41,7 +41,7 @@ end
 function Randomat:GetRoleColor(role)
     local color = nil
     if type(ROLE_COLORS) == "table" then
-        color = ROLE_COLORS[role];
+        color = ROLE_COLORS[role]
     end
     -- Don't return the table directly because if the table exists but is missing a role we need to handle that
     if color then return color end
@@ -69,4 +69,24 @@ function Randomat:GetRoleColor(role)
         [ROLE_CLOWN] = Color(255, 80, 235, 255)
     }
     return role_colors[role]
+end
+
+function Randomat:GetValidRoles(roles, check)
+    local valid_roles = {}
+    for _, r in ipairs(roles) do
+        if r ~= -1 and (not check or check(r)) then
+            table.insert(valid_roles, r)
+        end
+    end
+    return valid_roles
+end
+
+function Randomat:GetShopRoles()
+    -- Get the default list of roles
+    local initial_roles = {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY,ROLE_JESTER,ROLE_SWAPPER}
+    if type(SHOP_ROLES) == "table" then
+        initial_roles = SHOP_ROLES
+    end
+
+    return Randomat:GetValidRoles(initial_roles, WEPS.DoesRoleHaveWeapon)
 end

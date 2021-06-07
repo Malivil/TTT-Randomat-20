@@ -52,7 +52,7 @@ function EVENT:Begin()
 end
 
 function EVENT:GiveWep(ply)
-    Randomat:GiveRandomShopItem(ply, {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY}, blocklist, true,
+    Randomat:GiveRandomShopItem(ply, Randomat:GetShopRoles(), blocklist, true,
         -- gettrackingvar
         function()
             return ply.blackmarketweptries

@@ -39,7 +39,7 @@ function ENT:Use(activator, caller)
         table.insert(blocklist, blocked_id:Trim())
     end
 
-    Randomat:GiveRandomShopItem(activator, {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY}, blocklist, false,
+    Randomat:GiveRandomShopItem(activator, Randomat:GetShopRoles(), blocklist, false,
         -- gettrackingvar
         function()
             return activator.packageweptries

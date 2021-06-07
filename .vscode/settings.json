@@ -121,7 +121,8 @@
         "SetGlobalFloat",
         "EQUIP_MAX",
         "RADAR",
-        "FindMetaTable"
+        "FindMetaTable",
+        "SHOP_ROLES"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
