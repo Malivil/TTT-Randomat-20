@@ -8,6 +8,7 @@ util.AddNetworkString("ElectionVoteBegin")
 util.AddNetworkString("ElectionVoteVoted")
 util.AddNetworkString("ElectionVoteReset")
 util.AddNetworkString("ElectionVoteEnd")
+util.AddNetworkString("TTT_DrunkSober")
 
 CreateConVar("randomat_election_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 30, 180)
 CreateConVar("randomat_election_winner_credits", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of credits given as a reward, if appropriate", 1, 10)
@@ -202,13 +203,24 @@ function EVENT:SwearIn(winner)
                 winner:SetNWBool("WasDrunk", true)
                 winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are an innocent.")
                 winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are an innocent.")
+
+                net.Start("TTT_DrunkSober")
+                net.WriteString(winner:Nick())
+                net.WriteString("an innocent")
+                net.Broadcast()
             else
                 winner:SetRole(ROLE_TRAITOR)
                 winner:SetNWBool("WasDrunk", true)
-                winner:SetCredits(1)
+                winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
                 winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are a traitor.")
                 winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are a traitor.")
+
+                net.Start("TTT_DrunkSober")
+                net.WriteString(winner:Nick())
+                net.WriteString("a traitor")
+                net.Broadcast()
             end
+
             SendFullStateUpdate()
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
         elseif winner:GetRole() == ROLE_OLDMAN then
