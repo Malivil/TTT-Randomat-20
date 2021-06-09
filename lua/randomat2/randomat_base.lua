@@ -148,15 +148,20 @@ end
 
 function Randomat:GetPlayers(shuffle, alive_only, dead_only)
     local plys = {}
-    for _, ply in ipairs(player.GetAll()) do
-        if IsValid(ply) and
-           -- Anybody
-           ((not alive_only and not dead_only) or
-           -- Alive and non-spec
-            (alive_only and (ply:Alive() and not ply:IsSpec())) or
-           -- Dead or spec
-            (dead_only and (not ply:Alive() or ply:IsSpec()))) then
-            table.insert(plys, ply)
+    -- Optimize this to get the full raw list if both alive and dead should be included
+    if alive_only == dead_only then
+        plys = player.GetAll()
+    else
+        for _, ply in ipairs(player.GetAll()) do
+            if IsValid(ply) and
+            -- Anybody
+            ((not alive_only and not dead_only) or
+            -- Alive and non-spec
+                (alive_only and (ply:Alive() and not ply:IsSpec())) or
+            -- Dead or spec
+                (dead_only and (not ply:Alive() or ply:IsSpec()))) then
+                table.insert(plys, ply)
+            end
         end
     end
 
