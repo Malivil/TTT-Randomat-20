@@ -85,7 +85,11 @@ function Randomat:GetShopRoles()
     -- Get the default list of roles
     local initial_roles = {ROLE_TRAITOR,ROLE_ASSASSIN,ROLE_HYPNOTIST,ROLE_DETECTIVE,ROLE_MERCENARY,ROLE_JESTER,ROLE_SWAPPER}
     if type(SHOP_ROLES) == "table" then
-        initial_roles = SHOP_ROLES
+        if type(SHOP_ROLES[1]) == "boolean" then
+            initial_roles = table.GetKeys(SHOP_ROLES)
+        else
+            initial_roles = SHOP_ROLES
+        end
     end
 
     return Randomat:GetValidRoles(initial_roles, WEPS.DoesRoleHaveWeapon)
