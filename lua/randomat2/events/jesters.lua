@@ -7,14 +7,14 @@ function EVENT:Begin()
     local tx = 0
     local dx = 0
     for _, ply in ipairs(self:GetAlivePlayers(true)) do
-        if (ply:GetRole() == ROLE_TRAITOR and tx == 0) or (ply:GetRole() == ROLE_DETECTIVE and dx == 0) then
-            if ply:GetRole() ~= ROLE_DETECTIVE then
-                tx = 1
-                ply:SetMaxHealth(100)
-            else
+        if (ply:GetRole() == ROLE_TRAITOR and tx == 0) or (Randomat:IsGoodDetectiveLike(ply) and dx == 0) then
+            if Randomat:IsGoodDetectiveLike(ply) then
                 dx = 1
                 ply:SetHealth(200)
                 ply:SetMaxHealth(200)
+            else
+                tx = 1
+                ply:SetMaxHealth(100)
             end
         else
             Randomat:SetRole(ply, ROLE_JESTER)
@@ -48,7 +48,7 @@ function EVENT:Condition()
     local has_detective = false
     local has_traitor = false
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_DETECTIVE then
+        if Randomat:IsGoodDetectiveLike(v) then
             has_detective = true
         elseif v:GetRole() == ROLE_TRAITOR then
             has_traitor = true

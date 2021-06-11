@@ -51,7 +51,7 @@ function EVENT:Begin()
     net.Broadcast()
 
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_DETECTIVE then
+        if Randomat:IsGoodDetectiveLike(v) then
             timer.Create("RandomatRevolverTimer", 0.15, 1, function()
                 self:StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatrevolver")
@@ -157,7 +157,7 @@ function EVENT:Condition()
     local has_detective = false
     local t = 0
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_DETECTIVE then
+        if Randomat:IsGoodDetectiveLike(v) then
             has_detective = true
         elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) then
             t = t+1

@@ -16,9 +16,9 @@ function EVENT:Begin(...)
         target = params[1]
     end
 
-    if not IsValid(target) or not target:Alive() or target:GetRole() ~= ROLE_DETECTIVE then
+    if not IsValid(target) or not target:Alive() or not Randomat:IsGoodDetectiveLike(target) then
         for _, v in ipairs(self:GetAlivePlayers(true)) do
-            if v:GetRole() == ROLE_DETECTIVE then
+            if Randomat:IsGoodDetectiveLike(v) then
                 has_detective = true
                 target = v
             end
@@ -46,10 +46,11 @@ end
 function EVENT:Condition()
     local has_detective = false
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_DETECTIVE then
-            has_detective = true
-        elseif v:GetRole() == ROLE_DETRAITOR then
+        -- If there is a detraitor or a promoted impersonator, don't run this because it makes their jobs too easy
+        if Randomat:IsEvilDetectiveLike(v) then
             return false
+        elseif Randomat:IsGoodDetectiveLike(v) then
+            has_detective = true
         end
     end
 

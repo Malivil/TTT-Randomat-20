@@ -506,44 +506,47 @@ end
 function randomat_meta:GetConVars() end
 
 -- What role is a player?
-function randomat_meta:GetRoleName(ply, hide_detraitor)
-    if ply:GetRole() == ROLE_TRAITOR then
+function randomat_meta:GetRoleName(ply, hide_secret_roles)
+    local role = ply:GetRole()
+    if role == ROLE_TRAITOR then
         return "A traitor"
-    elseif ply:GetRole() == ROLE_HYPNOTIST then
+    elseif role == ROLE_HYPNOTIST then
         return "A hypnotist"
-    elseif ply:GetRole() == ROLE_ASSASSIN then
+    elseif role == ROLE_ASSASSIN then
         return "An assassin"
-    elseif ply:GetRole() == ROLE_DETECTIVE or (ply:GetRole() == ROLE_DETRAITOR and hide_detraitor) then
+    -- Hide detraitors so they don't get outed
+    elseif role == ROLE_DETECTIVE or (hide_secret_roles and role == ROLE_DETRAITOR) then
         return "A detective"
-    elseif ply:GetRole() == ROLE_MERCENARY then
+    elseif role == ROLE_MERCENARY then
         return "A mercenary"
-    elseif ply:GetRole() == ROLE_ZOMBIE then
+    elseif role == ROLE_ZOMBIE then
         return "A zombie"
-    elseif ply:GetRole() == ROLE_VAMPIRE then
+    elseif role == ROLE_VAMPIRE then
         return "A vampire"
-    elseif ply:GetRole() == ROLE_KILLER then
+    elseif role == ROLE_KILLER then
         return "A killer"
-    elseif ply:GetRole() == ROLE_INNOCENT then
+    elseif role == ROLE_INNOCENT then
         return "An innocent"
-    elseif ply:GetRole() == ROLE_GLITCH then
+    elseif role == ROLE_GLITCH then
         return "A glitch"
-    elseif ply:GetRole() == ROLE_PHANTOM then
+    elseif role == ROLE_PHANTOM then
         return "A phantom"
-    elseif ply:GetRole() == ROLE_DETRAITOR then
+    elseif role == ROLE_DETRAITOR then
         return "A detraitor"
-    elseif ply:GetRole() == ROLE_REVENGER then
+    elseif role == ROLE_REVENGER then
         return "A revenger"
-    elseif ply:GetRole() == ROLE_DRUNK then
+    elseif role == ROLE_DRUNK then
         return "A drunk"
-    elseif ply:GetRole() == ROLE_CLOWN then
+    elseif role == ROLE_CLOWN then
         return "A clown"
-    elseif ply:GetRole() == ROLE_DEPUTY then
+    -- Hide imposters so they don't get outed
+    elseif role == ROLE_DEPUTY or (hide_secret_roles and role == ROLE_IMPERSONATOR) then
         return "A deputy"
-    elseif ply:GetRole() == ROLE_IMPERSONATOR then
+    elseif role == ROLE_IMPERSONATOR then
         return "An impersonator"
-    elseif ply:GetRole() == ROLE_BEGGAR then
+    elseif role == ROLE_BEGGAR then
         return "A beggar"
-    elseif ply:GetRole() == ROLE_OLDMAN then
+    elseif role == ROLE_OLDMAN then
         return "An old man"
     end
 
@@ -643,7 +646,7 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
         -- Reset FOV to unscope
         ply:SetFOV(0, 0.2)
 
-        -- Have Zombies keep their claws, Hypnotists keep their brainwashing device, and Detective/Detraitors keep their DNA Scanners
+        -- Have Zombies keep their claws, Hypnotists keep their brainwashing device, and Detective-like players keep their DNA Scanners
         if ply:GetRole() == ROLE_ZOMBIE then
             ply:Give("weapon_zom_claws")
         elseif had_brainwash then

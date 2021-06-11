@@ -16,8 +16,8 @@ net.Receive("ElectionNominateBegin", function()
     list:AddColumn("Votes")
 
     for _, v in ipairs(player.GetAll()) do
-        -- Don't allow dead people, spectators, detectives, and detraitors to get nominated
-        if v:Alive() and not v:IsSpec() and v:GetRole() ~= ROLE_DETECTIVE and v:GetRole() ~= ROLE_DETRAITOR then
+        -- Don't allow dead people, spectators, and detective-like players to get nominated
+        if v:Alive() and not v:IsSpec() and not Randomat:IsDetectiveLike(v) then
             list:AddLine(v:Nick(), 0)
         end
     end

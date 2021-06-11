@@ -2,12 +2,14 @@ local EVENT = {}
 
 CreateConVar("randomat_derptective_rate_of_fire", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Rate of Fire multiplier for the H.U.G.E.", 2, 5)
 
-local function GetEventDescription(has_detraitor)
+local function GetEventDescription(has_detraitor, has_deputy_and_imposter)
     local msg = "Forces the detective(s)"
 
-    -- Only mention Detraitors if that role actually exists
+    -- Only mention roles that actually exist
     if has_detraitor then
         msg = msg .. " and detraitor(s)"
+    elseif has_deputy_and_imposter then
+        msg = msg .. " and promoted detective-like player(s)"
     end
 
     return msg .. " to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire"
@@ -19,12 +21,12 @@ EVENT.id = "derptective"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 function EVENT:Begin()
-    EVENT.Description = GetEventDescription(ROLE_DETRAITOR ~= -1)
+    EVENT.Description = GetEventDescription(ROLE_DETRAITOR ~= -1, ROLE_DEPUTY ~= -1 and ROLE_IMPERSONATOR ~= -1)
 
     local rof = GetConVar("randomat_derptective_rate_of_fire"):GetInt()
     self:AddHook("Think", function()
         for _, ply in ipairs(self:GetAlivePlayers()) do
-            if ply:GetRole() == ROLE_DETECTIVE or ply:GetRole() == ROLE_DETRAITOR then
+            if Randomat:IsDetectiveLike(ply) then
                 -- Force the player to use the H.U.G.E.
                 if not ply:HasWeapon("weapon_zm_sledge")  then
                     ply:StripWeapons()
@@ -53,7 +55,7 @@ function EVENT:Begin()
     -- Disallow them from picking up new weapons
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         if not IsValid(ply) then return end
-        if ply:GetRole() == ROLE_DETECTIVE or ply:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsDetectiveLike(ply) then
             return WEPS.GetClass(wep) == "weapon_zm_sledge"
         end
     end)
@@ -61,7 +63,7 @@ end
 
 function EVENT:End()
     for _, ply in ipairs(self:GetAlivePlayers()) do
-        if ply:GetRole() == ROLE_DETECTIVE or ply:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsDetectiveLike(ply) then
             local wep = ply:GetActiveWeapon()
             -- Reverse the changes to the H.U.G.E. if they have one
             if IsValid(wep) and WEPS.GetClass(wep) == "weapon_zm_sledge" then
@@ -76,9 +78,9 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    -- Only run if there is at least one detective/detraitor living
+    -- Only run if there is at least one detective-like player living
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if v:GetRole() == ROLE_DETECTIVE or v:GetRole() == ROLE_DETRAITOR then
+        if Randomat:IsDetectiveLike(v) then
             return true
         end
     end

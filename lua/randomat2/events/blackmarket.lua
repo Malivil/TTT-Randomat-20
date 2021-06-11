@@ -21,7 +21,7 @@ function EVENT:Begin()
 
     -- Reset all target players to 0 credits
     for _, ply in ipairs(self:GetAlivePlayers()) do
-        if Randomat:IsTraitorTeam(ply) or ply:GetRole() == ROLE_DETECTIVE then
+        if Randomat:IsTraitorTeam(ply) or Randomat:IsGoodDetectiveLike(ply) then
             ply:SetCredits(0)
         end
     end
@@ -43,7 +43,7 @@ function EVENT:Begin()
 
     timer.Create("RdmtBlackMarketDetective", GetConVar("randomat_blackmarket_timer_detective"):GetInt(), 0, function()
         for _, ply in ipairs(self:GetAlivePlayers()) do
-            if ply:GetRole() == ROLE_DETECTIVE then
+            if Randomat:IsGoodDetectiveLike(ply) then
                 ply.blackmarketweptries = 0
                 self:GiveWep(ply)
             end
@@ -79,6 +79,17 @@ function EVENT:End()
         end
         oldSetCredits = nil
     end
+end
+
+function EVENT:Condition()
+    -- Only run if there is at least one detective-like player living
+    for _, v in ipairs(self:GetAlivePlayers()) do
+        if Randomat:IsGoodDetectiveLike(v) then
+            return true
+        end
+    end
+
+    return false
 end
 
 function EVENT:GetConVars()

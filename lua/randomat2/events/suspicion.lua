@@ -10,22 +10,22 @@ EVENT.SingleUse = false
 
 function EVENT:Begin()
     local traitor = {}
-    local suspicionply = 0
+    local suspicionply = nil
 
     for _, v in ipairs(self:GetAlivePlayers(true)) do
-        if Randomat:IsTraitorTeam(v) then
+        if Randomat:IsTraitorTeam(v, true) then
             table.insert(traitor, v)
-            if suspicionply == 0 then
+            if suspicionply == nil then
                 suspicionply = v
             end
         elseif Randomat:IsInnocentTeam(v, true) then
             suspicionply = v
-        elseif suspicionply == 0 and v:GetRole() ~= ROLE_DETECTIVE then
+        elseif suspicionply == nil and not Randomat:IsDetectiveLike(v) then
             suspicionply = v
         end
     end
 
-    if suspicionply ~= 0 then
+    if suspicionply ~= nil then
         Randomat:EventNotifySilent(suspicionply:Nick().." is acting suspicious...")
 
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
