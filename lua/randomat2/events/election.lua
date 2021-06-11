@@ -225,7 +225,7 @@ function EVENT:SwearIn(winner)
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
         elseif winner:GetRole() == ROLE_OLDMAN then
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their frailty has spread to the rest of you.")
-            Randomat:SilentTriggerEvent("suddendeath")
+            Randomat:SilentTriggerEvent("suddendeath", winner, {GetConVar("ttt_old_man_starting_health"):GetInt()})
         -- Innocent - Promote to Detective, give credits
         elseif Randomat:IsInnocentTeam(winner) then
             Randomat:SetRole(winner, ROLE_DETECTIVE)
