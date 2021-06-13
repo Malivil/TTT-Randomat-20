@@ -6,7 +6,10 @@ CreateConVar("randomat_prophunt_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time 
 CreateConVar("randomat_prophunt_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether the event strips your other weapons")
 CreateConVar("randomat_prophunt_blind_time", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long to blind the hunters for at the start", 0, 60)
 CreateConVar("randomat_prophunt_round_time", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How many seconds the Prop Hunt round should last", 0, 600)
+CreateConVar("randomat_prophunt_damage_scale", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Damage scale when a hunter shoots a wrong prop", 0, 2)
 CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
+CreateConVar("randomat_prophunt_regen_timer", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often the hunters will regen health", 0, 60)
+CreateConVar("randomat_prophunt_regen_health", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health the hunters will heal", 1, 10)
 
 local cvar_states = {}
 local default_weaponids = {"weapon_ttt_prop_disguiser", "weapon_ttt_prophide"}
@@ -173,6 +176,22 @@ function EVENT:Begin()
         end
     end)
 
+    local regenHealth = GetConVar("randomat_prophunt_regen_health"):GetInt()
+    local regenTimer = GetConVar("randomat_prophunt_regen_timer"):GetInt()
+    if regenHealth > 0 and regenTimer > 0 then
+        timer.Create("RandomatPropHuntHealTimer", regenTimer, 0, function()
+            for _, ply in ipairs(self:GetAlivePlayers()) do
+                if ply:GetRole() == ROLE_TRAITOR then
+                    local health = ply:Health()
+                    local maxHealth = ply:GetMaxHealth()
+
+                    health = math.min(health + regenHealth, maxHealth)
+                    ply:SetHealth(health)
+                end
+            end
+        end)
+    end
+
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         if not GetConVar("randomat_prophunt_strip"):GetBool() then return end
         -- Invalid, dead, spectator, and traitor players can pickup whatever they want
@@ -199,7 +218,8 @@ function EVENT:Begin()
         -- If the thing they attacked is not a disguise then they should take the damage
         -- This property is added by the Prop Disguiser [310403737] (and the Prop Disguiser Improved [2127939503])
         if not ent.IsADisguise then
-            att:TakeDamage(dmginfo:GetDamage(), att, att:GetActiveWeapon())
+            local damage_scale = GetConVar("randomat_prophunt_damage_scale"):GetFloat()
+            att:TakeDamage(dmginfo:GetDamage() * damage_scale, att, att:GetActiveWeapon())
         end
     end)
 end
@@ -215,6 +235,7 @@ function EVENT:End()
     end
 
     timer.Remove("RandomatPropHuntTimer")
+    timer.Remove("RandomatPropHuntHealTimer")
 end
 
 function EVENT:Condition()
@@ -238,7 +259,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in ipairs({"timer", "blind_time", "round_time"}) do
+    for _, v in ipairs({"timer", "blind_time", "round_time", "regen_timer", "regen_health", "damage_scale"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -247,7 +268,7 @@ function EVENT:GetConVars()
                 dsc = convar:GetHelpText(),
                 min = convar:GetMin(),
                 max = convar:GetMax(),
-                dcm = 0
+                dcm = v == "damage_scale" and 1 or 0
             })
         end
     end
