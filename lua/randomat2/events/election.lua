@@ -381,12 +381,12 @@ function EVENT:SwearIn(winner)
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if turninnocents then
                     if Randomat:IsInnocentTeam(v) then
-                        v:StripWeapon("weapon_ttt_wtester")
+                        self:StripRoleWeapons(v)
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end
                 else
                     if Randomat:IsTraitorTeam(v) then
-                        v:StripWeapon("weapon_hyp_brainwash")
+                        self:StripRoleWeapons(v)
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end
                 end

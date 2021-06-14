@@ -25,6 +25,8 @@ ROLE_DEPUTY = ROLE_DEPUTY or -1
 ROLE_IMPERSONATOR = ROLE_IMPERSONATOR or -1
 ROLE_BEGGAR = ROLE_BEGGAR or -1
 ROLE_OLDMAN = ROLE_OLDMAN or -1
+ROLE_BODYSNATCHER = ROLE_BODYSNATCHER or -1
+ROLE_VETERAN = ROLE_VETERAN or -1
 
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = {}
@@ -181,6 +183,10 @@ function Randomat:GetValidPlayer(ply)
 end
 
 function Randomat:SetRole(ply, role)
+    -- Reset the Veteran damage bonus
+    if ply:GetRole() == ROLE_VETERAN then
+        ply:SetNWBool("VeteranActive", false)
+    end
     ply:SetRole(role)
 
     net.Start("TTT_RoleChanged")
@@ -591,6 +597,12 @@ function randomat_meta:StripRoleWeapons(ply)
     if ply:HasWeapon("weapon_hyp_brainwash") then
         ply:StripWeapon("weapon_hyp_brainwash")
     end
+    if ply:HasWeapon("weapon_ttt_brainwash") then
+        ply:StripWeapon("weapon_ttt_brainwash")
+    end
+    if ply:HasWeapon("weapon_ttt_bodysnatch") then
+        ply:StripWeapon("weapon_ttt_bodysnatch")
+    end
     if ply:HasWeapon("weapon_vam_fangs") then
         ply:StripWeapon("weapon_vam_fangs")
     end
@@ -639,18 +651,26 @@ function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
 end
 
 function randomat_meta:SwapWeapons(ply, weapons, from_killer)
-    local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
+    local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash") or ply:HasWeapon("weapon_ttt_brainwash")
+    local had_bodysnatch = ply:HasWeapon("weapon_ttt_bodysnatch")
     local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
     self:HandleWeaponAddAndSelect(ply, function()
         ply:StripWeapons()
         -- Reset FOV to unscope
         ply:SetFOV(0, 0.2)
 
-        -- Have Zombies keep their claws, Hypnotists keep their brainwashing device, and Detective-like players keep their DNA Scanners
+        -- Have Zombies keep their claws, Hypnotists keep their brainwashing device, Bodysnatchers keep their snatching devices, and Detective-like players keep their DNA Scanners
         if ply:GetRole() == ROLE_ZOMBIE then
             ply:Give("weapon_zom_claws")
         elseif had_brainwash then
-            ply:Give("weapon_hyp_brainwash")
+            -- Give back whichever version exists
+            if weapons.Get("weapon_hyp_brainwash") ~= nil then
+                ply:Give("weapon_hyp_brainwash")
+            elseif weapons.Get("weapon_ttt_brainwash") ~= nil then
+                ply:Give("weapon_ttt_brainwash")
+            end
+        elseif had_bodysnatch then
+            ply:Give("weapon_ttt_bodysnatch")
         elseif had_scanner then
             ply:Give("weapon_ttt_wtester")
         elseif ply:GetRole() == ROLE_KILLER and ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
