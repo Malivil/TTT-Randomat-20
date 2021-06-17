@@ -5,8 +5,8 @@ EVENT_TYPE_WEAPON_OVERRIDE = 1
 -- Shared Functions
 function Randomat:IsInnocentTeam(ply, skip_detective)
     -- Handle this early because IsInnocentTeam doesn't
-    if skip_detective and Randomat:IsGoodDetectiveLike(ply) then
-        return false
+    if skip_detective and Randomat:IsDetectiveLike(ply, false) then 
+        return false 
     end
     if ply.IsInnocentTeam then return ply:IsInnocentTeam() end
     local role = ply:GetRole()
@@ -15,8 +15,8 @@ end
 
 function Randomat:IsTraitorTeam(ply, skip_evil_detective)
     -- Handle this early because IsTraitorTeam doesn't
-    if skip_evil_detective and Randomat:IsEvilDetectiveLike(ply) then
-        return false
+    if skip_evil_detective and Randomat:IsDetectiveLike(ply, true) then 
+        return false 
     end
     if player.IsTraitorTeam then return player.IsTraitorTeam(ply) end
     if ply.IsTraitorTeam then return ply:IsTraitorTeam() end
@@ -42,20 +42,15 @@ function Randomat:IsIndependentTeam(ply)
     return role == ROLE_KILLER
 end
 
-function Randomat:IsDetectiveLike(ply)
-    if ply.IsDetectiveLike then return ply:IsDetectiveLike() end
+function Randomat:IsDetectiveLike(ply, evil_detective)
     local role = ply:GetRole()
-    return role == ROLE_DETECTIVE or ROLE_DETRAITOR
-end
-
-function Randomat:IsGoodDetectiveLike(ply)
-    local role = ply:GetRole()
-    return role == ROLE_DETECTIVE or (Randomat:IsDetectiveLike(ply) and Randomat:IsInnocentTeam(ply))
-end
-
-function Randomat:IsEvilDetectiveLike(ply)
-    local role = ply:GetRole()
-    return role == ROLE_DETRAITOR or (Randomat:IsDetectiveLike(ply) and Randomat:IsTraitorTeam(ply))
+    if evil_detective then
+        if ply.IsDetectiveLike then return ply:IsDetectiveLike() and ply:IsTraitorTeam() end
+        return role == ROLE_DETRAITOR
+    else
+        if ply.IsDetectiveLike then return ply:IsDetectiveLike() and ply:IsInnocentTeam() end
+        return role == ROLE_DETECTIVE
+    end
 end
 
 function Randomat:GetRoleColor(role)
