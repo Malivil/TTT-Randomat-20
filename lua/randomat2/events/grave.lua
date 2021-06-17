@@ -19,7 +19,7 @@ function EVENT:Begin(...)
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
         timer.Create(victim:SteamID64() .. "RdmtZombieTimer", 0.25, 1, function()
-            if (filter_class == nil or (IsValid(killer) and killer:GetClass() == filter_class)) and not victim:Alive() and victim:GetRole() ~= ROLE_ZOMBIE and victim:GetPData("IsZombifying", 0) ~= 1 then
+            if (filter_class == nil or (IsValid(killer) and killer:GetClass() == filter_class)) and not victim:Alive() and victim:GetRole() ~= ROLE_ZOMBIE and victim:GetPData("IsZombifying", 0) ~= 1 and not victim:GetNWBool("IsZombifying", false) then
                 net.Start("TTT_Zombified")
                 net.WriteString(victim:Nick())
                 net.Broadcast()
