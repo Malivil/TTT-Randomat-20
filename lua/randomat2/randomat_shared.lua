@@ -45,7 +45,7 @@ end
 function Randomat:IsDetectiveLike(ply)
     if ply.IsDetectiveLike then return ply:IsDetectiveLike() end
     local role = ply:GetRole()
-    return role == ROLE_DETECTIVE or ROLE_DETRAITOR
+    return role == ROLE_DETECTIVE or role == ROLE_DETRAITOR
 end
 
 function Randomat:IsGoodDetectiveLike(ply)
