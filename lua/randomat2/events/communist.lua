@@ -18,7 +18,9 @@ local function TriggerAlert(item, role, is_item, ply)
 end
 
 function EVENT:Begin()
-    self:AddHook("TTTOrderedEquipment", function(ply, item, is_item)
+    self:AddHook("TTTOrderedEquipment", function(ply, item, is_item, fromrdmt)
+        if fromrdmt then return end
+
         local role_name = self:GetRoleName(ply, true)
         if not GetConVar("randomat_communist_show_roles"):GetBool() then
             role_name = "Someone"
@@ -32,7 +34,7 @@ function EVENT:Begin()
                 p:Give(item)
             end
 
-            Randomat:CallShopHooks(p, item, is_item)
+            Randomat:CallShopHooks(is_item, item, p)
         end
     end)
 

@@ -422,7 +422,7 @@ function Randomat:GiveRandomShopItem(ply, roles, blocklist, include_equipment, g
 end
 
 function Randomat:CallShopHooks(isequip, id, ply)
-    hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, isequip)
+    hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, isequip, true)
     net.Start("TTT_BoughtItem")
     net.WriteBit(isequip)
     if isequip then
