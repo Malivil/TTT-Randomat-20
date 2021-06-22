@@ -18,10 +18,11 @@ function EVENT:Begin()
                 if GetConVar("randomat_cantstop_disableback"):GetBool() then
                     v:ConCommand("-back")
                 end
-            else
-                v:ConCommand("-forward")
             end
         end
+    end)
+    self:AddHook("PostPlayerDeath", function(v)
+        v:ConCommand("-forward")
     end)
 end
 
