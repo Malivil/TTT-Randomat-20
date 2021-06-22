@@ -122,7 +122,8 @@
         "EQUIP_MAX",
         "RADAR",
         "FindMetaTable",
-        "SHOP_ROLES"
+        "SHOP_ROLES",
+        "IN_DUCK"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

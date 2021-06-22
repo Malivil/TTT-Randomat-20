@@ -1,4 +1,6 @@
+local hardmode = false
 net.Receive("OppositeDayBegin", function()
+    hardmode = net.ReadBool()
     hook.Add("StartCommand", "RdmtOppositeCommandHook", function(ply, cmd)
         -- Make the player move the opposite direction, but only if they aren't on a ladder
         cmd:SetForwardMove(-cmd:GetForwardMove())
@@ -10,6 +12,14 @@ net.Receive("OppositeDayBegin", function()
         elseif cmd:KeyDown(IN_RELOAD) then
             cmd:RemoveKey(IN_RELOAD)
             cmd:SetButtons(cmd:GetButtons() + IN_ATTACK)
+        elseif hardmode then
+            if cmd:KeyDown(IN_JUMP) then
+                cmd:RemoveKey(IN_JUMP)
+                cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
+            elseif cmd:KeyDown(IN_DUCK) then
+                cmd:RemoveKey(IN_DUCK)
+                cmd:SetButtons(cmd:GetButtons() + IN_JUMP)
+            end
         end
     end)
 
