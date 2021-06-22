@@ -11,24 +11,36 @@ function EVENT:Begin()
     for k, v in ipairs(player.GetAll()) do
         plys[k] = v
     end
+
     self:AddHook("Think", function()
+        local backwards = Randomat:IsEventActive("opposite")
         for _, v in pairs(plys) do
             if v:Alive() and not v:IsSpec() then
-                v:ConCommand("+forward")
+                if backwards then
+                    v:ConCommand("+back")
+                else
+                    v:ConCommand("+forward")
+                end
                 if GetConVar("randomat_cantstop_disableback"):GetBool() then
-                    v:ConCommand("-back")
+                    if backwards then
+                        v:ConCommand("-forward")
+                    else
+                        v:ConCommand("-back")
+                    end
                 end
             end
         end
     end)
     self:AddHook("PostPlayerDeath", function(v)
         v:ConCommand("-forward")
+        v:ConCommand("-back")
     end)
 end
 
 function EVENT:End()
     for _, v in ipairs(player.GetAll()) do
         v:ConCommand("-forward")
+        v:ConCommand("-back")
     end
 end
 
