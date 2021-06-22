@@ -647,7 +647,7 @@ _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
 
 ## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
 This one is pretty self-explanitory except for the "Detective is stronger" part. That just means the detective has 200 health.\
-NOTE: This event is automatically disabled if my version of [Custom Roles for TTT](https://steamcommunity.com/sharedfiles/filedetails/?id=2045444087) (or another compatible version) is not used. This is due to an issue with the original Custom Roles for TTT where the round would not end if a Jester was killed and there were multiple Jesters.
+NOTE: This event is automatically disabled in the outdated version of Custom Roles for TTT. This is due to an issue where the round would not end if a Jester was killed and there were multiple Jesters.
 \
 \
 **ConVars**
@@ -657,13 +657,14 @@ _ttt_randomat_jesters_min_players_ - Default: 0 - The minimum number of players 
 
 ## Opposite Day
 Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.\
-NOTE: Sprinting may only work when going backwards if my version of [Custom Roles for TTT](https://steamcommunity.com/sharedfiles/filedetails/?id=2045444087) is not used.
+NOTE: Sprinting will only work when going backwards in the outdated version of Custom Roles for TTT.
 \
 \
 **ConVars**
 \
 _ttt_randomat_opposite_ - Default: 1 - Whether this event is enabled.\
-_ttt_randomat_opposite_min_players_ - Default: 0 - The minimum number of players required for this event to start.
+_ttt_randomat_opposite_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_randomat_opposite_hardmode_ - Default: 1 - Whether to enable hard mode and switch Jump/Crouch.
 
 ## Prop Hunt
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
