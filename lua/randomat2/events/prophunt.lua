@@ -18,7 +18,9 @@ local weaponid = nil
 EVENT.Title = "Prop Hunt"
 EVENT.Description = "Forces Innocents to use a Prop Disguiser, changing this to play like the popular gamemode Prop Hunt"
 EVENT.id = "prophunt"
-EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+if GetConVar("randomat_prophunt_strip"):GetBool() then
+    EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+end
 
 local function PopulateWeaponId()
     if weaponid ~= nil then return end
@@ -136,6 +138,7 @@ function EVENT:Begin()
     end
     SendFullStateUpdate()
 
+    local strip = GetConVar("randomat_prophunt_strip"):GetBool()
     local traitors_blinded = false
     timer.Create("RandomatPropHuntTimer", GetConVar("randomat_prophunt_timer"):GetInt(), 0, function()
         if not traitors_blinded then
@@ -149,7 +152,7 @@ function EVENT:Begin()
         local updated = false
         for _, ply in ipairs(self:GetAlivePlayers()) do
             if ply:GetRole() == ROLE_INNOCENT then
-                if GetConVar("randomat_prophunt_strip"):GetBool() then
+                if strip then
                     for _, wep in ipairs(ply:GetWeapons()) do
                         local weaponclass = WEPS.GetClass(wep)
                         if weaponclass ~= weaponid then
@@ -193,7 +196,7 @@ function EVENT:Begin()
     end
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
-        if not GetConVar("randomat_prophunt_strip"):GetBool() then return end
+        if not strip then return end
         -- Invalid, dead, spectator, and traitor players can pickup whatever they want
         if not IsValid(ply) or not ply:Alive() or ply:IsSpec() or ply:GetRole() == ROLE_TRAITOR then
             return

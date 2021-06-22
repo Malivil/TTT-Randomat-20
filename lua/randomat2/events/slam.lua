@@ -7,7 +7,9 @@ CreateConVar("randomat_slam_weaponid", "weapon_ttt_slam", {FCVAR_ARCHIVE, FCVAR_
 EVENT.Title = "Come on and SLAM!"
 EVENT.Description = "Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the duration of the event"
 EVENT.id = "slam"
-EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+if GetConVar("randomat_slam_strip"):GetBool() then
+    EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+end
 
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
@@ -33,11 +35,12 @@ function EVENT:Begin()
     end
     SendFullStateUpdate()
 
+    local strip = GetConVar("randomat_slam_strip"):GetBool()
     timer.Create("RandomatSlamTimer", GetConVar("randomat_slam_timer"):GetInt(), 0, function()
         local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
         local updated = false
         for _, ply in ipairs(self:GetAlivePlayers()) do
-            if GetConVar("randomat_slam_strip"):GetBool() then
+            if strip then
                 for _, wep in ipairs(ply:GetWeapons()) do
                     local weaponclass = WEPS.GetClass(wep)
                     if weaponclass ~= weaponid then
@@ -64,7 +67,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
-        if not GetConVar("randomat_slam_strip"):GetBool() then return end
+        if not strip then return end
         return IsValid(wep) and WEPS.GetClass(wep) == GetConVar("randomat_slam_weaponid"):GetString()
     end)
 end

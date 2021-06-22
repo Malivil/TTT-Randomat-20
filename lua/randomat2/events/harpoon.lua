@@ -6,7 +6,9 @@ CreateConVar("randomat_harpoon_weaponid", "ttt_m9k_harpoon", {FCVAR_ARCHIVE, FCV
 
 EVENT.Title = "Harpooooooooooooooooooooon!!"
 EVENT.id = "harpoon"
-EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+if GetConVar("randomat_harpoon_strip"):GetBool() then
+    EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+end
 
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
@@ -32,11 +34,12 @@ function EVENT:Begin()
     end
     SendFullStateUpdate()
 
+    local strip = GetConVar("randomat_harpoon_strip"):GetBool()
     timer.Create("RandomatPoonTimer", GetConVar("randomat_harpoon_timer"):GetInt(), 0, function()
         local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
         local updated = false
         for _, ply in ipairs(self:GetAlivePlayers()) do
-            if GetConVar("randomat_harpoon_strip"):GetBool() then
+            if strip then
                 for _, wep in ipairs(ply:GetWeapons()) do
                     local weaponclass = WEPS.GetClass(wep)
                     if weaponclass ~= weaponid then
@@ -63,7 +66,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
-        if not GetConVar("randomat_harpoon_strip"):GetBool() then return end
+        if not strip then return end
         return IsValid(wep) and WEPS.GetClass(wep) == GetConVar("randomat_harpoon_weaponid"):GetString()
     end)
 end
