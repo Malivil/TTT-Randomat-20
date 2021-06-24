@@ -17,9 +17,13 @@ function EVENT:Begin()
                 ply:SetMaxHealth(100)
             end
         else
-            Randomat:SetRole(ply, ROLE_JESTER)
             ply:SetCredits(0)
             ply:SetMaxHealth(100)
+            -- Heal the Old Man back to full when they are converted
+            if ply:GetRole() == ROLE_OLDMAN then
+                ply:SetHealth(100)
+            end
+            Randomat:SetRole(ply, ROLE_JESTER)
             for _, wep in ipairs(ply:GetWeapons()) do
                 if wep.Kind == WEAPON_EQUIP1 or wep.Kind == WEAPON_EQUIP2 then
                     ply:StripWeapon(wep:GetClass())
