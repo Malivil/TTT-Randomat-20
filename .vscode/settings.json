@@ -123,7 +123,10 @@
         "RADAR",
         "FindMetaTable",
         "SHOP_ROLES",
-        "IN_DUCK"
+        "IN_DUCK",
+        "DOCTOR_MODE_STATION",
+        "ROLE_DOCTOR",
+        "ROLE_STRINGS_EXT"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

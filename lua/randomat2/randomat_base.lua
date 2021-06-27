@@ -537,23 +537,15 @@ function randomat_meta:GetRoleName(ply, hide_secret_roles)
         return "A glitch"
     elseif role == ROLE_PHANTOM then
         return "A phantom"
-    elseif role == ROLE_DETRAITOR then
-        return "A detraitor"
-    elseif role == ROLE_REVENGER then
-        return "A revenger"
-    elseif role == ROLE_DRUNK then
-        return "A drunk"
-    elseif role == ROLE_CLOWN then
-        return "A clown"
     -- Hide imposters so they don't get outed
     elseif role == ROLE_DEPUTY or (hide_secret_roles and role == ROLE_IMPERSONATOR) then
         return "A deputy"
-    elseif role == ROLE_IMPERSONATOR then
-        return "An impersonator"
-    elseif role == ROLE_BEGGAR then
-        return "A beggar"
-    elseif role == ROLE_OLDMAN then
-        return "An old man"
+    end
+
+    -- Use the role strings for every other role
+    local role_string = ROLE_STRINGS_EXT[role]
+    if role_string then
+        return role_string:sub(1, 1):upper() .. role_string:sub(2)
     end
 
     return "Someone"
@@ -603,6 +595,15 @@ function randomat_meta:StripRoleWeapons(ply)
     if ply:HasWeapon("weapon_ttt_bodysnatch") then
         ply:StripWeapon("weapon_ttt_bodysnatch")
     end
+    if ply:HasWeapon("weapon_bod_bodysnatch") then
+        ply:StripWeapon("weapon_bod_bodysnatch")
+    end
+    if ply:HasWeapon("weapon_doc_defib") then
+        ply:StripWeapon("weapon_doc_defib")
+    end
+    if ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION then
+        ply:StripWeapon("weapon_ttt_health_station")
+    end
     if ply:HasWeapon("weapon_vam_fangs") then
         ply:StripWeapon("weapon_vam_fangs")
     end
@@ -611,6 +612,9 @@ function randomat_meta:StripRoleWeapons(ply)
     end
     if ply:HasWeapon("weapon_kil_knife") then
         ply:StripWeapon("weapon_kil_knife")
+    end
+    if ply:HasWeapon("weapon_kil_crowbar") then
+        ply:StripWeapon("weapon_kil_crowbar")
     end
     if ply:HasWeapon("weapon_ttt_wtester") then
         ply:StripWeapon("weapon_ttt_wtester")
@@ -652,16 +656,20 @@ end
 
 function randomat_meta:SwapWeapons(ply, weapons, from_killer)
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash") or ply:HasWeapon("weapon_ttt_brainwash")
-    local had_bodysnatch = ply:HasWeapon("weapon_ttt_bodysnatch")
+    local had_bodysnatch = ply:HasWeapon("weapon_bod_bodysnatch") or ply:HasWeapon("weapon_ttt_bodysnatch")
+    local had_doctor_defib = ply:HasWeapon("weapon_doc_defib")
+    local had_doctor_station = ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION
     local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
     self:HandleWeaponAddAndSelect(ply, function()
         ply:StripWeapons()
         -- Reset FOV to unscope
         ply:SetFOV(0, 0.2)
 
-        -- Have Zombies keep their claws, Hypnotists keep their brainwashing device, Bodysnatchers keep their snatching devices, and Detective-like players keep their DNA Scanners
+        -- Have roles keep their special weapons
         if ply:GetRole() == ROLE_ZOMBIE then
             ply:Give("weapon_zom_claws")
+        elseif ply:GetRole() == ROLE_VAMPIRE then
+            ply:Give("weapon_vam_fangs")
         elseif had_brainwash then
             -- Give back whichever version exists
             if weapons.Get("weapon_hyp_brainwash") ~= nil then
@@ -670,11 +678,26 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
                 ply:Give("weapon_ttt_brainwash")
             end
         elseif had_bodysnatch then
-            ply:Give("weapon_ttt_bodysnatch")
+            -- Give back whichever version exists
+            if weapons.Get("weapon_bod_bodysnatch") ~= nil then
+                ply:Give("weapon_bod_bodysnatch")
+            elseif weapons.Get("weapon_ttt_bodysnatch") ~= nil then
+                ply:Give("weapon_ttt_bodysnatch")
+            end
         elseif had_scanner then
             ply:Give("weapon_ttt_wtester")
-        elseif ply:GetRole() == ROLE_KILLER and ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
-            ply:Give("weapon_kil_knife")
+        elseif had_doctor_defib then
+            ply:Give("weapon_doc_defib")
+        elseif had_doctor_station then
+            ply:Give("weapon_ttt_health_station")
+        elseif ply:GetRole() == ROLE_KILLER then
+            if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
+                ply:Give("weapon_kil_knife")
+            end
+            if ConVarExists("ttt_killer_crowbar_enabled") and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
+                ply:StripWeapon("weapon_zm_improvised")
+                ply:Give("weapon_kil_crowbar")
+            end
         end
 
         -- If the player that swapped to this player was a killer then they no longer have a crowbar
