@@ -619,6 +619,9 @@ function randomat_meta:StripRoleWeapons(ply)
     if ply:HasWeapon("weapon_ttt_wtester") then
         ply:StripWeapon("weapon_ttt_wtester")
     end
+    if ply:HasWeapon("weapon_qua_bomb_station") then
+        ply:StripWeapon("weapon_qua_bomb_station")
+    end
 end
 
 function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
@@ -659,6 +662,7 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
     local had_bodysnatch = ply:HasWeapon("weapon_bod_bodysnatch") or ply:HasWeapon("weapon_ttt_bodysnatch")
     local had_doctor_defib = ply:HasWeapon("weapon_doc_defib")
     local had_doctor_station = ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION
+    local had_bomb_station = ply:HasWeapon("weapon_qua_bomb_station")
     local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
     self:HandleWeaponAddAndSelect(ply, function()
         ply:StripWeapons()
@@ -690,6 +694,8 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
             ply:Give("weapon_doc_defib")
         elseif had_doctor_station then
             ply:Give("weapon_ttt_health_station")
+        elseif had_bomb_station then
+            ply:Give("weapon_qua_bomb_station")
         elseif ply:GetRole() == ROLE_KILLER then
             if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
                 ply:Give("weapon_kil_knife")
