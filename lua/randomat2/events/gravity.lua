@@ -12,6 +12,7 @@ EVENT.id = "gravity"
 
 local defaultGravity = nil
 local function SetGravity(gravity)
+    if gravity == nil then return end
     RunConsoleCommand("sv_gravity", gravity)
 end
 
@@ -51,8 +52,6 @@ function EVENT:StartResetTimer(start)
 end
 
 function EVENT:End()
-    if defaultGravity == nil then return end
-
     timer.Remove("RandomatGravityReset")
     timer.Remove("RandomatGravityChange")
     SetGravity(defaultGravity)
