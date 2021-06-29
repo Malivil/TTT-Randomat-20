@@ -589,12 +589,6 @@ function randomat_meta:StripRoleWeapons(ply)
     if ply:HasWeapon("weapon_hyp_brainwash") then
         ply:StripWeapon("weapon_hyp_brainwash")
     end
-    if ply:HasWeapon("weapon_ttt_brainwash") then
-        ply:StripWeapon("weapon_ttt_brainwash")
-    end
-    if ply:HasWeapon("weapon_ttt_bodysnatch") then
-        ply:StripWeapon("weapon_ttt_bodysnatch")
-    end
     if ply:HasWeapon("weapon_bod_bodysnatch") then
         ply:StripWeapon("weapon_bod_bodysnatch")
     end
@@ -658,8 +652,8 @@ function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
 end
 
 function randomat_meta:SwapWeapons(ply, weapons, from_killer)
-    local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash") or ply:HasWeapon("weapon_ttt_brainwash")
-    local had_bodysnatch = ply:HasWeapon("weapon_bod_bodysnatch") or ply:HasWeapon("weapon_ttt_bodysnatch")
+    local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
+    local had_bodysnatch = ply:HasWeapon("weapon_bod_bodysnatch")
     local had_doctor_defib = ply:HasWeapon("weapon_doc_defib")
     local had_doctor_station = ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION
     local had_bomb_station = ply:HasWeapon("weapon_qua_bomb_station")
@@ -675,19 +669,9 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
         elseif ply:GetRole() == ROLE_VAMPIRE then
             ply:Give("weapon_vam_fangs")
         elseif had_brainwash then
-            -- Give back whichever version exists
-            if weapons.Get("weapon_hyp_brainwash") ~= nil then
-                ply:Give("weapon_hyp_brainwash")
-            elseif weapons.Get("weapon_ttt_brainwash") ~= nil then
-                ply:Give("weapon_ttt_brainwash")
-            end
+            ply:Give("weapon_hyp_brainwash")
         elseif had_bodysnatch then
-            -- Give back whichever version exists
-            if weapons.Get("weapon_bod_bodysnatch") ~= nil then
-                ply:Give("weapon_bod_bodysnatch")
-            elseif weapons.Get("weapon_ttt_bodysnatch") ~= nil then
-                ply:Give("weapon_ttt_bodysnatch")
-            end
+            ply:Give("weapon_bod_bodysnatch")
         elseif had_scanner then
             ply:Give("weapon_ttt_wtester")
         elseif had_doctor_defib then
