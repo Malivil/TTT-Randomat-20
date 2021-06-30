@@ -209,19 +209,20 @@ function EVENT:ScoreRound()
     timer.Create("RdmtRockPaperScissorsEndMessageTimer", 5, 1, function()
         Randomat:SmallNotify("Game over... checking the scores!", 3)
         timer.Create("RdmtRockPaperScissorsEndScoreTimer", 3, 1, function()
+            -- Stop tracking player deaths since the game is now over
+            self:RemoveHook("PlayerDeath")
+
             -- Player 1 wins
             if score > 0 then
                 Randomat:EventNotify(ply1:Nick() .. " wins Rock, Paper, Scissors!")
                 Randomat:SmallNotify(ply2:Nick() .. " has been killed")
                 Randomat:LogEvent("[RANDOMAT] " .. ply1:Nick() .. " wins Rock, Paper, Scissors!")
-                self:RemoveHook("PlayerDeath")
                 KillPlayer(ply1, ply2)
             -- Player 2 wins
             elseif score < 0 then
                 Randomat:EventNotify(ply2:Nick() .. " wins Rock, Paper, Scissors!")
                 Randomat:SmallNotify(ply1:Nick() .. " has been killed")
                 Randomat:LogEvent("[RANDOMAT] " .. ply2:Nick() .. " wins Rock, Paper, Scissors!")
-                self:RemoveHook("PlayerDeath")
                 KillPlayer(ply2, ply1)
             -- It's a tie!
             else
