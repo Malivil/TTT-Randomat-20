@@ -75,6 +75,13 @@ end
 
 local function TriggerEvent(event, ply, silent, ...)
     if not silent then
+        -- If this event is supposed to start secretly, trigger "secret" with this specific event chosen
+        -- Unless "secret" is already running in which case we don't care, just let it go
+        if event.StartSecret and not Randomat:IsEventActive("secret") then
+            TriggerEvent(Randomat.Events["secret"], ply, false, {event.id})
+            return
+        end
+
         Randomat:EventNotify(event.Title)
     end
 
@@ -202,6 +209,10 @@ function Randomat:register(tbl)
     -- Default SingleUse to true if it isn't specified
     if tbl.SingleUse ~= false then
         tbl.SingleUse = true
+    end
+    -- Default StartSecret to false if it isn't specified
+    if tbl.StartSecret ~= true then
+        tbl.StartSecret = false
     end
     -- Default the event type if it's not specified
     if tbl.Type == nil then

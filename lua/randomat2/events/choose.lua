@@ -44,7 +44,7 @@ function EVENT:Begin()
     local x = 0
     for _, v in RandomPairs(Randomat.Events) do
         if x < GetConVar("randomat_choose_choices"):GetInt() then
-            if Randomat:CanEventRun(v) and v.id ~= "choose" then
+            if Randomat:CanEventRun(v) and v.id ~= "choose" and not v.StartSecret then
                 x = x+1
                 local title = Randomat:GetEventTitle(v)
                 EventChoices[x] = title
