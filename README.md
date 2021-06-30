@@ -23,6 +23,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 
 # New Events
 - A Glitch has been patched
+- Betrayed
 - Big Head Mode
 - Black Market Buyout
 - Camp Fire
@@ -141,6 +142,15 @@ _ttt_randomat_ragdoll_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_ragdoll_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_ragdoll_time_ - Default: 1.5 - The time the player is ragdolled.\
 _randomat_ragdoll_delay_ - Default: 1.5 - The time between ragdolls.
+
+## Betrayed
+Randomly converts one vanilla Traitor to be a Glitch
+\
+\
+**ConVars**
+\
+_ttt_randomat_betrayed_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_betrayed_min_players_ - Default: 0 - The minimum number of players required for this event to start.
 
 ## Big Head Mode
 Causes all players to have their heads grow to massive proportions.\
@@ -1051,8 +1061,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
-- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
- for the "I don't think you realise the gravity of the situation." event
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, and for the idea for the "Betrayed" event.
 - [The Stig](https://steamcommunity.com/id/The_stig_981) for the idea of adding a round time ConVar to the "Prop Hunt" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
