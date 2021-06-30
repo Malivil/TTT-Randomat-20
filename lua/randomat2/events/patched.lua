@@ -6,6 +6,7 @@ EVENT.Title = "A Glitch has been patched"
 EVENT.Description = "Changes a random Glitch into either an Innocent or a Traitor"
 EVENT.id = "patched"
 EVENT.AltTitle = "Patched"
+EVENT.StartSecret = true
 
 function EVENT:Begin()
     for _, v in ipairs(self:GetAlivePlayers(true)) do
