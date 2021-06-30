@@ -29,6 +29,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Camp Fire
 - Care Package
 - Careful...
+- Clownin' Around
 - Come on and SLAM!
 - Communism! Time to learn how to share...
 - Compulsive Reloading
@@ -249,6 +250,15 @@ _randomat_choose_choices_ - Default: 3 - Number of events you can choose from.\
 _randomat_choose_vote_ - Default: 0 - Allows all players to vote on the event.\
 _randomat_choose_votetimer_ - Default: 10 - How long players have to vote on the event.\
 _randomat_choose_deadvoters_ - Default: 0 - Dead people can vote.
+
+## Clownin' Around (aka We All Float Down Here)
+Converts a Jester/Swapper to a Killer Clown
+\
+\
+**ConVars**
+\
+_ttt_randomat_clowninaround - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_clowninaround_min_players_ - Default: 0 - The minimum number of players required for this event to start.
 
 ## Come on and SLAM!
 Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the duration of the event. Will not trigger if there is a Jester or a Swapper since they cannot win during this event.
@@ -1061,7 +1071,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
-- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, and for the idea for the "Betrayed" event.
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, and for the idea for the "Betrayed" and "Clownin' Around" events.
 - [The Stig](https://steamcommunity.com/id/The_stig_981) for the idea of adding a round time ConVar to the "Prop Hunt" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
