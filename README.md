@@ -32,6 +32,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Communism! Time to learn how to share...
 - Compulsive Reloading
 - Derptective
+- Detraitor
 - Don't be so Sensitive
 - Don't Let it Go to Your Head
 - Double Cross
@@ -302,6 +303,15 @@ Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite 
 _ttt_randomat_derptective_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_derptective_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_derptective_rate_of_fire_ - Default: 2 - Rate of Fire multiplier for the H.U.G.E..
+
+## Detraitor
+The Detective has been corrupted and joined the Traitor team!
+\
+\
+**ConVars**
+\
+_ttt_randomat_detraitor_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_detraitor_min_players_ - Default: 0 - The minimum number of players required for this event to start.
 
 ## Don't be so Sensitive
 Periodically changes each player's mouse sensitivity to a number within the configurable range
@@ -1017,8 +1027,8 @@ If a developer of an external Randomat event would like to add support for this 
 Another thing that was added is the concept of an event "type". This is currently being used to make sure multiple events that override weapons (like Harpoon, Slam, Prop Hunt, etc.) don't run concurrently. To set your event to not conflict with those as well, set the `Type` property to `EVENT_TYPE_WEAPON_OVERRIDE`.
 
 # Special Thanks
-- [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to.
-- [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the "TTT Randomat" mod which THAT was an update to.
+- [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to
+- [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the "TTT Randomat" mod which THAT was an update to
 - [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the "The Cake is a Lie" event
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
@@ -1039,9 +1049,10 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
+- Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror" as well as
- for the "I don't think you realise the gravity of the situation." event.
+ for the "I don't think you realise the gravity of the situation." event
 - [The Stig](https://steamcommunity.com/id/The_stig_981) for the idea of adding a round time ConVar to the "Prop Hunt" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
