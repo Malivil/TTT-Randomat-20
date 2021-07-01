@@ -42,6 +42,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Election Day
 - Evasive Maneuvers
 - Flip the Script
+- Fog of War
 - Flu Season
 - Glitch in the Matrix
 - I don't think you realise the gravity of the situation.
@@ -497,6 +498,18 @@ _randomat_flu_interval_ - Default: 10 - How often effects happen to infected.\
 _randomat_flu_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
 _randomat_flu_chance_ - Default: 25 - Spreading chance.\
 _randomat_flu_speed_factor_ - Default: 0.8 - What speed the infected player should be reduced to.
+
+## Fog of War
+Covers the map in a fog which restricts player view
+\
+\
+**ConVars**
+\
+_ttt_randomat_fogofwar_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_fogofwar_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_fogofwar_weight_ - Default: 1 - The weight this event should use during the randomized event selection process.\
+_randomat_fogofwar_default_ - Default: 1.0 - The fog distance scale for non-traitors.\
+_randomat_fogofwar_traitor_ - Default: 1.5 - The fog distance scale for traitors.
 
 ## FREEZE!
 aka Winter has come at last.\
@@ -1181,11 +1194,11 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
-- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, and for the idea for the "Betrayed" and "Clownin' Around" events.
-- [The Stig](https://steamcommunity.com/id/The_stig_981) for the idea of adding a round time ConVar to the "Prop Hunt" event
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, and for the idea for the "Betrayed" and "Clownin' Around" events
+- [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
-- [Tygron](https://steamcommunity.com/id/Tygron), [The Stig](https://steamcommunity.com/id/The_stig_981), and [TilSchwantje](https://github.com/TilSchwantje) for providing feedback and verifying bug fixes
+- [Tygron](https://steamcommunity.com/id/Tygron), [The Stig](https://steamcommunity.com/id/The-Stig-294), and [TilSchwantje](https://github.com/TilSchwantje) for providing feedback and verifying bug fixes
 
 # Steam Workshop
 https://steamcommunity.com/sharedfiles/filedetails/?id=2055805086
