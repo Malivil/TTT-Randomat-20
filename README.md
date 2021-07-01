@@ -56,6 +56,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - The Cake is a Lie
 - Time Warp
 - Total Magnetism
+- Wasteful!
 - Zom-Bees!
 
 # Events
@@ -954,6 +955,15 @@ Gives each player a random pistol and main weapon that they cannot drop
 _ttt_randomat_randomweapon_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_randomweapon_min_players_ - Default: 0 - The minimum number of players required for this event to start.
 
+## Wasteful!
+Every gun shot uses two bullets
+\
+\
+**ConVars**
+\
+_ttt_randomat_wasteful_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_wasteful_min_players_ - Default: 0 - The minimum number of players required for this event to start.
+
 ## We learned how to heal over time, its hard, but definitely possible... (aka Regeneration)
 Causes players to slowly regenerate lost health over time
 \
@@ -1067,7 +1077,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
-- Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING" and "Don't Let it Go to Your Head" events
+- Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
