@@ -41,6 +41,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Double-Edged Sword
 - Election Day
 - Evasive Maneuvers
+- Flip the Script
 - Flu Season
 - Glitch in the Matrix
 - I don't think you realise the gravity of the situation.
@@ -437,6 +438,15 @@ Causes everything (movement, firing speed, timers, etc.) to run a configurable a
 _ttt_randomat_flash_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_flash_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
+
+## Flip the Script
+Inverses everyone's health
+\
+\
+**ConVars**
+\
+_ttt_randomat_flipthescript_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_flipthescript_min_players_ - Default: 0 - The minimum number of players required for this event to start.
 
 ## Flu Season
 Randomly infects a player with the flu, causing them to sneeze occasionally. Also has a chance to spread to other players within a configurable distance
@@ -1079,6 +1089,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
+- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, and for the idea for the "Betrayed" and "Clownin' Around" events.
