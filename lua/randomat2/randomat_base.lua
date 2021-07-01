@@ -224,6 +224,7 @@ function Randomat:register(tbl)
 
     CreateConVar("ttt_randomat_"..id, 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
     CreateConVar("ttt_randomat_"..id.."_min_players", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    CreateConVar("ttt_randomat_"..id.."_weight", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 end
 
 function Randomat:unregister(id)
@@ -232,9 +233,22 @@ function Randomat:unregister(id)
 end
 
 local function GetRandomEvent(events)
-    local count = table.Count(events)
+    local weighted_events = {}
+    for id, _ in pairs(events) do
+        local weight = GetConVar("ttt_randomat_" .. id .. "_weight"):GetInt()
+        for _ = 1, weight do
+            table.insert(weighted_events, id)
+        end
+    end
+
+    -- Randomize the weighted list
+    table.Shuffle(weighted_events)
+
+    -- Then get a random index from the random list for more randomness
+    local count = table.Count(weighted_events)
     local idx = math.random(count)
-    local key = table.GetKeys(events)[idx]
+    local key = weighted_events[idx]
+
     return events[key]
 end
 
