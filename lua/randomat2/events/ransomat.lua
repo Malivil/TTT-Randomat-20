@@ -15,7 +15,7 @@ local function CanBuy(ply, traitorsonly)
     if traitorsonly then
         return Randomat:IsTraitorTeam(ply) and ply:GetCredits() > 0
     end
-    return Randomat:IsShopRole(ply) and ply:GetCredits() > 0
+    return Randomat:CanUseShop(ply) and ply:GetCredits() > 0
 end
 
 function EVENT:Begin()
