@@ -7,62 +7,66 @@ EVENT.Title = "Ransomat"
 EVENT.id = "ransom"
 EVENT.Description = "Choose a random person with a buy menu and force them to buy an item from the shop or else they die"
 EVENT.StartSecret  = true
+EVENT.SingleUse = true
 
-local function CanBuy(ply)
-    if GetConVar("randomat_ransom_traitorsonly"):GetBool() then
-        return (ply:GetRole() == ROLE_TRAITOR or (CR_VERSION and ply:IsTraitorTeam())) and ply:GetCredits() > 0
+local function CanBuy(ply, traitorsonly)
+    if not IsValid(ply) then return false end
+
+    if traitorsonly then
+        return Randomat:IsTraitorTeam(ply) and ply:GetCredits() > 0
     end
-    return ply:IsValid() and Randomat:IsShopRole(ply) and ply:GetCredits() > 0
+    return Randomat:IsShopRole(ply) and ply:GetCredits() > 0
 end
 
 function EVENT:Begin()
-    local p
-    -- build a list of eligible players to target
+    local traitorsonly = GetConVar("randomat_ransom_traitorsonly"):GetBool()
+    local target
+    -- Find a random player to target
     for _, ply in ipairs(self:GetAlivePlayers(true)) do
-        if GetConVar("randomat_ransom_traitorsonly"):GetBool() then
-            if ply:IsValid() and Randomat:IsTraitorTeam(ply) and ply:GetCredits() > 0 then
-                p = ply
-                break
-            end
-        elseif CanBuy(ply) then
-            p = ply
+        if CanBuy(ply, traitorsonly) then
+            target = ply
             break
         end
     end
-    -- break if no players found, shouldn't happen thanks to self:Condition
-    if not p then
+
+    -- Break if no players found, shouldn't happen thanks to the pre-condition check
+    if not target then
         return
     end
 
     local time = GetConVar("randomat_ransom_deathtimer"):GetInt()
-    -- alert the player they are on a timer
-    timer.Create("RdmtRansomedNotify",3,1, function()
-        p:PrintMessage(HUD_PRINTTALK, "Buy something in "..time.." seconds or you will die!")
-        p:PrintMessage(HUD_PRINTCENTER, "Buy something in "..time.." seconds or you will die!")
+    -- Alert the player they are on a timer
+    timer.Create("RdmtRansomNotify", 3, 1, function()
+        target:PrintMessage(HUD_PRINTTALK, "Buy something in " .. time .. " seconds or you will die!")
+        target:PrintMessage(HUD_PRINTCENTER, "Buy something in " .. time .. " seconds or you will die!")
     end)
-    -- kill the player after a set time
-    timer.Create("RdmtTimeToBuy",time,1, function()
-        p:Kill()
+
+    -- Kill the player after a set time
+    timer.Create("RdmtRansomKill", time, 1, function()
+        if not IsValid(target) or not target:Alive() or target:IsSpec() then return end
+        target:Kill()
     end)
-    -- remove the timer if they bought something
-    hook.Add("TTTOrderedEquipment", "RandomatRansomEquiptment", function()
-        timer.Remove("RdmtRansomedNotify")
-        timer.Remove("RdmtTimeToBuy")
-        p:PrintMessage(HUD_PRINTTALK, "You live for now!")
-        p:PrintMessage(HUD_PRINTCENTER, "You live for now!")
+
+    -- Remove the timer if they bought something
+    self:AddHook("TTTOrderedEquipment", function(ply, itme, is_item, fromrdmt)
+        if ply ~= target or fromrdmt then return end
+
+        timer.Remove("RdmtRansomKill")
+        ply:PrintMessage(HUD_PRINTTALK, "You live... for now!")
+        ply:PrintMessage(HUD_PRINTCENTER, "You live... for now!")
     end)
-    SendFullStateUpdate()
 end
 
 function EVENT:End()
-    timer.Remove("RdmtRansomedNotify")
-    timer.Remove("RdmtTimeToBuy")
+    timer.Remove("RdmtRansomNotify")
+    timer.Remove("RdmtRansomKill")
 end
 
 function EVENT:Condition()
+    local traitorsonly = GetConVar("randomat_ransom_traitorsonly"):GetBool()
     -- Don't run this event if there aren't any players who are able to buy
-    for _, ply in pairs(self:GetAlivePlayers(true)) do
-        if CanBuy(ply) then
+    for _, ply in pairs(self:GetAlivePlayers()) do
+        if CanBuy(ply, traitorsonly) then
             return true
         end
     end
@@ -71,7 +75,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in ipairs({"DeathTimer"}) do
+    for _, v in ipairs({"deathtimer"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -86,7 +90,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"TraitorsOnly"}) do
+    for _, v in ipairs({"traitorsonly"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
