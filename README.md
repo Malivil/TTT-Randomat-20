@@ -50,6 +50,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - NO NERD HEALING
 - Opposite Day
 - Prop Hunt
+- Ransomat
 - Rock, Paper, Scissors
 - Run For Your Life!
 - Sharing is Caring
@@ -841,6 +842,15 @@ _ttt_randomat_intensifies_weight_ - Default: 1 - The weight this event should us
 _randomat_intensifies_timer_ - Default: 20 - How often (in seconds) a random event will be triggered.\
 _randomat_intensifies_triggerbyotherrandom_ - Default: 1 - Allow being triggered by other events like Random xN.
 
+## Ransomat
+Chooses a random person with a buy menu and forces them to buy an item from the shop or else they die
+\
+\
+**ConVars**
+\
+_randomat_ransom_traitorsonly_ - Default: 0 - Only target Traitors for the event.\
+_randomat_ransom_deathtimer_ - Default: 60 - The amount of time the person has to buy something.\
+
 ## RISE FROM YOUR GRAVE
 Causes anyone who dies to be resurrected as a Zombie
 \
@@ -1194,7 +1204,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
-- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, and for the idea for the "Betrayed" and "Clownin' Around" events
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event and for the idea for the "Betrayed" and "Clownin' Around" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
