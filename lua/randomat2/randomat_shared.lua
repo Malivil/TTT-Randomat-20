@@ -108,3 +108,15 @@ function Randomat:GetShopRoles()
 
     return Randomat:GetValidRoles(initial_roles, WEPS.DoesRoleHaveWeapon)
 end
+
+function Randomat:IsShopRole(ply)
+    if ply.IsShopRole then
+        return ply:IsShopRole() and (not ply:IsDeputy() or ply:GetNWBool("HasPromotion", false))
+            and (not ply:IsClown() or ply:GetNWBool("KillerClownActive", false))
+    elseif player.HasBuyMenu then
+        return player.HasBuyMenu(ply)
+    end
+    -- Get the shop roles if not on the latest CR
+    local shop_roles = Randomat:GetShopRoles()
+    return shop_roles[ply:GetRole()] or false
+end
