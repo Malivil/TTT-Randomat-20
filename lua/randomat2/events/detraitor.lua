@@ -14,7 +14,7 @@ function EVENT:Begin()
             else
                 Randomat:SetRole(v, ROLE_DETRAITOR)
             end
-            timer.Create("RdmtDetraitorNotify", 3, 1, function()
+            timer.Create("RdmtDetraitorNotify", 5, 1, function()
                 v:PrintMessage(HUD_PRINTTALK, "You have been corrupted and joined the Traitor Team! Only your new allies can tell the difference.")
                 v:PrintMessage(HUD_PRINTCENTER, "You have been corrupted and joined the Traitor Team! Only your new allies can tell the difference.")
             end)

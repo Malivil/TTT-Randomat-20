@@ -187,7 +187,6 @@ function EVENT:GetConVars()
             })
         end
     end
-
     return sliders
 end
 
