@@ -848,8 +848,11 @@ Chooses a random person with a buy menu and forces them to buy an item from the 
 \
 **ConVars**
 \
+_ttt_randomat_ransom_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_ransom_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_ransom_weight_ - Default: 1 - The weight this event should use during the randomized event selection process.\
 _randomat_ransom_traitorsonly_ - Default: 0 - Only target Traitors for the event.\
-_randomat_ransom_deathtimer_ - Default: 60 - The amount of time the person has to buy something.\
+_randomat_ransom_deathtimer_ - Default: 60 - The amount of time the person has to buy something.
 
 ## RISE FROM YOUR GRAVE
 Causes anyone who dies to be resurrected as a Zombie
