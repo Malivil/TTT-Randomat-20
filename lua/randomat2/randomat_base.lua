@@ -39,16 +39,6 @@ local function EndEvent(evt)
     evt:End()
 end
 
-local function EndActiveEvents()
-    if Randomat.ActiveEvents ~= {} then
-        for _, evt in pairs(Randomat.ActiveEvents) do
-            EndEvent(evt)
-        end
-
-        Randomat.ActiveEvents = {}
-    end
-end
-
 local function NotifyDescription(event)
     -- Show this if "secret" is active if we're specifically showing the description for "secret"
     if event.Id ~= "secret" and Randomat:IsEventActive("secret") then return end
@@ -108,24 +98,6 @@ local function TriggerEvent(event, ply, silent, ...)
         end
     end
 end
-
-local function ClearAutoComplete(cmd, args)
-    local name = string.lower(string.Trim(args))
-    local options = {}
-    for _, v in pairs(Randomat.ActiveEvents) do
-        if string.find(string.lower(v.Id), name) then
-            table.insert(options, cmd .. " " .. v.Id)
-        end
-    end
-    return options
-end
-
-concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
-    local cmd = arg[1]
-    Randomat:EndActiveEvent(cmd)
-end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
-
-concommand.Add("ttt_randomat_clearevents", EndActiveEvents, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 
 function Randomat:EndActiveEvent(id)
     for k, evt in pairs(Randomat.ActiveEvents) do
@@ -224,7 +196,14 @@ function Randomat:register(tbl)
 
     CreateConVar("ttt_randomat_"..id, 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
     CreateConVar("ttt_randomat_"..id.."_min_players", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-    CreateConVar("ttt_randomat_"..id.."_weight", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    local weight = CreateConVar("ttt_randomat_"..id.."_weight", -1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    local default_weight = GetConVar("ttt_randomat_event_weight"):GetInt()
+
+    -- If the current weight matches the default, update the per-event weight to the new default of -1
+    if weight:GetInt() == default_weight then
+        print("Event '" .. id .. "' weight (" .. weight:GetInt() .. ") matches default weight (" .. default_weight .. "), resetting to -1")
+        weight:SetInt(-1)
+    end
 end
 
 function Randomat:unregister(id)
@@ -236,6 +215,11 @@ local function GetRandomEvent(events)
     local weighted_events = {}
     for id, _ in pairs(events) do
         local weight = GetConVar("ttt_randomat_" .. id .. "_weight"):GetInt()
+        local default_weight = GetConVar("ttt_randomat_event_weight"):GetInt()
+        -- Use the default if the per-event weight is invalid
+        if weight < 0 then
+            weight = default_weight
+        end
         for _ = 1, weight do
             table.insert(weighted_events, id)
         end
@@ -325,30 +309,6 @@ function Randomat:SilentTriggerEvent(cmd, ply, ...)
         error("Could not find event '" .. cmd .. "'")
     end
 end
-
-local function TriggerAutoComplete(cmd, args)
-    local name = string.lower(string.Trim(args))
-    local options = {}
-    for _, v in pairs(Randomat.Events) do
-        if string.find(string.lower(v.Id), name) then
-            table.insert(options, cmd .. " " .. v.Id)
-        end
-    end
-    return options
-end
-
-concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
-    Randomat:SafeTriggerEvent(arg[1], nil, true)
-end, TriggerAutoComplete, "Triggers a specific randomat event with conditions", FCVAR_SERVER_CAN_EXECUTE)
-
-concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
-    Randomat:TriggerEvent(arg[1], nil)
-end, TriggerAutoComplete, "Triggers a specific randomat event without conditions", FCVAR_SERVER_CAN_EXECUTE)
-
-concommand.Add("ttt_randomat_triggerrandom", function()
-    local rdmply = Randomat:GetValidPlayer(nil)
-    Randomat:TriggerRandomEvent(rdmply)
-end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
 function Randomat:SmallNotify(msg, length, targ)
     -- Don't broadcast anything when "Secret" is running
@@ -730,6 +690,62 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
         end
     end)
 end
+
+--[[
+ Commands
+]]--
+
+local function EndActiveEvents()
+    if Randomat.ActiveEvents ~= {} then
+        for _, evt in pairs(Randomat.ActiveEvents) do
+            EndEvent(evt)
+        end
+
+        Randomat.ActiveEvents = {}
+    end
+end
+
+local function ClearAutoComplete(cmd, args)
+    local name = string.lower(string.Trim(args))
+    local options = {}
+    for _, v in pairs(Randomat.ActiveEvents) do
+        if string.find(string.lower(v.Id), name) then
+            table.insert(options, cmd .. " " .. v.Id)
+        end
+    end
+    return options
+end
+
+concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
+    local cmd = arg[1]
+    Randomat:EndActiveEvent(cmd)
+end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
+
+concommand.Add("ttt_randomat_clearevents", EndActiveEvents, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
+
+local function TriggerAutoComplete(cmd, args)
+    local name = string.lower(string.Trim(args))
+    local options = {}
+    for _, v in pairs(Randomat.Events) do
+        if string.find(string.lower(v.Id), name) then
+            table.insert(options, cmd .. " " .. v.Id)
+        end
+    end
+    return options
+end
+
+concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
+    Randomat:SafeTriggerEvent(arg[1], nil, true)
+end, TriggerAutoComplete, "Triggers a specific randomat event with conditions", FCVAR_SERVER_CAN_EXECUTE)
+
+concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
+    Randomat:TriggerEvent(arg[1], nil)
+end, TriggerAutoComplete, "Triggers a specific randomat event without conditions", FCVAR_SERVER_CAN_EXECUTE)
+
+concommand.Add("ttt_randomat_triggerrandom", function()
+    local rdmply = Randomat:GetValidPlayer(nil)
+    Randomat:TriggerRandomEvent(rdmply)
+end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
 --[[
  Override TTT Stuff
