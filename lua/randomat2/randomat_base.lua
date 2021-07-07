@@ -163,8 +163,13 @@ end
 
 function Randomat:SetRole(ply, role)
     -- Reset the Veteran damage bonus
-    if ply:GetRole() == ROLE_VETERAN then
+    if ply:GetRole() == ROLE_VETERAN and role ~= ROLE_VETERAN then
         ply:SetNWBool("VeteranActive", false)
+    end
+    -- Heal the Old Man back to full when they are converted
+    if ply:GetRole() == ROLE_OLDMAN and role ~= ROLE_OLDMAN then
+        ply:SetMaxHealth(100)
+        ply:SetHealth(100)
     end
     ply:SetRole(role)
 
