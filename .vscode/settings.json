@@ -128,7 +128,9 @@
         "ROLE_DOCTOR",
         "ROLE_STRINGS_EXT",
         "render",
-        "MATERIAL_FOG_LINEAR"
+        "MATERIAL_FOG_LINEAR",
+        "CR_VERSION",
+        "CRVersion"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

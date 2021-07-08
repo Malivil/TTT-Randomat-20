@@ -50,6 +50,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - I don't think you realise the gravity of the situation.
 - Lonely Yogs
 - NO NERD HEALING
+- Olympic Sprint
 - Opposite Day
 - Prop Hunt
 - Ransomat
@@ -757,6 +758,17 @@ _ttt_randomat_bees_min_players_ - Default: 0 - The minimum number of players req
 _ttt_randomat_bees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
 
+## Olympic Sprint
+Disables sprint stamina consumption, allowing players to sprint forever.\
+NOTE: Only works with the latest Custom Roles version and will auto-disable on older versions.
+\
+\
+**ConVars**
+\
+_ttt_randomat_olympicsprint_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_olympicsprint_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_olympicsprint_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
 This one is pretty self-explanitory except for the "Detective is stronger" part. That just means the detective has 200 health.\
 NOTE: This event is automatically disabled in the outdated version of Custom Roles for TTT. This is due to an issue where the round would not end if a Jester was killed and there were multiple Jesters.
@@ -1208,6 +1220,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" event 
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" event
+- Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed" and "Clownin' Around" events
