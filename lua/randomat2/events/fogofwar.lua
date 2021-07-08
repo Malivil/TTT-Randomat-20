@@ -1,7 +1,7 @@
 local EVENT = {}
 
-util.AddNetworkString("FogOfWarBegin")
-util.AddNetworkString("FogOfWarEnd")
+util.AddNetworkString("RdmtFogOfWarBegin")
+util.AddNetworkString("RdmtFogOfWarEnd")
 
 local default = CreateConVar("randomat_fogofwar_default", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The fog distance scale for non-traitors", 0.2, 5)
 local traitor = CreateConVar("randomat_fogofwar_traitor", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The fog distance scale for traitors", 0.2, 5)
@@ -11,14 +11,14 @@ EVENT.Description = "Covers the map in a fog which restricts player view"
 EVENT.id = "fogofwar"
 
 function EVENT:Begin()
-    net.Start("FogOfWarBegin")
+    net.Start("RdmtFogOfWarBegin")
     net.WriteFloat(default:GetFloat())
     net.WriteFloat(traitor:GetFloat())
     net.Broadcast()
 end
 
 function EVENT:End()
-    net.Start("FogOfWarEnd")
+    net.Start("RdmtFogOfWarEnd")
     net.Broadcast()
 end
 
