@@ -128,14 +128,15 @@ function Randomat:RestoreWeaponSound(wep)
     if not IsValid(wep) or not wep.Primary then return end
     if wep.Primary.OriginalSound then
         wep.Primary.Sound = wep.Primary.OriginalSound
+        wep.Primary.OriginalSound = nil
     end
 end
 
 function Randomat:OverrideWeaponSound(wep, sound)
     if not IsValid(wep) or not wep.Primary then return end
-    if wep.Primary.OriginalSound == nil then
-        wep.Primary.OriginalSound = wep.Primary.Sound
-    end
+    if wep.Primary.OriginalSound ~= nil then return end
+
+    wep.Primary.OriginalSound = wep.Primary.Sound
     wep.Primary.Sound = sound
 end
 
@@ -146,7 +147,8 @@ function Randomat:OverrideWeaponSoundData(data, sound)
     local weap_start, _ = string.find(current_sound, "weapons/")
     local fire_start, _ = string.find(current_sound, "fire")
     local shot_start, _ = string.find(current_sound, "shot")
-    if weap_start and (fire_start or shot_start) then
+    local shoot_start, _ = string.find(current_sound, "shoot")
+    if weap_start and (fire_start or shot_start or shoot_start) then
         data.SoundName = sound
         return true
     end
