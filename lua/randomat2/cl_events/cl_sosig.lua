@@ -1,36 +1,11 @@
-
 local sosig_sound = "weapons/sosig.mp3"
 local hooked = false
-
-local function FixWeapon(wep)
-    if not IsValid(wep) or not wep.Primary then return end
-    if wep.Primary.OriginalSound == nil then
-        wep.Primary.OriginalSound = wep.Primary.Sound
-    end
-    wep.Primary.Sound = sosig_sound
-end
-
-local function UnfixWeapon(wep)
-    if not IsValid(wep) or not wep.Primary then return end
-    if wep.Primary.OriginalSound then
-        wep.Primary.Sound = wep.Primary.OriginalSound
-    end
-end
 
 net.Receive("TriggerSosig", function()
     -- This event can be called multiple times but we only want to add the hook once
     if not hooked then
         hook.Add("EntityEmitSound", "SosigOverrideHook", function(data)
-            local owner = data.Entity
-            if not IsValid(owner) then return end
-            local sound = data.SoundName:lower()
-            local weap_start, _ = string.find(sound, "weapons/")
-            local fire_start, _ = string.find(sound, "fire")
-            local shot_start, _ = string.find(sound, "shot")
-            if weap_start and (fire_start or shot_start) then
-                data.SoundName = sosig_sound
-                return true
-            end
+            return Randomat:OverrideWeaponSoundData(data, sosig_sound)
         end)
         hooked = true
     end
@@ -39,7 +14,7 @@ net.Receive("TriggerSosig", function()
     if not IsValid(client) then return end
 
     for _, wep in ipairs(client:GetWeapons()) do
-        FixWeapon(wep)
+        Randomat:OverrideWeaponSound(wep, sosig_sound)
     end
 end)
 
@@ -51,6 +26,6 @@ net.Receive("EndSosig", function()
     if not IsValid(client) then return end
 
     for _, wep in ipairs(client:GetWeapons()) do
-        UnfixWeapon(wep)
+        Randomat:RestoreWeaponSound(wep)
     end
 end)

@@ -2,7 +2,7 @@
 EVENT_TYPE_DEFAULT = 0
 EVENT_TYPE_WEAPON_OVERRIDE = 1
 
--- Shared Functions
+-- Team Functions
 function Randomat:IsInnocentTeam(ply, skip_detective)
     -- Handle this early because IsInnocentTeam doesn't
     if skip_detective and Randomat:IsGoodDetectiveLike(ply) then
@@ -42,6 +42,7 @@ function Randomat:IsIndependentTeam(ply)
     return role == ROLE_KILLER
 end
 
+-- Role Functions
 function Randomat:IsDetectiveLike(ply)
     if ply.IsDetectiveLike then return ply:IsDetectiveLike() end
     local role = ply:GetRole()
@@ -120,4 +121,33 @@ function Randomat:CanUseShop(ply)
     -- Otherwise just assume any roel in the list of shop roles can use the shop
     local shop_roles = Randomat:GetShopRoles()
     return shop_roles[ply:GetRole()] or false
+end
+
+-- Weapon Functions
+function Randomat:RestoreWeaponSound(wep)
+    if not IsValid(wep) or not wep.Primary then return end
+    if wep.Primary.OriginalSound then
+        wep.Primary.Sound = wep.Primary.OriginalSound
+    end
+end
+
+function Randomat:OverrideWeaponSound(wep, sound)
+    if not IsValid(wep) or not wep.Primary then return end
+    if wep.Primary.OriginalSound == nil then
+        wep.Primary.OriginalSound = wep.Primary.Sound
+    end
+    wep.Primary.Sound = sound
+end
+
+function Randomat:OverrideWeaponSoundData(data, sound)
+    if not IsValid(data.Entity) then return end
+
+    local current_sound = data.SoundName:lower()
+    local weap_start, _ = string.find(current_sound, "weapons/")
+    local fire_start, _ = string.find(current_sound, "fire")
+    local shot_start, _ = string.find(current_sound, "shot")
+    if weap_start and (fire_start or shot_start) then
+        data.SoundName = sound
+        return true
+    end
 end
