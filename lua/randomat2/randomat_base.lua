@@ -429,6 +429,40 @@ function Randomat:CallShopHooks(isequip, id, ply)
     net.Send(ply)
 end
 
+function Randomat:RemoveEquipmentItem(ply, item_id)
+    -- Keep track of what equipment the player had
+    local i = 1
+    local equip = {}
+    local credits = 0
+    local removed = false
+    while i < EQUIP_MAX do
+        if ply:HasEquipmentItem(i) then
+            -- Remove and refund the specific equipment item we're removing
+            if i == item_id then
+                removed = true
+                credits = credits + 1
+            else
+                table.insert(equip, i)
+            end
+        end
+        -- Double the index since this is a bit-mask
+        i = i * 2
+    end
+
+    -- Give the player enough credits to compensate for the equipment they can no longer use
+    ply:AddCredits(credits)
+
+    -- Remove all their equipment
+    ply:ResetEquipment()
+
+    -- Add back the others (since we only want to remove the given item)
+    for _, id in ipairs(equip) do
+        ply:GiveEquipmentItem(id)
+    end
+
+    return removed
+end
+
 --[[
  Randomat Meta
 ]]--

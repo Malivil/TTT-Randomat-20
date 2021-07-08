@@ -130,7 +130,8 @@
         "render",
         "MATERIAL_FOG_LINEAR",
         "CR_VERSION",
-        "CRVersion"
+        "CRVersion",
+        "EQUIP_PHD"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
