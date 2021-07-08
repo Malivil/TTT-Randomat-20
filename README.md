@@ -59,6 +59,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Sharing is Caring
 - Shh... It's a Secret!
 - Social Distancing
+- That Doesn't Sound Right
 - The Cake is a Lie
 - Time Warp
 - Total Magnetism
@@ -992,7 +993,7 @@ _ttt_randomat_suddendeath_weight_ - Default: -1 - The weight this event should u
 Swaps player inventories periodically throughout the round. There are some caveats to how this event interacts with special roles:
 - Non-prime Zombies are excluded
 - Prime Zombies will keep their claws
-- Players who received a Killer's inventory will be given a crowbar instead of the Killer's knife
+- Players who received a Killer's inventory will be given a crowbar instead of the Killer's knife/crowbar
 
 **ConVars**
 \
@@ -1000,6 +1001,15 @@ _ttt_randomat_inventory_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_inventory_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_inventory_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_inventory_timer_ - Default: 15 - Time between inventory swaps.
+
+## That Doesn't Sound Right
+Shuffles weapon sounds at the start of the event
+
+**ConVars**
+\
+_ttt_randomat_soundright_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_soundright_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_soundright_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## The 'bar has been raised!
 Increases the damage and push force of the crowbar
@@ -1218,10 +1228,11 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
-- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" event 
+- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" event
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
+- Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed" and "Clownin' Around" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event
