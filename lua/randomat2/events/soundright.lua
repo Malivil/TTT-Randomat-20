@@ -3,7 +3,6 @@ local EVENT = {}
 EVENT.Title = "That Doesn't Sound Right"
 EVENT.Description = "Shuffles weapon sounds"
 EVENT.id = "soundright"
-EVENT.SingleUse = true
 
 util.AddNetworkString("RdmtSoundRightBegin")
 util.AddNetworkString("RdmtSoundRightUpdate")

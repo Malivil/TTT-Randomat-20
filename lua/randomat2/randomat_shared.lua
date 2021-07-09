@@ -123,7 +123,7 @@ function Randomat:CanUseShop(ply)
     return shop_roles[ply:GetRole()] or false
 end
 
--- Weapon Functions
+-- Weapon Sound Functions
 function Randomat:RestoreWeaponSound(wep)
     if not IsValid(wep) or not wep.Primary then return end
     if wep.Primary.OriginalSound then
@@ -132,15 +132,15 @@ function Randomat:RestoreWeaponSound(wep)
     end
 end
 
-function Randomat:OverrideWeaponSound(wep, sound)
+function Randomat:OverrideWeaponSound(wep, chosen_sound)
     if not IsValid(wep) or not wep.Primary then return end
     if wep.Primary.OriginalSound ~= nil then return end
 
     wep.Primary.OriginalSound = wep.Primary.Sound
-    wep.Primary.Sound = sound
+    wep.Primary.Sound = chosen_sound
 end
 
-function Randomat:OverrideWeaponSoundData(data, sound)
+function Randomat:OverrideWeaponSoundData(data, chosen_sound)
     if not IsValid(data.Entity) then return end
 
     local current_sound = data.SoundName:lower()
@@ -149,7 +149,7 @@ function Randomat:OverrideWeaponSoundData(data, sound)
     local shot_start, _ = string.find(current_sound, "shot")
     local shoot_start, _ = string.find(current_sound, "shoot")
     if weap_start and (fire_start or shot_start or shoot_start) then
-        data.SoundName = sound
+        data.SoundName = chosen_sound
         return true
     end
 end

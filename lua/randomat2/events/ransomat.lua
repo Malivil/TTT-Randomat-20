@@ -7,7 +7,6 @@ EVENT.Title = "Ransomat"
 EVENT.id = "ransom"
 EVENT.Description = "Choose a random person with a buy menu and force them to buy an item from the shop or else they die"
 EVENT.StartSecret  = true
-EVENT.SingleUse = true
 
 local function CanBuy(ply, traitorsonly)
     if not IsValid(ply) then return false end
