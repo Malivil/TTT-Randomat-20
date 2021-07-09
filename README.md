@@ -62,6 +62,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Sharing is Caring
 - Shh... It's a Secret!
 - Social Distancing
+- Stick With Me
 - That Doesn't Sound Right
 - The Cake is a Lie
 - Time Warp
@@ -1021,6 +1022,21 @@ _ttt_randomat_soulmates_weight_ - Default: -1 - The weight this event should use
 _randomat_soulmates_affectall_ - Default: 0 - Whether everyone should have a soulmate.\
 _randomat_soulmates_sharedhealth_ - Default: 0 - Whether soulmates should have shared health.
 
+## Stick With Me
+Pairs all players with another random player. Does a small amount of damage over time to players who spend too much time away from their partner.
+\
+\
+**ConVars**
+\
+_ttt_randomat_stickwithme_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_stickwithme_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_stickwithme_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_stickwithme_warning_timer_ - Default: 30 - Time a player has to find their partner at the start of the event.\
+_randomat_stickwithme_damage_timer_ - Default: 10 - Time a player must be away from their partner before damage starts.\
+_randomat_stickwithme_damage_interval_ - Default: 2 - How often damage is done when partners are too far".\
+_randomat_stickwithme_damage_distance_ - Default: 200 - Distance a player must be from their partner to be considered "near".\
+_randomat_stickwithme_damage_amount_ - Default: 1 - Damage done to each player who is too far.
+
 ## Sudden Death!
 Changes everyone to have only 1 health
 \
@@ -1288,7 +1304,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
-- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye" and "Typeracer" events
+- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Typeracer", and "Stick With Me" events
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
