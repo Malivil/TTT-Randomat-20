@@ -1023,7 +1023,7 @@ Shuffles weapon sounds at the start of the event
 _ttt_randomat_soundright_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_soundright_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_soundright_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_soundright_blocklist_ - Default: tfa_sword_advanced_base,ttt_m9k_orbital_strike,weapon_haddaway,weapon_lazycopyoftttbase,weapon_pulserif,weapon_tttbase,weapon_ttt_dislocator - The comma-separated list of weapon IDs to not use for sounds. For example: "ttt_m9k_orbital_strike,weapon_haddaway".
+_randomat_soundright_blocklist_ - Default: ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator - The comma-separated list of weapon IDs to not use for sounds. For example: "ttt_m9k_orbital_strike,weapon_haddaway".
 
 ## The 'bar has been raised!
 Increases the damage and push force of the crowbar
