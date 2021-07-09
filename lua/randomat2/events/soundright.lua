@@ -1,5 +1,7 @@
 local EVENT = {}
 
+CreateConVar("randomat_soundright_blocklist", "tfa_sword_advanced_base,ttt_m9k_orbital_strike,weapon_haddaway,weapon_lazycopyoftttbase,weapon_pulserif,weapon_tttbase,weapon_ttt_dislocator", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
+
 EVENT.Title = "That Doesn't Sound Right"
 EVENT.Description = "Shuffles weapon sounds"
 EVENT.id = "soundright"
@@ -8,16 +10,17 @@ util.AddNetworkString("RdmtSoundRightBegin")
 util.AddNetworkString("RdmtSoundRightUpdate")
 util.AddNetworkString("RdmtSoundRightEnd")
 
+local sounds = {}
 local wep_sounds = {}
-local function GetRandomWeaponSound(wep, sounds)
+local function GetRandomWeaponSound(wep)
     local wep_class = WEPS.GetClass(wep)
     if not wep_sounds[wep_class] then
         local chosen_sound = nil
-        -- Choose a random (but valid) sound
+        -- Choose a random (but valid) sound that is different than the one the weapon already has
         repeat
             local idx = math.random(1, #sounds)
             chosen_sound = sounds[idx]
-        until chosen_sound and string.len(chosen_sound) > 0
+        until chosen_sound and string.len(chosen_sound) > 0 and (not wep.Primary or wep.Primary.Sound ~= chosen_sound)
 
         -- If this is a sound script, extract the file out of it.
         -- Some weapons have to be overwritten by the EntityEmitSound hook and that can't use scripts
@@ -36,8 +39,8 @@ local function GetRandomWeaponSound(wep, sounds)
     return wep_sounds[wep_class]
 end
 
-local function SetRandomWeaponSound(ply, wep, sounds)
-    local chosen_sound = GetRandomWeaponSound(wep, sounds)
+local function SetRandomWeaponSound(ply, wep)
+    local chosen_sound = GetRandomWeaponSound(wep)
     Randomat:OverrideWeaponSound(wep, chosen_sound)
 
     net.Start("RdmtSoundRightUpdate")
@@ -47,22 +50,27 @@ local function SetRandomWeaponSound(ply, wep, sounds)
 end
 
 function EVENT:Begin()
-    local sounds = {}
+    local blocklist = {}
+    for blocked_id in string.gmatch(GetConVar("randomat_paranoid_blocklist"):GetString(), '([^,]+)') do
+        table.insert(blocklist, blocked_id:Trim())
+    end
+
+    -- Add all non-blocked weapon sounds
     for _, v in pairs(weapons.GetList()) do
-        if v and v.Primary.Sound then
+        if v and v.Primary.Sound and not table.HasValue(blocklist, v.ClassName) then
             table.insert(sounds, v.Primary.Sound)
         end
     end
 
     for _, ply in ipairs(player.GetAll()) do
         for _, wep in ipairs(ply:GetWeapons()) do
-            SetRandomWeaponSound(ply, wep, sounds)
+            SetRandomWeaponSound(ply, wep)
         end
     end
 
     self:AddHook("WeaponEquip", function(wep, ply)
         timer.Create("SoundRightDelay", 0.1, 1, function()
-            SetRandomWeaponSound(ply, wep, sounds)
+            SetRandomWeaponSound(ply, wep)
         end)
     end)
 
@@ -71,7 +79,7 @@ function EVENT:Begin()
         local wep = data.Entity:GetActiveWeapon()
         if not IsValid(wep) then return end
 
-        local chosen_sound = GetRandomWeaponSound(wep, sounds)
+        local chosen_sound = GetRandomWeaponSound(wep)
         return Randomat:OverrideWeaponSoundData(data, chosen_sound)
     end)
 
@@ -88,6 +96,21 @@ function EVENT:End()
             Randomat:RestoreWeaponSound(wep)
         end
     end
+end
+
+function EVENT:GetConVars()
+    local textboxes = {}
+    for _, v in ipairs({"blocklist"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(textboxes, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return {}, {}, textboxes
 end
 
 Randomat:register(EVENT)
