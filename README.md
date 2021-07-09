@@ -28,6 +28,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Betrayed
 - Big Head Mode
 - Black Market Buyout
+- Bullseye
 - Camp Fire
 - Care Package
 - Careful...
@@ -207,6 +208,16 @@ _ttt_randomat_blind_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blind_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blind_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_blind_duration_ - Default: 39 - The duration the players should be blinded for.
+
+## Bullseye
+Only headshots do damage
+\
+\
+**ConVars**
+\
+_ttt_randomat_bullseye_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_bullseye_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_bullseye_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Butterfingers
 Causes weapons to periodically slip out of players' hands
