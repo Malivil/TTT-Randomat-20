@@ -53,6 +53,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - NO NERD HEALING
 - Olympic Sprint
 - Opposite Day
+- Paranoid
 - Prop Hunt
 - Ransomat
 - Rock, Paper, Scissors
@@ -806,6 +807,22 @@ _ttt_randomat_opposite_min_players_ - Default: 0 - The minimum number of players
 _ttt_randomat_opposite_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_opposite_hardmode_ - Default: 1 - Whether to enable hard mode and switch Jump/Crouch.
 
+## Paranoid
+Periodically plays gun and death sounds randomly around players
+\
+\
+**ConVars**
+\
+_ttt_randomat_paranoid_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_paranoid_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_paranoid_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_paranoid_timer_min_ - Default: 15 - The minimum time before the sound should play.\
+_randomat_paranoid_timer_max_ - Default: 30 - The maximum time before the sound should play.\
+_randomat_paranoid_shots_min_ - Default: 2 - The minimum times the sound should play.\
+_randomat_paranoid_shots_max_ - Default: 6 - The maximum times the sound should play.\
+_randomat_paranoid_volume_ - Default: 125 - The volume the sound should play at.\
+_randomat_paranoid_blocklist_ - Default: ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "ttt_m9k_orbital_strike,weapon_haddaway".
+
 ## Prop Hunt
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
 \
@@ -1243,9 +1260,10 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
-- Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" event
+- Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" and "Paranoid" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
+- Dom from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event

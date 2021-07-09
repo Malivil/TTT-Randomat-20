@@ -134,7 +134,8 @@
         "EQUIP_PHD",
         "GetPlayerFilter",
         "chat",
-        "ROLE_STRINGS"
+        "ROLE_STRINGS",
+        "EmitSound"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
