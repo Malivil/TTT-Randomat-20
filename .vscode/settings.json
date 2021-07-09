@@ -131,7 +131,10 @@
         "MATERIAL_FOG_LINEAR",
         "CR_VERSION",
         "CRVersion",
-        "EQUIP_PHD"
+        "EQUIP_PHD",
+        "GetPlayerFilter",
+        "chat",
+        "ROLE_STRINGS"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

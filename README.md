@@ -48,6 +48,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Flu Season
 - Glitch in the Matrix
 - I don't think you realise the gravity of the situation.
+- Incriminating Evidence
 - Lonely Yogs
 - NO NERD HEALING
 - Olympic Sprint
@@ -671,6 +672,18 @@ _ttt_randomat_visualiser_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_visualiser_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_visualiser_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## Incriminating Evidence
+Forces a random player to say something incriminating without their knowledge
+\
+\
+**ConVars**
+\
+_ttt_randomat_incriminating_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_incriminating_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_incriminating_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_incriminating_timer_min_ - Default: 1 - The minimum time before the message is sent.\
+_randomat_incriminating_timer_max_ - Default: 10 - The maximum time before the message is sent.
+
 ## Infinite Ammo!
 Gives all weapons infinite ammo, allowing players to constantly shoot without reloading
 \
@@ -759,7 +772,7 @@ _ttt_randomat_bees_min_players_ - Default: 0 - The minimum number of players req
 _ttt_randomat_bees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
 
-## Olympic Sprint
+## Olympic Sprint (aka Infinite Sprint)
 Disables sprint stamina consumption, allowing players to sprint forever.\
 NOTE: Only works with the latest Custom Roles version and will auto-disable on older versions.
 \
@@ -1231,6 +1244,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" event
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
+- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
