@@ -567,7 +567,7 @@ function randomat_meta:GetRoleName(ply, hide_secret_roles)
     end
 
     -- Use the role strings for every other role
-    local role_string = ROLE_STRINGS_EXT[role]
+    local role_string = ROLE_STRINGS_EXT and ROLE_STRINGS_EXT[role] or nil
     if role_string then
         return role_string:sub(1, 1):upper() .. role_string:sub(2)
     end
