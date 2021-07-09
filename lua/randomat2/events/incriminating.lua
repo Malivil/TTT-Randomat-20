@@ -34,7 +34,9 @@ function EVENT:Begin()
 
     -- Get a random living player
     local target = self:GetAlivePlayers(true)[1]
-    local delay = math.random(GetConVar("randomat_incriminating_timer_min"):GetInt(), GetConVar("randomat_incriminating_timer_max"):GetInt())
+    local delay_min = GetConVar("randomat_incriminating_timer_min"):GetInt()
+    local delay_max = math.max(delay_min, GetConVar("randomat_incriminating_timer_max"):GetInt())
+    local delay = math.random(delay_min, delay_max)
     timer.Create("IncriminatingDelay", delay, 1, function()
         local message = messages[math.random(1, #messages)]
         -- Replace the "{PLAYER}" placeholder
