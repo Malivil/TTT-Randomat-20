@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_soundright_blocklist", "ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
+CreateConVar("randomat_soundright_blocklist", "ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
 
 EVENT.Title = "That Doesn't Sound Right"
 EVENT.Description = "Shuffles weapon sounds"
