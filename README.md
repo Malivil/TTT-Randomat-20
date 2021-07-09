@@ -66,6 +66,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - The Cake is a Lie
 - Time Warp
 - Total Magnetism
+- Typeracer
 - Wasteful!
 - Zom-Bees!
 
@@ -1138,6 +1139,18 @@ _ttt_randomat_randomweapon_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_randomweapon_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_randomweapon_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## Typeracer
+Type each word/phrase in chat within the configurable amount of time OR DIE!
+\
+\
+**ConVars**
+\
+_ttt_randomat_typeracer_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_typeracer_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_typeracer_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_randomat_typeracer_timer_ - Default: 15 - The amount of time players have to type each given word.\
+_randomat_typeracer_kill_wrong_ - Default: 1 - Whether to kill players who type the word incorrectly.
+
 ## Wasteful!
 Every gun shot uses two bullets
 \
@@ -1275,7 +1288,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
-- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye" event
+- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye" and "Typeracer" events
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
