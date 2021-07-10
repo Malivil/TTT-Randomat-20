@@ -153,3 +153,73 @@ function Randomat:OverrideWeaponSoundData(data, chosen_sound)
         return true
     end
 end
+
+-- Player Functions
+local player_view_offsets = {}
+local player_view_offsets_ducked = {}
+function Randomat:SetPlayerScale(ply, scale, id)
+    ply:SetStepSize(ply:GetStepSize() * scale)
+    ply:SetModelScale(ply:GetModelScale() * scale, 1)
+
+    -- Save the original values
+    local sid = ply:SteamID64()
+    if not player_view_offsets[sid] then
+        player_view_offsets[sid] = ply:GetViewOffset()
+    end
+    if not player_view_offsets_ducked[sid] then
+        player_view_offsets_ducked[sid] = ply:GetViewOffsetDucked()
+    end
+
+    -- Use the current, not the saved, values so that this can run multiple times (in theory)
+    ply:SetViewOffset(ply:GetViewOffset()*scale)
+    ply:SetViewOffsetDucked(ply:GetViewOffsetDucked()*scale)
+
+    local a, b = ply:GetHull()
+    ply:SetHull(a * scale, b * scale)
+
+    a, b = ply:GetHullDuck()
+    ply:SetHullDuck(a * scale, b * scale)
+
+    -- Reduce the player speed on the client
+    local speed_factor = math.Clamp(ply:GetStepSize() / 9, 0.25, 1)
+    net.Start("RdmtSetSpeedMultiplier")
+    net.WriteFloat(speed_factor)
+    net.WriteString("Rdmt" .. id .. "Speed")
+    net.Send(ply)
+end
+
+function Randomat:ResetPlayerScale(ply, id)
+    ply:SetModelScale(1, 1)
+
+    -- Retrieve the saved offsets
+    local offset = nil
+    local sid = ply:SteamID64()
+    if player_view_offsets[sid] then
+        offset = player_view_offsets[sid]
+        player_view_offsets[sid] = nil
+    end
+    -- Reset the view offset to the saved value or the default (if the ec_ViewChanged is not set)
+    -- The "ec_ViewChanged" property is from the "Enhanced Camera" mod which use ViewOffset to make the camera more "realistic"
+    if offset or not ply.ec_ViewChanged then
+        ply:SetViewOffset(offset or Vector(0, 0, 64))
+    end
+
+    -- Retrieve the saved ducked offsets
+    local offset_ducked = nil
+    if player_view_offsets_ducked[sid] then
+        offset_ducked = player_view_offsets_ducked[sid]
+        player_view_offsets_ducked[sid] = nil
+    end
+    -- Reset the view offset to the saved value or the default (if the ec_ViewChanged is not set)
+    -- The "ec_ViewChanged" property is from the "Enhanced Camera" mod which use ViewOffset to make the camera more "realistic"
+    if offset_ducked or not ply.ec_ViewChanged then
+        ply:SetViewOffsetDucked(offset_ducked or Vector(0, 0, 28))
+    end
+    ply:ResetHull()
+    ply:SetStepSize(18)
+
+    -- Reset the player speed on the client
+    net.Start("RdmtRemoveSpeedMultiplier")
+    net.WriteString("Rdmt" .. id .. "Speed")
+    net.Send(ply)
+end

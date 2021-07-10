@@ -498,7 +498,7 @@ end
 
 function randomat_meta:RemoveHook(hooktype)
     local id = "RandomatEvent." .. self.Id .. ":" .. hooktype
-    for idx, ahook in ipairs(self.Hooks) do
+    for idx, ahook in ipairs(self.Hooks or {}) do
         if ahook[1] == hooktype and ahook[2] == id then
             hook.Remove(ahook[1], ahook[2])
             table.remove(self.Hooks, idx)
@@ -728,6 +728,27 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
             end
         end
     end)
+end
+
+function randomat_meta:SetAllPlayerScales(scale)
+    for _, ply in ipairs(self:GetAlivePlayers()) do
+        Randomat:SetPlayerScale(ply, scale, self.id)
+    end
+
+    -- Reduce the player speed on the server
+    self:AddHook("TTTSpeedMultiplier", function(ply, mults)
+        if not ply:Alive() or ply:IsSpec() then return end
+        local speed_factor = math.Clamp(ply:GetStepSize() / 9, 0.25, 1)
+        table.insert(mults, speed_factor)
+    end)
+end
+
+function randomat_meta:ResetAllPlayerScales()
+    for _, ply in ipairs(self:GetAlivePlayers()) do
+        Randomat:ResetPlayerScale(ply, self.id)
+    end
+
+    self:RemoveHook("TTTSpeedMultiplier")
 end
 
 --[[
