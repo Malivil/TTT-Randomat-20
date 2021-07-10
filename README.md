@@ -65,6 +65,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Stick With Me
 - That Doesn't Sound Right
 - The Cake is a Lie
+- They have a cave troll
 - Time Warp
 - Total Magnetism
 - Typeracer
@@ -1112,6 +1113,21 @@ _ttt_randomat_switch_min_players_ - Default: 0 - The minimum number of players r
 _ttt_randomat_switch_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_switch_timer_ - Default: 15 - How often players are switched.
 
+## They have a cave troll
+Chooses a random traitor and makes them a strong giant with a crowbar. Other random players are chosen to be smaller and given knives
+\
+\
+**ConVars**
+\
+_ttt_randomat_cavetroll_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_cavetroll_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_cavetroll_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_cavetroll_troll_scale_ - Default: 1.5 - The scale factor to use for the troll.\
+_randomat_cavetroll_troll_damage_bonus_ - Default: 0.25 - The percent damage bonus to give the troll.\
+_randomat_cavetroll_troll_health_ - Default: 150 - The amount of health the troll should have.\
+_randomat_cavetroll_hobbit_scale_ - Default: 0.5 - The scale factor to use for the hobbits.\
+_randomat_cavetroll_hobbit_pct_ - Default: 0.34 - The percent of non-traitors to be hobbits.
+
 ## Time Warp
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal and intensifies on a configurable interval
 \
@@ -1297,15 +1313,16 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Ill_Worry7895 on Reddit for the idea for the "Black Market Buyout", "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
-- Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
+- Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
-- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
-- Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
-- Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
-- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
+- Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Typeracer", and "Stick With Me" events
+- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
+- Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
+- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
+- Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "They have a cave troll" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
