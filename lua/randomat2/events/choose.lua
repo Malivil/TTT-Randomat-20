@@ -59,31 +59,32 @@ function EVENT:Begin()
         net.WriteTable(EventChoices)
         net.Broadcast()
 
-        timer.Create("RdmtChooseVoteTimer",GetConVar("randomat_choose_votetimer"):GetInt(), 1, function()
-            local vts = -1
-            local evnt = ""
-            for k, v in RandomPairs(EventVotes) do
-                if vts < v then
-                    vts = v
-                    evnt = k
-                end
-            end
-            for _, v in pairs(Randomat.Events) do
-                local title = Randomat:GetEventTitle(v)
-                if title == evnt then
-                    Randomat:TriggerEvent(v.id, owner)
-                end
-            end
-            net.Start("ChooseVoteEnd")
-            net.Broadcast()
-            EventVotes = {}
-        end)
     else
         net.Start("ChooseEventTrigger")
         net.WriteInt(GetConVarNumber("randomat_choose_choices"), 32)
         net.WriteTable(EventChoices)
         net.Send(owner)
     end
+
+    timer.Create("RdmtChooseVoteTimer",GetConVar("randomat_choose_votetimer"):GetInt(), 1, function()
+        local vts = -1
+        local evnt = ""
+        for k, v in RandomPairs(EventVotes) do
+            if vts < v then
+                vts = v
+                evnt = k
+            end
+        end
+        for _, v in pairs(Randomat.Events) do
+            local title = Randomat:GetEventTitle(v)
+            if title == evnt then
+                Randomat:TriggerEvent(v.id, owner)
+            end
+        end
+        net.Start("ChooseVoteEnd")
+        net.Broadcast()
+        EventVotes = {}
+    end)
 end
 
 function EVENT:End()

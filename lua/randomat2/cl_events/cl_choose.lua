@@ -104,8 +104,8 @@ net.Receive("ChooseVoteTrigger", function()
             end
         end
     end)
+end)
 
-    net.Receive("ChooseVoteEnd", function()
-        closeAllChooseFrames()
-    end)
+net.Receive("ChooseVoteEnd", function()
+    closeAllChooseFrames()
 end)
