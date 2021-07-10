@@ -129,7 +129,7 @@ function EVENT:GetConVars()
         end
     end
 
-    return {}, checks, {}
+    return {}, checks
 end
 
 Randomat:register(EVENT)
