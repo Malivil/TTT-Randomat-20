@@ -5,10 +5,14 @@ CreateConVar("randomat_stickwithme_damage_timer", 10, {FCVAR_ARCHIVE, FCVAR_NOTI
 CreateConVar("randomat_stickwithme_damage_interval", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often damage is done when partners are too far", 1, 600)
 CreateConVar("randomat_stickwithme_damage_distance", 200, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Maximum partner distance before damage", 1, 1000)
 CreateConVar("randomat_stickwithme_damage_amount", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Damage done to each player who is too far", 1, 100)
+CreateConVar("randomat_stickwithme_highlight", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to highlight player partners")
 
 EVENT.Title = "Stick With Me"
 EVENT.Description = "Pairs players together, forcing them to stay close to eachother or take damage"
 EVENT.id = "stickwithme"
+
+util.AddNetworkString("RdmtStickWithMeHighlightAdd")
+util.AddNetworkString("RdmtStickWithMeHighlightRemove")
 
 local pairthinktime = {}
 
@@ -33,6 +37,7 @@ function EVENT:Begin()
     end
 
     local warningtime = GetConVar("randomat_stickwithme_warning_timer"):GetInt()
+    local highlight = GetConVar("randomat_stickwithme_highlight"):GetBool()
 
     local size = #ply2
     for i = 1, size do
@@ -41,6 +46,16 @@ function EVENT:Begin()
         ply1[i]:PrintMessage(HUD_PRINTCENTER, "Your partner is " .. ply2[i]:Nick() .. ". You have " .. warningtime .. " seconds to find them!")
         ply2[i]:PrintMessage(HUD_PRINTCENTER, "Your partner is " .. ply1[i]:Nick() .. ". You have " .. warningtime .. " seconds to find them!")
         Randomat:LogEvent("[RANDOMAT] " .. ply1[i]:Nick() .. " and " .. ply2[i]:Nick() .. " are now partners.")
+
+        if highlight then
+            net.Start("RdmtStickWithMeHighlightAdd")
+            net.WriteEntity(ply2[i])
+            net.Send(ply1[i])
+
+            net.Start("RdmtStickWithMeHighlightAdd")
+            net.WriteEntity(ply1[i])
+            net.Send(ply2[i])
+        end
     end
 
     timer.Create("RdmtStickWithMeDelay", warningtime, 1, function()
@@ -92,6 +107,8 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtStickWithMeDelay")
+    net.Start("RdmtStickWithMeHighlightRemove")
+    net.Broadcast()
     for k, _ in pairs(pairthinktime) do
         ClearPlayerData(k)
     end
@@ -118,7 +135,18 @@ function EVENT:GetConVars()
         end
     end
 
-    return sliders
+    local checks = {}
+    for _, v in ipairs({"highlight"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return sliders, checks
 end
 
 Randomat:register(EVENT)

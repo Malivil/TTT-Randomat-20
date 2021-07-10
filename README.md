@@ -1035,7 +1035,8 @@ _randomat_stickwithme_warning_timer_ - Default: 30 - Time a player has to find t
 _randomat_stickwithme_damage_timer_ - Default: 10 - Time a player must be away from their partner before damage starts.\
 _randomat_stickwithme_damage_interval_ - Default: 2 - How often damage is done when partners are too far".\
 _randomat_stickwithme_damage_distance_ - Default: 200 - Distance a player must be from their partner to be considered "near".\
-_randomat_stickwithme_damage_amount_ - Default: 1 - Damage done to each player who is too far.
+_randomat_stickwithme_damage_amount_ - Default: 1 - Damage done to each player who is too far.\
+_randomat_stickwithme_highlight_ - Default: 1 - Whether to highlight player partners.
 
 ## Sudden Death!
 Changes everyone to have only 1 health
