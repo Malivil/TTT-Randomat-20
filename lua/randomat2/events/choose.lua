@@ -1,11 +1,10 @@
 local EVENT = {}
 
 util.AddNetworkString("ChooseEventTrigger")
-util.AddNetworkString("PlayerChoseEvent")
-util.AddNetworkString("ChooseEventEnd")
 util.AddNetworkString("ChooseVoteTrigger")
+util.AddNetworkString("ChooseEventEnd")
+util.AddNetworkString("ChoosePlayerChose")
 util.AddNetworkString("ChoosePlayerVoted")
-util.AddNetworkString("ChooseVoteEnd")
 
 CreateConVar("randomat_choose_choices", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of events you can choose from", 2, 5)
 CreateConVar("randomat_choose_vote", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows all players to vote on the event")
@@ -41,10 +40,11 @@ function EVENT:Begin()
     EventChoices = {}
     PlayersVoted = {}
     EventVotes = {}
+    local choices = GetConVar("randomat_choose_choices"):GetInt()
     local x = 0
     for _, v in RandomPairs(Randomat.Events) do
-        if x < GetConVar("randomat_choose_choices"):GetInt() then
-            if Randomat:CanEventRun(v) and v.id ~= "choose" and not v.StartSecret then
+        if x < choices then
+            if Randomat:CanEventRun(v) and v.id ~= self.id and not v.StartSecret then
                 x = x+1
                 local title = Randomat:GetEventTitle(v)
                 EventChoices[x] = title
@@ -55,11 +55,11 @@ function EVENT:Begin()
 
     if GetConVar("randomat_choose_vote"):GetBool() then
         net.Start("ChooseVoteTrigger")
-        net.WriteInt(GetConVarNumber("randomat_choose_choices"), 32)
+        net.WriteInt(choices, 32)
         net.WriteTable(EventChoices)
         net.Broadcast()
 
-        timer.Create("RdmtChooseVoteTimer",GetConVar("randomat_choose_votetimer"):GetInt(), 1, function()
+        timer.Create("RdmtChooseVoteTimer", GetConVar("randomat_choose_votetimer"):GetInt(), 1, function()
             local vts = -1
             local evnt = ""
             for k, v in RandomPairs(EventVotes) do
@@ -74,23 +74,24 @@ function EVENT:Begin()
                     Randomat:TriggerEvent(v.id, owner)
                 end
             end
-            net.Start("ChooseVoteEnd")
+            net.Start("ChooseEventEnd")
             net.Broadcast()
             EventVotes = {}
         end)
     else
         net.Start("ChooseEventTrigger")
-        net.WriteInt(GetConVarNumber("randomat_choose_choices"), 32)
+        net.WriteInt(choices, 32)
         net.WriteTable(EventChoices)
         net.Send(owner)
     end
 end
 
 function EVENT:End()
-    if owner == nil then return end
+    timer.Remove("RdmtChooseVoteTimer")
 
+    if owner == nil then return end
     net.Start("ChooseEventEnd")
-    net.Send(owner)
+    net.Broadcast()
 end
 
 function EVENT:GetConVars()
@@ -123,7 +124,7 @@ function EVENT:GetConVars()
     return sliders, checks
 end
 
-net.Receive("PlayerChoseEvent", function()
+net.Receive("ChoosePlayerChose", function()
     local str = net.ReadString()
     for _, v in pairs(Randomat.Events) do
         local title = Randomat:GetEventTitle(v)
@@ -134,14 +135,16 @@ net.Receive("PlayerChoseEvent", function()
 end)
 
 net.Receive("ChoosePlayerVoted", function(ln, ply)
-    local t = 0
+    local voted = false
     for _, v in pairs(PlayersVoted) do
         if v == ply then
-            t = 1
+            voted = true
+            break
         end
     end
+
     if (ply:Alive() and not ply:IsSpec()) or GetConVar("randomat_choose_deadvoters"):GetBool() then
-        if t ~= 1 then
+        if not voted then
             local str = net.ReadString()
             EventVotes[str] = EventVotes[str] + 1
             net.Start("ChoosePlayerVoted")

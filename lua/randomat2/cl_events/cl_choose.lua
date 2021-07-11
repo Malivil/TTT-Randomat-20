@@ -9,17 +9,19 @@ local function closeFrame(frame, idx)
 end
 
 local function closeChooseFrame()
-    if #chooseTables == 0 then return end
-
-    local lastidx
+    local lastidx = nil
     -- Frames not not necessarily stored in order when multiple are shown at once
     -- Find that last index since that will be the frame on top (visually)
-    for i, _ in pairs(chooseTables) do
-        lastidx = i
+    for i, f in pairs(chooseTables) do
+        if f then
+            lastidx = i
+        end
     end
 
-    local frame = chooseTables[lastidx]
-    closeFrame(frame, lastidx)
+    if lastidx then
+        local frame = chooseTables[lastidx]
+        closeFrame(frame, lastidx)
+    end
 end
 
 local function closeAllChooseFrames()
@@ -58,15 +60,11 @@ net.Receive("ChooseEventTrigger", function()
     chooseTables[frames] = frame
 
     list.OnRowSelected = function(lst, index, pnl)
-        net.Start("PlayerChoseEvent")
+        net.Start("ChoosePlayerChose")
         net.WriteString(pnl:GetColumnText(1))
         net.SendToServer()
         closeChooseFrame()
     end
-
-    net.Receive("ChooseEventEnd", function()
-        closeAllChooseFrames()
-    end)
 end)
 
 net.Receive("ChooseVoteTrigger", function()
@@ -92,10 +90,6 @@ net.Receive("ChooseVoteTrigger", function()
         net.SendToServer()
     end
 
-    net.Receive("ChooseEventEnd", function()
-        closeAllChooseFrames()
-    end)
-
     net.Receive("ChoosePlayerVoted", function()
         local votee = net.ReadString()
         for _, v in ipairs(list:GetLines()) do
@@ -104,8 +98,8 @@ net.Receive("ChooseVoteTrigger", function()
             end
         end
     end)
+end)
 
-    net.Receive("ChooseVoteEnd", function()
-        closeAllChooseFrames()
-    end)
+net.Receive("ChooseEventEnd", function()
+    closeAllChooseFrames()
 end)
