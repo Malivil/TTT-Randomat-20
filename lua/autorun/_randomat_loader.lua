@@ -38,16 +38,31 @@ if SERVER then
         end
     end)
 
-    CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should automatically trigger on round start.")
-    CreateConVar("ttt_randomat_auto_chance", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Chance of the auto-Randomat triggering.")
+    local auto = CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should automatically trigger on round start.")
+    local auto_chance = CreateConVar("ttt_randomat_auto_chance", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Chance of the auto-Randomat triggering.")
+    local auto_choose = CreateConVar("ttt_randomat_auto_choose", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the auto-started event is always \"choose\"")
+    local auto_silent = CreateConVar("ttt_randomat_auto_silent", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the auto-started event should be silent.")
     CreateConVar("ttt_randomat_rebuyable", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether you can buy more than one Randomat.")
     CreateConVar("ttt_randomat_event_weight", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The default selection weight each event should use.", 1)
     CreateConVar("ttt_randomat_event_hint", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should print what each event does when they start.")
     CreateConVar("ttt_randomat_event_hint_chat", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether hints should also be put in chat.")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
-        if GetConVar("ttt_randomat_auto"):GetBool() and math.random() <= GetConVar("ttt_randomat_auto_chance"):GetFloat() then
-            Randomat:TriggerRandomEvent(nil)
+        if auto:GetBool() and math.random() <= auto_chance:GetFloat() then
+            local silent = auto_silent:GetBool()
+            if auto_choose:GetBool() then
+                if silent then
+                    Randomat:SilentTriggerEvent("choose", nil)
+                else
+                    Randomat:TriggerEvent("choose", nil)
+                end
+            else
+                if silent then
+                    Randomat:SilentTriggerRandomEvent(nil)
+                else
+                    Randomat:TriggerRandomEvent(nil)
+                end
+            end
         end
     end)
 end

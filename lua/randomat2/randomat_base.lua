@@ -216,7 +216,27 @@ function Randomat:unregister(id)
     Randomat.Events[id] = nil
 end
 
-local function GetRandomEvent(events)
+function Randomat:CanEventRun(event)
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return false end
+
+    -- Don't allow multiple weapon override events to run at once
+    if event.Type == EVENT_TYPE_WEAPON_OVERRIDE then
+        for _, evt in pairs(Randomat.ActiveEvents) do
+            if evt.Type == EVENT_TYPE_WEAPON_OVERRIDE then
+                return false
+            end
+        end
+    end
+
+    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
+    local player_count = player.GetCount()
+    return event:Enabled() and event:Condition() and (min_players <= 0 or player_count >= min_players) and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
+end
+
+local function GetRandomWeightedEvent(events)
     local weighted_events = {}
     for id, _ in pairs(events) do
         local weight = GetConVar("ttt_randomat_" .. id .. "_weight"):GetInt()
@@ -241,27 +261,7 @@ local function GetRandomEvent(events)
     return events[key]
 end
 
-function Randomat:CanEventRun(event)
-    if type(event) ~= "table" then
-        event = Randomat.Events[event]
-    end
-    if event == nil then return false end
-
-    -- Don't allow multiple weapon override events to run at once
-    if event.Type == EVENT_TYPE_WEAPON_OVERRIDE then
-        for _, evt in pairs(Randomat.ActiveEvents) do
-            if evt.Type == EVENT_TYPE_WEAPON_OVERRIDE then
-                return false
-            end
-        end
-    end
-
-    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
-    local player_count = player.GetCount()
-    return event:Enabled() and event:Condition() and (min_players <= 0 or player_count >= min_players) and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
-end
-
-function Randomat:TriggerRandomEvent(ply)
+function Randomat:GetRandomEvent()
     local events = Randomat.Events
 
     local found = false
@@ -276,12 +276,21 @@ function Randomat:TriggerRandomEvent(ply)
         error("Could not find valid event, consider enabling more")
     end
 
-    local event = GetRandomEvent(events)
+    local event = GetRandomWeightedEvent(events)
     while not Randomat:CanEventRun(event) do
-        event = GetRandomEvent(events)
+        event = GetRandomWeightedEvent(events)
     end
+    return event
+end
 
+function Randomat:TriggerRandomEvent(ply)
+    local event = Randomat:GetRandomEvent()
     TriggerEvent(event, ply, false)
+end
+
+function Randomat:SilentTriggerRandomEvent(ply)
+    local event = Randomat:GetRandomEvent()
+    TriggerEvent(event, ply, true)
 end
 
 function Randomat:TriggerEvent(cmd, ply, ...)
