@@ -86,7 +86,7 @@ local function TriggerEvent(event, ply, silent, ...)
     Randomat:LogEvent("[RANDOMAT] Event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
 
     if not silent then
-        local has_description = event.Description ~= nil and string.len(event.Description) > 0
+        local has_description = event.Description ~= nil and #event.Description > 0
         if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() then
             -- Show the small description message but don't use SmallNotify because it specifically mutes when "secret" is running and we want to show this if this event IS "secret"
             NotifyDescription(event)

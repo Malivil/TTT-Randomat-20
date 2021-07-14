@@ -18,7 +18,7 @@ function EVENT:GetRandomWeaponSound(sounds)
     repeat
         local idx = math.random(1, #sounds)
         chosen_sound = sounds[idx]
-    until chosen_sound and string.len(chosen_sound) > 0
+    until chosen_sound and #chosen_sound > 0
 
     return chosen_sound
 end

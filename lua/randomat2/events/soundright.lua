@@ -20,7 +20,7 @@ local function GetRandomWeaponSound(wep)
         repeat
             local idx = math.random(1, #sounds)
             chosen_sound = sounds[idx]
-        until chosen_sound and string.len(chosen_sound) > 0 and (not wep.Primary or wep.Primary.Sound ~= chosen_sound)
+        until chosen_sound and #chosen_sound > 0 and (not wep.Primary or wep.Primary.Sound ~= chosen_sound)
 
         -- If this is a sound script, extract the file out of it.
         -- Some weapons have to be overwritten by the EntityEmitSound hook and that can't use scripts
