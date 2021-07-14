@@ -15,12 +15,10 @@ local function RemoveBlind()
     net.Broadcast()
 end
 
-function EVENT:Begin(...)
-    local params = ...
-    local duration = GetConVar("randomat_blind_duration"):GetInt()
+function EVENT:Begin(duration)
     -- Default to the duration passed as a paramter, if there is one
-    if params ~= nil and params[1] ~= nil then
-        duration = params[1]
+    if not duration then
+        duration = GetConVar("randomat_blind_duration"):GetInt()
     end
     EVENT.Title = "All traitors have been blinded for "..duration.." seconds!"
 

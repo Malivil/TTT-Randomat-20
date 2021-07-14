@@ -28,8 +28,7 @@ local function InitializeSharedHealth(i)
     SetSharedHealth(i, shared_health)
 end
 
-function EVENT:Begin(...)
-    local params = ...
+function EVENT:Begin(first_target, second_target)
     ply1 = {}
     ply1_health = {}
     ply2 = {}
@@ -37,14 +36,14 @@ function EVENT:Begin(...)
 
     local affect_all = GetConVar("randomat_soulmates_affectall"):GetBool()
     -- Allow the players to be overwritten if this is called from another event
-    if params ~= nil and params[1] ~= nil and params[2] ~= nil then
+    if first_target and second_target then
         affect_all = false
 
-        ply1[1] = params[1]
-        ply1_health[1] = params[1]:Health()
+        ply1[1] = first_target
+        ply1_health[1] = first_target:Health()
 
-        ply2[1] = params[2]
-        ply2_health[1] = params[2]:Health()
+        ply2[1] = second_target
+        ply2_health[1] = second_target:Health()
     else
         local x = 0
         for _, v in ipairs(self:GetAlivePlayers(true)) do

@@ -6,12 +6,7 @@ EVENT.Title = "NOT THE BEES!"
 EVENT.Description = "Spawns hostile bees randomly around players"
 EVENT.id = "bees"
 
-function EVENT:Begin(...)
-    local params = ...
-    local color = nil
-    if params ~= nil and params[1] ~= nil then
-        color = params[1]
-    end
+function EVENT:Begin(color)
     local x = 0
     local plys = {}
     for _, v in ipairs(self:GetAlivePlayers()) do
@@ -30,7 +25,7 @@ function EVENT:Begin(...)
         bee:SetModel("models/lucian/props/stupid_bee.mdl")
         bee:SetPos(spos)
         bee:SetParent(headBee)
-        if color ~= nil and type(color) == "table" then
+        if color and type(color) == "table" then
             bee:SetColor(color)
         end
         headBee:SetNoDraw(true)

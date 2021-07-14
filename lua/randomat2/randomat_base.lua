@@ -68,7 +68,7 @@ local function TriggerEvent(event, ply, silent, ...)
         -- If this event is supposed to start secretly, trigger "secret" with this specific event chosen
         -- Unless "secret" is already running in which case we don't care, just let it go
         if event.StartSecret and not Randomat:IsEventActive("secret") then
-            TriggerEvent(Randomat.Events["secret"], ply, false, {event.id})
+            TriggerEvent(Randomat.Events["secret"], ply, false, event.id)
             return
         end
 

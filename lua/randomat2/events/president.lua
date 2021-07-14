@@ -6,16 +6,13 @@ EVENT.id = "president"
 
 CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
 
-function EVENT:Begin(...)
-    local params = ...
-    local target = self.owner
-    local has_detective = false
-
+function EVENT:Begin(target)
     -- Default to the player passed as a paramter, if there is one
-    if params ~= nil and params[1] ~= nil then
-        target = params[1]
+    if not target then
+        target = self.owner
     end
 
+    local has_detective = false
     if not IsValid(target) or not target:Alive() or not Randomat:IsGoodDetectiveLike(target) then
         for _, v in ipairs(self:GetAlivePlayers(true)) do
             if Randomat:IsGoodDetectiveLike(v) then

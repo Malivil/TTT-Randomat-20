@@ -225,7 +225,16 @@ function EVENT:SwearIn(winner)
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
         elseif winner:GetRole() == ROLE_OLDMAN then
             self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their frailty has spread to the rest of you.")
-            Randomat:SilentTriggerEvent("suddendeath", winner, {GetConVar("ttt_old_man_starting_health"):GetInt()})
+
+            local health
+            -- TODO: Remove this version check after 1.0.3 is pushed to release
+            if CRVersion("1.0.3") then
+                health = GetConVar("ttt_oldman_starting_health"):GetInt()
+            else
+                health = GetConVar("ttt_old_man_starting_health"):GetInt()
+            end
+
+            Randomat:SilentTriggerEvent("suddendeath", winner, health)
         -- Innocent - Promote to Detective, give credits
         elseif Randomat:IsInnocentTeam(winner) then
             Randomat:SetRole(winner, ROLE_DETECTIVE)
@@ -235,7 +244,7 @@ function EVENT:SwearIn(winner)
             -- Trigger "Get Down Mr. President" with the winner as the target, if this feature is enabled
             -- This DOES expose Detraitors if people are paying attention -- This won't trigger if there is a Detraitor because that makes it too easy for them to win
             if GetConVar("randomat_election_trigger_mrpresident"):GetBool() then
-                Randomat:SafeTriggerEvent("president", winner, false, {winner})
+                Randomat:SafeTriggerEvent("president", winner, false, winner)
             end
         -- Traitor - Announce their role, and give their whole team free credits
         elseif Randomat:IsTraitorTeam(winner) then

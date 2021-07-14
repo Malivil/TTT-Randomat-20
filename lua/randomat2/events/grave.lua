@@ -9,17 +9,11 @@ EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with", 10, 100)
 
-function EVENT:Begin(...)
-    local params = ...
-    local filter_class = nil
-    if params ~= nil and params[1] ~= nil then
-        filter_class = params[1]
-    end
-
+function EVENT:Begin(filter_class)
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
         timer.Create(victim:SteamID64() .. "RdmtZombieTimer", 0.25, 1, function()
-            if (filter_class == nil or (IsValid(killer) and killer:GetClass() == filter_class)) and not victim:Alive() and victim:GetRole() ~= ROLE_ZOMBIE and victim:GetPData("IsZombifying", 0) ~= 1 and not victim:GetNWBool("IsZombifying", false) then
+            if (not filter_class or (IsValid(killer) and killer:GetClass() == filter_class)) and not victim:Alive() and victim:GetRole() ~= ROLE_ZOMBIE and victim:GetPData("IsZombifying", 0) ~= 1 and not victim:GetNWBool("IsZombifying", false) then
                 net.Start("TTT_Zombified")
                 net.WriteString(victim:Nick())
                 net.Broadcast()
