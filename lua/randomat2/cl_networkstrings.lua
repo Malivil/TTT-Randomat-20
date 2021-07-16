@@ -18,7 +18,7 @@ net.Receive("alerteventtrigger", function()
     local event = net.ReadString()
     local item = net.ReadString()
     local role_string = net.ReadString()
-    local is_item = net.ReadInt(8)
+    local is_item = net.ReadUInt(32)
     local role = net.ReadInt(16)
     local name
     if is_item == 0 then
