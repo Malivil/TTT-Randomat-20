@@ -49,6 +49,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Flu Season
 - Glitch in the Matrix
 - I don't think you realise the gravity of the situation.
+- I'm feeling kinda ILL
 - Incriminating Evidence
 - Lonely Yogs
 - NO NERD HEALING
@@ -688,6 +689,18 @@ _ttt_randomat_visualiser_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_visualiser_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_visualiser_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## I'm feeling kinda ILL
+Causes players to slowly lose health over time
+\
+\
+**ConVars**
+\
+_ttt_randomat_feelingill_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_feelingill_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_feelingill_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_feelingill_timer_ - Default: 3 - How often (in seconds) a player will lose health.\
+_randomat_feelingill_health_ - Default: 1 - How much health per tick you lose.
+
 ## Incriminating Evidence
 Forces a random player to say something incriminating without their knowledge
 \
@@ -1313,6 +1326,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
 - u/Ill_Worry7895 on Reddit for the idea for the "Black Market Buyout", "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
+- u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
