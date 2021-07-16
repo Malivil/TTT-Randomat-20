@@ -6,14 +6,19 @@ EVENT.Title = "NOT THE BEES!"
 EVENT.Description = "Spawns hostile bees randomly around players"
 EVENT.id = "bees"
 
-function EVENT:Begin(color)
+function EVENT:Begin(color, count)
+    if not count then
+        count = GetConVar("randomat_bees_count"):GetInt()
+    end
+
     local x = 0
     local plys = {}
     for _, v in ipairs(self:GetAlivePlayers()) do
         x = x+1
         table.insert(plys, v)
     end
-    timer.Create("randomatbees", 0.1, GetConVar("randomat_bees_count"):GetInt()*x, function()
+
+    timer.Create("randomatbees", 0.1, count*x, function()
         local rdmply = plys[math.random(1, #plys)]
         while (not rdmply:Alive()) or rdmply:IsSpec() do
             rdmply = plys[math.random(1, #plys)]
