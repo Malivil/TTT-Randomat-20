@@ -354,7 +354,7 @@ _ttt_randomat_crabs_min_players_ - Default: 0 - The minimum number of players re
 _ttt_randomat_crabs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_crabs_count_ - Default: 5 - The amount of crabs spawned when someone dies.
 
-## Dead Men Tell no Tales
+## Dead Men Tell No Tales
 Prevents corpses from being searched
 \
 \
