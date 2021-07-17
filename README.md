@@ -1298,7 +1298,8 @@ Kills any player who jumps a second time after this event has triggered
 _ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jump_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_jump_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.
+_randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.\
+_randomat_jump_quackspam_ - Default: 0 - Whether to show the message multiple times for a Quack.
 
 ## Zom-Bees!
 Spawns bees who spread zombiism to their victims. See "NOT THE BEES!" and "RISE FROM YOUR GRAVE" events for additional configuration.

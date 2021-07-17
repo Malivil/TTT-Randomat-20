@@ -141,7 +141,8 @@
         "DMG_BLAST",
         "DMG_FALL",
         "DMG_CLUB",
-        "DMG_DROWN"
+        "DMG_DROWN",
+        "ROLE_ROMANTIC"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
