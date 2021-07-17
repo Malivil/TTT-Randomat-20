@@ -367,11 +367,11 @@ function Randomat:EventNotifySilent(title)
     net.Broadcast()
 end
 
-local function GetRandomRoleWeapon(roles, blocklist)
+function Randomat:GetRandomRoleWeapon(roles, blocklist)
     local selected = math.random(1,#roles)
     local tbl = table.Copy(EquipmentItems[roles[selected]]) or {}
     for _, v in ipairs(weapons.GetList()) do
-        if v and not v.Spawnable and v.CanBuy and not table.HasValue(blocklist, v.ClassName) then
+        if v and not v.Spawnable and v.CanBuy and (not blocklist or not table.HasValue(blocklist, v.ClassName)) then
             table.insert(tbl, v)
         end
     end
@@ -389,7 +389,7 @@ local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settr
     tracking = tracking + 1
     settrackingvar(tracking)
 
-    local item, item_id, swep_table = GetRandomRoleWeapon(roles, blocklist)
+    local item, item_id, swep_table = Randomat:GetRandomRoleWeapon(roles, blocklist)
     if item_id then
         -- If this is an item and we shouldn't give players items or the player already has this item, try again
         if not include_equipment or ply:HasEquipmentItem(item_id) then
