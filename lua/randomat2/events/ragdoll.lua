@@ -117,6 +117,7 @@ local function unragdollPlayer(v)
         end
     end
 
+    v:SetMaxHealth(v.spawnInfo.maxhealth)
     v:SetHealth(math.max(0, v.spawnInfo.health))
     if v:Health() <= 0 then
         v:Kill()
@@ -154,6 +155,7 @@ local function ragdollPlayer(v)
     info.weps = weps
     info.activeWeapon = v:GetActiveWeapon().ClassName
     info.health = v:Health()
+    info.maxhealth = v:GetMaxHealth()
     info.credits = v:GetCredits()
     info.equipment = equipment
     v.spawnInfo = info
