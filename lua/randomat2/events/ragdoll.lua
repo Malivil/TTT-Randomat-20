@@ -110,6 +110,7 @@ local function unragdollPlayer(v)
     end
 
     v:SetCredits(v.spawnInfo.credits)
+    v:SetModel(v.spawnInfo.model)
 
     for i, j in pairs(v.spawnInfo.equipment) do
         if j then
@@ -156,6 +157,7 @@ local function ragdollPlayer(v)
     info.activeWeapon = v:GetActiveWeapon().ClassName
     info.health = v:Health()
     info.maxhealth = v:GetMaxHealth()
+    info.model = v:GetModel()
     info.credits = v:GetCredits()
     info.equipment = equipment
     v.spawnInfo = info
