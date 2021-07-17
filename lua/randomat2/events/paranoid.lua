@@ -5,7 +5,7 @@ CreateConVar("randomat_paranoid_timer_max", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 CreateConVar("randomat_paranoid_shots_min", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum times the sound should play", 1, 10)
 CreateConVar("randomat_paranoid_shots_max", 6, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum times the sound should play", 1, 15)
 CreateConVar("randomat_paranoid_volume", 125, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The volume the sound should play at", 75, 180)
-CreateConVar("randomat_paranoid_blocklist", "ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
+CreateConVar("randomat_paranoid_blocklist", "weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
 
 EVENT.Title = "Paranoid"
 EVENT.Description = "Periodically plays gun and death sounds randomly around players"

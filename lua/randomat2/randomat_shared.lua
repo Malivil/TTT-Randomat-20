@@ -144,11 +144,10 @@ function Randomat:OverrideWeaponSoundData(data, chosen_sound)
     if not IsValid(data.Entity) then return end
 
     local current_sound = data.SoundName:lower()
-    local weap_start, _ = string.find(current_sound, "weapons/")
-    local fire_start, _ = string.find(current_sound, "fire")
-    local shot_start, _ = string.find(current_sound, "shot")
-    local shoot_start, _ = string.find(current_sound, "shoot")
-    if weap_start and (fire_start or shot_start or shoot_start) then
+    local fire_start, _ = string.find(current_sound, ".*weapons/.*/.*fire.*%..*")
+    local shot_start, _ = string.find(current_sound, ".*weapons/.*/.*shot.*%..*")
+    local shoot_start, _ = string.find(current_sound, ".*weapons/.*/.*shoot.*%..*")
+    if fire_start or shot_start or shoot_start then
         data.SoundName = chosen_sound
         return true
     end

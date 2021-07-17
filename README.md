@@ -849,7 +849,7 @@ _randomat_paranoid_timer_max_ - Default: 30 - The maximum time before the sound 
 _randomat_paranoid_shots_min_ - Default: 2 - The minimum times the sound should play.\
 _randomat_paranoid_shots_max_ - Default: 6 - The maximum times the sound should play.\
 _randomat_paranoid_volume_ - Default: 125 - The volume the sound should play at.\
-_randomat_paranoid_blocklist_ - Default: ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "ttt_m9k_orbital_strike,weapon_haddaway".
+_randomat_paranoid_blocklist_ - Default: weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "weapon_pulserif,weapon_ttt_dislocator".
 
 ## Prop Hunt
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
@@ -1084,7 +1084,7 @@ Shuffles weapon sounds at the start of the event
 _ttt_randomat_soundright_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_soundright_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_soundright_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_soundright_blocklist_ - Default: ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "ttt_m9k_orbital_strike,weapon_haddaway".
+_randomat_soundright_blocklist_ - Default: weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "weapon_pulserif,weapon_ttt_dislocator".
 
 ## The 'bar has been raised!
 Increases the damage and push force of the crowbar

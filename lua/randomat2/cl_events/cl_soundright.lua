@@ -35,6 +35,7 @@ end)
 net.Receive("RdmtSoundRightEnd", function()
     hook.Remove("EntityEmitSound", "SoundRightOverrideHook")
 
+    table.Empty(wep_sounds)
     local client = LocalPlayer()
     if not IsValid(client) then return end
 

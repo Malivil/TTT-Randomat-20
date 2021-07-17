@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_soundright_blocklist", "ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
+CreateConVar("randomat_soundright_blocklist", "weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
 
 EVENT.Title = "That Doesn't Sound Right"
 EVENT.Description = "Shuffles weapon sounds"
@@ -88,6 +88,8 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
+    table.Empty(sounds)
+    table.Empty(wep_sounds)
     net.Start("RdmtSoundRightEnd")
     net.Broadcast()
     timer.Remove("SoundRightDelay")
