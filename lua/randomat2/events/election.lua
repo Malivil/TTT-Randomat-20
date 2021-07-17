@@ -20,6 +20,7 @@ CreateConVar("randomat_election_break_ties", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "
 EVENT.Title = "Election Day"
 EVENT.Description = "Nominate and then elect players to become President. Each role gets a different reward for being elected"
 EVENT.id = "election"
+EVENT.Type = EVENT_TYPE_VOTING
 
 local playersvoted = {}
 local votableplayers = {}
@@ -425,10 +426,6 @@ function EVENT:End()
     net.Broadcast()
     net.Start("ElectionVoteEnd")
     net.Broadcast()
-end
-
-function EVENT:Condition()
-    return not Randomat:IsEventActive("democracy")
 end
 
 function EVENT:GetConVars()

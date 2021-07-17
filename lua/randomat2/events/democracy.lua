@@ -15,6 +15,7 @@ EVENT.Title = "I love democracy, I love the republic."
 EVENT.AltTitle = "Democracy"
 EVENT.Description = "Cast your vote to kill a player. Votes continue until the round ends"
 EVENT.id = "democracy"
+EVENT.Type = EVENT_TYPE_VOTING
 
 local playervotes = {}
 local votableplayers = {}
@@ -151,10 +152,6 @@ function EVENT:End()
     timer.Remove("votekilltimer")
     net.Start("DemocracyEventEnd")
     net.Broadcast()
-end
-
-function EVENT:Condition()
-    return not Randomat:IsEventActive("election")
 end
 
 function EVENT:GetConVars()

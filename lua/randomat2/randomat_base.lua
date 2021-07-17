@@ -222,10 +222,10 @@ function Randomat:CanEventRun(event)
     end
     if event == nil then return false end
 
-    -- Don't allow multiple weapon override events to run at once
-    if event.Type == EVENT_TYPE_WEAPON_OVERRIDE then
+    -- Don't allow multiple events of the same type to run at once
+    if event.Type ~= EVENT_TYPE_DEFAULT then
         for _, evt in pairs(Randomat.ActiveEvents) do
-            if evt.Type == EVENT_TYPE_WEAPON_OVERRIDE then
+            if evt.Type == event.Type then
                 return false
             end
         end
