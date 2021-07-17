@@ -48,6 +48,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Fog of War
 - Flu Season
 - Glitch in the Matrix
+- Herd Immunity
 - I don't think you realise the gravity of the situation.
 - I'm feeling kinda ILL
 - Incriminating Evidence
@@ -638,6 +639,19 @@ _ttt_randomat_harpoon_weight_ - Default: -1 - The weight this event should use d
 _randomat_harpoon_timer_ - Default: 3 - Time between being given harpoons.\
 _randomat_harpoon_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_harpoon_weaponid_ - Default: ttt_m9k_harpoon - Id of the weapon given.
+
+## Herd Immunity
+Players vote for what type of damage they will be immune to for the rest of the round
+\
+\
+**ConVars**
+\
+_ttt_randomat_harpoon_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_harpoon_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_harpoon_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_immunity_timer_ - Default: 30 - The number of seconds the vote lasts.\
+_randomat_immunity_bullet_ - Default: 0 - Whether bullet damage can be voted for.\
+_randomat_immunity_slashing_ - Default: 0 - Whether slashing damage can be voted for.
 
 ## Honey, I shrunk the terrorists
 Scales each player's size by a configurable ratio

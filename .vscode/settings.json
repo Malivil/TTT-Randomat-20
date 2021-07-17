@@ -136,7 +136,12 @@
         "chat",
         "ROLE_STRINGS",
         "EmitSound",
-        "HITGROUP_HEAD"
+        "HITGROUP_HEAD",
+        "DMG_BURN",
+        "DMG_BLAST",
+        "DMG_FALL",
+        "DMG_CLUB",
+        "DMG_DROWN"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
