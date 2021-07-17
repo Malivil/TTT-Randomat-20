@@ -6,6 +6,7 @@ util.AddNetworkString("DemocracyEventEnd")
 util.AddNetworkString("DemocracyPlayerVoted")
 util.AddNetworkString("DemocracyJesterVoted")
 util.AddNetworkString("DemocracyReset")
+
 CreateConVar("randomat_democracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 10, 90)
 CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody dies")
 CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
@@ -21,6 +22,12 @@ local playervotes = {}
 local votableplayers = {}
 local playersvoted = {}
 local aliveplys = {}
+
+local function ClearTable(table)
+    for k, _ in pairs(table) do
+        table[k] = nil
+    end
+end
 
 function EVENT:Begin()
     net.Start("DemocracyEventBegin")
@@ -228,11 +235,5 @@ net.Receive("DemocracyJesterVoted", function(ln, ply)
         end
     end
 end)
-
-function ClearTable(table)
-    for k, _ in pairs(table) do
-        table[k] = nil
-    end
-end
 
 Randomat:register(EVENT)
