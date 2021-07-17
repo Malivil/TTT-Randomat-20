@@ -225,7 +225,25 @@ function Randomat:CanEventRun(event)
     -- Don't allow multiple events of the same type to run at once
     if event.Type ~= EVENT_TYPE_DEFAULT then
         for _, evt in pairs(Randomat.ActiveEvents) do
-            if evt.Type == event.Type then
+            if type(evt.Type) == "table" then
+                -- If both are tables don't allow any matching types
+                if type(event.Type) == "table" then
+                    for _, t in ipairs(event.Type) do
+                        if table.HasValue(evt.Type, t) then
+                            return false
+                        end
+                    end
+                -- If only one is a table, don't allow it to contain the other's type
+                elseif table.HasValue(evt.Type, event.Type) then
+                    return false
+                end
+            -- If only one is a table, don't allow it to contain the other's type
+            elseif type(event.Type) == "table" then
+                if table.HasValue(event.Type, evt.Type) then
+                    return false
+                end
+            -- If neither are tables, don't allow the types to match
+            elseif evt.Type == event.Type then
                 return false
             end
         end
