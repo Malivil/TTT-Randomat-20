@@ -30,6 +30,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
+        if not IsValid(victim) then return end
         SetPlayerVisible(victim)
     end)
 end

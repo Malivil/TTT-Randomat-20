@@ -28,6 +28,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Betrayed
 - Big Head Mode
 - Black Market Buyout
+- Blerg!
 - Bullseye
 - Camp Fire
 - Care Package
@@ -205,6 +206,23 @@ _ttt_randomat_blackmarket_weight_ - Default: -1 - The weight this event should u
 _randomat_blackmarket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 _randomat_blackmarket_timer_traitor_ - Default: 25 - How often (in seconds) traitors should get items.\
 _randomat_blackmarket_timer_detective_ - Default: 15 - How often (in seconds) detectives should get items.
+
+## Blerg!
+ala Blegh!\
+ala Blergh!\
+ala Bleh!\
+ala Blarg!\
+\
+Players respawn repeatedly unless killed during a brief window where they can't use weapons
+\
+\
+**ConVars**
+\
+_ttt_randomat_blerg_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_blerg_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_blerg_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_blerg_respawntimer_ - Default: 60 - Delay before dead players respawn.\
+_randomat_blerg_weapondelay_ - Default: 20 - Delay before respawned can use weapons.
 
 ## Blind Traitors (aka All traitors have been blinded for X seconds!)
 Blinds all traitors for a configurable amount of seconds
@@ -1388,7 +1406,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
 - u/Geonightman on Reddit for the idea for the "Stop, I'm Bees!" event
-- u/En_TioN on Reddit for the idea for the "Scouts Only" and "Gaseous Snake" events
+- u/En_TioN on Reddit for the idea for the "Blerg!", "Gaseous Snake", and "Scouts Only" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
