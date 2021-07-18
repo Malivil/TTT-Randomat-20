@@ -61,6 +61,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Ransomat
 - Rock, Paper, Scissors
 - Run For Your Life!
+- Scouts Only
 - Sharing is Caring
 - Shh... It's a Secret!
 - Social Distancing
@@ -815,7 +816,7 @@ _ttt_randomat_wallhack_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_wallhack_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_wallhack_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
-## NOT THE BEES!
+## NOT THE BEES
 Spawns bees randomly around players
 \
 \
@@ -985,6 +986,17 @@ _ttt_randomat_runforyourlife_min_players_ - Default: 0 - The minimum number of p
 _ttt_randomat_runforyourlife_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_runforyourlife_delay_ - Default: 0.2 - Time between player taking damage.\
 _randomat_runforyourlife_damage_ - Default: 3 - Amount of damage a player takes.
+
+## Scouts Only
+Forces everyone to use a rifle and lowers everyone's gravity
+\
+\
+**ConVars**
+\
+_ttt_randomat_scoutsonly_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_scoutsonly_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_scoutsonly_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_scoutsonly_gravity_ - Default: 0.1 - The gravity scale.
 
 ## Sharing is Caring
 When a player kills another, their inventory is swapped with thier victim's.
@@ -1365,6 +1377,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
 - u/Geonightman on Reddit for the idea for the "Stop, I'm Bees!" event
+- u/En_TioN on Reddit for the idea for the "Scouts Only" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
