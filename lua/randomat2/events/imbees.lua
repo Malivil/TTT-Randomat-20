@@ -1,10 +1,10 @@
 local EVENT = {}
 
-CreateConVar("randomat_crabs_count", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of crabs spawned when someone dies", 1, 10)
+CreateConVar("randomat_imbees_count", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of bees spawned when someone dies", 1, 10)
 
-EVENT.Title = "Crabs are People"
-EVENT.Description = "Spawns hostile headcrabs when a player is killed"
-EVENT.id = "crabs"
+EVENT.Title = "Stop, I'm Bees!"
+EVENT.Description = "Spawns bees when a player is killed"
+EVENT.id = "imbees"
 
 function EVENT:Begin()
     local plys = {}
@@ -14,13 +14,11 @@ function EVENT:Begin()
         end
     end
 
-    timer.Create("headcrabtimer", 1, 0, function()
+    timer.Create("RdmtImBeesTimer", 1, 0, function()
         for k, ply in pairs(plys) do
             if not ply:Alive() then
-                for i = 1, GetConVar("randomat_crabs_count"):GetInt() do
-                    local crab = ents.Create("npc_headcrab")
-                    crab:SetPos(ply:GetPos() + Vector(math.random(-100, 100), math.random(-100, 100), 0) )
-                    crab:Spawn()
+                for _ = 1, GetConVar("randomat_imbees_count"):GetInt() do
+                    Randomat:SpawnBee(ply)
                 end
                 plys[k] = nil
             end
@@ -29,7 +27,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    timer.Remove("headcrabtimer")
+    timer.Remove("RdmtImBeesTimer")
 end
 
 function EVENT:GetConVars()

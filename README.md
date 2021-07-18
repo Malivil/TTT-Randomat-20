@@ -65,6 +65,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Shh... It's a Secret!
 - Social Distancing
 - Stick With Me
+- Stop, I'm Bees!
 - That Doesn't Sound Right
 - The Cake is a Lie
 - They have a cave troll
@@ -1077,6 +1078,17 @@ _randomat_stickwithme_damage_distance_ - Default: 200 - Distance a player must b
 _randomat_stickwithme_damage_amount_ - Default: 1 - Damage done to each player who is too far.\
 _randomat_stickwithme_highlight_ - Default: 1 - Whether to highlight player partners.
 
+## Stop, I'm Bees!
+Spawns a configurable number of bees when a player is killed
+\
+\
+**ConVars**
+\
+_ttt_randomat_imbees_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_imbees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_imbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_imbees_count_ - Default: 3 - The amount of bees spawned when someone dies.
+
 ## Sudden Death!
 Changes everyone to have only 1 health
 \
@@ -1352,6 +1364,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Ill_Worry7895 on Reddit for the idea for the "Black Market Buyout", "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
+- u/Geonightman on Reddit for the idea for the "Stop, I'm Bees!" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
