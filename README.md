@@ -355,6 +355,16 @@ _ttt_randomat_crabs_min_players_ - Default: 0 - The minimum number of players re
 _ttt_randomat_crabs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_crabs_count_ - Default: 5 - The amount of crabs spawned when someone dies.
 
+## Dead Men Tell ALL Tales
+Allows dead players to text chat with the living
+\
+\
+**ConVars**
+\
+_ttt_randomat_deadchat_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_deadchat_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_deadchat_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Dead Men Tell No Tales
 Prevents corpses from being searched
 \
