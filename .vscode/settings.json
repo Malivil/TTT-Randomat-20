@@ -142,7 +142,9 @@
         "DMG_FALL",
         "DMG_CLUB",
         "DMG_DROWN",
-        "ROLE_ROMANTIC"
+        "ROLE_ROMANTIC",
+        "ParticleEmitter",
+        "VectorRand"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

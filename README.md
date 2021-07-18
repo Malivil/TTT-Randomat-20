@@ -47,6 +47,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Flip the Script
 - Fog of War
 - Flu Season
+- Gaseous Snake
 - Glitch in the Matrix
 - Herd Immunity
 - I don't think you realise the gravity of the situation.
@@ -587,6 +588,16 @@ _ttt_randomat_lifesteal_min_players_ - Default: 0 - The minimum number of player
 _ttt_randomat_lifesteal_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_lifesteal_health_ - Default: 25 - The health gained per kill.\
 _randomat_lifesteal_cap_ - Default: 0 - The maximum health a player can get from killing people. Set to 0 to disable.
+
+## Gaseous Snake
+Turns everyone invisible but envelopes them in smoke
+\
+\
+**ConVars**
+\
+_ttt_randomat_gaseous_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_gaseous_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_gaseous_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Get Down Mr President!
 Gives all Detectives extra health, but kills all members of the Innocent team if they get killed
@@ -1377,7 +1388,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
 - u/Geonightman on Reddit for the idea for the "Stop, I'm Bees!" event
-- u/En_TioN on Reddit for the idea for the "Scouts Only" event
+- u/En_TioN on Reddit for the idea for the "Scouts Only" and "Gaseous Snake" events
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
