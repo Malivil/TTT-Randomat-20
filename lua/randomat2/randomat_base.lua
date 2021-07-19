@@ -495,6 +495,23 @@ function Randomat:RemoveEquipmentItem(ply, item_id)
     return removed
 end
 
+function Randomat:SpawnBee(ply, color)
+    local spos = ply:GetPos() + Vector(math.random(-75,75), math.random(-75,75), math.random(200,250))
+    local headBee = SpawnNPC(ply, spos, "npc_manhack")
+    headBee:SetNPCState(2)
+
+    local bee = ents.Create("prop_dynamic")
+    bee:SetModel("models/lucian/props/stupid_bee.mdl")
+    bee:SetPos(spos)
+    bee:SetParent(headBee)
+    if color and type(color) == "table" then
+        bee:SetColor(color)
+    end
+
+    headBee:SetNoDraw(true)
+    headBee:SetHealth(1000)
+end
+
 --[[
  Randomat Meta
 ]]--

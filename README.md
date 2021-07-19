@@ -62,6 +62,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Paranoid
 - Prop Hunt
 - Ransomat
+- RISE FROM YOUR... Bees?
 - Rock, Paper, Scissors
 - Run For Your Life!
 - Scouts Only
@@ -1003,6 +1004,16 @@ _ttt_randomat_grave_min_players_ - Default: 0 - The minimum number of players re
 _ttt_randomat_grave_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.
 
+## RISE FROM YOUR... Bees?
+Dead players become harmless bees
+\
+\
+**ConVars**
+\
+_ttt_randomat_specbees_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_specbees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_specbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Rock, Paper, Scissors
 Starts a game of Rock, Paper, Scissors between two players... to the death! A tie results in the players being soulbound to eachother.
 \
@@ -1428,6 +1439,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "They have a cave troll" event
+- Matt from Nanotekkit for the idea for the "RISE FROM YOUR... Bees?" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
