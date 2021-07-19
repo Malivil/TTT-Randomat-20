@@ -66,6 +66,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Rock, Paper, Scissors
 - Run For Your Life!
 - Scouts Only
+- Second Chance
 - Sharing is Caring
 - Shh... It's a Secret!
 - Social Distancing
@@ -1048,6 +1049,16 @@ _ttt_randomat_scoutsonly_min_players_ - Default: 0 - The minimum number of playe
 _ttt_randomat_scoutsonly_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_scoutsonly_gravity_ - Default: 0.1 - The gravity scale.
 
+## Second Chance
+Respawns the first player who is killed as a random vanilla role
+\
+\
+**ConVars**
+\
+_ttt_randomat_secondchance_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_secondchance_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_secondchance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Sharing is Caring
 When a player kills another, their inventory is swapped with thier victim's.
 \
@@ -1434,7 +1445,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
-- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Typeracer", and "Stick With Me" events
+- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
