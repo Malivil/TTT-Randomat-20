@@ -12,6 +12,7 @@ end
 AddServer("randomat2/randomat_base.lua")
 AddServer("randomat2/randomat_shared.lua")
 AddClient("randomat2/randomat_shared.lua")
+AddClient("randomat2/cl_common.lua")
 AddClient("randomat2/cl_message.lua")
 AddClient("randomat2/cl_networkstrings.lua")
 

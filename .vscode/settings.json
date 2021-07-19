@@ -144,7 +144,8 @@
         "DMG_DROWN",
         "ROLE_ROMANTIC",
         "ParticleEmitter",
-        "VectorRand"
+        "VectorRand",
+        "OBS_MODE_ROAMING"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

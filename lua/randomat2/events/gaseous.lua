@@ -6,6 +6,7 @@ util.AddNetworkString("RdmtGaseousEnd")
 EVENT.Title = "Gaseous Snake"
 EVENT.Description = "Turns everyone invisible but envelopes them in smoke"
 EVENT.id = "gaseous"
+EVENT.Type = EVENT_TYPE_SMOKING
 
 local function SetPlayerInvisible(ply)
     ply:SetColor(Color(255, 255, 255, 0))

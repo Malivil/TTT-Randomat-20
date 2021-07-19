@@ -49,6 +49,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Fog of War
 - Flu Season
 - Gaseous Snake
+- Ghostly Apparition
 - Glitch in the Matrix
 - Herd Immunity
 - I don't think you realise the gravity of the situation.
@@ -628,6 +629,15 @@ _ttt_randomat_president_min_players_ - Default: 0 - The minimum number of player
 _ttt_randomat_president_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.
 
+## Ghostly Apparition
+Dead players become ghosts who leave a trail of smoke as they drift through the world
+\
+\
+**ConVars**
+\
+_ttt_randomat_apparition_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_apparition_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_apparition_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 ## Glitch in the Matrix
 Randomly changes everyone's role to be either Glitch or Traitor based on the configurable values
 \

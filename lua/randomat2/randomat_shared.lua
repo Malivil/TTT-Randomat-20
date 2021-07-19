@@ -2,6 +2,7 @@
 EVENT_TYPE_DEFAULT = 0
 EVENT_TYPE_WEAPON_OVERRIDE = 1
 EVENT_TYPE_VOTING = 2
+EVENT_TYPE_SMOKING = 2
 
 -- Team Functions
 function Randomat:IsInnocentTeam(ply, skip_detective)
