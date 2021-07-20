@@ -207,7 +207,7 @@ Disables Traitor and Detective shop, but periodically gives out free items from 
 _ttt_randomat_blackmarket_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blackmarket_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blackmarket_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_blackmarket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
+_randomat_blackmarket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".\
 _randomat_blackmarket_timer_traitor_ - Default: 25 - How often (in seconds) traitors should get items.\
 _randomat_blackmarket_timer_detective_ - Default: 15 - How often (in seconds) detectives should get items.
 
@@ -488,9 +488,10 @@ Moves all props, ammo, and weapons a random amount in a random direction.
 \
 **ConVars**
 \
-_ttt_randomat_doubleedge_ - Default: 1 - Whether this event is enabled.\
-_ttt_randomat_doubleedge_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_doubleedge_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_earthquake_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_earthquake_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_earthquake_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_earthquake_blocklist_ - Default: - The comma-separated list of maps to not allow this map on. For example: "ttt_lego,gm_flatgrass".
 
 ## Election Day
 Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\

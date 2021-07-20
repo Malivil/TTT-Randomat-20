@@ -1,5 +1,7 @@
 local EVENT = {}
 
+CreateConVar("randomat_earthquake_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of maps to not allow this map on")
+
 EVENT.Title = "Earthquake"
 EVENT.id = "earthquake"
 
@@ -27,6 +29,32 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtEarthquake")
+end
+
+function EVENT:Condition()
+    local blocklist = {}
+    for blocked_id in string.gmatch(GetConVar("randomat_earthquake_blocklist"):GetString(), '([^,]+)') do
+        table.insert(blocklist, blocked_id:Trim())
+    end
+
+    -- Don't start this event on maps that are on the blocklist
+    return not table.HasValue(blocklist, game.GetMap())
+end
+
+function EVENT:GetConVars()
+    local textboxes = {}
+    for _, v in ipairs({"blocklist"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(textboxes, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+
+    return {}, {}, textboxes
 end
 
 Randomat:register(EVENT)
