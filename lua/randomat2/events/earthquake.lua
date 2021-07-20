@@ -1,0 +1,32 @@
+local EVENT = {}
+
+EVENT.Title = "Earthquake"
+EVENT.id = "earthquake"
+
+function EVENT:Begin()
+    local magnitude = math.random(1, 10)
+    self.Description = "Magnitude " .. magnitude .. "!"
+
+    util.ScreenShake(vector_origin, magnitude, 5, 2 * magnitude, 5000)
+    timer.Create("RdmtEarthquake", 0.25, 5 * magnitude, function ()
+        for _, ent in ipairs(ents.GetAll()) do
+            local class = ent:GetClass()
+            if (string.StartWith(class, "prop_physics") or class == "prop_dynamic" or
+                string.StartWith(class, "item_ammo_") or string.StartWith(class, "item_box_") or
+                type(ent) == "Weapon") and not IsValid(ent:GetParent()) then
+                ent:PhysWake()
+                local phys = ent:GetPhysicsObject()
+                if IsValid(phys) then
+                    local push = Vector(math.random(-150, 150), math.random(-150, 150), math.random(-150, 150))
+                    phys:SetVelocity(phys:GetVelocity() + push)
+                end
+            end
+        end
+    end)
+end
+
+function EVENT:End()
+    timer.Remove("RdmtEarthquake")
+end
+
+Randomat:register(EVENT)

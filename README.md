@@ -43,6 +43,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Don't Let it Go to Your Head
 - Double Cross
 - Double-Edged Sword
+- Earthquake
 - Election Day
 - Evasive Maneuvers
 - Flip the Script
@@ -480,6 +481,16 @@ _ttt_randomat_doubleedge_min_players_ - Default: 0 - The minimum number of playe
 _ttt_randomat_doubleedge_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_doubleedge_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
 _randomat_doubleedge_amount_ - Default: 2 - How much self-damage to heal per interval.
+
+## Earthquake
+Moves all props, ammo, and weapons a random amount in a random direction.
+\
+\
+**ConVars**
+\
+_ttt_randomat_doubleedge_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_doubleedge_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_doubleedge_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Election Day
 Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\
@@ -1451,6 +1462,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "They have a cave troll" event
 - Matt from Nanotekkit for the idea for the "RISE FROM YOUR... Bees?" event
+- Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
