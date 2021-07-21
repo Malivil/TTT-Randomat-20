@@ -35,12 +35,10 @@ function EVENT:Begin()
     bees = {}
 
     local dead = {}
-    for _, p in ipairs(player.GetAll()) do
-        if not p:Alive() or p:IsSpec() then
-            dead[p:SteamID64()] = true
-            SetSpectatorValues(p)
-            CreateBee(p)
-        end
+    for _, p in ipairs(self:GetDeadPlayers()) do
+        dead[p:SteamID64()] = true
+        SetSpectatorValues(p)
+        CreateBee(p)
     end
 
     self:AddHook("KeyPress", function(ply, key)
