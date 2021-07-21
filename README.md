@@ -61,6 +61,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Olympic Sprint
 - Opposite Day
 - Paranoid
+- praW emiT
 - Prop Hunt
 - Ransomat
 - RISE FROM YOUR... Bees?
@@ -930,6 +931,19 @@ _randomat_paranoid_shots_max_ - Default: 6 - The maximum times the sound should 
 _randomat_paranoid_volume_ - Default: 125 - The volume the sound should play at.\
 _randomat_paranoid_blocklist_ - Default: weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "weapon_pulserif,weapon_ttt_dislocator".
 
+## praW emiT (aka Reverse Time Warp)
+Causes everything (movement, firing speed, timers, etc.) to run a configurable amount slower than normal and intensifies on a configurable interval
+\
+\
+**ConVars**
+\
+_ttt_randomat_reversetimewarp_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_reversetimewarp_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_reversetimewarp_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_reversetimewarp_scale_ - Default: 15 - The percentage the speed should decrease. Treated as an subtractive decrease on multiple uses (e.g. 1.0 -> 0.85 -> 0.7 (0.85 - 0.15) rather than 1.0 -> 0.85 -> 0.1275 (0.85 - 0.85x0.15).\
+_randomat_reversetimewarp_scale_min_ - Default: 0.15 - The minimum scale the speed should decrease to.\
+_randomat_reversetimewarp_timer_ - Default: 15 - How often (in seconds) the speed will be decreased.
+
 ## Prop Hunt
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
 \
@@ -1467,7 +1481,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
-- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed" and "Clownin' Around" events
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
