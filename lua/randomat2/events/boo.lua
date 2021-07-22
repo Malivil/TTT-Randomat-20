@@ -15,6 +15,7 @@ local timers = {}
 local ghosts = {}
 function EVENT:Begin()
     timers = {}
+    ghosts = {}
     for _, p in ipairs(player.GetAll()) do
         p:SetNWInt("RdmtBooPower", 0)
         if not p:Alive() or p:IsSpec() then
