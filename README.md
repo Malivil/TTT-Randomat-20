@@ -72,6 +72,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Second Chance
 - Sharing is Caring
 - Shh... It's a Secret!
+- Smoke Signals
 - Social Distancing
 - Stick With Me
 - Stop, I'm Bees!
@@ -1128,6 +1129,18 @@ _ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_shutup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_shutup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## Smoke Signals
+Allows dead players to envelope their target in smoke
+\
+\
+**ConVars**
+\
+_ttt_randomat_smoke_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_smoke_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_smoke_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_smoke_charge_time_ - Default: 60 - How many seconds it takes to charge the next attack.\
+_randomat_smoke_time_ - Default: 5 - How many seconds the smoke lasts.
+
 ## So that's it. What, we're some kind of suicide squad? (aka Detonators)
 Gives everyone a detonator for a random other player. When that detonator is used, the target player is exploded.
 \
@@ -1489,7 +1502,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "They have a cave troll" event
-- Matt from Nanotekkit for the idea for the "Boo!" and "RISE FROM YOUR... Bees?" events
+- Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
