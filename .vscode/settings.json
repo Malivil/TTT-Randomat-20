@@ -147,7 +147,8 @@
         "VectorRand",
         "OBS_MODE_ROAMING",
         "MOVETYPE_VPHYSICS",
-        "FL_OBJECT"
+        "FL_OBJECT",
+        "RENDERMODE_GLOW"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

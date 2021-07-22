@@ -29,6 +29,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 - Big Head Mode
 - Black Market Buyout
 - Blerg!
+- Boo!
 - Bullseye
 - Camp Fire
 - Care Package
@@ -239,6 +240,18 @@ _ttt_randomat_blind_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blind_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blind_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_blind_duration_ - Default: 39 - The duration the players should be blinded for.
+
+## Boo!
+Allows dead players to scare their target and make them drop their weapon
+\
+\
+**ConVars**
+\
+_ttt_randomat_boo_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_boo_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_boo_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_boo_charge_time_ - Default: 60 - How many seconds it takes to charge the next attack.\
+_randomat_boo_ghost_time_ - Default: 5 - How many seconds the ghost lasts.
 
 ## Bullseye
 Only headshots do damage
@@ -1476,7 +1489,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "They have a cave troll" event
-- Matt from Nanotekkit for the idea for the "RISE FROM YOUR... Bees?" event
+- Matt from Nanotekkit for the idea for the "Boo!" and "RISE FROM YOUR... Bees?" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
