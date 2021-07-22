@@ -51,13 +51,16 @@ function EVENT:Begin()
                 ghost:SetModel(ply:GetModel())
 
                 local pos = target:GetPos()
-                local ang = ply:GetAngles()
+                local ang = target:GetAngles()
                 ghost:SetPos(pos + ang:Forward() * 40)
+                ghost:SetAngles(-ang)
                 ghost:SetNotSolid(true)
                 ghost:SetColor(Color(245, 245, 245, 100))
                 ghost:SetRenderMode(RENDERMODE_GLOW)
                 ghost:Spawn()
                 table.insert(ghosts, ghost)
+
+                target:PrintMessage(HUD_PRINTCENTER, "Boo!")
 
                 -- Keep track of the ghost timer
                 local id = "RdmtBooGhostTimer_" .. ply:SteamID64() .. "_" .. target:SteamID64()
