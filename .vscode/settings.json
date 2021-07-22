@@ -148,7 +148,8 @@
         "OBS_MODE_ROAMING",
         "MOVETYPE_VPHYSICS",
         "FL_OBJECT",
-        "RENDERMODE_GLOW"
+        "RENDERMODE_GLOW",
+        "WIN_NONE"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

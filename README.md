@@ -23,67 +23,22 @@ _ttt_randomat_event_weight_ - Default: 1 - The default selection weight each eve
 _ttt_randomat_event_hint_ - Default: 0 - Whether the Randomat should print what each event does when they start.\
 _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put in chat.
 
-# New Events
-- A Glitch has been patched
-- Betrayed
-- Big Head Mode
-- Black Market Buyout
-- Blerg!
-- Boo!
-- Bullseye
-- Camp Fire
-- Care Package
-- Careful...
-- Clownin' Around
-- Come on and SLAM!
-- Communism! Time to learn how to share...
-- Compulsive Reloading
-- Derptective
-- Detraitor
-- Don't be so Sensitive
-- Don't Let it Go to Your Head
-- Double Cross
-- Double-Edged Sword
-- Earthquake
-- Election Day
-- Evasive Maneuvers
-- Flip the Script
-- Fog of War
-- Flu Season
-- Gaseous Snake
-- Ghostly Apparition
-- Glitch in the Matrix
-- Herd Immunity
-- I don't think you realise the gravity of the situation.
-- I'm feeling kinda ILL
-- Incriminating Evidence
-- Lonely Yogs
-- NO NERD HEALING
-- Olympic Sprint
-- Opposite Day
-- Paranoid
-- praW emiT
-- Prop Hunt
-- Ransomat
-- RISE FROM YOUR... Bees?
-- Rock, Paper, Scissors
-- Run For Your Life!
-- Scouts Only
-- Second Chance
-- Sharing is Caring
-- Shh... It's a Secret!
-- Smoke Signals
-- Social Distancing
-- Stick With Me
-- Stop, I'm Bees!
-- That Doesn't Sound Right
-- The Cake is a Lie
-- They have a cave troll
-- Time Warp
-- Total Magnetism
-- Typeracer
-- Wasteful!
-- Zom-Bees!
+# Latest Events
+1. I'm feeling kinda ILL
+2. Herd Immunity
+3. Gaseous Snake
+4. Scouts Only
+5. Stop, I'm Bees!
+6. Dead Men Tell ALL Tales
+7. Blerg!
+8. Ghostly Apparition
+9. RISE FROM YOUR... Bees?
+10. Second Chance
+11. Earthquake
+12. praW emiT
+13. Boo!
+14. Smoke Signals
+15. Hedge Your Bets
 
 # Events
 ## \#BringBackOldJester
@@ -719,6 +674,16 @@ _ttt_randomat_harpoon_weight_ - Default: -1 - The weight this event should use d
 _randomat_harpoon_timer_ - Default: 3 - Time between being given harpoons.\
 _randomat_harpoon_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_harpoon_weaponid_ - Default: ttt_m9k_harpoon - Id of the weapon given.
+
+## Hedge Your Bets
+Dead players bet on who is going to live to the end. Winners are respawned to fight them.
+\
+\
+**ConVars**
+\
+_ttt_randomat_bets_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_bets_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_bets_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Herd Immunity
 Players vote for what type of damage they will be immune to for the rest of the round
@@ -1497,7 +1462,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
-- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Typeracer", "Second Chance", "Stick With Me" events
+- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
