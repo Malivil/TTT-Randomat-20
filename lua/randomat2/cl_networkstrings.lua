@@ -1,19 +1,4 @@
-local function GetItemName(item, role)
-    local id = tonumber(item)
-    local info = GetEquipmentItem(role, id)
-    return info and LANG.TryTranslation(info.name) or item
-end
-
-local function GetWeaponName(item)
-    for _, v in ipairs(weapons.GetList()) do
-        if item == v.ClassName then
-            return v.PrintName
-        end
-    end
-
-    return item
-end
-
+-- Weapon/Item Names
 net.Receive("alerteventtrigger", function()
     local event = net.ReadString()
     local item = net.ReadString()
@@ -22,9 +7,9 @@ net.Receive("alerteventtrigger", function()
     local role = net.ReadInt(16)
     local name
     if is_item == 0 then
-        name = GetWeaponName(item)
+        name = Randomat:GetWeaponName(item)
     else
-        name = GetItemName(item, role)
+        name = Randomat:GetItemName(item, role)
     end
 
     net.Start("AlertTriggerFinal")
@@ -34,6 +19,7 @@ net.Receive("alerteventtrigger", function()
     net.SendToServer()
 end)
 
+-- Player Speed
 local current_mults = {}
 local current_mults_withweapon = {}
 net.Receive("RdmtSetSpeedMultiplier", function()

@@ -70,3 +70,20 @@ function Randomat:PaintBar(r, x, y, w, h, colors, value)
         Randomat:RoundedMeter(r, x, y, width, h, colors.fill)
     end
 end
+
+-- Weapon Functions
+function Randomat:GetItemName(item, role)
+    local id = tonumber(item)
+    local info = GetEquipmentItem(role, id)
+    return info and LANG.TryTranslation(info.name) or item
+end
+
+function Randomat:GetWeaponName(item)
+    for _, v in ipairs(weapons.GetList()) do
+        if item == v.ClassName then
+            return v.PrintName
+        end
+    end
+
+    return item
+end
