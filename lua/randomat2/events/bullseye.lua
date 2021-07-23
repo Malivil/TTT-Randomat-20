@@ -7,7 +7,7 @@ EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 function EVENT:Begin()
     self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
-        -- If the player doens't have a head hitbox then they take damage as normal
+        -- If the player doesn't have a head hitbox then they take damage as normal
         local box = ply:GetHitBoxBone(HITGROUP_HEAD, 0)
         if box and hitgroup ~= HITGROUP_HEAD then
             dmginfo:ScaleDamage(0)
