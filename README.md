@@ -42,6 +42,8 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 16. Paranormal Activity
 
 # Events
+**NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
+
 ## \#BringBackOldJester
 Converts the Swapper to a Jester
 \
