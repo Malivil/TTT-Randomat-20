@@ -81,7 +81,7 @@ end
 function Randomat:GetWeaponName(item)
     for _, v in ipairs(weapons.GetList()) do
         if item == v.ClassName then
-            return v.PrintName
+            return LANG.TryTranslation(v.PrintName)
         end
     end
 
