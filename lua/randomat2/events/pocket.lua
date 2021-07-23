@@ -10,6 +10,7 @@ EVENT.SingleUse = false
 local blocklist = {}
 
 function EVENT:Begin()
+    blocklist = {}
     for blocked_id in string.gmatch(GetConVar("randomat_pocket_blocklist"):GetString(), '([^,]+)') do
         table.insert(blocklist, blocked_id:Trim())
     end

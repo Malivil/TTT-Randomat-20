@@ -39,7 +39,7 @@ function EVENT:Begin()
     local ghost_time = GetConVar("randomat_boo_ghost_time"):GetInt()
     self:AddHook("KeyPress", function(ply, key)
         if key == IN_JUMP and ply:GetNWInt("RdmtBooPower", 0) == 100 then
-            local target = ply:GetObserverTarget()
+            local target = ply:GetObserverMode() ~= OBS_MODE_ROAMING and ply:GetObserverTarget() or nil
             if IsValid(target) and target:IsPlayer() then
                 -- Reset the player's power
                 ply:SetNWInt("RdmtBooPower", 0)

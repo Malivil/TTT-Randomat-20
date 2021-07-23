@@ -14,6 +14,7 @@ CreateConVar("randomat_glitch_min_traitors", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "
 local blocklist = {}
 
 function EVENT:Begin()
+    blocklist = {}
     for blocked_id in string.gmatch(GetConVar("randomat_glitch_blocklist"):GetString(), '([^,]+)') do
         table.insert(blocklist, blocked_id:Trim())
     end

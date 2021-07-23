@@ -15,6 +15,7 @@ local blocklist = {}
 local oldSetCredits = nil
 
 function EVENT:Begin()
+    blocklist = {}
     for blocked_id in string.gmatch(GetConVar("randomat_blackmarket_blocklist"):GetString(), '([^,]+)') do
         table.insert(blocklist, blocked_id:Trim())
     end

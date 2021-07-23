@@ -72,7 +72,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("KeyPress", function(ply, key)
-        local target = ply:GetObserverTarget()
+        local target = ply:GetObserverMode() ~= OBS_MODE_ROAMING and ply:GetObserverTarget() or nil
         if not IsValid(target) or not target:IsPlayer() then return end
 
         local target_sid = target:SteamID64()
