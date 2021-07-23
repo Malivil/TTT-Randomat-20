@@ -149,7 +149,12 @@
         "MOVETYPE_VPHYSICS",
         "FL_OBJECT",
         "RENDERMODE_GLOW",
-        "WIN_NONE"
+        "WIN_NONE",
+        "COLOR_GREEN",
+        "IN_FORWARD",
+        "IN_MOVELEFT",
+        "IN_MOVERIGHT",
+        "ULib"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

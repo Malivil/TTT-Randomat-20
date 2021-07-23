@@ -39,6 +39,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 13. Boo!
 14. Smoke Signals
 15. Hedge Your Bets
+16. Paranormal Activity
 
 # Events
 ## \#BringBackOldJester
@@ -910,6 +911,27 @@ _randomat_paranoid_shots_max_ - Default: 6 - The maximum times the sound should 
 _randomat_paranoid_volume_ - Default: 125 - The volume the sound should play at.\
 _randomat_paranoid_blocklist_ - Default: weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "weapon_pulserif,weapon_ttt_dislocator".
 
+## Paranormal Activity
+Allows the dead to buff or debuff their targets
+\
+\
+**ConVars**
+\
+_ttt_randomat_paranoid_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_paranoid_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_paranoid_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_specbuff_charge_time_ - Default: 60 - How many seconds it takes to charge to full power.\
+_randomat_specbuff_heal_power_ - Default: 75 - The amount of power to heal the target.\
+_randomat_specbuff_heal_amount_ - Default: 10 - The amount of to heal the target.\
+_randomat_specbuff_fast_power_ - Default: 25 - The amount of power to make the target faster.\
+_randomat_specbuff_fast_factor_ - Default: 1.2 - The speed factor for target when fast.\
+_randomat_specbuff_fast_timer_ - Default: 3 - How long the effect lasts.\
+_randomat_specbuff_slow_power_ - Default: 25 - The amount of power to slow the target.\
+_randomat_specbuff_slow_factor_ - Default: 0.8 - The speed factor for target when slow.\
+_randomat_specbuff_slow_timer_ - Default: 3 - How long the effect lasts.\
+_randomat_specbuff_slap_power_ - Default: 75 - The amount of power to slap the target.\
+_randomat_specbuff_slap_force_ - Default: 500 - How hard to slap the target.
+
 ## praW emiT (aka Reverse Time Warp)
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount slower than normal and intensifies on a configurable interval
 \
@@ -1464,9 +1486,9 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
-- Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
+- Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
-- Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "They have a cave troll" event
+- Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
