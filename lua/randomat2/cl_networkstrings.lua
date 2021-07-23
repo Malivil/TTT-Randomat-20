@@ -58,6 +58,20 @@ net.Receive("RdmtRemoveSpeedMultiplier", function()
     current_mults_withweapon[key] = nil
 end)
 
+net.Receive("RdmtRemoveSpeedMultipliers", function()
+    local key = net.ReadString()
+    for k, _ in pairs(current_mults) do
+        if string.StartWith(k, key) then
+            current_mults[k] = nil
+        end
+    end
+    for k, _ in pairs(current_mults_withweapon) do
+        if string.StartWith(k, key) then
+            current_mults_withweapon[k] = nil
+        end
+    end
+end)
+
 hook.Add("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults)
     if ply ~= LocalPlayer() or not ply:Alive() or ply:IsSpec() then return end
 

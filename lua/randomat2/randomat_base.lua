@@ -5,6 +5,7 @@ util.AddNetworkString("alerteventtrigger")
 util.AddNetworkString("RdmtSetSpeedMultiplier")
 util.AddNetworkString("RdmtSetSpeedMultiplier_WithWeapon")
 util.AddNetworkString("RdmtRemoveSpeedMultiplier")
+util.AddNetworkString("RdmtRemoveSpeedMultipliers")
 util.AddNetworkString("TTT_RoleChanged")
 util.AddNetworkString("TTT_LogInfo")
 
