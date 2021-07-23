@@ -40,6 +40,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 14. Smoke Signals
 15. Hedge Your Bets
 16. Paranormal Activity
+17. Gifts from the Dead
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -625,6 +626,20 @@ Dead players become ghosts who leave a trail of smoke as they drift through the 
 _ttt_randomat_apparition_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_apparition_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_apparition_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Gifts from the Dead
+Allows dead players to give the living a single gift
+\
+\
+**ConVars**
+\
+_ttt_randomat_gifts_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_gifts_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_gifts_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_gifts_charge_time_ - Default: 60 - How many seconds before the dead can give a gift.\
+_randomat_gifts_random_items_ - Default: 1 - Whether everyone should get a random item to gift.\
+_randomat_gifts_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
+
 ## Glitch in the Matrix
 Randomly changes everyone's role to be either Glitch or Traitor based on the configurable values
 \
@@ -1490,6 +1505,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
+- Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
