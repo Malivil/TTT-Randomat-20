@@ -1,5 +1,5 @@
 -- Player Effects
-function Randomat:HandlePlayerSmoke(client, pred)
+function Randomat:HandlePlayerSmoke(client, pred, color)
     for _, v in ipairs(player.GetAll()) do
         if pred(v) then
             if not v.RdmtSmokeEmitter then v.RdmtSmokeEmitter = ParticleEmitter(v:GetPos()) end
@@ -20,7 +20,12 @@ function Randomat:HandlePlayerSmoke(client, pred)
                     particle:SetEndSize(size + 1)
                     particle:SetRoll(0)
                     particle:SetRollDelta(0)
-                    particle:SetColor(0, 0, 0)
+                    if color then
+                        local r, g, b, _ = color:Unpack()
+                        particle:SetColor(r, g, b)
+                    else
+                        particle:SetColor(0, 0, 0)
+                    end
                 end
             end
         else
