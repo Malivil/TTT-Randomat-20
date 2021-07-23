@@ -1,6 +1,7 @@
 local smokers = {}
 
 net.Receive("RdmtSmokeSignalsBegin", function()
+    smokers = {}
     local client = LocalPlayer()
     hook.Add("HUDPaint", "RdmtSmokeSignalsUI", function()
         local width, height, margin = 200, 25, 20
