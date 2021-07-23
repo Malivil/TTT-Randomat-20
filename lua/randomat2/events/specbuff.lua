@@ -8,11 +8,11 @@ util.AddNetworkString("RdmtSpecBuffHealEnd")
 CreateConVar("randomat_specbuff_charge_time", 60, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many seconds it takes to charge to full power", 10, 120)
 CreateConVar("randomat_specbuff_heal_power", 75, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of power to heal the target", 1, 100)
 CreateConVar("randomat_specbuff_heal_amount", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of to heal the target", 1, 100)
-CreateConVar("randomat_specbuff_fast_power", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of power to make the target faster", 1, 100)
-CreateConVar("randomat_specbuff_fast_factor", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The speed factor for target when fast", 1.1, 2)
+CreateConVar("randomat_specbuff_fast_power", 35, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of power to make the target faster", 1, 100)
+CreateConVar("randomat_specbuff_fast_factor", 1.3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The speed factor for target when fast", 1.1, 2)
 CreateConVar("randomat_specbuff_fast_timer", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How long the effect lasts", 1, 60)
-CreateConVar("randomat_specbuff_slow_power", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of power to slow the target", 1, 100)
-CreateConVar("randomat_specbuff_slow_factor", 0.8, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The speed factor for target when slow", 0.1, 0.9)
+CreateConVar("randomat_specbuff_slow_power", 35, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of power to slow the target", 1, 100)
+CreateConVar("randomat_specbuff_slow_factor", 0.7, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The speed factor for target when slow", 0.1, 0.9)
 CreateConVar("randomat_specbuff_slow_timer", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How long the effect lasts", 1, 60)
 CreateConVar("randomat_specbuff_slap_power", 75, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of power to slap the target", 1, 100)
 CreateConVar("randomat_specbuff_slap_force", 500, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How hard to slap the target", 250, 1000)
@@ -79,6 +79,7 @@ function EVENT:Begin()
         local ply_sid = ply:SteamID64()
         local power = ply:GetNWInt("RdmtSpecBuffPower", 0)
         local spent = 0
+        local verb
         if key == IN_FORWARD and power >= fast_power then
             local timer_id = "RdmtSpecBuffFastTimer_" .. ply_sid .. "_" .. target_sid
             if timer.Exists(timer_id) then return end
@@ -106,6 +107,7 @@ function EVENT:Begin()
             end)
 
             spent = fast_power
+            verb = "hastened"
         elseif key == IN_BACK and power >= slow_power then
             local timer_id = "RdmtSpecBuffSlowTimer_" .. ply_sid .. "_" .. target_sid
             if timer.Exists(timer_id) then return end
@@ -133,6 +135,7 @@ function EVENT:Begin()
             end)
 
             spent = slow_power
+            verb = "slowed"
         elseif key == IN_MOVELEFT and power >= heal_power then
             local timer_id = "RdmtSpecBuffHealTimer_" .. ply_sid .. "_" .. target_sid
             if timer.Exists(timer_id) then return end
@@ -162,13 +165,22 @@ function EVENT:Begin()
             end)
 
             spent = heal_power
+            verb = "healed"
         elseif key == IN_MOVERIGHT and power >= slap_power then
             ULib.slap(target, 0, slap_force, spent)
             spent = slap_power
+            verb = "slapped"
         end
 
-        -- Update the player's power
-        ply:SetNWInt("RdmtSpecBuffPower", power - spent)
+        if spent > 0 then
+            ply:PrintMessage(HUD_PRINTTALK, "You have " .. verb .. " your target, " .. target:Nick())
+            ply:PrintMessage(HUD_PRINTCENTER, "You have " .. verb .. " your target, " .. target:Nick())
+            target:PrintMessage(HUD_PRINTTALK, "A ghost has " .. verb .. " you")
+            target:PrintMessage(HUD_PRINTCENTER, "A ghost has " .. verb .. " you")
+
+            -- Update the player's power
+            ply:SetNWInt("RdmtSpecBuffPower", power - spent)
+        end
     end)
 
     self:AddHook("TTTSpeedMultiplier", function(ply, mults)
