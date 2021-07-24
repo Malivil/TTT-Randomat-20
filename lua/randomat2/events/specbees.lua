@@ -62,15 +62,15 @@ function EVENT:Begin()
         CreateBee(victim)
     end)
 
-    self:AddHook("Think", function()
-        for sid, b in pairs(bees) do
-            local ply = player.GetBySteamID64(sid)
-            if IsValid(ply) then
-                local ang = ply:GetAngles()
-                b:SetPos(ply:GetPos() + ang:Forward() * 20)
-                b:SetAngles(ang)
-            end
-        end
+    self:AddHook("PlayerTick", function(ply, mv)
+        if not IsValid(ply) or not ply:IsSpec() then return end
+
+        local bee = bees[ply:SteamID64()]
+        if not IsValid(bee) then return end
+
+         local ang = mv:GetAngles()
+         bee:SetPos(mv:GetOrigin() + ang:Forward() * 20)
+         bee:SetAngles(ang)
     end)
 end
 
