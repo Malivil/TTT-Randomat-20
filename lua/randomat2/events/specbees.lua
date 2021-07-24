@@ -62,7 +62,7 @@ function EVENT:Begin()
         CreateBee(victim)
     end)
 
-    self:AddHook("PlayerTick", function(ply, mv)
+    self:AddHook("FinishMove", function(ply, mv)
         if not IsValid(ply) or not ply:IsSpec() then return end
 
         local bee = bees[ply:SteamID64()]
