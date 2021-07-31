@@ -210,7 +210,7 @@ Allows dead players to scare their target and make them drop their weapon
 _ttt_randomat_boo_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_boo_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_boo_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_boo_charge_time_ - Default: 60 - How many seconds it takes to charge the next attack.\
+_randomat_boo_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
 _randomat_boo_ghost_time_ - Default: 5 - How many seconds the ghost lasts.
 
 ## Bullseye
@@ -1142,7 +1142,7 @@ Allows dead players to envelope their target in smoke
 _ttt_randomat_smoke_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_smoke_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_smoke_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_smoke_charge_time_ - Default: 60 - How many seconds it takes to charge the next attack.\
+_randomat_smoke_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
 _randomat_smoke_time_ - Default: 5 - How many seconds the smoke lasts.
 
 ## So that's it. What, we're some kind of suicide squad? (aka Detonators)
