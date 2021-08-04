@@ -32,6 +32,9 @@ function EVENT:Begin()
                 p:GiveEquipmentItem(tonumber(item))
             else
                 p:Give(item)
+                if item.WasBought then
+                    item:WasBought(p)
+                end
             end
 
             Randomat:CallShopHooks(is_item, item, p)
