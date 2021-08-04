@@ -459,6 +459,8 @@ end
 
 function Randomat:CallShopHooks(isequip, id, ply)
     hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, isequip, true)
+    ply:AddBought(id)
+
     net.Start("TTT_BoughtItem")
     net.WriteBit(isequip)
     if isequip then
