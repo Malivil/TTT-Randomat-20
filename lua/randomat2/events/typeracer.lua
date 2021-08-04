@@ -50,7 +50,7 @@ end
 function EVENT:Begin()
     if ROLE_STRINGS then
         for _, r in ipairs(ROLE_STRINGS) do
-            table.insert(values, r)
+            table.insert(values, r:lower())
         end
     end
 
