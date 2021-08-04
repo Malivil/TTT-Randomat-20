@@ -28,16 +28,18 @@ function EVENT:Begin()
         TriggerAlert(item, role_name, is_item, ply)
 
         for _, p in ipairs(player.GetAll()) do
-            if is_item then
-                p:GiveEquipmentItem(tonumber(item))
-            else
-                p:Give(item)
-                if item.WasBought then
-                    item:WasBought(p)
+            if p ~= ply then
+                if is_item then
+                    p:GiveEquipmentItem(tonumber(item))
+                else
+                    p:Give(item)
+                    if item.WasBought then
+                        item:WasBought(p)
+                    end
                 end
-            end
 
-            Randomat:CallShopHooks(is_item, item, p)
+                Randomat:CallShopHooks(is_item, item, p)
+            end
         end
     end)
 
