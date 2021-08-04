@@ -146,7 +146,7 @@ local function ragdollPlayer(v)
     local equipment = {}
     -- Keep track of what equipment the player had
     local i = 1
-    while i < EQUIP_MAX do
+    while i <= EQUIP_MAX do
         equipment[i] = v:HasEquipmentItem(i)
         -- Double the index since this is a bit-mask
         i = i * 2

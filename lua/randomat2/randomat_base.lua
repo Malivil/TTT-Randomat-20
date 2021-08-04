@@ -483,7 +483,7 @@ function Randomat:RemoveEquipmentItem(ply, item_id)
     local equip = {}
     local credits = 0
     local removed = false
-    while i < EQUIP_MAX do
+    while i <= EQUIP_MAX do
         if ply:HasEquipmentItem(i) then
             -- Remove and refund the specific equipment item we're removing
             if i == item_id then
