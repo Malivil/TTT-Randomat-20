@@ -156,6 +156,10 @@ function Randomat:OverrideWeaponSoundData(data, chosen_sound)
     end
 end
 
+function Randomat:IsZombifying(ply)
+    return ply:GetPData("IsZombifying", 0) == 1 or ply:GetNWBool("IsZombifying", false)
+end
+
 -- Player Functions
 local player_view_offsets = {}
 local player_view_offsets_ducked = {}

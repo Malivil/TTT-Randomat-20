@@ -1047,7 +1047,8 @@ Causes anyone who dies to be resurrected as a Zombie
 _ttt_randomat_grave_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_grave_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_grave_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.
+_randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.\
+_randomat_grave_include_dead_ - Default: 1 - Whether to resurrect dead players at the start.
 
 ## RISE FROM YOUR... Bees?
 Dead players become harmless bees
@@ -1453,14 +1454,15 @@ _randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple t
 _randomat_jump_quackspam_ - Default: 0 - Whether to show the message multiple times for a Quack.
 
 ## Zom-Bees!
-Spawns bees who spread zombiism to their victims. See "NOT THE BEES!" and "RISE FROM YOUR GRAVE" events for additional configuration.
+Spawns bees who spread zombiism to their victims. See the "RISE FROM YOUR GRAVE" event for additional configuration.
 \
 \
 **ConVars**
 \
 _ttt_randomat_zombees_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_zombees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_zombees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_zombees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_zombees_count_ - Default: 1 - The number of bees spawned per player.
 
 # ULX Support
 This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0 (other than any new events or ConVars or renamed ConVars).\
