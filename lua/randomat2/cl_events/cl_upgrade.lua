@@ -15,7 +15,7 @@ net.Receive("UpgradeEventBegin", function()
     local gap = 20
     upgradeFrame:SetSize(300, 190)
     upgradeFrame:Center()
-    upgradeFrame:SetTitle("Choose a New Role (Hold " .. string.lower(Key("+showscores", "tab")) .. ")")
+    upgradeFrame:SetTitle("Choose a New Role (Hold " .. Key("+showscores", "tab"):lower() .. ")")
     upgradeFrame:SetDraggable(false)
     upgradeFrame:ShowCloseButton(false)
     upgradeFrame:SetVisible(true)

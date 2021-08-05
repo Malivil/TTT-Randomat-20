@@ -225,7 +225,7 @@ function EVENT:SwearIn(winner)
             SendFullStateUpdate()
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
         elseif winner:GetRole() == ROLE_OLDMAN then
-            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their frailty has spread to the rest of you.")
+            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
 
             local health
             -- TODO: Remove this version check after 1.0.3 is pushed to release
@@ -249,7 +249,7 @@ function EVENT:SwearIn(winner)
             end
         -- Traitor - Announce their role, and give their whole team free credits
         elseif Randomat:IsTraitorTeam(winner) then
-            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! Their team has been paid for their support.")
+            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their team has been paid for their support.")
 
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if Randomat:IsTraitorTeam(v) then
@@ -280,7 +280,7 @@ function EVENT:SwearIn(winner)
                     sacrifice = traitors[math.random(1, #traitors)]
                 end
 
-                self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! " .. sacrifice:Nick() .. " has been sacrificed to make their victory easier.")
+                self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! " .. sacrifice:Nick() .. " has been sacrificed to make their victory easier.")
                 sacrifice:Kill()
             else
                 local largest
@@ -299,7 +299,7 @@ function EVENT:SwearIn(winner)
                     team = "traitor"
                 end
 
-                self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! The " .. team .. " team has been sacrificed to make their victory easier.")
+                self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. team .. " team has been sacrificed to make their victory easier.")
                 for _, v in ipairs(largest) do
                     v:Kill()
                 end
@@ -380,13 +380,13 @@ function EVENT:SwearIn(winner)
             end
         -- Zombie - Silently trigger the RISE FROM YOUR GRAVE event
         elseif winner:GetRole() == ROLE_ZOMBIE then
-            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "!")
+            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "!")
             Randomat:SilentTriggerEvent("grave", winner)
         -- Vampire - Convert all of the configured team to vampires
         elseif winner:GetRole() == ROLE_VAMPIRE then
             local turninnocents = GetConVar("randomat_election_vamp_turn_innocents"):GetBool()
             local team = turninnocents and "innocent" or "traitor"
-            self:SmallNotify("The President is " .. string.lower(self:GetRoleName(winner)) .. "! The " .. team .. " team has been converted to their thalls.")
+            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. team .. " team has been converted to their thalls.")
 
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if turninnocents then

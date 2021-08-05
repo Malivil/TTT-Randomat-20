@@ -603,14 +603,30 @@ function randomat_meta:GetConVars() end
 -- What role is a player?
 function randomat_meta:GetRoleName(ply, hide_secret_roles)
     local role = ply:GetRole()
+
+    -- Hide detraitors and impersonators so they don't get outed
+    if hide_secret_roles then
+        if role == ROLE_DETRAITOR then
+            role = ROLE_DETECTIVE
+        elseif role == ROLE_IMPERSONATOR then
+            role = ROLE_DEPUTY
+        end
+    end
+
+    -- Use the role strings if they exist
+    local role_string = ROLE_STRINGS_EXT and ROLE_STRINGS_EXT[role] or nil
+    if role_string then
+        return role_string:sub(1, 1):upper() .. role_string:sub(2):lower()
+    end
+
+    -- Otherwise fall back to the defaults
     if role == ROLE_TRAITOR then
         return "A traitor"
     elseif role == ROLE_HYPNOTIST then
         return "A hypnotist"
     elseif role == ROLE_ASSASSIN then
         return "An assassin"
-    -- Hide detraitors so they don't get outed
-    elseif role == ROLE_DETECTIVE or (hide_secret_roles and role == ROLE_DETRAITOR) then
+    elseif role == ROLE_DETECTIVE then
         return "A detective"
     elseif role == ROLE_MERCENARY then
         return "A mercenary"
@@ -626,17 +642,7 @@ function randomat_meta:GetRoleName(ply, hide_secret_roles)
         return "A glitch"
     elseif role == ROLE_PHANTOM then
         return "A phantom"
-    -- Hide imposters so they don't get outed
-    elseif role == ROLE_DEPUTY or (hide_secret_roles and role == ROLE_IMPERSONATOR) then
-        return "A deputy"
     end
-
-    -- Use the role strings for every other role
-    local role_string = ROLE_STRINGS_EXT and ROLE_STRINGS_EXT[role] or nil
-    if role_string then
-        return role_string:sub(1, 1):upper() .. role_string:sub(2):lower()
-    end
-
     return "Someone"
 end
 
@@ -831,10 +837,10 @@ local function EndActiveEvents()
 end
 
 local function ClearAutoComplete(cmd, args)
-    local name = string.lower(string.Trim(args))
+    local name = string.Trim(args):lower()
     local options = {}
     for _, v in pairs(Randomat.ActiveEvents) do
-        if string.find(string.lower(v.Id), name) then
+        if string.find(v.Id:lower(), name) then
             table.insert(options, cmd .. " " .. v.Id)
         end
     end
@@ -849,10 +855,10 @@ end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_
 concommand.Add("ttt_randomat_clearevents", EndActiveEvents, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 
 local function TriggerAutoComplete(cmd, args)
-    local name = string.lower(string.Trim(args))
+    local name = string.Trim(args):lower()
     local options = {}
     for _, v in pairs(Randomat.Events) do
-        if string.find(string.lower(v.Id), name) then
+        if string.find(v.Id:lower(), name) then
             table.insert(options, cmd .. " " .. v.Id)
         end
     end
