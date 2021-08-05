@@ -41,6 +41,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 15. Hedge Your Bets
 16. Paranormal Activity
 17. Gifts from the Dead
+18. Our Little Secret
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -912,6 +913,19 @@ _ttt_randomat_opposite_min_players_ - Default: 0 - The minimum number of players
 _ttt_randomat_opposite_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_opposite_hardmode_ - Default: 1 - Whether to enable hard mode and switch Jump/Crouch.
 
+## Our Little Secret
+Pairs players together, temporarily revealing their roles after a short delay
+\
+\
+**ConVars**
+\
+_ttt_randomat_oursecret_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_oursecret_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_oursecret_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_oursecret_min_delay_ - Default: 15 - The minimum delay before showing role.\
+_randomat_oursecret_max_delay_ - Default: 30 - The maximum delay before showing role.\
+_randomat_oursecret_highlight_time_ - Default: 5 - How long to show the player's role color.
+
 ## Paranoid
 Periodically plays gun and death sounds randomly around players
 \
@@ -1509,6 +1523,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
+- Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
