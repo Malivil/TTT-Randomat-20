@@ -199,28 +199,23 @@ function EVENT:SwearIn(winner)
     timer.Simple(3, function()
         -- Drunk - Have the drunk immediately remember their role
         if winner:GetRole() == ROLE_DRUNK then
-            if math.random() <= GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
-                winner:SetRole(ROLE_INNOCENT)
-                winner:SetNWBool("WasDrunk", true)
-                winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are an innocent.")
-                winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are an innocent.")
-
-                net.Start("TTT_DrunkSober")
-                net.WriteString(winner:Nick())
-                net.WriteString("an innocent")
-                net.Broadcast()
-            else
-                winner:SetRole(ROLE_TRAITOR)
-                winner:SetNWBool("WasDrunk", true)
+            local role
+            if math.random() > GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
+                role = ROLE_TRAITOR
                 winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
-                winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are a traitor.")
-                winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are a traitor.")
-
-                net.Start("TTT_DrunkSober")
-                net.WriteString(winner:Nick())
-                net.WriteString("a traitor")
-                net.Broadcast()
+            else
+                role = ROLE_INNOCENT
             end
+
+            winner:SetNWBool("WasDrunk", true)
+            winner:SetRole(role)
+            winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+            winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+
+            net.Start("TTT_DrunkSober")
+            net.WriteString(winner:Nick())
+            net.WriteString(ROLE_STRINGS_EXT[role])
+            net.Broadcast()
 
             SendFullStateUpdate()
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
