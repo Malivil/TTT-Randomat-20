@@ -126,6 +126,10 @@ function Randomat:CanUseShop(ply)
     return shop_roles[ply:GetRole()] or false
 end
 
+function Randomat:IsZombifying(ply)
+    return ply:GetPData("IsZombifying", 0) == 1 or ply:GetNWBool("IsZombifying", false)
+end
+
 -- Weapon Sound Functions
 function Randomat:RestoreWeaponSound(wep)
     if not IsValid(wep) or not wep.Primary then return end
@@ -147,17 +151,13 @@ function Randomat:OverrideWeaponSoundData(data, chosen_sound)
     if not IsValid(data.Entity) then return end
 
     local current_sound = data.SoundName:lower()
-    local fire_start, _ = string.find(current_sound, ".*weapons/.*/.*fire.*%..*")
-    local shot_start, _ = string.find(current_sound, ".*weapons/.*/.*shot.*%..*")
-    local shoot_start, _ = string.find(current_sound, ".*weapons/.*/.*shoot.*%..*")
+    local fire_start, _ = string.find(current_sound, ".*weapons/.*fire.*%..*")
+    local shot_start, _ = string.find(current_sound, ".*weapons/.*shot.*%..*")
+    local shoot_start, _ = string.find(current_sound, ".*weapons/.*shoot.*%..*")
     if fire_start or shot_start or shoot_start then
         data.SoundName = chosen_sound
         return true
     end
-end
-
-function Randomat:IsZombifying(ply)
-    return ply:GetPData("IsZombifying", 0) == 1 or ply:GetNWBool("IsZombifying", false)
 end
 
 -- Player Functions
