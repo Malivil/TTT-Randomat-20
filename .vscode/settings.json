@@ -154,7 +154,11 @@
         "IN_FORWARD",
         "IN_MOVELEFT",
         "IN_MOVERIGHT",
-        "ULib"
+        "ULib",
+        "GetGlobalFloat",
+        "TRAITOR_ROLES",
+        "ROLE_STRINGS_RAW",
+        "INDEPENDENT_ROLES"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

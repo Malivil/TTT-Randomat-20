@@ -788,8 +788,9 @@ Forces a random player to say something incriminating without their knowledge
 _ttt_randomat_incriminating_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_incriminating_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_incriminating_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_incriminating_timer_min_ - Default: 1 - The minimum time before the message is sent.\
-_randomat_incriminating_timer_max_ - Default: 10 - The maximum time before the message is sent.
+_randomat_incriminating_timer_min_ - Default: 3 - The minimum time before the message is sent.\
+_randomat_incriminating_timer_max_ - Default: 10 - The maximum time before the message is sent.\
+_randomat_incriminating_mistake_chance_ - Default: 0.2 - The chance that an "oops" message is sent.
 
 ## Infinite Ammo!
 Gives all weapons infinite ammo, allowing players to constantly shoot without reloading
@@ -1493,27 +1494,29 @@ Another thing that was added is the concept of an event "type". This is currentl
 - [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to
 - [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the "TTT Randomat" mod which THAT was an update to
 - [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the "The Cake is a Lie" event
-- u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
-- u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
-- u/zoxzix89 on Reddit for the idea for the "Time Warp" event
-- u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
-- u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
+- u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/alt----f4 on Reddit for the idea for the "A Glitch has been patched" event
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
+- u/En_TioN on Reddit for the idea for the "Blerg!", "Gaseous Snake", and "Scouts Only" events
+- u/Geonightman on Reddit for the idea for the "Stop, I'm Bees!" event
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
-- u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
-- u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
-- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
-- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
 - u/Ill_Worry7895 on Reddit for the idea for the "Black Market Buyout", "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
-- u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
+- u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
+- u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
+- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
-- u/Geonightman on Reddit for the idea for the "Stop, I'm Bees!" event
-- u/En_TioN on Reddit for the idea for the "Blerg!", "Gaseous Snake", and "Scouts Only" events
+- u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
+- u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
+- u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
+- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
+- u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
+- u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
+- u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
+- Angela, Crimson, Fazzy, Fyxen, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
