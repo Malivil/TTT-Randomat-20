@@ -34,6 +34,9 @@ local function UpdateToMerc(ply)
 end
 
 function EVENT:Begin()
+    -- Update this in case the CVar has been changed
+    EVENT.Description = GetEventDescription()
+
     local choose = CanChooseRole()
     local target = nil
     for _, ply in ipairs(self:GetAlivePlayers(true)) do
