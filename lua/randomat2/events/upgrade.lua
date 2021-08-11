@@ -118,6 +118,24 @@ net.Receive("RdmtPlayerChoseKiller", function()
         ply:StripWeapon("weapon_zm_improvised")
         ply:Give("weapon_kil_knife")
     end
+
+    -- If the killer's max health can be changed and it's different than what they have now, update it
+    -- Also heal the player the difference in health
+    if ConVarExists("ttt_killer_max_health") then
+        local max = GetConVar("ttt_killer_max_health"):GetInt()
+        local current_max = ply:GetMaxHealth()
+        if max ~= current_max then
+            local hp = ply:Health()
+            local new_hp = math.min(max, hp + (max - current_max))
+            ply:SetMaxHealth(max)
+            ply:SetHealth(new_hp)
+        end
+    end
+
+    -- In the new CR, the Killer is given the throwable crowbar as well
+    if CR_VERSION and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
+        ply:Give("weapon_kil_crowbar")
+    end
 end)
 
 net.Receive("RdmtPlayerChoseMercenary", function()
