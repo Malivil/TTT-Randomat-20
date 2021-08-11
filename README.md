@@ -191,7 +191,7 @@ _ttt_randomat_blerg_weight_ - Default: -1 - The weight this event should use dur
 _randomat_blerg_respawntimer_ - Default: 60 - Delay before dead players respawn.\
 _randomat_blerg_weapondelay_ - Default: 20 - Delay before respawned can use weapons.
 
-## Blind Traitors (aka All traitors have been blinded for X seconds!)
+## Blind Traitors
 Blinds all traitors for a configurable amount of seconds
 \
 \

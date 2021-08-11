@@ -14,6 +14,9 @@ CreateConVar("randomat_glitch_min_traitors", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "
 local blocklist = {}
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Randomly changes everyone's role to be either " .. Randomat:GetRoleString(ROLE_GLITCH) .. " or " .. Randomat:GetRoleString(ROLE_TRAITOR)
+
     blocklist = {}
     for blocked_id in string.gmatch(GetConVar("randomat_glitch_blocklist"):GetString(), '([^,]+)') do
         table.insert(blocklist, blocked_id:Trim())

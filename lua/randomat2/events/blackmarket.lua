@@ -8,13 +8,15 @@ CreateConVar("randomat_blackmarket_timer_traitor", 25, {FCVAR_ARCHIVE, FCVAR_NOT
 CreateConVar("randomat_blackmarket_timer_detective", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often detectives should get items", 1, 60)
 
 EVENT.Title = "Black Market Buyout"
-EVENT.Description = "Disables Traitor and Detective shop, but periodically gives out free items from both"
+EVENT.Description = "Disables Traitor and Detective shops, but periodically gives out free items from both"
 EVENT.id = "blackmarket"
 
 local blocklist = {}
 local oldSetCredits = nil
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Disables " .. Randomat:GetRoleString(ROLE_TRAITOR) .. " and " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " shops, but periodically gives out free items from both"
     blocklist = {}
     for blocked_id in string.gmatch(GetConVar("randomat_blackmarket_blocklist"):GetString(), '([^,]+)') do
         table.insert(blocklist, blocked_id:Trim())

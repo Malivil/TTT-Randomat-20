@@ -9,6 +9,9 @@ EVENT.AltTitle = "Patched"
 EVENT.StartSecret = true
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Changes a random " .. Randomat:GetRoleString(ROLE_GLITCH) .. " into either " .. Randomat:GetRoleExtendedString(ROLE_INNOCENT) .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR)
+
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_GLITCH then
             if math.random(1,100) <= GetConVar("randomat_patched_chance"):GetInt() then

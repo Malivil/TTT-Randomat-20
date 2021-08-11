@@ -158,7 +158,8 @@
         "GetGlobalFloat",
         "TRAITOR_ROLES",
         "ROLE_STRINGS_RAW",
-        "INDEPENDENT_ROLES"
+        "INDEPENDENT_ROLES",
+        "ROLE_STRINGS_PLURAL"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

@@ -13,21 +13,21 @@ util.AddNetworkString("RdmtIncriminatingMessage")
 
 local new_round_tmpl = {}
 table.insert(new_round_tmpl, "finally")
-table.insert(new_round_tmpl, "traitor finally")
+table.insert(new_round_tmpl, "{traitor} finally")
 
 local start_tmpl = {}
 table.insert(start_tmpl, "this map has a good sniper spot")
-table.insert(start_tmpl, "we should get the detective first")
+table.insert(start_tmpl, "we should get the {detective} first")
 table.insert(start_tmpl, "save your credits for the trap")
-table.insert(start_tmpl, "watch out for {PLAYER}")
-table.insert(start_tmpl, "{PLAYER} is a jester")
-table.insert(start_tmpl, "careful, {PLAYER} is a jester")
+table.insert(start_tmpl, "watch out for %PLAYER%")
+table.insert(start_tmpl, "%PLAYER% is a {jester}")
+table.insert(start_tmpl, "careful, %PLAYER% is a {jester}")
 table.insert(start_tmpl, "follow me")
 table.insert(start_tmpl, "follow my lead")
-table.insert(start_tmpl, "{i'm} gonna try to get {PLAYER} quick")
+table.insert(start_tmpl, "{i'm} gonna try to get %PLAYER% quick")
 table.insert(start_tmpl, "buy a {weapon}")
-table.insert(start_tmpl, "{i'm} not the glitch")
-table.insert(start_tmpl, "i think {PLAYER} is the glitch")
+table.insert(start_tmpl, "{i'm} not the {glitch}")
+table.insert(start_tmpl, "i think %PLAYER% is the {glitch}")
 table.insert(start_tmpl, "did you type in chat?")
 table.insert(start_tmpl, "who uses traitor chat?")
 
@@ -36,21 +36,21 @@ table.insert(mid_tmpl, "come here so we can double kill")
 table.insert(mid_tmpl, "c4 at the tester")
 
 local end_tmpl = {}
-table.insert(end_tmpl, "just kill the detective already")
+table.insert(end_tmpl, "just kill the {detective} already")
 table.insert(end_tmpl, "why haven't we won yet?")
 table.insert(end_tmpl, "{i'm} out of credits")
 
 local mid_end_tmpl = {}
 table.insert(mid_end_tmpl, "hey, gimme a credit")
-table.insert(mid_end_tmpl, "quick, kill {PLAYER}")
-table.insert(mid_end_tmpl, "how is {PLAYER} still alive?")
+table.insert(mid_end_tmpl, "quick, kill %PLAYER%")
+table.insert(mid_end_tmpl, "how is %PLAYER% still alive?")
 table.insert(mid_end_tmpl, "watch out, gonna use a {weapon}")
 table.insert(mid_end_tmpl, "have {you} killed anyone yet?")
 table.insert(mid_end_tmpl, "where can {i} put this body?")
 table.insert(mid_end_tmpl, "hey, this body has credits on it")
 table.insert(mid_end_tmpl, "do {you} have any credits left?")
 table.insert(mid_end_tmpl, "got any heal stuff?")
-table.insert(mid_end_tmpl, "how do {you} get out of the traitor room?")
+table.insert(mid_end_tmpl, "how do {you} get out of the {traitor} room?")
 table.insert(mid_end_tmpl, "did they see you?")
 table.insert(mid_end_tmpl, "how did they not see that!?")
 table.insert(mid_end_tmpl, "did he not see you? {lol}")
@@ -90,8 +90,21 @@ local function ReplacePlaceholders(tmpl)
     -- Don't worry about capitals for this one, they are only used at the start of messages
     message = ReplaceRandom(message, "{i'm}", {"i'm", "im"})
     message = ReplaceRandom(message, "{lol}", {"lol", "LOL", "lmao", "LMAO"})
-    message = ReplaceRandom(message, "{oops}", {"oops", "whoops", "oopsie", "crap", "shit", "crud"})
-    return ReplaceRandom(message, "{weapon}", weapons_options)
+    message = ReplaceRandom(message, "{oops}", {"oops", "whoops", "oopsie", "crap", "shit", "crud", "damn"})
+    message = ReplaceRandom(message, "{weapon}", weapons_options)
+
+    -- If this is defined then the role names are configurable, replace the placeholder with whatever the configured string is
+    if ROLE_STRINGS_RAW then
+        for r, s in pairs(ROLE_STRINGS_RAW) do
+            message = string.Replace(message, "{" .. s .. "}", ROLE_STRINGS[r]:lower())
+        end
+    else
+        -- If there are no role string lists, remove the brackets and use the string as-is
+        message = string.Replace(message, "{", "")
+        message = string.Replace(message, "}", "")
+    end
+
+    return message
 end
 
 local function AddRoleStrings(target, roles, messages)
@@ -121,15 +134,15 @@ function EVENT:Begin()
 
         -- Only include these if they target roles are enabled
         if ConVarExists("ttt_swapper_enabled") and GetConVar("ttt_swapper_enabled"):GetBool() then
-            table.insert(mid_tmpl, "i think {PLAYER} is a swapper")
+            table.insert(mid_tmpl, "i think %PLAYER% is a {swapper}")
         end
         if ConVarExists("ttt_deputy_enabled") and GetConVar("ttt_deputy_enabled"):GetBool() then
-            table.insert(mid_tmpl, "i think {PLAYER} is the deputy, kill them before they get promoted")
+            table.insert(mid_tmpl, "i think %PLAYER% is the {deputy}, kill them before they get promoted")
         end
 
         -- Add roles as messages
         AddRoleStrings(start_tmpl, TRAITOR_ROLES, {"what does {ROLE} do again?", "what do {i} do as {ROLE} again?"})
-        AddRoleStrings(start_tmpl, INDEPENDENT_ROLES, {"{PLAYER} is {ROLE}"})
+        AddRoleStrings(start_tmpl, INDEPENDENT_ROLES, {"%PLAYER% is {ROLE}"})
 
         -- Add barnacle-related lines, if it exists
         if weapons.GetStored("weapon_ttt_barnacle") then
@@ -184,7 +197,7 @@ function EVENT:Begin()
         templates = table.Add(table.Copy(mid_tmpl), mid_end_tmpl)
     end
 
-    -- Go through all messages in template list and update all but the {PLAYER} placeholder
+    -- Go through all messages in template list and update all but the %PLAYER% placeholder
     local messages = {}
     for _, tmpl in ipairs(templates) do
         -- Replace placeholders
@@ -192,7 +205,7 @@ function EVENT:Begin()
 
         -- Add the message in with and without the first letter capitalized
         table.insert(messages, message)
-        table.insert(messages, message:sub(1, 1):upper() .. message:sub(2))
+        table.insert(messages, Randomat:Capitalize(message))
     end
 
     -- Shuffle them for more randomization
@@ -206,8 +219,9 @@ function EVENT:Begin()
     local delay = math.random(delay_min, delay_max)
     timer.Create("IncriminatingDelay", delay, 1, function()
         local message = messages[math.random(1, #messages)]
-        -- Replace the "{PLAYER}" placeholder
-        if string.find(message, "{PLAYER}") then
+        -- Replace the "%PLAYER%" placeholder
+        -- Use a different placeholder for this so that the extra {'s and }'s for role names can be stripped out easily
+        if string.find(message, "%PLAYER%", nil, true) then
             local players = self:GetAlivePlayers(true)
             local found = nil
             for _, p in ipairs(players) do
@@ -216,7 +230,7 @@ function EVENT:Begin()
                     break
                 end
             end
-            message = string.Replace(message, "{PLAYER}", found:Nick())
+            message = string.Replace(message, "%PLAYER%", found:Nick())
         end
 
         SendMessage(message, target)

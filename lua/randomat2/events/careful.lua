@@ -7,6 +7,9 @@ EVENT.Description = "Set all Jesters and Swappers to a reduced amount of health"
 EVENT.id = "careful"
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description =  "Set all " .. Randomat:GetRolePluralString(ROLE_JESTER) .. " and " .. Randomat:GetRolePluralString(ROLE_SWAPPER) .. " to a reduced amount of health"
+
     local health = GetConVar("randomat_careful_health"):GetInt()
     for _, ply in ipairs(self:GetAlivePlayers()) do
         if ply:GetRole() == ROLE_JESTER or ply:GetRole() == ROLE_SWAPPER then

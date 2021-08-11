@@ -600,50 +600,8 @@ end
 
 function randomat_meta:GetConVars() end
 
--- What role is a player?
 function randomat_meta:GetRoleName(ply, hide_secret_roles)
-    local role = ply:GetRole()
-
-    -- Hide detraitors and impersonators so they don't get outed
-    if hide_secret_roles then
-        if role == ROLE_DETRAITOR then
-            role = ROLE_DETECTIVE
-        elseif role == ROLE_IMPERSONATOR then
-            role = ROLE_DEPUTY
-        end
-    end
-
-    -- Use the role strings if they exist
-    local role_string = ROLE_STRINGS_EXT and ROLE_STRINGS_EXT[role] or nil
-    if role_string then
-        return role_string:sub(1, 1):upper() .. role_string:sub(2):lower()
-    end
-
-    -- Otherwise fall back to the defaults
-    if role == ROLE_TRAITOR then
-        return "A traitor"
-    elseif role == ROLE_HYPNOTIST then
-        return "A hypnotist"
-    elseif role == ROLE_ASSASSIN then
-        return "An assassin"
-    elseif role == ROLE_DETECTIVE then
-        return "A detective"
-    elseif role == ROLE_MERCENARY then
-        return "A mercenary"
-    elseif role == ROLE_ZOMBIE then
-        return "A zombie"
-    elseif role == ROLE_VAMPIRE then
-        return "A vampire"
-    elseif role == ROLE_KILLER then
-        return "A killer"
-    elseif role == ROLE_INNOCENT then
-        return "An innocent"
-    elseif role == ROLE_GLITCH then
-        return "A glitch"
-    elseif role == ROLE_PHANTOM then
-        return "A phantom"
-    end
-    return "Someone"
+    return Randomat:GetRoleExtendedString(ply:GetRole(), hide_secret_roles)
 end
 
 -- Rename stock weapons so they are readable
@@ -681,17 +639,14 @@ end
 
 function randomat_meta:StripRoleWeapons(ply)
     if not IsValid(ply) then return end
+
+    if ply.StripRoleWeapons then
+        ply:StripRoleWeapons()
+        return
+    end
+
     if ply:HasWeapon("weapon_hyp_brainwash") then
         ply:StripWeapon("weapon_hyp_brainwash")
-    end
-    if ply:HasWeapon("weapon_bod_bodysnatch") then
-        ply:StripWeapon("weapon_bod_bodysnatch")
-    end
-    if ply:HasWeapon("weapon_doc_defib") then
-        ply:StripWeapon("weapon_doc_defib")
-    end
-    if ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION then
-        ply:StripWeapon("weapon_ttt_health_station")
     end
     if ply:HasWeapon("weapon_vam_fangs") then
         ply:StripWeapon("weapon_vam_fangs")
@@ -707,6 +662,17 @@ function randomat_meta:StripRoleWeapons(ply)
     end
     if ply:HasWeapon("weapon_ttt_wtester") then
         ply:StripWeapon("weapon_ttt_wtester")
+    end
+
+    -- TODO: Remove all these things after CR is pushed to release
+    if ply:HasWeapon("weapon_bod_bodysnatch") then
+        ply:StripWeapon("weapon_bod_bodysnatch")
+    end
+    if ply:HasWeapon("weapon_doc_defib") then
+        ply:StripWeapon("weapon_doc_defib")
+    end
+    if ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION then
+        ply:StripWeapon("weapon_ttt_health_station")
     end
     if ply:HasWeapon("weapon_qua_bomb_station") then
         ply:StripWeapon("weapon_qua_bomb_station")

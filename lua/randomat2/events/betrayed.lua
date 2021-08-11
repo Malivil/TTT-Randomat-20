@@ -6,6 +6,9 @@ EVENT.id = "betrayed"
 EVENT.StartSecret = true
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Randomly converts one vanilla " .. Randomat:GetRoleString(ROLE_TRAITOR) .. " to be " .. Randomat:GetRoleExtendedString(ROLE_GLITCH)
+
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_TRAITOR then
             Randomat:SetRole(v, ROLE_GLITCH)

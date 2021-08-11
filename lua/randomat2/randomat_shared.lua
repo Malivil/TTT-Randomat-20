@@ -5,6 +5,11 @@ EVENT_TYPE_VOTING = 2
 EVENT_TYPE_SMOKING = 3
 EVENT_TYPE_SPECTATOR_UI = 4
 
+-- String Functions
+function Randomat:Capitalize(msg)
+    return msg:sub(1, 1):upper() .. msg:sub(2):lower()
+end
+
 -- Team Functions
 function Randomat:IsInnocentTeam(ply, skip_detective)
     -- Handle this early because IsInnocentTeam doesn't
@@ -87,6 +92,117 @@ function Randomat:GetRoleColor(role)
         [ROLE_KILLER] = Color(50, 0, 70, 255)
     }
     return role_colors[role]
+end
+
+function Randomat:GetRoleExtendedString(role, hide_secret_roles)
+    -- Hide detraitors and impersonators so they don't get outed
+    if hide_secret_roles then
+        if role == ROLE_DETRAITOR then
+            role = ROLE_DETECTIVE
+        elseif role == ROLE_IMPERSONATOR then
+            role = ROLE_DEPUTY
+        end
+    end
+
+    -- Use the role strings if they exist
+    local role_string = ROLE_STRINGS_EXT and ROLE_STRINGS_EXT[role] or nil
+    if role_string then
+        return Randomat:Capitalize(role_string)
+    end
+
+    -- Otherwise fall back to the defaults
+    if role == ROLE_TRAITOR then
+        return "A traitor"
+    elseif role == ROLE_HYPNOTIST then
+        return "A hypnotist"
+    elseif role == ROLE_ASSASSIN then
+        return "An assassin"
+    elseif role == ROLE_DETECTIVE then
+        return "A detective"
+    elseif role == ROLE_MERCENARY then
+        return "A mercenary"
+    elseif role == ROLE_ZOMBIE then
+        return "A zombie"
+    elseif role == ROLE_VAMPIRE then
+        return "A vampire"
+    elseif role == ROLE_KILLER then
+        return "A killer"
+    elseif role == ROLE_INNOCENT then
+        return "An innocent"
+    elseif role == ROLE_GLITCH then
+        return "A glitch"
+    elseif role == ROLE_PHANTOM then
+        return "A phantom"
+    end
+    return "Someone"
+end
+
+function Randomat:GetRoleString(role)
+    -- Use the role strings if they exist
+    if ROLE_STRINGS and ROLE_STRINGS[role] or nil then
+        return ROLE_STRINGS[role]
+    end
+
+    -- Otherwise fall back to the defaults
+    if role == ROLE_TRAITOR then
+        return "Traitor"
+    elseif role == ROLE_HYPNOTIST then
+        return "Hypnotist"
+    elseif role == ROLE_ASSASSIN then
+        return "Assassin"
+    elseif role == ROLE_DETECTIVE then
+        return "Detective"
+    elseif role == ROLE_MERCENARY then
+        return "Mercenary"
+    elseif role == ROLE_ZOMBIE then
+        return "Zombie"
+    elseif role == ROLE_VAMPIRE then
+        return "Vampire"
+    elseif role == ROLE_KILLER then
+        return "Killer"
+    elseif role == ROLE_INNOCENT then
+        return "Innocent"
+    elseif role == ROLE_GLITCH then
+        return "Glitch"
+    elseif role == ROLE_PHANTOM then
+        return "Phantom"
+    end
+    return "Someone"
+end
+
+function Randomat:GetRolePluralString(role)
+    -- Use the role strings if they exist
+    if ROLE_STRINGS_PLURAL and ROLE_STRINGS_PLURAL[role] or nil then
+        return ROLE_STRINGS_PLURAL[role]
+    end
+
+    -- Otherwise fall back to the defaults
+    if role == ROLE_TRAITOR then
+        return "Traitors"
+    elseif role == ROLE_HYPNOTIST then
+        return "Hypnotists"
+    elseif role == ROLE_ASSASSIN then
+        return "Assassins"
+    elseif role == ROLE_DETECTIVE then
+        return "Detectives"
+    elseif role == ROLE_MERCENARY then
+        return "Mercenaries"
+    elseif role == ROLE_ZOMBIE then
+        return "Zombies"
+    elseif role == ROLE_VAMPIRE then
+        return "Vampires"
+    elseif role == ROLE_KILLER then
+        return "Killers"
+    elseif role == ROLE_INNOCENT then
+        return "Innocents"
+    elseif role == ROLE_GLITCH then
+        return "Glitches"
+    elseif role == ROLE_PHANTOM then
+        return "Phantoms"
+    elseif role == ROLE_DETRAITOR then
+        return "Detraitors"
+    end
+    return "Players"
 end
 
 function Randomat:GetValidRoles(roles, check)

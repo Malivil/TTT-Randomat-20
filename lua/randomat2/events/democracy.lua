@@ -111,7 +111,7 @@ function EVENT:Begin()
                                     voter = v
                                 end
                             end
-                            self:SmallNotify(voter:Nick().." was dumb enough to vote for the Jester!")
+                            self:SmallNotify(voter:Nick().." was dumb enough to vote for the " .. Randomat:GetRoleString(ROLE_JESTER) .. "!")
 
                             if jestermode == 1 then
                                 -- Delay slightly to show the message above before the round potentially ends

@@ -7,6 +7,9 @@ EVENT.id = "president"
 CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
 
 function EVENT:Begin(target)
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Gives all " .. Randomat:GetRolePluralString(ROLE_DETECTIVE) .. " extra health, but kills all members of the " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " team if they get killed"
+
     -- Default to the player passed as a paramter, if there is one
     if not target then
         target = self.owner
