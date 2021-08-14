@@ -1,0 +1,12 @@
+net.Receive("RdmtApparitionBegin", function()
+    local client = LocalPlayer()
+    hook.Add("Think", "RdmtApparitionThink", function()
+        Randomat:HandlePlayerSmoke(client, function(v)
+            return not v:Alive() or v:IsSpec()
+        end)
+    end)
+end)
+
+net.Receive("RdmtApparitionEnd", function()
+    hook.Remove("Think", "RdmtApparitionThink")
+end)

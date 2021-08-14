@@ -122,7 +122,7 @@ function EVENT:Begin()
         if not traitors_blinded then
             local blind_time = GetConVar("randomat_prophunt_blind_time"):GetInt()
             if blind_time > 0 then
-                Randomat:SilentTriggerEvent("blind", self.owner, {blind_time})
+                Randomat:SilentTriggerEvent("blind", self.owner, blind_time)
             end
             traitors_blinded = true
         end

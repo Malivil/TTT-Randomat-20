@@ -9,6 +9,9 @@ EVENT.AltTitle = "A player is acting suspicious"
 EVENT.SingleUse = false
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Changes a random player to either " .. Randomat:GetRoleExtendedString(ROLE_JESTER):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
+
     local traitor = {}
     local suspicionply = nil
 

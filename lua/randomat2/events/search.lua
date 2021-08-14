@@ -1,6 +1,6 @@
 local EVENT = {}
 
-EVENT.Title = "Dead Men Tell no Tales"
+EVENT.Title = "Dead Men Tell No Tales"
 EVENT.Description = "Prevents corpses from being searched"
 EVENT.id = "search"
 

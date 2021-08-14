@@ -17,7 +17,7 @@ net.Receive("RockPaperScissorsEventBegin", function()
     local side_margin = 20
     rockPaperScissorsFrame:SetSize(width, height)
     rockPaperScissorsFrame:Center()
-    rockPaperScissorsFrame:SetTitle("Rock, Paper, or Scissors? (Hold " .. string.lower(Key("+showscores", "tab")) .. ")")
+    rockPaperScissorsFrame:SetTitle("Rock, Paper, or Scissors? (Hold " .. Key("+showscores", "tab"):lower() .. ")")
     rockPaperScissorsFrame:SetDraggable(false)
     rockPaperScissorsFrame:ShowCloseButton(false)
     rockPaperScissorsFrame:SetVisible(true)

@@ -27,6 +27,10 @@ function EVENT:End()
     game.SetTimeScale(1)
 end
 
+function EVENT:Condition()
+    return not Randomat:IsEventActive("reversetimewarp")
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in ipairs({"scale", "scale_max", "timer"}) do

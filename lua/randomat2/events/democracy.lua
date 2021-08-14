@@ -6,6 +6,7 @@ util.AddNetworkString("DemocracyEventEnd")
 util.AddNetworkString("DemocracyPlayerVoted")
 util.AddNetworkString("DemocracyJesterVoted")
 util.AddNetworkString("DemocracyReset")
+
 CreateConVar("randomat_democracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 10, 90)
 CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody dies")
 CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
@@ -15,11 +16,18 @@ EVENT.Title = "I love democracy, I love the republic."
 EVENT.AltTitle = "Democracy"
 EVENT.Description = "Cast your vote to kill a player. Votes continue until the round ends"
 EVENT.id = "democracy"
+EVENT.Type = EVENT_TYPE_VOTING
 
 local playervotes = {}
 local votableplayers = {}
 local playersvoted = {}
 local aliveplys = {}
+
+local function ClearTable(table)
+    for k, _ in pairs(table) do
+        table[k] = nil
+    end
+end
 
 function EVENT:Begin()
     net.Start("DemocracyEventBegin")
@@ -103,7 +111,7 @@ function EVENT:Begin()
                                     voter = v
                                 end
                             end
-                            self:SmallNotify(voter:Nick().." was dumb enough to vote for the Jester!")
+                            self:SmallNotify(voter:Nick().." was dumb enough to vote for the " .. Randomat:GetRoleString(ROLE_JESTER) .. "!")
 
                             if jestermode == 1 then
                                 -- Delay slightly to show the message above before the round potentially ends
@@ -151,10 +159,6 @@ function EVENT:End()
     timer.Remove("votekilltimer")
     net.Start("DemocracyEventEnd")
     net.Broadcast()
-end
-
-function EVENT:Condition()
-    return not Randomat:IsEventActive("election")
 end
 
 function EVENT:GetConVars()
@@ -231,11 +235,5 @@ net.Receive("DemocracyJesterVoted", function(ln, ply)
         end
     end
 end)
-
-function ClearTable(table)
-    for k, _ in pairs(table) do
-        table[k] = nil
-    end
-end
 
 Randomat:register(EVENT)

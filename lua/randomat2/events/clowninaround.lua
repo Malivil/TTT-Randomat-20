@@ -2,11 +2,14 @@ local EVENT = {}
 
 EVENT.Title = "We All Float Down Here"
 EVENT.AltTitle = "Clownin' Around"
-EVENT.Description = "Converts a Jester/Swapper to a Killer Clown"
+EVENT.Description = "Converts a Jester/Swapper to a Clown"
 EVENT.id = "clowninaround"
 EVENT.StartSecret = true
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Converts a " .. Randomat:GetRoleString(ROLE_JESTER) .. "/" .. Randomat:GetRoleString(ROLE_SWAPPER) .. " to a " .. Randomat:GetRoleString(ROLE_CLOWN)
+
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_JESTER or v:GetRole() == ROLE_SWAPPER then
             Randomat:SetRole(v, ROLE_CLOWN)

@@ -21,8 +21,8 @@ function EVENT:Begin()
                     local crab = ents.Create("npc_headcrab")
                     crab:SetPos(ply:GetPos() + Vector(math.random(-100, 100), math.random(-100, 100), 0) )
                     crab:Spawn()
-                    plys[k] = nil
                 end
+                plys[k] = nil
             end
         end
     end)

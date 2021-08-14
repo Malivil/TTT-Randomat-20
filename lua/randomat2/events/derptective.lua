@@ -3,20 +3,20 @@ local EVENT = {}
 CreateConVar("randomat_derptective_rate_of_fire", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Rate of Fire multiplier for the H.U.G.E.", 2, 5)
 
 local function GetEventDescription(has_detraitor, has_deputy_and_imposter)
-    local msg = "Forces the detective(s)"
+    local msg = "Forces the " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. "(s)"
 
     -- Only mention roles that actually exist
     if has_detraitor then
-        msg = msg .. " and detraitor(s)"
+        msg = msg .. " and " .. Randomat:GetRoleString(ROLE_DETRAITOR) .. "(s)"
     elseif has_deputy_and_imposter then
-        msg = msg .. " and promoted detective-like player(s)"
+        msg = msg .. " and promoted " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. "-like player(s)"
     end
 
     return msg .. " to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire"
 end
 
 EVENT.Title = "Derptective"
-EVENT.Description = GetEventDescription(true)
+EVENT.Description = "Forces the detective(s) to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire"
 EVENT.id = "derptective"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 

@@ -10,6 +10,7 @@ EVENT.SingleUse = false
 local blocklist = {}
 
 function EVENT:Begin()
+    blocklist = {}
     for blocked_id in string.gmatch(GetConVar("randomat_pocket_blocklist"):GetString(), '([^,]+)') do
         table.insert(blocklist, blocked_id:Trim())
     end
@@ -36,22 +37,6 @@ function EVENT:GiveWep(ply)
         function(isequip, id)
             Randomat:CallShopHooks(isequip, id, ply)
         end)
-end
-
-function EVENT:GetConVars()
-    local textboxes = {}
-    for _, v in ipairs({"blocklist"}) do
-        local name = "randomat_" .. self.id .. "_" .. v
-        if ConVarExists(name) then
-            local convar = GetConVar(name)
-            table.insert(textboxes, {
-                cmd = v,
-                dsc = convar:GetHelpText()
-            })
-        end
-    end
-
-    return {}, {}, textboxes
 end
 
 Randomat:register(EVENT)

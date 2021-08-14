@@ -7,6 +7,9 @@ EVENT.Description = "Changes a random vanilla Innocent into either a Glitch or a
 EVENT.id = "doublecross"
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description = "Changes a random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT):lower() .. " into either " .. Randomat:GetRoleExtendedString(ROLE_GLITCH):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
+
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_INNOCENT then
             if math.random(1,100) <= GetConVar("randomat_doublecross_chance"):GetInt() then

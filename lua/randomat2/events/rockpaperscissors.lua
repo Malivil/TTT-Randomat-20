@@ -231,7 +231,7 @@ function EVENT:ScoreRound()
                 Randomat:LogEvent("[RANDOMAT] Rock, Paper, Scissors ended in a tie!")
                 timer.Create("RdmtRockPaperScissorsEndSoulTimer", 5, 1, function()
                     -- Start the "Soul Mates" event after a short delay
-                    Randomat:SafeTriggerEvent("soulmates", self.owner, false, {ply1, ply2})
+                    Randomat:SafeTriggerEvent("soulmates", self.owner, false, ply1, ply2)
                 end)
             end
         end)

@@ -5,6 +5,9 @@ EVENT.Description = "Converts the Swapper to a Jester"
 EVENT.id = "oldjester"
 
 function EVENT:Begin()
+    -- Update this in case the role names have been changed
+    EVENT.Description =  "Converts the " .. Randomat:GetRoleString(ROLE_SWAPPER) .. " to a " .. Randomat:GetRoleString(ROLE_JESTER)
+
     for _, j in ipairs(self:GetAlivePlayers()) do
         if j:GetRole() == ROLE_SWAPPER then
             Randomat:SetRole(j, ROLE_JESTER)

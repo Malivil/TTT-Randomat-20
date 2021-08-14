@@ -4,11 +4,10 @@ EVENT.Title = "Sudden Death!"
 EVENT.Description = "Changes everyone to have only 1 health"
 EVENT.id = "suddendeath"
 
-function EVENT:Begin(...)
-    local params = ...
-    local health = 1
-    if params ~= nil and params[1] ~= nil then
-        health = params[1]
+function EVENT:Begin(health)
+    -- Default to 1 if we're not given a value
+    if not health then
+        health = 1
     end
 
     timer.Create("suddendeathtimer", 1, 0, function()

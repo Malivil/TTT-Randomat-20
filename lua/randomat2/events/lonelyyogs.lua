@@ -20,7 +20,7 @@ local function ClearPlayerData(sid)
 end
 
 function EVENT:Begin()
-    self:AddHook("SetupMove", function(ply, mv)
+    self:AddHook("FinishMove", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
             playermoveloc[ply:SteamID64()] = ply:GetPos()
         end

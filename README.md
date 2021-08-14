@@ -23,56 +23,29 @@ _ttt_randomat_event_weight_ - Default: 1 - The default selection weight each eve
 _ttt_randomat_event_hint_ - Default: 0 - Whether the Randomat should print what each event does when they start.\
 _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put in chat.
 
-# New Events
-- A Glitch has been patched
-- Betrayed
-- Big Head Mode
-- Black Market Buyout
-- Bullseye
-- Camp Fire
-- Care Package
-- Careful...
-- Clownin' Around
-- Come on and SLAM!
-- Communism! Time to learn how to share...
-- Compulsive Reloading
-- Derptective
-- Detraitor
-- Don't be so Sensitive
-- Don't Let it Go to Your Head
-- Double Cross
-- Double-Edged Sword
-- Election Day
-- Evasive Maneuvers
-- Flip the Script
-- Fog of War
-- Flu Season
-- Glitch in the Matrix
-- I don't think you realise the gravity of the situation.
-- Incriminating Evidence
-- Lonely Yogs
-- NO NERD HEALING
-- Olympic Sprint
-- Opposite Day
-- Paranoid
-- Prop Hunt
-- Ransomat
-- Rock, Paper, Scissors
-- Run For Your Life!
-- Sharing is Caring
-- Shh... It's a Secret!
-- Social Distancing
-- Stick With Me
-- That Doesn't Sound Right
-- The Cake is a Lie
-- They have a cave troll
-- Time Warp
-- Total Magnetism
-- Typeracer
-- Wasteful!
-- Zom-Bees!
+# Latest Events
+1. I'm feeling kinda ILL
+2. Herd Immunity
+3. Gaseous Snake
+4. Scouts Only
+5. Stop, I'm Bees!
+6. Dead Men Tell ALL Tales
+7. Blerg!
+8. Ghostly Apparition
+9. RISE FROM YOUR... Bees?
+10. Second Chance
+11. Earthquake
+12. praW emiT
+13. Boo!
+14. Smoke Signals
+15. Hedge Your Bets
+16. Paranormal Activity
+17. Gifts from the Dead
+18. Our Little Secret
 
 # Events
+**NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
+
 ## \#BringBackOldJester
 Converts the Swapper to a Jester
 \
@@ -197,11 +170,28 @@ Disables Traitor and Detective shop, but periodically gives out free items from 
 _ttt_randomat_blackmarket_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blackmarket_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blackmarket_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_blackmarket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
+_randomat_blackmarket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".\
 _randomat_blackmarket_timer_traitor_ - Default: 25 - How often (in seconds) traitors should get items.\
 _randomat_blackmarket_timer_detective_ - Default: 15 - How often (in seconds) detectives should get items.
 
-## Blind Traitors (aka All traitors have been blinded for X seconds!)
+## Blerg!
+ala Blegh!\
+ala Blergh!\
+ala Bleh!\
+ala Blarg!\
+\
+Players respawn repeatedly unless killed during a brief window where they can't use weapons
+\
+\
+**ConVars**
+\
+_ttt_randomat_blerg_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_blerg_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_blerg_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_blerg_respawntimer_ - Default: 60 - Delay before dead players respawn.\
+_randomat_blerg_weapondelay_ - Default: 20 - Delay before respawned can use weapons.
+
+## Blind Traitors
 Blinds all traitors for a configurable amount of seconds
 \
 \
@@ -210,7 +200,19 @@ Blinds all traitors for a configurable amount of seconds
 _ttt_randomat_blind_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blind_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blind_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_blind_duration_ - Default: 39 - The duration the players should be blinded for.
+_randomat_blind_duration_ - Default: 15 - The duration the players should be blinded for.
+
+## Boo!
+Allows dead players to scare their target and make them drop their weapon
+\
+\
+**ConVars**
+\
+_ttt_randomat_boo_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_boo_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_boo_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_boo_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
+_randomat_boo_ghost_time_ - Default: 5 - How many seconds the ghost lasts.
 
 ## Bullseye
 Only headshots do damage
@@ -291,7 +293,8 @@ _ttt_randomat_choose_weight_ - Default: -1 - The weight this event should use du
 _randomat_choose_choices_ - Default: 3 - Number of events you can choose from.\
 _randomat_choose_vote_ - Default: 0 - Allows all players to vote on the event.\
 _randomat_choose_votetimer_ - Default: 10 - How long players have to vote on the event.\
-_randomat_choose_deadvoters_ - Default: 0 - Dead people can vote.
+_randomat_choose_deadvoters_ - Default: 0 - Dead people can vote.\
+_randomat_choose_limitchoosetime_ - Default: 0 - Whether single player choosing has limited time.
 
 ## Clownin' Around (aka We All Float Down Here)
 Converts a Jester/Swapper to a Killer Clown
@@ -352,7 +355,17 @@ _ttt_randomat_crabs_min_players_ - Default: 0 - The minimum number of players re
 _ttt_randomat_crabs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_crabs_count_ - Default: 5 - The amount of crabs spawned when someone dies.
 
-## Dead Men Tell no Tales
+## Dead Men Tell ALL Tales
+Allows dead players to text chat with the living
+\
+\
+**ConVars**
+\
+_ttt_randomat_deadchat_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_deadchat_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_deadchat_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Dead Men Tell No Tales
 Prevents corpses from being searched
 \
 \
@@ -443,6 +456,17 @@ _ttt_randomat_doubleedge_min_players_ - Default: 0 - The minimum number of playe
 _ttt_randomat_doubleedge_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_doubleedge_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
 _randomat_doubleedge_amount_ - Default: 2 - How much self-damage to heal per interval.
+
+## Earthquake
+Moves all props, ammo, and weapons a random amount in a random direction.
+\
+\
+**ConVars**
+\
+_ttt_randomat_earthquake_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_earthquake_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_earthquake_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_earthquake_blocklist_ - Default: - The comma-separated list of maps to not allow this map on. For example: "ttt_lego,gm_flatgrass".
 
 ## Election Day
 Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\
@@ -573,6 +597,16 @@ _ttt_randomat_lifesteal_weight_ - Default: -1 - The weight this event should use
 _randomat_lifesteal_health_ - Default: 25 - The health gained per kill.\
 _randomat_lifesteal_cap_ - Default: 0 - The maximum health a player can get from killing people. Set to 0 to disable.
 
+## Gaseous Snake
+Turns everyone invisible but envelopes them in smoke
+\
+\
+**ConVars**
+\
+_ttt_randomat_gaseous_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_gaseous_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_gaseous_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Get Down Mr President!
 Gives all Detectives extra health, but kills all members of the Innocent team if they get killed
 \
@@ -583,6 +617,29 @@ _ttt_randomat_president_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_president_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_president_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.
+
+## Ghostly Apparition
+Dead players become ghosts who leave a trail of smoke as they drift through the world
+\
+\
+**ConVars**
+\
+_ttt_randomat_apparition_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_apparition_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_apparition_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Gifts from the Dead
+Allows dead players to give the living a single gift
+\
+\
+**ConVars**
+\
+_ttt_randomat_gifts_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_gifts_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_gifts_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_gifts_charge_time_ - Default: 60 - How many seconds before the dead can give a gift.\
+_randomat_gifts_random_items_ - Default: 1 - Whether everyone should get a random item to gift.\
+_randomat_gifts_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## Glitch in the Matrix
 Randomly changes everyone's role to be either Glitch or Traitor based on the configurable values
@@ -637,6 +694,29 @@ _randomat_harpoon_timer_ - Default: 3 - Time between being given harpoons.\
 _randomat_harpoon_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_harpoon_weaponid_ - Default: ttt_m9k_harpoon - Id of the weapon given.
 
+## Hedge Your Bets
+Dead players bet on who is going to live to the end. Winners are respawned to fight them.
+\
+\
+**ConVars**
+\
+_ttt_randomat_bets_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_bets_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_bets_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Herd Immunity
+Players vote for what type of damage they will be immune to for the rest of the round
+\
+\
+**ConVars**
+\
+_ttt_randomat_harpoon_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_harpoon_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_harpoon_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_immunity_timer_ - Default: 30 - The number of seconds the vote lasts.\
+_randomat_immunity_bullet_ - Default: 0 - Whether bullet damage can be voted for.\
+_randomat_immunity_slashing_ - Default: 0 - Whether slashing damage can be voted for.
+
 ## Honey, I shrunk the terrorists
 Scales each player's size by a configurable ratio
 \
@@ -687,6 +767,18 @@ _ttt_randomat_visualiser_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_visualiser_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_visualiser_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## I'm feeling kinda ILL
+Causes players to slowly lose health over time
+\
+\
+**ConVars**
+\
+_ttt_randomat_feelingill_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_feelingill_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_feelingill_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_feelingill_timer_ - Default: 3 - How often (in seconds) a player will lose health.\
+_randomat_feelingill_health_ - Default: 1 - How much health per tick you lose.
+
 ## Incriminating Evidence
 Forces a random player to say something incriminating without their knowledge
 \
@@ -696,8 +788,9 @@ Forces a random player to say something incriminating without their knowledge
 _ttt_randomat_incriminating_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_incriminating_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_incriminating_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_incriminating_timer_min_ - Default: 1 - The minimum time before the message is sent.\
-_randomat_incriminating_timer_max_ - Default: 10 - The maximum time before the message is sent.
+_randomat_incriminating_timer_min_ - Default: 3 - The minimum time before the message is sent.\
+_randomat_incriminating_timer_max_ - Default: 10 - The maximum time before the message is sent.\
+_randomat_incriminating_mistake_chance_ - Default: 0.2 - The chance that an "oops" message is sent.
 
 ## Infinite Ammo!
 Gives all weapons infinite ammo, allowing players to constantly shoot without reloading
@@ -776,7 +869,7 @@ _ttt_randomat_wallhack_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_wallhack_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_wallhack_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
-## NOT THE BEES!
+## NOT THE BEES
 Spawns bees randomly around players
 \
 \
@@ -821,6 +914,19 @@ _ttt_randomat_opposite_min_players_ - Default: 0 - The minimum number of players
 _ttt_randomat_opposite_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_opposite_hardmode_ - Default: 1 - Whether to enable hard mode and switch Jump/Crouch.
 
+## Our Little Secret
+Pairs players together, temporarily revealing their roles after a short delay
+\
+\
+**ConVars**
+\
+_ttt_randomat_oursecret_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_oursecret_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_oursecret_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_oursecret_min_delay_ - Default: 15 - The minimum delay before showing role.\
+_randomat_oursecret_max_delay_ - Default: 30 - The maximum delay before showing role.\
+_randomat_oursecret_highlight_time_ - Default: 5 - How long to show the player's role color.
+
 ## Paranoid
 Periodically plays gun and death sounds randomly around players
 \
@@ -835,7 +941,41 @@ _randomat_paranoid_timer_max_ - Default: 30 - The maximum time before the sound 
 _randomat_paranoid_shots_min_ - Default: 2 - The minimum times the sound should play.\
 _randomat_paranoid_shots_max_ - Default: 6 - The maximum times the sound should play.\
 _randomat_paranoid_volume_ - Default: 125 - The volume the sound should play at.\
-_randomat_paranoid_blocklist_ - Default: ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "ttt_m9k_orbital_strike,weapon_haddaway".
+_randomat_paranoid_blocklist_ - Default: weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "weapon_pulserif,weapon_ttt_dislocator".
+
+## Paranormal Activity
+Allows the dead to buff or debuff their targets
+\
+\
+**ConVars**
+\
+_ttt_randomat_paranoid_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_paranoid_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_paranoid_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_specbuff_charge_time_ - Default: 60 - How many seconds it takes to charge to full power.\
+_randomat_specbuff_heal_power_ - Default: 75 - The amount of power to heal the target.\
+_randomat_specbuff_heal_amount_ - Default: 10 - The amount of to heal the target.\
+_randomat_specbuff_fast_power_ - Default: 25 - The amount of power to make the target faster.\
+_randomat_specbuff_fast_factor_ - Default: 1.2 - The speed factor for target when fast.\
+_randomat_specbuff_fast_timer_ - Default: 3 - How long the effect lasts.\
+_randomat_specbuff_slow_power_ - Default: 25 - The amount of power to slow the target.\
+_randomat_specbuff_slow_factor_ - Default: 0.8 - The speed factor for target when slow.\
+_randomat_specbuff_slow_timer_ - Default: 3 - How long the effect lasts.\
+_randomat_specbuff_slap_power_ - Default: 75 - The amount of power to slap the target.\
+_randomat_specbuff_slap_force_ - Default: 500 - How hard to slap the target.
+
+## praW emiT (aka Reverse Time Warp)
+Causes everything (movement, firing speed, timers, etc.) to run a configurable amount slower than normal and intensifies on a configurable interval
+\
+\
+**ConVars**
+\
+_ttt_randomat_reversetimewarp_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_reversetimewarp_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_reversetimewarp_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_reversetimewarp_scale_ - Default: 15 - The percentage the speed should decrease. Treated as an subtractive decrease on multiple uses (e.g. 1.0 -> 0.85 -> 0.7 (0.85 - 0.15) rather than 1.0 -> 0.85 -> 0.1275 (0.85 - 0.85x0.15).\
+_randomat_reversetimewarp_scale_min_ - Default: 0.15 - The minimum scale the speed should decrease to.\
+_randomat_reversetimewarp_timer_ - Default: 15 - How often (in seconds) the speed will be decreased.
 
 ## Prop Hunt
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
@@ -922,7 +1062,18 @@ Causes anyone who dies to be resurrected as a Zombie
 _ttt_randomat_grave_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_grave_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_grave_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.
+_randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.\
+_randomat_grave_include_dead_ - Default: 1 - Whether to resurrect dead players at the start.
+
+## RISE FROM YOUR... Bees?
+Dead players become harmless bees
+\
+\
+**ConVars**
+\
+_ttt_randomat_specbees_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_specbees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_specbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Rock, Paper, Scissors
 Starts a game of Rock, Paper, Scissors between two players... to the death! A tie results in the players being soulbound to eachother.
@@ -946,6 +1097,27 @@ _ttt_randomat_runforyourlife_min_players_ - Default: 0 - The minimum number of p
 _ttt_randomat_runforyourlife_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_runforyourlife_delay_ - Default: 0.2 - Time between player taking damage.\
 _randomat_runforyourlife_damage_ - Default: 3 - Amount of damage a player takes.
+
+## Scouts Only
+Forces everyone to use a rifle and lowers everyone's gravity
+\
+\
+**ConVars**
+\
+_ttt_randomat_scoutsonly_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_scoutsonly_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_scoutsonly_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_scoutsonly_gravity_ - Default: 0.1 - The gravity scale.
+
+## Second Chance
+Respawns the first player who is killed as a random vanilla role
+\
+\
+**ConVars**
+\
+_ttt_randomat_secondchance_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_secondchance_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_secondchance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Sharing is Caring
 When a player kills another, their inventory is swapped with thier victim's.
@@ -976,6 +1148,18 @@ Disables all sounds for the duration of the event
 _ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_shutup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_shutup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Smoke Signals
+Allows dead players to envelope their target in smoke
+\
+\
+**ConVars**
+\
+_ttt_randomat_smoke_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_smoke_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_smoke_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_smoke_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
+_randomat_smoke_time_ - Default: 5 - How many seconds the smoke lasts.
 
 ## So that's it. What, we're some kind of suicide squad? (aka Detonators)
 Gives everyone a detonator for a random other player. When that detonator is used, the target player is exploded.
@@ -1039,6 +1223,17 @@ _randomat_stickwithme_damage_distance_ - Default: 200 - Distance a player must b
 _randomat_stickwithme_damage_amount_ - Default: 1 - Damage done to each player who is too far.\
 _randomat_stickwithme_highlight_ - Default: 1 - Whether to highlight player partners.
 
+## Stop, I'm Bees!
+Spawns a configurable number of bees when a player is killed
+\
+\
+**ConVars**
+\
+_ttt_randomat_imbees_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_imbees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_imbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_imbees_count_ - Default: 3 - The amount of bees spawned when someone dies.
+
 ## Sudden Death!
 Changes everyone to have only 1 health
 \
@@ -1070,7 +1265,7 @@ Shuffles weapon sounds at the start of the event
 _ttt_randomat_soundright_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_soundright_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_soundright_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_soundright_blocklist_ - Default: ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "ttt_m9k_orbital_strike,weapon_haddaway".
+_randomat_soundright_blocklist_ - Default: weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "weapon_pulserif,weapon_ttt_dislocator".
 
 ## The 'bar has been raised!
 Increases the damage and push force of the crowbar
@@ -1270,17 +1465,19 @@ Kills any player who jumps a second time after this event has triggered
 _ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jump_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_jump_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.
+_randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.\
+_randomat_jump_quackspam_ - Default: 0 - Whether to show the message multiple times for a Quack.
 
 ## Zom-Bees!
-Spawns bees who spread zombiism to their victims. See "NOT THE BEES!" and "RISE FROM YOUR GRAVE" events for additional configuration.
+Spawns bees who spread zombiism to their victims. See the "RISE FROM YOUR GRAVE" event for additional configuration.
 \
 \
 **ConVars**
 \
 _ttt_randomat_zombees_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_zombees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_zombees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_zombees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_zombees_count_ - Default: 1 - The number of bees spawned per player.
 
 # ULX Support
 This version of the Randomat 2.0 should be compatible with all versions of the ULX Module for Randomat 2.0 (other than any new events or ConVars or renamed ConVars).\
@@ -1297,36 +1494,45 @@ Another thing that was added is the concept of an event "type". This is currentl
 - [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to
 - [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the "TTT Randomat" mod which THAT was an update to
 - [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the "The Cake is a Lie" event
-- u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
-- u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
-- u/zoxzix89 on Reddit for the idea for the "Time Warp" event
-- u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
-- u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
+- u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
 - u/alt----f4 on Reddit for the idea for the "A Glitch has been patched" event
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
+- u/En_TioN on Reddit for the idea for the "Blerg!", "Gaseous Snake", and "Scouts Only" events
+- u/Geonightman on Reddit for the idea for the "Stop, I'm Bees!" event
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
-- u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
-- u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
-- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
-- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
 - u/Ill_Worry7895 on Reddit for the idea for the "Black Market Buyout", "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
+- u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
+- u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
+- u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
+- u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
+- u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
+- u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
+- u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
+- u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
+- u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
+- u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
+- Angela, Crimson, Fazzy, Fyxen, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
-- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Typeracer", and "Stick With Me" events
+- Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
-- Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event
+- Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
-- Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "They have a cave troll" event
-- Lewis of the Yogscast for the idea for the "Detraitor" event and the concept of events starting in secret
+- Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event
+- Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
+- Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
+- Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
+- Shahad from Nanotekkit for the idea for the "Earthquake" event
+- Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
-- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed" and "Clownin' Around" events
+- [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event

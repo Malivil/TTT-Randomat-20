@@ -110,6 +110,7 @@ local function unragdollPlayer(v)
     end
 
     v:SetCredits(v.spawnInfo.credits)
+    v:SetModel(v.spawnInfo.model)
 
     for i, j in pairs(v.spawnInfo.equipment) do
         if j then
@@ -117,6 +118,7 @@ local function unragdollPlayer(v)
         end
     end
 
+    v:SetMaxHealth(v.spawnInfo.maxhealth)
     v:SetHealth(math.max(0, v.spawnInfo.health))
     if v:Health() <= 0 then
         v:Kill()
@@ -144,7 +146,7 @@ local function ragdollPlayer(v)
     local equipment = {}
     -- Keep track of what equipment the player had
     local i = 1
-    while i < EQUIP_MAX do
+    while i <= EQUIP_MAX do
         equipment[i] = v:HasEquipmentItem(i)
         -- Double the index since this is a bit-mask
         i = i * 2
@@ -154,6 +156,8 @@ local function ragdollPlayer(v)
     info.weps = weps
     info.activeWeapon = v:GetActiveWeapon().ClassName
     info.health = v:Health()
+    info.maxhealth = v:GetMaxHealth()
+    info.model = v:GetModel()
     info.credits = v:GetCredits()
     info.equipment = equipment
     v.spawnInfo = info

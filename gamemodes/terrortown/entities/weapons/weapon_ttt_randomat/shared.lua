@@ -1,7 +1,7 @@
 if SERVER then
     AddCSLuaFile("shared.lua")
     resource.AddFile("materials/VGUI/ttt/icon_randomat.vmt")
-    SWEP.LimitedStock = not GetConVar("ttt_randomat_rebuyable"):GetBool()
+    util.AddNetworkString("TTT_ResetBuyableWeaponsCache")
 end
 
 if CLIENT then
@@ -56,13 +56,32 @@ SWEP.Primary.ClipMax = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Sound = ""
 
+function SWEP:SetupDataTables()
+    self:DTVar("Bool", 0, "limited_stock")
+    return self.BaseClass.SetupDataTables(self)
+ end
 
 function SWEP:Initialize()
     util.PrecacheSound("weapons/c4_initiate.wav")
+
+    -- Update the LimitedStock state based on the convar
+    if SERVER then
+        self.LimitedStock = not GetConVar("ttt_randomat_rebuyable"):GetBool()
+        self.dt.limited_stock = self.LimitedStock
+    else
+        self.LimitedStock = self.dt.limited_stock
+    end
+    weapons.GetStored("weapon_ttt_randomat").LimitedStock = self.LimitedStock
+
+    if SERVER then
+        -- Reset the weapons cache so the shop UI on the client shows correctly
+        net.Start("TTT_ResetBuyableWeaponsCache")
+        net.Broadcast()
+    end
 end
 
 function SWEP:OnRemove()
-    if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+    if CLIENT and IsValid(self:GetOwner()) and self:GetOwner() == LocalPlayer() and self:GetOwner():Alive() then
         RunConsoleCommand("lastinv")
     end
 end
@@ -70,11 +89,11 @@ end
 function SWEP:PrimaryAttack()
     if SERVER and IsFirstTimePredicted() then
         if GetConVar("ttt_randomat_chooseevent"):GetBool() then
-            Randomat:SilentTriggerEvent("choose", self.Owner)
+            Randomat:SilentTriggerEvent("choose", self:GetOwner())
         else
-            Randomat:TriggerRandomEvent(self.Owner)
+            Randomat:TriggerRandomEvent(self:GetOwner())
         end
-        DamageLog("RANDOMAT: " .. self.Owner:Nick() .. " [" .. self.Owner:GetRoleString() .. "] used his Randomat")
+        DamageLog("RANDOMAT: " .. self:GetOwner():Nick() .. " [" .. self:GetOwner():GetRoleString() .. "] used his Randomat")
         self:SetNextPrimaryFire(CurTime() + 10)
 
         self:Remove()

@@ -1,11 +1,11 @@
 local EVENT = {}
 
-CreateConVar("randomat_blind_duration", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "The duration the players should be blinded for", 5, 60)
+CreateConVar("randomat_blind_duration", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "The duration the players should be blinded for", 5, 60)
 
 util.AddNetworkString("blindeventactive")
 
-EVENT.Title = "All traitors have been blinded for "..GetConVar("randomat_blind_duration"):GetInt().." seconds!"
-EVENT.AltTitle = "Blind Traitors"
+EVENT.Title = "Blind Traitors"
+EVENT.Description = "All traitors have been blinded for " .. GetConVar("randomat_blind_duration"):GetInt() .. " seconds!"
 EVENT.id = "blind"
 EVENT.SingleUse = false
 
@@ -15,14 +15,15 @@ local function RemoveBlind()
     net.Broadcast()
 end
 
-function EVENT:Begin(...)
-    local params = ...
-    local duration = GetConVar("randomat_blind_duration"):GetInt()
+function EVENT:Begin(duration)
     -- Default to the duration passed as a paramter, if there is one
-    if params ~= nil and params[1] ~= nil then
-        duration = params[1]
+    if not duration then
+        duration = GetConVar("randomat_blind_duration"):GetInt()
     end
-    EVENT.Title = "All traitors have been blinded for "..duration.." seconds!"
+
+    -- Update these in case the CVar or role names have been changed
+    EVENT.Title = "Blind " .. Randomat:GetRolePluralString(ROLE_TRAITOR)
+    EVENT.Description = "All " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " have been blinded for " .. duration .. " seconds!"
 
     net.Start("blindeventactive")
     net.WriteBool(true)

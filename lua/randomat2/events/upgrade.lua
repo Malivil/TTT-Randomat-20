@@ -8,6 +8,7 @@ util.AddNetworkString("RdmtPlayerChoseKiller")
 CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the innocent should choose their new role.")
 
 EVENT.Title = "An innocent has been upgraded!"
+EVENT.Description = "A random vanilla Innocent is upgraded to a Mercenary"
 EVENT.id = "upgrade"
 
 local function CanChooseRole()
@@ -18,14 +19,12 @@ local function GetEventDescription()
     local choose = CanChooseRole()
     local action
     if choose then
-        action = "given the choice of becoming a Mercenary or a Killer"
+        action = "given the choice of becoming " .. Randomat:GetRoleExtendedString(ROLE_MERCENARY):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_KILLER):lower()
     else
-        action = "upgraded to a Mercenary"
+        action = "upgraded to " .. Randomat:GetRoleExtendedString(ROLE_MERCENARY):lower()
     end
-    return "A random vanilla Innocent is " .. action
+    return "A random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT):lower() .. " is " .. action
 end
-
-EVENT.Description = GetEventDescription()
 
 local function UpdateToMerc(ply)
     Randomat:SetRole(ply, ROLE_MERCENARY)
@@ -34,6 +33,10 @@ local function UpdateToMerc(ply)
 end
 
 function EVENT:Begin()
+    -- Update these in case the CVar or role names have been changed
+    EVENT.Title = Randomat:GetRoleExtendedString(ROLE_INNOCENT) .. " has been upgraded!"
+    EVENT.Description = GetEventDescription()
+
     local choose = CanChooseRole()
     local target = nil
     for _, ply in ipairs(self:GetAlivePlayers(true)) do
@@ -114,6 +117,24 @@ net.Receive("RdmtPlayerChoseKiller", function()
     if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
         ply:StripWeapon("weapon_zm_improvised")
         ply:Give("weapon_kil_knife")
+    end
+
+    -- If the killer's max health can be changed and it's different than what they have now, update it
+    -- Also heal the player the difference in health
+    if ConVarExists("ttt_killer_max_health") then
+        local max = GetConVar("ttt_killer_max_health"):GetInt()
+        local current_max = ply:GetMaxHealth()
+        if max ~= current_max then
+            local hp = ply:Health()
+            local new_hp = math.min(max, hp + (max - current_max))
+            ply:SetMaxHealth(max)
+            ply:SetHealth(new_hp)
+        end
+    end
+
+    -- In the new CR, the Killer is given the throwable crowbar as well
+    if CR_VERSION and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
+        ply:Give("weapon_kil_crowbar")
     end
 end)
 

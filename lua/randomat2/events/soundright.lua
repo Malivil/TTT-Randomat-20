@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_soundright_blocklist", "ttt_m9k_orbital_strike,weapon_haddaway,weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
+CreateConVar("randomat_soundright_blocklist", "weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not use for sounds")
 
 EVENT.Title = "That Doesn't Sound Right"
 EVENT.Description = "Shuffles weapon sounds"
@@ -20,7 +20,7 @@ local function GetRandomWeaponSound(wep)
         repeat
             local idx = math.random(1, #sounds)
             chosen_sound = sounds[idx]
-        until chosen_sound and string.len(chosen_sound) > 0 and (not wep.Primary or wep.Primary.Sound ~= chosen_sound)
+        until chosen_sound and #chosen_sound > 0 and (not wep.Primary or wep.Primary.Sound ~= chosen_sound)
 
         -- If this is a sound script, extract the file out of it.
         -- Some weapons have to be overwritten by the EntityEmitSound hook and that can't use scripts
@@ -88,6 +88,8 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
+    table.Empty(sounds)
+    table.Empty(wep_sounds)
     net.Start("RdmtSoundRightEnd")
     net.Broadcast()
     timer.Remove("SoundRightDelay")

@@ -12,7 +12,7 @@ local function TriggerAlert(item, role, is_item, ply)
     net.WriteString(EVENT.id)
     net.WriteString(item)
     net.WriteString(role)
-    net.WriteInt(is_item ~= nil and is_item or 0, 8)
+    net.WriteUInt(is_item ~= nil and is_item or 0, 32)
     net.WriteInt(ply:GetRole(), 16)
     net.Send(ply)
 end
@@ -28,13 +28,18 @@ function EVENT:Begin()
         TriggerAlert(item, role_name, is_item, ply)
 
         for _, p in ipairs(player.GetAll()) do
-            if is_item then
-                p:GiveEquipmentItem(tonumber(item))
-            else
-                p:Give(item)
-            end
+            if p ~= ply then
+                if is_item then
+                    p:GiveEquipmentItem(tonumber(item))
+                else
+                    p:Give(item)
+                    if item.WasBought then
+                        item:WasBought(p)
+                    end
+                end
 
-            Randomat:CallShopHooks(is_item, item, p)
+                Randomat:CallShopHooks(is_item, item, p)
+            end
         end
     end)
 

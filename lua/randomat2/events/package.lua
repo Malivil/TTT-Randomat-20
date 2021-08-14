@@ -23,20 +23,4 @@ function EVENT:Begin()
     ent:Spawn()
 end
 
-function EVENT:GetConVars()
-    local textboxes = {}
-    for _, v in ipairs({"blocklist"}) do
-        local name = "randomat_" .. self.id .. "_" .. v
-        if ConVarExists(name) then
-            local convar = GetConVar(name)
-            table.insert(textboxes, {
-                cmd = v,
-                dsc = convar:GetHelpText()
-            })
-        end
-    end
-
-    return {}, {}, textboxes
-end
-
 Randomat:register(EVENT)
