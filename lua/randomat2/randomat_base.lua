@@ -511,8 +511,8 @@ function Randomat:RemoveEquipmentItem(ply, item_id)
     return removed
 end
 
-function Randomat:SpawnBee(ply, color)
-    local spos = ply:GetPos() + Vector(math.random(-75,75), math.random(-75,75), math.random(200,250))
+function Randomat:SpawnBee(ply, color, height)
+    local spos = ply:GetPos() + Vector(math.random(-75, 75), math.random(-75, 75), height or math.random(200, 250))
     local headBee = SpawnNPC(ply, spos, "npc_manhack")
     headBee:SetNPCState(2)
 
