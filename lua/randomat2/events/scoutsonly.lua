@@ -37,7 +37,7 @@ function EVENT:Begin()
     SendFullStateUpdate()
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
-        return false
+        return (wep:GetClass() == "weapon_zm_rifle")
     end)
 
     self:AddHook("Think", function()
