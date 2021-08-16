@@ -181,7 +181,11 @@ function Randomat:SetRole(ply, role)
 
     net.Start("TTT_RoleChanged")
     net.WriteString(ply:SteamID64())
-    net.WriteUInt(role, 8)
+    if CR_VERSION and CRVersion("1.1.2") then
+        net.WriteInt(role, 8)
+    else
+        net.WriteUInt(role, 8)
+    end
     net.Broadcast()
 end
 
@@ -662,20 +666,6 @@ function randomat_meta:StripRoleWeapons(ply)
     end
     if ply:HasWeapon("weapon_ttt_wtester") then
         ply:StripWeapon("weapon_ttt_wtester")
-    end
-
-    -- TODO: Remove all these things after CR is pushed to release
-    if ply:HasWeapon("weapon_bod_bodysnatch") then
-        ply:StripWeapon("weapon_bod_bodysnatch")
-    end
-    if ply:HasWeapon("weapon_doc_defib") then
-        ply:StripWeapon("weapon_doc_defib")
-    end
-    if ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION then
-        ply:StripWeapon("weapon_ttt_health_station")
-    end
-    if ply:HasWeapon("weapon_qua_bomb_station") then
-        ply:StripWeapon("weapon_qua_bomb_station")
     end
 end
 

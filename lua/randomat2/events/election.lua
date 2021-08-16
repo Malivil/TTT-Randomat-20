@@ -222,14 +222,7 @@ function EVENT:SwearIn(winner)
         elseif winner:GetRole() == ROLE_OLDMAN then
             self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
 
-            local health
-            -- TODO: Remove this version check after 1.0.3 is pushed to release
-            if CRVersion("1.0.3") then
-                health = GetConVar("ttt_oldman_starting_health"):GetInt()
-            else
-                health = GetConVar("ttt_old_man_starting_health"):GetInt()
-            end
-
+            local health = GetConVar("ttt_oldman_starting_health"):GetInt()
             Randomat:SilentTriggerEvent("suddendeath", winner, health)
         -- Innocent - Promote to Detective, give credits
         elseif Randomat:IsInnocentTeam(winner) then
