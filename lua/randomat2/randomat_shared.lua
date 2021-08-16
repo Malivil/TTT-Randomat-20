@@ -243,7 +243,7 @@ function Randomat:CanUseShop(ply)
 end
 
 function Randomat:IsZombifying(ply)
-    return ply:GetPData("IsZombifying", 0) == 1 or ply:GetNWBool("IsZombifying", false)
+    return ply:GetNWBool("IsZombifying", false) or ply:GetPData("IsZombifying", 0) == 1
 end
 
 -- Weapon Sound Functions
