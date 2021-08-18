@@ -159,7 +159,11 @@
         "TRAITOR_ROLES",
         "ROLE_STRINGS_RAW",
         "INDEPENDENT_ROLES",
-        "ROLE_STRINGS_PLURAL"
+        "ROLE_STRINGS_PLURAL",
+        "list",
+        "bit",
+        "SF_NPC_FADE_CORPSE",
+        "SF_NPC_ALWAYSTHINK"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
