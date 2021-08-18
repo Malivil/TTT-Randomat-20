@@ -530,6 +530,7 @@ function Randomat:SpawnBee(ply, color, height)
 
     headBee:SetNoDraw(true)
     headBee:SetHealth(1000)
+    return headBee
 end
 
 --[[
@@ -771,7 +772,7 @@ function randomat_meta:SetAllPlayerScales(scale)
 end
 
 function randomat_meta:ResetAllPlayerScales()
-    for _, ply in ipairs(self:GetAlivePlayers()) do
+    for _, ply in ipairs(player.GetAll()) do
         Randomat:ResetPlayerScale(ply, self.id)
     end
 
