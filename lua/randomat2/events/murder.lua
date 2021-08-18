@@ -14,6 +14,10 @@ CreateConVar("randomat_murder_allow_shop", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Wh
 util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
 
+local function IsEvil(ply)
+    return Randomat:IsTraitorTeam(ply) or Randomat:IsIndependentTeam(ply)
+end
+
 function EVENT:StripBannedWeapons(ply)
     -- Let the killer keep their knife since their role does not change
     if ply:GetRole() ~= ROLE_KILLER then
