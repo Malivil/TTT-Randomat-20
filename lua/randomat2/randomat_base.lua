@@ -522,7 +522,7 @@ function Randomat:SpawnNPC(ply, pos, cls)
 
 	-- Don't let them spawn this entity if it isn't in our NPC Spawn list.
 	-- We don't want them spawning any entity they like!
-	if not npc_data then 
+	if not npc_data then
 		if IsValid(ply) then
 			ply:SendLua("Derma_Message(\"Sorry! You can't spawn that NPC!\")")
         end
