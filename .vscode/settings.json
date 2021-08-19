@@ -163,7 +163,16 @@
         "list",
         "bit",
         "SF_NPC_FADE_CORPSE",
-        "SF_NPC_ALWAYSTHINK"
+        "SF_NPC_ALWAYSTHINK",
+        "COLOR_ORANGE",
+        "COLOR_OLIVE",
+        "COLOR_PINK",
+        "COLOR_NAVY",
+        "COLOR_BLUE",
+        "COLOR_LGRAY",
+        "COLOR_YELLOW",
+        "COLOR_DGREEN",
+        "COLOR_BLACK"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

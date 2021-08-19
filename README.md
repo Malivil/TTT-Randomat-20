@@ -42,6 +42,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 16. Paranormal Activity
 17. Gifts from the Dead
 18. Our Little Secret
+19. Breadcrumbs
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -213,6 +214,19 @@ _ttt_randomat_boo_min_players_ - Default: 0 - The minimum number of players requ
 _ttt_randomat_boo_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_boo_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
 _randomat_boo_ghost_time_ - Default: 5 - How many seconds the ghost lasts.
+
+## Breadcrumbs
+Follow the colorful trails to find the other players
+\
+\
+**ConVars**
+\
+_ttt_randomat_breadcrumbs_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_breadcrumbs_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_breadcrumbs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_breadcrumbs_start_width_ - Default: 30 - The trail's starting width.\
+_randomat_breadcrumbs_end_width_ - Default: 1 - The trail's ending width.\
+_randomat_breadcrumbs_fade_time_ - Default: 3 - How many seconds the trail should last.
 
 ## Bullseye
 Only headshots do damage
@@ -1521,10 +1535,10 @@ Another thing that was added is the concept of an event "type". This is currentl
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
-- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
+- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
-- Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event
+- Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
 - Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
