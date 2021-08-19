@@ -153,6 +153,7 @@ function EVENT:Begin()
             table.insert(mid_tmpl, "watch out for barnacle")
             table.insert(mid_tmpl, "careful {i} put a barnacle here")
             table.insert(mid_tmpl, "where did {you} put that barnacle?")
+            table.insert(mid_tmpl, "barnacle door")
         end
 
         -- Add harpoon-related lines, if it exists
