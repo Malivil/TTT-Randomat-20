@@ -1323,7 +1323,7 @@ _ttt_randomat_switch_weight_ - Default: -1 - The weight this event should use du
 _randomat_switch_timer_ - Default: 15 - How often players are switched.
 
 ## They have a cave troll
-Chooses a random traitor and makes them a strong giant with a crowbar. Other random players are chosen to be smaller and given knives
+Chooses a random traitor and makes them a strong giant with a club. Other random players are chosen to be smaller and given knives
 \
 \
 **ConVars**
@@ -1332,10 +1332,11 @@ _ttt_randomat_cavetroll_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_cavetroll_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_cavetroll_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_cavetroll_troll_scale_ - Default: 1.5 - The scale factor to use for the troll.\
-_randomat_cavetroll_troll_damage_bonus_ - Default: 0.25 - The percent damage bonus to give the troll.\
+_randomat_cavetroll_troll_damage_ - Default: 50 - How much damage the troll's "club" should do.\
 _randomat_cavetroll_troll_health_ - Default: 150 - The amount of health the troll should have.\
 _randomat_cavetroll_hobbit_scale_ - Default: 0.5 - The scale factor to use for the hobbits.\
-_randomat_cavetroll_hobbit_pct_ - Default: 0.34 - The percent of non-traitors to be hobbits.
+_randomat_cavetroll_hobbit_pct_ - Default: 0.34 - The percent of non-traitors to be hobbits.\
+_randomat_cavetroll_hobbit_damage_ - Default: 20 - How much damage the hobbits' "swords" should do.
 
 ## Time Warp
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal and intensifies on a configurable interval
