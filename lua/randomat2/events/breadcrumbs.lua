@@ -8,25 +8,23 @@ EVENT.Title = "Breadcrumbs"
 EVENT.Description = "Follow the colorful trails to find the other players"
 EVENT.id = "breadcrumbs"
 
-local colors = {
-    COLOR_WHITE,
-    COLOR_GREEN,
-    COLOR_RED,
-    COLOR_YELLOW,
-    COLOR_LGRAY,
-    COLOR_BLUE,
-    COLOR_PINK,
-    COLOR_ORANGE
-}
 local player_colors = {}
 local player_trails = {}
 
 local function CreateTrail(ply)
     local sid = ply:SteamID64()
     if not player_colors[sid] then
-        player_colors[sid] = table.Random(colors)
-        print("Chose color for " .. ply:Name())
-        print(player_colors[sid])
+        local colors = {
+            COLOR_WHITE,
+            COLOR_GREEN,
+            COLOR_RED,
+            COLOR_YELLOW,
+            COLOR_LGRAY,
+            COLOR_BLUE,
+            COLOR_PINK,
+            COLOR_ORANGE
+        }
+        player_colors[sid] = colors[math.random(1, #colors)]
     end
 
     local startWidth = GetConVar("randomat_breadcrumbs_start_width"):GetInt()
