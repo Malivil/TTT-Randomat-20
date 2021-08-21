@@ -80,8 +80,8 @@ function EVENT:Begin()
 
     for _, v in ipairs(self:GetAlivePlayers()) do
         local messages = {}
-        -- All bad guys are traitors
-        if Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or Randomat:IsIndependentTeam(v) then
+        -- Convert traitor team members to vanilla traitors
+        if Randomat:IsTraitorTeam(v) then
             Randomat:SetRole(v, ROLE_TRAITOR)
 
             -- Any player who has no credits most-likely was just transformed from a role without any credits so give them one to start with
