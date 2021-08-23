@@ -228,14 +228,15 @@ function EVENT:Condition()
     -- Only run this if there are actual props
     if table.Count(ents.FindByClass("prop_physics*")) == 0 and table.Count(ents.FindByClass("prop_dynamic")) == 0 then return false end
 
-    -- Only run if there is at least one innocent or jester/swapper living
+    -- Only run if there are multiple traitors remaining
+    local t_count = 0
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if (Randomat:IsJesterTeam(v) or Randomat:IsInnocentTeam(v)) then
-            return true
+        if Randomat:IsTraitorTeam(v) then
+            t_count = t_count + 1
         end
     end
 
-    return false
+    return t_count > 1
 end
 
 function EVENT:GetConVars()
