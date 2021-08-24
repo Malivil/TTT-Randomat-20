@@ -36,9 +36,10 @@ function EVENT:Begin()
             end
         end
 
-        plylist[k]["ply"]:Give("weapon_ttt_randomatdet")
-        plylist[k]["ply"]:GetWeapon("weapon_ttt_randomatdet").Target = plylist[k]["tgt"]
-
+        local det = plylist[k]["ply"]:Give("weapon_ttt_randomatdet")
+        if det then
+            det.Target = plylist[k]["tgt"]
+        end
     end
 end
 

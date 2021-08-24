@@ -60,8 +60,7 @@ function EVENT:Begin()
     troll:SetMaxHealth(troll_health)
     troll:SetHealth(troll_health - (max_hp - troll:Health()))
     troll:StripWeapons()
-    troll:Give("weapon_ttt_randomatclub")
-    local club = troll:GetWeapon("weapon_ttt_randomatclub")
+    local club = troll:Give("weapon_ttt_randomatclub")
     if club then
         club.Primary.Damage = troll_damage
     end
@@ -75,8 +74,7 @@ function EVENT:Begin()
     for _, h in ipairs(hobbits) do
         Randomat:SetPlayerScale(h, hobbit_scale, self.id)
         h:StripWeapon("weapon_zm_improvised")
-        h:Give("weapon_ttt_randomatknife")
-        local knife = h:GetWeapon("weapon_ttt_randomatknife")
+        local knife = h:Give("weapon_ttt_randomatknife")
         if knife then
             knife.Primary.Damage = hobbit_damage
         end

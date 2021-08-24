@@ -32,8 +32,7 @@ function EVENT:Begin()
         end
 
         p:StripWeapons()
-        p:Give("weapon_zm_rifle")
-        local weap = p:GetActiveWeapon()
+        local weap = p:Give("weapon_zm_rifle")
         if weap then
             weap.AllowDrop = false
         end
