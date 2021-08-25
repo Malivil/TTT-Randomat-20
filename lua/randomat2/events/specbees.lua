@@ -51,7 +51,9 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        bees[sid]:Remove()
+        if bees[sid] then
+            bees[sid]:Remove()
+        end
         bees[sid] = nil
     end)
 
