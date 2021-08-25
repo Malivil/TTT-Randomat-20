@@ -68,9 +68,9 @@ function EVENT:Begin()
         local bee = bees[ply:SteamID64()]
         if not IsValid(bee) then return end
 
-         local ang = mv:GetAngles()
-         bee:SetPos(mv:GetOrigin() + ang:Forward() * 20)
-         bee:SetAngles(ang)
+        local ang = mv:GetAngles()
+        bee:SetPos(mv:GetOrigin() + ang:Forward() * 20)
+        bee:SetAngles(ang)
     end)
 end
 
