@@ -1,12 +1,16 @@
--- Player Effects
-function Randomat:HandlePlayerSmoke(client, pred, color)
-    for _, v in ipairs(player.GetAll()) do
+-- Effects
+function Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist)
+    if not max_dist then
+        max_dist = 3000
+    end
+
+    for _, v in ipairs(tbl) do
         if pred(v) then
             if not v.RdmtSmokeEmitter then v.RdmtSmokeEmitter = ParticleEmitter(v:GetPos()) end
             if not v.RdmtSmokeNextPart then v.RdmtSmokeNextPart = CurTime() end
             local pos = v:GetPos() + Vector(0, 0, 30)
             if v.RdmtSmokeNextPart < CurTime() then
-                if client:GetPos():Distance(pos) <= 3000 then
+                if client:GetPos():Distance(pos) <= max_dist then
                     v.RdmtSmokeEmitter:SetPos(pos)
                     v.RdmtSmokeNextPart = CurTime() + math.Rand(0.003, 0.01)
                     local vec = Vector(math.Rand(-8, 8), math.Rand(-8, 8), math.Rand(10, 55))
@@ -35,6 +39,10 @@ function Randomat:HandlePlayerSmoke(client, pred, color)
             end
         end
     end
+end
+
+function Randomat:HandlePlayerSmoke(client, pred, color, max_dist)
+    Randomat:HandleEntitySmoke(player.GetAll(), client, pred, color, max_dist)
 end
 
 -- UI Functions
