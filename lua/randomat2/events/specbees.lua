@@ -57,6 +57,16 @@ function EVENT:Begin()
         bees[sid] = nil
     end)
 
+    self:AddHook("PlayerDisconnected", function(ply)
+        if not IsValid(ply) then return end
+        local sid = ply:SteamID64()
+        dead[sid] = false
+        if bees[sid] then
+            bees[sid]:Remove()
+        end
+        bees[sid] = nil
+    end)
+
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
         dead[victim:SteamID64()] = true
