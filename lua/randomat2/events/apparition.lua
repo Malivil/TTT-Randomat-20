@@ -17,7 +17,20 @@ local function SetSpectatorValues(p)
     p:SetEyeAngles(ang)
 end
 
+local ghosts = {}
+local function CreateGhost(p)
+    local ghost = ents.Create("npc_kleiner")
+    ghost:SetPos(p:GetPos())
+    ghost:SetRenderMode(RENDERMODE_NONE)
+    ghost:SetNotSolid(true)
+    ghost:SetNWBool("RdmtApparition", true)
+    ghost:Spawn()
+    ghosts[p:SteamID64()] = ghost
+end
+
 function EVENT:Begin()
+    ghosts = {}
+
     net.Start("RdmtApparitionBegin")
     net.Broadcast()
 
@@ -25,6 +38,7 @@ function EVENT:Begin()
     for _, p in ipairs(self:GetDeadPlayers()) do
         dead[p:SteamID64()] = true
         SetSpectatorValues(p)
+        CreateGhost(p)
     end
 
     self:AddHook("KeyPress", function(ply, key)
@@ -35,17 +49,47 @@ function EVENT:Begin()
 
     self:AddHook("PlayerSpawn", function(ply)
         if not IsValid(ply) then return end
-        dead[ply:SteamID64()] = false
+        local sid = ply:SteamID64()
+        dead[sid] = false
+        if ghosts[sid] then
+            ghosts[sid]:Remove()
+        end
+        ghosts[sid] = nil
+    end)
+
+    self:AddHook("PlayerDisconnected", function(ply)
+        if not IsValid(ply) then return end
+        local sid = ply:SteamID64()
+        dead[sid] = false
+        if ghosts[sid] then
+            ghosts[sid]:Remove()
+        end
+        ghosts[sid] = nil
     end)
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
         dead[victim:SteamID64()] = true
         SetSpectatorValues(victim)
+        CreateGhost(victim)
+    end)
+
+    self:AddHook("FinishMove", function(ply, mv)
+        if not IsValid(ply) or not ply:IsSpec() then return end
+
+        local ghost = ghosts[ply:SteamID64()]
+        if not IsValid(ghost) then return end
+
+        ghost:SetPos(ply:GetPos())
     end)
 end
 
 function EVENT:End()
+    for _, b in pairs(ghosts) do
+        b:Remove()
+    end
+    table.Empty(ghosts)
+
     net.Start("RdmtApparitionEnd")
     net.Broadcast()
 end
