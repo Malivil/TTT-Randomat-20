@@ -97,6 +97,12 @@ function EVENT:Begin()
                 net.Send(v)
             end
 
+            if v:HasWeapon("weapon_controllable_manhack") then
+                table.insert(messages, "Controllable Manhacks are disabled while Prop Hunt is active! Your purchase has been refunded.")
+                v:StripWeapon("weapon_controllable_manhack")
+                v:AddCredits(1)
+            end
+
             table.insert(messages, 1, "Hunt Innocents disguised as props, but be careful -- shooting non-player props will cause you to take damage!")
         -- Everyone else is innocent
         else
