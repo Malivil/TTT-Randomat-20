@@ -231,11 +231,6 @@ end
 
 function Randomat:CanUseShop(ply)
     if ply.CanUseShop then return ply:CanUseShop() end
-    if ply.IsShopRole then
-        return ply:IsShopRole() and
-            (not ply:IsDeputy() or ply:GetNWBool("HasPromotion", false)) and
-            (not ply:IsClown() or ply:GetNWBool("KillerClownActive", false))
-    end
     if player.HasBuyMenu then return player.HasBuyMenu(ply) end
     -- Otherwise just assume any roel in the list of shop roles can use the shop
     local shop_roles = Randomat:GetShopRoles()
