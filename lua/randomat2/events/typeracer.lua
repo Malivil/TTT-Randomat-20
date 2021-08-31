@@ -33,6 +33,7 @@ table.insert(values, "weird")
 table.insert(values, "intelligence")
 table.insert(values, "pronunciation")
 table.insert(values, "handkerchief")
+table.insert(values, "tneconni")
 
 function EVENT:ChooseWord(first)
     local chosen = values[math.random(1, #values)]
