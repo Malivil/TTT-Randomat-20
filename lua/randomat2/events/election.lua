@@ -199,25 +199,30 @@ function EVENT:SwearIn(winner)
     timer.Simple(3, function()
         -- Drunk - Have the drunk immediately remember their role
         if winner:GetRole() == ROLE_DRUNK then
-            local role
-            if math.random() > GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
-                role = ROLE_TRAITOR
-                winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
+            if winner.SoberDrunk then
+                winner:SoberDrunk()
+            -- Fall back to default logic if we don't have the advanced drunk options
             else
-                role = ROLE_INNOCENT
+                local role
+                if math.random() > GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
+                    role = ROLE_TRAITOR
+                    winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
+                else
+                    role = ROLE_INNOCENT
+                end
+
+                winner:SetNWBool("WasDrunk", true)
+                winner:SetRole(role)
+                winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+                winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+
+                net.Start("TTT_DrunkSober")
+                net.WriteString(winner:Nick())
+                net.WriteString(ROLE_STRINGS_EXT[role])
+                net.Broadcast()
+
+                SendFullStateUpdate()
             end
-
-            winner:SetNWBool("WasDrunk", true)
-            winner:SetRole(role)
-            winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
-            winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
-
-            net.Start("TTT_DrunkSober")
-            net.WriteString(winner:Nick())
-            net.WriteString(ROLE_STRINGS_EXT[role])
-            net.Broadcast()
-
-            SendFullStateUpdate()
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
         elseif winner:GetRole() == ROLE_OLDMAN then
             self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
