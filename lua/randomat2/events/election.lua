@@ -199,7 +199,9 @@ function EVENT:SwearIn(winner)
     timer.Simple(3, function()
         -- Drunk - Have the drunk immediately remember their role
         if winner:GetRole() == ROLE_DRUNK then
-            if winner.SoberDrunk then
+            if ConVarExists("ttt_drunk_become_clown") and GetConVar("ttt_drunk_become_clown"):GetBool() then
+                winner:DrunkRememberRole(ROLE_CLOWN, true)
+            elseif winner.SoberDrunk then
                 winner:SoberDrunk()
             -- Fall back to default logic if we don't have the advanced drunk options
             else
@@ -223,6 +225,9 @@ function EVENT:SwearIn(winner)
 
                 SendFullStateUpdate()
             end
+
+            if timer.Exists("drunkremember") then timer.Remove("drunkremember") end
+            if timer.Exists("waitfordrunkrespawn") then timer.Remove("waitfordrunkrespawn") end
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
         elseif winner:GetRole() == ROLE_OLDMAN then
             self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
