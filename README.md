@@ -24,25 +24,16 @@ _ttt_randomat_event_hint_ - Default: 0 - Whether the Randomat should print what 
 _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put in chat.
 
 # Latest Events
-1. I'm feeling kinda ILL
-2. Herd Immunity
-3. Gaseous Snake
-4. Scouts Only
-5. Stop, I'm Bees!
-6. Dead Men Tell ALL Tales
-7. Blerg!
-8. Ghostly Apparition
-9. RISE FROM YOUR... Bees?
-10. Second Chance
-11. Earthquake
-12. praW emiT
-13. Boo!
-14. Smoke Signals
-15. Hedge Your Bets
-16. Paranormal Activity
-17. Gifts from the Dead
-18. Our Little Secret
-19. Breadcrumbs
+1. Earthquake
+2. praW emiT
+3. Boo!
+4. Smoke Signals
+5. Hedge Your Bets
+6. Paranormal Activity
+7. Gifts from the Dead
+8. Our Little Secret
+9. Breadcrumbs
+10. Poltergeists
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -978,6 +969,16 @@ _randomat_specbuff_slow_timer_ - Default: 3 - How long the effect lasts.\
 _randomat_specbuff_slap_power_ - Default: 75 - The amount of power to slap the target.\
 _randomat_specbuff_slap_force_ - Default: 500 - How hard to slap the target.
 
+## Poltergeists
+Allows dead players to see and activate traitor traps
+\
+\
+**ConVars**
+\
+_ttt_randomat_poltergeists_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_poltergeists_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_poltergeists_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## praW emiT (aka Reverse Time Warp)
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount slower than normal and intensifies on a configurable interval
 \
@@ -1546,6 +1547,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
+- joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event

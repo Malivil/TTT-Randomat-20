@@ -173,7 +173,8 @@
         "COLOR_YELLOW",
         "COLOR_DGREEN",
         "COLOR_BLACK",
-        "RENDERMODE_NONE"
+        "RENDERMODE_NONE",
+        "TBHUD"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
