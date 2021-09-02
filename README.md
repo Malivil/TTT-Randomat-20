@@ -34,6 +34,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 8. Our Little Secret
 9. Breadcrumbs
 10. Poltergeists
+11. Fiends for Life
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -523,6 +524,16 @@ _ttt_randomat_flash_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_flash_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_flash_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
+
+## Fiends for Life
+Innocents win if they kill the jester, but traitors will share the win
+\
+\
+**ConVars**
+\
+_ttt_randomat_killjester_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_killjester_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_killjester_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Flip the Script
 Inverses everyone's health
@@ -1521,6 +1532,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
+- u/PacoSoe on Reddit for the idea for the "Fiends for Life" event
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
