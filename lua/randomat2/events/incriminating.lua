@@ -139,6 +139,9 @@ function EVENT:Begin()
         if ConVarExists("ttt_deputy_enabled") and GetConVar("ttt_deputy_enabled"):GetBool() then
             table.insert(mid_tmpl, "i think %PLAYER% is the {deputy}, kill them before they get promoted")
         end
+        if ConVarExists("ttt_impersonator_enabled") and GetConVar("ttt_impersonator_enabled"):GetBool() then
+            table.insert(mid_tmpl, "{im} {impersonator}, please kill {detective}")
+        end
 
         -- Add roles as messages
         AddRoleStrings(start_tmpl, TRAITOR_ROLES, {"what does {ROLE} do again?", "what do {i} do as {ROLE} again?"})
@@ -154,6 +157,17 @@ function EVENT:Begin()
             table.insert(mid_tmpl, "careful {i} put a barnacle here")
             table.insert(mid_tmpl, "where did {you} put that barnacle?")
             table.insert(mid_tmpl, "barnacle door")
+        end
+
+        -- Add shark trap-related lines, if it exists
+        if weapons.GetStored("weapon_shark_trap") then
+            table.insert(weapons_options, "shark trap")
+
+            table.insert(mid_tmpl, "just put down a shark trap")
+            table.insert(mid_tmpl, "shark trap in this room")
+            table.insert(mid_tmpl, "watch out for shark trap")
+            table.insert(mid_tmpl, "careful {i} put a shark trap here")
+            table.insert(mid_tmpl, "where did {you} put that shark trap?")
         end
 
         -- Add harpoon-related lines, if it exists
