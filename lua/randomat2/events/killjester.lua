@@ -4,7 +4,7 @@ util.AddNetworkString("RdmtKillJesterBegin")
 util.AddNetworkString("RdmtKillJesterEnd")
 
 EVENT.Title = "Fiends for Life"
-EVENT.Description = "Innocents win if they kill the jester, but traitors will share the win"
+EVENT.Description = "Innocents win if they kill the jester, but traitors want them alive"
 EVENT.id = "killjester"
 
 function EVENT:Begin()

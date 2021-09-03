@@ -526,7 +526,7 @@ _ttt_randomat_flash_weight_ - Default: -1 - The weight this event should use dur
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
 
 ## Fiends for Life
-Innocents win if they kill the jester, but traitors will share the win
+Innocents win if they kill the jester, but traitors want them alive
 \
 \
 **ConVars**
