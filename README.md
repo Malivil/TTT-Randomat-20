@@ -24,24 +24,17 @@ _ttt_randomat_event_hint_ - Default: 0 - Whether the Randomat should print what 
 _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put in chat.
 
 # Latest Events
-1. I'm feeling kinda ILL
-2. Herd Immunity
-3. Gaseous Snake
-4. Scouts Only
-5. Stop, I'm Bees!
-6. Dead Men Tell ALL Tales
-7. Blerg!
-8. Ghostly Apparition
-9. RISE FROM YOUR... Bees?
-10. Second Chance
-11. Earthquake
-12. praW emiT
-13. Boo!
-14. Smoke Signals
-15. Hedge Your Bets
-16. Paranormal Activity
-17. Gifts from the Dead
-18. Our Little Secret
+1. Earthquake
+2. praW emiT
+3. Boo!
+4. Smoke Signals
+5. Hedge Your Bets
+6. Paranormal Activity
+7. Gifts from the Dead
+8. Our Little Secret
+9. Breadcrumbs
+10. Poltergeists
+11. Fiends for Life
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -213,6 +206,19 @@ _ttt_randomat_boo_min_players_ - Default: 0 - The minimum number of players requ
 _ttt_randomat_boo_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_boo_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
 _randomat_boo_ghost_time_ - Default: 5 - How many seconds the ghost lasts.
+
+## Breadcrumbs
+Follow the colorful trails to find the other players
+\
+\
+**ConVars**
+\
+_ttt_randomat_breadcrumbs_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_breadcrumbs_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_breadcrumbs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_breadcrumbs_start_width_ - Default: 30 - The trail's starting width.\
+_randomat_breadcrumbs_end_width_ - Default: 1 - The trail's ending width.\
+_randomat_breadcrumbs_fade_time_ - Default: 3 - How many seconds the trail should last.
 
 ## Bullseye
 Only headshots do damage
@@ -518,6 +524,16 @@ _ttt_randomat_flash_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_flash_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_flash_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
+
+## Fiends for Life
+Innocents win if they kill the jester, but traitors want them alive
+\
+\
+**ConVars**
+\
+_ttt_randomat_killjester_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_killjester_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_killjester_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Flip the Script
 Inverses everyone's health
@@ -964,6 +980,16 @@ _randomat_specbuff_slow_timer_ - Default: 3 - How long the effect lasts.\
 _randomat_specbuff_slap_power_ - Default: 75 - The amount of power to slap the target.\
 _randomat_specbuff_slap_force_ - Default: 500 - How hard to slap the target.
 
+## Poltergeists
+Allows dead players to see and activate traitor traps
+\
+\
+**ConVars**
+\
+_ttt_randomat_poltergeists_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_poltergeists_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_poltergeists_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## praW emiT (aka Reverse Time Warp)
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount slower than normal and intensifies on a configurable interval
 \
@@ -1309,7 +1335,7 @@ _ttt_randomat_switch_weight_ - Default: -1 - The weight this event should use du
 _randomat_switch_timer_ - Default: 15 - How often players are switched.
 
 ## They have a cave troll
-Chooses a random traitor and makes them a strong giant with a crowbar. Other random players are chosen to be smaller and given knives
+Chooses a random traitor and makes them a strong giant with a club. Other random players are chosen to be smaller and given knives
 \
 \
 **ConVars**
@@ -1318,10 +1344,11 @@ _ttt_randomat_cavetroll_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_cavetroll_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_cavetroll_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_cavetroll_troll_scale_ - Default: 1.5 - The scale factor to use for the troll.\
-_randomat_cavetroll_troll_damage_bonus_ - Default: 0.25 - The percent damage bonus to give the troll.\
+_randomat_cavetroll_troll_damage_ - Default: 50 - How much damage the troll's "club" should do.\
 _randomat_cavetroll_troll_health_ - Default: 150 - The amount of health the troll should have.\
 _randomat_cavetroll_hobbit_scale_ - Default: 0.5 - The scale factor to use for the hobbits.\
-_randomat_cavetroll_hobbit_pct_ - Default: 0.34 - The percent of non-traitors to be hobbits.
+_randomat_cavetroll_hobbit_pct_ - Default: 0.34 - The percent of non-traitors to be hobbits.\
+_randomat_cavetroll_hobbit_damage_ - Default: 20 - How much damage the hobbits' "swords" should do.
 
 ## Time Warp
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount faster than normal and intensifies on a configurable interval
@@ -1505,6 +1532,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
+- u/PacoSoe on Reddit for the idea for the "Fiends for Life" event
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
@@ -1521,16 +1549,17 @@ Another thing that was added is the concept of an event "type". This is currentl
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
-- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" event
+- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
-- Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event
+- Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
 - Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
+- joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event

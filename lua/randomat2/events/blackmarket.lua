@@ -32,7 +32,7 @@ function EVENT:Begin()
     -- Overwrite SetCredits to disable awarding credits during this event
     if oldSetCredits == nil then
         oldSetCredits = plymeta.SetCredits
-        function plymeta:SetCredits(amt) end
+        plymeta.SetCredits = function(ply, amy) end
     end
 
     timer.Create("RdmtBlackMarketTraitor", GetConVar("randomat_blackmarket_timer_traitor"):GetInt(), 0, function()
@@ -71,17 +71,13 @@ function EVENT:GiveWep(ply)
 end
 
 function EVENT:End()
-    timer.Remove("RdmtBlackMarketTraitor")
-    timer.Remove("RdmtBlackMarketDetective")
-
-    -- If we've overwritten SetCredits, overwrite it AGAIN and then call the original
-    if oldSetCredits ~= nil then
-        local originalSetCredits = oldSetCredits
-        function plymeta:SetCredits(amt)
-            originalSetCredits(self, amt)
-        end
+    if oldSetCredits then
+        plymeta.SetCredits = oldSetCredits
         oldSetCredits = nil
     end
+
+    timer.Remove("RdmtBlackMarketTraitor")
+    timer.Remove("RdmtBlackMarketDetective")
 end
 
 function EVENT:Condition()

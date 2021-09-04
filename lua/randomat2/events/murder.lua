@@ -14,6 +14,10 @@ CreateConVar("randomat_murder_allow_shop", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Wh
 util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
 
+local function IsEvil(ply)
+    return Randomat:IsTraitorTeam(ply) or Randomat:IsIndependentTeam(ply)
+end
+
 function EVENT:StripBannedWeapons(ply)
     -- Let the killer keep their knife since their role does not change
     if ply:GetRole() ~= ROLE_KILLER then
@@ -57,7 +61,7 @@ function EVENT:Begin()
                 v:Give("weapon_ttt_randomatrevolver")
                 v:SetNWBool("RdmMurderRevolver", true)
             end)
-        elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or (Randomat:IsIndependentTeam(v) and v:GetRole() ~= ROLE_KILLER) then
+        elseif Randomat:IsTraitorTeam(v) then
             Randomat:SetRole(v, ROLE_TRAITOR)
             timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
                 self:StripBannedWeapons(v)
@@ -159,7 +163,7 @@ function EVENT:Condition()
     for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsGoodDetectiveLike(v) then
             has_detective = true
-        elseif Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) then
+        elseif Randomat:IsTraitorTeam(v) then
             t = t+1
         end
     end

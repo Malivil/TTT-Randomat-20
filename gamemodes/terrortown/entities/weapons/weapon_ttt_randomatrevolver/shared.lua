@@ -66,10 +66,6 @@ function SWEP:PrimaryAttack(worldsnd)
    end)
 end
 
-function IsEvil(ply)
-   return Randomat:IsTraitorTeam(ply) or Randomat:IsIndependentTeam(ply)
-end
-
 if CLIENT then
    local i = 0
    hook.Add("DrawOverlay", "RdmtMurderBlind", function()

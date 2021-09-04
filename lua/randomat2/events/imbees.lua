@@ -18,7 +18,7 @@ function EVENT:Begin()
         for k, ply in pairs(plys) do
             if not ply:Alive() then
                 for _ = 1, GetConVar("randomat_imbees_count"):GetInt() do
-                    Randomat:SpawnBee(ply)
+                    Randomat:SpawnBee(ply, nil, math.random(25, 50))
                 end
                 plys[k] = nil
             end

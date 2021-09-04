@@ -159,7 +159,23 @@
         "TRAITOR_ROLES",
         "ROLE_STRINGS_RAW",
         "INDEPENDENT_ROLES",
-        "ROLE_STRINGS_PLURAL"
+        "ROLE_STRINGS_PLURAL",
+        "list",
+        "bit",
+        "SF_NPC_FADE_CORPSE",
+        "SF_NPC_ALWAYSTHINK",
+        "COLOR_ORANGE",
+        "COLOR_OLIVE",
+        "COLOR_PINK",
+        "COLOR_NAVY",
+        "COLOR_BLUE",
+        "COLOR_LGRAY",
+        "COLOR_YELLOW",
+        "COLOR_DGREEN",
+        "COLOR_BLACK",
+        "RENDERMODE_NONE",
+        "TBHUD",
+        "WIN_INNOCENT"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

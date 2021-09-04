@@ -51,7 +51,19 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        bees[sid]:Remove()
+        if bees[sid] then
+            bees[sid]:Remove()
+        end
+        bees[sid] = nil
+    end)
+
+    self:AddHook("PlayerDisconnected", function(ply)
+        if not IsValid(ply) then return end
+        local sid = ply:SteamID64()
+        dead[sid] = false
+        if bees[sid] then
+            bees[sid]:Remove()
+        end
         bees[sid] = nil
     end)
 
@@ -68,9 +80,9 @@ function EVENT:Begin()
         local bee = bees[ply:SteamID64()]
         if not IsValid(bee) then return end
 
-         local ang = mv:GetAngles()
-         bee:SetPos(mv:GetOrigin() + ang:Forward() * 20)
-         bee:SetAngles(ang)
+        local ang = mv:GetAngles()
+        bee:SetPos(mv:GetOrigin() + ang:Forward() * 20)
+        bee:SetAngles(ang)
     end)
 end
 

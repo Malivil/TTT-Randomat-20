@@ -199,37 +199,40 @@ function EVENT:SwearIn(winner)
     timer.Simple(3, function()
         -- Drunk - Have the drunk immediately remember their role
         if winner:GetRole() == ROLE_DRUNK then
-            local role
-            if math.random() > GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
-                role = ROLE_TRAITOR
-                winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
+            if ConVarExists("ttt_drunk_become_clown") and GetConVar("ttt_drunk_become_clown"):GetBool() then
+                winner:DrunkRememberRole(ROLE_CLOWN, true)
+            elseif winner.SoberDrunk then
+                winner:SoberDrunk()
+            -- Fall back to default logic if we don't have the advanced drunk options
             else
-                role = ROLE_INNOCENT
+                local role
+                if math.random() > GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
+                    role = ROLE_TRAITOR
+                    winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
+                else
+                    role = ROLE_INNOCENT
+                end
+
+                winner:SetNWBool("WasDrunk", true)
+                winner:SetRole(role)
+                winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+                winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+
+                net.Start("TTT_DrunkSober")
+                net.WriteString(winner:Nick())
+                net.WriteString(ROLE_STRINGS_EXT[role])
+                net.Broadcast()
+
+                SendFullStateUpdate()
             end
 
-            winner:SetNWBool("WasDrunk", true)
-            winner:SetRole(role)
-            winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
-            winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
-
-            net.Start("TTT_DrunkSober")
-            net.WriteString(winner:Nick())
-            net.WriteString(ROLE_STRINGS_EXT[role])
-            net.Broadcast()
-
-            SendFullStateUpdate()
+            if timer.Exists("drunkremember") then timer.Remove("drunkremember") end
+            if timer.Exists("waitfordrunkrespawn") then timer.Remove("waitfordrunkrespawn") end
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
         elseif winner:GetRole() == ROLE_OLDMAN then
             self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
 
-            local health
-            -- TODO: Remove this version check after 1.0.3 is pushed to release
-            if CRVersion("1.0.3") then
-                health = GetConVar("ttt_oldman_starting_health"):GetInt()
-            else
-                health = GetConVar("ttt_old_man_starting_health"):GetInt()
-            end
-
+            local health = GetConVar("ttt_oldman_starting_health"):GetInt()
             Randomat:SilentTriggerEvent("suddendeath", winner, health)
         -- Innocent - Promote to Detective, give credits
         elseif Randomat:IsInnocentTeam(winner) then

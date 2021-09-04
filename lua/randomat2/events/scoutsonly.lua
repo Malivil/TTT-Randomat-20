@@ -32,7 +32,10 @@ function EVENT:Begin()
         end
 
         p:StripWeapons()
-        p:Give("weapon_zm_rifle")
+        local weap = p:Give("weapon_zm_rifle")
+        if weap then
+            weap.AllowDrop = false
+        end
     end
     SendFullStateUpdate()
 
@@ -54,6 +57,13 @@ function EVENT:End()
     timer.Remove("RandomatScoutsOnlyTimer")
     for _, ply in ipairs(player.GetAll()) do
         ply:SetGravity(1)
+        ply:Give("weapon_ttt_unarmed")
+        ply:Give("weapon_zm_carry")
+        ply:Give("weapon_zm_improvised")
+        local weap = ply:GetActiveWeapon()
+        if weap then
+            weap.AllowDrop = true
+        end
     end
 end
 

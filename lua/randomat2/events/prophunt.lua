@@ -80,8 +80,8 @@ function EVENT:Begin()
 
     for _, v in ipairs(self:GetAlivePlayers()) do
         local messages = {}
-        -- All bad guys are traitors
-        if Randomat:IsTraitorTeam(v) or Randomat:IsMonsterTeam(v) or Randomat:IsIndependentTeam(v) then
+        -- Convert traitor team members to vanilla traitors
+        if Randomat:IsTraitorTeam(v) then
             Randomat:SetRole(v, ROLE_TRAITOR)
 
             -- Any player who has no credits most-likely was just transformed from a role without any credits so give them one to start with
@@ -95,6 +95,12 @@ function EVENT:Begin()
                 table.insert(messages, "Radars are disabled while Prop Hunt is active! Your purchase has been refunded.")
                 net.Start("PropHuntRemoveRadar")
                 net.Send(v)
+            end
+
+            if v:HasWeapon("weapon_controllable_manhack") then
+                table.insert(messages, "Controllable Manhacks are disabled while Prop Hunt is active! Your purchase has been refunded.")
+                v:StripWeapon("weapon_controllable_manhack")
+                v:AddCredits(1)
             end
 
             table.insert(messages, 1, "Hunt Innocents disguised as props, but be careful -- shooting non-player props will cause you to take damage!")
@@ -228,14 +234,15 @@ function EVENT:Condition()
     -- Only run this if there are actual props
     if table.Count(ents.FindByClass("prop_physics*")) == 0 and table.Count(ents.FindByClass("prop_dynamic")) == 0 then return false end
 
-    -- Only run if there is at least one innocent or jester/swapper living
+    -- Only run if there are multiple traitors remaining
+    local t_count = 0
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if (Randomat:IsJesterTeam(v) or Randomat:IsInnocentTeam(v)) then
-            return true
+        if Randomat:IsTraitorTeam(v) then
+            t_count = t_count + 1
         end
     end
 
-    return false
+    return t_count > 1
 end
 
 function EVENT:GetConVars()
