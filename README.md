@@ -658,7 +658,7 @@ _randomat_gifts_random_items_ - Default: 1 - Whether everyone should get a rando
 _randomat_gifts_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## Glitch in the Matrix
-Randomly changes everyone's role to be either Glitch or Traitor based on the configurable values
+Changes everyone's role to be either Glitch or Traitor and gives a random shop item
 \
 \
 **ConVars**
