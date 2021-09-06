@@ -14,6 +14,7 @@ CreateConVar("randomat_choose_limitchoosetime", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}
 
 local EventChoices = {}
 local owner = nil
+local allow_dead = false
 
 local EventVotes = {}
 local PlayersVoted = {}
@@ -40,10 +41,11 @@ EVENT.Title = "Choose an Event!"
 EVENT.Description = GetEventDescription(0)
 EVENT.id = "choose"
 
-function EVENT:Begin()
+function EVENT:Begin(vote, dead_can_vote, vote_predicate)
     local votetimer = GetConVar("randomat_choose_votetimer"):GetInt()
     local limitchoosetime = GetConVar("randomat_choose_limitchoosetime"):GetBool()
     owner = self.owner
+    allow_dead = dead_can_vote
     EVENT.Description = GetEventDescription(limitchoosetime and votetimer or 0)
 
     EventChoices = {}
@@ -62,11 +64,15 @@ function EVENT:Begin()
         end
     end
 
-    if GetConVar("randomat_choose_vote"):GetBool() then
+    if vote or GetConVar("randomat_choose_vote"):GetBool() then
         net.Start("ChooseVoteTrigger")
         net.WriteInt(choices, 32)
         net.WriteTable(EventChoices)
-        net.Broadcast()
+        if type(vote_predicate) == "function" then
+            net.Send(GetPlayerFilter(vote_predicate))
+        else
+            net.Broadcast()
+        end
 
         timer.Create("RdmtChooseVoteTimer", votetimer, 1, function()
             local vts = -1
@@ -85,7 +91,11 @@ function EVENT:Begin()
                 end
             end
             net.Start("ChooseEventEnd")
-            net.Broadcast()
+            if type(vote_predicate) == "function" then
+                net.Send(GetPlayerFilter(vote_predicate))
+            else
+                net.Broadcast()
+            end
             EventVotes = {}
         end)
     else
@@ -165,7 +175,7 @@ net.Receive("ChoosePlayerVoted", function(ln, ply)
         end
     end
 
-    if (ply:Alive() and not ply:IsSpec()) or GetConVar("randomat_choose_deadvoters"):GetBool() then
+    if (ply:Alive() and not ply:IsSpec()) or allow_dead or GetConVar("randomat_choose_deadvoters"):GetBool() then
         if not voted then
             local str = net.ReadString()
             EventVotes[str] = EventVotes[str] + 1
