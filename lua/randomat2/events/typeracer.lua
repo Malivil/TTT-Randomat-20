@@ -34,6 +34,8 @@ table.insert(values, "intelligence")
 table.insert(values, "pronunciation")
 table.insert(values, "handkerchief")
 table.insert(values, "tneconni")
+table.insert(values, "the five boxing wizards jump quickly")
+table.insert(values, "sphinx of black quartz, judge my vow")
 
 function EVENT:ChooseWord(first)
     local chosen = values[math.random(1, #values)]
@@ -69,11 +71,13 @@ function EVENT:Begin()
 
         self:AddHook("PlayerSay", function(ply, text, team_only)
             if not IsValid(ply) or ply:IsSpec() then return end
-            if team_only then return end
+
+            local sid64 = ply:SteamID64()
+            if team_only or safe[sid64] then return end
             if text:lower() == chosen then
                 ply:PrintMessage(HUD_PRINTTALK, "You're safe!")
                 ply:PrintMessage(HUD_PRINTCENTER, "You're safe!")
-                safe[ply:SteamID64()] = true
+                safe[sid64] = true
             else
                 ply:PrintMessage(HUD_PRINTTALK, "WRONG!")
                 ply:PrintMessage(HUD_PRINTCENTER, "WRONG!")
