@@ -37,15 +37,13 @@ table.insert(values, "tneconni")
 table.insert(values, "the five boxing wizards jump quickly")
 table.insert(values, "sphinx of black quartz, judge my vow")
 
-function EVENT:ChooseWord(first)
+function EVENT:ChooseWord(first, quiz_time)
     local chosen = values[math.random(1, #values)]
 
     -- Let everyone know what the word is
     local message = "The " .. (first and "first" or "next") .. " word/phrase is: " .. chosen
-    for _, p in ipairs(self:GetAlivePlayers()) do
-        p:PrintMessage(HUD_PRINTTALK, message)
-    end
-    self:SmallNotify(message)
+    local time = math.Round(quiz_time * 0.66)
+    self:SmallNotify(message, time)
 
     return chosen
 end
@@ -67,7 +65,7 @@ function EVENT:Begin()
 
     timer.Create("RdmtTypeRacerDelay", time, 1, function()
         local safe = {}
-        local chosen = self:ChooseWord(true)
+        local chosen = self:ChooseWord(true, time)
 
         self:AddHook("PlayerSay", function(ply, text, team_only)
             if not IsValid(ply) or ply:IsSpec() then return end
@@ -99,7 +97,7 @@ function EVENT:Begin()
             end
 
             table.Empty(safe)
-            chosen = self:ChooseWord()
+            chosen = self:ChooseWord(false, time)
         end)
     end)
 end
