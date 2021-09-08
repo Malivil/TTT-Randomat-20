@@ -7,14 +7,16 @@ EVENT.id = "narration"
 util.AddNetworkString("TriggerNarration")
 util.AddNetworkString("EndNarration")
 
+local footsteps_pattern = ".*player/footsteps/.*%..*"
 local reload_sounds = {"weapons/reload/reload1.mp3", "weapons/reload/reload2.mp3", "weapons/reload/reload3.mp3", "weapons/reload/reload4.mp3", "weapons/reload/reload5.mp3"}
 local death_sounds = {"blerg/blerg1.mp3", "blerg/blerg2.mp3", "blerg/blerg3.mp3", "blerg/blerg4.mp3", "blerg/blerg5.mp3", "blerg/blerg6.mp3", "blerg/blerg7.mp3", "blerg/blerg8.mp3", "blerg/blerg9.mp3", "blerg/blerg10.mp3"}
 local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3", "weapons/gunshot/gunshot2.mp3", "weapons/gunshot/gunshot3.mp3", "weapons/gunshot/gunshot4.mp3", "weapons/gunshot/gunshot5.mp3"}
 local door_opening_sounds = {"door_opening/door_opening1.mp3", "door_opening/door_opening2.mp3", "door_opening/door_opening3.mp3"}
 local door_closing_sounds = {"door_closing/door_closing1.mp3", "door_closing/door_closing2.mp3", "door_closing/door_closing3.mp3"}
+local jump_sounds = {"jump/jump1.mp3", "jump/jump2.mp3"}
 local sound_mapping = {
     -- Footsteps
-    [".*player/footsteps/.*%..*"] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3", "footsteps/footsteps3.mp3", "footsteps/footsteps4.mp3", "footsteps/footsteps5.mp3"},
+    [footsteps_pattern] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3", "footsteps/footsteps3.mp3", "footsteps/footsteps4.mp3", "footsteps/footsteps5.mp3"},
     -- Explosions
     [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.mp3", "explosion/explosion2.mp3", "explosion/explosion3.mp3", "explosion/explosion4.mp3", "explosion/explosion5.mp3", "explosion/explosion6.mp3"},
     -- C4 Beeps
@@ -83,13 +85,19 @@ function EVENT:Begin()
         local new_sound = nil
         for pattern, sounds in pairs(sound_mapping) do
             if string.find(current_sound, pattern) then
-                new_sound = sounds[math.random(1, #sounds)]
+                -- If this is a player "footstep"-ing in mid-air, they are jumping
+                if footsteps_pattern == pattern and IsValid(data.Entity) and data.Entity:IsPlayer() and not data.Entity:IsOnGround() then
+                    new_sound = jump_sounds[math.random(1, #jump_sounds)]
+                else
+                    new_sound = sounds[math.random(1, #sounds)]
+                end
             end
         end
 
         if new_sound then
             data.SoundName = new_sound
             return true
+        -- Door opening/closing
         elseif current_sound == "doors/default_move.wav" then
             if DoorIsOpen(data.Entity) then
                 data.SoundName = door_closing_sounds[math.random(1, #door_closing_sounds)]
