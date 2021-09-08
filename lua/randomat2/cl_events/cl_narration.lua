@@ -14,15 +14,15 @@ local sound_mapping = {
     -- Glass breaking
     [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.mp3", "smashing_glass/smashing_glass2.mp3", "smashing_glass/smashing_glass3.mp3", "smashing_glass/smashing_glass4.mp3", "smashing_glass/smashing_glass5.mp3", "smashing_glass/smashing_glass6.mp3"},
     -- Fall damage
-    [".*player/damage*.%.mp3"] = {"bones_cracking/bones_cracking1.mp3", "bones_cracking/bones_cracking2.mp3", "bones_cracking/bones_cracking3.mp3", "bones_cracking/bones_cracking4.mp3"},
+    [".*player/damage*."] = {"bones_cracking/bones_cracking1.mp3", "bones_cracking/bones_cracking2.mp3", "bones_cracking/bones_cracking3.mp3", "bones_cracking/bones_cracking4.mp3"},
     -- Player death
-    [".*player/death.*%.mp3"] = death_sounds,
-    [".*vo/npc/male01/pain*.%.mp3"] = death_sounds,
-    [".*vo/npc/barney/ba_pain*.%.mp3"] = death_sounds,
-    [".*vo/npc/barney/ba_ohshit03%.mp3"] = death_sounds,
-    [".*vo/npc/barney/ba_no01%.mp3"] = death_sounds,
-    [".*vo/npc/male01/no02%.mp3"] = death_sounds,
-    [".*hostage/hpain/hpain.*%.mp3"] = death_sounds,
+    [".*player/death.*"] = death_sounds,
+    [".*vo/npc/male01/pain*."] = death_sounds,
+    [".*vo/npc/barney/ba_pain*."] = death_sounds,
+    [".*vo/npc/barney/ba_ohshit03.*"] = death_sounds,
+    [".*vo/npc/barney/ba_no01.*"] = death_sounds,
+    [".*vo/npc/male01/no02.*"] = death_sounds,
+    [".*hostage/hpain/hpain.*"] = death_sounds,
     -- Reload
     [".*weapons/.*out%..*"] = reload_sounds,
     [".*weapons/.*in%..*"] = reload_sounds,
