@@ -31,6 +31,12 @@ local function CreateBee(p)
     bees[p:SteamID64()] = bee
 end
 
+local function DestroyBee(b)
+    b:StopSound(engineSound)
+    b:StopSound(bladeSound)
+    b:Remove()
+end
+
 function EVENT:Begin()
     bees = {}
 
@@ -51,8 +57,8 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        if bees[sid] then
-            bees[sid]:Remove()
+        if bees[sid] and IsValid(bees[sid]) then
+            DestroyBee(bees[sid])
         end
         bees[sid] = nil
     end)
@@ -61,8 +67,8 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        if bees[sid] then
-            bees[sid]:Remove()
+        if bees[sid] and IsValid(bees[sid]) then
+            DestroyBee(bees[sid])
         end
         bees[sid] = nil
     end)
@@ -88,9 +94,9 @@ end
 
 function EVENT:End()
     for _, b in pairs(bees) do
-        b:StopSound(engineSound)
-        b:StopSound(bladeSound)
-        b:Remove()
+        if b and IsValid(b) then
+            DestroyBee(b)
+        end
     end
     table.Empty(bees)
 end
