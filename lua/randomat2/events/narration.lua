@@ -7,22 +7,22 @@ EVENT.id = "narration"
 util.AddNetworkString("TriggerNarration")
 util.AddNetworkString("EndNarration")
 
-local reload_sounds = {"weapons/reload/reload1.mp3", "weapons/reload/reload2.mp3"}
+local reload_sounds = {"weapons/reload/reload1.mp3", "weapons/reload/reload2.mp3", "weapons/reload/reload3.mp3"}
 local death_sounds = {"blerg/blerg1.mp3", "blerg/blerg2.mp3", "blerg/blerg3.mp3", "blerg/blerg4.mp3", "blerg/blerg5.mp3", "blerg/blerg6.mp3", "blerg/blerg7.mp3", "blerg/blerg8.mp3", "blerg/blerg9.mp3", "blerg/blerg10.mp3"}
-local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3"}
-local door_opening_sounds = {"door_opening/door_opening1.mp3"}
-local door_closing_sounds = {"door_closing/door_closing1.mp3"}
+local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3", "weapons/gunshot/gunshot2.mp3"}
+local door_opening_sounds = {"door_opening/door_opening1.mp3", "door_opening/door_opening2.mp3"}
+local door_closing_sounds = {"door_closing/door_closing1.mp3", "door_closing/door_closing2.mp3"}
 local sound_mapping = {
     -- Footsteps
-    [".*player/footsteps/.*%..*"] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3"},
+    [".*player/footsteps/.*%..*"] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3", "footsteps/footsteps3.mp3"},
     -- Explosions
-    [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.mp3", "explosion/explosion2.mp3", "explosion/explosion3.mp3"},
+    [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.mp3", "explosion/explosion2.mp3", "explosion/explosion3.mp3", "explosion/explosion4.mp3"},
     -- C4 Beeps
-    [".*weapons/.*beep.*%..*"] = {"beeping/beeping1.mp3", "beeping/beeping2.mp3"},
+    [".*weapons/.*beep.*%..*"] = {"beeping/beeping1.mp3", "beeping/beeping2.mp3", "beeping/beeping3.mp3"},
     -- Glass breaking
-    [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.mp3", "smashing_glass/smashing_glass2.mp3"},
+    [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.mp3", "smashing_glass/smashing_glass2.mp3", "smashing_glass/smashing_glass3.mp3"},
     -- Fall damage
-    [".*player/damage*.%.mp3"] = {"bones_cracking/bones_cracking1.mp3"},
+    [".*player/damage*.%.mp3"] = {"bones_cracking/bones_cracking1.mp3", "bones_cracking/bones_cracking2.mp3"},
     -- Player death
     [".*player/death.*%.mp3"] = death_sounds,
     [".*vo/npc/male01/pain*.%.mp3"] = death_sounds,
