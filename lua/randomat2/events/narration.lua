@@ -8,23 +8,23 @@ util.AddNetworkString("TriggerNarration")
 util.AddNetworkString("EndNarration")
 
 local footsteps_pattern = ".*player/footsteps/.*%..*"
-local reload_sounds = {"weapons/reload/reload1.mp3", "weapons/reload/reload2.mp3", "weapons/reload/reload3.mp3", "weapons/reload/reload4.mp3", "weapons/reload/reload5.mp3", "weapons/reload/reload6.mp3"}
+local reload_sounds = {"weapons/reload/reload1.mp3", "weapons/reload/reload2.mp3", "weapons/reload/reload3.mp3", "weapons/reload/reload4.mp3", "weapons/reload/reload5.mp3", "weapons/reload/reload6.mp3", "weapons/reload/reload7.mp3", "weapons/reload/reload8.mp3"}
 local death_sounds = {"blerg/blerg1.mp3", "blerg/blerg2.mp3", "blerg/blerg3.mp3", "blerg/blerg4.mp3", "blerg/blerg5.mp3", "blerg/blerg6.mp3", "blerg/blerg7.mp3", "blerg/blerg8.mp3", "blerg/blerg9.mp3", "blerg/blerg10.mp3"}
-local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3", "weapons/gunshot/gunshot2.mp3", "weapons/gunshot/gunshot3.mp3", "weapons/gunshot/gunshot4.mp3", "weapons/gunshot/gunshot5.mp3", "weapons/gunshot/gunshot6.mp3"}
-local door_opening_sounds = {"door_opening/door_opening1.mp3", "door_opening/door_opening2.mp3", "door_opening/door_opening3.mp3", "door_opening/door_opening4.mp3"}
-local door_closing_sounds = {"door_closing/door_closing1.mp3", "door_closing/door_closing2.mp3", "door_closing/door_closing3.mp3", "door_closing/door_closing4.mp3"}
-local jump_sounds = {"jump/jump1.mp3", "jump/jump2.mp3", "jump/jump3.mp3"}
+local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3", "weapons/gunshot/gunshot2.mp3", "weapons/gunshot/gunshot3.mp3", "weapons/gunshot/gunshot4.mp3", "weapons/gunshot/gunshot5.mp3", "weapons/gunshot/gunshot6.mp3", "weapons/gunshot/gunshot7.mp3", "weapons/gunshot/gunshot8.mp3"}
+local door_opening_sounds = {"door_opening/door_opening1.mp3", "door_opening/door_opening2.mp3", "door_opening/door_opening3.mp3", "door_opening/door_opening4.mp3", "door_opening/door_opening5.mp3"}
+local door_closing_sounds = {"door_closing/door_closing1.mp3", "door_closing/door_closing2.mp3", "door_closing/door_closing3.mp3", "door_closing/door_closing4.mp3", "door_opening/door_closing5.mp3"}
+local jump_sounds = {"jump/jump1.mp3", "jump/jump2.mp3", "jump/jump3.mp3", "jump/jump4.mp3"}
 local sound_mapping = {
     -- Footsteps
-    [footsteps_pattern] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3", "footsteps/footsteps3.mp3", "footsteps/footsteps4.mp3", "footsteps/footsteps5.mp3", "footsteps/footsteps6.mp3", "footsteps/footsteps7.mp3"},
+    [footsteps_pattern] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3", "footsteps/footsteps3.mp3", "footsteps/footsteps4.mp3", "footsteps/footsteps5.mp3", "footsteps/footsteps6.mp3", "footsteps/footsteps7.mp3", "footsteps/footsteps8.mp3", "footsteps/footsteps9.mp3"},
     -- Explosions
-    [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.mp3", "explosion/explosion2.mp3", "explosion/explosion3.mp3", "explosion/explosion4.mp3", "explosion/explosion5.mp3", "explosion/explosion6.mp3", "explosion/explosion7.mp3", "explosion/explosion8.mp3"},
+    [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.mp3", "explosion/explosion2.mp3", "explosion/explosion3.mp3", "explosion/explosion4.mp3", "explosion/explosion5.mp3", "explosion/explosion6.mp3", "explosion/explosion7.mp3", "explosion/explosion8.mp3", "explosion/explosion9.mp3"},
     -- C4 Beeps
-    [".*weapons/.*beep.*%..*"] = {"beeping/beeping1.mp3", "beeping/beeping2.mp3", "beeping/beeping3.mp3", "beeping/beeping4.mp3", "beeping/beeping5.mp3", "beeping/beeping6.mp3"},
+    [".*weapons/.*beep.*%..*"] = {"beeping/beeping1.mp3", "beeping/beeping2.mp3", "beeping/beeping3.mp3", "beeping/beeping4.mp3", "beeping/beeping5.mp3", "beeping/beeping6.mp3", "beeping/beeping7.mp3"},
     -- Glass breaking
-    [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.mp3", "smashing_glass/smashing_glass2.mp3", "smashing_glass/smashing_glass3.mp3", "smashing_glass/smashing_glass4.mp3", "smashing_glass/smashing_glass5.mp3", "smashing_glass/smashing_glass6.mp3"},
-    -- Fall damage
-    [".*player/damage*."] = {"bones_cracking/bones_cracking1.mp3", "bones_cracking/bones_cracking2.mp3", "bones_cracking/bones_cracking3.mp3", "bones_cracking/bones_cracking4.mp3"},
+    [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.mp3", "smashing_glass/smashing_glass2.mp3", "smashing_glass/smashing_glass3.mp3", "smashing_glass/smashing_glass4.mp3", "smashing_glass/smashing_glass5.mp3", "smashing_glass/smashing_glass6.mp3", "smashing_glass/smashing_glass7.mp3", "smashing_glass/smashing_glass8.mp3"},
+    -- Fall damage (which don't work when converted to MP3 for some reason)
+    [".*player/damage*."] = {"bones_cracking/bones_cracking1.wav", "bones_cracking/bones_cracking2.wav", "bones_cracking/bones_cracking3.wav", "bones_cracking/bones_cracking4.wav", "bones_cracking/bones_cracking5.wav"},
     -- Player death
     [".*player/death.*"] = death_sounds,
     [".*vo/npc/male01/pain*."] = death_sounds,
@@ -85,9 +85,12 @@ function EVENT:Begin()
         local new_sound = nil
         for pattern, sounds in pairs(sound_mapping) do
             if string.find(current_sound, pattern) then
-                -- If this is a player "footstep"-ing in mid-air, they are jumping
+                -- If this is a player "footstep"-ing in mid-air, they are jumping or using a ladder
                 if footsteps_pattern == pattern and IsValid(data.Entity) and data.Entity:IsPlayer() and not data.Entity:IsOnGround() then
-                    new_sound = jump_sounds[math.random(1, #jump_sounds)]
+                    -- Don't replace the sound if the player is on a ladder
+                    if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
+                        new_sound = jump_sounds[math.random(1, #jump_sounds)]
+                    end
                 else
                     new_sound = sounds[math.random(1, #sounds)]
                 end
