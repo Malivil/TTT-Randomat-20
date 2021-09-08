@@ -1556,7 +1556,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Angela, Crimson, Fazzy, Fyxen, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
-- Angela, Dom, Fyxen, and Pardival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
+- Angela, Dom, Fyxen, Neil, and Pardival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
