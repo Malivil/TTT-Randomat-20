@@ -7,30 +7,30 @@ EVENT.id = "narration"
 util.AddNetworkString("TriggerNarration")
 util.AddNetworkString("EndNarration")
 
-local reload_sounds = {"weapons/reload/reload1.wav", "weapons/reload/reload2.wav"}
-local death_sounds = {"blerg/blerg1.wav", "blerg/blerg2.wav", "blerg/blerg3.wav", "blerg/blerg4.wav", "blerg/blerg5.wav", "blerg/blerg6.wav", "blerg/blerg7.wav", "blerg/blerg8.wav", "blerg/blerg9.wav", "blerg/blerg10.wav"}
-local gunshot_sounds = {"weapons/gunshot/gunshot1.wav"}
-local door_opening_sounds = {"door_opening/door_opening1.wav"}
-local door_closing_sounds = {"door_closing/door_closing1.wav"}
+local reload_sounds = {"weapons/reload/reload1.mp3", "weapons/reload/reload2.mp3"}
+local death_sounds = {"blerg/blerg1.mp3", "blerg/blerg2.mp3", "blerg/blerg3.mp3", "blerg/blerg4.mp3", "blerg/blerg5.mp3", "blerg/blerg6.mp3", "blerg/blerg7.mp3", "blerg/blerg8.mp3", "blerg/blerg9.mp3", "blerg/blerg10.mp3"}
+local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3"}
+local door_opening_sounds = {"door_opening/door_opening1.mp3"}
+local door_closing_sounds = {"door_closing/door_closing1.mp3"}
 local sound_mapping = {
     -- Footsteps
-    [".*player/footsteps/.*%..*"] = {"footsteps/footsteps1.wav", "footsteps/footsteps2.wav"},
+    [".*player/footsteps/.*%..*"] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3"},
     -- Explosions
-    [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.wav", "explosion/explosion2.wav", "explosion/explosion3.wav"},
+    [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.mp3", "explosion/explosion2.mp3", "explosion/explosion3.mp3"},
     -- C4 Beeps
-    [".*weapons/.*beep.*%..*"] = {"beeping/beeping1.wav", "beeping/beeping2.wav"},
+    [".*weapons/.*beep.*%..*"] = {"beeping/beeping1.mp3", "beeping/beeping2.mp3"},
     -- Glass breaking
-    [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.wav", "smashing_glass/smashing_glass2.wav"},
+    [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.mp3", "smashing_glass/smashing_glass2.mp3"},
     -- Fall damage
-    [".*player/damage*.%.wav"] = {"bones_cracking/bones_cracking1.wav"},
+    [".*player/damage*.%.mp3"] = {"bones_cracking/bones_cracking1.mp3"},
     -- Player death
-    [".*player/death.*%.wav"] = death_sounds,
-    [".*vo/npc/male01/pain*.%.wav"] = death_sounds,
-    [".*vo/npc/barney/ba_pain*.%.wav"] = death_sounds,
-    [".*vo/npc/barney/ba_ohshit03%.wav"] = death_sounds,
-    [".*vo/npc/barney/ba_no01%.wav"] = death_sounds,
-    [".*vo/npc/male01/no02%.wav"] = death_sounds,
-    [".*hostage/hpain/hpain.*%.wav"] = death_sounds,
+    [".*player/death.*%.mp3"] = death_sounds,
+    [".*vo/npc/male01/pain*.%.mp3"] = death_sounds,
+    [".*vo/npc/barney/ba_pain*.%.mp3"] = death_sounds,
+    [".*vo/npc/barney/ba_ohshit03%.mp3"] = death_sounds,
+    [".*vo/npc/barney/ba_no01%.mp3"] = death_sounds,
+    [".*vo/npc/male01/no02%.mp3"] = death_sounds,
+    [".*hostage/hpain/hpain.*%.mp3"] = death_sounds,
     -- Reload
     [".*weapons/.*out%..*"] = reload_sounds,
     [".*weapons/.*in%..*"] = reload_sounds,

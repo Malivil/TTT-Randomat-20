@@ -51,7 +51,7 @@ net.Receive("randomat_message", function()
     local length = net.ReadUInt(8)
 
     ShowMessage(big, msg, length)
-    surface.PlaySound("weapons/c4_initiate.wav")
+    surface.PlaySound("weapons/c4_initiate.mp3")
 end)
 
 net.Receive("randomat_message_silent", function()
