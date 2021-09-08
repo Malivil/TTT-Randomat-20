@@ -35,6 +35,7 @@ _ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put i
 9. Breadcrumbs
 10. Poltergeists
 11. Fiends for Life
+12. Narration
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -855,6 +856,16 @@ _randomat_malfunction_lower_ - Default: 1 - The lower limit for the random timer
 _randomat_malfunction_affectall_ - Default: 0 - Set to 1 for the event to affect everyone at once.\
 _randomat_malfunction_duration_ - Default: 0.5 - Duration of gun malfunction (set to 0 for 1 shot).
 
+## Narration
+Narrates common game activities
+\
+\
+**ConVars**
+\
+_ttt_randomat_narration_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_narration_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_narration_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## No more Fall Damage!
 Prevents any player from taking damage when they fall
 \
@@ -1545,18 +1556,20 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Angela, Crimson, Fazzy, Fyxen, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
+- Angela and Pardival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
 - CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
-- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
+- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
 - Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
+- Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
