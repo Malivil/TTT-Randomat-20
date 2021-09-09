@@ -51,7 +51,7 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        if ghosts[sid] and IsValid(ghosts[sid]) then
+        if IsValid(ghosts[sid]) then
             ghosts[sid]:Remove()
         end
         ghosts[sid] = nil
@@ -61,7 +61,7 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        if ghosts[sid] and IsValid(ghosts[sid]) then
+        if IsValid(ghosts[sid]) then
             ghosts[sid]:Remove()
         end
         ghosts[sid] = nil
@@ -86,7 +86,7 @@ end
 
 function EVENT:End()
     for _, g in pairs(ghosts) do
-        if g and IsValid(g) then
+        if IsValid(g) then
             g:Remove()
         end
     end

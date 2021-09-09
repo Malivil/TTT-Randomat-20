@@ -36,7 +36,7 @@ end
 
 local function RemoveTrail(sid)
     local trail = player_trails[sid]
-    if trail and IsValid(trail) then
+    if IsValid(trail) then
         trail:Remove()
         player_trails[sid] = nil
     end

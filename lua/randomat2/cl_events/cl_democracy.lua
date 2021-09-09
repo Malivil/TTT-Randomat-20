@@ -84,10 +84,10 @@ net.Receive("DemocracyJesterRevenge", function()
 end)
 
 net.Receive("DemocracyEventEnd", function()
-    if voteframe ~= nil and IsValid(voteframe) then
+    if IsValid(voteframe) then
         voteframe:Close()
     end
-    if jesterframe ~= nil and IsValid(jesterframe) then
+    if IsValid(jesterframe) then
         jesterframe:Close()
     end
 end)

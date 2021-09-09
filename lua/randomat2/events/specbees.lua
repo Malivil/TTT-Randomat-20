@@ -57,7 +57,7 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        if bees[sid] and IsValid(bees[sid]) then
+        if IsValid(bees[sid]) then
             DestroyBee(bees[sid])
         end
         bees[sid] = nil
@@ -67,7 +67,7 @@ function EVENT:Begin()
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
         dead[sid] = false
-        if bees[sid] and IsValid(bees[sid]) then
+        if IsValid(bees[sid]) then
             DestroyBee(bees[sid])
         end
         bees[sid] = nil
@@ -94,7 +94,7 @@ end
 
 function EVENT:End()
     for _, b in pairs(bees) do
-        if b and IsValid(b) then
+        if IsValid(b) then
             DestroyBee(b)
         end
     end

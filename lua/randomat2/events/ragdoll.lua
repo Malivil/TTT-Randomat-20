@@ -100,7 +100,7 @@ local function unragdollPlayer(v)
     for i, _ in pairs(v.spawnInfo.weps) do
         v:Give(i)
         local wep = v:GetWeapon(i)
-        if wep ~= nil and IsValid(wep) then
+        if IsValid(wep) then
             if v.spawnInfo.weps[i].Clip then
                 wep:SetClip1(v.spawnInfo.weps[i].Clip)
             end

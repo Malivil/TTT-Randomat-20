@@ -50,7 +50,7 @@ net.Receive("ElectionNominateBegin", function()
     end)
 
     net.Receive("ElectionNominateEnd", function()
-        if frame ~= nil and IsValid(frame) then
+        if IsValid(frame) then
             frame:Close()
         end
     end)
@@ -105,7 +105,7 @@ net.Receive("ElectionVoteBegin", function()
     end)
 
     net.Receive("ElectionVoteEnd", function()
-        if frame ~= nil and IsValid(frame) then
+        if IsValid(frame) then
             frame:Close()
         end
     end)

@@ -70,7 +70,7 @@ hook.Add("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults)
 
     -- Apply all of these that are valid and have a weapon that matches the specific class
     local wep = ply:GetActiveWeapon()
-    if wep and IsValid(wep) then
+    if IsValid(wep) then
         local wep_class = wep:GetClass()
         for _, m in pairs(current_mults_withweapon) do
             if m ~= nil and wep_class == m.wep_class then

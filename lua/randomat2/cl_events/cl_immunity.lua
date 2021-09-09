@@ -51,7 +51,7 @@ net.Receive("RdmtHerdImmunityBegin", function()
 end)
 
 net.Receive("RdmtHerdImmunityEnd", function()
-    if voteframe ~= nil and IsValid(voteframe) then
+    if IsValid(voteframe) then
         voteframe:Close()
     end
 end)

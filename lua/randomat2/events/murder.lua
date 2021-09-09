@@ -133,7 +133,7 @@ function EVENT:Begin()
     self:AddHook("TTTSpeedMultiplier", function(ply, mults)
         if not ply:Alive() or ply:IsSpec() then return end
         local wep = ply:GetActiveWeapon()
-        if wep and IsValid(wep) and wep:GetClass() == "weapon_ttt_randomatknife" then
+        if IsValid(wep) and wep:GetClass() == "weapon_ttt_randomatknife" then
             table.insert(mults, speed_factor)
         end
     end)

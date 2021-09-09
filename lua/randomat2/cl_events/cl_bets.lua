@@ -42,7 +42,7 @@ net.Receive("RdmtHedgeBetsBegin", function()
 end)
 
 net.Receive("RdmtHedgeBetsEnd", function()
-    if betframe ~= nil and IsValid(betframe) then
+    if IsValid(betframe) then
         betframe:Close()
     end
 end)

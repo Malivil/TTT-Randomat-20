@@ -69,7 +69,7 @@ function EVENT:Begin()
 
                 -- Remove ghost after the timer
                 timer.Create(id, ghost_time, 1, function()
-                    if ghost and IsValid(ghost) then
+                    if IsValid(ghost) then
                         ghost:Remove()
                     end
                 end)
@@ -94,7 +94,7 @@ function EVENT:End()
         timer.Remove(id)
     end
     for _, ghost in ipairs(ghosts) do
-        if ghost and IsValid(ghost) then
+        if IsValid(ghost) then
             ghost:Remove()
         end
     end
