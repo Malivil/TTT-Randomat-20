@@ -13,7 +13,7 @@ local death_sounds = {"blerg/blerg1.mp3", "blerg/blerg2.mp3", "blerg/blerg3.mp3"
 local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3", "weapons/gunshot/gunshot2.mp3", "weapons/gunshot/gunshot3.mp3", "weapons/gunshot/gunshot4.mp3", "weapons/gunshot/gunshot5.mp3", "weapons/gunshot/gunshot6.mp3", "weapons/gunshot/gunshot7.mp3", "weapons/gunshot/gunshot8.mp3"}
 local door_opening_sounds = {"door_opening/door_opening1.mp3", "door_opening/door_opening2.mp3", "door_opening/door_opening3.mp3", "door_opening/door_opening4.mp3", "door_opening/door_opening5.mp3"}
 local door_closing_sounds = {"door_closing/door_closing1.mp3", "door_closing/door_closing2.mp3", "door_closing/door_closing3.mp3", "door_closing/door_closing4.mp3", "door_opening/door_closing5.mp3"}
-local jump_sounds = {"jump/jump1.mp3", "jump/jump2.mp3", "jump/jump3.mp3", "jump/jump4.mp3"}
+local jump_sounds = {"jump/jump1.mp3", "jump/jump2.mp3", "jump/jump3.mp3", "jump/jump4.mp3", "jump/jump5.mp3"}
 local sound_mapping = {
     -- Footsteps
     [footsteps_pattern] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3", "footsteps/footsteps3.mp3", "footsteps/footsteps4.mp3", "footsteps/footsteps5.mp3", "footsteps/footsteps6.mp3", "footsteps/footsteps7.mp3", "footsteps/footsteps8.mp3", "footsteps/footsteps9.mp3"},
