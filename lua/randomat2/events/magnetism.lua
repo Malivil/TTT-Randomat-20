@@ -15,7 +15,7 @@ function EVENT:Begin()
 
         local pos = victim:GetPos()
         for _, ent in ipairs(ents.FindInSphere(pos, radius)) do
-            if IsValid(ent) and ent:IsPlayer() and ent:Alive() and not ent:IsSpec() then
+            if IsPlayer(ent) and ent:Alive() and not ent:IsSpec() then
                 -- Get the direction toward the player who died
                 local dir = (pos - ent:GetPos()):GetNormal()
 

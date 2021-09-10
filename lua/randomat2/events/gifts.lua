@@ -54,7 +54,7 @@ end
 function EVENT:Begin()
     equips = {}
     blocklist = {}
-    for blocked_id in string.gmatch(GetConVar("randomat_blackmarket_blocklist"):GetString(), '([^,]+)') do
+    for blocked_id in string.gmatch(GetConVar("randomat_blackmarket_blocklist"):GetString(), "([^,]+)") do
         table.insert(blocklist, blocked_id:Trim())
     end
 
@@ -86,7 +86,7 @@ function EVENT:Begin()
             local equip = GetPlayerEquip(ply)
             local target = ply:GetObserverMode() ~= OBS_MODE_ROAMING and ply:GetObserverTarget() or nil
             -- Try to give this item to the current spectator target
-            if IsValid(target) and target:IsPlayer() then
+            if IsPlayer(target) then
                 if target:CanCarryWeapon(weapons.GetStored(equip)) then
                     ply:PrintMessage(HUD_PRINTTALK, "You gave " .. target:Nick() .. " your gift")
                     ply:PrintMessage(HUD_PRINTCENTER, "You gave " .. target:Nick() .. " your gift")

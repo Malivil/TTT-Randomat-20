@@ -108,8 +108,7 @@ function EVENT:GetConVars()
     return {}, checks
 end
 
-net.Receive("RdmtPlayerChoseKiller", function()
-    local ply = net.ReadEntity()
+net.Receive("RdmtPlayerChoseKiller", function(len, ply)
     Randomat:SetRole(ply, ROLE_KILLER)
     SendFullStateUpdate()
     ply:SetCredits(GetConVar("ttt_kil_credits_starting"):GetInt())
@@ -138,8 +137,8 @@ net.Receive("RdmtPlayerChoseKiller", function()
     end
 end)
 
-net.Receive("RdmtPlayerChoseMercenary", function()
-    UpdateToMerc(net.ReadEntity())
+net.Receive("RdmtPlayerChoseMercenary", function(len, ply)
+    UpdateToMerc(ply)
 end)
 
 Randomat:register(EVENT)

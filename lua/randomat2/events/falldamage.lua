@@ -5,7 +5,7 @@ EVENT.id = "falldamage"
 
 function EVENT:Begin()
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
-        if IsValid(ent) and ent:IsPlayer() and dmginfo:IsFallDamage() then
+        if IsPlayer(ent) and dmginfo:IsFallDamage() then
             return true
         end
     end)

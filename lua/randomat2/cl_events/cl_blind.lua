@@ -4,7 +4,7 @@ net.Receive("blindeventactive", function()
             local client = LocalPlayer()
             if IsValid(client) and client:Alive() and Randomat:IsTraitorTeam(client) then
                 surface.SetDrawColor(0, 0, 0, 255)
-                surface.DrawRect(0, 0, surface.ScreenWidth(), surface.ScreenHeight())
+                surface.DrawRect(0, 0, ScrW(), ScrH())
             end
         end)
     else

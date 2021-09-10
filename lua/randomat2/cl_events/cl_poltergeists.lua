@@ -40,6 +40,6 @@ net.Receive("RdmtPoltergeistsEnd", function()
 end)
 
 hook.Add("InitPostEntity", "RdmtPoltergeistsReady", function()
-	net.Start("RdmtPoltergeistsClientReady")
+    net.Start("RdmtPoltergeistsClientReady")
     net.SendToServer()
 end)

@@ -84,7 +84,7 @@ local function unragdollPlayer(v)
 
     v:Spawn()
 
-    if ragdoll ~= nil and ragdoll:IsValid() then
+    if IsValid(ragdoll) then
         local pos = ragdoll:GetPos()
         pos.z = pos.z + 10
         v:SetPos(pos)
@@ -183,7 +183,7 @@ local function ragdollPlayer(v)
 
     if ragdoll.DisallowDeleting then
         ragdoll:DisallowDeleting(true, function(old, new)
-            if v:IsValid() then v.ragdoll = new end
+            if IsValid(v) then v.ragdoll = new end
         end)
     end
 
@@ -191,7 +191,7 @@ local function ragdollPlayer(v)
     local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
     hook.Add("Think", v:Nick().."UnragdollTimer", function()
         -- Turn a ragdoll back into a player if they have essentially stopped moving and have been a ragdoll "long enough"
-        if ragdoll:IsValid() and ragdoll:GetPhysicsObjectNum(1):GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
+        if IsValid(ragdoll) and ragdoll:GetPhysicsObjectNum(1):GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
             hook.Remove("Think", v:Nick().."UnragdollTimer")
             unragdollPlayer(v)
         end

@@ -517,63 +517,63 @@ end
 
 -- Adapted from Sandbox code by Jenssons
 function Randomat:SpawnNPC(ply, pos, cls)
-	local npc_list = list.Get("NPC")
-	local npc_data = npc_list[cls]
+    local npc_list = list.Get("NPC")
+    local npc_data = npc_list[cls]
 
-	-- Don't let them spawn this entity if it isn't in our NPC Spawn list.
-	-- We don't want them spawning any entity they like!
-	if not npc_data then
-		if IsValid(ply) then
-			ply:SendLua("Derma_Message(\"Sorry! You can't spawn that NPC!\")")
+    -- Don't let them spawn this entity if it isn't in our NPC Spawn list.
+    -- We don't want them spawning any entity they like!
+    if not npc_data then
+        if IsValid(ply) then
+            ply:SendLua("Derma_Message(\"Sorry! You can't spawn that NPC!\")")
         end
         return
     end
 
-	-- Create NPC
-	local npc_ent = ents.Create(npc_data.Class)
-	if not IsValid(npc_ent) then return end
+    -- Create NPC
+    local npc_ent = ents.Create(npc_data.Class)
+    if not IsValid(npc_ent) then return end
 
-	npc_ent:SetPos(pos)
+    npc_ent:SetPos(pos)
 
-	--
-	-- This NPC has a special model we want to define
-	--
-	if npc_data.Model then
-		npc_ent:SetModel(npc_data.Model)
-	end
+    --
+    -- This NPC has a special model we want to define
+    --
+    if npc_data.Model then
+        npc_ent:SetModel(npc_data.Model)
+    end
 
-	--
-	-- Spawn Flags
-	--
-	local spawn_flags = bit.bor(SF_NPC_FADE_CORPSE, SF_NPC_ALWAYSTHINK)
-	if npc_data.SpawnFlags then spawn_flags = bit.bor(spawn_flags, npc_data.SpawnFlags) end
-	if npc_data.TotalSpawnFlags then spawn_flags = npc_data.TotalSpawnFlags end
-	npc_ent:SetKeyValue("spawnflags", spawn_flags)
+    --
+    -- Spawn Flags
+    --
+    local spawn_flags = bit.bor(SF_NPC_FADE_CORPSE, SF_NPC_ALWAYSTHINK)
+    if npc_data.SpawnFlags then spawn_flags = bit.bor(spawn_flags, npc_data.SpawnFlags) end
+    if npc_data.TotalSpawnFlags then spawn_flags = npc_data.TotalSpawnFlags end
+    npc_ent:SetKeyValue("spawnflags", spawn_flags)
 
-	--
-	-- Optional Key Values
-	--
-	if npc_data.KeyValues then
-		for k, v in pairs(npc_data.KeyValues) do
-			npc_ent:SetKeyValue(k, v)
+    --
+    -- Optional Key Values
+    --
+    if npc_data.KeyValues then
+        for k, v in pairs(npc_data.KeyValues) do
+            npc_ent:SetKeyValue(k, v)
         end
-	end
+    end
 
-	--
-	-- This NPC has a special skin we want to define
-	--
-	if npc_data.Skin then
-		npc_ent:SetSkin(npc_data.Skin)
-	end
+    --
+    -- This NPC has a special skin we want to define
+    --
+    if npc_data.Skin then
+        npc_ent:SetSkin(npc_data.Skin)
+    end
 
-	npc_ent:Spawn()
-	npc_ent:Activate()
+    npc_ent:Spawn()
+    npc_ent:Activate()
 
-	if not npc_data.NoDrop and not npc_data.OnCeiling then
-		npc_ent:DropToFloor()
-	end
+    if not npc_data.NoDrop and not npc_data.OnCeiling then
+        npc_ent:DropToFloor()
+    end
 
-	return npc_ent
+    return npc_ent
 end
 
 function Randomat:SpawnBee(ply, color, height)
@@ -764,7 +764,7 @@ function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
     end
 end
 
-function randomat_meta:SwapWeapons(ply, weapons, from_killer)
+function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
     local had_bodysnatch = ply:HasWeapon("weapon_bod_bodysnatch")
     local had_doctor_defib = ply:HasWeapon("weapon_doc_defib")
@@ -809,7 +809,7 @@ function randomat_meta:SwapWeapons(ply, weapons, from_killer)
         end
 
         -- Handle inventory weapons last to make sure the roles get their specials
-        for _, v in ipairs(weapons) do
+        for _, v in ipairs(weapon_list) do
             local wep_class = WEPS.GetClass(v)
             -- Don't give players the detective's tester
             if wep_class ~= "weapon_ttt_wtester" then

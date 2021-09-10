@@ -97,7 +97,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("EntityTakeDamage", function(tgt, dmg)
-        if tgt:IsPlayer() and tgt:GetRole() ~= ROLE_TRAITOR and dmg:IsBulletDamage() then
+        if IsPlayer(tgt) and tgt:GetRole() ~= ROLE_TRAITOR and dmg:IsBulletDamage() then
             dmg:ScaleDamage(0.25)
         end
     end)
@@ -115,25 +115,30 @@ function EVENT:Begin()
         if ply:HasWeapon("weapon_ttt_randomatrevolver") or (IsEvil(ply) and WEPS.GetClass(wep) ~= "weapon_ttt_randomatknife") then return false end
     end)
 
-    self:AddHook("PlayerDeath", function(tgt, wep, ply)
-        if table.HasValue(player.GetAll(), ply) then
-            if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
-              if WEPS.GetClass(ply:GetActiveWeapon()) == "weapon_ttt_randomatrevolver" and not IsEvil(tgt) and not IsEvil(ply) then
-                 ply:DropWeapon(ply:GetActiveWeapon())
-                 ply:SetNWBool("RdmtShouldBlind", true)
-                 timer.Create("RdmtBlindEndDelay"..ply:Nick(), 5, 1, function()
-                    ply:SetNWBool("RdmtShouldBlind", false)
-                 end)
-              end
+    self:AddHook("PlayerDeath", function(tgt, infl, ply)
+        if not IsPlayer(ply) then return end
+        if not ply:Alive() or ply:IsSpec() then return end
+        if IsEvil(tgt) or IsEvil(ply) then return end
+
+        local wep = ply.GetActiveWeapon and ply:GetActiveWeapon() or nil
+        if IsValid(wep) and WEPS.GetClass(wep) == "weapon_ttt_randomatrevolver" then
+            for _, v in ipairs(player.GetAll()) do
+                v:PrintMessage(HUD_PRINTTALK, ply:Nick() .. " killed an innocent bystander")
             end
+            ply:DropWeapon(wep)
+            ply:SetNWBool("RdmtShouldBlind", true)
+            timer.Create("RdmtBlindEndDelay_" .. ply:Nick(), 5, 1, function()
+                ply:SetNWBool("RdmtShouldBlind", false)
+            end)
         end
     end)
 
     -- Increase the player speed on the server
     self:AddHook("TTTSpeedMultiplier", function(ply, mults)
+        if not IsPlayer(ply) then return end
         if not ply:Alive() or ply:IsSpec() then return end
         local wep = ply:GetActiveWeapon()
-        if IsValid(wep) and wep:GetClass() == "weapon_ttt_randomatknife" then
+        if IsValid(wep) and WEPS.GetClass(wep) == "weapon_ttt_randomatknife" then
             table.insert(mults, speed_factor)
         end
     end)
@@ -146,6 +151,7 @@ function EVENT:End()
     for _, v in ipairs(player.GetAll()) do
         v:SetNWInt("MurderWeaponsEquipped", 0)
         v:SetNWBool("RdmMurderRevolver", false)
+        timer.Remove("RdmtBlindEndDelay_" .. v:Nick())
     end
     net.Start("MurderEventActive")
     net.WriteBool(false)

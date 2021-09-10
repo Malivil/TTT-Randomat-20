@@ -46,7 +46,7 @@ function EVENT:Begin()
     local immunity = nil
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
         if not immunity then return end
-        if not IsValid(ent) or not ent:IsPlayer() or not ent:Alive() or ent:IsSpec() then return end
+        if not IsPlayer(ent) or not ent:Alive() or ent:IsSpec() then return end
 
         -- Disallow damage of the voted type
         if dmginfo:IsDamageType(immunity) then

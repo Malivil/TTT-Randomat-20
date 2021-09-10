@@ -33,7 +33,7 @@ function EVENT:Begin(target)
     target:SetHealth(target:GetMaxHealth())
 
     self:AddHook("PlayerDeath", function(tgt, dmg, ply)
-        if tgt:IsValid() and tgt == target then
+        if IsValid(tgt) and tgt == target then
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if Randomat:IsInnocentTeam(v) then
                     v:Kill()

@@ -39,7 +39,6 @@ net.Receive("UpgradeEventBegin", function()
     end
     btn1.DoClick = function()
         net.Start("RdmtPlayerChoseMercenary")
-        net.WriteEntity(LocalPlayer())
         net.SendToServer()
         closeFrame()
     end
@@ -55,7 +54,6 @@ net.Receive("UpgradeEventBegin", function()
     end
     btn2.DoClick = function()
         net.Start("RdmtPlayerChoseKiller")
-        net.WriteEntity(LocalPlayer())
         net.SendToServer()
         closeFrame()
     end

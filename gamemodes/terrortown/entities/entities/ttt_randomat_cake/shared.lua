@@ -2,13 +2,13 @@ AddCSLuaFile()
 ENT.Type = "anim"
 
 function ENT:Initialize()
-	self.Entity:SetModel("models/871/871.mdl")
-    self.Entity:PhysicsInit(SOLID_VPHYSICS)
-    self.Entity:SetModelScale(2)
-    self.Entity:SetHealth(1)
+    self:SetModel("models/871/871.mdl")
+    self:PhysicsInit(SOLID_VPHYSICS)
+    self:SetModelScale(2)
+    self:SetHealth(1)
 
-	local phys = self.Entity:GetPhysicsObject()
-	if phys:IsValid() then
+    local phys = self:GetPhysicsObject()
+    if IsValid(phys) then
         phys:Wake()
     end
 end
@@ -17,7 +17,7 @@ function ENT:OnRemove()
 end
 
 function ENT:OnTakeDamage(dmgInfo)
-    self.Entity:Remove()
+    self:Remove()
     return true
 end
 
@@ -47,7 +47,7 @@ function ENT:Use(activator, caller)
             activator:TakeDamage(dotAmount, nil, nil)
         end)
     end
-	self:Remove()
+    self:Remove()
 end
 
 function ENT:Break()

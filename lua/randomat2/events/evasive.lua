@@ -11,9 +11,9 @@ function EVENT:Begin()
     local push_force = GetConVar("randomat_evasive_force"):GetInt()
     local jumping_push_force = GetConVar("randomat_evasive_jumping_force"):GetInt()
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
-        if not dmginfo:IsBulletDamage() or not IsValid(ent) or not ent:IsPlayer() then return end
+        if not dmginfo:IsBulletDamage() or not IsPlayer(ent) then return end
         local att = dmginfo:GetAttacker()
-        if not IsValid(att) or not att:IsPlayer() or ent == att then return end
+        if not IsPlayer(att) or ent == att then return end
 
         -- Get the direction "away" from the attacker
         local dir = (ent:GetPos() - att:GetPos()):GetNormal()

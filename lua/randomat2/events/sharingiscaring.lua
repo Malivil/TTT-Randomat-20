@@ -6,8 +6,8 @@ EVENT.id = "sharingiscaring"
 
 function EVENT:Begin()
     self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)
-        if not IsValid(victim) then return end
-        if not IsValid(attacker) or not attacker:IsPlayer() then return end
+        if not IsPlayer(victim) then return end
+        if not IsPlayer(attacker) then return end
 
         -- Get the list of the victim's weapons and then strip them so they don't get dropped
         local weps = victim:GetWeapons()

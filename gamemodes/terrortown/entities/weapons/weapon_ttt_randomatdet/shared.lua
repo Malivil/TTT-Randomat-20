@@ -33,22 +33,22 @@ SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Sound = ""
 
 function SWEP:Initialize()
-    self.Weapon:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
+    self:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
 end
 
 function SWEP:Equip()
     if not self.Target or not IsValid(self.Target) then return end
-    self.Owner:PrintMessage(HUD_PRINTTALK, "You have recieved the detonator for "..self.Target:Nick())
+    self:GetOwner():PrintMessage(HUD_PRINTTALK, "You have recieved the detonator for " .. self.Target:Nick())
 end
 
 function SWEP:Deploy()
-    self.Weapon:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
+    self:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
     return true
 end
 
 function SWEP:PrimaryAttack()
     if SERVER then
-        PlayerDetonate(self.Owner, self.Target)
+        PlayerDetonate(self:GetOwner(), self.Target)
         self:Remove()
     end
 end

@@ -2,16 +2,16 @@ AddCSLuaFile()
 ENT.Type = "anim"
 
 function ENT:Initialize()
-	self.Entity:SetModel("models/items/item_item_crate.mdl")
-    self.Entity:PhysicsInit(SOLID_VPHYSICS)
-    self.Entity:SetModelScale(1)
-    self.Entity:SetHealth(250)
+    self:SetModel("models/items/item_item_crate.mdl")
+    self:PhysicsInit(SOLID_VPHYSICS)
+    self:SetModelScale(1)
+    self:SetHealth(250)
     if SERVER then
-        self.Entity:PrecacheGibs()
+        self:PrecacheGibs()
     end
 
-	local phys = self.Entity:GetPhysicsObject()
-	if phys:IsValid() then
+    local phys = self:GetPhysicsObject()
+    if IsValid(phys) then
         phys:Wake()
     end
 end
@@ -23,10 +23,10 @@ function ENT:Think()
 end
 
 function ENT:OnTakeDamage(dmgInfo)
-    self.Entity:SetHealth(self.Entity:Health() - dmgInfo:GetDamage())
-    if self.Entity:Health() <= 0 then
-        self.Entity:GibBreakServer(Vector(1, 1, 1))
-        self.Entity:Remove()
+    self:SetHealth(self:Health() - dmgInfo:GetDamage())
+    if self:Health() <= 0 then
+        self:GibBreakServer(Vector(1, 1, 1))
+        self:Remove()
     end
     return true
 end
@@ -35,7 +35,7 @@ function ENT:Use(activator, caller)
     if not IsValid(activator) or not activator:Alive() or activator:IsSpec() then return end
 
     local blocklist = {}
-    for blocked_id in string.gmatch(GetConVar("randomat_package_blocklist"):GetString(), '([^,]+)') do
+    for blocked_id in string.gmatch(GetConVar("randomat_package_blocklist"):GetString(), "([^,]+)") do
         table.insert(blocklist, blocked_id:Trim())
     end
 
@@ -56,7 +56,7 @@ function ENT:Use(activator, caller)
             end
         end)
 
-	self:Remove()
+    self:Remove()
 end
 
 function ENT:Break()

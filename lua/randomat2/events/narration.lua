@@ -52,11 +52,11 @@ local sound_mapping = {
 local function DoorIsOpen(door)
     if not IsValid(door) then return false end
 
-	local doorClass = door:GetClass()
-	if doorClass == "func_door" or doorClass == "func_door_rotating" then
-		return door:GetInternalVariable( "m_toggle_state" ) == 0
-	elseif doorClass == "prop_door_rotating" then
-		return door:GetInternalVariable( "m_eDoorState" ) ~= 0
+    local doorClass = door:GetClass()
+    if doorClass == "func_door" or doorClass == "func_door_rotating" then
+        return door:GetInternalVariable("m_toggle_state") == 0
+    elseif doorClass == "prop_door_rotating" then
+        return door:GetInternalVariable("m_eDoorState") ~= 0
     end
     return false
 end
@@ -86,7 +86,7 @@ function EVENT:Begin()
         for pattern, sounds in pairs(sound_mapping) do
             if string.find(current_sound, pattern) then
                 -- If this is a player "footstep"-ing in mid-air, they are jumping or using a ladder
-                if footsteps_pattern == pattern and IsValid(data.Entity) and data.Entity:IsPlayer() and not data.Entity:IsOnGround() then
+                if footsteps_pattern == pattern and IsPlayer(data.Entity) and not data.Entity:IsOnGround() then
                     -- Don't replace the sound if the player is on a ladder
                     if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
                         new_sound = jump_sounds[math.random(1, #jump_sounds)]

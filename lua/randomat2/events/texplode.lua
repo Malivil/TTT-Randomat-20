@@ -47,7 +47,7 @@ function EVENT:Begin()
             end
 
             if pos == nil then
-                self:SmallNotify("The traitor's body bomb was destroyed before it could explode! Phew...")    
+                self:SmallNotify("The traitor's body bomb was destroyed before it could explode! Phew...")
                 return
             end
 

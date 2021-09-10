@@ -19,7 +19,7 @@ net.Receive("RdmtDeadGiftBegin", function()
 
         draw.SimpleText("GIFT POWER", "HealthAmmo", ScrW() / 2, y,  Color(0, 0, 10, 200), TEXT_ALIGN_CENTER)
         local target = client:GetObserverMode() ~= OBS_MODE_ROAMING and client:GetObserverTarget() or nil
-        if IsValid(target) and target:IsPlayer() then
+        if IsPlayer(target) then
             draw.SimpleText("Press JUMP to give your target the '" .. equip .. "'", "TabLarge", ScrW() / 2, y - margin, COLOR_WHITE, TEXT_ALIGN_CENTER)
         else
             draw.SimpleText("Press JUMP to drop your '" .. equip .. "' on the ground", "TabLarge", ScrW() / 2, y - margin, COLOR_WHITE, TEXT_ALIGN_CENTER)

@@ -38,9 +38,9 @@ function EVENT:Begin()
     end)
 
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
-        if not IsValid(ent) or not ent:IsPlayer() then return end
+        if not IsPlayer(ent) then return end
         local att = dmginfo:GetAttacker()
-        if not IsValid(att) or not att:IsPlayer() then return end
+        if not IsPlayer(att) then return end
         local dmg = dmginfo:GetDamage()
 
         -- Save self damage
