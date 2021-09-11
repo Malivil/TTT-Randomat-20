@@ -47,8 +47,8 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    -- Only run this if we can overwrite the function that makes it all work
-    return type(plymeta.CanUseTraitorButton) == "function"
+    -- Only run this if we can overwrite the function that makes it all work and there are traitor buttons on this map
+    return type(plymeta.CanUseTraitorButton) == "function" and #ents.FindByClass("ttt_traitor_button") > 0
 end
 
 Randomat:register(EVENT)
