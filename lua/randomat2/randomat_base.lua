@@ -767,9 +767,8 @@ end
 function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
     local had_bodysnatch = ply:HasWeapon("weapon_bod_bodysnatch")
-    local had_doctor_defib = ply:HasWeapon("weapon_doc_defib")
-    local had_doctor_station = ply:GetRole() == ROLE_DOCTOR and ply:HasWeapon("weapon_ttt_health_station") and GetConVar("ttt_doctor_mode"):GetInt() == DOCTOR_MODE_STATION
-    local had_bomb_station = ply:HasWeapon("weapon_qua_bomb_station")
+    local had_paramedic_defib = ply:HasWeapon("weapon_med_defib")
+    local had_zombificator = ply:HasWeapon("weapon_mad_zombificator")
     local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
     self:HandleWeaponAddAndSelect(ply, function()
         ply:StripWeapons()
@@ -787,12 +786,10 @@ function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
             ply:Give("weapon_bod_bodysnatch")
         elseif had_scanner then
             ply:Give("weapon_ttt_wtester")
-        elseif had_doctor_defib then
-            ply:Give("weapon_doc_defib")
-        elseif had_doctor_station then
-            ply:Give("weapon_ttt_health_station")
-        elseif had_bomb_station then
-            ply:Give("weapon_qua_bomb_station")
+        elseif had_paramedic_defib then
+            ply:Give("weapon_med_defib")
+        elseif had_zombificator then
+            ply:Give("weapon_mad_zombificator")
         elseif ply:GetRole() == ROLE_KILLER then
             if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
                 ply:Give("weapon_kil_knife")
