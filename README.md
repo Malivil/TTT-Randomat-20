@@ -12,16 +12,17 @@ _ttt_randomat_clearevents_ - Clears all active events.\
 _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.\
 _ttt_randomat_disableall_ - Disables all events.\
 _ttt_randomat_enableall_ - Enables all events.\
-_ttt_randomat_resetweights_ - Resets all weights to their defaults.\
+_ttt_randomat_resetweights_ - Resets all weights to their defaults.
 
 # General ConVars
 _ttt_randomat_auto_ - Default: 0 - Whether the Randomat should automatically trigger on round start.\
 _ttt_randomat_auto_chance_ - Default: 1 - Chance of the auto-Randomat triggering.\
+_ttt_randomat_auto_silent_ - Default: 0 - Whether the auto-started event should be silent.\
 _ttt_randomat_chooseevent_ - Default: 0 - Allows you to choose out of a selection of events.\
 _ttt_randomat_rebuyable_ - Default: 0 - Whether you can buy more than one Randomat.\
 _ttt_randomat_event_weight_ - Default: 1 - The default selection weight each event should use.\
-_ttt_randomat_event_hint_ - Default: 0 - Whether the Randomat should print what each event does when they start.\
-_ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put in chat.
+_ttt_randomat_event_hint_ - Default: 1 - Whether the Randomat should print what each event does when they start.\
+_ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put in chat.
 
 # Latest Events
 1. Earthquake
