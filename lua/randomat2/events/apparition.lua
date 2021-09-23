@@ -28,17 +28,25 @@ local function CreateGhost(p)
     ghosts[p:SteamID64()] = ghost
 end
 
+local dead = {}
+local function SetupGhost(p)
+    -- Haunting phantoms and infecting parasites shouldn't be ghosts
+    if p:GetNWBool("Haunting", false) or p:GetNWBool("Infecting", false) then return end
+
+    dead[p:SteamID64()] = true
+    SetSpectatorValues(p)
+    CreateGhost(p)
+end
+
 function EVENT:Begin()
     ghosts = {}
+    dead = {}
 
     net.Start("RdmtApparitionBegin")
     net.Broadcast()
 
-    local dead = {}
     for _, p in ipairs(self:GetDeadPlayers()) do
-        dead[p:SteamID64()] = true
-        SetSpectatorValues(p)
-        CreateGhost(p)
+        SetupGhost(p)
     end
 
     self:AddHook("KeyPress", function(ply, key)
@@ -69,9 +77,9 @@ function EVENT:Begin()
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
-        dead[victim:SteamID64()] = true
-        SetSpectatorValues(victim)
-        CreateGhost(victim)
+        timer.Create("RdmtApparitionStart_" .. victim:SteamID64(), 1, 1, function()
+            SetupGhost(victim)
+        end)
     end)
 
     self:AddHook("FinishMove", function(ply, mv)
@@ -90,7 +98,12 @@ function EVENT:End()
             g:Remove()
         end
     end
+    for _, p in pairs(player.GetAll()) do
+        timer.Remove("RdmtApparitionStart_" .. p:SteamID64())
+    end
+
     table.Empty(ghosts)
+    table.Empty(dead)
 
     net.Start("RdmtApparitionEnd")
     net.Broadcast()

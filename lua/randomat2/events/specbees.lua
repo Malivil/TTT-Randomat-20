@@ -1,5 +1,8 @@
 local EVENT = {}
 
+util.AddNetworkString("RdmtSpecBeesBegin")
+util.AddNetworkString("RdmtSpecBeesEnd")
+
 EVENT.Title = "RISE FROM YOUR... Bees?"
 EVENT.Description = "Dead players become harmless bees"
 EVENT.id = "specbees"
@@ -22,13 +25,21 @@ local function CreateBee(p)
     bee:SetModel("models/lucian/props/stupid_bee.mdl")
     bee:SetPos(p:GetPos())
     bee:SetNotSolid(true)
-    bee:PhysicsInit(SOLID_VPHYSICS)
-    bee:SetMoveType(MOVETYPE_VPHYSICS)
-    bee:SetSolid(SOLID_VPHYSICS)
-    bee:AddFlags(FL_OBJECT)
+    bee:SetNWBool("RdmtSpecBee", true)
+    bee:Spawn()
     bee:EmitSound(engineSound)
     bee:EmitSound(bladeSound)
     bees[p:SteamID64()] = bee
+end
+
+local dead = {}
+local function SetupBee(p)
+    -- Haunting phantoms and infecting parasites shouldn't be bees
+    if p:GetNWBool("Haunting", false) or p:GetNWBool("Infecting", false) then return end
+
+    dead[p:SteamID64()] = true
+    SetSpectatorValues(p)
+    CreateBee(p)
 end
 
 local function DestroyBee(b)
@@ -39,12 +50,13 @@ end
 
 function EVENT:Begin()
     bees = {}
+    dead = {}
 
-    local dead = {}
+    net.Start("RdmtSpecBeesBegin")
+    net.Broadcast()
+
     for _, p in ipairs(self:GetDeadPlayers()) do
-        dead[p:SteamID64()] = true
-        SetSpectatorValues(p)
-        CreateBee(p)
+        SetupBee(p)
     end
 
     self:AddHook("KeyPress", function(ply, key)
@@ -75,9 +87,9 @@ function EVENT:Begin()
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
-        dead[victim:SteamID64()] = true
-        SetSpectatorValues(victim)
-        CreateBee(victim)
+        timer.Create("RdmtSpecBeesStart_" .. victim:SteamID64(), 1, 1, function()
+            SetupBee(victim)
+        end)
     end)
 
     self:AddHook("FinishMove", function(ply, mv)
@@ -98,7 +110,15 @@ function EVENT:End()
             DestroyBee(b)
         end
     end
+    for _, p in pairs(player.GetAll()) do
+        timer.Remove("RdmtSpecBeesStart_" .. p:SteamID64())
+    end
+
     table.Empty(bees)
+    table.Empty(dead)
+
+    net.Start("RdmtSpecBeesEnd")
+    net.Broadcast()
 end
 
 Randomat:register(EVENT)

@@ -2,8 +2,13 @@ net.Receive("RdmtApparitionBegin", function()
     local client = LocalPlayer()
     hook.Add("Think", "RdmtApparitionThink", function()
         Randomat:HandleEntitySmoke(ents.GetAll(), client, function(v)
-            v:SetNoDraw(true)
-            return v:GetNWBool("RdmtApparition", false)
+            if v:GetNWBool("RdmtApparition", false) then
+                v:SetNoDraw(true)
+                v:SetRenderMode(RENDERMODE_NONE)
+                v:SetNotSolid(true)
+                return true
+            end
+            return false
         end)
     end)
 end)
