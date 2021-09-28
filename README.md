@@ -26,17 +26,18 @@ _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put i
 
 # Latest Events
 1. Earthquake
-2. praW emiT
-3. Boo!
-4. Smoke Signals
-5. Hedge Your Bets
-6. Paranormal Activity
-7. Gifts from the Dead
-8. Our Little Secret
-9. Breadcrumbs
-10. Poltergeists
-11. Fiends for Life
-12. Narration
+1. praW emiT
+1. Boo!
+1. Smoke Signals
+1. Hedge Your Bets
+1. Paranormal Activity
+1. Gifts from the Dead
+1. Our Little Secret
+1. Breadcrumbs
+1. Poltergeists
+1. Fiends for Life
+1. Narration
+1. T-Rex Vision
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1282,6 +1283,16 @@ _ttt_randomat_suddendeath_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_suddendeath_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_suddendeath_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## T-Rex Vision
+Your vision is now based on movement. All players who aren't moving are invisible
+\
+\
+**ConVars**
+\
+_ttt_randomat_trexvision_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_trexvision_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_trexvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Taking Inventory
 Swaps player inventories periodically throughout the round. There are some caveats to how this event interacts with special roles:
 - Non-prime Zombies are excluded
@@ -1574,6 +1585,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
+- Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event

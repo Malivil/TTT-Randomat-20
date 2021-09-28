@@ -340,3 +340,13 @@ function Randomat:ResetPlayerScale(ply, id)
     net.WriteString("Rdmt" .. id .. "Speed")
     net.Send(ply)
 end
+
+function Randomat:SetPlayerInvisible(ply)
+    ply:SetColor(Color(255, 255, 255, 0))
+    ply:SetMaterial("sprites/heatwave")
+end
+
+function Randomat:SetPlayerVisible(ply)
+    ply:SetColor(Color(255, 255, 255, 255))
+    ply:SetMaterial("models/glass")
+end
