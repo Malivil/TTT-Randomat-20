@@ -8,37 +8,100 @@ CreateConVar("randomat_typeracer_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The
 CreateConVar("randomat_typeracer_kill_wrong", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to kill players who type the word incorrectly")
 
 local values = {}
-table.insert(values, "cheese")
-table.insert(values, "randomat")
-table.insert(values, "racecar")
 table.insert(values, "kayak")
-table.insert(values, "banana")
-table.insert(values, "mississippi")
-table.insert(values, "massachusetts")
-table.insert(values, "worcestershire")
-table.insert(values, "controller")
-table.insert(values, "the quick brown fox jumps over the lazy dog")
-table.insert(values, "peter piper picked a peck of pickled peppers")
-table.insert(values, "red rum, sir, is murder")
-table.insert(values, "she sells seashells by the seashore")
-table.insert(values, "supercalifragilisticexpialidocious")
-table.insert(values, "unenthusiastically")
-table.insert(values, "defenestration")
-table.insert(values, "contagious")
-table.insert(values, "sophisticated")
-table.insert(values, "perplexing")
-table.insert(values, "misspell")
-table.insert(values, "pharaoh")
 table.insert(values, "weird")
-table.insert(values, "intelligence")
-table.insert(values, "pronunciation")
-table.insert(values, "handkerchief")
+table.insert(values, "cheese")
+table.insert(values, "banana")
+table.insert(values, "rhythm")
+table.insert(values, "racecar")
+table.insert(values, "pharaoh")
+table.insert(values, "randomat")
+table.insert(values, "misspell")
 table.insert(values, "tneconni")
+table.insert(values, "controller")
+table.insert(values, "contagious")
+table.insert(values, "perplexing")
+table.insert(values, "psychology")
+table.insert(values, "definitely")
+table.insert(values, "ameliorate")
+table.insert(values, "mississippi")
+table.insert(values, "connecticut")
+table.insert(values, "stroopwafel")
+table.insert(values, "tegucigalpa")
+table.insert(values, "ouagadougou")
+table.insert(values, "pterodactyl")
+table.insert(values, "connoisseur")
+table.insert(values, "intelligence")
+table.insert(values, "handkerchief")
+table.insert(values, "acquaintance")
+table.insert(values, "perseverance")
+table.insert(values, "sacrilegious")
+table.insert(values, "entrepreneur")
+table.insert(values, "massachusetts")
+table.insert(values, "sophisticated")
+table.insert(values, "pronunciation")
+table.insert(values, "worcestershire")
+table.insert(values, "defenestration")
+table.insert(values, "acknowledgment")
+table.insert(values, "consanguineous")
+table.insert(values, "omphaloskepsis")
+table.insert(values, "myrmecophilous")
+table.insert(values, "phenolphthalein")
+table.insert(values, "psychotomimetic")
+table.insert(values, "trichotillomania")
+table.insert(values, "triskaidekaphobia")
+table.insert(values, "unenthusiastically")
+table.insert(values, "benedict cumberbatch")
+table.insert(values, "internationalization")
+table.insert(values, "llanfairpwllgwyngyll")
+table.insert(values, "uncharacteristically")
+table.insert(values, "electroencephalograph")
+table.insert(values, "incomprehensibilities")
+table.insert(values, "red rum, sir, is murder")
+table.insert(values, "honorificabilitudinitatibus")
+table.insert(values, "antidisestablishmentarianism")
+table.insert(values, "floccinaucinihilipilification")
+table.insert(values, "pseudopseudohypoparathyroidism")
+table.insert(values, "kolmivaihekilowattituntimittari")
+table.insert(values, "supercalifragilisticexpialidocious")
+table.insert(values, "she sells seashells by the seashore")
 table.insert(values, "the five boxing wizards jump quickly")
 table.insert(values, "sphinx of black quartz, judge my vow")
+table.insert(values, "the quick brown fox jumps over the lazy dog")
+table.insert(values, "peter piper picked a peck of pickled peppers")
+table.insert(values, "pneumonoultramicroscopicsilicovolcanoconiosis")
 
+local bucketed_values = {}
+
+local iteration
+local MIN_ITERATION = 1
+local MAX_ITERATION = 10
+
+local iteration_length_mapping = {
+    [1] = function(len) return len < 10 end,
+    [2] = function(len) return len < 12 end,
+    [3] = function(len) return len > 5 and len < 14 end,
+    [4] = function(len) return len > 7 and len < 16 end,
+    [5] = function(len) return len > 9 and len < 18 end,
+    [6] = function(len) return len > 11 and len < 20 end,
+    [7] = function(len) return len > 13 and len < 22 end,
+    [8] = function(len) return len > 15 and len < 24 end,
+    [9] = function(len) return len > 17 end,
+    [10] = function(len) return len > 19 end
+}
+
+local last_word = nil
 function EVENT:ChooseWord(first, quiz_time)
-    local chosen = values[math.random(1, #values)]
+    -- Get the word based on the current iteration so difficult scales over time
+    iteration = math.Clamp(iteration + 1, MIN_ITERATION, MAX_ITERATION)
+    local bucket_values = bucketed_values[iteration]
+
+    -- Make sure we don't choose the same word twice in a row
+    local chosen
+    repeat
+        chosen = bucket_values[math.random(1, #bucket_values)]
+    until last_word == nil or last_word ~= chosen
+    last_word = chosen
 
     -- Let everyone know what the word is
     local message = "The " .. (first and "first" or "next") .. " word/phrase is: " .. chosen
@@ -49,9 +112,30 @@ function EVENT:ChooseWord(first, quiz_time)
 end
 
 function EVENT:Begin()
-    if ROLE_STRINGS then
-        for _, r in ipairs(ROLE_STRINGS) do
-            table.insert(values, r:lower())
+    iteration = 0
+
+    -- Only add to the values arrays the first time
+    if table.Count(bucketed_values) == 0 then
+        -- Add all the role names
+        if ROLE_STRINGS then
+            for _, r in ipairs(ROLE_STRINGS) do
+                table.insert(values, r:lower())
+            end
+        end
+
+        -- Initialize the buckets
+        for i = MIN_ITERATION, MAX_ITERATION do
+            bucketed_values[i] = {}
+        end
+
+        -- Put values in the buckets based on their lengths
+        for _, v in ipairs(values) do
+            local len = #v
+            for i, pred in pairs(iteration_length_mapping) do
+                if pred(len) then
+                    table.insert(bucketed_values[i], v)
+                end
+            end
         end
     end
 
