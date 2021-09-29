@@ -11,6 +11,7 @@ CreateConVar("randomat_choose_vote", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows a
 CreateConVar("randomat_choose_votetimer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long players have to vote on the event", 5, 60)
 CreateConVar("randomat_choose_deadvoters", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Dead people can vote")
 CreateConVar("randomat_choose_limitchoosetime", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether single player choosing has limited time")
+CreateConVar("randomat_choose_limitchoosetime_random", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to choose a random event if time runs out")
 
 local EventChoices = {}
 local owner = nil
@@ -41,9 +42,20 @@ EVENT.Title = "Choose an Event!"
 EVENT.Description = GetEventDescription(0)
 EVENT.id = "choose"
 
+local function StartEventByTitle(title)
+    for _, v in pairs(Randomat.Events) do
+        local eventTitle = Randomat:GetEventTitle(v)
+        if eventTitle == title then
+            Randomat:TriggerEvent(v.id, owner)
+            break
+        end
+    end
+end
+
 function EVENT:Begin(vote, dead_can_vote, vote_predicate)
     local votetimer = GetConVar("randomat_choose_votetimer"):GetInt()
     local limitchoosetime = GetConVar("randomat_choose_limitchoosetime"):GetBool()
+    local limitchoosetime_random = GetConVar("randomat_choose_limitchoosetime_random"):GetBool()
     owner = self.owner
     allow_dead = dead_can_vote
     EVENT.Description = GetEventDescription(limitchoosetime and votetimer or 0)
@@ -83,13 +95,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate)
                     evnt = k
                 end
             end
-            for _, v in pairs(Randomat.Events) do
-                local title = Randomat:GetEventTitle(v)
-                if title == evnt then
-                    Randomat:TriggerEvent(v.id, owner)
-                    break
-                end
-            end
+            StartEventByTitle(evnt)
             net.Start("ChooseEventEnd")
             if type(vote_predicate) == "function" then
                 net.Send(GetPlayerFilter(vote_predicate))
@@ -106,8 +112,14 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate)
 
         if limitchoosetime then
             timer.Create("RdmtChooseTimer", votetimer, 1, function()
-                owner:PrintMessage(HUD_PRINTTALK, "You took too long to choose!")
-                owner:PrintMessage(HUD_PRINTCENTER, "You took too long to choose!")
+                local message = "You took too long to choose!"
+                if limitchoosetime_random then
+                    message = message .. " Choosing a random one for you..."
+                    local choice = EventChoices[math.random(1, #EventChoices)]
+                    StartEventByTitle(choice)
+                end
+                owner:PrintMessage(HUD_PRINTTALK, message)
+                owner:PrintMessage(HUD_PRINTCENTER, message)
                 net.Start("ChooseEventEnd")
                 net.Send(owner)
             end)
@@ -141,7 +153,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"vote", "deadvoters", "limitchoosetime"}) do
+    for _, v in ipairs({"vote", "deadvoters", "limitchoosetime", "limitchoosetime_random"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -158,12 +170,7 @@ net.Receive("ChoosePlayerChose", function()
     timer.Remove("RdmtChooseTimer")
 
     local str = net.ReadString()
-    for _, v in pairs(Randomat.Events) do
-        local title = Randomat:GetEventTitle(v)
-        if title == str then
-            Randomat:TriggerEvent(v.id, owner)
-        end
-    end
+    StartEventByTitle(str)
 end)
 
 net.Receive("ChoosePlayerVoted", function(ln, ply)
