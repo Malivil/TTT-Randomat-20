@@ -103,6 +103,9 @@ local function TriggerEvent(event, ply, silent, ...)
             end
         end
     end
+
+    -- Let other addons know that an event was started
+    hook.Call("TTTRandomatTriggered", nil, event.Id, owner)
 end
 
 function Randomat:EndActiveEvent(id)
