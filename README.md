@@ -636,7 +636,8 @@ Gives all Detectives extra health, but kills all members of the Innocent team if
 _ttt_randomat_president_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_president_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_president_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.
+_randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.\
+_randomat_president_announce_ - Defualt: 1 - Whether to announce when the president dies
 
 ## Ghostly Apparition
 Dead players become ghosts who leave a trail of smoke as they drift through the world
