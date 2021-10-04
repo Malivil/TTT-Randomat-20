@@ -44,7 +44,7 @@ function EVENT:Begin()
 end
 
 function PlayerDetonate(owner, ply)
-    if owner:GetRole() ~= ROLE_JESTER and owner:GetRole() ~= ROLE_SWAPPER then
+    if not Randomat:IsJesterTeam(owner) then
         local pos = nil
         if ply:Alive() then
             pos = ply:GetPos()
