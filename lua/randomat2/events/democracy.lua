@@ -91,10 +91,10 @@ function EVENT:Begin()
                 end
 
                 if skipkill == 0 then
-                    if Randomat:IsJesterTeam(slainply) then
+                    if Randomat:ShouldActLikeJester(slainply) then
                         local jestervoters = {}
                         for voter, tgt in RandomPairs(playersvoted) do
-                            if voter:Alive() and not voter:IsSpec() and not Randomat:IsJesterTeam(voter) and tgt == slainply then
+                            if voter:Alive() and not voter:IsSpec() and not Randomat:ShouldActLikeJester(voter) and tgt == slainply then
                                 table.insert(jestervoters, voter)
                             end
                         end
@@ -113,7 +113,8 @@ function EVENT:Begin()
                             end
                             self:SmallNotify(voter:Nick().." was dumb enough to vote for the " .. Randomat:GetRoleString(ROLE_JESTER) .. "!")
 
-                            if jestermode == 1 then
+                            -- Only kill the jester if we know they are a Jester or a Swapper. The other ones might not like being killed so much
+                            if jestermode == 1 and (slainply:GetRole() == ROLE_JESTER or slainply:GetRole() == ROLE_SWAPPER) then
                                 -- Delay slightly to show the message above before the round potentially ends
                                 timer.Simple(1, function()
                                     local dmginfo = DamageInfo()
