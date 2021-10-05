@@ -17,7 +17,7 @@ function EVENT:Begin()
             if key == IN_JUMP and ply:Alive() and not ply:IsSpec() and (ply:WaterLevel() < 3) then
                 if ply.rdmtJumps > 0 then
                     if ply.rdmtJumps == 1 or
-                        (Randomat:IsJesterTeam(ply) and GetConVar("randomat_jump_jesterspam"):GetBool()) or
+                        (Randomat:ShouldActLikeJester(ply) and GetConVar("randomat_jump_jesterspam"):GetBool()) or
                         (ROLE_QUACK ~= -1 and ply:GetRole() == ROLE_QUACK and GetConVar("randomat_jump_quackspam"):GetBool()) then
                         util.BlastDamage(ply, ply, ply:GetPos(), 100, 500)
                         self:SmallNotify(ply:Nick() .. " tried to jump twice.")

@@ -67,6 +67,11 @@ function Randomat:IsEvilDetectiveLike(ply)
     return role == ROLE_DETRAITOR or (Randomat:IsDetectiveLike(ply) and Randomat:IsTraitorTeam(ply))
 end
 
+function Randomat:ShouldActLikeJester(ply)
+    if ply.ShouldActLikeJester then return ply:ShouldActLikeJester() end
+    return Randomat:IsJesterTeam(ply)
+end
+
 function Randomat:GetRoleColor(role)
     local color = nil
     if type(ROLE_COLORS) == "table" then

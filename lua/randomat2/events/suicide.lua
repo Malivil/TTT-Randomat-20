@@ -44,7 +44,7 @@ function EVENT:Begin()
 end
 
 function PlayerDetonate(owner, ply)
-    if not Randomat:IsJesterTeam(owner) then
+    if not Randomat:ShouldActLikeJester(owner) then
         local pos = nil
         if ply:Alive() then
             pos = ply:GetPos()
