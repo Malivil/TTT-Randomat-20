@@ -246,7 +246,7 @@ function Randomat:IsZombifying(ply)
     return ply:GetNWBool("IsZombifying", false) or ply:GetPData("IsZombifying", 0) == 1
 end
 
--- Weapon Sound Functions
+-- Weapon Functions
 function Randomat:RestoreWeaponSound(wep)
     if not IsValid(wep) or not wep.Primary then return end
     if wep.Primary.OriginalSound then
@@ -273,6 +273,61 @@ function Randomat:OverrideWeaponSoundData(data, chosen_sound)
     if fire_start or shot_start or shoot_start then
         data.SoundName = chosen_sound
         return true
+    end
+end
+
+function Randomat:RemoveEquipmentItem(ply, item_id)
+    -- Keep track of what equipment the player had
+    local i = 1
+    local equip = {}
+    local credits = 0
+    local removed = false
+    while i <= EQUIP_MAX do
+        if ply:HasEquipmentItem(i) then
+            -- Remove and refund the specific equipment item we're removing
+            if i == item_id then
+                removed = true
+                credits = credits + 1
+            else
+                table.insert(equip, i)
+            end
+        end
+        -- Double the index since this is a bit-mask
+        i = i * 2
+    end
+
+    -- Give the player enough credits to compensate for the equipment they can no longer use
+    ply:AddCredits(credits)
+
+    -- Remove all their equipment
+    ply:ResetEquipment()
+
+    -- Add back the others (since we only want to remove the given item)
+    for _, id in ipairs(equip) do
+        ply:GiveEquipmentItem(id)
+    end
+
+    return removed
+end
+
+function Randomat:RemovePhdFlopper(ply, block_message)
+    local removed = false
+    -- Remove and refund the player's PHD Flopper
+    if Randomat:RemoveEquipmentItem(ply, EQUIP_PHD) then
+        removed = true
+        ply:SetNWBool("PHDActive", false)
+    elseif ply:GetNWString("phdIsActive", "false") == "true" then
+        ply:SetNWString("phdIsActive", "false")
+        ply.ShouldRemoveFallDamage = false
+        hook.Remove("HUDPaint", "perkHUDPaintIcon")
+        -- Explicitly refund this here. RemoveEquipmentItem handles the refund of the other type of PHD Flopper
+        ply:AddCredits(1)
+    end
+
+    if removed and not block_message then
+        timer.Simple(1, function()
+            ply:ChatPrint("PHD Floppers are disabled while this event is active! Your purchase has been refunded.")
+        end)
     end
 end
 

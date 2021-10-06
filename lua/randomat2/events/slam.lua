@@ -11,27 +11,6 @@ if GetConVar("randomat_slam_strip"):GetBool() then
     EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 end
 
-local function RemovePhdFlopper(ply)
-    local removed = false
-    -- Remove and refund the player's PHD Flopper
-    if Randomat:RemoveEquipmentItem(ply, EQUIP_PHD) then
-        removed = true
-        ply:SetNWBool("PHDActive", false)
-    elseif ply:GetNWString("phdIsActive", "false") == "true" then
-        ply:SetNWString("phdIsActive", "false")
-        ply.ShouldRemoveFallDamage = false
-        hook.Remove("HUDPaint", "perkHUDPaintIcon")
-        -- Explicitly refund this here. RemoveEquipmentItem handles the refund of the other type of PHD Flopper
-        ply:AddCredits(1)
-    end
-
-    if removed then
-        timer.Simple(1, function()
-            ply:ChatPrint("PHD Floppers are disabled while 'Come on and SLAM!' is active! Your purchase has been refunded.")
-        end)
-    end
-end
-
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
@@ -53,7 +32,7 @@ end
 function EVENT:Begin()
     for _, v in ipairs(self:GetAlivePlayers()) do
         self:HandleRoleWeapons(v)
-        RemovePhdFlopper(v)
+        Randomat:RemovePhdFlopper(v)
     end
     SendFullStateUpdate()
 
