@@ -4,6 +4,7 @@ EVENT.Title = "Flip the Script"
 EVENT.Description = "Inverses everyone's health"
 EVENT.id = "flipthescript"
 EVENT.SingleUse = false
+EVENT.MinRoundCompletePercent = 25
 
 function EVENT:Begin()
     for _, v in ipairs(self:GetAlivePlayers()) do

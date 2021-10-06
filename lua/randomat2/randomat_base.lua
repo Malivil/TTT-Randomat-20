@@ -262,6 +262,12 @@ function Randomat:CanEventRun(event)
         end
     end
 
+    local round_percent_complete = Randomat:GetRoundCompletePercent()
+    if (event.MinRoundCompletePercent and event.MinRoundCompletePercent > round_percent_complete) or
+        (event.MaxRoundCompletePercent and event.MaxRoundCompletePercent < round_percent_complete) then
+        return false
+    end
+
     local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
     local player_count = player.GetCount()
     return event:Enabled() and event:Condition() and (min_players <= 0 or player_count >= min_players) and (not event.SingleUse or not Randomat:IsEventActive(event.Id))

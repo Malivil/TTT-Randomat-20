@@ -197,16 +197,16 @@ function EVENT:Begin()
     end
 
     -- The percent of the round that is complete is how much time has elapsed since the start of the round compared to the total amount of time the round will last
-    local round_percent_complete = (CurTime() - GAMEMODE.RoundStartTime) / (GetGlobalFloat("ttt_round_end", CurTime()) - GAMEMODE.RoundStartTime)
+    local round_percent_complete = Randomat:GetRoundCompletePercent()
     local templates = {}
     -- Use "new round" and "start" if <= 5% of the round has elapsed
-    if round_percent_complete <= 0.05 then
+    if round_percent_complete <= 5 then
         templates = table.Add(table.Copy(start_tmpl), new_round_tmpl)
     -- Use "start" if <=25% of the round has elapsed
-    elseif round_percent_complete <= 0.25 then
+    elseif round_percent_complete <= 25 then
         templates = start_tmpl
     -- Use "end" and "mid/end" if >=75% of the round has elapsed
-    elseif round_percent_complete >= 0.75 then
+    elseif round_percent_complete >= 75 then
         templates = table.Add(table.Copy(end_tmpl), mid_end_tmpl)
     -- Otherwise use "mid" and "mid/end"
     else

@@ -4,6 +4,7 @@ EVENT.Title = "Detraitor"
 EVENT.Description = "The Detective has been corrupted and joined the Traitor team!"
 EVENT.id = "detraitor"
 EVENT.StartSecret = true
+EVENT.MaxRoundCompletePercent = 15
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

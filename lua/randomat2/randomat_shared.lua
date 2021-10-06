@@ -410,3 +410,8 @@ function Randomat:SetPlayerVisible(ply)
     ply:SetColor(Color(255, 255, 255, 255))
     ply:SetMaterial("models/glass")
 end
+
+-- Round Functions
+function Randomat:GetRoundCompletePercent()
+    return ((CurTime() - GAMEMODE.RoundStartTime) / (GetGlobalFloat("ttt_round_end", CurTime()) - GAMEMODE.RoundStartTime)) * 100
+end
