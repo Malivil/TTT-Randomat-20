@@ -13,7 +13,8 @@ util.AddNetworkString("TTT_DrunkSober")
 CreateConVar("randomat_election_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 30, 180)
 CreateConVar("randomat_election_winner_credits", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of credits given as a reward, if appropriate", 1, 10)
 CreateConVar("randomat_election_vamp_turn_innocents", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether Vampires turn innocents. Otherwise, turns traitors")
-CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show who each player voted for in chat")
+CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_election_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
 CreateConVar("randomat_election_trigger_mrpresident", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to trigger Get Down Mr. President if an Innocent wins")
 CreateConVar("randomat_election_break_ties", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to break ties by choosing a random winner")
 
@@ -549,7 +550,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"vamp_turn_innocents", "show_votes", "trigger_mrpresident", "break_ties"}) do
+    for _, v in ipairs({"vamp_turn_innocents", "show_votes", "show_votes_anon", "trigger_mrpresident", "break_ties"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -563,7 +564,7 @@ function EVENT:GetConVars()
     return sliders, checks
 end
 
-net.Receive("ElectionNominateVoted", function(ln, ply)
+local function HandleVote(ply, message)
     for k, _ in pairs(playersvoted) do
         if k == ply then
             ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
@@ -580,47 +581,33 @@ net.Receive("ElectionNominateVoted", function(ln, ply)
             num = playervotes[votee]
 
             if GetConVar("randomat_election_show_votes"):GetBool() then
+                local anon = GetConVar("randomat_election_show_votes_anon"):GetBool()
                 for _, va in ipairs(player.GetAll()) do
-                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted for "..votee)
+                    local name
+                    if anon then
+                        name = "Someone"
+                    else
+                        name = ply:Nick()
+                    end
+                    va:PrintMessage(HUD_PRINTTALK, name.." has voted for "..votee)
                 end
             end
+            break
         end
     end
 
-    net.Start("ElectionNominateVoted")
+    net.Start(message)
         net.WriteString(votee)
         net.WriteInt(num, 32)
     net.Broadcast()
+end
+
+net.Receive("ElectionNominateVoted", function(ln, ply)
+    HandleVote(ply, "ElectionNominateVoted")
 end)
 
 net.Receive("ElectionVoteVoted", function(ln, ply)
-    for k, _ in pairs(playersvoted) do
-        if k == ply then
-            ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
-            return
-        end
-    end
-
-    local num = 0
-    local votee = net.ReadString()
-    for _, v in pairs(votableplayers) do
-        if v:Nick() == votee then
-            playersvoted[ply] = v
-            playervotes[votee] = playervotes[votee] + 1
-            num = playervotes[votee]
-
-            if GetConVar("randomat_election_show_votes"):GetBool() then
-                for _, va in ipairs(player.GetAll()) do
-                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted for "..votee)
-                end
-            end
-        end
-    end
-
-    net.Start("ElectionVoteVoted")
-        net.WriteString(votee)
-        net.WriteInt(num, 32)
-    net.Broadcast()
+    HandleVote(ply, "ElectionVoteVoted")
 end)
 
 Randomat:register(EVENT)
