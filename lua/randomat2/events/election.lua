@@ -294,9 +294,14 @@ function EVENT:SwearIn(winner)
 
             local given = nil
             self:AddHook("WeaponEquip", function(wep, ply)
-                -- Set the "BoughtBuy" property to the found user to make this beggar join their team
+                -- Set the "BoughtBy" property to the found user to make this beggar join their team
                 if IsValid(wep) and WEPS.GetClass(wep) == given and winner == ply then
-                    wep.BoughtBuy = source
+                    -- Keep this backwards compatible in case we're on a newer version
+                    if CRVersion("1.3.1") then
+                        wep.BoughtBy = source
+                    else
+                        wep.BoughtBuy = source
+                    end
                     self:RemoveHook("WeaponEquip")
                 end
             end)
