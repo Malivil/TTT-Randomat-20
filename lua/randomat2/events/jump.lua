@@ -3,25 +3,32 @@ local EVENT = {}
 EVENT.Title = "You can only jump once."
 EVENT.id = "jump"
 
-CreateConVar("randomat_jump_jesterspam", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show the message multiple times for a Jester/Swapper")
-CreateConVar("randomat_jump_quackspam", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show the message multiple times for a Quack")
+CreateConVar("randomat_jump_spam", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show the message again for a player who doesn't die")
+CreateConVar("randomat_jump_kill_blast_immune", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to kill players who are immune to blast damage")
+
+local timerIds = {}
 
 function EVENT:Begin()
     for _, v in ipairs(player.GetAll()) do
         v.rdmtJumps = 0
     end
 
+    local spam = GetConVar("randomat_jump_spam"):GetBool()
+    local killBlastImmune = GetConVar("randomat_jump_kill_blast_immune"):GetBool()
     timer.Create("RdmtJumpStartDelay", 1, 1, function()
         self:AddHook("KeyPress", function(ply, key)
             -- Don't count "jumps" if the player is underwater
             if key == IN_JUMP and ply:Alive() and not ply:IsSpec() and (ply:WaterLevel() < 3) then
-                if ply.rdmtJumps > 0 then
-                    if ply.rdmtJumps == 1 or
-                        (Randomat:ShouldActLikeJester(ply) and GetConVar("randomat_jump_jesterspam"):GetBool()) or
-                        (ROLE_QUACK ~= -1 and ply:GetRole() == ROLE_QUACK and GetConVar("randomat_jump_quackspam"):GetBool()) then
-                        util.BlastDamage(ply, ply, ply:GetPos(), 100, 500)
-                        self:SmallNotify(ply:Nick() .. " tried to jump twice.")
+                if ply.rdmtJumps > 0 and (ply.rdmtJumps == 1 or spam) then
+                    util.BlastDamage(ply, ply, ply:GetPos(), 100, 500)
+                    if not Randomat:ShouldActLikeJester(ply) and killBlastImmune then
+                        local timerId = "RdmtJumpKillDelay_" .. ply:SteamID64()
+                        table.insert(timerIds, timerId)
+                        timer.Create(timerId, 0.25, 1, function()
+                            ply:Kill()
+                        end)
                     end
+                    self:SmallNotify(ply:Nick() .. " tried to jump twice.")
                 end
 
                 ply.rdmtJumps = ply.rdmtJumps + 1
@@ -34,12 +41,16 @@ function EVENT:End()
     for _, v in ipairs(player.GetAll()) do
         v.rdmtJumps = nil
     end
+    for _, timerId in ipairs(timerIds) do
+        timer.Remove(timerId)
+    end
+    table.Empty(timerIds)
     timer.Remove("RdmtJumpStartDelay")
 end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in ipairs({"jesterspam", "quackspam"}) do
+    for _, v in ipairs({"spam", "kill_blast_immune"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
