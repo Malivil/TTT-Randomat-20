@@ -632,11 +632,7 @@ function randomat_meta:Condition()
 end
 
 function randomat_meta:Enabled()
-    if GetConVar("ttt_randomat_"..self.id):GetBool() then
-        return true
-    else
-        return false
-    end
+    return GetConVar("ttt_randomat_" .. self.id):GetBool()
 end
 
 function randomat_meta:GetConVars() end
