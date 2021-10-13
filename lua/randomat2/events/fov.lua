@@ -1,24 +1,43 @@
 local EVENT = {}
 
 CreateConVar("randomat_fov_scale", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Scale of the FOV increase", 1.1, 2.0)
+CreateConVar("randomat_fov_scale_ironsight", 1.0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Scale of the FOV increase when ironsighted", 0.8, 2.0)
 
 EVENT.Title = "Quake Pro"
 EVENT.Description = "Increases each player's Field of View (FOV) so it looks like you're playing Quake"
 EVENT.id = "fov"
 EVENT.SingleUse = false
 
+local function PlayerInIronsights(ply)
+    return ply.GetActiveWeapon and ply:GetActiveWeapon() and ply:GetActiveWeapon():GetIronsights()
+end
+
 function EVENT:Begin()
     local scale = GetConVar("randomat_fov_scale"):GetFloat()
-    local changedFOV = {}
+    local scaleIronsight = GetConVar("randomat_fov_scale_ironsight"):GetFloat()
+    local originalFOV = {}
+    for _, v in ipairs(player.GetAll()) do
+        if PlayerInIronsights(v) then
+            v:GetActiveWeapon():SetIronsights(false)
+        end
+    end
+
     timer.Create("RandomatFOVTimer", 0.1, 0, function()
         for _, v in ipairs(player.GetAll()) do
             if v:Alive() and not v:IsSpec() then
-                -- Save the player's scaled FOV the first time we see them
-                if changedFOV[v:SteamID64()] == nil then
-                    changedFOV[v:SteamID64()] = v:GetFOV() * scale
+                local fovScale
+                if PlayerInIronsights(v) then
+                    fovScale = scaleIronsight
+                else
+                    fovScale = scale
                 end
 
-                v:SetFOV(changedFOV[v:SteamID64()], 0)
+                -- Save the player's scaled FOV the first time we see them
+                if originalFOV[v:SteamID64()] == nil then
+                    originalFOV[v:SteamID64()] = v:GetFOV()
+                end
+
+                v:SetFOV(originalFOV[v:SteamID64()] * fovScale, 0)
             else
                 v:SetFOV(0, 0)
             end
@@ -35,7 +54,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in ipairs({"scale"}) do
+    for _, v in ipairs({"scale", "scale_ironsight"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

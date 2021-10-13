@@ -1046,7 +1046,8 @@ Increases each player's Field of View (FOV) so it looks like you're playing Quak
 _ttt_randomat_fov_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_fov_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_fov_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.
+_randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.\
+_randomat_fov_scale_ironsight_ - Default: 1.0 - Scale of the FOV increase when ironsighted.
 
 ## Random Health for everyone!
 Gives everyone a random amount of health within the configurable boundaries
