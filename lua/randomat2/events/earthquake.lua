@@ -10,7 +10,8 @@ function EVENT:Begin()
     local magnitude = math.random(1, 10)
     self.Description = "Magnitude " .. magnitude .. "!"
 
-    util.ScreenShake(vector_origin, magnitude, 5, 2 * magnitude, 5000)
+    -- Shake the screen aroudn the owner's location in case there are really big maps with a lot of empty space
+    util.ScreenShake(self.owner:GetPos(), magnitude, 5, 2 * magnitude, 5000)
     timer.Create("RdmtEarthquake", 0.25, 5 * magnitude, function ()
         for _, ent in ipairs(ents.GetAll()) do
             local class = ent:GetClass()
