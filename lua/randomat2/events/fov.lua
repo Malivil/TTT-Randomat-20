@@ -1,5 +1,7 @@
 local EVENT = {}
 
+util.AddNetworkString("RdmtFOVBegin")
+
 CreateConVar("randomat_fov_scale", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Scale of the FOV increase", 1.1, 2.0)
 CreateConVar("randomat_fov_scale_ironsight", 1.0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Scale of the FOV increase when ironsighted", 0.8, 2.0)
 
@@ -19,8 +21,11 @@ function EVENT:Begin()
     for _, v in ipairs(player.GetAll()) do
         if PlayerInIronsights(v) then
             v:GetActiveWeapon():SetIronsights(false)
+            v:SetFOV(0, 0)
         end
     end
+    net.Start("RdmtFOVBegin")
+    net.Broadcast()
 
     timer.Create("RandomatFOVTimer", 0.1, 0, function()
         for _, v in ipairs(player.GetAll()) do
