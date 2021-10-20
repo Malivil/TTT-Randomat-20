@@ -1436,6 +1436,17 @@ _ttt_randomat_typeracer_weight_ - Default: -1 - The weight this event should use
 _randomat_typeracer_timer_ - Default: 15 - The amount of time players have to type each given word.\
 _randomat_typeracer_kill_wrong_ - Default: 1 - Whether to kill players who type the word incorrectly.
 
+**Custom Phrases**
+\
+This event also supports custom phrases to be added by server administrators. This allows servers to use their own phrases that may not work in the core event by default -- things like inside jokes or phrases that use other alphabets. The custom phrases are stored, one per line, in the `data/randomat/typeracer.txt` file on the server.
+\
+\
+You can also use the following commands in the server console to help you manage the custom phrases:
+\
+_randomat_typeracer_add_phrase {phrase}_ - Adds the given phrase to the list of custom phrases (if it doesn't exist) and updates the `data/randomat/typeracer.txt` file.\
+_randomat_typeracer_remove_phrase {phrase}_ - Removes the given phrase from the list of custom phrases (if it exists) and updates the `data/randomat/typeracer.txt` file.\
+_randomat_typeracer_list_phrases_ - Lists all of the current custom phrases.
+
 ## Wasteful!
 Every gun shot uses two bullets
 \

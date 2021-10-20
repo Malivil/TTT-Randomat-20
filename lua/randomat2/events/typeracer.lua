@@ -71,6 +71,8 @@ table.insert(values, "the quick brown fox jumps over the lazy dog")
 table.insert(values, "peter piper picked a peck of pickled peppers")
 table.insert(values, "pneumonoultramicroscopicsilicovolcanoconiosis")
 
+local custom_values_path = "randomat/typeracer.txt"
+local custom_values = {}
 local bucketed_values = {}
 
 local iteration
@@ -89,6 +91,60 @@ local iteration_length_mapping = {
     [9] = function(len) return len > 17 end,
     [10] = function(len) return len > 19 end
 }
+
+local function SaveCustomValues()
+    if not file.IsDir("randomat", "DATA") then
+        if file.Exists("randomat", "DATA") then
+            ErrorNoHalt("Item named 'randomat' already exists in garrysmod/data but it is not a directory\n")
+            return
+        end
+
+        file.CreateDir("randomat")
+    end
+
+    local typeracer_data = file.Open(custom_values_path, "w", "DATA")
+    for _, phrase in ipairs(custom_values) do
+        typeracer_data:Write(phrase .. "\n")
+    end
+    typeracer_data:Close()
+end
+
+concommand.Add("randomat_typeracer_add_phrase", function(ply, cmd, args, argStr)
+    local phrase = string.Trim(argStr):lower()
+    if table.HasValue(custom_values, argStr) or table.HasValue(ROLE_STRINGS, argStr) then
+        print("Phrase already exists: '" .. phrase .. "'")
+    else
+        print("Adding phrase: '" .. phrase .. "'")
+        table.insert(custom_values, phrase)
+    end
+    SaveCustomValues()
+end)
+concommand.Add("randomat_typeracer_remove_phrase", function(ply, cmd, args, argStr)
+    local phrase = string.Trim(argStr):lower()
+    if table.HasValue(custom_values, argStr) then
+        print("Removing phrase: '" .. phrase .. "'")
+        table.RemoveByValue(custom_values, argStr)
+    else
+        print("Phrase not found: '" .. phrase .. "'")
+    end
+    SaveCustomValues()
+end)
+concommand.Add("randomat_typeracer_list_phrases", function(ply, cmd, args, argStr)
+    print("Custom Phrases:")
+    PrintTable(custom_values)
+end)
+
+-- Read custom values out of the file on the disk
+if file.Exists(custom_values_path, "DATA") then
+    local typeracer_data = file.Open(custom_values_path, "r", "DATA")
+    while not typeracer_data:EndOfFile() do
+        local line = string.Trim(typeracer_data:ReadLine()):lower()
+        if not table.HasValue(values, line) then
+            table.insert(custom_values, line)
+        end
+    end
+    typeracer_data:Close()
+end
 
 local last_word = nil
 function EVENT:ChooseWord(first, quiz_time)
@@ -121,6 +177,11 @@ function EVENT:Begin()
             for _, r in ipairs(ROLE_STRINGS) do
                 table.insert(values, r:lower())
             end
+        end
+
+        -- Add custom values to the defaults
+        if #custom_values > 0 then
+            values = table.Add(values, custom_values)
         end
 
         -- Initialize the buckets
