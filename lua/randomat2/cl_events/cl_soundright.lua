@@ -2,7 +2,7 @@ local wep_sounds = {}
 
 net.Receive("RdmtSoundRightBegin", function()
     hook.Add("EntityEmitSound", "SoundRightOverrideHook", function(data)
-        if not IsValid(data.Entity) or not data.Entity:IsPlayer() or not data.Entity.GetActiveWeapon then return end
+        if not IsPlayer(data.Entity) or not data.Entity.GetActiveWeapon then return end
         local wep = data.Entity:GetActiveWeapon()
         if not IsValid(wep) then return end
 

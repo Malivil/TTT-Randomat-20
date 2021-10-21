@@ -8,50 +8,195 @@ CreateConVar("randomat_typeracer_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The
 CreateConVar("randomat_typeracer_kill_wrong", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to kill players who type the word incorrectly")
 
 local values = {}
-table.insert(values, "cheese")
-table.insert(values, "randomat")
-table.insert(values, "racecar")
 table.insert(values, "kayak")
+table.insert(values, "weird")
+table.insert(values, "cheese")
 table.insert(values, "banana")
-table.insert(values, "mississippi")
-table.insert(values, "massachusetts")
-table.insert(values, "worcestershire")
+table.insert(values, "rhythm")
+table.insert(values, "racecar")
+table.insert(values, "pharaoh")
+table.insert(values, "randomat")
+table.insert(values, "misspell")
+table.insert(values, "tneconni")
 table.insert(values, "controller")
+table.insert(values, "contagious")
+table.insert(values, "perplexing")
+table.insert(values, "psychology")
+table.insert(values, "definitely")
+table.insert(values, "ameliorate")
+table.insert(values, "mississippi")
+table.insert(values, "connecticut")
+table.insert(values, "stroopwafel")
+table.insert(values, "tegucigalpa")
+table.insert(values, "ouagadougou")
+table.insert(values, "pterodactyl")
+table.insert(values, "connoisseur")
+table.insert(values, "intelligence")
+table.insert(values, "handkerchief")
+table.insert(values, "acquaintance")
+table.insert(values, "perseverance")
+table.insert(values, "sacrilegious")
+table.insert(values, "entrepreneur")
+table.insert(values, "massachusetts")
+table.insert(values, "sophisticated")
+table.insert(values, "pronunciation")
+table.insert(values, "worcestershire")
+table.insert(values, "defenestration")
+table.insert(values, "acknowledgment")
+table.insert(values, "consanguineous")
+table.insert(values, "omphaloskepsis")
+table.insert(values, "myrmecophilous")
+table.insert(values, "phenolphthalein")
+table.insert(values, "psychotomimetic")
+table.insert(values, "trichotillomania")
+table.insert(values, "triskaidekaphobia")
+table.insert(values, "unenthusiastically")
+table.insert(values, "benedict cumberbatch")
+table.insert(values, "internationalization")
+table.insert(values, "llanfairpwllgwyngyll")
+table.insert(values, "uncharacteristically")
+table.insert(values, "electroencephalograph")
+table.insert(values, "incomprehensibilities")
+table.insert(values, "red rum, sir, is murder")
+table.insert(values, "honorificabilitudinitatibus")
+table.insert(values, "antidisestablishmentarianism")
+table.insert(values, "floccinaucinihilipilification")
+table.insert(values, "pseudopseudohypoparathyroidism")
+table.insert(values, "kolmivaihekilowattituntimittari")
+table.insert(values, "supercalifragilisticexpialidocious")
+table.insert(values, "she sells seashells by the seashore")
+table.insert(values, "the five boxing wizards jump quickly")
+table.insert(values, "sphinx of black quartz, judge my vow")
 table.insert(values, "the quick brown fox jumps over the lazy dog")
 table.insert(values, "peter piper picked a peck of pickled peppers")
-table.insert(values, "red rum, sir, is murder")
-table.insert(values, "she sells seashells by the seashore")
-table.insert(values, "supercalifragilisticexpialidocious")
-table.insert(values, "unenthusiastically")
-table.insert(values, "defenestration")
-table.insert(values, "contagious")
-table.insert(values, "sophisticated")
-table.insert(values, "perplexing")
-table.insert(values, "misspell")
-table.insert(values, "pharaoh")
-table.insert(values, "weird")
-table.insert(values, "intelligence")
-table.insert(values, "pronunciation")
-table.insert(values, "handkerchief")
-table.insert(values, "tneconni")
+table.insert(values, "pneumonoultramicroscopicsilicovolcanoconiosis")
 
-function EVENT:ChooseWord(first)
-    local chosen = values[math.random(1, #values)]
+local custom_values_path = "randomat/typeracer.txt"
+local custom_values = {}
+local bucketed_values = {}
+
+local iteration
+local MIN_ITERATION = 1
+local MAX_ITERATION = 10
+
+local iteration_length_mapping = {
+    [1] = function(len) return len < 10 end,
+    [2] = function(len) return len < 12 end,
+    [3] = function(len) return len > 5 and len < 14 end,
+    [4] = function(len) return len > 7 and len < 16 end,
+    [5] = function(len) return len > 9 and len < 18 end,
+    [6] = function(len) return len > 11 and len < 20 end,
+    [7] = function(len) return len > 13 and len < 22 end,
+    [8] = function(len) return len > 15 and len < 24 end,
+    [9] = function(len) return len > 17 end,
+    [10] = function(len) return len > 19 end
+}
+
+local function SaveCustomValues()
+    if not file.IsDir("randomat", "DATA") then
+        if file.Exists("randomat", "DATA") then
+            ErrorNoHalt("Item named 'randomat' already exists in garrysmod/data but it is not a directory\n")
+            return
+        end
+
+        file.CreateDir("randomat")
+    end
+
+    local typeracer_data = file.Open(custom_values_path, "w", "DATA")
+    for _, phrase in ipairs(custom_values) do
+        typeracer_data:Write(phrase .. "\n")
+    end
+    typeracer_data:Close()
+end
+
+concommand.Add("randomat_typeracer_add_phrase", function(ply, cmd, args, argStr)
+    local phrase = string.Trim(argStr):lower()
+    if table.HasValue(custom_values, argStr) or table.HasValue(ROLE_STRINGS, argStr) then
+        print("Phrase already exists: '" .. phrase .. "'")
+    else
+        print("Adding phrase: '" .. phrase .. "'")
+        table.insert(custom_values, phrase)
+    end
+    SaveCustomValues()
+end)
+concommand.Add("randomat_typeracer_remove_phrase", function(ply, cmd, args, argStr)
+    local phrase = string.Trim(argStr):lower()
+    if table.HasValue(custom_values, argStr) then
+        print("Removing phrase: '" .. phrase .. "'")
+        table.RemoveByValue(custom_values, argStr)
+    else
+        print("Phrase not found: '" .. phrase .. "'")
+    end
+    SaveCustomValues()
+end)
+concommand.Add("randomat_typeracer_list_phrases", function(ply, cmd, args, argStr)
+    print("Custom Phrases:")
+    PrintTable(custom_values)
+end)
+
+-- Read custom values out of the file on the disk
+if file.Exists(custom_values_path, "DATA") then
+    local typeracer_data = file.Open(custom_values_path, "r", "DATA")
+    while not typeracer_data:EndOfFile() do
+        local line = string.Trim(typeracer_data:ReadLine()):lower()
+        if not table.HasValue(values, line) then
+            table.insert(custom_values, line)
+        end
+    end
+    typeracer_data:Close()
+end
+
+local last_word = nil
+function EVENT:ChooseWord(first, quiz_time)
+    -- Get the word based on the current iteration so difficult scales over time
+    iteration = math.Clamp(iteration + 1, MIN_ITERATION, MAX_ITERATION)
+    local bucket_values = bucketed_values[iteration]
+
+    -- Make sure we don't choose the same word twice in a row
+    local chosen
+    repeat
+        chosen = bucket_values[math.random(1, #bucket_values)]
+    until last_word == nil or last_word ~= chosen
+    last_word = chosen
 
     -- Let everyone know what the word is
     local message = "The " .. (first and "first" or "next") .. " word/phrase is: " .. chosen
-    for _, p in ipairs(self:GetAlivePlayers()) do
-        p:PrintMessage(HUD_PRINTTALK, message)
-    end
-    self:SmallNotify(message)
+    local time = math.Round(quiz_time * 0.66)
+    self:SmallNotify(message, time)
 
     return chosen
 end
 
 function EVENT:Begin()
-    if ROLE_STRINGS then
-        for _, r in ipairs(ROLE_STRINGS) do
-            table.insert(values, r:lower())
+    iteration = 0
+
+    -- Only add to the values arrays the first time
+    if table.Count(bucketed_values) == 0 then
+        -- Add all the role names
+        if ROLE_STRINGS then
+            for _, r in ipairs(ROLE_STRINGS) do
+                table.insert(values, r:lower())
+            end
+        end
+
+        -- Add custom values to the defaults
+        if #custom_values > 0 then
+            values = table.Add(values, custom_values)
+        end
+
+        -- Initialize the buckets
+        for i = MIN_ITERATION, MAX_ITERATION do
+            bucketed_values[i] = {}
+        end
+
+        -- Put values in the buckets based on their lengths
+        for _, v in ipairs(values) do
+            local len = #v
+            for i, pred in pairs(iteration_length_mapping) do
+                if pred(len) then
+                    table.insert(bucketed_values[i], v)
+                end
+            end
         end
     end
 
@@ -65,15 +210,17 @@ function EVENT:Begin()
 
     timer.Create("RdmtTypeRacerDelay", time, 1, function()
         local safe = {}
-        local chosen = self:ChooseWord(true)
+        local chosen = self:ChooseWord(true, time)
 
         self:AddHook("PlayerSay", function(ply, text, team_only)
             if not IsValid(ply) or ply:IsSpec() then return end
-            if team_only then return end
+
+            local sid64 = ply:SteamID64()
+            if team_only or safe[sid64] then return end
             if text:lower() == chosen then
                 ply:PrintMessage(HUD_PRINTTALK, "You're safe!")
                 ply:PrintMessage(HUD_PRINTCENTER, "You're safe!")
-                safe[ply:SteamID64()] = true
+                safe[sid64] = true
             else
                 ply:PrintMessage(HUD_PRINTTALK, "WRONG!")
                 ply:PrintMessage(HUD_PRINTCENTER, "WRONG!")
@@ -95,7 +242,7 @@ function EVENT:Begin()
             end
 
             table.Empty(safe)
-            chosen = self:ChooseWord()
+            chosen = self:ChooseWord(false, time)
         end)
     end)
 end

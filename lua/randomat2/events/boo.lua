@@ -40,7 +40,7 @@ function EVENT:Begin()
     self:AddHook("KeyPress", function(ply, key)
         if key == IN_JUMP and ply:GetNWInt("RdmtBooPower", 0) == 100 then
             local target = ply:GetObserverMode() ~= OBS_MODE_ROAMING and ply:GetObserverTarget() or nil
-            if IsValid(target) and target:IsPlayer() then
+            if IsPlayer(target) then
                 -- Reset the player's power
                 ply:SetNWInt("RdmtBooPower", 0)
 

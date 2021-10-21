@@ -6,7 +6,7 @@ EVENT.id = "credits"
 function EVENT:Begin()
     timer.Create("GiveCredsTimer", 0, 0, function()
         for _, ply in ipairs(player.GetAll()) do
-            ply:SetCredits(5)
+            ply:SetCredits(10)
         end
     end)
 end

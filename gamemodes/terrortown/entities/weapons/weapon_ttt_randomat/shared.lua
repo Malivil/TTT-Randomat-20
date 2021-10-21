@@ -62,7 +62,7 @@ function SWEP:SetupDataTables()
  end
 
 function SWEP:Initialize()
-    util.PrecacheSound("weapons/c4_initiate.wav")
+    util.PrecacheSound("weapons/c4_initiate.mp3")
 
     -- Update the LimitedStock state based on the convar
     if SERVER then

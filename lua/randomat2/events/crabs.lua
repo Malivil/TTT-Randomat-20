@@ -19,7 +19,7 @@ function EVENT:Begin()
             if not ply:Alive() then
                 for i = 1, GetConVar("randomat_crabs_count"):GetInt() do
                     local crab = ents.Create("npc_headcrab")
-                    crab:SetPos(ply:GetPos() + Vector(math.random(-100, 100), math.random(-100, 100), 0) )
+                    crab:SetPos(ply:GetPos() + Vector(math.random(-100, 100), math.random(-100, 100), 0))
                     crab:Spawn()
                 end
                 plys[k] = nil

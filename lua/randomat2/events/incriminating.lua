@@ -8,6 +8,7 @@ EVENT.Title = "Incriminating Evidence"
 EVENT.Description = "Forces a random player to say something incriminating without their knowledge"
 EVENT.id = "incriminating"
 EVENT.StartSecret = true
+EVENT.SingleUse = false
 
 util.AddNetworkString("RdmtIncriminatingMessage")
 
@@ -126,6 +127,16 @@ local function AddRoleStrings(target, roles, messages)
     end
 end
 
+function EVENT:GetRandomAlivePlayer(pred)
+    local alive_players = self:GetAlivePlayers(true)
+    for _, p in ipairs(alive_players) do
+        -- Exclude detective-like players unless there isn't anyone else to choose
+        if (not pred or pred(p)) and (#alive_players == 2 or not Randomat:IsDetectiveLike(p)) then
+            return p
+        end
+    end
+end
+
 local first_time = true
 function EVENT:Begin()
     -- Only add templates the first time this is run
@@ -196,16 +207,16 @@ function EVENT:Begin()
     end
 
     -- The percent of the round that is complete is how much time has elapsed since the start of the round compared to the total amount of time the round will last
-    local round_percent_complete = (CurTime() - GAMEMODE.RoundStartTime) / (GetGlobalFloat("ttt_round_end", CurTime()) - GAMEMODE.RoundStartTime)
+    local round_percent_complete = Randomat:GetRoundCompletePercent()
     local templates = {}
     -- Use "new round" and "start" if <= 5% of the round has elapsed
-    if round_percent_complete <= 0.05 then
+    if round_percent_complete <= 5 then
         templates = table.Add(table.Copy(start_tmpl), new_round_tmpl)
     -- Use "start" if <=25% of the round has elapsed
-    elseif round_percent_complete <= 0.25 then
+    elseif round_percent_complete <= 25 then
         templates = start_tmpl
     -- Use "end" and "mid/end" if >=75% of the round has elapsed
-    elseif round_percent_complete >= 0.75 then
+    elseif round_percent_complete >= 75 then
         templates = table.Add(table.Copy(end_tmpl), mid_end_tmpl)
     -- Otherwise use "mid" and "mid/end"
     else
@@ -226,8 +237,8 @@ function EVENT:Begin()
     -- Shuffle them for more randomization
     table.Shuffle(messages)
 
-    -- Get a random living player
-    local target = self:GetAlivePlayers(true)[1]
+    -- Get a random living non-Detective player
+    local target = self:GetRandomAlivePlayer()
     local mistake_chance = GetConVar("randomat_incriminating_mistake_chance"):GetFloat()
     local delay_min = GetConVar("randomat_incriminating_timer_min"):GetInt()
     local delay_max = math.max(delay_min, GetConVar("randomat_incriminating_timer_max"):GetInt())
@@ -237,14 +248,7 @@ function EVENT:Begin()
         -- Replace the "%PLAYER%" placeholder
         -- Use a different placeholder for this so that the extra {'s and }'s for role names can be stripped out easily
         if string.find(message, "%PLAYER%", nil, true) then
-            local players = self:GetAlivePlayers(true)
-            local found = nil
-            for _, p in ipairs(players) do
-                if p ~= target then
-                    found = p
-                    break
-                end
-            end
+            local found = GetRandomAlivePlayer(function(p) return p ~= target end)
             message = string.Replace(message, "%PLAYER%", found:Nick())
         end
 

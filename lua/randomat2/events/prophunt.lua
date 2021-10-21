@@ -51,7 +51,7 @@ end
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if (Randomat:IsTraitorTeam(ply) and not ply:GetRole() == ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply) then
+    if (Randomat:IsTraitorTeam(ply) and ply:GetRole() ~= ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply) then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         updated = true
     end
@@ -200,7 +200,7 @@ function EVENT:Begin()
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
         if not IsValid(ent) or not (string.StartWith(ent:GetClass(), "prop_physics") or ent:GetClass() == "prop_dynamic") then return end
         local att = dmginfo:GetAttacker()
-        if not IsValid(att) or not att:IsPlayer() then return end
+        if not IsPlayer(att) then return end
 
         -- If the thing they attacked is not a disguise then they should take the damage
         -- This property is added by the Prop Disguiser [310403737] (and the Prop Disguiser Improved [2127939503])

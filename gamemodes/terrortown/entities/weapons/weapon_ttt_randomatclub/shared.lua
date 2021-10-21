@@ -39,7 +39,7 @@ SWEP.NoSights               = true
 local sound_single = Sound("Weapon_Crowbar.Single")
 
 function SWEP:PrimaryAttack()
-    self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+    self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
     if not IsValid(self:GetOwner()) then return end
 
@@ -55,10 +55,10 @@ function SWEP:PrimaryAttack()
     local tr_main = util.TraceHull({start=spos, endpos=sdest, filter=self:GetOwner(), mask=MASK_SHOT_HULL, mins=kmins, maxs=kmaxs})
     local hitEnt = tr_main.Entity
 
-    self.Weapon:EmitSound(sound_single)
+    self:EmitSound(sound_single)
 
     if IsValid(hitEnt) or tr_main.HitWorld then
-        self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
+        self:SendWeaponAnim(ACT_VM_HITCENTER)
 
         if not (CLIENT and (not IsFirstTimePredicted())) then
             local edata = EffectData()
@@ -82,17 +82,17 @@ function SWEP:PrimaryAttack()
             end
         end
     else
-        self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
+        self:SendWeaponAnim(ACT_VM_MISSCENTER)
     end
 
     if SERVER then
         self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 
-        if hitEnt and hitEnt:IsValid() then
+        if IsValid(hitEnt) then
             local dmg = DamageInfo()
             dmg:SetDamage(self.Primary.Damage)
             dmg:SetAttacker(self:GetOwner())
-            dmg:SetInflictor(self.Weapon)
+            dmg:SetInflictor(self)
             dmg:SetDamageForce(self:GetOwner():GetAimVector() * 1500)
             dmg:SetDamagePosition(self:GetOwner():GetPos())
             dmg:SetDamageType(DMG_CLUB)

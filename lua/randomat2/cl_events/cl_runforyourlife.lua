@@ -19,7 +19,7 @@ net.Receive("RandomatRunForYourLifeStart", function()
     local delay = net.ReadFloat()
     hook.Add("Think", ply:Nick() .. "RunForYourLifeThink", function()
         if ply == nil or not IsValid(ply) or not ply:Alive() then return end
-        if Randomat:IsJesterTeam(ply) then return end
+        if Randomat:ShouldActLikeJester(ply) then return end
 
         if (last_hurt_time + delay) < CurTime() and IsSprinting(ply) then
             last_hurt_time = CurTime()

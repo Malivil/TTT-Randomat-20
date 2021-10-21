@@ -1,7 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Glitch in the Matrix"
-EVENT.Description = "Randomly changes everyone's role to be either Glitch or Traitor"
+EVENT.Description = "Changes everyone's role to be either Glitch or Traitor and gives a random shop item."
 EVENT.id = "glitch"
 
 CreateConVar("randomat_glitch_traitor_pct", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The percentage of players that will be traitors", 1, 100)
@@ -18,7 +18,7 @@ function EVENT:Begin()
     EVENT.Description = "Randomly changes everyone's role to be either " .. Randomat:GetRoleString(ROLE_GLITCH) .. " or " .. Randomat:GetRoleString(ROLE_TRAITOR)
 
     blocklist = {}
-    for blocked_id in string.gmatch(GetConVar("randomat_glitch_blocklist"):GetString(), '([^,]+)') do
+    for blocked_id in string.gmatch(GetConVar("randomat_glitch_blocklist"):GetString(), "([^,]+)") do
         table.insert(blocklist, blocked_id:Trim())
     end
 

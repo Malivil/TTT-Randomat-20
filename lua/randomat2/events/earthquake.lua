@@ -4,12 +4,14 @@ CreateConVar("randomat_earthquake_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 
 EVENT.Title = "Earthquake"
 EVENT.id = "earthquake"
+EVENT.SingleUse = false
 
 function EVENT:Begin()
     local magnitude = math.random(1, 10)
     self.Description = "Magnitude " .. magnitude .. "!"
 
-    util.ScreenShake(vector_origin, magnitude, 5, 2 * magnitude, 5000)
+    -- Shake the screen aroudn the owner's location in case there are really big maps with a lot of empty space
+    util.ScreenShake(self.owner:GetPos(), magnitude, 5, 2 * magnitude, 5000)
     timer.Create("RdmtEarthquake", 0.25, 5 * magnitude, function ()
         for _, ent in ipairs(ents.GetAll()) do
             local class = ent:GetClass()
@@ -33,7 +35,7 @@ end
 
 function EVENT:Condition()
     local blocklist = {}
-    for blocked_id in string.gmatch(GetConVar("randomat_earthquake_blocklist"):GetString(), '([^,]+)') do
+    for blocked_id in string.gmatch(GetConVar("randomat_earthquake_blocklist"):GetString(), "([^,]+)") do
         table.insert(blocklist, blocked_id:Trim())
     end
 

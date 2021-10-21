@@ -8,7 +8,7 @@ EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
 function EVENT:Begin()
     self:AddHook("EntityFireBullets", function(ent, data)
-        if not IsValid(ent) or not ent:IsPlayer() then return end
+        if not IsPlayer(ent) then return end
 
         local wep = ent:GetActiveWeapon()
         if not IsValid(wep) or not wep.Primary or wep.Primary.ClipSize <= 0 then return end

@@ -5,6 +5,7 @@ EVENT.Description = "Gives all Detectives extra health, but kills all members of
 EVENT.id = "president"
 
 CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
+CreateConVar("randomat_president_announce", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to announce when the president dies")
 
 function EVENT:Begin(target)
     -- Update this in case the role names have been changed
@@ -32,8 +33,12 @@ function EVENT:Begin(target)
     target:SetMaxHealth(target:GetMaxHealth()+GetConVar("randomat_president_bonushealth"):GetInt())
     target:SetHealth(target:GetMaxHealth())
 
+    local announce = GetConVar("randomat_president_announce"):GetBool()
     self:AddHook("PlayerDeath", function(tgt, dmg, ply)
-        if tgt:IsValid() and tgt == target then
+        if IsValid(tgt) and tgt == target then
+            if announce then
+                self:SmallNotify("The President has been killed!")
+            end
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if Randomat:IsInnocentTeam(v) then
                     v:Kill()
@@ -72,7 +77,19 @@ function EVENT:GetConVars()
             })
         end
     end
-    return sliders
+
+    local checks = {}
+    for _, v in ipairs({"announce"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(checks, {
+                cmd = v,
+                dsc = convar:GetHelpText()
+            })
+        end
+    end
+    return sliders, checks
 end
 
 Randomat:register(EVENT)

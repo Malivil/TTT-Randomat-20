@@ -11,6 +11,9 @@ CreateConVar("randomat_democracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The
 CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody dies")
 CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
 CreateConVar("randomat_democracy_jestermode", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How to handle when Jester/Swapper is voted for. See documentation", 0, 2)
+CreateConVar("randomat_democracy_show_jester_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a jester votes for revenge in chat")
+CreateConVar("randomat_democracy_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_democracy_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
 
 EVENT.Title = "I love democracy, I love the republic."
 EVENT.AltTitle = "Democracy"
@@ -91,10 +94,10 @@ function EVENT:Begin()
                 end
 
                 if skipkill == 0 then
-                    if Randomat:IsJesterTeam(slainply) then
+                    if Randomat:ShouldActLikeJester(slainply) then
                         local jestervoters = {}
                         for voter, tgt in RandomPairs(playersvoted) do
-                            if voter:Alive() and not voter:IsSpec() and not Randomat:IsJesterTeam(voter) and tgt == slainply then
+                            if voter:Alive() and not voter:IsSpec() and not Randomat:ShouldActLikeJester(voter) and tgt == slainply then
                                 table.insert(jestervoters, voter)
                             end
                         end
@@ -113,7 +116,8 @@ function EVENT:Begin()
                             end
                             self:SmallNotify(voter:Nick().." was dumb enough to vote for the " .. Randomat:GetRoleString(ROLE_JESTER) .. "!")
 
-                            if jestermode == 1 then
+                            -- Only kill the jester if we know they are a Jester or a Swapper. The other ones might not like being killed so much
+                            if jestermode == 1 and (slainply:GetRole() == ROLE_JESTER or slainply:GetRole() == ROLE_SWAPPER) then
                                 -- Delay slightly to show the message above before the round potentially ends
                                 timer.Simple(1, function()
                                     local dmginfo = DamageInfo()
@@ -178,7 +182,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"tiekills"}) do
+    for _, v in ipairs({"tiekills", "show_votes", "show_votes_anon"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -206,12 +210,22 @@ net.Receive("DemocracyPlayerVoted", function(ln, ply)
         if v:Nick() == votee then --find which player was voted for
             playersvoted[ply] = v --insert player and target into table
 
-            for _, va in ipairs(player.GetAll()) do
-                va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted to kill "..votee) --tell everyone who they voted for
+            if GetConVar("randomat_democracy_show_votes"):GetBool() then
+                local anon = GetConVar("randomat_democracy_show_votes_anon"):GetBool()
+                for _, va in ipairs(player.GetAll()) do
+                    local name
+                    if anon then
+                        name = "Someone"
+                    else
+                        name = ply:Nick()
+                    end
+                    va:PrintMessage(HUD_PRINTTALK, name.." has voted to kill "..votee)
+                end
             end
 
             playervotes[k] = playervotes[k] + 1
             num = playervotes[k]
+            break
         end
     end
 
@@ -228,8 +242,10 @@ net.Receive("DemocracyJesterVoted", function(ln, ply)
         if v:Nick() == votee then
             v:Kill()
 
-            for _, va in ipairs(player.GetAll()) do
-                va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has decided to take revenge on "..votee.." for their vote")
+            if GetConVar("randomat_democracy_show_jester_votes"):GetBool() then
+                for _, va in ipairs(player.GetAll()) do
+                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has decided to take revenge on "..votee.." for their vote")
+                end
             end
             return
         end

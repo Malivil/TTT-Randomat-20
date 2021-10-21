@@ -50,7 +50,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("EntityTakeDamage", function(ply, dmg)
-        if ply:IsValid() and ply.isFrozen then
+        if IsValid(ply) and ply.isFrozen then
             dmg:ScaleDamage(0)
         end
     end)

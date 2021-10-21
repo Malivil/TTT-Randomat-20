@@ -12,29 +12,32 @@ _ttt_randomat_clearevents_ - Clears all active events.\
 _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.\
 _ttt_randomat_disableall_ - Disables all events.\
 _ttt_randomat_enableall_ - Enables all events.\
-_ttt_randomat_resetweights_ - Resets all weights to their defaults.\
+_ttt_randomat_resetweights_ - Resets all weights to their defaults.
 
 # General ConVars
 _ttt_randomat_auto_ - Default: 0 - Whether the Randomat should automatically trigger on round start.\
 _ttt_randomat_auto_chance_ - Default: 1 - Chance of the auto-Randomat triggering.\
+_ttt_randomat_auto_silent_ - Default: 0 - Whether the auto-started event should be silent.\
 _ttt_randomat_chooseevent_ - Default: 0 - Allows you to choose out of a selection of events.\
 _ttt_randomat_rebuyable_ - Default: 0 - Whether you can buy more than one Randomat.\
 _ttt_randomat_event_weight_ - Default: 1 - The default selection weight each event should use.\
-_ttt_randomat_event_hint_ - Default: 0 - Whether the Randomat should print what each event does when they start.\
-_ttt_randomat_event_hint_chat_ - Default: 0 - Whether hints should also be put in chat.
+_ttt_randomat_event_hint_ - Default: 1 - Whether the Randomat should print what each event does when they start.\
+_ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put in chat.
 
 # Latest Events
 1. Earthquake
-2. praW emiT
-3. Boo!
-4. Smoke Signals
-5. Hedge Your Bets
-6. Paranormal Activity
-7. Gifts from the Dead
-8. Our Little Secret
-9. Breadcrumbs
-10. Poltergeists
-11. Fiends for Life
+1. praW emiT
+1. Boo!
+1. Smoke Signals
+1. Hedge Your Bets
+1. Paranormal Activity
+1. Gifts from the Dead
+1. Our Little Secret
+1. Breadcrumbs
+1. Poltergeists
+1. Fiends for Life
+1. Narration
+1. T-Rex Vision
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -300,7 +303,8 @@ _randomat_choose_choices_ - Default: 3 - Number of events you can choose from.\
 _randomat_choose_vote_ - Default: 0 - Allows all players to vote on the event.\
 _randomat_choose_votetimer_ - Default: 10 - How long players have to vote on the event.\
 _randomat_choose_deadvoters_ - Default: 0 - Dead people can vote.\
-_randomat_choose_limitchoosetime_ - Default: 0 - Whether single player choosing has limited time.
+_randomat_choose_limitchoosetime_ - Default: 0 - Whether single player choosing has limited time.\
+_randomat_choose_limitchoosetime_random_ - Default: 0 - Whether to choose a random event if time runs out.
 
 ## Clownin' Around (aka We All Float Down Here)
 Converts a Jester/Swapper to a Killer Clown
@@ -498,7 +502,8 @@ _ttt_randomat_election_weight_ - Default: -1 - The weight this event should use 
 _randomat_election_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_election_winner_credits_ - Default: 2 - The number of credits given as a reward, if appropriate.\
 _randomat_election_vamp_turn_innocents_ - Default: 0 - Whether Vampires turn innocents. Otherwise, turns traitors.\
-_randomat_election_show_votes_ - Default: 1 - Whether to show who each player voted for in chat.\
+_randomat_election_show_votes_ - Default: 1 - Whether to show when a target is voted for in chat.\
+_randomat_election_show_votes_anon_ - Default: 0 - Whether to hide who voted in chat.\
 _randomat_election_trigger_mrpresident_ - Default: 0 - Whether to trigger Get Down Mr. President if an Innocent wins.\
 _randomat_election_break_ties_ - Default: 0 - Whether to break ties by choosing a random winner.
 
@@ -632,7 +637,8 @@ Gives all Detectives extra health, but kills all members of the Innocent team if
 _ttt_randomat_president_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_president_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_president_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.
+_randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.\
+_randomat_president_announce_ - Defualt: 1 - Whether to announce when the president dies
 
 ## Ghostly Apparition
 Dead players become ghosts who leave a trail of smoke as they drift through the world
@@ -658,7 +664,7 @@ _randomat_gifts_random_items_ - Default: 1 - Whether everyone should get a rando
 _randomat_gifts_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## Glitch in the Matrix
-Randomly changes everyone's role to be either Glitch or Traitor based on the configurable values
+Changes everyone's role to be either Glitch or Traitor and gives a random shop item
 \
 \
 **ConVars**
@@ -771,7 +777,10 @@ _ttt_randomat_democracy_weight_ - Default: -1 - The weight this event should use
 _randomat_democracy_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_democracy_tiekills_ - Default: 1 - If 1, ties result in a coin toss; if 0, nobody dies in a tied vote.\
 _randomat_democracy_totalpct_ - Default: 50 - Percent of total player votes required for a vote to pass, set to 0 to disable.\
-_randomat_democracy_jestermode_ - Default: 0 - What to do when a Jester/Swapper is voted for. 0 - Kill a random player that voted for them. 1 - Kill the Jester/Swapper, activating their "ability". 2 - Let the Jester/Swapper choose who of their voters to kill.
+_randomat_democracy_jestermode_ - Default: 0 - What to do when a jester team member is voted for. 0 - Kill a random player that voted for them. 1 - Kill the jester team member, activating their "ability" (NOTE: If the player is not a Jester or Swapper, this mode will behave like mode 0 instead). 2 - Let the jester team member choose who of their voters to kill.\
+_randomat_democracy_show_jester_votes_ - Default: 1 - Whether to show when a jester votes for revenge in chat. Used for jestermode 2 only.\
+_randomat_democracy_show_votes_ - Default: 1 - Whether to show when a target is voted for in chat.\
+_randomat_democracy_show_votes_anon_ - Default: 0 - Whether to hide who voted in chat.
 
 ## I see dead people
 Drops a Visualizer whenever a player is killed
@@ -854,6 +863,16 @@ _randomat_malfunction_upper_ - Default: 15 - The upper limit for the random time
 _randomat_malfunction_lower_ - Default: 1 - The lower limit for the random timer.\
 _randomat_malfunction_affectall_ - Default: 0 - Set to 1 for the event to affect everyone at once.\
 _randomat_malfunction_duration_ - Default: 0.5 - Duration of gun malfunction (set to 0 for 1 shot).
+
+## Narration
+Narrates common game activities
+\
+\
+**ConVars**
+\
+_ttt_randomat_narration_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_narration_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_narration_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## No more Fall Damage!
 Prevents any player from taking damage when they fall
@@ -1027,7 +1046,8 @@ Increases each player's Field of View (FOV) so it looks like you're playing Quak
 _ttt_randomat_fov_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_fov_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_fov_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.
+_randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.\
+_randomat_fov_scale_ironsight_ - Default: 1.0 - Scale of the FOV increase when ironsighted.
 
 ## Random Health for everyone!
 Gives everyone a random amount of health within the configurable boundaries
@@ -1270,6 +1290,16 @@ _ttt_randomat_suddendeath_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_suddendeath_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_suddendeath_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## T-Rex Vision
+Your vision is now based on movement. All players who aren't moving are invisible
+\
+\
+**ConVars**
+\
+_ttt_randomat_trexvision_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_trexvision_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_trexvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Taking Inventory
 Swaps player inventories periodically throughout the round. There are some caveats to how this event interacts with special roles:
 - Non-prime Zombies are excluded
@@ -1406,6 +1436,17 @@ _ttt_randomat_typeracer_weight_ - Default: -1 - The weight this event should use
 _randomat_typeracer_timer_ - Default: 15 - The amount of time players have to type each given word.\
 _randomat_typeracer_kill_wrong_ - Default: 1 - Whether to kill players who type the word incorrectly.
 
+**Custom Phrases**
+\
+This event also supports custom phrases to be added by server administrators. This allows servers to use their own phrases that may not work in the core event by default -- things like inside jokes or phrases that use other alphabets. The custom phrases are stored, one per line, in the `data/randomat/typeracer.txt` file on the server.
+\
+\
+You can also use the following commands in the server console to help you manage the custom phrases:
+\
+_randomat_typeracer_add_phrase {phrase}_ - Adds the given phrase to the list of custom phrases (if it doesn't exist) and updates the `data/randomat/typeracer.txt` file.\
+_randomat_typeracer_remove_phrase {phrase}_ - Removes the given phrase from the list of custom phrases (if it exists) and updates the `data/randomat/typeracer.txt` file.\
+_randomat_typeracer_list_phrases_ - Lists all of the current custom phrases.
+
 ## Wasteful!
 Every gun shot uses two bullets
 \
@@ -1492,8 +1533,8 @@ Kills any player who jumps a second time after this event has triggered
 _ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jump_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_jump_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_jump_jesterspam_ - Default: 0 - Whether to show the message multiple times for a Jester/Swapper.\
-_randomat_jump_quackspam_ - Default: 0 - Whether to show the message multiple times for a Quack.
+_randomat_jump_spam_ - Default: 0 - Whether to show the message again for a player who doesn't die.\
+_randomat_jump_kill_blast_immune_ - Default: 1 - Whether to kill players who are immune to blast damage.
 
 ## Zom-Bees!
 Spawns bees who spread zombiism to their victims. See the "RISE FROM YOUR GRAVE" event for additional configuration.
@@ -1541,8 +1582,9 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
-- Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
+- Alex, Angela, Clockwork_tiger, Dom, Fyxen, Jaakko, Neil, and Pardival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
+- Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Angela, Crimson, Fazzy, Fyxen, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
@@ -1551,15 +1593,17 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
-- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script" and "That Doesn't Sound Right" events
+- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
 - Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
+- Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
+- Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event

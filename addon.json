@@ -3,7 +3,7 @@
   "type": "ServerContent",
   "ignore": [
     ".git*",
-	".vscode*",
+    ".vscode*",
     "*.md",
     "*.iml",
     ".idea*",

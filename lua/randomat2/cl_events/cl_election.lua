@@ -9,20 +9,20 @@ net.Receive("ElectionNominateBegin", function()
     frame:SetDeleteOnClose(true)
 
     --Player List
-    local list = vgui.Create("DListView", frame)
-    list:Dock(FILL)
-    list:SetMultiSelect(false)
-    list:AddColumn("Players")
-    list:AddColumn("Votes")
+    local listView = vgui.Create("DListView", frame)
+    listView:Dock(FILL)
+    listView:SetMultiSelect(false)
+    listView:AddColumn("Players")
+    listView:AddColumn("Votes")
 
     for _, v in ipairs(player.GetAll()) do
         -- Don't allow dead people, spectators, and detective-like players to get nominated
         if v:Alive() and not v:IsSpec() and not Randomat:IsDetectiveLike(v) then
-            list:AddLine(v:Nick(), 0)
+            listView:AddLine(v:Nick(), 0)
         end
     end
 
-    list.OnRowSelected = function(lst, index, pnl)
+    listView.OnRowSelected = function(lst, index, pnl)
         local ply = LocalPlayer()
         if ply:Alive() and not ply:IsSpec() then
             net.Start("ElectionNominateVoted")
@@ -34,9 +34,11 @@ net.Receive("ElectionNominateBegin", function()
     end
 
     net.Receive("ElectionNominateVoted", function()
+        if not IsValid(listView) then return end
+
         local votee = net.ReadString()
         local num = net.ReadInt(32)
-        for _, v in ipairs(list:GetLines()) do
+        for _, v in ipairs(listView:GetLines()) do
             if v:GetColumnText(1) == votee then
                 v:SetColumnText(2, num)
             end
@@ -44,13 +46,15 @@ net.Receive("ElectionNominateBegin", function()
     end)
 
     net.Receive("ElectionNominateReset", function()
-        for _, v in ipairs(list:GetLines()) do
+        if not IsValid(listView) then return end
+
+        for _, v in ipairs(listView:GetLines()) do
             v:SetColumnText(2, 0)
         end
     end)
 
     net.Receive("ElectionNominateEnd", function()
-        if frame ~= nil and IsValid(frame) then
+        if IsValid(frame) then
             frame:Close()
         end
     end)
@@ -67,17 +71,17 @@ net.Receive("ElectionVoteBegin", function()
     frame:SetDeleteOnClose(true)
 
     --Player List
-    local list = vgui.Create("DListView", frame)
-    list:Dock(FILL)
-    list:SetMultiSelect(false)
-    list:AddColumn("Players")
-    list:AddColumn("Votes")
+    local listView = vgui.Create("DListView", frame)
+    listView:Dock(FILL)
+    listView:SetMultiSelect(false)
+    listView:AddColumn("Players")
+    listView:AddColumn("Votes")
 
     --Add the two options
-    list:AddLine(net.ReadString(), 0)
-    list:AddLine(net.ReadString(), 0)
+    listView:AddLine(net.ReadString(), 0)
+    listView:AddLine(net.ReadString(), 0)
 
-    list.OnRowSelected = function(lst, index, pnl)
+    listView.OnRowSelected = function(lst, index, pnl)
         local ply = LocalPlayer()
         if ply:Alive() and not ply:IsSpec() then
             net.Start("ElectionVoteVoted")
@@ -89,9 +93,11 @@ net.Receive("ElectionVoteBegin", function()
     end
 
     net.Receive("ElectionVoteVoted", function()
+        if not IsValid(listView) then return end
+
         local votee = net.ReadString()
         local num = net.ReadInt(32)
-        for _, v in ipairs(list:GetLines()) do
+        for _, v in ipairs(listView:GetLines()) do
             if v:GetColumnText(1) == votee then
                 v:SetColumnText(2, num)
             end
@@ -99,13 +105,15 @@ net.Receive("ElectionVoteBegin", function()
     end)
 
     net.Receive("ElectionVoteReset", function()
-        for _, v in ipairs(list:GetLines()) do
+        if not IsValid(listView) then return end
+
+        for _, v in ipairs(listView:GetLines()) do
             v:SetColumnText(2, 0)
         end
     end)
 
     net.Receive("ElectionVoteEnd", function()
-        if frame ~= nil and IsValid(frame) then
+        if IsValid(frame) then
             frame:Close()
         end
     end)

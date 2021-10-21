@@ -13,7 +13,8 @@ util.AddNetworkString("TTT_DrunkSober")
 CreateConVar("randomat_election_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 30, 180)
 CreateConVar("randomat_election_winner_credits", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of credits given as a reward, if appropriate", 1, 10)
 CreateConVar("randomat_election_vamp_turn_innocents", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether Vampires turn innocents. Otherwise, turns traitors")
-CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show who each player voted for in chat")
+CreateConVar("randomat_election_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_election_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
 CreateConVar("randomat_election_trigger_mrpresident", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to trigger Get Down Mr. President if an Innocent wins")
 CreateConVar("randomat_election_break_ties", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to break ties by choosing a random winner")
 
@@ -110,9 +111,8 @@ function EVENT:StartVotes(first, second)
                 end
             else
                 self:SmallNotify("Nobody was voted for. A new round of voting will begin.")
+                ResetVotes()
             end
-
-            ResetVotes()
         end
     end)
 end
@@ -197,45 +197,8 @@ function EVENT:SwearIn(winner)
     local credits = GetConVar("randomat_election_winner_credits"):GetInt()
     -- Wait 3 seconds before applying the affect
     timer.Simple(3, function()
-        -- Drunk - Have the drunk immediately remember their role
-        if winner:GetRole() == ROLE_DRUNK then
-            if ConVarExists("ttt_drunk_become_clown") and GetConVar("ttt_drunk_become_clown"):GetBool() then
-                winner:DrunkRememberRole(ROLE_CLOWN, true)
-            elseif winner.SoberDrunk then
-                winner:SoberDrunk()
-            -- Fall back to default logic if we don't have the advanced drunk options
-            else
-                local role
-                if math.random() > GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
-                    role = ROLE_TRAITOR
-                    winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
-                else
-                    role = ROLE_INNOCENT
-                end
-
-                winner:SetNWBool("WasDrunk", true)
-                winner:SetRole(role)
-                winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
-                winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
-
-                net.Start("TTT_DrunkSober")
-                net.WriteString(winner:Nick())
-                net.WriteString(ROLE_STRINGS_EXT[role])
-                net.Broadcast()
-
-                SendFullStateUpdate()
-            end
-
-            if timer.Exists("drunkremember") then timer.Remove("drunkremember") end
-            if timer.Exists("waitfordrunkrespawn") then timer.Remove("waitfordrunkrespawn") end
-        -- Old Man - Silently start "Sudden Death" so everyone is on the same page
-        elseif winner:GetRole() == ROLE_OLDMAN then
-            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
-
-            local health = GetConVar("ttt_oldman_starting_health"):GetInt()
-            Randomat:SilentTriggerEvent("suddendeath", winner, health)
         -- Innocent - Promote to Detective, give credits
-        elseif Randomat:IsInnocentTeam(winner) then
+        if Randomat:IsInnocentTeam(winner) then
             Randomat:SetRole(winner, ROLE_DETECTIVE)
             winner:AddCredits(credits)
             SendFullStateUpdate()
@@ -254,6 +217,7 @@ function EVENT:SwearIn(winner)
                     v:AddCredits(credits)
                 end
             end
+        -- Jester Team
         -- Clown - Kill all of the larger team so the Clown activates immediately
         elseif winner:GetRole() == ROLE_CLOWN then
             local innocents = {}
@@ -330,9 +294,14 @@ function EVENT:SwearIn(winner)
 
             local given = nil
             self:AddHook("WeaponEquip", function(wep, ply)
-                -- Set the "BoughtBuy" property to the found user to make this beggar join their team
+                -- Set the "BoughtBy" property to the found user to make this beggar join their team
                 if IsValid(wep) and WEPS.GetClass(wep) == given and winner == ply then
-                    wep.BoughtBuy = source
+                    -- Keep this backwards compatible in case we're on a newer version
+                    if CRVersion("1.3.1") then
+                        wep.BoughtBy = source
+                    else
+                        wep.BoughtBuy = source
+                    end
                     self:RemoveHook("WeaponEquip")
                 end
             end)
@@ -351,8 +320,50 @@ function EVENT:SwearIn(winner)
                     given = id
                     Randomat:CallShopHooks(isequip, id, winner)
                 end)
+        -- Bodysnatcher - Choose the role of a random dead player (or a random enabled role if none are dead) and give it to the bodysnatcher
+        elseif winner:GetRole() == ROLE_BODYSNATCHER then
+            local role = nil
+            for _, ply in ipairs(self:GetDeadPlayers(true)) do
+                role = ply:GetRole()
+                break
+            end
+
+            -- If there are no dead players, get a random enabled role
+            if not role then
+                local hasIndependent = false
+                for _, ply in ipairs(self:GetAlivePlayers()) do
+                    if Randomat:IsIndependentTeam(ply) or Randomat:IsJesterTeam(ply) then
+                        hasIndependent = true
+                        break
+                    end
+                end
+
+                local roles = {}
+                for r = 0, ROLE_MAX do
+                    -- Don't make them another jester and if there is already an independent, don't choose one of those either
+                    if not JESTER_ROLES[r] and (not hasIndependent or not INDEPENDENT_ROLES[r]) then
+                        local rolestring = ROLE_STRINGS_RAW[r]
+                        if DEFAULT_ROLES[r] or GetConVar("ttt_" .. rolestring .. "_enabled"):GetBool() then
+                            table.insert(roles, r)
+                        end
+                    end
+                end
+
+                role = roles[math.random(1, #roles)]
+            end
+
+            winner:PrintMessage(HUD_PRINTTALK, "You have pulled the knowledge how of to be " .. ROLE_STRINGS_EXT[role] .. " from the ether.")
+            winner:PrintMessage(HUD_PRINTCENTER, "You have pulled the knowledge how of to be " .. ROLE_STRINGS_EXT[role] .. " from the ether.")
+
+            self:StripRoleWeapons(winner)
+            Randomat:SetRole(winner, role)
+            SendFullStateUpdate()
+
+            -- Make sure they get their loadout weapons
+            hook.Call("PlayerLoadout", GAMEMODE, winner)
         -- Jester - Kill them, winning the round
         -- Swapper - Kill them with a random player as the "attacker", swapping their roles
+        -- Other Jesters - Kill them, hope that it triggers something
         elseif Randomat:IsJesterTeam(winner) then
             local attacker = self.owner
             if winner:GetRole() == ROLE_SWAPPER or attacker == winner then
@@ -369,6 +380,44 @@ function EVENT:SwearIn(winner)
             dmginfo:SetDamageForce(Vector(0, 0, 0))
             dmginfo:SetDamagePosition(attacker:GetPos())
             winner:TakeDamageInfo(dmginfo)
+        -- Independents
+        -- Drunk - Have the drunk immediately remember their role
+        elseif winner:GetRole() == ROLE_DRUNK then
+            if ConVarExists("ttt_drunk_become_clown") and GetConVar("ttt_drunk_become_clown"):GetBool() then
+                winner:DrunkRememberRole(ROLE_CLOWN, true)
+            elseif winner.SoberDrunk then
+                winner:SoberDrunk()
+            -- Fall back to default logic if we don't have the advanced drunk options
+            else
+                local role
+                if math.random() > GetConVar("ttt_drunk_innocent_chance"):GetFloat() then
+                    role = ROLE_TRAITOR
+                    winner:SetCredits(GetConVar("ttt_credits_starting"):GetInt())
+                else
+                    role = ROLE_INNOCENT
+                end
+
+                winner:SetNWBool("WasDrunk", true)
+                Randomat:SetRole(winner, role)
+                winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+                winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+
+                net.Start("TTT_DrunkSober")
+                net.WriteString(winner:Nick())
+                net.WriteString(ROLE_STRINGS_EXT[role])
+                net.Broadcast()
+
+                SendFullStateUpdate()
+            end
+
+            if timer.Exists("drunkremember") then timer.Remove("drunkremember") end
+            if timer.Exists("waitfordrunkrespawn") then timer.Remove("waitfordrunkrespawn") end
+        -- Old Man - Silently start "Sudden Death" so everyone is on the same page
+        elseif winner:GetRole() == ROLE_OLDMAN then
+            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
+
+            local health = GetConVar("ttt_oldman_starting_health"):GetInt()
+            Randomat:SilentTriggerEvent("suddendeath", winner, health)
         -- Killer - Kill all non-Jesters/Swappers so they win the round
         elseif winner:GetRole() == ROLE_KILLER then
             for _, v in ipairs(self:GetAlivePlayers()) do
@@ -376,6 +425,21 @@ function EVENT:SwearIn(winner)
                     v:Kill()
                 end
             end
+        -- Other Independents - Restore the target's max health to at least 100 and give them 25 HP
+        -- If they don't have max health after the 25 HP bonus the heal them to their maximum instead
+        elseif Randomat:IsIndependentTeam(winner) then
+            local max = winner:GetMaxHealth()
+            if max < 100 then
+                max = 100
+            end
+
+            local hp = winner:Health() + 25
+            if hp < max then
+                hp = max
+            end
+            winner:SetMaxHealth(max)
+            winner:SetHealth(hp)
+        -- Monster Team
         -- Zombie - Silently trigger the RISE FROM YOUR GRAVE event
         elseif winner:GetRole() == ROLE_ZOMBIE then
             self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "!")
@@ -384,7 +448,7 @@ function EVENT:SwearIn(winner)
         elseif winner:GetRole() == ROLE_VAMPIRE then
             local turninnocents = GetConVar("randomat_election_vamp_turn_innocents"):GetBool()
             local team = turninnocents and "innocent" or "traitor"
-            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. team .. " team has been converted to their thalls.")
+            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. team .. " team has been converted to be their thalls.")
 
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if turninnocents then
@@ -400,6 +464,53 @@ function EVENT:SwearIn(winner)
                 end
             end
             SendFullStateUpdate()
+        -- Other Monsters - Convert a random dead player (or live player who voted for them) to that monster's role
+        elseif Randomat:IsMonsterTeam(winner) then
+            local target = nil
+            for _, ply in ipairs(self:GetDeadPlayers(true)) do
+                target = ply
+                break
+            end
+
+            local context_str = ""
+
+            -- Look through the list of players who voted for this person
+            if not target then
+                local voters = {}
+                for voter, votee in pairs(playersvoted) do
+                    -- Find the people who voted for this person but ignore the winner themselves
+                    if votee == winner and voter ~= winner then
+                        table.insert(voters, voter)
+                    end
+                end
+
+                target = voters[math.random(1, #voters)]
+                target:PrintMessage(HUD_PRINTTALK, "The president you voted for has recruited you to their legion of monsters")
+                target:PrintMessage(HUD_PRINTCENTER, "The president you voted for has recruited you to their legion of monsters")
+            else
+                context_str = "brought back from the dead and "
+                target:PrintMessage(HUD_PRINTTALK, "You have been brought back to serve in the president's legion of monsters")
+                target:PrintMessage(HUD_PRINTCENTER, "You have been brought back to serve in the president's legion of monsters")
+            end
+
+            winner:PrintMessage(HUD_PRINTTALK, target:Nick() .. " has been " .. context_str .. "converted to your role")
+            winner:PrintMessage(HUD_PRINTCENTER, target:Nick() .. " has been " .. context_str .. "converted to your role")
+
+            -- Convert the target to the winner's role
+            Randomat:SetRole(target, winner:GetRole())
+            -- If they were dead, respawn them
+            if not target:Alive() or target:IsSpec() then
+                local body = target.server_ragdoll or target:GetRagdollEntity()
+                -- Destroy their old body
+                if IsValid(body) then
+                    body:Remove()
+                end
+                target:SpawnForRound(true)
+            end
+            SendFullStateUpdate()
+
+            -- Make sure they get their loadout weapons
+            hook.Call("PlayerLoadout", GAMEMODE, target)
         end
 
         Randomat:EndActiveEvent(self.id)
@@ -418,6 +529,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
+    ResetVotes()
     timer.Remove("ElectionNominateTimer")
     timer.Remove("ElectionVoteTimer")
     net.Start("ElectionNominateEnd")
@@ -443,7 +555,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"vamp_turn_innocents", "show_votes", "trigger_mrpresident", "break_ties"}) do
+    for _, v in ipairs({"vamp_turn_innocents", "show_votes", "show_votes_anon", "trigger_mrpresident", "break_ties"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -457,7 +569,7 @@ function EVENT:GetConVars()
     return sliders, checks
 end
 
-net.Receive("ElectionNominateVoted", function(ln, ply)
+local function HandleVote(ply, message)
     for k, _ in pairs(playersvoted) do
         if k == ply then
             ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
@@ -474,47 +586,33 @@ net.Receive("ElectionNominateVoted", function(ln, ply)
             num = playervotes[votee]
 
             if GetConVar("randomat_election_show_votes"):GetBool() then
+                local anon = GetConVar("randomat_election_show_votes_anon"):GetBool()
                 for _, va in ipairs(player.GetAll()) do
-                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted for "..votee)
+                    local name
+                    if anon then
+                        name = "Someone"
+                    else
+                        name = ply:Nick()
+                    end
+                    va:PrintMessage(HUD_PRINTTALK, name.." has voted for "..votee)
                 end
             end
+            break
         end
     end
 
-    net.Start("ElectionNominateVoted")
+    net.Start(message)
         net.WriteString(votee)
         net.WriteInt(num, 32)
     net.Broadcast()
+end
+
+net.Receive("ElectionNominateVoted", function(ln, ply)
+    HandleVote(ply, "ElectionNominateVoted")
 end)
 
 net.Receive("ElectionVoteVoted", function(ln, ply)
-    for k, _ in pairs(playersvoted) do
-        if k == ply then
-            ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
-            return
-        end
-    end
-
-    local num = 0
-    local votee = net.ReadString()
-    for _, v in pairs(votableplayers) do
-        if v:Nick() == votee then
-            playersvoted[ply] = v
-            playervotes[votee] = playervotes[votee] + 1
-            num = playervotes[votee]
-
-            if GetConVar("randomat_election_show_votes"):GetBool() then
-                for _, va in ipairs(player.GetAll()) do
-                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has voted for "..votee)
-                end
-            end
-        end
-    end
-
-    net.Start("ElectionVoteVoted")
-        net.WriteString(votee)
-        net.WriteInt(num, 32)
-    net.Broadcast()
+    HandleVote(ply, "ElectionVoteVoted")
 end)
 
 Randomat:register(EVENT)

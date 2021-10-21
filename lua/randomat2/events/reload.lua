@@ -17,7 +17,7 @@ local playerdraining = {}
 
 function EVENT:Begin()
     self:AddHook("EntityFireBullets", function(entity, data)
-        if not IsValid(entity) or not entity:IsPlayer() then return end
+        if not IsPlayer(entity) then return end
         local playername = entity:Nick()
         playerlastshottime[playername] = CurTime()
         playerdraining[playername] = false

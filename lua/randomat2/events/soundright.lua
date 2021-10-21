@@ -51,7 +51,7 @@ end
 
 function EVENT:Begin()
     local blocklist = {}
-    for blocked_id in string.gmatch(GetConVar("randomat_paranoid_blocklist"):GetString(), '([^,]+)') do
+    for blocked_id in string.gmatch(GetConVar("randomat_paranoid_blocklist"):GetString(), "([^,]+)") do
         table.insert(blocklist, blocked_id:Trim())
     end
 
@@ -75,7 +75,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("EntityEmitSound", function(data)
-        if not IsValid(data.Entity) or not data.Entity:IsPlayer() or not data.Entity.GetActiveWeapon then return end
+        if not IsPlayer(data.Entity) or not data.Entity.GetActiveWeapon then return end
         local wep = data.Entity:GetActiveWeapon()
         if not IsValid(wep) then return end
 
