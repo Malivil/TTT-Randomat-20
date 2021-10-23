@@ -54,7 +54,49 @@ function EVENT:Begin()
             victim:PrintMessage(HUD_PRINTTALK, "You're back! Try to survive without weapons for " .. weapondelay .. " seconds")
             victim:PrintMessage(HUD_PRINTCENTER, "You're back! Try to survive without weapons for " .. weapondelay .. " seconds")
             respawntime[sid] = CurTime()
+            -- Destroy their old body
+            local body = victim.server_ragdoll or victim:GetRagdollEntity()
+            local credits = 0
+            if IsValid(body) then
+                credits = CORPSE.GetCredits(body, 0)
+                body:Remove()
+            end
             victim:SpawnForRound(true)
+            victim:SetCredits(credits)
+            -- Let them know when they can use weapons and give their defaults back
+            timer.Create("RdmtBlergWeaponTimer_" .. sid, weapondelay, 1, function()
+                victim:PrintMessage(HUD_PRINTTALK, "You made it! Get some weapons and get back to killing!")
+                victim:PrintMessage(HUD_PRINTCENTER, "You made it! Get some weapons and get back to killing!")
+
+                if not victim:HasWeapon("weapon_ttt_unarmed") then
+                    victim:Give("weapon_ttt_unarmed")
+                end
+                if not victim:HasWeapon("weapon_zm_carry") then
+                    victim:Give("weapon_zm_carry")
+                end
+
+                local hasCrowbar = false
+                if victim:IsKiller() then
+                    -- Only run this if the version of Custom Roles with a knife exists and it is enabled
+                    if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
+                        -- The newest version of CR doesn't replace the crowbar with the knife
+                        if not CR_VERSION then
+                            hasCrowbar = true
+                        end
+                        victim:Give("weapon_kil_knife")
+                    end
+
+                    -- In the newest version of CR the killer can get a throwable crowbar as a replacement for the normal one
+                    if CR_VERSION and ConVarExists("ttt_killer_crowbar_enabled") and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
+                        victim:Give("weapon_kil_crowbar")
+                        hasCrowbar = true
+                    end
+                end
+
+                if not hasCrowbar and not victim:HasWeapon("weapon_zm_improvised") then
+                    victim:Give("weapon_zm_improvised")
+                end
+            end)
         end)
     end)
 
@@ -64,6 +106,7 @@ function EVENT:Begin()
         local sid = ply:SteamID64()
         permadead[sid] = false
         timer.Remove("RdmtBlergRespawnTimer_" .. sid)
+        timer.Remove("RdmtBlergWeaponTimer_" .. sid)
     end)
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
@@ -79,6 +122,7 @@ end
 function EVENT:End()
     for _, p in pairs(player.GetAll()) do
         timer.Remove("RdmtBlergRespawnTimer_" .. p:SteamID64())
+        timer.Remove("RdmtBlergWeaponTimer_" .. p:SteamID64())
     end
 end
 
