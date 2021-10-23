@@ -28,7 +28,11 @@ end
 
 local function UpdateToMerc(ply)
     Randomat:SetRole(ply, ROLE_MERCENARY)
-    ply:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
+    if ply.SetDefaultCredits then
+        ply:SetDefaultCredits()
+    else
+        ply:SetCredits(GetConVar("ttt_mer_credits_starting"):GetInt())
+    end
     SendFullStateUpdate()
 end
 
@@ -111,11 +115,26 @@ end
 net.Receive("RdmtPlayerChoseKiller", function(len, ply)
     Randomat:SetRole(ply, ROLE_KILLER)
     SendFullStateUpdate()
-    ply:SetCredits(GetConVar("ttt_kil_credits_starting"):GetInt())
+
+    if ply.SetDefaultCredits then
+        ply:SetDefaultCredits()
+    else
+        ply:SetCredits(GetConVar("ttt_kil_credits_starting"):GetInt())
+    end
+
     -- Only run this if the version of Custom Roles with a knife exists and it is enabled
     if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
-        ply:StripWeapon("weapon_zm_improvised")
+        -- The newest version of CR doesn't replace the crowbar with the knife
+        if not CR_VERSION then
+            ply:StripWeapon("weapon_zm_improvised")
+        end
         ply:Give("weapon_kil_knife")
+    end
+
+    -- In the newest version of CR the killer can get a throwable crowbar as a replacement for the normal one
+    if CR_VERSION and ConVarExists("ttt_killer_crowbar_enabled") and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
+        ply:StripWeapon("weapon_zm_improvised")
+        ply:Give("weapon_kil_crowbar")
     end
 
     -- If the killer's max health can be changed and it's different than what they have now, update it
@@ -129,11 +148,6 @@ net.Receive("RdmtPlayerChoseKiller", function(len, ply)
             ply:SetMaxHealth(max)
             ply:SetHealth(new_hp)
         end
-    end
-
-    -- In the new CR, the Killer is given the throwable crowbar as well
-    if CR_VERSION and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
-        ply:Give("weapon_kil_crowbar")
     end
 end)
 
