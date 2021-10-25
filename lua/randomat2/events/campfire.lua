@@ -21,7 +21,7 @@ function EVENT:Begin()
                 playermovetime[ply:GetName()] = CurTime()
             end
         end
-    end);
+    end)
 
     local plys = {}
     for _, v in ipairs(player.GetAll()) do

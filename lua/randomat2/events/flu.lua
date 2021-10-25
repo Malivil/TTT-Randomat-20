@@ -71,7 +71,7 @@ function EVENT:Begin()
         if ply:Alive() and not ply:IsSpec() then
             playermoveloc[ply:GetName()] = ply:GetPos()
         end
-    end);
+    end)
 
     -- Reduce the player speed on the server
     local speed_factor = GetConVar("randomat_flu_speed_factor"):GetFloat()

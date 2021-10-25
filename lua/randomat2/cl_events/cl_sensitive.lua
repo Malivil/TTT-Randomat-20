@@ -11,4 +11,4 @@ end)
 
 hook.Add("AdjustMouseSensitivity", "RdmtSensitiveChangeHook", function(default_sensitivity)
     return sensitivity
-end);
+end)
