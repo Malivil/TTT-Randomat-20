@@ -467,6 +467,18 @@ _ttt_randomat_doubleedge_weight_ - Default: -1 - The weight this event should us
 _randomat_doubleedge_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
 _randomat_doubleedge_amount_ - Default: 2 - How much self-damage to heal per interval.
 
+## Down Under
+Flips your view upside-down
+\
+\
+**ConVars**
+\
+_ttt_randomat_downunder_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_downunder_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_downunder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_downunder_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
+_randomat_downunder_amount_ - Default: 2 - How much self-damage to heal per interval.
+
 ## Earthquake
 Moves all props, ammo, and weapons a random amount in a random direction.
 \
@@ -1593,9 +1605,10 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
-- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events
+- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events and the name of the "Down Under" event
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
+- Tryhardsupreme from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Down Under" event
 - Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
