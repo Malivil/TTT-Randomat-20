@@ -38,6 +38,8 @@ _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put i
 1. Fiends for Life
 1. Narration
 1. T-Rex Vision
+1. Down Under
+1. The Sky is Lava
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1207,6 +1209,18 @@ _ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_shutup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_shutup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## The Sky is Lava
+Players take damage while they are in the air
+\
+\
+**ConVars**
+\
+_ttt_randomat_skyislava_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_skyislava_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_skyislava_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_skyislava_interval_ - Default: 0.25 - How often (in seconds) damage is done while players are in the air.\
+_randomat_skyislava_damage_ - Default: 1 - How much damage is done.
+
 ## Smoke Signals
 Allows dead players to envelope their target in smoke
 \
@@ -1600,7 +1614,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Angela, Crimson, Fazzy, Fyxen, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
-- CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
+- CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "The Sky is Lava" event and the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
