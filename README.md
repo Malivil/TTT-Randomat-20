@@ -505,7 +505,10 @@ If a Vampire wins, the configured team (see _randomat_election_vamp_turn_innocen
 If a Drunk wins, they will instantly remember what role they are supposed to be.\
 If the Old Man wins, everyone else will become as frail as they are (e.g. reduced to 1 health).\
 If the Clown wins, whichever team (Innocent or Traitor) has more players will be killed, causing the Clown to instantly trigger and go on a rampage. If only one team has players alive, a random living player from that team will be sacrificed to help the Clown toward victory.\
-If the Beggar wins, an innocent or traitor team member will be chosen randomly to give the beggar a random shop weapon, causing the beggar to join that team.
+If the Beggar wins, an innocent or traitor team member will be chosen randomly to give the beggar a random shop weapon, causing the beggar to join that team.\
+If the Bodysnatcher wins, they are given the role of a random dead player if there are any, or a random enabled role if there are no dead players.\
+If a member of the independent team (that doesn't have a specific rule above) wins, they are healed to full or given bonus health if they are already near-full.\
+If a member of the monster team (that doesn't have a specific rule above) wins, a random player (preferring a dead one, if there are any) are converted to the same role (and resurrected, if dead).
 \
 \
 **ConVars**
