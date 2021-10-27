@@ -12,7 +12,7 @@ function EVENT:Begin()
     local spawns = {}
     for _, e in ipairs(all_entities) do
         local entity_class = e:GetClass()
-        if string.StartWith(entity_class, "info_") or string.StartWith(entity_class, "weapon_") or string.StartWith(entity_class, "item_") then
+        if (string.StartWith(entity_class, "info_") or string.StartWith(entity_class, "weapon_") or string.StartWith(entity_class, "item_")) and not IsValid(e:GetParent()) then
             table.insert(spawns, e)
         end
     end
