@@ -25,21 +25,11 @@ _ttt_randomat_event_hint_ - Default: 1 - Whether the Randomat should print what 
 _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put in chat.
 
 # Latest Events
-1. Earthquake
-1. praW emiT
-1. Boo!
-1. Smoke Signals
-1. Hedge Your Bets
-1. Paranormal Activity
-1. Gifts from the Dead
-1. Our Little Secret
-1. Breadcrumbs
-1. Poltergeists
-1. Fiends for Life
 1. Narration
 1. T-Rex Vision
 1. Down Under
 1. The Sky is Lava
+1. There's a cooldown on the jump!
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1381,6 +1371,17 @@ _randomat_cakes_damage_ - Default: 25 - The amount of health the player will los
 _randomat_cakes_damage_time_ - Default: 30 - The amount of time the player will take damage after eating a cake, in seconds.\
 _randomat_cakes_damage_interval_ - Default: 1 - How often the player will take damage after eating a cake, in seconds.\
 _randomat_cakes_damage_over_time_ - Default: 1 - The amount of health the player will lose each tick after eating a cake.
+
+## There's a cooldown on the jump!
+Players can only jump once every configurable number of seconds
+\
+\
+**ConVars**
+\
+_ttt_randomat_jumpcooldown_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_jumpcooldown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_jumpcooldown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_jumpcooldown_length_ - Default: 5 - The length of the jump cooldown.
 
 ## There's this game my father taught me years ago, it's called "Switch"
 Randomly switches positions of two players on a configurable interval
