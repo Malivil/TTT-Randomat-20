@@ -30,6 +30,7 @@ _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put i
 1. Down Under
 1. The Sky is Lava
 1. There's a cooldown on the jump!
+1. Jump Around!
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -844,6 +845,18 @@ Gives all players essentially infinite credits for use in their shop menus (if t
 _ttt_randomat_credits_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_credits_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_credits_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Jump Around!
+Players can only move by multi-jumping\
+NOTE: Only runs if a double-jump mod which supports the "multijump_default_jumps" convar is running
+\
+\
+**ConVars**
+\
+_ttt_randomat_jumparound_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_jumparound_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_jumparound_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_jumparound_jumps_ - Default: 5 - How many multi-jumps the players can do.
 
 ## Lonely Yogs
 Drops a discombob between two players who get too close.
