@@ -14,7 +14,7 @@ net.Receive("JumpCooldownBegin", function()
             if nextJump > now then
                 cmd:RemoveKey(IN_JUMP)
             -- Wait a short delay to allow the player to jump if they are just holding down the spacebar
-            elseif nextJump + 0.1 < now then
+            elseif nextJump + 0.25 < now then
                 nextJump = now + cooldown
             end
         end
