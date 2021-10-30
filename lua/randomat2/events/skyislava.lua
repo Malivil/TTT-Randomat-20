@@ -39,6 +39,15 @@ function EVENT:Begin()
             end)
         end
     end)
+
+    self:AddHook("PlayerDeath", function(victim, entity, killer)
+        if not IsValid(victim) then return end
+
+        local sid = victim:SteamID64()
+        if not jumptimers[sid] then return end
+        timer.Remove(jumptimers[sid])
+        jumptimers[sid] = nil
+    end)
 end
 
 function EVENT:End()
@@ -47,6 +56,7 @@ function EVENT:End()
             timer.Remove(t)
         end
     end
+    table.Empty(jumptimers)
 end
 
 function EVENT:GetConVars()
