@@ -78,6 +78,9 @@ function EVENT:Begin()
             end
         end
 
+        table.Empty(playersvoted)
+        table.Empty(votes)
+
         -- There was a tie, try again
         if tie then
             self:SmallNotify("The vote was a tie. Try again.")
@@ -136,7 +139,7 @@ net.Receive("RdmtHerdImmunityPlayerVoted", function(ln, ply)
     for k, _ in pairs(playersvoted) do
         if k == ply then
             ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
-            return
+            --return
         end
     end
 

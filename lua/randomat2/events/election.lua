@@ -27,14 +27,8 @@ local playersvoted = {}
 local votableplayers = {}
 local playervotes = {}
 
-local function ClearTable(table)
-    for k, _ in pairs(table) do
-        table[k] = nil
-    end
-end
-
 local function ResetVotes()
-    ClearTable(playersvoted)
+    table.Empty(playersvoted)
 
     net.Start("ElectionVoteReset")
     net.Broadcast()
@@ -118,7 +112,7 @@ function EVENT:StartVotes(first, second)
 end
 
 local function ResetNominations()
-    ClearTable(playersvoted)
+    table.Empty(playersvoted)
 
     net.Start("ElectionNominateReset")
     net.Broadcast()
