@@ -404,11 +404,13 @@ end
 function Randomat:SetPlayerInvisible(ply)
     ply:SetColor(Color(255, 255, 255, 0))
     ply:SetMaterial("sprites/heatwave")
+    ply:SetNWBool("RdmtInvisible", true)
 end
 
 function Randomat:SetPlayerVisible(ply)
     ply:SetColor(Color(255, 255, 255, 255))
     ply:SetMaterial("models/glass")
+    ply:SetNWBool("RdmtInvisible", false)
 end
 
 -- Round Functions

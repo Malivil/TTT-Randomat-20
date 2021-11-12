@@ -1,5 +1,8 @@
 local EVENT = {}
 
+util.AddNetworkString("RdmtTRexVisionBegin")
+util.AddNetworkString("RdmtTRexVisionEnd")
+
 EVENT.Title = "T-Rex Vision"
 EVENT.Description = "Your vision is now based on movement"
 EVENT.id = "trexvision"
@@ -11,6 +14,9 @@ local function IsTooSlow(crouching, val)
 end
 
 function EVENT:Begin()
+    net.Start("RdmtTRexVisionBegin")
+    net.Broadcast()
+
     for _, p in ipairs(self:GetAlivePlayers()) do
         Randomat:SetPlayerInvisible(p)
     end
@@ -42,6 +48,9 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
+    net.Start("RdmtTRexVisionEnd")
+    net.Broadcast()
+
     for _, p in ipairs(player.GetAll()) do
         Randomat:SetPlayerVisible(p)
     end
