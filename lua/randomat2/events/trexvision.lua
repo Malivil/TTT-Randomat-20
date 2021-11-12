@@ -1,7 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "T-Rex Vision"
-EVENT.AltTitle = "Your vision is now based on movement"
+EVENT.Description = "Your vision is now based on movement"
 EVENT.id = "trexvision"
 
 local function IsTooSlow(crouching, val)
