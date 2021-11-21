@@ -15,30 +15,35 @@ function EVENT:Begin()
         plylist[plysize] = {}
         plylist[plysize]["ply"] = v
         plylist[plysize]["tgt"] = v
-
     end
 
     for k, _ in pairs(plylist) do
-
         if plysize > 1 and k < plysize then
             plylist[k]["tgt"] = plylist[k+1]["ply"]
         elseif plysize > 1 then
             plylist[k]["tgt"] = plylist[1]["ply"]
         end
 
-        timer.Create("RandomatDetTimer", 1, 5, function() plylist[k]["ply"]:PrintMessage(HUD_PRINTCENTER, "You have a detonator for "..plylist[k]["tgt"]:Nick()) end)
+        local ply = plylist[k]["ply"]
+        local target = plylist[k]["tgt"]
+        timer.Create("RandomatDetTimer_" .. ply:Nick(), 1, 5, function()
+            ply:PrintMessage(HUD_PRINTCENTER, "You have a detonator for "..target:Nick())
+        end)
 
-        plylist[k]["ply"]:PrintMessage(HUD_PRINTTALK, "You have a detonator for "..plylist[k]["tgt"]:Nick())
+        -- Delay this
+        timer.Simple(0.1, function()
+            ply:PrintMessage(HUD_PRINTTALK, "You have a detonator for "..target:Nick())
+        end)
 
-        for _, wep in pairs(plylist[k]["ply"]:GetWeapons()) do
+        for _, wep in pairs(ply:GetWeapons()) do
             if wep.Kind == WEAPON_EQUIP2 then
-                plylist[k]["ply"]:StripWeapon(wep:GetClass())
+                ply:StripWeapon(wep:GetClass())
             end
         end
 
-        local det = plylist[k]["ply"]:Give("weapon_ttt_randomatdet")
+        local det = ply:Give("weapon_ttt_randomatdet")
         if det then
-            det.Target = plylist[k]["tgt"]
+            det.Target = target
         end
     end
 end
@@ -72,7 +77,9 @@ function PlayerDetonate(owner, ply)
 end
 
 function EVENT:End()
-    timer.Remove("RandomatDetTimer")
+    for _, v in ipairs(player.GetAll()) do
+        timer.Remove("RandomatDetTimer_" .. v:Nick())
+    end
 end
 
 Randomat:register(EVENT)
