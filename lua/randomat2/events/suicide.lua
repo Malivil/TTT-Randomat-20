@@ -26,7 +26,7 @@ function EVENT:Begin()
 
         local ply = plylist[k]["ply"]
         local target = plylist[k]["tgt"]
-        timer.Create("RandomatDetTimer_" .. ply:Nick(), 1, 5, function()
+        timer.Create("RandomatDetTimer_" .. ply:SteamID64(), 1, 5, function()
             ply:PrintMessage(HUD_PRINTCENTER, "You have a detonator for "..target:Nick())
         end)
 
@@ -78,7 +78,7 @@ end
 
 function EVENT:End()
     for _, v in ipairs(player.GetAll()) do
-        timer.Remove("RandomatDetTimer_" .. v:Nick())
+        timer.Remove("RandomatDetTimer_" .. v:SteamID64())
     end
 end
 
