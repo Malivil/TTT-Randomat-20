@@ -6,8 +6,13 @@ EVENT_TYPE_SMOKING = 3
 EVENT_TYPE_SPECTATOR_UI = 4
 
 -- String Functions
-function Randomat:Capitalize(msg)
-    return msg:sub(1, 1):upper() .. msg:sub(2):lower()
+function Randomat:Capitalize(msg, skip_lower)
+    local first = msg:sub(1, 1):upper()
+    local rest = msg:sub(2)
+    if not skip_lower then
+        rest = rest:lower()
+    end
+    return first .. rest
 end
 
 -- Team Functions

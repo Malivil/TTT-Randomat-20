@@ -231,7 +231,7 @@ function EVENT:Begin()
 
         -- Add the message in with and without the first letter capitalized
         table.insert(messages, message)
-        table.insert(messages, Randomat:Capitalize(message))
+        table.insert(messages, Randomat:Capitalize(message, true))
     end
 
     -- Shuffle them for more randomization
