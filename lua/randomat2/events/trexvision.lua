@@ -62,4 +62,17 @@ function EVENT:End()
     end
 end
 
+function EVENT:Condition()
+    -- Don't run this event if there are zombies because it makes their role basically impossible
+    -- Don't both running the check if zombies don't exist though
+    if ROLE_ZOMBIE ~= -1 then
+        for _, v in ipairs(player.GetAll()) do
+            if v:GetRole() == ROLE_ZOMBIE then
+                return false
+            end
+        end
+    end
+    return true
+end
+
 Randomat:register(EVENT)
