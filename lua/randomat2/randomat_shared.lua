@@ -406,6 +406,10 @@ function Randomat:ResetPlayerScale(ply, id)
     net.Send(ply)
 end
 
+function Randomat:IsPlayerInvisible(ply)
+    return ply:GetNWBool("RdmtInvisible", false)
+end
+
 function Randomat:SetPlayerInvisible(ply)
     ply:SetColor(Color(255, 255, 255, 0))
     ply:SetMaterial("sprites/heatwave")

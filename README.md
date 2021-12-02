@@ -1330,7 +1330,8 @@ Your vision is now based on movement. All players who aren't moving are invisibl
 \
 _ttt_randomat_trexvision_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_trexvision_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_trexvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_trexvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_trexvision_reveal_time_ - Default: 5 - How long to reveal a player who shoots their gun.
 
 ## Taking Inventory
 Swaps player inventories periodically throughout the round. There are some caveats to how this event interacts with special roles:
