@@ -4,7 +4,6 @@ ENT.Type = "anim"
 function ENT:Initialize()
     self:SetModel("models/871/871.mdl")
     self:PhysicsInit(SOLID_VPHYSICS)
-    self:SetModelScale(2)
     self:SetHealth(1)
 
     local phys = self:GetPhysicsObject()
