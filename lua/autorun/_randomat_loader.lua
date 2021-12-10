@@ -9,13 +9,6 @@ local function AddClient(fil)
     if CLIENT then include(fil) end
 end
 
-AddServer("randomat2/randomat_base.lua")
-AddServer("randomat2/randomat_shared.lua")
-AddClient("randomat2/randomat_shared.lua")
-AddClient("randomat2/cl_common.lua")
-AddClient("randomat2/cl_message.lua")
-AddClient("randomat2/cl_networkstrings.lua")
-
 if SERVER then
     resource.AddSingleFile("materials/icon32/copy.png")
     resource.AddSingleFile("materials/icon32/cut.png")
@@ -47,6 +40,7 @@ if SERVER then
     CreateConVar("ttt_randomat_event_weight", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The default selection weight each event should use.", 1)
     CreateConVar("ttt_randomat_event_hint", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should print what each event does when they start.")
     CreateConVar("ttt_randomat_event_hint_chat", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether hints should also be put in chat.")
+    CreateConVar("ttt_randomat_event_history", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many events to keep in history to prevent duplication.")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
         if auto:GetBool() and math.random() <= auto_chance:GetFloat() then
@@ -67,6 +61,13 @@ if SERVER then
         end
     end)
 end
+
+AddServer("randomat2/randomat_base.lua")
+AddServer("randomat2/randomat_shared.lua")
+AddClient("randomat2/randomat_shared.lua")
+AddClient("randomat2/cl_common.lua")
+AddClient("randomat2/cl_message.lua")
+AddClient("randomat2/cl_networkstrings.lua")
 
 local files, _ = file.Find("randomat2/events/*.lua", "LUA")
 for _, fil in ipairs(files) do
