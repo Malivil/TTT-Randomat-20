@@ -233,7 +233,25 @@ function Randomat:CanEventRun(event)
     if type(event) ~= "table" then
         event = Randomat.Events[event]
     end
+    -- Basic checks
     if event == nil then return false end
+    if not event:Enabled() then return false end
+    if not event:Condition() then return false end
+
+    -- Check there are enough players
+    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
+    local player_count = player.GetCount()
+    if min_players > 0 and player_count < min_players then return false end
+
+    -- Check that the round has run the correct amount of time
+    local round_percent_complete = Randomat:GetRoundCompletePercent()
+    if (event.MinRoundCompletePercent and event.MinRoundCompletePercent > round_percent_complete) or
+        (event.MaxRoundCompletePercent and event.MaxRoundCompletePercent < round_percent_complete) then
+        return false
+    end
+
+    -- Don't allow single use events to run twice
+    if event.SingleUse and Randomat:IsEventActive(event.Id) then return false end
 
     -- Don't allow multiple events of the same type to run at once
     if event.Type ~= EVENT_TYPE_DEFAULT then
@@ -262,15 +280,7 @@ function Randomat:CanEventRun(event)
         end
     end
 
-    local round_percent_complete = Randomat:GetRoundCompletePercent()
-    if (event.MinRoundCompletePercent and event.MinRoundCompletePercent > round_percent_complete) or
-        (event.MaxRoundCompletePercent and event.MaxRoundCompletePercent < round_percent_complete) then
-        return false
-    end
-
-    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
-    local player_count = player.GetCount()
-    return event:Enabled() and event:Condition() and (min_players <= 0 or player_count >= min_players) and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
+    return true
 end
 
 local function GetRandomWeightedEvent(events)
