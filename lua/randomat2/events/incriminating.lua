@@ -248,7 +248,7 @@ function EVENT:Begin()
         -- Replace the "%PLAYER%" placeholder
         -- Use a different placeholder for this so that the extra {'s and }'s for role names can be stripped out easily
         if string.find(message, "%PLAYER%", nil, true) then
-            local found = GetRandomAlivePlayer(function(p) return p ~= target end)
+            local found = self:GetRandomAlivePlayer(function(p) return p ~= target end)
             message = string.Replace(message, "%PLAYER%", found:Nick())
         end
 
