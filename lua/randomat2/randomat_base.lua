@@ -168,7 +168,14 @@ end
 
 local function EndEvent(evt)
     evt:CleanUpHooks()
-    evt:End()
+
+    local function End()
+        evt:End()
+    end
+    local function Catch(err)
+        ErrorNoHalt("WARNING: Randomat event '" .. evt.Id .. "' caused an error when it was being Ended. Please report to the addon developer with the following error:\n", err, "\n")
+    end
+    xpcall(End, Catch)
 end
 
 local function TriggerEvent(event, ply, silent, ...)
