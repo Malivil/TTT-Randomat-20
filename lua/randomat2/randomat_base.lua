@@ -909,8 +909,8 @@ function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
         -- Handle inventory weapons last to make sure the roles get their specials
         for _, v in ipairs(weapon_list) do
             local wep_class = WEPS.GetClass(v)
-            -- Don't give players the detective's tester
-            if wep_class ~= "weapon_ttt_wtester" then
+            -- Don't give players the detective's tester or other role weapons
+            if wep_class ~= "weapon_ttt_wtester" and (not WEAPON_CATEGORY_ROLE or v.Category ~= WEAPON_CATEGORY_ROLE) then
                 ply:Give(wep_class)
             end
         end
