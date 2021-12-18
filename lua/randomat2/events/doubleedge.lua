@@ -37,7 +37,8 @@ function EVENT:Begin()
         end
     end)
 
-    self:AddHook("EntityTakeDamage", function(ent, dmginfo)
+    self:AddHook("PostEntityTakeDamage", function(ent, dmginfo, taken)
+        if not taken then return end
         if not IsPlayer(ent) then return end
         local att = dmginfo:GetAttacker()
         if not IsPlayer(att) then return end
