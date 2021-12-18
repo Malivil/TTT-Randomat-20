@@ -10,7 +10,8 @@ EVENT.id = "evasive"
 function EVENT:Begin()
     local push_force = GetConVar("randomat_evasive_force"):GetInt()
     local jumping_push_force = GetConVar("randomat_evasive_jumping_force"):GetInt()
-    self:AddHook("EntityTakeDamage", function(ent, dmginfo)
+    self:AddHook("PostEntityTakeDamage", function(ent, dmginfo, taken)
+        if not taken then return end
         if not dmginfo:IsBulletDamage() or not IsPlayer(ent) then return end
         local att = dmginfo:GetAttacker()
         if not IsPlayer(att) or ent == att then return end
