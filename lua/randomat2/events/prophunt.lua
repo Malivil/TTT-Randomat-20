@@ -219,6 +219,8 @@ function EVENT:End()
 
     for _, ply in ipairs(player.GetAll()) do
         timer.Remove(ply:GetName() .. "RandomatPropHuntMessageTimer")
+        -- Reset the disguised status in case they were disguised as a prop when the round ended
+        ply:SetNWBool("disguised", false)
     end
 
     timer.Remove("RandomatPropHuntTimer")
