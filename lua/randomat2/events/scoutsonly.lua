@@ -43,6 +43,14 @@ function EVENT:Begin()
         return false
     end)
 
+    self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
+        if not IsValid(ply) then return end
+        if not is_item then
+            ply:ChatPrint("You can only buy passive items during '" .. Randomat:GetEventTitle(EVENT) .. "'!\nYour purchase has been refunded.")
+            return false
+        end
+    end)
+
     self:AddHook("Think", function()
         for _, v in ipairs(self:GetAlivePlayers()) do
             local active_weapon = v:GetActiveWeapon()

@@ -75,7 +75,10 @@ function EVENT:Begin()
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
         if not IsValid(ply) then return end
         if id == "hoff_perk_phd" or (is_item and is_item == EQUIP_PHD) then
-            ply:ChatPrint("PHD Floppers are disabled while 'Come on and SLAM!' is active! Your purchase has been refunded.")
+            ply:ChatPrint("PHD Floppers are disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active!\nYour purchase has been refunded.")
+            return false
+        elseif not is_item then
+            ply:ChatPrint("You can only buy passive items during '" .. Randomat:GetEventTitle(EVENT) .. "'!\nYour purchase has been refunded.")
             return false
         end
     end)

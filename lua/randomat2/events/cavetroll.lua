@@ -85,8 +85,17 @@ function EVENT:Begin()
         if not IsValid(ply) or not ply:Alive() or ply:IsSpec() or ply ~= troll then
             return
         end
-        -- The troll can only use the crowbar
-        return IsValid(wep) and WEPS.GetClass(wep) == "weapon_zm_improvised"
+        -- The troll can only use the club
+        return IsValid(wep) and WEPS.GetClass(wep) == "weapon_ttt_randomatclub"
+    end)
+
+    self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
+        if not IsValid(ply) then return end
+        if ply ~= troll then return end
+        if not is_item then
+            ply:ChatPrint("You can only buy passive items during '" .. Randomat:GetEventTitle(EVENT) .. "'!\nYour purchase has been refunded.")
+            return false
+        end
     end)
 
     self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
