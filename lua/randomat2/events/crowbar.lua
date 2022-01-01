@@ -13,7 +13,7 @@ function EVENT:Begin()
     if original_push == nil then
         original_push = GetConVar("ttt_crowbar_pushforce"):GetInt()
     end
-    local current_push = GetConVar("ttt_crowbar_pushforce"):GetInt();
+    local current_push = GetConVar("ttt_crowbar_pushforce"):GetInt()
     RunConsoleCommand("ttt_crowbar_pushforce", current_push * GetConVar("randomat_crowbar_push"):GetFloat())
 
     local damage = GetConVar("randomat_crowbar_damage"):GetFloat()

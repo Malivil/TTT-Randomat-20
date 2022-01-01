@@ -21,7 +21,8 @@ function EVENT:Begin()
         end
     end)
 
-    self:AddHook("EntityTakeDamage", function(victim, dmg)
+    self:AddHook("PostEntityTakeDamage", function(victim, dmg, taken)
+        if not taken then return end
         if IsPlayer(victim) and victim:IsTerror() and dmg:GetDamage() < victim:Health() then
             victim.rmdregeneration = CurTime() + GetConVar("randomat_regeneration_delay"):GetInt()
         end

@@ -64,7 +64,7 @@ function EVENT:Begin()
             end
         end
 
-        local result = hook.Call("TTTCheckForWin", GAMEMODE, true)
+        local result = hook.Run("TTTCheckForWin", true)
         -- If the round was supposed to end but someone won the bet, respawn them and delay the end of the round
         if result ~= WIN_NONE and living_bet_count > 0 then
             -- Respawn all the bet winners
@@ -74,6 +74,10 @@ function EVENT:Begin()
                     ply:PrintMessage(HUD_PRINTTALK, "You won your bet and have respawned. Good luck!")
                     ply:PrintMessage(HUD_PRINTCENTER, "You won your bet and have respawned. Good luck!")
                     ply:SpawnForRound(true)
+                    local body = ply.server_ragdoll or ply:GetRagdollEntity()
+                    if IsValid(body) then
+                        body:Remove()
+                    end
                     Randomat:SetRole(ply, role)
                 end
             end

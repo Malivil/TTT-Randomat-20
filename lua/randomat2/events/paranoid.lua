@@ -46,7 +46,7 @@ local deathsounds = {
     Sound("hostage/hpain/hpain4.wav"),
     Sound("hostage/hpain/hpain5.wav"),
     Sound("hostage/hpain/hpain6.wav")
-};
+}
 local sounds = {}
 function EVENT:StartTimer()
     local delay_min = GetConVar("randomat_paranoid_timer_min"):GetInt()

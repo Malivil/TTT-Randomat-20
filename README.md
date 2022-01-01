@@ -12,7 +12,8 @@ _ttt_randomat_clearevents_ - Clears all active events.\
 _ttt_randomat_triggerrandom_ - Triggers a random  randomat event.\
 _ttt_randomat_disableall_ - Disables all events.\
 _ttt_randomat_enableall_ - Enables all events.\
-_ttt_randomat_resetweights_ - Resets all weights to their defaults.
+_ttt_randomat_resetweights_ - Resets all weights to their defaults.\
+_ttt_randomat_clearhistory_ - Clears the event history list.
 
 # General ConVars
 _ttt_randomat_auto_ - Default: 0 - Whether the Randomat should automatically trigger on round start.\
@@ -22,22 +23,16 @@ _ttt_randomat_chooseevent_ - Default: 0 - Allows you to choose out of a selectio
 _ttt_randomat_rebuyable_ - Default: 0 - Whether you can buy more than one Randomat.\
 _ttt_randomat_event_weight_ - Default: 1 - The default selection weight each event should use.\
 _ttt_randomat_event_hint_ - Default: 1 - Whether the Randomat should print what each event does when they start.\
-_ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put in chat.
+_ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put in chat.\
+_ttt_randomat_event_history_ - Default: 10 - How many events should be kept in history. Events in history will are ignored when searching for a random event to start.
 
 # Latest Events
-1. Earthquake
-1. praW emiT
-1. Boo!
-1. Smoke Signals
-1. Hedge Your Bets
-1. Paranormal Activity
-1. Gifts from the Dead
-1. Our Little Secret
-1. Breadcrumbs
-1. Poltergeists
-1. Fiends for Life
 1. Narration
 1. T-Rex Vision
+1. Down Under
+1. The Sky is Lava
+1. There's a cooldown on the jump!
+1. Jump Around!
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -467,6 +462,18 @@ _ttt_randomat_doubleedge_weight_ - Default: -1 - The weight this event should us
 _randomat_doubleedge_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
 _randomat_doubleedge_amount_ - Default: 2 - How much self-damage to heal per interval.
 
+## Down Under
+Flips your view upside-down
+\
+\
+**ConVars**
+\
+_ttt_randomat_downunder_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_downunder_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_downunder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_downunder_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
+_randomat_downunder_amount_ - Default: 2 - How much self-damage to heal per interval.
+
 ## Earthquake
 Moves all props, ammo, and weapons a random amount in a random direction.
 \
@@ -491,7 +498,10 @@ If a Vampire wins, the configured team (see _randomat_election_vamp_turn_innocen
 If a Drunk wins, they will instantly remember what role they are supposed to be.\
 If the Old Man wins, everyone else will become as frail as they are (e.g. reduced to 1 health).\
 If the Clown wins, whichever team (Innocent or Traitor) has more players will be killed, causing the Clown to instantly trigger and go on a rampage. If only one team has players alive, a random living player from that team will be sacrificed to help the Clown toward victory.\
-If the Beggar wins, an innocent or traitor team member will be chosen randomly to give the beggar a random shop weapon, causing the beggar to join that team.
+If the Beggar wins, an innocent or traitor team member will be chosen randomly to give the beggar a random shop weapon, causing the beggar to join that team.\
+If the Bodysnatcher wins, they are given the role of a random dead player if there are any, or a random enabled role if there are no dead players.\
+If a member of the independent team (that doesn't have a specific rule above) wins, they are healed to full or given bonus health if they are already near-full.\
+If a member of the monster team (that doesn't have a specific rule above) wins, a random player (preferring a dead one, if there are any) are converted to the same role (and resurrected, if dead).
 \
 \
 **ConVars**
@@ -837,6 +847,18 @@ Gives all players essentially infinite credits for use in their shop menus (if t
 _ttt_randomat_credits_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_credits_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_credits_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Jump Around!
+Players can only move by multi-jumping\
+NOTE: Only runs if a double-jump mod which supports the "multijump_default_jumps" convar is running
+\
+\
+**ConVars**
+\
+_ttt_randomat_jumparound_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_jumparound_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_jumparound_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_jumparound_jumps_ - Default: 5 - How many multi-jumps the players can do.
 
 ## Lonely Yogs
 Drops a discombob between two players who get too close.
@@ -1195,6 +1217,18 @@ _ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_shutup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_shutup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## The Sky is Lava
+Players take damage while they are in the air
+\
+\
+**ConVars**
+\
+_ttt_randomat_skyislava_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_skyislava_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_skyislava_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_skyislava_interval_ - Default: 0.25 - How often (in seconds) damage is done while players are in the air.\
+_randomat_skyislava_damage_ - Default: 1 - How much damage is done.
+
 ## Smoke Signals
 Allows dead players to envelope their target in smoke
 \
@@ -1298,7 +1332,8 @@ Your vision is now based on movement. All players who aren't moving are invisibl
 \
 _ttt_randomat_trexvision_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_trexvision_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_trexvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_trexvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_trexvision_reveal_time_ - Default: 5 - How long to reveal a player who shoots their gun.
 
 ## Taking Inventory
 Swaps player inventories periodically throughout the round. There are some caveats to how this event interacts with special roles:
@@ -1352,6 +1387,17 @@ _randomat_cakes_damage_ - Default: 25 - The amount of health the player will los
 _randomat_cakes_damage_time_ - Default: 30 - The amount of time the player will take damage after eating a cake, in seconds.\
 _randomat_cakes_damage_interval_ - Default: 1 - How often the player will take damage after eating a cake, in seconds.\
 _randomat_cakes_damage_over_time_ - Default: 1 - The amount of health the player will lose each tick after eating a cake.
+
+## There's a cooldown on the jump!
+Players can only jump once every configurable number of seconds
+\
+\
+**ConVars**
+\
+_ttt_randomat_jumpcooldown_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_jumpcooldown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_jumpcooldown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_jumpcooldown_length_ - Default: 5 - The length of the jump cooldown.
 
 ## There's this game my father taught me years ago, it's called "Switch"
 Randomly switches positions of two players on a configurable interval
@@ -1583,19 +1629,20 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
-- Alex, Angela, Clockwork_tiger, Dom, Fyxen, Jaakko, Neil, and Pardival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
+- Alex, Angela, Clockwork_tiger, Dom, [Fyxen](https://steamcommunity.com/profiles/76561198810121546/), Jaakko, Neil, and Pardival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
-- Angela, Crimson, Fazzy, Fyxen, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
+- Angela, Crimson, Fazzy, [Fyxen](https://steamcommunity.com/profiles/76561198810121546/), Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
 - Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "NO NERD HEALING", "Don't Let it Go to Your Head", and "Wasteful!" events
-- CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the name of the "Opposite Day" event
+- CrimsonDude from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "The Sky is Lava" event and the name of the "Opposite Day" event
 - Dom and Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranoid" event
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
-- Fyxen from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
+- [Fyxen](https://steamcommunity.com/profiles/76561198810121546/) from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
-- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events
+- Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events and the name of the "Down Under" event
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
+- Tryhardsupreme from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Down Under" event
 - Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
@@ -1604,6 +1651,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
+- [AshuraaHunter](https://github.com/AshuraaHunter) from GitHub for the idea for adding player names to the "Typeracer" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
 - [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event

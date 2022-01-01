@@ -21,7 +21,7 @@ local bladeSound = Sound("NPC_Manhack.BladeSound")
 
 local bees = {}
 local function CreateBee(p)
-    local bee = ents.Create("prop_physics")
+    local bee = ents.Create("prop_dynamic")
     bee:SetModel("models/lucian/props/stupid_bee.mdl")
     bee:SetPos(p:GetPos())
     bee:SetNotSolid(true)

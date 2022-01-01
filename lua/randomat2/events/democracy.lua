@@ -26,12 +26,6 @@ local votableplayers = {}
 local playersvoted = {}
 local aliveplys = {}
 
-local function ClearTable(table)
-    for k, _ in pairs(table) do
-        table[k] = nil
-    end
-end
-
 function EVENT:Begin()
     net.Start("DemocracyEventBegin")
     net.Broadcast()
@@ -146,8 +140,8 @@ function EVENT:Begin()
                 self:SmallNotify("Not enough players voted. Everyone stays alive. For now.")
             end
 
-            ClearTable(playersvoted)
-            ClearTable(aliveplys)
+            table.Empty(playersvoted)
+            table.Empty(aliveplys)
 
             net.Start("DemocracyReset")
             net.Broadcast()

@@ -15,7 +15,7 @@ net.Receive("RdmtSmokeSignalsBegin", function()
             border = COLOR_WHITE,
             background = Color(17, 115, 135, 222),
             fill = Color(82, 226, 255, 255)
-        };
+        }
 
         Randomat:PaintBar(8, x, y, width, height, colors, progress_percentage)
 

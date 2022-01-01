@@ -224,7 +224,8 @@ function EVENT:Begin()
         end
     end)
 
-    self:AddHook("EntityTakeDamage", function(ent, dmg)
+    self:AddHook("PostEntityTakeDamage", function(ent, dmg, taken)
+        if not taken then return end
         if not IsValid(ent) or ent:GetClass() ~= "prop_ragdoll" then return end
         -- Skip crush damage. This is to prevent taking damage just by turning into a ragdoll
         if dmg:IsDamageType(DMG_CRUSH) then return end

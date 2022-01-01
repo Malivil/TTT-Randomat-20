@@ -29,7 +29,7 @@ function EVENT:Begin()
             end
             SetSensitivity(v, sensitivity)
         end
-    end);
+    end)
 
     -- Reset dead player's sensitivity
     self:AddHook("PlayerDeath", function(victim, entity, killer)
@@ -39,7 +39,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    timer.Remove("RdmtSensitivityChangeTimer");
+    timer.Remove("RdmtSensitivityChangeTimer")
     -- Added in cl_sensitive
     hook.Remove("AdjustMouseSensitivity", "RdmtSensitiveChangeHook")
     for _, v in ipairs(player.GetAll()) do

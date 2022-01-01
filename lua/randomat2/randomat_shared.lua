@@ -6,8 +6,13 @@ EVENT_TYPE_SMOKING = 3
 EVENT_TYPE_SPECTATOR_UI = 4
 
 -- String Functions
-function Randomat:Capitalize(msg)
-    return msg:sub(1, 1):upper() .. msg:sub(2):lower()
+function Randomat:Capitalize(msg, skip_lower)
+    local first = msg:sub(1, 1):upper()
+    local rest = msg:sub(2)
+    if not skip_lower then
+        rest = rest:lower()
+    end
+    return first .. rest
 end
 
 -- Team Functions
@@ -334,7 +339,7 @@ end
 -- Player Functions
 local player_view_offsets = {}
 local player_view_offsets_ducked = {}
-function Randomat:SetPlayerScale(ply, scale, id)
+function Randomat:SetPlayerScale(ply, scale, id, skip_speed)
     ply:SetStepSize(ply:GetStepSize() * scale)
     ply:SetModelScale(ply:GetModelScale() * scale, 1)
 
@@ -356,6 +361,9 @@ function Randomat:SetPlayerScale(ply, scale, id)
 
     a, b = ply:GetHullDuck()
     ply:SetHullDuck(a * scale, b * scale)
+
+    -- If we don't want to adjust the player's speed, we're done here
+    if skip_speed then return end
 
     -- Reduce the player speed on the client
     local speed_factor = math.Clamp(ply:GetStepSize() / 9, 0.25, 1)
@@ -401,14 +409,20 @@ function Randomat:ResetPlayerScale(ply, id)
     net.Send(ply)
 end
 
+function Randomat:IsPlayerInvisible(ply)
+    return ply:GetNWBool("RdmtInvisible", false)
+end
+
 function Randomat:SetPlayerInvisible(ply)
     ply:SetColor(Color(255, 255, 255, 0))
     ply:SetMaterial("sprites/heatwave")
+    ply:SetNWBool("RdmtInvisible", true)
 end
 
 function Randomat:SetPlayerVisible(ply)
     ply:SetColor(Color(255, 255, 255, 255))
     ply:SetMaterial("models/glass")
+    ply:SetNWBool("RdmtInvisible", false)
 end
 
 -- Round Functions

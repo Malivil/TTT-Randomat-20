@@ -231,7 +231,7 @@ function EVENT:Begin()
 
         -- Add the message in with and without the first letter capitalized
         table.insert(messages, message)
-        table.insert(messages, Randomat:Capitalize(message))
+        table.insert(messages, Randomat:Capitalize(message, true))
     end
 
     -- Shuffle them for more randomization
@@ -248,7 +248,7 @@ function EVENT:Begin()
         -- Replace the "%PLAYER%" placeholder
         -- Use a different placeholder for this so that the extra {'s and }'s for role names can be stripped out easily
         if string.find(message, "%PLAYER%", nil, true) then
-            local found = GetRandomAlivePlayer(function(p) return p ~= target end)
+            local found = self:GetRandomAlivePlayer(function(p) return p ~= target end)
             message = string.Replace(message, "%PLAYER%", found:Nick())
         end
 

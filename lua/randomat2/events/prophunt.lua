@@ -192,7 +192,7 @@ function EVENT:Begin()
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
         if not IsValid(ply) then return end
         if is_item == EQUIP_RADAR then
-            ply:ChatPrint("Radars are disabled while Prop Hunt is active! Your purchase has been refunded.")
+            ply:ChatPrint("Radars are disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active!\nYour purchase has been refunded.")
             return false
         end
     end)
@@ -219,6 +219,8 @@ function EVENT:End()
 
     for _, ply in ipairs(player.GetAll()) do
         timer.Remove(ply:GetName() .. "RandomatPropHuntMessageTimer")
+        -- Reset the disguised status in case they were disguised as a prop when the round ended
+        ply:SetNWBool("disguised", false)
     end
 
     timer.Remove("RandomatPropHuntTimer")

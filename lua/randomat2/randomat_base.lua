@@ -40,10 +40,103 @@ Randomat.ActiveEvents = {}
 local randomat_meta =  {}
 randomat_meta.__index = randomat_meta
 
-local function EndEvent(evt)
-    evt:CleanUpHooks()
-    evt:End()
+--[[
+ Event History
+]]--
+
+Randomat.EventHistory = {}
+
+local function IsEventInHistory(event)
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return end
+
+    return table.HasValue(Randomat.EventHistory, event.Id)
 end
+
+local function TruncateEventHistory(count)
+    if count <= 0 then return end
+
+    -- Make sure we only keep the configured number of events
+    if #Randomat.EventHistory > count then
+        local extra = #Randomat.EventHistory - count
+        local keep = {}
+        for i = extra + 1, #Randomat.EventHistory, 1 do
+            table.insert(keep, Randomat.EventHistory[i])
+        end
+        Randomat.EventHistory = keep
+    end
+end
+
+local function SaveEventHistory()
+    -- Save each event ID on a new line
+    local history = string.Implode("\n", Randomat.EventHistory)
+    file.Write("randomat/history.txt", history)
+end
+
+local function CheckEventHistoryFile()
+    -- Make sure the directory exists
+    if not file.IsDir("randomat", "DATA") then
+        if file.Exists("randomat", "DATA") then
+            ErrorNoHalt("Item named 'randomat' already exists in garrysmod/data but it is not a directory\n")
+            return false
+        end
+
+        file.CreateDir("randomat")
+    end
+
+    -- Make sure the file exists
+    if not file.Exists("randomat/history.txt", "DATA") then
+        file.Write("randomat/history.txt", "")
+    end
+
+    return true
+end
+
+local function AddEventToHistory(event)
+    local count = GetConVar("ttt_randomat_event_history"):GetInt()
+    if count <= 0 then return end
+
+    if not CheckEventHistoryFile() then return end
+
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return end
+
+    table.insert(Randomat.EventHistory, event.Id)
+    TruncateEventHistory(count)
+    SaveEventHistory()
+end
+
+local function LoadEventHistory()
+    local count = GetConVar("ttt_randomat_event_history"):GetInt()
+    if count <= 0 then return end
+
+    if not CheckEventHistoryFile() then return end
+
+    -- Read each entry from the file and save them
+    local history = string.Split(file.Read("randomat/history.txt", "DATA"), "\n")
+    for _, h in ipairs(history) do
+        if #h > 0 then
+            table.insert(Randomat.EventHistory, h)
+        end
+    end
+
+    TruncateEventHistory(count)
+    SaveEventHistory()
+end
+LoadEventHistory()
+
+concommand.Add("ttt_randomat_clearhistory", function()
+    table.Empty(Randomat.EventHistory)
+    SaveEventHistory()
+end)
+
+--[[
+ Event Notifications
+]]--
 
 local function NotifyDescription(event)
     -- Show this if "secret" is active if we're specifically showing the description for "secret"
@@ -67,6 +160,22 @@ local function ChatDescription(ply, event, has_description)
     end
 
     ply:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] " .. title .. description)
+end
+
+--[[
+ Event Control
+]]--
+
+local function EndEvent(evt)
+    evt:CleanUpHooks()
+
+    local function End()
+        evt:End()
+    end
+    local function Catch(err)
+        ErrorNoHalt("WARNING: Randomat event '" .. evt.Id .. "' caused an error when it was being Ended. Please report to the addon developer with the following error:\n", err, "\n")
+    end
+    xpcall(End, Catch)
 end
 
 local function TriggerEvent(event, ply, silent, ...)
@@ -107,6 +216,10 @@ local function TriggerEvent(event, ply, silent, ...)
     -- Let other addons know that an event was started
     hook.Call("TTTRandomatTriggered", nil, event.Id, owner)
 end
+
+--[[
+ Randomat Namespace
+]]--
 
 function Randomat:EndActiveEvent(id)
     for k, evt in pairs(Randomat.ActiveEvents) do
@@ -229,11 +342,32 @@ function Randomat:unregister(id)
     Randomat.Events[id] = nil
 end
 
-function Randomat:CanEventRun(event)
+function Randomat:CanEventRun(event, ignore_history)
     if type(event) ~= "table" then
         event = Randomat.Events[event]
     end
+    -- Basic checks
     if event == nil then return false end
+    if not event:Enabled() then return false end
+    if not event:Condition() then return false end
+
+    -- Check there are enough players
+    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
+    local player_count = player.GetCount()
+    if min_players > 0 and player_count < min_players then return false end
+
+    -- Check that the round has run the correct amount of time
+    local round_percent_complete = Randomat:GetRoundCompletePercent()
+    if (event.MinRoundCompletePercent and event.MinRoundCompletePercent > round_percent_complete) or
+        (event.MaxRoundCompletePercent and event.MaxRoundCompletePercent < round_percent_complete) then
+        return false
+    end
+
+    -- Don't allow single use events to run twice
+    if event.SingleUse and Randomat:IsEventActive(event.Id) then return false end
+
+    -- Don't use the same events over and over again
+    if not ignore_history and IsEventInHistory(event) then return false end
 
     -- Don't allow multiple events of the same type to run at once
     if event.Type ~= EVENT_TYPE_DEFAULT then
@@ -262,15 +396,7 @@ function Randomat:CanEventRun(event)
         end
     end
 
-    local round_percent_complete = Randomat:GetRoundCompletePercent()
-    if (event.MinRoundCompletePercent and event.MinRoundCompletePercent > round_percent_complete) or
-        (event.MaxRoundCompletePercent and event.MaxRoundCompletePercent < round_percent_complete) then
-        return false
-    end
-
-    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
-    local player_count = player.GetCount()
-    return event:Enabled() and event:Condition() and (min_players <= 0 or player_count >= min_players) and (not event.SingleUse or not Randomat:IsEventActive(event.Id))
+    return true
 end
 
 local function GetRandomWeightedEvent(events)
@@ -317,6 +443,10 @@ function Randomat:GetRandomEvent()
     while not Randomat:CanEventRun(event) do
         event = GetRandomWeightedEvent(events)
     end
+
+    -- Only add randomly selected events to the history so specifically-triggered events don't get tracked
+    AddEventToHistory(event)
+
     return event
 end
 
@@ -779,8 +909,8 @@ function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
         -- Handle inventory weapons last to make sure the roles get their specials
         for _, v in ipairs(weapon_list) do
             local wep_class = WEPS.GetClass(v)
-            -- Don't give players the detective's tester
-            if wep_class ~= "weapon_ttt_wtester" then
+            -- Don't give players the detective's tester or other role weapons
+            if wep_class ~= "weapon_ttt_wtester" and (not WEAPON_CATEGORY_ROLE or v.Category ~= WEAPON_CATEGORY_ROLE) then
                 ply:Give(wep_class)
             end
         end

@@ -27,7 +27,7 @@ function EVENT:Begin()
         if ply:Alive() and not ply:IsSpec() then
             playermoveloc[ply:SteamID64()] = ply:GetPos()
         end
-    end);
+    end)
 
     local plys = {}
     for _, v in ipairs(player.GetAll()) do

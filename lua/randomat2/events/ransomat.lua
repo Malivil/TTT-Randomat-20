@@ -54,6 +54,11 @@ function EVENT:Begin()
             ply:PrintMessage(HUD_PRINTCENTER, "You live... for now!")
         end)
     end)
+
+    self:AddHook("PlayerDeath", function(victim, entity, killer)
+        if not IsValid(victim) or not IsValid(target) or victim ~= target then return end
+        timer.Remove("RdmtRansomKill")
+    end)
 end
 
 function EVENT:End()
