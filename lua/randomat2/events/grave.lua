@@ -77,6 +77,14 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    -- Don't do zombies if there is a Mad Scientist because that just makes their job too easy
+    if ConVarExists("ttt_madscientist_enabled") then
+        for _, p in ipairs(player.GetAll()) do
+            if p:GetRole() == ROLE_MADSCIENTIST then
+                return false
+            end
+        end
+    end
     return ConVarExists("ttt_zombie_enabled")
 end
 
