@@ -347,27 +347,27 @@ function Randomat:CanEventRun(event, ignore_history)
         event = Randomat.Events[event]
     end
     -- Basic checks
-    if event == nil then return false end
-    if not event:Enabled() then return false end
-    if not event:Condition() then return false end
+    if event == nil then return false, "No such event" end
+    if not event:Enabled() then return false, "Not enabled" end
+    if not event:Condition() then return false, "Condition not fulfilled" end
 
     -- Check there are enough players
     local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
     local player_count = player.GetCount()
-    if min_players > 0 and player_count < min_players then return false end
+    if min_players > 0 and player_count < min_players then return false, "Not enough players (" .. player_count .. " vs. " .. min_players .. " required)" end
 
     -- Check that the round has run the correct amount of time
     local round_percent_complete = Randomat:GetRoundCompletePercent()
     if (event.MinRoundCompletePercent and event.MinRoundCompletePercent > round_percent_complete) or
         (event.MaxRoundCompletePercent and event.MaxRoundCompletePercent < round_percent_complete) then
-        return false
+        return false, "Round percent complete mismatch (" .. round_percent_complete .. ")"
     end
 
     -- Don't allow single use events to run twice
-    if event.SingleUse and Randomat:IsEventActive(event.Id) then return false end
+    if event.SingleUse and Randomat:IsEventActive(event.Id) then return false, "Single use event is already running" end
 
     -- Don't use the same events over and over again
-    if not ignore_history and IsEventInHistory(event) then return false end
+    if not ignore_history and IsEventInHistory(event) then return false, "Event is in recent history" end
 
     -- Don't allow multiple events of the same type to run at once
     if event.Type ~= EVENT_TYPE_DEFAULT then
@@ -377,21 +377,21 @@ function Randomat:CanEventRun(event, ignore_history)
                 if type(event.Type) == "table" then
                     for _, t in ipairs(event.Type) do
                         if table.HasValue(evt.Type, t) then
-                            return false
+                            return false, "Event with same type (" .. t .. ") is already running"
                         end
                     end
                 -- If only one is a table, don't allow it to contain the other's type
                 elseif table.HasValue(evt.Type, event.Type) then
-                    return false
+                    return false, "Event with same type (" .. event.Type .. ") is already running"
                 end
             -- If only one is a table, don't allow it to contain the other's type
             elseif type(event.Type) == "table" then
                 if table.HasValue(event.Type, evt.Type) then
-                    return false
+                    return false, "Event with same type (" .. evt.Type .. ") is already running"
                 end
             -- If neither are tables, don't allow the types to match
             elseif evt.Type == event.Type then
-                return false
+                return false, "Event with same type (" .. event.Type .. ") is already running"
             end
         end
     end
@@ -472,10 +472,11 @@ end
 function Randomat:SafeTriggerEvent(cmd, ply, error_if_unsafe, ...)
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
-        if Randomat:CanEventRun(event) then
+        local can_run, reason = Randomat:CanEventRun(event)
+        if can_run then
             TriggerEvent(event, ply, false, ...)
         elseif error_if_unsafe then
-            error("Conditions for event not met")
+            error("Conditions for event not met: " .. reason)
         end
     else
         error("Could not find event '" .. cmd .. "'")
