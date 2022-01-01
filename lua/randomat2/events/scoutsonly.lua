@@ -40,7 +40,7 @@ function EVENT:Begin()
     SendFullStateUpdate()
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
-        return (wep:GetClass() == "weapon_zm_rifle")
+        return false
     end)
 
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
