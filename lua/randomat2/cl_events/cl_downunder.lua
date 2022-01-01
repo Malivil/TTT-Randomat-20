@@ -21,8 +21,18 @@ net.Receive("RdmtDownUnderBegin", function()
 
         return view
     end)
+    
+    -- Inverts mouse input to make this event easier to control
+    hook.Add("InputMouseApply", "RdmtDownUnderInvertMouse", function(cmd, x, y, ang)
+        ang.yaw = ang.yaw + (x / 50)
+        ang.pitch = math.Clamp(ang.pitch - y / 50, -89, 89)
+        cmd:SetViewAngles(ang)
+
+        return true
+    end)
 end)
 
 net.Receive("RdmtDownUnderEnd", function()
     hook.Remove("CalcView", "RdmtDownUnderCalcView")
+    hook.Remove("InputMouseApply", "RdmtDownUnderInvertMouse")
 end)

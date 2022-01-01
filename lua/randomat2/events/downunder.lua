@@ -10,6 +10,12 @@ EVENT.id = "downunder"
 function EVENT:Begin()
     net.Start("RdmtDownUnderBegin")
     net.Broadcast()
+
+    -- Inverts sidewards movement to make this event easier to control
+    self:AddHook("SetupMove", function(ply, mv, cmd)
+        local sidespeed = mv:GetSideSpeed()
+        mv:SetSideSpeed(-sidespeed)
+    end)
 end
 
 function EVENT:End()
