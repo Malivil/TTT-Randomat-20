@@ -43,7 +43,11 @@ if SERVER then
     CreateConVar("ttt_randomat_event_history", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many events to keep in history to prevent duplication.")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
-        if auto:GetBool() and math.random() <= auto_chance:GetFloat() then
+        local should_auto = auto:GetBool() and math.random() <= auto_chance:GetFloat()
+        local new_auto = hook.Call("TTTRandomatShouldAuto", nil, should_auto)
+        if type(new_auto) == "boolean" then should_auto = new_auto end
+
+        if should_auto then
             local silent = auto_silent:GetBool()
             if auto_choose:GetBool() then
                 if silent then
