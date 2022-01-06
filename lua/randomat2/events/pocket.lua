@@ -24,7 +24,7 @@ function EVENT:Begin()
 end
 
 function EVENT:GiveWep(ply)
-    Randomat:GiveRandomShopItem(ply, Randomat:GetShopRoles(), blocklist, true,
+    Randomat:GiveRandomShopItem(ply, Randomat:GetShopRoles(), blocklist, false,
         -- gettrackingvar
         function()
             return ply.pocketweptries
