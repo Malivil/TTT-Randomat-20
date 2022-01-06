@@ -399,9 +399,11 @@ function Randomat:CanEventRun(event, ignore_history)
     return true
 end
 
-local function GetRandomWeightedEvent(events)
+local function GetRandomWeightedEvent(events, can_run)
     local weighted_events = {}
-    for id, _ in pairs(events) do
+    for id, event in pairs(events) do
+        if can_run and not can_run(event) then continue end
+
         local weight = GetConVar("ttt_randomat_" .. id .. "_weight"):GetInt()
         local default_weight = GetConVar("ttt_randomat_event_weight"):GetInt()
         -- Use the default if the per-event weight is invalid
@@ -424,12 +426,12 @@ local function GetRandomWeightedEvent(events)
     return events[key]
 end
 
-function Randomat:GetRandomEvent()
+function Randomat:GetRandomEvent(skip_history, can_run)
     local events = Randomat.Events
 
     local found = false
     for _, v in pairs(events) do
-        if Randomat:CanEventRun(v) then
+        if Randomat:CanEventRun(v, can_run) then
             found = true
             break
         end
@@ -445,7 +447,9 @@ function Randomat:GetRandomEvent()
     end
 
     -- Only add randomly selected events to the history so specifically-triggered events don't get tracked
-    AddEventToHistory(event)
+    if skip_history then
+        AddEventToHistory(event)
+    end
 
     return event
 end
