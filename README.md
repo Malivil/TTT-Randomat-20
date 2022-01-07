@@ -33,6 +33,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. The Sky is Lava
 1. There's a cooldown on the jump!
 1. Jump Around!
+1. Trickle-Down Economics
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1229,6 +1230,16 @@ _ttt_randomat_skyislava_weight_ - Default: -1 - The weight this event should use
 _randomat_skyislava_interval_ - Default: 0.25 - How often (in seconds) damage is done while players are in the air.\
 _randomat_skyislava_damage_ - Default: 1 - How much damage is done.
 
+## Trickle-Down Economics
+Spent credits are redistributed to other people with shops
+\
+\
+**ConVars**
+\
+_ttt_randomat_trickledown_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_trickledown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_trickledown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Smoke Signals
 Allows dead players to envelope their target in smoke
 \
@@ -1626,6 +1637,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
+- u/Tr4sh13 on Reddit for the idea for the "Trickle-Down Economics" event
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
