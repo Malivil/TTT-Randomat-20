@@ -849,6 +849,17 @@ _ttt_randomat_credits_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_credits_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_credits_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## Insurance Policy
+Players gain a credit every X damage they take
+\
+\
+**ConVars**
+\
+_ttt_randomat_insurance_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_insurance_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_insurance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_insurance_damage_ - Default: 20 - How much damage before a player gets paid.
+
 ## Jump Around!
 Players can only move by multi-jumping\
 NOTE: Only runs if a double-jump mod which supports the "multijump_default_jumps" convar is running
@@ -1637,7 +1648,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
-- u/Tr4sh13 on Reddit for the idea for the "Trickle-Down Economics" event
+- u/Tr4sh13 on Reddit for the idea for the "Insurance Policy" and "Trickle-Down Economics" events
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
