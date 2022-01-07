@@ -704,18 +704,20 @@ function Randomat:SpawnBee(ply, color, height)
     return headBee
 end
 
-function Randomat:SpawnBarrel(pos, range, min_range)
+function Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)
     local ent = ents.Create("prop_physics")
     if not IsValid(ent) then return end
 
     if not min_range then
         min_range = range
     end
+
     local x = math.random(min_range, range)
     local y = math.random(min_range, range)
-
-    if math.random(0, 1) == 1 then x = -x end
-    if math.random(0, 1) == 1 then y = -y end
+    if not ignore_negative then
+        if math.random(0, 1) == 1 then x = -x end
+        if math.random(0, 1) == 1 then y = -y end
+    end
 
     ent:SetModel("models/props_c17/oildrum001_explosive.mdl")
     ent:SetPos(pos + Vector(x, y, math.random(5, range)))

@@ -206,6 +206,16 @@ _ttt_randomat_blind_min_players_ - Default: 0 - The minimum number of players re
 _ttt_randomat_blind_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_blind_duration_ - Default: 15 - The duration the players should be blinded for.
 
+## Bomberman
+Spawns an explosive barrel behind a player when they crouch
+\
+\
+**ConVars**
+\
+_ttt_randomat_bomberman_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_bomberman_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_bomberman_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Boo!
 Allows dead players to scare their target and make them drop their weapon
 \
@@ -1660,7 +1670,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
-- u/Tr4sh13 on Reddit for the idea for the "Barrel (In)Justice", "Insurance Policy", and "Trickle-Down Economics" events
+- u/Tr4sh13 on Reddit for the idea for the "Barrel (In)Justice", "Bomberman", "Insurance Policy", and "Trickle-Down Economics" events
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
