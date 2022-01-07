@@ -431,7 +431,7 @@ function Randomat:GetRandomEvent(skip_history, can_run)
 
     local found = false
     for _, v in pairs(events) do
-        if Randomat:CanEventRun(v, can_run) then
+        if Randomat:CanEventRun(v) and ((not can_run) or can_run(v)) then
             found = true
             break
         end
@@ -441,9 +441,9 @@ function Randomat:GetRandomEvent(skip_history, can_run)
         error("Could not find valid event, consider enabling more")
     end
 
-    local event = GetRandomWeightedEvent(events)
+    local event = GetRandomWeightedEvent(events, can_run)
     while not Randomat:CanEventRun(event) do
-        event = GetRandomWeightedEvent(events)
+        event = GetRandomWeightedEvent(events, can_run)
     end
 
     -- Only add randomly selected events to the history so specifically-triggered events don't get tracked
