@@ -447,7 +447,7 @@ function Randomat:GetRandomEvent(skip_history, can_run)
     end
 
     -- Only add randomly selected events to the history so specifically-triggered events don't get tracked
-    if skip_history then
+    if not skip_history then
         AddEventToHistory(event)
     end
 
