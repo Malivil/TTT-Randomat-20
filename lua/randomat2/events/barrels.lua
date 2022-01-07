@@ -16,20 +16,11 @@ local function TriggerBarrels()
         end
     end
 
+    local range = GetConVar("randomat_barrels_range"):GetInt()
     for _, ply in pairs(plys) do
         if ply:Alive() and not ply:IsSpec() then
             for _ = 1, GetConVar("randomat_barrels_count"):GetInt() do
-                local ent = ents.Create("prop_physics")
-
-                if (not IsValid(ent)) then return end
-
-                ent:SetModel("models/props_c17/oildrum001_explosive.mdl")
-                local sc = GetConVar("randomat_barrels_range"):GetInt()
-                ent:SetPos(ply:GetPos() + Vector(math.random(-sc, sc), math.random(-sc, sc), math.random(5, sc)))
-                ent:Spawn()
-
-                local phys = ent:GetPhysicsObject()
-                if (not IsValid(phys)) then ent:Remove() return end
+                Randomat:SpawnBarrel(ply:GetPos(), range)
             end
         end
     end

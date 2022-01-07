@@ -131,6 +131,18 @@ _ttt_randomat_ragdoll_weight_ - Default: -1 - The weight this event should use d
 _randomat_ragdoll_time_ - Default: 1.5 - The time the player is ragdolled.\
 _randomat_ragdoll_delay_ - Default: 1.5 - The time between ragdolls.
 
+## Barrel (In)Justice
+Explodes barrels if a player gets too close and then spawns more
+\
+\
+**ConVars**
+\
+_ttt_randomat_barrelinjustice_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_barrelinjustice_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_barrelinjustice_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_barrelinjustice_count_ - Default: 2 - Number of barrels spawned after one is exploded.\
+_randomat_barrelinjustice_range_ - Default: 100 - Minimum distance from the player for a barrel to explode
+
 ## Betrayed
 Randomly converts one vanilla Traitor to be a Glitch
 \
@@ -1648,7 +1660,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
-- u/Tr4sh13 on Reddit for the idea for the "Insurance Policy" and "Trickle-Down Economics" events
+- u/Tr4sh13 on Reddit for the idea for the "Barrel (In)Justice", "Insurance Policy", and "Trickle-Down Economics" events
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
