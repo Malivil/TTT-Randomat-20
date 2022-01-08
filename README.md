@@ -34,7 +34,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. There's a cooldown on the jump!
 1. Jump Around!
 1. Trickle-Down Economics
-1. Insurancy Policy
+1. Insurance Policy
 1. Barrel (In)Justice
 1. Bomberman
 1. Red Light, Green Light
