@@ -1,7 +1,7 @@
 net.Receive("RdmtDownUnderBegin", function()
     local view = { origin = vector_origin, angles = angle_zero, fov = 0 }
     hook.Add("CalcView", "RdmtDownUnderCalcView", function(ply, origin, angles, fov)
-        if not ply:Alive() or ply:IsSpec() then return end
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
 
         -- Get the views as given plus whatever is calculated from the current weapon
         view.origin = origin
@@ -23,7 +23,10 @@ net.Receive("RdmtDownUnderBegin", function()
     end)
 
     -- Inverts mouse input to make this event easier to control
-    hook.Add("InputMouseApply", "RdmtDownUnderInvertMouse", function(cmd, x, y, ang)
+    local client = LocalPlayer()
+    hook.Add("InputMouseApply", "RdmtDownUnderInputMouseApply", function(cmd, x, y, ang)
+        if not IsPlayer(client) or not client:Alive() or client:IsSpec() then return end
+
         ang.yaw = ang.yaw + (x / 50)
         ang.pitch = math.Clamp(ang.pitch - y / 50, -89, 89)
         cmd:SetViewAngles(ang)
@@ -34,5 +37,5 @@ end)
 
 net.Receive("RdmtDownUnderEnd", function()
     hook.Remove("CalcView", "RdmtDownUnderCalcView")
-    hook.Remove("InputMouseApply", "RdmtDownUnderInvertMouse")
+    hook.Remove("InputMouseApply", "RdmtDownUnderInputMouseApply")
 end)

@@ -13,6 +13,8 @@ function EVENT:Begin()
 
     -- Inverts sidewards movement to make this event easier to control
     self:AddHook("SetupMove", function(ply, mv, cmd)
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+
         local sidespeed = mv:GetSideSpeed()
         mv:SetSideSpeed(-sidespeed)
     end)
