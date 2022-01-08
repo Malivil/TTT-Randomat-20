@@ -34,6 +34,10 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. There's a cooldown on the jump!
 1. Jump Around!
 1. Trickle-Down Economics
+1. Insurancy Policy
+1. Barrel (In)Justice
+1. Bomberman
+1. Red Light, Green Light
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1154,6 +1158,19 @@ _ttt_randomat_ransom_min_players_ - Default: 0 - The minimum number of players r
 _ttt_randomat_ransom_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_ransom_traitorsonly_ - Default: 0 - Only target Traitors for the event.\
 _randomat_ransom_deathtimer_ - Default: 60 - The amount of time the person has to buy something.
+
+## Red Light, Green Light
+Hurts a player if they move during a red light
+\
+\
+**ConVars**
+\
+_ttt_randomat_redlight_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_redlight_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_redlight_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_redlight_mindelay_ - Default: 3 - Minimum time for each phase.\
+_randomat_redlight_maxdelay_ - Default: 10 - Maximum time for each phase.\
+_randomat_redlight_damage_ - Default: 3 - Amount of damage a player takes per second.
 
 ## RISE FROM YOUR GRAVE
 Causes anyone who dies to be resurrected as a Zombie
