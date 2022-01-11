@@ -38,6 +38,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Barrel (In)Justice
 1. Bomberman
 1. Red Light, Green Light
+1. Two Lies and a Truth
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1290,6 +1291,17 @@ _ttt_randomat_trickledown_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_trickledown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_trickledown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
+## Two Lies and a Truth
+One of these three events has been started... but which one?
+\
+\
+**ConVars**
+\
+_ttt_randomat_twolies_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_twolies_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_twolies_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_twolies_blocklist_ - Default: - The comma-separated list of event IDs to not start. For example: "skyislava,boo".
+
 ## Smoke Signals
 Allows dead players to envelope their target in smoke
 \
@@ -1686,6 +1698,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
 - u/Speedlovar on Reddit for the idea for the "Care Package", "Careful...", "Compulsive Reloading", "Derptective", and "Opposite Day" events
+- u/SwampyBogbeard on Reddit for the idea for the "Two Lies and a Truth" event
 - u/ttimo123456 on Reddit for the idea for the "Prop Hunt" event
 - u/Tr4sh13 on Reddit for the idea for the "Barrel (In)Justice", "Bomberman", "Insurance Policy", and "Trickle-Down Economics" events
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event

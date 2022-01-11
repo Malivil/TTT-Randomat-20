@@ -138,7 +138,7 @@ end)
  Event Notifications
 ]]--
 
-local function NotifyDescription(event)
+function Randomat:NotifyDescription(event)
     -- Show this if "secret" is active if we're specifically showing the description for "secret"
     if event.Id ~= "secret" and Randomat:IsEventActive("secret") then return end
     net.Start("randomat_message")
@@ -148,7 +148,7 @@ local function NotifyDescription(event)
     net.Broadcast()
 end
 
-local function ChatDescription(ply, event, has_description)
+function Randomat:ChatDescription(ply, event, has_description)
     -- Show this if "secret" is active if we're specifically showing the description for "secret"
     if event.Id ~= "secret" and Randomat:IsEventActive("secret") then return end
     if not IsValid(ply) then return end
@@ -204,11 +204,11 @@ local function TriggerEvent(event, ply, silent, ...)
         local has_description = event.Description ~= nil and #event.Description > 0
         if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() then
             -- Show the small description message but don't use SmallNotify because it specifically mutes when "secret" is running and we want to show this if this event IS "secret"
-            NotifyDescription(event)
+            Randomat:NotifyDescription(event)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
             for _, p in ipairs(player.GetAll()) do
-                ChatDescription(p, event, has_description)
+                Randomat:ChatDescription(p, event, has_description)
             end
         end
     end
