@@ -76,7 +76,7 @@ _ttt_randomat_suspicion_weight_ - Default: -1 - The weight this event should use
 _randomat_suspicion_chance_ - Default: 50 - The chance of the player being a Jester.
 
 ## A Random Person will explode every X seconds! Watch out! (EXCEPT DETECTIVES)
-This one is pretty self-explanitory. Detraitors are also excluded from explosion.
+This one is pretty self-explanatory. Detraitors are also excluded from explosion.
 \
 \
 **ConVars**
@@ -87,7 +87,7 @@ _ttt_randomat_explode_weight_ - Default: -1 - The weight this event should use d
 _randomat_explode_timer_ - Default: 30 - The time between explosions.
 
 ## A traitor will explode in X seconds!
-This one is pretty self-explanitory
+This one is pretty self-explanatory
 \
 \
 **ConVars**
@@ -498,9 +498,7 @@ Flips your view upside-down
 \
 _ttt_randomat_downunder_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_downunder_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_downunder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_downunder_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
-_randomat_downunder_amount_ - Default: 2 - How much self-damage to heal per interval.
+_ttt_randomat_downunder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Earthquake
 Moves all props, ammo, and weapons a random amount in a random direction.
@@ -676,7 +674,7 @@ _ttt_randomat_president_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_president_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_president_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.\
-_randomat_president_announce_ - Defualt: 1 - Whether to announce when the president dies
+_randomat_president_announce_ - Default: 1 - Whether to announce when the president dies
 
 ## Ghostly Apparition
 Dead players become ghosts who leave a trail of smoke as they drift through the world
@@ -770,9 +768,9 @@ Players vote for what type of damage they will be immune to for the rest of the 
 \
 **ConVars**
 \
-_ttt_randomat_harpoon_ - Default: 1 - Whether this event is enabled.\
-_ttt_randomat_harpoon_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_harpoon_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_immunity_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_immunity_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_immunity_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_immunity_timer_ - Default: 30 - The number of seconds the vote lasts.\
 _randomat_immunity_bullet_ - Default: 0 - Whether bullet damage can be voted for.\
 _randomat_immunity_slashing_ - Default: 0 - Whether slashing damage can be voted for.
@@ -790,7 +788,7 @@ _randomat_shrink_scale_ - Default: 0.5 - The shrinking scale factor.
 
 ## I don't think you realise the gravity of the situation.
 Gravity is changed every few seconds for a short period of time before reverting to normal.  
-It goes gack and forth between being lowered and raised each time.
+It goes back and forth between being lowered and raised each time.
 \
 \
 **ConVars**
@@ -988,7 +986,7 @@ _ttt_randomat_olympicsprint_min_players_ - Default: 0 - The minimum number of pl
 _ttt_randomat_olympicsprint_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
-This one is pretty self-explanitory except for the "Detective is stronger" part. That just means the detective has 200 health.\
+This one is pretty self-explanatory except for the "Detective is stronger" part. That just means the detective has 200 health.\
 NOTE: This event is automatically disabled in the outdated version of Custom Roles for TTT. This is due to an issue where the round would not end if a Jester was killed and there were multiple Jesters.
 \
 \
@@ -1196,7 +1194,7 @@ _ttt_randomat_specbees_min_players_ - Default: 0 - The minimum number of players
 _ttt_randomat_specbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Rock, Paper, Scissors
-Starts a game of Rock, Paper, Scissors between two players... to the death! A tie results in the players being soulbound to eachother.
+Starts a game of Rock, Paper, Scissors between two players... to the death! A tie results in the players being soulbound to each other.
 \
 \
 **ConVars**
@@ -1240,7 +1238,7 @@ _ttt_randomat_secondchance_min_players_ - Default: 0 - The minimum number of pla
 _ttt_randomat_secondchance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Sharing is Caring
-When a player kills another, their inventory is swapped with thier victim's.
+When a player kills another, their inventory is swapped with their victim's.
 \
 \
 **ConVars**
@@ -1325,7 +1323,7 @@ _ttt_randomat_suicide_min_players_ - Default: 0 - The minimum number of players 
 _ttt_randomat_suicide_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Social Distancing
-Does a small amount of damage over time to players who spend too much time close to eachother.
+Does a small amount of damage over time to players who spend too much time close to each other.
 \
 \
 **ConVars**
@@ -1704,7 +1702,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
-- Alex, Angela, Clockwork_tiger, Dom, [Fyxen](https://steamcommunity.com/profiles/76561198810121546/), Jaakko, Neil, and Pardival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
+- Alex, Angela, Clockwork_tiger, Dom, [Fyxen](https://steamcommunity.com/profiles/76561198810121546/), Jaakko, Neil, and Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Angela, Crimson, Fazzy, [Fyxen](https://steamcommunity.com/profiles/76561198810121546/), Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for ideas for improving the "Incriminating Evidence" event
@@ -1722,7 +1720,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
-- Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targetting dead players
+- Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targeting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
