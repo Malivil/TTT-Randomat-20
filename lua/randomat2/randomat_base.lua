@@ -35,7 +35,7 @@ ROLE_TRICKSTER = ROLE_TRICKSTER or -1
 ROLE_DETRAITOR = ROLE_DETRAITOR or -1
 
 Randomat.Events = Randomat.Events or {}
-Randomat.ActiveEvents = {}
+Randomat.ActiveEvents = Randomat.ActiveEvents or {}
 
 local randomat_meta =  {}
 randomat_meta.__index = randomat_meta
@@ -44,7 +44,7 @@ randomat_meta.__index = randomat_meta
  Event History
 ]]--
 
-Randomat.EventHistory = {}
+Randomat.EventHistory = Randomat.EventHistory or {}
 
 local function IsEventInHistory(event)
     if type(event) ~= "table" then
@@ -191,8 +191,7 @@ local function TriggerEvent(event, ply, silent, ...)
     end
 
     local owner = Randomat:GetValidPlayer(ply)
-    local index = #Randomat.ActiveEvents + 1
-    Randomat.ActiveEvents[index] = event
+    local index = table.insert(Randomat.ActiveEvents, event)
     Randomat.ActiveEvents[index].owner = owner
     Randomat.ActiveEvents[index]:Begin(...)
 
