@@ -1672,7 +1672,7 @@ That being said, I have created my [own version of the ULX Module](https://steam
 This section is information that is relevant to developers who want to create their own Randomat events
 
 ## Application Programming Interface (API)
-The API for the Randomat is available on GitHub [here](API.md)
+The API for the Randomat is available on GitHub [here](API.md).
 
 ## ULX Support
 To implement support for my dynamic [ULX Module](https://steamcommunity.com/sharedfiles/filedetails/?id=2096758509), define the `EVENT:GetConVars` method as described in the [API](API.md). There is an example available on the GitHub for my ULX plugin as well, [here](https://github.com/Malivil/TTT-Randomat-20-ULX/blob/master/README.md#getconvars-implementation-example).
