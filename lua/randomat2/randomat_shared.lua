@@ -242,7 +242,7 @@ end
 function Randomat:CanUseShop(ply)
     if ply.CanUseShop then return ply:CanUseShop() end
     if player.HasBuyMenu then return player.HasBuyMenu(ply) end
-    -- Otherwise just assume any roel in the list of shop roles can use the shop
+    -- Otherwise just assume any role in the list of shop roles can use the shop
     local shop_roles = Randomat:GetShopRoles()
     return shop_roles[ply:GetRole()] or false
 end
@@ -302,6 +302,9 @@ if SERVER then
             i = i * 2
         end
 
+        -- Exit early if we didn't change anything
+        if not removed then return false end
+
         -- Give the player enough credits to compensate for the equipment they can no longer use
         ply:AddCredits(credits)
 
@@ -313,7 +316,7 @@ if SERVER then
             ply:GiveEquipmentItem(id)
         end
 
-        return removed
+        return true
     end
 
     function Randomat:RemovePhdFlopper(ply, block_message)

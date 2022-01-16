@@ -53,7 +53,7 @@ function EVENT:Begin()
         table.insert(hobbits, others[i])
     end
 
-    -- Choose the troll, update their roel and health, and remove their weapons
+    -- Choose the troll, update their role and health, and remove their weapons
     local troll = traitors[1]
     local max_hp = troll:GetMaxHealth()
     Randomat:SetRole(troll, ROLE_TRAITOR)
