@@ -226,7 +226,7 @@ Messages that the Randomat is set up to listen to in the defined realm.
 - *Float* - The speed multiplier to record
 - *String* - The unique key for the speed multiplier. Used to remove the multiplier later
 
-**RdmtSetSpeedMultiplier_WithWeapon** - .\
+**RdmtSetSpeedMultiplier_WithWeapon** - Registers a speed multiplier for the local player that only takes effect when they have a specific weapon equipped.\
 *Realm:* Client\
 *Parameters:*
 - *Float* - The speed multiplier to record
