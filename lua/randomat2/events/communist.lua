@@ -55,6 +55,10 @@ function EVENT:Begin()
     end)
 end
 
+function EVENT:Condition()
+    return not Randomat:IsEventActive("privacy")
+end
+
 function EVENT:GetConVars()
     local checks = {}
     for _, v in ipairs({"show_roles"}) do
