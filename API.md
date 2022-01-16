@@ -8,12 +8,22 @@ This document aims to explain the things that have been added to the Randomat 2.
     1. [Methods](#Methods)
     1. [Properties](#Properties)
 1. [Hooks](#Hooks)
-1. [Net Messages](#Net_Messages)
-1. [Randomat Namespace](#Randomat_Namespace)
-    1. [Methods](#Methods)
+1. [Net Messages](#Net-Messages)
+1. [Randomat Namespace](#Randomat-Namespace)
+    1. [Methods](#Methods-1)
     1. [Tables](#Tables)
 
 ## Enumerations
+Enumerations available globally (within the defined realm).
+
+**EVENT_TYPE_\*** - What type the event is. By default, multiple events with the same (non-default) type cannot run at the same time.\
+*Realm:* Client and Server\
+*Values:*
+- EVENT_TYPE_DEFAULT - This event doesn't match any of the other types or doesn't specify a type
+- EVENT_TYPE_WEAPON_OVERRIDE - This event changes what weapons a player has and can use
+- EVENT_TYPE_VOTING - This event shows a voting UI for each player
+- EVENT_TYPE_SMOKING - This event uses a smoking effect on the players
+- EVENT_TYPE_SPECTATOR_UI - This event uses a custom interface for spectators
 
 ## Events
 Creating an Randomat event involves defining the object with its associated methods and properties and then registering it. This section will detail the common methods and properties available when creating your event.
@@ -131,6 +141,44 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 - *ply* - The player who triggered the event
 
 ## Net Messages
+Messages that the Randomat is set up to listen to in the defined realm.
+
+**randomat_message** - Displays a message on the local player's screen. Also plays a sound.\
+*Realm:* Client\
+*Parameters:*
+- *Bool* - Whether the message being displayed should be large
+- *String* - The message being displayed 
+- *UInt(8)* - The number of seconds the message should be displayed for
+
+**randomat_message_silent** - Displays a message on the local player's screen. Does not play a sound.\
+*Realm:* Client\
+*Parameters:*
+- *Bool* - Whether the message being displayed should be large
+- *String* - The message being displayed 
+- *UInt(8)* - The number of seconds the message should be displayed for
+
+**RdmtRemoveSpeedMultiplier** - Removes a speed multiplier for the local player.\
+*Realm:* Client\
+*Parameters:*
+- *String* - The unique key for the speed multiplier to remove
+
+**RdmtRemoveSpeedMultipliers** - Removes all speed multipliers for the local player which have keys that start with the given string.\
+*Realm:* Client\
+*Parameters:*
+- *String* - The value that multiplier keys must start with to be removed
+
+**RdmtSetSpeedMultiplier** - Registers a speed multiplier for the local player.\
+*Realm:* Client\
+*Parameters:*
+- *Float* - The speed multiplier to record
+- *String* - The unique key for the speed multiplier. Used to remove the multiplier later
+
+**RdmtSetSpeedMultiplier_WithWeapon** - .\
+*Realm:* Client\
+*Parameters:*
+- *Float* - The speed multiplier to record
+- *String* - The unique key for the speed multiplier. Used to remove the multiplier later
+- *String* - The weapon class the local player must have equipped for the speed multiplier to be in effect
 
 ## Randomat Namespace
 
@@ -193,6 +241,12 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 *Parameters:*
 - *event* - 
 
+**Randomat:GetItemName(item, role)** - .\
+*Realm:* Client\
+*Parameters:*
+- *item* - 
+- *role* - 
+
 **Randomat:GetPlayers(shuffle, alive_only, dead_only)** - .\
 *Realm:* Server\
 *Parameters:*
@@ -249,6 +303,11 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 - *roles* - 
 - *check* - 
 
+**Randomat:GetWeaponName(item)** - .\
+*Realm:* Client\
+*Parameters:*
+- *item* - 
+
 **Randomat:GiveRandomShopItem(ply, roles, blocklist, include_equipment, gettrackingvar, settrackingvar, onitemgiven, droppable_only)** - .\
 *Realm:* Server\
 *Parameters:*
@@ -260,6 +319,23 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 - *settrackingvar* - 
 - *onitemgiven* - 
 - *droppable_only* - 
+
+**Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist)** - .\
+*Realm:* Client\
+*Parameters:*
+- *tbl* - 
+- *client* - 
+- *pred* - 
+- *color* - 
+- *max_dist* - 
+
+**Randomat:HandlePlayerSmoke(client, pred, color, max_dist)** - .\
+*Realm:* Client\
+*Parameters:*
+- *client* - 
+- *pred* - 
+- *color* - 
+- *max_dist* - 
 
 **Randomat:IsEventActive(id)** - .\
 *Realm:* Server\
@@ -340,6 +416,17 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 - *wep* - 
 - *chosen_sound* - 
 
+**Randomat:PaintBar(r, x, y, w, h, colors, value)** - .\
+*Realm:* Client\
+*Parameters:*
+- *r* - 
+- *x* - 
+- *y* - 
+- *w* - 
+- *h* - 
+- *colors* - 
+- *value* - 
+
 **Randomat:register(event)** - .\
 *Realm:* Server\
 *Parameters:*
@@ -367,6 +454,16 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 *Realm:* Client and Server\
 *Parameters:*
 - *wep* - 
+
+**Randomat:RoundedMeter(bs, x, y, w, h, color)** - .\
+*Realm:* Client\
+*Parameters:*
+- *bs* - 
+- *x* - 
+- *y* - 
+- *w* - 
+- *h* - 
+- *color* - 
 
 **Randomat:SetRole(ply, role)** - .\
 *Realm:* Server\
