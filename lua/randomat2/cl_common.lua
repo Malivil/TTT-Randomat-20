@@ -69,7 +69,7 @@ end
 function Randomat:PaintBar(r, x, y, w, h, colors, value)
     -- Background
     -- slightly enlarged to make a subtle border
-    draw.RoundedBox(8, x - 1, y - 1, w + 2, h + 2, colors.background)
+    draw.RoundedBox(r, x - 1, y - 1, w + 2, h + 2, colors.background)
 
     -- Fill
     local width = w * math.Clamp(value, 0, 1)
