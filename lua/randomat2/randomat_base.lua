@@ -305,8 +305,9 @@ function Randomat:SetRole(ply, role)
 end
 
 function Randomat:register(tbl)
-    local id = tbl.id
+    local id = tbl.id or tbl.Id
     tbl.Id = id
+    tbl.id = id
     tbl.__index = tbl
     -- Default SingleUse to true if it isn't specified
     if tbl.SingleUse ~= false then
