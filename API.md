@@ -29,93 +29,146 @@ Enumerations available globally (within the defined realm).
 Creating an Randomat event involves defining the object with its associated methods and properties and then registering it. This section will detail the common methods and properties available when creating your event.
 
 ### Methods
+All methods below are automatically defined for every event but events can override them as needed.
 
-**EVENT:AddHook(hooktype, callbackfunc)** - .\
+**EVENT:AddHook(hooktype, callbackfunc)** - Registers a new hook for this event.\
 *Realm:* Server\
 *Parameters:*
-- *hooktype* - 
-- *callbackfunc* - 
+- *hooktype* - The type of hook to add
+- *callbackfunc* - The function to call for the hook
 
-**EVENT:Begin(...)** - .\
+**EVENT:Begin(...)** - Called when an event is started. **Must be defined to for an event to work**.\
 *Realm:* Server\
 *Parameters:*
-- *...* - 
+- *...* - All parameters that could be passed into this event. This is only used when one of the `TriggerEvent` methods is called, allowing you to change aspects of an event based on what code calls it
 
-**EVENT:CleanUpHooks()** - .\
+**EVENT:CleanUpHooks()** - Removes all hooks registered to this event.\
 *Realm:* Server
 
-**EVENT:Condition()** - .\
+**EVENT:Condition()** - Called when the Randomat is attempting to determine if an event can be started.\
 *Realm:* Server
 
-**EVENT:Enabled()** - .\
+*Returns:* `true` by default, meaning an event should run. If overridden and changed to return `false`, this event will never start
+
+**EVENT:Enabled()** - Called when determining if an event is enabled.\
 *Realm:* Server
 
-**EVENT:End()** - .\
+*Returns:* The current value of the the automatically-generated `ttt_randomat_{EVENT_ID}` convar. If overridden and changed to return `false`, this event will never start
+
+**EVENT:End()** - Called when an event is stopped. Used to do manual cleanup of processes started in the event.\
 *Realm:* Server
 
-**EVENT:GetAlivePlayers(shuffle)** - .\
+*NOTE:* **All** events are automatically ended during every round prep phase to ensure leftover event processes are stopped between events
+
+**EVENT:GetAlivePlayers(shuffle)** - Gets a table of all living players.\
 *Realm:* Server\
 *Parameters:*
-- *shuffle* - 
+- *shuffle* - Whether to shuffle the table after generating it
 
-**EVENT:GetConVars()** - .\
+*Returns:* A table of all living players
+
+**EVENT:GetConVars()** - Gets tables of the convars defined for an event. Used primarily by the Randomat 2.0 ULX module to dynamically create configuration pages for each event.\
 *Realm:* Server
 
-**EVENT:GetPlayers(shuffle)** - .\
+*Returns:*
+- *sliders* - Table of convar objects that should be configurable using numeric sliders
+  - *cmd* - The portion of the convar name that comes after `randomat_{EVENT_ID}_` (e.g. "interval" from `randomat_lonelyyogs_interval`)
+  - *dsc* - The description of this convar
+  - *min* - The minimum value for this convar
+  - *max* - The maximum value for this convar
+  - *dcm* - The number of decimal points to use for the slider for this convar
+- *checks* - Table of convar objects that should be configurable using checkboxes
+  - *cmd* - The portion of the convar name that comes after `randomat_{EVENT_ID}_` (e.g. "interval" from `randomat_lonelyyogs_interval`)
+  - *dsc* - The description of this convar
+- *textboxes* - Table of convar objects that should be configurable using textboxes
+  - *cmd* - The portion of the convar name that comes after `randomat_{EVENT_ID}_` (e.g. "interval" from `randomat_lonelyyogs_interval`)
+  - *dsc* - The description of this convar
+
+**EVENT:GetPlayers(shuffle)** - Gets a table of all players.\
 *Realm:* Server\
 *Parameters:*
-- *shuffle* - 
+- *shuffle* - Whether to shuffle the table after generating it
 
-**EVENT:GetRoleName(ply, hide_secret_roles)** - .\
+**EVENT:GetRoleName(ply, hide_secret_roles)** - Calls `Randomat:GetRoleExtendedString` for the given player's role.\
 *Realm:* Server\
 *Parameters:*
-- *ply* - 
-- *hide_secret_roles* - 
+- *ply* - The player whose role name is being retrieved
+- *hide_secret_roles* - Whether to hide roles that should remain secret (e.g. Detraitor and Impersonator)
 
-**EVENT:HandleWeaponAddAndSelect(ply, addweapons)** - .\
+**EVENT:HandleWeaponAddAndSelect(ply, addweapons)** - Handles adding weapons to the given player and selecting the weapon which is as close to their current weapon as possible.\
 *Realm:* Server\
 *Parameters:*
-- *ply* - 
-- *addweapons* - 
+- *ply* - The player whose weapons are being modified
+- *addweapons* - The callback function that will be called to add weapons
+  - *Parameters:*
+    - *active_class* - The player's current weapon class
+    - *active_kind* - The player's current weapon kind
 
-**EVENT:RemoveHook(hooktype)** .\
+**EVENT:RemoveHook(hooktype)** - Removes the hook of the given hook type bound to this event.\
 *Realm:* Server\
 *Parameters:*
-- *hooktype* - 
+- *hooktype* - The type of event to be removed
 
-**EVENT:RenameWeps(name)** - .\
+**EVENT:RenameWeps(name)** - Gets the human-readable name of the given weapon name string.\
 *Realm:* Server\
 *Parameters:*
-- *name* - 
+- *name* - The weapon name string to be translated
 
-**EVENT:ResetAllPlayerScales()** - .\
+**EVENT:ResetAllPlayerScales()** - Resets all player scales to their defaults.\
 *Realm:* Server
 
-**EVENT:SetAllPlayerScales(scale)** - .\
+**EVENT:SetAllPlayerScales(scale)** - Sets the scale of all living players to the given value.\
 *Realm:* Server\
 *Parameters:*
-- *scale* - 
+- *scale* - The player scale to be set
 
-**EVENT:SmallNotify(msg, length, target)** - .\
+**EVENT:SmallNotify(msg, length, target)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
 *Parameters:*
-- *msg* - 
-- *length* - 
-- *target* - 
+- *msg* - The message to display
+- *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
+- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
 
-**EVENT:StripRoleWeapons(ply)** - .\
+**EVENT:StripRoleWeapons(ply)** - Removes all role-specific weapons from the given player.\
 *Realm:* Server\
 *Parameters:*
-- *ply* - 
+- *ply* - The player whose role-specific events are being removed
 
-**EVENT:SwapWeapons(ply, weapon_list, from_killer)** - .\
+**EVENT:SwapWeapons(ply, weapon_list, from_killer)** - Swaps all weapons from the given player with the specified list of weapons.\
 *Realm:* Server\
 *Parameters:*
-- *ply* - 
-- *weapon_list* - 
-- *from_killer* - 
+- *ply* - The player whose weapons are being swapped
+- *weapon_list* - The list of weapons to give the target player
+- *from_killer* - Whether the weapons being given came from a player with the Killer role
 
 ### Properties
+
+**AltTitle** - The alternate title to use for this event. Used to prevent an event from sending an automatic "started" notification (if `Title` is not defined) and to allow for a second searchable title in the Randomat 2.0 ULX module. Defaults to `nil`.\
+*Realm:* Server
+
+**Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
+*Realm:* Server
+
+**Id (aka id)** - The unique identifier for this event.\
+*Realm:* Server
+
+**MaxRoundCompletePercent** - The maximum percentage of the current round that can be completed for this event to be randomly chosen to be started. Defaults to `nil`.\
+*Realm:* Server
+
+**MinRoundCompletePercent** - The minimum percentage of the current round that can be completed for this event to be randomly chosen to be started. Defaults to `nil`.\
+*Realm:* Server
+
+**SingleUse** - Whether this event should not be allowed to start if it's already running. Defaults to `true`.\
+*Realm:* Server
+
+**StartSecret** - Whether this event should be started in secret. Defaults to `false`.\
+*Realm:* Server
+
+**Title** - The title to use for this event. If this is not defined (and `AltTitle` is instead) the automatic "started" notification for this event will not happen.\
+*Realm:* Server
+
+**Type** - The *EVENT_TYPE_\** value to use for this event.\
+*Realm:* Server
 
 ## Hooks
 Custom and modified event hooks available within the defined realm. A list of default TTT hooks is available [here](https://www.troubleinterroristtown.com/development/hooks/) but note that they may have been modified (see below).
@@ -265,11 +318,11 @@ Messages that the Randomat is set up to listen to in the defined realm.
 *Parameters:*
 - *role* - 
 
-**Randomat:GetRoleExtendedString(role, hide_secret_roles)** - .\
+**Randomat:GetRoleExtendedString(role, hide_secret_roles)** - Gets the extended role string (e.g. "An innocent" or "A traitor") for the given role.\
 *Realm:* Client and Server\
 *Parameters:*
-- *role* - 
-- *hide_secret_roles* - 
+- *role* - The ID of the role whose extended string is being retrieved
+- *hide_secret_roles* - Whether to hide roles that should remain secret (e.g. Detraitor and Impersonator)
 
 **Randomat:GetRolePluralString(role)** - .\
 *Realm:* Client and Server\
