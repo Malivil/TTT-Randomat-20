@@ -11,7 +11,9 @@ EVENT.id = "fov"
 EVENT.SingleUse = false
 
 local function PlayerInIronsights(ply)
-    return ply.GetActiveWeapon and ply:GetActiveWeapon() and ply:GetActiveWeapon():GetIronsights()
+    if not ply.GetActiveWeapon then return false end
+    local weap = ply:GetActiveWeapon()
+    return IsValid(weap) and weap.GetIronsights and weap:GetIronsights()
 end
 
 function EVENT:Begin()
