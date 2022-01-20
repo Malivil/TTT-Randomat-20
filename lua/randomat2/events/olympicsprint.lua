@@ -19,7 +19,9 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    return CR_VERSION and CRVersion("1.0.2")
+    -- Check that this variable exists by double negating
+    -- We can't just return the variable directly because it's not a boolean
+    return not not CR_VERSION
 end
 
 Randomat:register(EVENT)

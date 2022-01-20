@@ -30,7 +30,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    if not CR_VERSION or not CRVersion("1.1.9") then return false end
+    if not CR_VERSION then return false end
 
     for _, p in ipairs(self:GetAlivePlayers()) do
         if p:GetRole() == ROLE_JESTER then

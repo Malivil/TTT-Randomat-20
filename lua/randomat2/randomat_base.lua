@@ -296,7 +296,7 @@ function Randomat:SetRole(ply, role)
 
     net.Start("TTT_RoleChanged")
     net.WriteString(ply:SteamID64())
-    if CR_VERSION and CRVersion("1.1.2") then
+    if CR_VERSION then
         net.WriteInt(role, 8)
     else
         net.WriteUInt(role, 8)
