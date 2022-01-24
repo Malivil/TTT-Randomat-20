@@ -832,31 +832,34 @@ function randomat_meta:RenameWeps(name)
     return name
 end
 
-function randomat_meta:StripRoleWeapons(ply)
+function randomat_meta:StripRoleWeapons(ply, skip_add_crowbar)
     if not IsValid(ply) then return end
 
     if ply.StripRoleWeapons then
         ply:StripRoleWeapons()
-        return
+    else
+        if ply:HasWeapon("weapon_hyp_brainwash") then
+            ply:StripWeapon("weapon_hyp_brainwash")
+        end
+        if ply:HasWeapon("weapon_vam_fangs") then
+            ply:StripWeapon("weapon_vam_fangs")
+        end
+        if ply:HasWeapon("weapon_zom_claws") then
+            ply:StripWeapon("weapon_zom_claws")
+        end
+        if ply:HasWeapon("weapon_kil_knife") then
+            ply:StripWeapon("weapon_kil_knife")
+        end
+        if ply:HasWeapon("weapon_kil_crowbar") then
+            ply:StripWeapon("weapon_kil_crowbar")
+        end
+        if ply:HasWeapon("weapon_ttt_wtester") then
+            ply:StripWeapon("weapon_ttt_wtester")
+        end
     end
 
-    if ply:HasWeapon("weapon_hyp_brainwash") then
-        ply:StripWeapon("weapon_hyp_brainwash")
-    end
-    if ply:HasWeapon("weapon_vam_fangs") then
-        ply:StripWeapon("weapon_vam_fangs")
-    end
-    if ply:HasWeapon("weapon_zom_claws") then
-        ply:StripWeapon("weapon_zom_claws")
-    end
-    if ply:HasWeapon("weapon_kil_knife") then
-        ply:StripWeapon("weapon_kil_knife")
-    end
-    if ply:HasWeapon("weapon_kil_crowbar") then
-        ply:StripWeapon("weapon_kil_crowbar")
-    end
-    if ply:HasWeapon("weapon_ttt_wtester") then
-        ply:StripWeapon("weapon_ttt_wtester")
+    if not skip_add_crowbar then
+        ply:Give("weapon_zm_improvised")
     end
 end
 

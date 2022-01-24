@@ -129,10 +129,11 @@ All methods below are automatically defined for every event but events can overr
 - *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
 - *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
 
-**EVENT:StripRoleWeapons(ply)** - Removes all role-specific weapons from the given player.\
+**EVENT:StripRoleWeapons(ply, skip_add_crowbar)** - Removes all role-specific weapons from the given player and gives them a crowbar (to replace the killer's crowbar).\
 *Realm:* Server\
 *Parameters:*
 - *ply* - The player whose role-specific events are being removed
+- *skip_add_crowbar* - Whether to skip giving the player a replacement crowbar
 
 **EVENT:SwapWeapons(ply, weapon_list, from_killer)** - Swaps all weapons from the given player with the specified list of weapons.\
 *Realm:* Server\
