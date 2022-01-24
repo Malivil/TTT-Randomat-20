@@ -151,7 +151,13 @@ Properties used to define and describe an event and its running conditions
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
 
+**Enabled** - Whether this event should be enabled by default. This changes the default value for created the `ttt_randomat_{EVENT_ID}` convar. Changing this after the event has already been loaded on a server will only change the default convar value, not the current value. Defaults to `true`.\
+*Realm:* Server
+
 **Id (aka id)** - The unique identifier for this event. **This must be defined for the event to work**.\
+*Realm:* Server
+
+**MinPlayers** - The minimum number of players that must be in the server before this event can be chosen. This changes the default value for created the `ttt_randomat_{EVENT_ID}_min_players` convar. Changing this after the event has already been loaded on a server will only change the default convar value, not the current value.Defaults to `0`.\
 *Realm:* Server
 
 **MaxRoundCompletePercent** - The maximum percentage of the current round that can be completed for this event to be randomly chosen to be started. Defaults to `nil`.\
@@ -170,6 +176,9 @@ Properties used to define and describe an event and its running conditions
 *Realm:* Server
 
 **Type** - The *EVENT_TYPE_\** value to use for this event.\
+*Realm:* Server
+
+**Weight** - The selection weight to use for this event when randomly choosing events. A higher weight means the event will be chosen more often. A weight of -1 means it should use the shared `ttt_randomat_event_weight` convar value. This changes the default value for created the `ttt_randomat_{EVENT_ID}_weight` convar. Changing this after the event has already been loaded on a server will only change the default convar value, not the current value. Defaults to `-1`.\
 *Realm:* Server
 
 ## Hooks

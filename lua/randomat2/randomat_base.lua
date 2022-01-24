@@ -305,10 +305,16 @@ function Randomat:SetRole(ply, role)
 end
 
 function Randomat:register(tbl)
+    local default_weight = GetConVar("ttt_randomat_event_weight"):GetInt()
+
     local id = tbl.id or tbl.Id
     tbl.Id = id
     tbl.id = id
     tbl.__index = tbl
+    -- Default Enabled to true if it isn't specified
+    if tbl.Enabled ~= false then
+        tbl.Enabled = true
+    end
     -- Default SingleUse to true if it isn't specified
     if tbl.SingleUse ~= false then
         tbl.SingleUse = true
@@ -321,14 +327,21 @@ function Randomat:register(tbl)
     if tbl.Type == nil then
         tbl.Type = EVENT_TYPE_DEFAULT
     end
+    -- Default MinPlayers to 0 if it's not specified
+    if tbl.MinPlayers == nil then
+        tbl.MinPlayers = 0
+    end
+    -- Default Weight to -1 if it's not specified or matches the global default
+    if tbl.Weight == nil or tbl.Weight == default_weight then
+        tbl.Weight = -1
+    end
     setmetatable(tbl, randomat_meta)
 
     Randomat.Events[id] = tbl
 
-    CreateConVar("ttt_randomat_"..id, 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-    CreateConVar("ttt_randomat_"..id.."_min_players", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-    local weight = CreateConVar("ttt_randomat_"..id.."_weight", -1, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-    local default_weight = GetConVar("ttt_randomat_event_weight"):GetInt()
+    CreateConVar("ttt_randomat_" .. id, tbl.Enabled and 1 or 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    CreateConVar("ttt_randomat_" .. id .. "_min_players", tbl.MinPlayers, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    local weight = CreateConVar("ttt_randomat_" .. id .. "_weight", tbl.Weight, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 
     -- If the current weight matches the default, update the per-event weight to the new default of -1
     if weight:GetInt() == default_weight then
