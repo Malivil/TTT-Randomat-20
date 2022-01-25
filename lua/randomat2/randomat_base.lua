@@ -311,9 +311,9 @@ function Randomat:register(tbl)
     tbl.Id = id
     tbl.id = id
     tbl.__index = tbl
-    -- Default Enabled to true if it isn't specified
-    if tbl.Enabled ~= false then
-        tbl.Enabled = true
+    -- Default IsEnabled to true if it isn't specified
+    if tbl.IsEnabled ~= false then
+        tbl.IsEnabled = true
     end
     -- Default SingleUse to true if it isn't specified
     if tbl.SingleUse ~= false then
@@ -339,7 +339,7 @@ function Randomat:register(tbl)
 
     Randomat.Events[id] = tbl
 
-    CreateConVar("ttt_randomat_" .. id, tbl.Enabled and 1 or 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    CreateConVar("ttt_randomat_" .. id, tbl.IsEnabled and 1 or 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
     CreateConVar("ttt_randomat_" .. id .. "_min_players", tbl.MinPlayers, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
     local weight = CreateConVar("ttt_randomat_" .. id .. "_weight", tbl.Weight, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 

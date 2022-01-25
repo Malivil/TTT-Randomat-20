@@ -151,7 +151,7 @@ Properties used to define and describe an event and its running conditions
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
 
-**Enabled** - Whether this event should be enabled by default. This changes the default value for created the `ttt_randomat_{EVENT_ID}` convar. Changing this after the event has already been loaded on a server will only change the default convar value, not the current value. Defaults to `true`.\
+**IsEnabled** - Whether this event should be enabled by default. This changes the default value for created the `ttt_randomat_{EVENT_ID}` convar. Changing this after the event has already been loaded on a server will only change the default convar value, not the current value. Defaults to `true`.\
 *Realm:* Server
 
 **Id (aka id)** - The unique identifier for this event. **This must be defined for the event to work**.\
