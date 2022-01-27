@@ -51,7 +51,7 @@ function EVENT:Begin()
                     if CurTime() - playerlastdraintime[playername] > drain_time then
                         playerlastdraintime[playername] = CurTime()
                         local active_weapon = v:GetActiveWeapon()
-                        if IsValid(active_weapon) and (active_weapon.Spawnable or (not active_weapon.CanBuy or affects_buy)) then
+                        if IsValid(active_weapon) and (active_weapon.AutoSpawnable or (not active_weapon.CanBuy or affects_buy)) then
                             local current_clip = active_weapon:Clip1() - 1
                             if current_clip >= 0 then
                                 active_weapon:SetClip1(current_clip)

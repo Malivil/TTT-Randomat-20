@@ -556,7 +556,7 @@ local function CanIncludeWeapon(weap, blocklist, droppable_only)
     -- Must be valid
     if not weap then return false end
     -- Must not spawn on the map
-    if weap.Spawnable then return false end
+    if weap.AutoSpawnable then return false end
     -- Must be droppable if droppable_only is true
     if droppable_only and not weap.AllowDrop then return false end
     -- Must be buyable by at least one role
