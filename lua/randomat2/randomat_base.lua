@@ -552,15 +552,15 @@ function Randomat:EventNotifySilent(title)
     net.Broadcast()
 end
 
-local function CanIncludeWeapon(weap, blocklist, droppable_only)
+local function CanIncludeWeapon(role, weap, blocklist, droppable_only)
     -- Must be valid
     if not weap then return false end
     -- Must not spawn on the map
     if weap.AutoSpawnable then return false end
     -- Must be droppable if droppable_only is true
     if droppable_only and not weap.AllowDrop then return false end
-    -- Must be buyable by at least one role
-    if not weap.CanBuy or table.Count(weap.CanBuy) == 0 then return false end
+    -- Must be buyable by the given role
+    if not weap.CanBuy or not table.HasValue(weap.CanBuy, role) then return false end
     -- Must not be blocked
     if blocklist and table.HasValue(blocklist, WEPS.GetClass(weap)) then return false end
     return true
@@ -568,9 +568,10 @@ end
 
 local function GetRandomRoleWeapon(roles, blocklist, droppable_only)
     local selected = math.random(1, #roles)
-    local tbl = table.Copy(EquipmentItems[roles[selected]]) or {}
+    local role = roles[selected]
+    local tbl = table.Copy(EquipmentItems[role]) or {}
     for _, v in ipairs(weapons.GetList()) do
-        if CanIncludeWeapon(v, blocklist, droppable_only) then
+        if CanIncludeWeapon(role, v, blocklist, droppable_only) then
             table.insert(tbl, v)
         end
     end
