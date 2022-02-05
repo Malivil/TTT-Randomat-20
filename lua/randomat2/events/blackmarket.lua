@@ -81,9 +81,11 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    -- Only run if there is at least one detective-like player living
+    -- Only run if there is at least one detective-like player living, but not the santa
     for _, v in ipairs(self:GetAlivePlayers()) do
-        if Randomat:IsGoodDetectiveLike(v) then
+        if ROLE_SANTA and v:GetRole() == ROLE_SANTA then
+            return false
+        elseif Randomat:IsGoodDetectiveLike(v) then
             return true
         end
     end
