@@ -575,6 +575,10 @@ local function GetRandomRoleWeapon(roles, blocklist, droppable_only)
             table.insert(tbl, v)
         end
     end
+    if #tbl == 0 then
+        return nil, nil, nil
+    end
+
     table.Shuffle(tbl)
 
     local item = table.Random(tbl)
@@ -592,7 +596,7 @@ function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tra
     local item, item_id, swep_table = GetRandomRoleWeapon(roles, blocklist, droppable_only)
     if item_id then
         -- If this is an item and we shouldn't get players items or the player already has this item, try again
-        if not include_equipment or ply:HasEquipmentItem(item_id) then
+        if not include_equipment or not ply or ply:HasEquipmentItem(item_id) then
             return Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
         -- Otherwise return it
         else
@@ -601,7 +605,7 @@ function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tra
         end
     elseif swep_table then
         -- If this player can use this weapon, give it to them
-        if ply:CanCarryWeapon(swep_table) then
+        if not ply or ply:CanCarryWeapon(swep_table) then
             settrackingvar(0)
             return item, item_id, swep_table
         -- Otherwise try again
@@ -609,7 +613,9 @@ function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tra
             return Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
         end
     end
-    return nil, nil, nil
+
+    -- If nothing valid was found, try again
+    return Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
 end
 
 local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settrackingvar, onitemgiven, droppable_only)
