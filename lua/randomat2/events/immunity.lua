@@ -47,6 +47,8 @@ function EVENT:Begin()
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
         if not immunity then return end
         if not IsPlayer(ent) or not ent:Alive() or ent:IsSpec() then return end
+        -- If we're blocking crush damage, let the barnacle still do the damage or else people can just get stuck in there
+        if immunity == DMG_CRUSH and IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor():GetClass() == "npc_barnacle" then return end
 
         -- Disallow damage of the voted type
         if dmginfo:IsDamageType(immunity) then
