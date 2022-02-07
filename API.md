@@ -253,11 +253,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 **Randomat:CallShopHooks(isequip, id, ply)** - Calls expected hooks, net messages, and player methods to indicate that a player has bought a weapon. This is used when the Randomat gives a player a weapon.\
 *Realm:* Server\
 *Parameters:*
-- *isequip* - Whether the item the player received was an equipment item
+- *isequip* - The numerical form of `id` which is used to determine whether the item the player received was an equipment item
 - *id* - The weapon class name (e.g., "weapon_ttt_knife") or item ID (e.g., EQUIP_ARMOR) that the player received
 - *ply* - The player who received the shop item
 
-**Randomat:CanEventRun(event, ignore_history)** - Determines whether the given event can start based on whether it conforms to the following conditions:\
+**Randomat:CanEventRun(event, ignore_history)** - Determines whether the given event can start based on whether it conforms to the following conditions:
 1. It exists
 1. It's `Enabled` method returns `true` (By default, this means whether the `ttt_randomat_{EVENT_ID}` convar is `1`)
 1. It's `Condition` method returns `true` (By default, this always returns `true`)
