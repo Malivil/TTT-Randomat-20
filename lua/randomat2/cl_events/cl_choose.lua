@@ -55,13 +55,13 @@ net.Receive("ChooseEventTrigger", function()
     list:AddColumn("Events")
 
     for _, v in pairs(tbl) do
-        list:AddLine(v)
+        list:AddLine(v.title, v.id)
     end
     chooseTables[frames] = frame
 
     list.OnRowSelected = function(lst, index, pnl)
         net.Start("ChoosePlayerChose")
-        net.WriteString(pnl:GetColumnText(1))
+        net.WriteString(pnl:GetColumnText(2))
         net.SendToServer()
         closeChooseFrame()
     end
@@ -80,21 +80,21 @@ net.Receive("ChooseVoteTrigger", function()
     list:AddColumn("Votes")
 
     for _, v in pairs(tbl) do
-        list:AddLine(v, 0)
+        list:AddLine(v.title, 0, v.id)
     end
     chooseTables[frames] = frame
 
     list.OnRowSelected = function(lst, index, pnl)
         net.Start("ChoosePlayerVoted")
-        net.WriteString(pnl:GetColumnText(1))
+        net.WriteString(pnl:GetColumnText(3))
         net.SendToServer()
     end
 
     net.Receive("ChoosePlayerVoted", function()
         local votee = net.ReadString()
         for _, v in ipairs(list:GetLines()) do
-            if v:GetColumnText(1) == votee then
-                v:SetColumnText(2, v:GetColumnText(2)+1)
+            if v:GetColumnText(3) == votee then
+                v:SetColumnText(2, v:GetColumnText(2) + 1)
             end
         end
     end)
