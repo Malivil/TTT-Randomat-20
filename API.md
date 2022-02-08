@@ -250,6 +250,11 @@ The methods and properties belonging to the static `Randomat` namespace, availab
 ### Methods
 Methods belonging to the `Randomat` namespace that are available globally, within the defined realm
 
+**Randomat:AddEventToHistory(event)** - Adds the given event to tracking history.\
+*Realm:* Server\
+*Parameters:*
+- *event* - The event or event id to add to tracking history
+
 **Randomat:CallShopHooks(isequip, id, ply)** - Calls expected hooks, net messages, and player methods to indicate that a player has bought a weapon. This is used when the Randomat gives a player a weapon.\
 *Realm:* Server\
 *Parameters:*
@@ -459,6 +464,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *id* - The ID of the event to search for
 
 *Returns:* `true` if the event id active, `false` otherwise
+
+**Randomat:IsEventInHistory(event)** - Checks whether the given event is in tracking history.\
+*Realm:* Server\
+*Parameters:*
+- *event* - The event or event id to check in tracking history
+
+*Returns:* `true` if the event is in the tracking history, `false` otherwise
 
 **Randomat:IsDetectiveLike(ply)** - Determines whether the given player is a Detective-like role.\
 *Realm:* Client and Server\

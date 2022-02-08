@@ -46,15 +46,6 @@ randomat_meta.__index = randomat_meta
 
 Randomat.EventHistory = Randomat.EventHistory or {}
 
-local function IsEventInHistory(event)
-    if type(event) ~= "table" then
-        event = Randomat.Events[event]
-    end
-    if event == nil then return end
-
-    return table.HasValue(Randomat.EventHistory, event.Id)
-end
-
 local function TruncateEventHistory(count)
     if count <= 0 then return end
 
@@ -94,22 +85,6 @@ local function CheckEventHistoryFile()
     return true
 end
 
-local function AddEventToHistory(event)
-    local count = GetConVar("ttt_randomat_event_history"):GetInt()
-    if count <= 0 then return end
-
-    if not CheckEventHistoryFile() then return end
-
-    if type(event) ~= "table" then
-        event = Randomat.Events[event]
-    end
-    if event == nil then return end
-
-    table.insert(Randomat.EventHistory, event.Id)
-    TruncateEventHistory(count)
-    SaveEventHistory()
-end
-
 local function LoadEventHistory()
     local count = GetConVar("ttt_randomat_event_history"):GetInt()
     if count <= 0 then return end
@@ -128,6 +103,31 @@ local function LoadEventHistory()
     SaveEventHistory()
 end
 LoadEventHistory()
+
+function Randomat:IsEventInHistory(event)
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return end
+
+    return table.HasValue(Randomat.EventHistory, event.Id)
+end
+
+function Randomat:AddEventToHistory(event)
+    local count = GetConVar("ttt_randomat_event_history"):GetInt()
+    if count <= 0 then return end
+
+    if not CheckEventHistoryFile() then return end
+
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return end
+
+    table.insert(Randomat.EventHistory, event.Id)
+    TruncateEventHistory(count)
+    SaveEventHistory()
+end
 
 concommand.Add("ttt_randomat_clearhistory", function()
     table.Empty(Randomat.EventHistory)
@@ -380,7 +380,7 @@ function Randomat:CanEventRun(event, ignore_history)
     if event.SingleUse and Randomat:IsEventActive(event.Id) then return false, "Single use event is already running" end
 
     -- Don't use the same events over and over again
-    if not ignore_history and IsEventInHistory(event) then return false, "Event is in recent history" end
+    if not ignore_history and Randomat:IsEventInHistory(event) then return false, "Event is in recent history" end
 
     -- Don't allow multiple events of the same type to run at once
     if event.Type ~= EVENT_TYPE_DEFAULT then
@@ -461,7 +461,7 @@ function Randomat:GetRandomEvent(skip_history, can_run)
 
     -- Only add randomly selected events to the history so specifically-triggered events don't get tracked
     if not skip_history then
-        AddEventToHistory(event)
+        Randomat:AddEventToHistory(event)
     end
 
     return event

@@ -42,6 +42,11 @@ EVENT.Title = "Choose an Event!"
 EVENT.Description = GetEventDescription(0)
 EVENT.id = "choose"
 
+local function StartEventAndAddToHistory(id)
+    Randomat:TriggerEvent(id, owner)
+    Randomat:AddEventToHistory(id)
+end
+
 function EVENT:Begin(vote, dead_can_vote, vote_predicate)
     local votetimer = GetConVar("randomat_choose_votetimer"):GetInt()
     local limitchoosetime = GetConVar("randomat_choose_limitchoosetime"):GetBool()
@@ -88,7 +93,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate)
                     evnt = k
                 end
             end
-            Randomat:TriggerEvent(evnt, owner)
+            StartEventAndAddToHistory(evnt)
             net.Start("ChooseEventEnd")
             if type(vote_predicate) == "function" then
                 net.Send(GetPlayerFilter(vote_predicate))
@@ -163,7 +168,7 @@ net.Receive("ChoosePlayerChose", function()
     timer.Remove("RdmtChooseTimer")
 
     local str = net.ReadString()
-    Randomat:TriggerEvent(str, owner)
+    StartEventAndAddToHistory(str)
 end)
 
 net.Receive("ChoosePlayerVoted", function(ln, ply)
