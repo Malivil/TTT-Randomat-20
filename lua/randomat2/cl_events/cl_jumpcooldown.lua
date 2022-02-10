@@ -32,7 +32,7 @@ net.Receive("JumpCooldownBegin", function()
         hook.Add("HUDPaint", "RdmtJumpCooldownHUDPaintHook", function()
             local diff = nextJump - CurTime()
             if diff > 0 then
-                HUD:PaintBar(8, x, y, width, height, colors, 1 - (diff / cooldown))
+                CRHUD:PaintBar(8, x, y, width, height, colors, 1 - (diff / cooldown))
                 draw.SimpleText("JUMP COOLDOWN", "Cooldown", ScrW() / 2, y + 1, COLOR_WHITE, TEXT_ALIGN_CENTER)
             end
         end)
