@@ -9,10 +9,14 @@ EVENT.Title = "T-Rex Vision"
 EVENT.Description = "Your vision is now based on movement"
 EVENT.id = "trexvision"
 
-local function IsTooSlow(crouching, val)
+local MathAbs = math.abs
+local MathRound = math.Round
+
+local function IsTooSlow(crouching, prone, vel)
     local min = 100
-    if crouching then min = 40 end
-    return math.Round(math.abs(val)) < min
+    if prone then min = 35
+    elseif crouching then min = 40 end
+    return MathRound(MathAbs(vel)) < min
 end
 
 local function SetPlayerInvisible(ply)
@@ -60,7 +64,8 @@ function EVENT:Begin()
 
         local vel = mv:GetVelocity()
         local crouching = ply:Crouching()
-        if not ply:GetNWBool("RdmtTRexVisionRevealed", false) and IsTooSlow(crouching, vel.x) and IsTooSlow(crouching, vel.y) and IsTooSlow(crouching, vel.z) then
+        local prone = ply.IsProne and ply:IsProne()
+        if not ply:GetNWBool("RdmtTRexVisionRevealed", false) and IsTooSlow(crouching, prone, vel.x) and IsTooSlow(crouching, prone, vel.y) and IsTooSlow(crouching, prone, vel.z) then
             SetPlayerInvisible(ply)
         else
             SetPlayerVisible(ply)
