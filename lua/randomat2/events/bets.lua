@@ -71,6 +71,7 @@ function EVENT:Begin()
             for sid, role in pairs(living_bets) do
                 local ply = player.GetBySteamID64(sid)
                 if IsValid(ply) and (not ply:Alive() or ply:IsSpec()) then
+                    Randomat:SetRole(ply, role)
                     ply:PrintMessage(HUD_PRINTTALK, "You won your bet and have respawned. Good luck!")
                     ply:PrintMessage(HUD_PRINTCENTER, "You won your bet and have respawned. Good luck!")
                     ply:SpawnForRound(true)
@@ -78,7 +79,6 @@ function EVENT:Begin()
                     if IsValid(body) then
                         body:Remove()
                     end
-                    Randomat:SetRole(ply, role)
                 end
             end
             SendFullStateUpdate()

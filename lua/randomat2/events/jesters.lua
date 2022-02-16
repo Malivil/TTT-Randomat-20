@@ -21,7 +21,6 @@ function EVENT:Begin()
             end
         else
             ply:SetCredits(0)
-            ply:SetMaxHealth(100)
             Randomat:SetRole(ply, ROLE_JESTER)
             for _, wep in ipairs(ply:GetWeapons()) do
                 if wep.Kind == WEAPON_EQUIP1 or wep.Kind == WEAPON_EQUIP2 then

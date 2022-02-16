@@ -282,17 +282,18 @@ function Randomat:GetValidPlayer(ply)
     return Randomat:GetPlayers(true, true)[1]
 end
 
-function Randomat:SetRole(ply, role)
-    -- Reset the Veteran damage bonus
-    if ply:GetRole() == ROLE_VETERAN and role ~= ROLE_VETERAN then
-        ply:SetNWBool("VeteranActive", false)
+function Randomat:SetRole(ply, role, set_max_hp)
+    local old_role = ply:GetRole()
+    ply:SetRole(role)
+
+    -- Set the player's max HP for their new role (Defaults to true)
+    if set_max_hp ~= false and SetRoleMaxHealth then
+        SetRoleMaxHealth(ply)
     end
     -- Heal the Old Man back to full when they are converted
-    if ply:GetRole() == ROLE_OLDMAN and role ~= ROLE_OLDMAN then
-        ply:SetMaxHealth(100)
-        ply:SetHealth(100)
+    if old_role == ROLE_OLDMAN and role ~= ROLE_OLDMAN and SetRoleStartingHealth then
+        SetRoleStartingHealth(ply)
     end
-    ply:SetRole(role)
 
     net.Start("TTT_RoleChanged")
     net.WriteString(ply:SteamID64())

@@ -56,7 +56,7 @@ function EVENT:Begin()
     -- Choose the troll, update their role and health, and remove their weapons
     local troll = traitors[1]
     local max_hp = troll:GetMaxHealth()
-    Randomat:SetRole(troll, ROLE_TRAITOR)
+    Randomat:SetRole(troll, ROLE_TRAITOR, false)
     troll:SetMaxHealth(troll_health)
     troll:SetHealth(troll_health - (max_hp - troll:Health()))
     troll:StripWeapons()
