@@ -68,6 +68,7 @@ function EVENT:Begin()
     self:AddHook("PlayerSpawn", function(ply)
         if not IsValid(ply) then return end
         local sid = ply:SteamID64()
+        timer.Remove("RdmtSpecBeesStart_" .. sid)
         dead[sid] = false
         if IsValid(bees[sid]) then
             DestroyBee(bees[sid])
