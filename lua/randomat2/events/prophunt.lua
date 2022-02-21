@@ -234,7 +234,7 @@ function EVENT:Condition()
     if util.WeaponForClass(weaponid) == nil then return false end
 
     -- Only run this if there are actual props
-    if table.Count(ents.FindByClass("prop_physics*")) == 0 and table.Count(ents.FindByClass("prop_dynamic")) == 0 then return false end
+    if (table.Count(ents.FindByClass("prop_physics*")) + table.Count(ents.FindByClass("prop_dynamic"))) < 5 then return false end
 
     -- Only run if there are multiple traitors remaining
     local t_count = 0
