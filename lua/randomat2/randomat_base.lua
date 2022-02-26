@@ -623,10 +623,10 @@ local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settr
     local item, item_id, swep_table = Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
     -- Give the player whatever was found
     if item_id then
-        onitemgiven(true, item_id)
+        onitemgiven(item_id, item_id)
         ply:GiveEquipmentItem(item_id)
     elseif swep_table then
-        onitemgiven(false, item.ClassName)
+        onitemgiven(nil, item.ClassName)
         ply:Give(item.ClassName)
         if swep_table.WasBought then
             swep_table:WasBought(ply)
@@ -643,7 +643,12 @@ function Randomat:CallShopHooks(isequip, id, ply)
     ply:AddBought(id)
 
     net.Start("TTT_BoughtItem")
-    net.WriteBit(isequip)
+    -- Not a boolean so we can't write it directly
+    if isequip then
+        net.WriteBit(true)
+    else
+        net.WriteBit(false)
+    end
     if isequip then
         local bits = 16
         -- Only use 32 bits if the number of equipment items we have requires it

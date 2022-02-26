@@ -82,7 +82,7 @@ end
 -- Weapon Functions
 function Randomat:GetItemName(item, role)
     local id = tonumber(item)
-    local info = GetEquipmentItem(role, id)
+    local info = GetEquipmentItemById and GetEquipmentItemById(id) or GetEquipmentItem(role, id)
     return info and LANG.TryTranslation(info.name) or item
 end
 
