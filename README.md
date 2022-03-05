@@ -1635,7 +1635,7 @@ Player roles are also adjusted when this event begins:
 _ttt_randomat_murder_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_murder_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_murder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_murder_pickups_pct_ - Default: 1.5 - Ratio of weapons required to get a revolver. Value = (ConVarValue x TotalWeapons)/Players.\
+_randomat_murder_pickups_ratio_ - Default: 0.75 - Ratio of weapons required to get a revolver. Value = (ConVarValue x TotalWeapons)/Players.\
 _randomat_murder_knifespeed_ - Default: 1.2 - Player move speed multiplier whilst knife is held.\
 _randomat_murder_knifedmg_ - Default: 50 - Damage of the traitor's knife.\
 _randomat_murder_highlight_gun_ - Default: 1 - Whether to highlight dropped revolvers.\

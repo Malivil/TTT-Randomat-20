@@ -6,7 +6,7 @@ EVENT.Description = "Innocents gather pieces to get a revolver while traitors tr
 EVENT.id = "murder"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 
-CreateConVar("randomat_murder_pickups_pct", 1.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver.", 1, 5)
+CreateConVar("randomat_murder_pickups_ratio", 0.75, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver.", 1, 5)
 CreateConVar("randomat_murder_highlight_gun", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to highlight dropped revolvers.")
 CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Player move speed multiplier whilst knife is held.", 1, 2)
 CreateConVar("randomat_murder_allow_shop", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to allow the shop to be used.")
@@ -21,11 +21,11 @@ end
 function EVENT:StripBannedWeapons(ply)
     -- Let the killer keep their knife since their role does not change
     if ply:GetRole() ~= ROLE_KILLER then
-        self:StripRoleWeapons(ply)
+        self:StripRoleWeapons(ply, true)
     end
     for _, wep in ipairs(ply:GetWeapons()) do
         local class_name = WEPS.GetClass(wep)
-        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE or class_name == "weapon_zm_improvised" or class_name == "weapon_ttt_crowbar_fast" or class_name == "weapon_ttt_innocent_knife" or class_name == "weapon_ttt_wrench"
+        if (not WEAPON_CATEGORY_ROLE or wep.Category ~= WEAPON_CATEGORY_ROLE) and (wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE or class_name == "weapon_zm_improvised" or class_name == "weapon_ttt_crowbar_fast" or class_name == "weapon_ttt_innocent_knife" or class_name == "weapon_ttt_wrench")
              then
             ply:StripWeapon(class_name)
             -- Reset FOV to unscope
@@ -46,7 +46,8 @@ function EVENT:Begin()
         end
     end
 
-    local pck = math.ceil(wepspawns/players)
+    local ratio = GetConVar("randomat_murder_pickups_ratio"):GetFloat()
+    local pck = math.ceil((wepspawns * ratio)/players)
     net.Start("MurderEventActive")
     net.WriteBool(true)
     net.WriteBool(allow_shop)
@@ -112,7 +113,7 @@ function EVENT:Begin()
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         -- Don't let the player pick up more weapons if they already have the revolver
         -- Also don't let bad players pick up weapon pieces but do let them pick up the knife
-        if ply:HasWeapon("weapon_ttt_randomatrevolver") or (IsEvil(ply) and WEPS.GetClass(wep) ~= "weapon_ttt_randomatknife") then return false end
+        if ply:HasWeapon("weapon_ttt_randomatrevolver") or (IsEvil(ply) and WEPS.GetClass(wep) == "weapon_ttt_randomatrevolver") then return false end
     end)
 
     self:AddHook("PlayerDeath", function(tgt, infl, ply)
@@ -179,16 +180,22 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in ipairs({"pickups_pct", "knifespeed", "knifedmg"}) do
+    for _, v in ipairs({"pickups_ratio", "knifespeed", "knifedmg"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
+            local decimal = 0
+            if v == "knifespeed" then
+                decimal = 1
+            elseif v == "pickups_ratio" then
+                decimal = 2
+            end
             table.insert(sliders, {
                 cmd = v,
                 dsc = convar:GetHelpText(),
                 min = convar:GetMin(),
                 max = convar:GetMax(),
-                dcm = v == "knifedmg" and 0 or 1
+                dcm = decimal
             })
         end
     end
