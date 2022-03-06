@@ -201,6 +201,17 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 - *is_item - If `true`, `equipment` represents an item ID. Otherwise, `equipment` represents a weapon class name
 - *from_randomat - Whether this hook was called from within the Randomat
 
+**TTTRandomatCanEventRun(event)** - Called when a Randomat event is checking if it can run.\
+*Realm:* Server\
+*Parameters:*
+- *event* - The event object to check
+
+*Return:*
+- *can_run* - `true` to allow the event to run or `false` to prevent it from running
+- *reason* - The string message used in the error message when an event is prevented from running (Optional)
+
+*Note:* Return nothing to allow the default logic to run
+
 **TTTRandomatTriggered(event_id, ply)** - Called when a Randomat event is started.\
 *Realm:* Server\
 *Parameters:*

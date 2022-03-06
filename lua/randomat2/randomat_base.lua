@@ -372,6 +372,12 @@ function Randomat:CanEventRun(event, ignore_history)
     end
     -- Basic checks
     if event == nil then return false, "No such event" end
+
+    local can_run, reason = hook.Call("TTTRandomatCanEventRun", nil, event)
+    if type(can_run) == "boolean" then
+        return can_run, reason or "Blocked by 'TTTRandomatCanEventRun' hook"
+    end
+
     if not event:Enabled() then return false, "Not enabled" end
     if not event:Condition() then return false, "Condition not fulfilled" end
 
