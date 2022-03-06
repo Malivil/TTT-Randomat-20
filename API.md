@@ -148,6 +148,9 @@ Properties used to define and describe an event and its running conditions
 **AltTitle** - The alternate title to use for this event. Used to prevent an event from sending an automatic "started" notification (if `Title` is not defined) and to allow for a second searchable title in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
 
+**Categories** - What categories this event belongs to. Useful for finding events with specific purposes. Also displayed in the ULX admin menu.\
+*Realm:* Server
+
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
 
@@ -324,12 +327,24 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *title* - The event title
 
+**Randomat:GetAllEventCategories()** - Gets the list of all categories used by registered events.\
+*Realm:* Server
+
+*Returns:* The list of all used event categories
+
 **Randomat:GetEventTitle(event)** - Gets the given event's `Title` or `AltTitle` property, whichever is defined.\
 *Realm:* Server\
 *Parameters:*
 - *event* - The event object whose title is being retrieved
 
 *Returns:* The event's usable title
+
+**Randomat:GetEventsByCategory(category)** - Gets the list of all registered events with the given category.\
+*Realm:* Server\
+*Parameters:*
+- *category* - The category of events to find
+
+*Returns:* The list of events with the given category
 
 **Randomat:GetItemName(item, role)** - Gets the name of the given equipment item for the provided role.\
 *Realm:* Client\

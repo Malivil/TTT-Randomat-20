@@ -336,6 +336,16 @@ function Randomat:register(tbl)
     if tbl.Weight == nil or tbl.Weight == default_weight then
         tbl.Weight = -1
     end
+    -- Normalize the categories by lowercasing them all
+    if type(tbl.Categories) == "table" then
+        local lower_cats = {}
+        for _, v in ipairs(tbl.Categories) do
+            if v and #v > 0 then
+                table.insert(lower_cats, v:lower())
+            end
+        end
+        tbl.Categories = lower_cats
+    end
     setmetatable(tbl, randomat_meta)
 
     Randomat.Events[id] = tbl
@@ -763,6 +773,36 @@ function Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)
 
     local phys = ent:GetPhysicsObject()
     if not IsValid(phys) then ent:Remove() return end
+end
+
+function Randomat:GetAllEventCategories()
+    local categories = {}
+    for _, e in pairs(Randomat.Events) do
+        if type(e.Categories) ~= "table" then continue end
+
+        for _, c in ipairs(e.Categories) do
+            if not c or #c == 0 then continue end
+
+            local lower_cat = c:lower()
+            if table.HasValue(categories, lower_cat) then continue end
+
+            table.insert(categories, lower_cat)
+        end
+    end
+    return categories
+end
+
+function Randomat:GetEventsByCategory(category)
+    if not category or #category == 0 then return {} end
+
+    local events = {}
+    local lower_cat = category:lower()
+    for _, e in pairs(Randomat.Events) do
+        if type(e.Categories) == "table" and table.HasValue(e.Categories, lower_cat) then
+            table.insert(events, e)
+        end
+    end
+    return events
 end
 
 --[[
