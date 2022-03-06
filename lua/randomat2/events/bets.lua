@@ -8,6 +8,7 @@ EVENT.Title = "Hedge Your Bets"
 EVENT.Description = "Dead players bet on who is going to live to the end. Winners are respawned to fight them."
 EVENT.id = "bets"
 EVENT.Type = EVENT_TYPE_VOTING
+EVENT.Categories = {"spectator", "biased", "rolechange", "moderateimpact"}
 
 local playerswhobet = {}
 local bets = {}

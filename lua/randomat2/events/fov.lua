@@ -9,6 +9,7 @@ EVENT.Title = "Quake Pro"
 EVENT.Description = "Increases each player's Field of View (FOV) so it looks like you're playing Quake"
 EVENT.id = "fov"
 EVENT.SingleUse = false
+EVENT.Categories = {"fun", "largeimpact"}
 
 local function PlayerInIronsights(ply)
     if not ply.GetActiveWeapon then return false end

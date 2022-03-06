@@ -5,6 +5,7 @@ CreateConVar("randomat_soundright_blocklist", "weapon_pulserif,weapon_ttt_disloc
 EVENT.Title = "That Doesn't Sound Right"
 EVENT.Description = "Shuffles weapon sounds"
 EVENT.id = "soundright"
+EVENT.Categories = {"fun", "smallimpact"}
 
 util.AddNetworkString("RdmtSoundRightBegin")
 util.AddNetworkString("RdmtSoundRightUpdate")

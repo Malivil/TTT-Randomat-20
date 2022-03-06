@@ -6,6 +6,7 @@ CreateConVar("randomat_intensifies_triggerbyotherrandom", 1, {FCVAR_ARCHIVE, FCV
 EVENT.Title = "Randomness Intensifies"
 EVENT.Description = "Continuously triggers random events for the rest of the round"
 EVENT.id = "intensifies"
+EVENT.Categories = {"eventtrigger", "largeimpact"}
 
 function EVENT:Begin()
     timer.Create("RandomatIntensifiesTimer", GetConVar("randomat_intensifies_timer"):GetInt() , 0, function()

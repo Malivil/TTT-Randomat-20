@@ -5,6 +5,7 @@ CreateConVar("randomat_careful_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Healt
 EVENT.Title = "Careful..."
 EVENT.Description = "Set all Jesters and Swappers to a reduced amount of health"
 EVENT.id = "careful"
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

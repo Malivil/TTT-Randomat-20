@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Trickle-Down Economics"
 EVENT.Description = "Spent credits are redistributed to other people with shops"
 EVENT.id = "trickledown"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 function EVENT:Begin()
     self:AddHook("TTTOrderedEquipment", function(ply, item, is_item, fromrdmt)

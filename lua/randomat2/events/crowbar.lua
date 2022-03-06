@@ -4,6 +4,7 @@ EVENT.Title = "The 'bar has been raised!"
 EVENT.Description = "Increases the damage and push force of the crowbar"
 EVENT.id = "crowbar"
 EVENT.SingleUse = false
+EVENT.Categories = {"smallimpact"}
 
 CreateConVar("randomat_crowbar_damage", 2.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Damage multiplier for the crowbar", 1.1, 3.0)
 CreateConVar("randomat_crowbar_push", 20, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Push force multiplier for the crowbar", 5, 50)

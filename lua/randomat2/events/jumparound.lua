@@ -8,6 +8,7 @@ CreateConVar("randomat_jumparound_jumps", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How
 EVENT.Title = "Jump Around!"
 EVENT.Description = "Players can only move by multi-jumping"
 EVENT.id = "jumparound"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 local jumps = nil
 function EVENT:Begin()

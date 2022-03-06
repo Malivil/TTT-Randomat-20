@@ -10,6 +10,7 @@ EVENT.Description = "Slowly drains a user's ammo over time if they haven't fired
 EVENT.id = "reload"
 -- Mark this as a weapon override type because the weapons used in weapon override types aren't reloadable
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Categories = {"fun", "moderateimpact"}
 
 local playerlastshottime = {}
 local playerlastdraintime = {}

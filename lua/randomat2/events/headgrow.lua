@@ -7,6 +7,7 @@ CreateConVar("randomat_headgrow_steal", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Wheth
 EVENT.Title = "Don't Let it Go to Your Head"
 EVENT.Description = "Grows a player's head each time they kill"
 EVENT.id = "headgrow"
+EVENT.Categories = {"fun", "deathtrigger", "moderateimpact"}
 
 local function ScalePlayerHead(ply, mult)
     if not IsValid(ply) then return end

@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Second Chance"
 EVENT.Description = "Respawns the first player who is killed as a random vanilla role"
 EVENT.id = "secondchance"
+EVENT.Categories = {"deathtrigger", "biased", "rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     self:AddHook("PlayerDeath", function(victim, entity, killer)

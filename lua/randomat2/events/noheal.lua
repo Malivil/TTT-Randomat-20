@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "NO NERD HEALING"
 EVENT.Description = "Prevents any player from regaining lost health"
 EVENT.id = "noheal"
+EVENT.Categories = {"biased", "moderateimpact"}
 
 local playerhealth = {}
 

@@ -6,6 +6,7 @@ CreateConVar("randomat_skyislava_damage", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Dam
 EVENT.Title = "The Sky is Lava"
 EVENT.Description = "Players take damage while they are in the air"
 EVENT.id = "skyislava"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 local jumptimers = {}
 

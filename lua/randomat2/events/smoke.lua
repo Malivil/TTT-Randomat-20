@@ -12,6 +12,7 @@ EVENT.Title = "Smoke Signals"
 EVENT.Description = "Allows dead players to envelope their target in smoke"
 EVENT.id = "smoke"
 EVENT.Type = EVENT_TYPE_SPECTATOR_UI
+EVENT.Categories = {"spectator", "moderateimpact"}
 
 local timers = {}
 function EVENT:Begin()

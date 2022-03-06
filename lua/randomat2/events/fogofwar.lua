@@ -9,6 +9,7 @@ local traitor = CreateConVar("randomat_fogofwar_traitor", 1.5, {FCVAR_ARCHIVE, F
 EVENT.Title = "Fog of War"
 EVENT.Description = "Covers the map in a fog which restricts player view"
 EVENT.id = "fogofwar"
+EVENT.Categories = {"biased", "moderateimpact"}
 
 function EVENT:Begin()
     net.Start("RdmtFogOfWarBegin")

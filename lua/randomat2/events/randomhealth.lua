@@ -6,6 +6,7 @@ CreateConVar("randomat_randomhealth_lower", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "T
 EVENT.Title = "Random Health for everyone!"
 EVENT.id = "randomhealth"
 EVENT.SingleUse = false
+EVENT.Categories = {"fun", "moderateimpact"}
 
 function EVENT:Begin()
     local lower = GetConVar("randomat_randomhealth_lower"):GetInt()

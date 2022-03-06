@@ -21,6 +21,7 @@ EVENT.id = "prophunt"
 if GetConVar("randomat_prophunt_strip"):GetBool() then
     EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 end
+EVENT.Categories = {"gamemode", "biased", "item", "rolechange", "largeimpact"}
 
 local function PopulateWeaponId()
     if weaponid ~= nil then return end

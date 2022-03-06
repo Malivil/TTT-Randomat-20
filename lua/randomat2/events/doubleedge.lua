@@ -6,6 +6,7 @@ CreateConVar("randomat_doubleedge_amount", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Ho
 EVENT.Title = "Double-Edged Sword"
 EVENT.Description = "Reflects 1/2 of the damage you do back on yourself, but you also heal self-damage slowly"
 EVENT.id = "doubleedge"
+EVENT.Categories = {"largeimpact"}
 
 local self_damage = {}
 local last_heal = {}

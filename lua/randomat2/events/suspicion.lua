@@ -7,6 +7,7 @@ EVENT.Description = "Changes a random player to either a Jester or a Traitor"
 EVENT.id = "suspicion"
 EVENT.AltTitle = "A player is acting suspicious"
 EVENT.SingleUse = false
+EVENT.Categories = {"rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Camp Fire"
 EVENT.Description = "Sets any player that has not moved enough on fire until they move from their current location"
 EVENT.id = "campfire"
+EVENT.Categories = {"moderateimpact"}
 
 local playermovetime = {}
 local playermoveloc = {}

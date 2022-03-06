@@ -9,6 +9,7 @@ CreateConVar("randomat_gas_smoke", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether sm
 EVENT.Title = "Bad Gas"
 EVENT.Description = "Drops grenades at random players' feet periodically"
 EVENT.id = "gas"
+EVENT.Categories = {"fun", "smallimpact"}
 
 function EVENT:Begin()
     local potatoTable = {}

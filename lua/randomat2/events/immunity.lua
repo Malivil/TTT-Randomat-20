@@ -12,7 +12,8 @@ CreateConVar("randomat_immunity_slashing", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Wh
 EVENT.Title = "Herd Immunity"
 EVENT.Description = "Players vote for what type of damage they will be immune to for the rest of the round"
 EVENT.id = "immunity"
-EVENT.Type = {EVENT_TYPE_VOTING,EVENT_TYPE_WEAPON_OVERRIDE}
+EVENT.Type = {EVENT_TYPE_VOTING, EVENT_TYPE_WEAPON_OVERRIDE}
+EVENT.Categories = {"moderateimpact"}
 
 local playersvoted = {}
 local votes = {}

@@ -4,6 +4,7 @@ CreateConVar("randomat_bighead_scale", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Head s
 
 EVENT.Title = "Big Head Mode"
 EVENT.id = "bighead"
+EVENT.Categories = {"fun", "smallimpact"}
 
 local function ScalePlayerHeads(mult)
     local scale = Vector(mult, mult, mult)

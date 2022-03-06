@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Get Down Mr President!"
 EVENT.Description = "Gives all Detectives extra health, but kills all members of the Innocent team if they get killed"
 EVENT.id = "president"
+EVENT.Categories = {"rolechange", "deathtrigger", "biased", "largeimpact"}
 
 CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
 CreateConVar("randomat_president_announce", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to announce when the president dies")

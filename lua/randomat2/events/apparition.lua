@@ -7,6 +7,7 @@ EVENT.Title = "Ghostly Apparition"
 EVENT.Description = "Dead players become ghosts who leave a trail of smoke as they drift through the world"
 EVENT.id = "apparition"
 EVENT.Type = EVENT_TYPE_SMOKING
+EVENT.Categories = {"spectator", "smallimpact"}
 
 local function SetSpectatorValues(p)
     local pos = p:GetPos()

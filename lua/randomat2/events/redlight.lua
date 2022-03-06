@@ -7,6 +7,7 @@ CreateConVar("randomat_redlight_damage", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Amou
 EVENT.Title = "Red Light, Green Light"
 EVENT.Description = "Hurts a player if they move during a red light"
 EVENT.id = "redlight"
+EVENT.Categories = {"gamemode", "largeimpact"}
 
 local function GetDelay()
     local min = GetConVar("randomat_redlight_mindelay"):GetInt()

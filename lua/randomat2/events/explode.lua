@@ -5,6 +5,7 @@ CreateConVar("randomat_explode_timer", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The t
 EVENT.Title = ""
 EVENT.AltTitle = "A Random Person will explode every "..GetConVar("randomat_explode_timer"):GetInt().." seconds! Watch out! (EXCEPT DETECTIVES)"
 EVENT.id = "explode"
+EVENT.Categories = {"largeimpact"}
 
 function EVENT:Begin()
     Randomat:EventNotifySilent("A Random Person will explode every "..GetConVar("randomat_explode_timer"):GetInt().." seconds! Watch out! (EXCEPT " .. Randomat:GetRolePluralString(ROLE_DETECTIVE):upper() .. ")")

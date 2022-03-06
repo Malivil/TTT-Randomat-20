@@ -6,6 +6,7 @@ util.AddNetworkString("RdmtSpecBeesEnd")
 EVENT.Title = "RISE FROM YOUR... Bees?"
 EVENT.Description = "Dead players become harmless bees"
 EVENT.id = "specbees"
+EVENT.Categories = {"spectator", "moderateimpact"}
 
 local function SetSpectatorValues(p)
     local pos = p:GetPos()

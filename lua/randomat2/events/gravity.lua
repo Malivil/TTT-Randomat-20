@@ -9,6 +9,7 @@ EVENT.Title = "I don't think you realise the gravity of the situation."
 EVENT.AltTitle = "Gravity Changer"
 EVENT.Description = "Gravity is changed every few seconds for a short period of time before reverting to normal"
 EVENT.id = "gravity"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 local defaultGravity = nil
 local function SetGravity(gravity)

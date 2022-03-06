@@ -9,6 +9,7 @@ util.AddNetworkString("RdmtCloseRockPaperScissorsFrame")
 EVENT.Title = "Rock, Paper, Scissors"
 EVENT.Description = ""
 EVENT.id = "rockpaperscissors"
+EVENT.Categories = {"gamemode", "largeimpact"}
 
 CreateConVar("randomat_rockpaperscissors_bestof", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many rounds to play", 1, 5)
 cvars.AddChangeCallback("randomat_rockpaperscissors_bestof", function(convar_name, value_old, value_new)

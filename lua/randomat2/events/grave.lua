@@ -6,6 +6,7 @@ EVENT.Title = "RISE FROM YOUR GRAVE"
 EVENT.Description = "Causes the dead to rise again as Zombies"
 EVENT.id = "grave"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Categories = {"deathtrigger", "rolechange", "biased", "largeimpact"}
 
 CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with", 10, 100)
 CreateConVar("randomat_grave_include_dead", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to resurrect dead players at the start")

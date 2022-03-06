@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Don't be so Sensitive"
 EVENT.Description = "Periodically changes each player's mouse sensitivity"
 EVENT.id = "sensitive"
+EVENT.Categories = {"fun", "largeimpact"}
 
 CreateConVar("randomat_sensitive_change_interval", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often to change each player's sensitivity", 5, 60)
 CreateConVar("randomat_sensitive_scale_min", 25, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum sensitivity to use", 10, 100)

@@ -6,6 +6,7 @@ EVENT.Title = "Care Package"
 EVENT.Description = "Spawns an ammo crate somewhere in the map that contains a free shop item"
 EVENT.id = "package"
 EVENT.SingleUse = false
+EVENT.Categories = {"fun", "smallimpact"}
 
 function EVENT:Begin()
     local all_entities = ents.GetAll()

@@ -6,6 +6,7 @@ CreateConVar("randomat_barrelinjustice_range", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE
 EVENT.Title = "Barrel (In)Justice"
 EVENT.Description = "Explodes barrels if a player gets too close and then spawns more"
 EVENT.id = "barrelinjustice"
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     local count = GetConVar("randomat_barrelinjustice_count"):GetInt()

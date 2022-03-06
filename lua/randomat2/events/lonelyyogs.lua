@@ -6,6 +6,7 @@ CreateConVar("randomat_lonelyyogs_interval", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 EVENT.Title = "Lonely Yogs"
 EVENT.Description = "Drops a discombob between two players who get too close"
 EVENT.id = "lonelyyogs"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 local playerlastbombtime = {}
 local playermoveloc = {}

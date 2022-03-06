@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Bomberman"
 EVENT.Description = "Spawns an explosive barrel behind a player when they crouch"
 EVENT.id = "bomberman"
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     local was_ducking = {}

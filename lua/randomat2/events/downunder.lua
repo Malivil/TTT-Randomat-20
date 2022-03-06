@@ -6,6 +6,7 @@ util.AddNetworkString("RdmtDownUnderEnd")
 EVENT.Title = "Down Under"
 EVENT.Description = "Flips your view upside-down"
 EVENT.id = "downunder"
+EVENT.Categories = {"largeimpact"}
 
 function EVENT:Begin()
     net.Start("RdmtDownUnderBegin")

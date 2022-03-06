@@ -41,6 +41,7 @@ end
 EVENT.Title = "Choose an Event!"
 EVENT.Description = GetEventDescription(0)
 EVENT.id = "choose"
+EVENT.Categories = {"eventtrigger", "moderateimpact"}
 
 local function StartEventAndAddToHistory(id)
     Randomat:TriggerEvent(id, owner)

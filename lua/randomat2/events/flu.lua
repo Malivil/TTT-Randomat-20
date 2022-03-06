@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Flu Season"
 EVENT.Description = "Randomly infects a player with the flu, causing them to move more slowly and sneeze occasionally"
 EVENT.id = "flu"
+EVENT.Categories = {"moderateimpact"}
 
 local sneezecount = 17
 local playerthinktime = {}

@@ -10,6 +10,7 @@ CreateConVar("randomat_oursecret_highlight_time", 5, {FCVAR_ARCHIVE, FCVAR_NOTIF
 EVENT.Title = "Our Little Secret"
 EVENT.Description = "Pairs players together, temporarily revealing their roles after a short delay"
 EVENT.id = "oursecret"
+EVENT.Categories = {"biased", "moderateimpact"}
 
 local timers = {}
 function EVENT:Begin()

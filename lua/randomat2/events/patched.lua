@@ -7,6 +7,7 @@ EVENT.Description = "Changes a random Glitch into either an Innocent or a Traito
 EVENT.id = "patched"
 EVENT.AltTitle = "Patched"
 EVENT.StartSecret = true
+EVENT.Categories = {"rolechange", "biased", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

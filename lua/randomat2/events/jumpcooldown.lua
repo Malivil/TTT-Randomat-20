@@ -7,6 +7,7 @@ CreateConVar("randomat_jumpcooldown_length", "5", {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 
 EVENT.Title = "There's a cooldown on the jump!"
 EVENT.id = "jumpcooldown"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 function EVENT:Begin()
     local cooldown = GetConVar("randomat_jumpcooldown_length"):GetInt()

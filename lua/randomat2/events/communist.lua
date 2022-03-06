@@ -5,6 +5,7 @@ CreateConVar("randomat_communist_show_roles", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, 
 EVENT.Title = "Communism! Time to learn how to share..."
 EVENT.Description = "Whenever anyone buys something from a shop, all other players get that thing too"
 EVENT.id = "communist"
+EVENT.Categories = {"moderateimpact"}
 
 local function TriggerAlert(item, role, is_item, ply)
     --Event handler located in cl_networkstrings

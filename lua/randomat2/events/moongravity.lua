@@ -5,6 +5,7 @@ CreateConVar("randomat_moongravity_gravity", 0.1, {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 EVENT.Title = "What? Moon Gravity on Earth?"
 EVENT.Description = "Lowers everyone's gravity to a fraction of what it is normally"
 EVENT.id = "moongravity"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 local function SetGravity(alive_players)
     local gravity = GetConVar("randomat_moongravity_gravity"):GetFloat()

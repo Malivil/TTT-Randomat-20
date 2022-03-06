@@ -4,6 +4,7 @@ EVENT.Title = "Infinite Ammo!"
 EVENT.id = "ammo"
 -- Mark this as a weapon override type because the weapons used in weapon override types don't have ammo
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Categories = {"moderateimpact"}
 
 CreateConVar("randomat_ammo_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether it gives buy menu weapons infinite ammo too.")
 

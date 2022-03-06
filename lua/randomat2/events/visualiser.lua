@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "I see dead people"
 EVENT.Description = "Drops a Visualizer whenever a player is killed"
 EVENT.id = "visualiser"
+EVENT.Categories = {"fun", "deathtrigger", "smallimpact"}
 
 function EVENT:Begin()
     self:AddHook("PlayerDeath", function(ply)

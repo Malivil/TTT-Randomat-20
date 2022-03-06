@@ -9,6 +9,7 @@ EVENT.id = "harpoon"
 if GetConVar("randomat_harpoon_strip"):GetBool() then
     EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 end
+EVENT.Categories = {"item", "rolechange", "largeimpact"}
 
 function EVENT:HandleRoleWeapons(ply)
     local updated = false

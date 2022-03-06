@@ -21,6 +21,7 @@ EVENT.Title = "Paranormal Activity"
 EVENT.Description = "Allows the dead to buff or debuff their targets"
 EVENT.id = "specbuff"
 EVENT.Type = {EVENT_TYPE_SPECTATOR_UI, EVENT_TYPE_SMOKING}
+EVENT.Categories = {"spectator", "largeimpact"}
 
 local timers = {}
 local slow_players = {}

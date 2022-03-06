@@ -8,6 +8,7 @@ EVENT.Title = "praW emiT"
 EVENT.AltTitle = "Reverse Time Warp"
 EVENT.Description = "Causes everything (movement, firing speed, timers, etc.) to run increasingly SLOWER"
 EVENT.id = "reversetimewarp"
+EVENT.Categories = {"fun", "largeimpact"}
 
 function EVENT:Begin()
     timer.Create("RandomatReverseTimeWarpTimer", GetConVar("randomat_reversetimewarp_timer"):GetInt(), 0, function()

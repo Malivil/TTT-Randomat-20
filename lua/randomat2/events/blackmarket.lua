@@ -10,6 +10,7 @@ CreateConVar("randomat_blackmarket_timer_detective", 15, {FCVAR_ARCHIVE, FCVAR_N
 EVENT.Title = "Black Market Buyout"
 EVENT.Description = "Disables Traitor and Detective shops, but periodically gives out free items from both"
 EVENT.id = "blackmarket"
+EVENT.Categories = {"moderateimpact"}
 
 local blocklist = {}
 local oldSetCredits = nil

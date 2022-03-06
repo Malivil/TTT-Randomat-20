@@ -10,6 +10,7 @@ EVENT.AltTitle = "Random x"..GetConVar("randomat_randomxn_triggers"):GetInt()
 EVENT.Description = "Triggers a number of random events with a slight delay between each"
 EVENT.id = "randomxn"
 EVENT.SingleUse = false
+EVENT.Categories = {"eventtrigger", "largeimpact"}
 
 local timers = {}
 

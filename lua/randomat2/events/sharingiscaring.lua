@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Sharing is Caring"
 EVENT.Description = "When a player kills another, their inventory is swapped with thier victim's"
 EVENT.id = "sharingiscaring"
+EVENT.Categories = {"biased", "deathtrigger", "large", "largeimpact"}
 
 function EVENT:Begin()
     self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)

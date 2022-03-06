@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Dead Men Tell ALL Tales"
 EVENT.Description = "Allows dead players to text chat with the living"
 EVENT.id = "deadchat"
+EVENT.Categories = {"spectator", "largeimpact"}
 
 function EVENT:Begin()
     GetConVar("ttt_limit_spectator_chat"):SetBool(false)

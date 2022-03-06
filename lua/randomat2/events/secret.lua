@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Shh... It's a Secret!"
 EVENT.Description = "Silences all event notifications and triggers another random event"
 EVENT.id = "secret"
+EVENT.Categories = {"fun", "largeimpact"}
 
 function EVENT:Begin(target_event)
     if target_event then

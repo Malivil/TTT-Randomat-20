@@ -8,6 +8,7 @@ CreateConVar("randomat_trexvision_reveal_time", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}
 EVENT.Title = "T-Rex Vision"
 EVENT.Description = "Your vision is now based on movement"
 EVENT.id = "trexvision"
+EVENT.Categories = {"biased", "moderateimpact"}
 
 local MathAbs = math.abs
 local MathRound = math.Round

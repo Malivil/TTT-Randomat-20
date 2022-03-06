@@ -7,6 +7,7 @@ CreateConVar("randomat_timewarp_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How 
 EVENT.Title = "Time Warp"
 EVENT.Description = "Causes everything (movement, firing speed, timers, etc.) to run increasingly faster"
 EVENT.id = "timewarp"
+EVENT.Categories = {"fun", "largeimpact"}
 
 function EVENT:Begin()
     timer.Create("RandomatTimeWarpTimer", GetConVar("randomat_timewarp_timer"):GetInt(), 0, function()

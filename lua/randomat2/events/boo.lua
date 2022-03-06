@@ -10,6 +10,7 @@ EVENT.Title = "Boo!"
 EVENT.Description = "Allows dead players to scare their target and make them drop their weapon"
 EVENT.id = "boo"
 EVENT.Type = EVENT_TYPE_SPECTATOR_UI
+EVENT.Categories = {"spectator", "moderateimpact"}
 
 local timers = {}
 local ghosts = {}

@@ -4,6 +4,7 @@ EVENT.Title = "Taking Inventory"
 EVENT.Description = "Swaps player inventories periodically throughout the round"
 EVENT.id = "inventory"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Categories = {"item", "moderateimpact"}
 
 CreateConVar("randomat_inventory_timer", 15, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between inventory swaps", 5, 60)
 

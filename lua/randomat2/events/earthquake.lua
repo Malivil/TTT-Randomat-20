@@ -5,6 +5,7 @@ CreateConVar("randomat_earthquake_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 EVENT.Title = "Earthquake"
 EVENT.id = "earthquake"
 EVENT.SingleUse = false
+EVENT.Categories = {"fun", "smallimpact"}
 
 function EVENT:Begin()
     local magnitude = math.random(1, 10)

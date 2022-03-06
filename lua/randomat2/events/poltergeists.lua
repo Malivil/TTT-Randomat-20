@@ -10,6 +10,7 @@ util.AddNetworkString("RdmtPoltergeistsClientReady")
 EVENT.Title = "Poltergeists"
 EVENT.Description = "Allows dead players to see and activate traitor traps"
 EVENT.id = "poltergeists"
+EVENT.Categories = {"spectator", "moderateimpact"}
 
 local oldCanUseTraitorButton = nil
 

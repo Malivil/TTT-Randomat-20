@@ -6,6 +6,7 @@ EVENT.Title = "What did I find in my pocket?"
 EVENT.Description = "Gives each player a random buyable weapon"
 EVENT.id = "pocket"
 EVENT.SingleUse = false
+EVENT.Categories = {"moderateimpact"}
 
 local blocklist = {}
 

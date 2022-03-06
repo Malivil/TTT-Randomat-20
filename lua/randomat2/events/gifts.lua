@@ -11,6 +11,7 @@ EVENT.Title = "Gifts from the Dead"
 EVENT.Description = "Allows dead players to give the living a single gift"
 EVENT.id = "gifts"
 EVENT.Type = EVENT_TYPE_SPECTATOR_UI
+EVENT.Categories = {"spectator", "biased", "moderateimpact"}
 
 local traitor_default = "weapon_ttt_c4"
 local innocent_default = "weapon_ttt_stungun"

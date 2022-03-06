@@ -5,6 +5,7 @@ EVENT.AltTitle = "Clownin' Around"
 EVENT.Description = "Converts a Jester/Swapper to a Clown"
 EVENT.id = "clowninaround"
 EVENT.StartSecret = true
+EVENT.Categories = {"rolechange", "smallimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

@@ -19,6 +19,7 @@ EVENT.Title = "Derptective"
 EVENT.Description = "Forces the detective(s) to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire"
 EVENT.id = "derptective"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Categories = {"biased", "item", "moderateimpact"}
 
 function EVENT:Begin()
     EVENT.Description = GetEventDescription(ROLE_DETRAITOR ~= -1, ROLE_DEPUTY ~= -1 and ROLE_IMPERSONATOR ~= -1)

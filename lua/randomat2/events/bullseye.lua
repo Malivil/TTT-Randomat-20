@@ -4,6 +4,7 @@ EVENT.Title = "Bullseye"
 EVENT.Description = "Only headshots do damage"
 EVENT.id = "bullseye"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Categories = {"biased", "largeimpact"}
 
 function EVENT:Begin()
     self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)

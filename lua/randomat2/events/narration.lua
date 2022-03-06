@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Narration"
 EVENT.Description = "Narrates common game activities"
 EVENT.id = "narration"
+EVENT.Categories = {"fun", "smallimpact"}
 
 util.AddNetworkString("TriggerNarration")
 util.AddNetworkString("EndNarration")

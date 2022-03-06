@@ -7,6 +7,7 @@ CreateConVar("randomat_opposite_hardmode", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 
 EVENT.Title = "Opposite Day"
 EVENT.id = "opposite"
+EVENT.Categories = {"fun", "largeimpact"}
 
 function EVENT:Begin()
     local hardmode = GetConVar("randomat_opposite_hardmode"):GetBool()

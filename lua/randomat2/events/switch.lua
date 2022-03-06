@@ -4,6 +4,7 @@ EVENT.Title = "There's this game my father taught me years ago, it's called \"Sw
 EVENT.AltTitle = "Switch"
 EVENT.Description = "Randomly switches positions of two players periodically"
 EVENT.id = "switch"
+EVENT.Categories = {"fun", "moderateimpact"}
 
 CreateConVar("randomat_switch_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often players are switched", 5, 60)
 

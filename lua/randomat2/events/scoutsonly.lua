@@ -6,6 +6,7 @@ EVENT.Title = "Scouts Only"
 EVENT.Description = "Forces everyone to use a rifle and lowers everyone's gravity"
 EVENT.id = "scoutsonly"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Categories = {"gamemode", "item", "rolechange", "largeimpact"}
 
 local function SetGravity(alive_players)
     local gravity = GetConVar("randomat_scoutsonly_gravity"):GetFloat()

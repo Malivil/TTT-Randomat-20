@@ -7,6 +7,7 @@ CreateConVar("randomat_breadcrumbs_fade_time", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE},
 EVENT.Title = "Breadcrumbs"
 EVENT.Description = "Follow the colorful trails to find the other players"
 EVENT.id = "breadcrumbs"
+EVENT.Categories = {"smallimpact"}
 
 local player_colors = {}
 local player_trails = {}

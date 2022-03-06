@@ -7,6 +7,7 @@ EVENT.AltTitle = "Everything is as fast as Flash now! ("..GetConVar("randomat_fl
 EVENT.Description = "Causes everything (movement, firing speed, timers, etc.) to run faster than normal"
 EVENT.id = "flash"
 EVENT.SingleUse = false
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     Randomat:EventNotifySilent("Everything is as fast as Flash now! ("..GetConVar("randomat_flash_scale"):GetInt().."% faster)")

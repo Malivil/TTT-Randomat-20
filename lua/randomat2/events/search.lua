@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Dead Men Tell No Tales"
 EVENT.Description = "Prevents corpses from being searched"
 EVENT.id = "search"
+EVENT.Categories = {"biased", "moderateimpact"}
 
 function EVENT:Begin()
     self:AddHook("TTTCanSearchCorpse", function(ply, rag, covert, long_range, was_traitor)

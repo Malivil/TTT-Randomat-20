@@ -5,6 +5,7 @@ CreateConVar("randomat_doublecross_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 EVENT.Title = "Double Cross"
 EVENT.Description = "Changes a random vanilla Innocent into either a Glitch or a Traitor"
 EVENT.id = "doublecross"
+EVENT.Categories = {"rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

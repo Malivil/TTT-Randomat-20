@@ -6,6 +6,7 @@ util.AddNetworkString("RdmtKillJesterEnd")
 EVENT.Title = "Fiends for Life"
 EVENT.Description = "Innocents win if they kill the jester, but traitors want them alive"
 EVENT.id = "killjester"
+EVENT.Categories = {"biased", "largeimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

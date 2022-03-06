@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "##BringBackOldJester"
 EVENT.Description = "Converts the Swapper to a Jester"
 EVENT.id = "oldjester"
+EVENT.Categories = {"rolechange", "smallimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
