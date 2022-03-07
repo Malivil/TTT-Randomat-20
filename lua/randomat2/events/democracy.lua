@@ -20,7 +20,7 @@ EVENT.AltTitle = "Democracy"
 EVENT.Description = "Cast your vote to kill a player. Votes continue until the round ends"
 EVENT.id = "democracy"
 EVENT.Type = EVENT_TYPE_VOTING
-EVENT.Categories = {"biased", "largeimpact"}
+EVENT.Categories = {"biased_traitor", "biased", "largeimpact"}
 
 local playervotes = {}
 local votableplayers = {}

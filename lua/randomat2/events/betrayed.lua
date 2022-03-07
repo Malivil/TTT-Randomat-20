@@ -4,7 +4,7 @@ EVENT.Title = "Betrayed"
 EVENT.Description = "Randomly converts one vanilla Traitor to be a Glitch"
 EVENT.id = "betrayed"
 EVENT.StartSecret = true
-EVENT.Categories = {"rolechange", "biased", "moderateimpact"}
+EVENT.Categories = {"rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

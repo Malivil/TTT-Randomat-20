@@ -6,7 +6,7 @@ CreateConVar("randomat_butter_affectall", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "Wh
 EVENT.Title = "Butterfingers"
 EVENT.Description = "Causes weapons to periodically slip out of players' hands"
 EVENT.id = "butter"
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
 function EVENT:Begin()
     local affect_all = GetConVar("randomat_butter_affectall"):GetBool()

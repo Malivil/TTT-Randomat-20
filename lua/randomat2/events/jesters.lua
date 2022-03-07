@@ -2,7 +2,7 @@ local EVENT = {}
 
 EVENT.Title = "One traitor, one detective. Everyone else is a jester. Detective is stronger."
 EVENT.id = "jesters"
-EVENT.Categories = {"rolechange", "biased", "largeimpact"}
+EVENT.Categories = {"rolechange", "biased_traitor", "biased", "largeimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

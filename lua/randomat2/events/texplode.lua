@@ -6,7 +6,7 @@ CreateConVar("randomat_texplode_radius", 600, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Ra
 EVENT.Title = ""
 EVENT.AltTitle = "A traitor will explode in "..GetConVar("randomat_texplode_timer"):GetInt().." seconds!"
 EVENT.id = "texplode"
-EVENT.Categories = {"biased", "largeimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 
 function EVENT:Begin()
     local explodetimer = GetConVar("randomat_texplode_timer"):GetInt()

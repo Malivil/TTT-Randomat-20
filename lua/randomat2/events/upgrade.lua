@@ -10,7 +10,7 @@ CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "W
 EVENT.Title = "An innocent has been upgraded!"
 EVENT.Description = "A random vanilla Innocent is upgraded to a Mercenary"
 EVENT.id = "upgrade"
-EVENT.Categories = {"rolechange", "biased", "moderateimpact"}
+EVENT.Categories = {"rolechange", "biased_innocent", "biased", "moderateimpact"}
 
 local function CanChooseRole()
     return ConVarExists("ttt_killer_enabled") and GetConVar("ttt_killer_enabled"):GetBool() and GetConVar("randomat_upgrade_chooserole"):GetBool()

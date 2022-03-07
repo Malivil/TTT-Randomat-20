@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "We've updated our privacy policy."
 EVENT.Description = "Alerts all players when an item is bought from a shop"
 EVENT.id = "privacy"
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
 local function TriggerAlert(item, role, is_item, ply)
     --Event handler located in cl_networkstrings

@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Total Mayhem"
 EVENT.Description = "Causes players to explode when killed"
 EVENT.id = "mayhem"
-EVENT.Categories = {"deathtrigger", "biased", "moderateimpact"}
+EVENT.Categories = {"deathtrigger", "biased_traitor", "biased", "moderateimpact"}
 
 function ExplodeTgt(tgt, ply)
     timer.Create("RdmtBombDelay"..tgt:Nick(), 0.1, 1, function()

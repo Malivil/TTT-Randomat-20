@@ -5,7 +5,7 @@ EVENT.AltTitle = "Murder"
 EVENT.Description = "Innocents gather pieces to get a revolver while traitors try to murder the innocents like the popular gamemodes Murder and Homicide"
 EVENT.id = "murder"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
-EVENT.Categories = {"gamemode", "biased", "item", "rolechange", "largeimpact"}
+EVENT.Categories = {"gamemode", "biased_traitor", "biased", "item", "rolechange", "largeimpact"}
 
 CreateConVar("randomat_murder_pickups_ratio", 0.75, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver.", 1, 5)
 CreateConVar("randomat_murder_highlight_gun", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to highlight dropped revolvers.")

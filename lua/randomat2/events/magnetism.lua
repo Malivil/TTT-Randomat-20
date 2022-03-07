@@ -5,7 +5,7 @@ CreateConVar("randomat_magnetism_radius", 1000, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 EVENT.Title = "Total Magnetism"
 EVENT.Description = "When a player dies, all nearby players will be pulled toward their corpse"
 EVENT.id = "magnetism"
-EVENT.Categories = {"fun", "deathtrigger", "biased", "moderateimpact"}
+EVENT.Categories = {"fun", "deathtrigger", "biased_innocent", "biased", "moderateimpact"}
 
 function EVENT:Begin()
     local pull_force = 4000

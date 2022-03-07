@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Glitch in the Matrix"
 EVENT.Description = "Changes everyone's role to be either Glitch or Traitor and gives a random shop item."
 EVENT.id = "glitch"
-EVENT.Categories = {"rolechange", "biased", "largeimpact"}
+EVENT.Categories = {"rolechange", "largeimpact"}
 
 CreateConVar("randomat_glitch_traitor_pct", 25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The percentage of players that will be traitors", 1, 100)
 CreateConVar("randomat_glitch_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of weapon IDs to not give out")

@@ -6,7 +6,7 @@ CreateConVar("randomat_evasive_jumping_force", 1000, {FCVAR_ARCHIVE, FCVAR_NOTIF
 EVENT.Title = "Evasive Maneuvers"
 EVENT.Description = "Causes players who are shot to \"dodge\" out of the way of further bullets"
 EVENT.id = "evasive"
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
 function EVENT:Begin()
     local push_force = GetConVar("randomat_evasive_force"):GetInt()

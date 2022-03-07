@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "Sudden Death!"
 EVENT.Description = "Changes everyone to have only 1 health"
 EVENT.id = "suddendeath"
-EVENT.Categories = {"biased", "largeimpact"}
+EVENT.Categories = {"biased_traitor", "biased", "largeimpact"}
 
 function EVENT:Begin(health)
     -- Default to 1 if we're not given a value

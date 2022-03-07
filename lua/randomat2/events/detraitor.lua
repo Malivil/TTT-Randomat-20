@@ -5,7 +5,7 @@ EVENT.Description = "The Detective has been corrupted and joined the Traitor tea
 EVENT.id = "detraitor"
 EVENT.StartSecret = true
 EVENT.MaxRoundCompletePercent = 15
-EVENT.Categories = {"biased", "rolechange", "largeimpact"}
+EVENT.Categories = {"biased_traitor", "biased", "rolechange", "largeimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

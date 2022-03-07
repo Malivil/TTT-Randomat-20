@@ -5,7 +5,7 @@ CreateConVar("randomat_insurance_damage", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Ho
 EVENT.Title = "Insurance Policy"
 EVENT.Description = "Players gain a credit every 20 damage they take"
 EVENT.id = "insurance"
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
 function EVENT:Begin()
     local damage = GetConVar("randomat_insurance_damage"):GetInt()

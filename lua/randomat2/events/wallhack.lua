@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "No one can hide from my sight"
 EVENT.Description = "Puts a green outline around every player"
 EVENT.id = "wallhack"
-EVENT.Categories = {"biased", "largeimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 
 util.AddNetworkString("haloeventtrigger")
 util.AddNetworkString("haloeventend")

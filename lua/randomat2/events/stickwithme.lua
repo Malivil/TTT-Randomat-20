@@ -10,7 +10,7 @@ CreateConVar("randomat_stickwithme_highlight", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 EVENT.Title = "Stick With Me"
 EVENT.Description = "Pairs players together, forcing them to stay close to eachother or take damage"
 EVENT.id = "stickwithme"
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
 util.AddNetworkString("RdmtStickWithMeHighlightAdd")
 util.AddNetworkString("RdmtStickWithMeHighlightRemove")

@@ -6,7 +6,7 @@ CreateConVar("randomat_lifesteal_cap", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The ma
 EVENT.Title = "Gaining life for killing people? Is it really worth it..."
 EVENT.Description = "Heals players who kill other players"
 EVENT.id = "lifesteal"
-EVENT.Categories = {"biased", "deathtrigger", "moderateimpact"}
+EVENT.Categories = {"biased_traitor", "biased", "deathtrigger", "moderateimpact"}
 
 function EVENT:Begin()
     local cap = GetConVar("randomat_lifesteal_cap"):GetInt()

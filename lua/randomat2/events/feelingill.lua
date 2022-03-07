@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "I'm feeling kinda ILL"
 EVENT.Description = "Causes players to slowly lose health over time"
 EVENT.id = "feelingill"
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"moderateimpact"}
 
 CreateConVar("randomat_feelingill_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often a player will lose health", 1, 60)
 CreateConVar("randomat_feelingill_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health per tick you lose", 1, 10)

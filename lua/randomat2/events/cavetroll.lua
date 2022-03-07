@@ -7,7 +7,7 @@ EVENT.Title = "They have a cave troll"
 EVENT.Description = "Chooses a random traitor and makes them a strong giant with a club.\nOther random players are chosen to be smaller and given knives"
 EVENT.id = "cavetroll"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
-EVENT.Categories = {"biased", "rolechange", "item", "largeimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "rolechange", "item", "largeimpact"}
 
 CreateConVar("randomat_cavetroll_troll_scale", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The scale factor to use for the troll", 1.1, 3.0)
 CreateConVar("randomat_cavetroll_troll_damage", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much damage the club should do", 0, 100)

@@ -22,7 +22,7 @@ EVENT.Title = "Election Day"
 EVENT.Description = "Nominate and then elect players to become President. Each role gets a different reward for being elected"
 EVENT.id = "election"
 EVENT.Type = EVENT_TYPE_VOTING
-EVENT.Categories = {"biased", "rolechange", "eventtrigger", "largeimpact"}
+EVENT.Categories = {"rolechange", "eventtrigger", "largeimpact"}
 
 local playersvoted = {}
 local votableplayers = {}

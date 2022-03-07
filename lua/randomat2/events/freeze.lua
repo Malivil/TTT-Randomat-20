@@ -28,7 +28,7 @@ EVENT.Title = table.Random(eventnames)
 EVENT.AltTitle = "Freeze"
 EVENT.Description = GetEventDescription()
 EVENT.id = "freeze"
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"biased_traitor", "biased", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the CVar has been changed

@@ -8,7 +8,7 @@ EVENT.Title = "Blind Traitors"
 EVENT.Description = "All traitors have been blinded for " .. GetConVar("randomat_blind_duration"):GetInt() .. " seconds!"
 EVENT.id = "blind"
 EVENT.SingleUse = false
-EVENT.Categories = {"biased", "moderateimpact"}
+EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
 local function RemoveBlind()
     net.Start("blindeventactive")
