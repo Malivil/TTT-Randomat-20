@@ -36,6 +36,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Red Light, Green Light
 1. Two Lies and a Truth
 1. A power you can't learn from the Jedi (aka ycarcomeD)
+1. Fan Favorite
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -577,6 +578,21 @@ _ttt_randomat_flash_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_flash_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_flash_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
+
+## Fan Favorite
+Cast your vote to resurrect a dead player
+\
+\
+**ConVars**
+\
+_ttt_randomat_fanfavorite_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_fanfavorite_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_fanfavorite_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_fanfavorite_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
+_randomat_fanfavorite_tiereses_ - Default: 1 - Whether ties result in a coin toss; otherwise, nobody is resurrected.\
+_randomat_fanfavorite_totalpct_ - Default: 50 - % of player votes needed for a vote to pass, set to 0 to disable.\
+_randomat_fanfavorite_show_votes_ - Default: 1 - Whether to show when a target is voted for in chat.\
+_randomat_fanfavorite_show_votes_anon_ - Default: 0 - Whether to hide who voted in chat.
 
 ## Fiends for Life
 Innocents win if they kill the jester, but traitors want them alive
