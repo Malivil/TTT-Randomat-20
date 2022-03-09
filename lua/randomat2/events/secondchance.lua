@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "Second Chance"
 EVENT.Description = "Respawns the first player who is killed as a random vanilla role"
 EVENT.id = "secondchance"
+EVENT.Type = EVENT_TYPE_RESPAWN
 EVENT.Categories = {"deathtrigger", "rolechange", "moderateimpact"}
 
 function EVENT:Begin()

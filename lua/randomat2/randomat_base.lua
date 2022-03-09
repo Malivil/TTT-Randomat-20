@@ -811,6 +811,18 @@ function Randomat:GetEventsByCategory(category)
     return events
 end
 
+function Randomat:GetEventsByType(etype)
+    if type(etype) ~= "number" then return {} end
+
+    local events = {}
+    for _, e in pairs(Randomat.Events) do
+        if (e.Type == etype) or (type(e.Type) == "table" and table.HasValue(e.Type, etype)) then
+            table.insert(events, e)
+        end
+    end
+    return events
+end
+
 --[[
  Randomat Meta
 ]]--

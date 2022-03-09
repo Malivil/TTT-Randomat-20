@@ -7,7 +7,7 @@ util.AddNetworkString("RdmtHedgeBetsPlayerBet")
 EVENT.Title = "Hedge Your Bets"
 EVENT.Description = "Dead players bet on who is going to live to the end. Winners are respawned to fight them."
 EVENT.id = "bets"
-EVENT.Type = EVENT_TYPE_VOTING
+EVENT.Type = {EVENT_TYPE_VOTING, EVENT_TYPE_RESPAWN}
 EVENT.Categories = {"spectator", "rolechange", "moderateimpact"}
 
 local playerswhobet = {}

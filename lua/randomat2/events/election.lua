@@ -21,7 +21,7 @@ CreateConVar("randomat_election_break_ties", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "
 EVENT.Title = "Election Day"
 EVENT.Description = "Nominate and then elect players to become President. Each role gets a different reward for being elected"
 EVENT.id = "election"
-EVENT.Type = EVENT_TYPE_VOTING
+EVENT.Type = {EVENT_TYPE_VOTING, EVENT_TYPE_RESPAWN}
 EVENT.Categories = {"rolechange", "eventtrigger", "largeimpact"}
 
 local playersvoted = {}

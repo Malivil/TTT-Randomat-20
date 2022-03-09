@@ -13,6 +13,7 @@ CreateConVar("randomat_blerg_weapondelay", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "D
 EVENT.Title = table.Random(eventnames)
 EVENT.Description = "Players respawn repeatedly unless killed during a brief window where they can't use weapons"
 EVENT.id = "blerg"
+EVENT.Type = EVENT_TYPE_RESPAWN
 EVENT.Categories = {"deathtrigger", "largeimpact"}
 
 local respawntime = {}

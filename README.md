@@ -27,10 +27,6 @@ _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put i
 _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in history. Events in history will are ignored when searching for a random event to start.
 
 # Latest Events
-1. Narration
-1. T-Rex Vision
-1. Down Under
-1. The Sky is Lava
 1. There's a cooldown on the jump!
 1. Jump Around!
 1. Trickle-Down Economics
@@ -39,6 +35,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Bomberman
 1. Red Light, Green Light
 1. Two Lies and a Truth
+1. A power you can't learn from the Jedi (aka ycarcomeD)
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -74,6 +71,21 @@ _ttt_randomat_suspicion_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_suspicion_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_suspicion_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_suspicion_chance_ - Default: 50 - The chance of the player being a Jester.
+
+## A power you can't learn from the Jedi (aka ycarcomeD)
+Cast your vote to save a player from dying one time. Vote will only happen once.
+\
+\
+**ConVars**
+\
+_ttt_randomat_reversedemocracy_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_reversedemocracy_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_reversedemocracy_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_reversedemocracy_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
+_randomat_reversedemocracy_tiesaves_ - Default: 1 - Whether ties result in a coin toss; otherwise, nobody is saved.\
+_randomat_reversedemocracy_totalpct_ - Default: 50 - % of player votes needed for a vote to pass, set to 0 to disable.\
+_randomat_reversedemocracy_show_votes_ - Default: 1 - Whether to show when a target is voted for in chat.\
+_randomat_reversedemocracy_show_votes_anon_ - Default: 0 - Whether to hide who voted in chat.
 
 ## A Random Person will explode every X seconds! Watch out! (EXCEPT DETECTIVES)
 This one is pretty self-explanatory. Detraitors are also excluded from explosion.

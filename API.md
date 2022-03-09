@@ -24,6 +24,7 @@ Enumerations available globally (within the defined realm).
 - EVENT_TYPE_VOTING - This event shows a voting UI for each player
 - EVENT_TYPE_SMOKING - This event uses a smoking effect on the players
 - EVENT_TYPE_SPECTATOR_UI - This event uses a custom interface for spectators
+- EVENT_TYPE_RESPAWN - This event causes players to respawn under the correct circumstances
 
 ## Events
 Creating an Randomat event involves defining the object with its associated methods and properties and then registering it. This section will detail the common methods and properties available when creating your event.
@@ -356,6 +357,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *category* - The category of events to find
 
 *Returns:* The list of events with the given category
+
+**Randomat:GetEventsByType(type)** - Gets the list of all registered events with the given type.\
+*Realm:* Server\
+*Parameters:*
+- *type* - The type of events to find
+
+*Returns:* The list of events with the given type
 
 **Randomat:GetItemName(item, role)** - Gets the name of the given equipment item for the provided role.\
 *Realm:* Client\
