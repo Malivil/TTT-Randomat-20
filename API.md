@@ -339,10 +339,20 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *title* - The event title
 
-**Randomat:GetAllEventCategories()** - Gets the list of all categories used by registered events.\
-*Realm:* Server
+**Randomat:GetAllEventCategories(readable)** - Gets the list of all categories used by registered events.\
+*Realm:* Server\
+*Parameters:*
+- *readable* - Whether the list of event categories should be in human-readable form. Defaults to `false`
 
 *Returns:* The list of all used event categories
+
+**Randomat:GetEventCategories(event, readable)** - Gets the list of categories for an event.\
+*Realm:* Server\
+*Parameters:*
+- *event* - The event object or ID of the event whose categories are being retrieved
+- *readable* - Whether the list of event categories should be in human-readable form. Defaults to `false`
+
+*Returns:* The list of categories for the given event
 
 **Randomat:GetEventTitle(event)** - Gets the given event's `Title` or `AltTitle` property, whichever is defined.\
 *Realm:* Server\
@@ -392,6 +402,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
   - *evt* - The event being checked
 
 *Returns:* A random event that can be started
+
+**Randomat:GetReadableCategory(category)** - Gets the human-readable form of the given category.\
+*Realm:* Server\
+*Parameters:*
+- *category* - The event category to translate
+
+*Returns:* The category in human-readable form
 
 **Randomat:GetRoleColor(role)** - Gets the [Color](https://wiki.facepunch.com/gmod/Color) associated with the provided role.\
 *Realm:* Client and Server\

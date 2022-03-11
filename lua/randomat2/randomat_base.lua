@@ -62,7 +62,7 @@ end
 
 local function SaveEventHistory()
     -- Save each event ID on a new line
-    local history = string.Implode("\n", Randomat.EventHistory)
+    local history = table.concat(Randomat.EventHistory, "\n")
     file.Write("randomat/history.txt", history)
 end
 
@@ -781,7 +781,32 @@ function Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)
     if not IsValid(phys) then ent:Remove() return end
 end
 
-function Randomat:GetAllEventCategories()
+function Randomat:GetReadableCategory(category)
+    if category == "smallimpact" then
+        return "Small Impact"
+    elseif category == "moderateimpact" then
+        return "Moderate Impact"
+    elseif category == "largeimpact" then
+        return "Large Impact"
+    elseif category == "rolechange" then
+        return "Role Change"
+    elseif category == "eventtrigger" then
+        return "Event Trigger"
+    elseif category == "deathtrigger" then
+        return "Death Trigger"
+    elseif category == "gamemode" then
+        return "Game Mode"
+    elseif string.StartWith(category, "biased_") then
+        local parts = string.Explode("_", category)
+        for k, p in ipairs(parts) do
+            parts[k] = Randomat:Capitalize(p)
+        end
+        return table.concat(parts, " - ")
+    end
+    return Randomat:Capitalize(category)
+end
+
+function Randomat:GetAllEventCategories(readable)
     local categories = {}
     for _, e in pairs(Randomat.Events) do
         if type(e.Categories) ~= "table" then continue end
@@ -789,13 +814,36 @@ function Randomat:GetAllEventCategories()
         for _, c in ipairs(e.Categories) do
             if not c or #c == 0 then continue end
 
-            local lower_cat = c:lower()
-            if table.HasValue(categories, lower_cat) then continue end
+            local cat = c:lower()
+            if readable then
+                cat = Randomat:GetReadableCategory(cat)
+            end
+            if table.HasValue(categories, cat) then continue end
 
-            table.insert(categories, lower_cat)
+            table.insert(categories, cat)
         end
     end
     return categories
+end
+
+function Randomat:GetEventCategories(event, readable)
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return nil end
+    if type(event.Categories) ~= "table" then return nil end
+
+    local categories
+    if readable then
+        categories = {}
+        for _, c in ipairs(event.Categories) do
+            table.insert(categories, Randomat:GetReadableCategory(c))
+        end
+    else
+        categories = event.Categories
+    end
+
+    return table.concat(categories, ", ")
 end
 
 function Randomat:GetEventsByCategory(category)
