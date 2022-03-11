@@ -346,13 +346,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* The list of all used event categories
 
-**Randomat:GetEventCategories(event, readable)** - Gets the list of categories for an event.\
+**Randomat:GetEventCategories(event, readable)** - Gets the comma-delimited list of categories for an event.\
 *Realm:* Server\
 *Parameters:*
 - *event* - The event object or ID of the event whose categories are being retrieved
 - *readable* - Whether the list of event categories should be in human-readable form. Defaults to `false`
 
-*Returns:* The list of categories for the given event
+*Returns:* The comma-delimited list of categories for the given event
 
 **Randomat:GetEventTitle(event)** - Gets the given event's `Title` or `AltTitle` property, whichever is defined.\
 *Realm:* Server\
