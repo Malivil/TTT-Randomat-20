@@ -33,6 +33,7 @@ if SERVER then
     end)
 
     local auto = CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should automatically trigger on round start.")
+    local auto_min_rounds = CreateConVar("ttt_randomat_auto_min_rounds", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The minimum number of completed rounds before auto-Randomat can trigger.")
     local auto_chance = CreateConVar("ttt_randomat_auto_chance", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Chance of the auto-Randomat triggering.")
     local auto_choose = CreateConVar("ttt_randomat_auto_choose", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the auto-started event is always \"choose\"")
     local auto_silent = CreateConVar("ttt_randomat_auto_silent", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the auto-started event should be silent.")
@@ -43,7 +44,9 @@ if SERVER then
     CreateConVar("ttt_randomat_event_history", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many events to keep in history to prevent duplication.")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
-        local should_auto = auto:GetBool() and math.random() <= auto_chance:GetFloat()
+        local rounds_complete = Randomat:GetRoundsComplete()
+        local min_rounds = auto_min_rounds:GetInt()
+        local should_auto = auto:GetBool() and math.random() <= auto_chance:GetFloat() and (min_rounds <= 0 or rounds_complete >= min_rounds)
         local new_auto = hook.Call("TTTRandomatShouldAuto", nil, should_auto)
         if type(new_auto) == "boolean" then should_auto = new_auto end
 

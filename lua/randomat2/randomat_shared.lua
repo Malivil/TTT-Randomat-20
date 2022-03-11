@@ -432,6 +432,20 @@ function Randomat:SetPlayerVisible(ply)
 end
 
 -- Round Functions
-function Randomat:GetRoundCompletePercent()
-    return ((CurTime() - GAMEMODE.RoundStartTime) / (GetGlobalFloat("ttt_round_end", CurTime()) - GAMEMODE.RoundStartTime)) * 100
+if SERVER then
+    function Randomat:GetRoundCompletePercent()
+        return ((CurTime() - GAMEMODE.RoundStartTime) / (GetGlobalFloat("ttt_round_end", CurTime()) - GAMEMODE.RoundStartTime)) * 100
+    end
+
+    function Randomat:GetRoundLimit()
+        return GetConVar("ttt_round_limit"):GetInt()
+    end
+
+    function Randomat:GetRoundsComplete()
+        return Randomat:GetRoundLimit() - Randomat:GetRoundsLeft()
+    end
+
+    function Randomat:GetRoundsLeft()
+        return math.max(0, GetGlobalInt("ttt_rounds_left", Randomat:GetRoundLimit()))
+    end
 end

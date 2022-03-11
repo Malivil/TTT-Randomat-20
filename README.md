@@ -17,6 +17,7 @@ _ttt_randomat_clearhistory_ - Clears the event history list.
 
 # General ConVars
 _ttt_randomat_auto_ - Default: 0 - Whether the Randomat should automatically trigger on round start.\
+_ttt_randomat_auto_min_rounds_ - Default: 0 - The minimum number of completed rounds before auto-Randomat can trigger.\
 _ttt_randomat_auto_chance_ - Default: 1 - Chance of the auto-Randomat triggering.\
 _ttt_randomat_auto_silent_ - Default: 0 - Whether the auto-started event should be silent.\
 _ttt_randomat_chooseevent_ - Default: 0 - Allows you to choose out of a selection of events.\

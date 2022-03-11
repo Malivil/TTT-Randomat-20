@@ -425,9 +425,24 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Returns:* The name string for the given role
 
 **Randomat:GetRoundCompletePercent()** - Gets the percentage of the current round that is complete.\
-*Realm:* Client and Server
+*Realm:* Server
 
 *Returns:* The round complete percentage
+
+**Randomat:GetRoundLimit()** - Gets the maximum number of rounds there can be.\
+*Realm:* Server
+
+*Returns:* The maximum number of rounds there can be
+
+**Randomat:GetRoundsComplete()** - Gets the number of completed rounds.\
+*Realm:* Server
+
+*Returns:* The number of completed rounds
+
+**Randomat:GetRoundsLeft()** - Gets the number of rounds left before map change.\
+*Realm:* Server
+
+*Returns:* The number of rounds left before map change
 
 **Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)** - Gets a random buyable item/weapon out of the list of role shops provided which can be given to the specified player.\
 *Realm:* Server\
