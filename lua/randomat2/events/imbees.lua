@@ -5,7 +5,7 @@ CreateConVar("randomat_imbees_count", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amo
 EVENT.Title = "Stop, I'm Bees!"
 EVENT.Description = "Spawns bees when a player is killed"
 EVENT.id = "imbees"
-EVENT.Categories = {"deathtrigger", "moderateimpact"}
+EVENT.Categories = {"deathtrigger", "entityspawn", "moderateimpact"}
 
 function EVENT:Begin()
     local plys = {}

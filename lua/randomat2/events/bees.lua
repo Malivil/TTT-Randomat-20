@@ -5,7 +5,7 @@ CreateConVar("randomat_bees_count", 4, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The numbe
 EVENT.Title = "NOT THE BEES!"
 EVENT.Description = "Spawns hostile bees randomly around players"
 EVENT.id = "bees"
-EVENT.Categories = {"moderateimpact"}
+EVENT.Categories = {"entityspawn", "moderateimpact"}
 
 function EVENT:Begin(color, count)
     if not count then

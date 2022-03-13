@@ -5,7 +5,7 @@ CreateConVar("randomat_crabs_count", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amou
 EVENT.Title = "Crabs are People"
 EVENT.Description = "Spawns hostile headcrabs when a player is killed"
 EVENT.id = "crabs"
-EVENT.Categories = {"deathtrigger", "moderateimpact"}
+EVENT.Categories = {"deathtrigger", "entityspawn", "moderateimpact"}
 
 function EVENT:Begin()
     local plys = {}
