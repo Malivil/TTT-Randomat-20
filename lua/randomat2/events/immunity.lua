@@ -142,7 +142,7 @@ net.Receive("RdmtHerdImmunityPlayerVoted", function(ln, ply)
     for k, _ in pairs(playersvoted) do
         if k == ply then
             ply:PrintMessage(HUD_PRINTTALK, "You have already voted.")
-            --return
+            return
         end
     end
 
