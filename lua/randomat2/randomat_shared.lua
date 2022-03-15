@@ -5,6 +5,7 @@ EVENT_TYPE_VOTING = 2
 EVENT_TYPE_SMOKING = 3
 EVENT_TYPE_SPECTATOR_UI = 4
 EVENT_TYPE_RESPAWN = 5
+EVENT_TYPE_GUNSOUNDS = 6
 
 -- String Functions
 function Randomat:Capitalize(msg, skip_lower)
