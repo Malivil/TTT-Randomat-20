@@ -3,6 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_earthquake_blocklist", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The comma-separated list of maps to not allow this map on")
 
 EVENT.Title = "Earthquake"
+EVENT.ExtDescription = "Shakes all props, weapons, and ammo on the map"
 EVENT.id = "earthquake"
 EVENT.SingleUse = false
 EVENT.Categories = {"fun", "smallimpact"}

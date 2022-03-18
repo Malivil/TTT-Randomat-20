@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Infinite Credits for Everyone!"
+EVENT.ExtDescription = "Continuously sets each player to have 10 credits, allowing them to buy anything they can hold"
 EVENT.id = "credits"
 EVENT.Categories = {"moderateimpact"}
 

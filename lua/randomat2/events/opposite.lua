@@ -6,6 +6,7 @@ util.AddNetworkString("OppositeDayEnd")
 CreateConVar("randomat_opposite_hardmode", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to enable hard mode and switch Jump/Crouch")
 
 EVENT.Title = "Opposite Day"
+EVENT.Description = "Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys."
 EVENT.id = "opposite"
 EVENT.Categories = {"fun", "largeimpact"}
 

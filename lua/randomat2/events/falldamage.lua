@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "No more Fall Damage!"
+EVENT.ExtDescription = "Prevents players from taking any damage when falling"
 EVENT.id = "falldamage"
 EVENT.Categories = {"fun", "smallimpact"}
 

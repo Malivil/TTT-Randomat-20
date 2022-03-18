@@ -5,6 +5,7 @@ CreateConVar("randomat_harpoon_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The ev
 CreateConVar("randomat_harpoon_weaponid", "ttt_m9k_harpoon", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 
 EVENT.Title = "Harpooooooooooooooooooooon!!"
+EVENT.ExtDescription = "Forces everyone to use harpoons"
 EVENT.id = "harpoon"
 if GetConVar("randomat_harpoon_strip"):GetBool() then
     EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE

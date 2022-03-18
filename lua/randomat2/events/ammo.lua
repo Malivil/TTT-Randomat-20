@@ -1,6 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Infinite Ammo!"
+EVENT.ExtDescription = "Changes all weapons to have infinite ammo and not require reloading"
 EVENT.id = "ammo"
 -- Mark this as a weapon override type because the weapons used in weapon override types don't have ammo
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE

@@ -7,7 +7,7 @@ util.AddNetworkString("RdmtPlayerChoseScissors")
 util.AddNetworkString("RdmtCloseRockPaperScissorsFrame")
 
 EVENT.Title = "Rock, Paper, Scissors"
-EVENT.Description = ""
+EVENT.ExtDescription = "Pits two players against eachother in a Rock, Paper, Scissors fight to the death"
 EVENT.id = "rockpaperscissors"
 EVENT.Categories = {"gamemode", "largeimpact"}
 
@@ -62,7 +62,7 @@ function EVENT:Begin()
     score = 0
     rounds_total = GetConVar("randomat_rockpaperscissors_bestof"):GetInt()
     rounds_left = rounds_total
-    EVENT.Description = ply1:Nick() .. " vs. " .. ply2:Nick() .. "! Best of " .. rounds_left .. ", TO THE DEATH!"
+    self.Description = ply1:Nick() .. " vs. " .. ply2:Nick() .. "! Best of " .. rounds_left .. ", TO THE DEATH!"
 
     net.Start("RockPaperScissorsEventBegin")
     net.Send(ply1)
