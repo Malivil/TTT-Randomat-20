@@ -5,13 +5,18 @@ util.AddNetworkString("ReverseDemocracyEventEnd")
 util.AddNetworkString("ReverseDemocracyPlayerVoted")
 util.AddNetworkString("ReverseDemocracyReset")
 
+
+local eventnames = {}
+table.insert(eventnames, "A power you can't learn from the Jedi")
+table.insert(eventnames, "He could save others from death, but not himself")
+
 CreateConVar("randomat_reversedemocracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 10, 90)
 CreateConVar("randomat_reversedemocracy_tiesaves", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody is saved")
 CreateConVar("randomat_reversedemocracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
 CreateConVar("randomat_reversedemocracy_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
 CreateConVar("randomat_reversedemocracy_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
 
-EVENT.Title = "A power you can't learn from the Jedi"
+EVENT.Title = table.Random(eventnames)
 EVENT.AltTitle = "ycarcomeD"
 EVENT.Description = "Cast your vote to save a player from dying one time. Vote will only happen once"
 EVENT.id = "reversedemocracy"
@@ -190,6 +195,11 @@ net.Receive("ReverseDemocracyPlayerVoted", function(ln, ply)
     end
 
     local votee = net.ReadString()
+    if ply:Nick() == votee then
+        ply:PrintMessage(HUD_PRINTTALK, "You can't vote for yourself.")
+        return
+    end
+
     local num
     for k, v in pairs(votableplayers) do
         if v:Nick() == votee then --find which player was voted for
