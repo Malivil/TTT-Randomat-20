@@ -36,7 +36,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Bomberman
 1. Red Light, Green Light
 1. Two Lies and a Truth
-1. A power you can't learn from the Jedi (aka ycarcomeD)
+1. A power you can't learn from the Jedi
 1. Fan Favorite
 
 # Events
@@ -74,7 +74,10 @@ _ttt_randomat_suspicion_min_players_ - Default: 0 - The minimum number of player
 _ttt_randomat_suspicion_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_suspicion_chance_ - Default: 50 - The chance of the player being a Jester.
 
-## A power you can't learn from the Jedi (aka ycarcomeD)
+## A power you can't learn from the Jedi
+aka He could save others from death, but not himself\
+aka ycarcomeD\
+\
 Cast your vote to save a player from dying one time. Vote will only happen once.
 \
 \
