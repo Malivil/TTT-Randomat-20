@@ -143,6 +143,21 @@ function EVENT:Begin()
             end
         end)
     end)
+
+    self:AddHook("TTTWinCheckBlocks", function(win_blocks)
+        table.insert(win_blocks, function(win_type)
+            if win_type == WIN_NONE then return win_type end
+
+            -- If the player we're saving is dead, block the win from happening so they can respawn
+            for _, p in ipairs(self:GetDeadPlayers()) do
+                if p:GetNWBool("RdmtReverseDemocracySaved", false) then
+                    return WIN_NONE
+                end
+            end
+
+            return win_type
+        end)
+    end)
 end
 
 function EVENT:End()
@@ -153,6 +168,13 @@ function EVENT:End()
     for _, v in ipairs(player.GetAll()) do
         v:SetNWBool("RdmtReverseDemocracySaved", false)
     end
+end
+
+function EVENT:Condition()
+    -- Check that this variable exists by double negating
+    -- We can't just return the variable directly because it's not a boolean
+    -- The "TTTWinCheckBlocks" hook is only available in the new CR
+    return not not CR_VERSION
 end
 
 function EVENT:GetConVars()
