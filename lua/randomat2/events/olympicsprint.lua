@@ -22,6 +22,7 @@ end
 function EVENT:Condition()
     -- Check that this variable exists by double negating
     -- We can't just return the variable directly because it's not a boolean
+    -- The "TTTSprintStaminaPost" hook is only available in the new CR
     return not not CR_VERSION
 end
 

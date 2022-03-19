@@ -31,6 +31,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    -- The "TTTScoringWinTitle" hook is only available in the new CR
     if not CR_VERSION then return false end
 
     for _, p in ipairs(self:GetAlivePlayers()) do
