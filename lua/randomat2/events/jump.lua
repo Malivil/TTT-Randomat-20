@@ -3,6 +3,7 @@ local EVENT = {}
 EVENT.Title = "You can only jump once."
 EVENT.ExtDescription = "Explodes players who jump more than once"
 EVENT.id = "jump"
+EVENT.Type = EVENT_TYPE_JUMPING
 EVENT.Categories = {"largeimpact"}
 
 CreateConVar("randomat_jump_spam", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show the message again for a player who doesn't die")

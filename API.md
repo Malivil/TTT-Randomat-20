@@ -26,6 +26,7 @@ Enumerations available globally (within the defined realm).
 - EVENT_TYPE_SPECTATOR_UI - This event uses a custom interface for spectators
 - EVENT_TYPE_RESPAWN - This event causes players to respawn under the correct circumstances
 - EVENT_TYPE_GUNSOUNDS - This event overrides weapon sounds
+- EVENT_TYPE_JUMPING - This event changes jumping in some extreme way
 
 ## Events
 Creating an Randomat event involves defining the object with its associated methods and properties and then registering it. This section will detail the common methods and properties available when creating your event.

@@ -8,6 +8,7 @@ CreateConVar("randomat_jumpcooldown_length", "5", {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 EVENT.Title = "There's a cooldown on the jump!"
 EVENT.Description = "Players can only jump once every 5 seconds"
 EVENT.id = "jumpcooldown"
+EVENT.Type = EVENT_TYPE_JUMPING
 EVENT.Categories = {"fun", "moderateimpact"}
 
 function EVENT:Begin()
