@@ -20,7 +20,9 @@ if CLIENT then
     function SWEP:PrimaryAttack() end
 end
 
-CreateConVar("ttt_randomat_chooseevent", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows you to choose out of a selection of events")
+if SERVER then
+    CreateConVar("ttt_randomat_chooseevent", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows you to choose out of a selection of events")
+end
 
 SWEP.ViewModel = "models/weapons/gamefreak/c_csgo_c4.mdl"
 SWEP.WorldModel = "models/weapons/gamefreak/w_c4_planted.mdl"
