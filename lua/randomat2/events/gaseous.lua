@@ -7,7 +7,7 @@ EVENT.Title = "Gaseous Snake"
 EVENT.Description = "Turns everyone invisible but envelopes them in smoke"
 EVENT.id = "gaseous"
 EVENT.Type = EVENT_TYPE_SMOKING
-EVENT.Categories = {"fun", "moderateimpact"}
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     net.Start("RdmtGaseousBegin")

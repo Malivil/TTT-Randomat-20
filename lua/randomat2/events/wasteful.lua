@@ -5,7 +5,7 @@ EVENT.Description = "Every gun shot uses two bullets"
 EVENT.id = "wasteful"
 -- Mark this as a weapon override type because the weapons used in weapon override types don't have ammo
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
-EVENT.Categories = {"fun", "moderateimpact"}
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     self:AddHook("EntityFireBullets", function(ent, data)

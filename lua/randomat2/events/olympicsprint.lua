@@ -7,7 +7,7 @@ EVENT.Title = "Olympic Sprint"
 EVENT.AltTitle = "Infinite Sprint"
 EVENT.Description = "Disables sprint stamina consumption, allowing players to sprint forever"
 EVENT.id = "olympicsprint"
-EVENT.Categories = {"fun", "smallimpact"}
+EVENT.Categories = {"smallimpact"}
 
 function EVENT:Begin()
     net.Start("RdmtOlympicSprintBegin")

@@ -9,7 +9,7 @@ EVENT.Description = "Forces a random player to say something incriminating witho
 EVENT.id = "incriminating"
 EVENT.StartSecret = true
 EVENT.SingleUse = false
-EVENT.Categories = {"fun", "smallimpact"}
+EVENT.Categories = {"smallimpact"}
 
 util.AddNetworkString("RdmtIncriminatingMessage")
 

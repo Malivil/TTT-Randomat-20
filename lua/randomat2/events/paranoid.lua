@@ -11,7 +11,7 @@ EVENT.Title = "Paranoid"
 EVENT.Description = "Periodically plays gun and death sounds randomly around players"
 EVENT.id = "paranoid"
 EVENT.StartSecret = true
-EVENT.Categories = {"fun", "largeimpact"}
+EVENT.Categories = {"largeimpact"}
 
 function EVENT:GetRandomWeaponSound(sounds)
     local chosen_sound = nil

@@ -7,7 +7,7 @@ EVENT.Title = "Random Health for everyone!"
 EVENT.ExtDescription = "Gives everyone a random amount of additional health"
 EVENT.id = "randomhealth"
 EVENT.SingleUse = false
-EVENT.Categories = {"fun", "moderateimpact"}
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     local lower = GetConVar("randomat_randomhealth_lower"):GetInt()

@@ -10,7 +10,7 @@ CreateConVar("randomat_runforyourlife_damage", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY},
 EVENT.Title = "Run For Your Life!"
 EVENT.Description = "Hurts a player while they are sprinting"
 EVENT.id = "runforyourlife"
-EVENT.Categories = {"fun", "moderateimpact"}
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     net.Start("RandomatRunForYourLifeStart")

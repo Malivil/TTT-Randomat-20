@@ -8,7 +8,7 @@ CreateConVar("randomat_opposite_hardmode", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 EVENT.Title = "Opposite Day"
 EVENT.Description = "Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys."
 EVENT.id = "opposite"
-EVENT.Categories = {"fun", "largeimpact"}
+EVENT.Categories = {"largeimpact"}
 
 function EVENT:Begin()
     local hardmode = GetConVar("randomat_opposite_hardmode"):GetBool()
