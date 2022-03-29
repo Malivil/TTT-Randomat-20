@@ -27,7 +27,7 @@ function EVENT:Begin()
     local rof = GetConVar("randomat_derptective_rate_of_fire"):GetInt()
     self:AddHook("Think", function()
         for _, ply in ipairs(self:GetAlivePlayers()) do
-            if Randomat:IsDetectiveLike(ply) then
+            if Randomat:IsDetectiveLike(ply) and ply:GetObserverMode() == OBS_MODE_NONE then
                 -- Force the player to use the H.U.G.E.
                 if not ply:HasWeapon("weapon_zm_sledge")  then
                     ply:StripWeapons()
