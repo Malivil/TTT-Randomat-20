@@ -42,38 +42,10 @@ function EVENT:Begin()
             end
         end
 
-        local det = ply:Give("weapon_ttt_randomatdet")
+        local det = ply:Give("weapon_ttt_randomatdetonator")
         if det then
             det.Target = target
         end
-    end
-end
-
-function PlayerDetonate(owner, ply)
-    if not Randomat:ShouldActLikeJester(owner) then
-        local pos = nil
-        if ply:Alive() then
-            pos = ply:GetPos()
-        else
-            local body = ply.server_ragdoll or ply:GetRagdollEntity()
-            if IsValid(body) then
-                pos = body:GetPos()
-                body:Remove()
-            end
-        end
-
-        if pos ~= nil then
-            local explode = ents.Create("env_explosion")
-            explode:SetPos(pos)
-            explode:SetOwner(owner)
-            explode:Spawn()
-            explode:SetKeyValue("iMagnitude", "230")
-            explode:Fire("Explode", 0,0)
-            explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
-        end
-    end
-    for _, v in ipairs(player.GetAll()) do
-        v:PrintMessage(HUD_PRINTTALK, owner:Nick().." has detonated "..ply:Nick())
     end
 end
 
