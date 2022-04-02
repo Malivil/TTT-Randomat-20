@@ -1,5 +1,5 @@
 local voteframe = nil
-local jesterframe = nil
+local jesterframes = {}
 
 net.Receive("DemocracyEventBegin", function()
     voteframe = vgui.Create("DFrame")
@@ -53,7 +53,8 @@ net.Receive("DemocracyEventBegin", function()
 end)
 
 net.Receive("DemocracyJesterRevenge", function()
-    jesterframe = vgui.Create("DFrame")
+    local jesterframe = vgui.Create("DFrame")
+    table.insert(jesterframes, jesterframe)
     jesterframe:SetPos(10, ScrH() - 800)
     jesterframe:SetSize(200, 300)
     jesterframe:SetTitle("Choose Your Revenge (Hold " .. Key("+showscores", "tab"):lower() .. ")")
@@ -63,19 +64,19 @@ net.Receive("DemocracyJesterRevenge", function()
     jesterframe:SetDeleteOnClose(true)
 
     --Player List
-    local list = vgui.Create("DListView", jesterframe)
-    list:Dock(FILL)
-    list:SetMultiSelect(false)
-    list:AddColumn("Players")
+    local plylist = vgui.Create("DListView", jesterframe)
+    plylist:Dock(FILL)
+    plylist:SetMultiSelect(false)
+    plylist:AddColumn("Players")
 
     local voters = net.ReadTable()
     for _, v in ipairs(voters) do
         if v:Alive() and not v:IsSpec() then
-            list:AddLine(v:Nick())
+            plylist:AddLine(v:Nick())
         end
     end
 
-    list.OnRowSelected = function(lst, index, pnl)
+    plylist.OnRowSelected = function(lst, index, pnl)
         net.Start("DemocracyJesterVoted")
         net.WriteString(pnl:GetColumnText(1))
         net.SendToServer()
@@ -87,7 +88,10 @@ net.Receive("DemocracyEventEnd", function()
     if IsValid(voteframe) then
         voteframe:Close()
     end
-    if IsValid(jesterframe) then
-        jesterframe:Close()
+
+    for _, f in ipairs(jesterframes) do
+        if IsValid(f) then
+            f:Close()
+        end
     end
 end)
