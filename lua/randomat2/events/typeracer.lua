@@ -261,6 +261,11 @@ function EVENT:End()
     timer.Remove("RdmtTypeRacerTimer")
 end
 
+-- "Secret" causes this event to essentially just kill everyone, since they can't see the prompts
+function EVENT:Condition()
+    return not Randomat:IsEventActive("secret")
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in ipairs({"timer"}) do
