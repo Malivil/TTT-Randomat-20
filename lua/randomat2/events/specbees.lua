@@ -49,6 +49,17 @@ local function DestroyBee(b)
     b:Remove()
 end
 
+local function StopBee(ply)
+    if not IsValid(ply) then return end
+    local sid = ply:SteamID64()
+    dead[sid] = false
+    if IsValid(bees[sid]) then
+        DestroyBee(bees[sid])
+    end
+    bees[sid] = nil
+    timer.Remove("RdmtSpecBeesStart_" .. sid)
+end
+
 function EVENT:Begin()
     bees = {}
     dead = {}
@@ -66,26 +77,8 @@ function EVENT:Begin()
         if dead[ply:SteamID64()] then return false end
     end)
 
-    self:AddHook("PlayerSpawn", function(ply)
-        if not IsValid(ply) then return end
-        local sid = ply:SteamID64()
-        timer.Remove("RdmtSpecBeesStart_" .. sid)
-        dead[sid] = false
-        if IsValid(bees[sid]) then
-            DestroyBee(bees[sid])
-        end
-        bees[sid] = nil
-    end)
-
-    self:AddHook("PlayerDisconnected", function(ply)
-        if not IsValid(ply) then return end
-        local sid = ply:SteamID64()
-        dead[sid] = false
-        if IsValid(bees[sid]) then
-            DestroyBee(bees[sid])
-        end
-        bees[sid] = nil
-    end)
+    self:AddHook("PlayerSpawn", StopBee)
+    self:AddHook("PlayerDisconnected", StopBee)
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end

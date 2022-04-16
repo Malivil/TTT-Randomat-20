@@ -39,6 +39,17 @@ local function SetupGhost(p)
     CreateGhost(p)
 end
 
+local function StopGhost(ply)
+    if not IsValid(ply) then return end
+    local sid = ply:SteamID64()
+    dead[sid] = false
+    if IsValid(ghosts[sid]) then
+        ghosts[sid]:Remove()
+    end
+    ghosts[sid] = nil
+    timer.Remove("RdmtApparitionStart_" .. sid)
+end
+
 function EVENT:Begin()
     ghosts = {}
     dead = {}
@@ -56,25 +67,8 @@ function EVENT:Begin()
         if dead[ply:SteamID64()] then return false end
     end)
 
-    self:AddHook("PlayerSpawn", function(ply)
-        if not IsValid(ply) then return end
-        local sid = ply:SteamID64()
-        dead[sid] = false
-        if IsValid(ghosts[sid]) then
-            ghosts[sid]:Remove()
-        end
-        ghosts[sid] = nil
-    end)
-
-    self:AddHook("PlayerDisconnected", function(ply)
-        if not IsValid(ply) then return end
-        local sid = ply:SteamID64()
-        dead[sid] = false
-        if IsValid(ghosts[sid]) then
-            ghosts[sid]:Remove()
-        end
-        ghosts[sid] = nil
-    end)
+    self:AddHook("PlayerSpawn", StopGhost)
+    self:AddHook("PlayerDisconnected", StopGhost)
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
