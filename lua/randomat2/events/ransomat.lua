@@ -68,6 +68,9 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    -- "Secret" makes this event kill the target without warning
+    if Randomat:IsEventActive("secret") then return false end
+
     local traitorsonly = GetConVar("randomat_ransom_traitorsonly"):GetBool()
     -- Don't run this event if there aren't any players who are able to buy
     for _, ply in pairs(self:GetAlivePlayers()) do
