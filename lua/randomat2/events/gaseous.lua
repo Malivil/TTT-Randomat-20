@@ -25,6 +25,15 @@ function EVENT:Begin()
         if not IsValid(victim) then return end
         Randomat:SetPlayerVisible(victim)
     end)
+
+    -- Ensure things that make players visible don't permanently break this randomat
+    timer.Create("RdmtGaseousTimer", 0.5, 0, function()
+        for _, p in ipairs(self:GetAlivePlayers()) do
+            if p:GetMaterial() ~= "sprites/heatwave" then
+                Randomat:SetPlayerInvisible(p)
+            end
+        end
+    end)
 end
 
 function EVENT:End()
