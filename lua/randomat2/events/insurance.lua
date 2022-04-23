@@ -42,6 +42,8 @@ function EVENT:Begin()
         local leftover = current % damage
         local total_damage = dmg + leftover
         local credits = math.floor(total_damage / damage)
+        if credits <= 0 then return end
+
         ent:AddCredits(credits)
         ent:PrintMessage(HUD_PRINTTALK, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits!")
         ent:PrintMessage(HUD_PRINTCENTER, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits!")
