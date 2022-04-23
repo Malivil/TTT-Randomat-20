@@ -43,6 +43,8 @@ function EVENT:End()
     for _, p in ipairs(player.GetAll()) do
         Randomat:SetPlayerVisible(p)
     end
+
+    timer.Remove("RdmtGaseousTimer")
 end
 
 Randomat:register(EVENT)
