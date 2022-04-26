@@ -113,6 +113,7 @@ local function unragdollPlayer(v)
 
     v:SetCredits(v.spawnInfo.credits)
     v:SetModel(v.spawnInfo.model)
+    v:SetPlayerColor(v.spawnInfo.playerColor)
 
     for i, j in pairs(v.spawnInfo.equipment) do
         if j then
@@ -162,16 +163,24 @@ local function ragdollPlayer(v)
     info.model = v:GetModel()
     info.credits = v:GetCredits()
     info.equipment = equipment
+    info.playerColor = v:GetPlayerColor()
     v.spawnInfo = info
 
     local ragdoll = ents.Create("prop_ragdoll")
     ragdoll.ragdolledPly = v
-    ragdoll:SetPos(v:GetPos())
     local velocity = v:GetVelocity()
+    ragdoll:SetPos(v:GetPos())
+    ragdoll:SetModel(info.model)
+    ragdoll:SetSkin(v:GetSkin())
+    for _, value in pairs(v:GetBodyGroups()) do
+        ragdoll:SetBodygroup(value.id, v:GetBodygroup(value.id))
+    end
     ragdoll:SetAngles(v:GetAngles())
-    ragdoll:SetModel(v:GetModel())
+    ragdoll:SetColor(v:GetColor())
+    CORPSE.SetPlayerNick(ragdoll, v)
     ragdoll:Spawn()
     ragdoll:Activate()
+
     v:SetParent(ragdoll)
 
     for j=0, ragdoll:GetPhysicsObjectCount() - 1 do
