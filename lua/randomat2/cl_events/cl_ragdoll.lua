@@ -8,10 +8,12 @@ end
 
 net.Receive("RdmtRagdollBegin", function()
     hook.Add("TTTTargetIDRagdollName", "RdmtRagdollTTTTargetIDRagdollName", BlockTargetID)
+    hook.Add("TTTTargetIDEntityHintLabel", "RdmtRagdollTTTTargetIDEntityHintLabel", BlockTargetID)
     hook.Add("TTTTargetIDPlayerHintText", "RdmtRagdollTTTTargetIDPlayerHintText", BlockTargetID)
 end)
 
 net.Receive("RdmtRagdollEnd", function()
     hook.Remove("TTTTargetIDRagdollName", "RdmtRagdollTTTTargetIDRagdollName")
+    hook.Remove("TTTTargetIDEntityHintLabel", "RdmtRagdollTTTTargetIDEntityHintLabel")
     hook.Remove("TTTTargetIDPlayerHintText", "RdmtRagdollTTTTargetIDPlayerHintText")
 end)
