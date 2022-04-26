@@ -1,5 +1,8 @@
 local EVENT = {}
 
+util.AddNetworkString("RdmtRagdollBegin")
+util.AddNetworkString("RdmtRagdollEnd")
+
 CreateConVar("randomat_ragdoll_time", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time the player is ragdolled", 0.5, 10)
 CreateConVar("randomat_ragdoll_delay", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time between ragdolls", 0.5, 10)
 
@@ -83,7 +86,9 @@ local function unragdollPlayer(v)
 
     local ragdoll = v.ragdoll
     v.ragdoll = nil -- Gotta do this before spawn or our hook catches it
-
+    -- Set these so players don't get their role weapons given back if they've already used them
+    v.Resurrecting = true
+    v.DeathRoleWeapons = nil
     v:Spawn()
 
     if IsValid(ragdoll) then
@@ -168,6 +173,7 @@ local function ragdollPlayer(v)
 
     local ragdoll = ents.Create("prop_ragdoll")
     ragdoll.ragdolledPly = v
+    ragdoll:SetNWBool("RdmtRagdollRagdoll", true)
     local velocity = v:GetVelocity()
     ragdoll:SetPos(v:GetPos())
     ragdoll:SetModel(info.model)
@@ -210,6 +216,9 @@ local function ragdollPlayer(v)
 end
 
 function EVENT:Begin()
+    net.Start("RdmtRagdollBegin")
+    net.Broadcast()
+
     for _, v in ipairs(player.GetAll()) do
         v.inRagdoll = false
         v.lastRagdoll = nil
@@ -253,6 +262,9 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
+    net.Start("RdmtRagdollEnd")
+    net.Broadcast()
+
     for _, v in ipairs(player.GetAll()) do
         if v.inRagdoll then
             unragdollPlayer(v)
