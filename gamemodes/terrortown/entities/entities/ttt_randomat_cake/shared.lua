@@ -23,6 +23,16 @@ end
 function ENT:Think()
 end
 
+local function TakeDamage(dmg, activator)
+    local dmginfo = DamageInfo()
+    dmginfo:SetDamage(dmg)
+    dmginfo:SetAttacker(game.GetWorld())
+    dmginfo:SetInflictor(game.GetWorld())
+    dmginfo:SetDamageType(DMG_BULLET)
+    dmginfo:SetDamageForce(Vector(0, 0, 0))
+    activator:TakeDamageInfo(dmginfo)
+end
+
 function ENT:Use(activator, caller)
     if not IsValid(activator) or not activator:Alive() or activator:IsSpec() then return end
 
@@ -35,7 +45,7 @@ function ENT:Use(activator, caller)
         timer.Remove(activator:GetName() .. "RdmtCakeDamageTimer")
     else
         local damageAmount = GetConVar("randomat_cakes_damage"):GetInt()
-        activator:TakeDamage(damageAmount, nil, nil)
+        TakeDamage(damageAmount, activator)
         activator:ChatPrint("You overate! Wait it out or try to eat another piece of cake to see if that stops the pain... somehow")
 
         local totaltime = GetConVar("randomat_cakes_damage_time"):GetInt()
@@ -43,7 +53,7 @@ function ENT:Use(activator, caller)
         local repetitions = totaltime / interval
         timer.Create(activator:GetName() .. "RdmtCakeDamageTimer", interval, repetitions, function()
             local dotAmount =  GetConVar("randomat_cakes_damage_over_time"):GetInt()
-            activator:TakeDamage(dotAmount, nil, nil)
+            TakeDamage(dotAmount, activator)
         end)
     end
     self:Remove()
