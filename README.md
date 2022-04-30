@@ -38,6 +38,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Two Lies and a Truth
 1. A power you can't learn from the Jedi
 1. Fan Favorite
+1. Full of Crabs and Fire!
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -673,6 +674,19 @@ _ttt_randomat_freeze_weight_ - Default: -1 - The weight this event should use du
 _randomat_freeze_duration_ - Default: 5 - Duration of the Freeze (in seconds).\
 _randomat_freeze_timer_ - Default: 30 - How often (in seconds) the Freeze occurs.\
 _randomat_freeze_hint_ - Default: 1 - Whether to explain the event after triggering.
+
+## Full of Crabs and Fire!
+Spawns hostile headcrabs and fire around the detective when they are killed
+\
+\
+**ConVars**
+\
+_ttt_randomat_crabsandfire_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_crabsandfire_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_crabsandfire_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_crabsandfire_crab_count_ - Default: - The number of crabs to spawn.\
+_randomat_crabsandfire_fire_count_ - Default: - The amount of fire to spawn.\
+_randomat_crabsandfire_fire_length_ - Default: - How long the fire should last.\
 
 ## Gaining life for killing people? Is it really worth it...
 Heals players who kill other players
