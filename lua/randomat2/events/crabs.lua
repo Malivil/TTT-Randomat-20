@@ -8,23 +8,15 @@ EVENT.id = "crabs"
 EVENT.Categories = {"deathtrigger", "entityspawn", "moderateimpact"}
 
 function EVENT:Begin()
-    local plys = {}
-    for k, ply in ipairs(player.GetAll()) do
-        if not ply:IsSpec() then
-            plys[k] = ply
-        end
-    end
+    local count = GetConVar("randomat_crabs_count"):GetInt()
+    self:AddHook("PostPlayerDeath", function(ply)
+        if not IsPlayer(ply) then return end
 
-    timer.Create("headcrabtimer", 1, 0, function()
-        for k, ply in pairs(plys) do
-            if not ply:Alive() then
-                for i = 1, GetConVar("randomat_crabs_count"):GetInt() do
-                    local crab = ents.Create("npc_headcrab")
-                    crab:SetPos(ply:GetPos() + Vector(math.random(-100, 100), math.random(-100, 100), 0))
-                    crab:Spawn()
-                end
-                plys[k] = nil
-            end
+        local pos = ply:GetPos()
+        for i = 1, count do
+            local crab = ents.Create("npc_headcrab")
+            crab:SetPos(pos + Vector(math.random(-100, 100), math.random(-100, 100), 0))
+            crab:Spawn()
         end
     end)
 end
