@@ -29,4 +29,8 @@ function EVENT:Begin()
     end)
 end
 
+function EVENT:Condition()
+    return not Randomat:IsEventActive("barrelinjustice")
+end
+
 Randomat:register(EVENT)

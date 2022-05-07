@@ -37,6 +37,10 @@ function EVENT:Begin()
     end)
 end
 
+function EVENT:Condition()
+    return not Randomat:IsEventActive("bomberman")
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in ipairs({"count", "range"}) do
