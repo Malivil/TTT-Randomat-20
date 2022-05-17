@@ -220,7 +220,7 @@ end
  Randomat Namespace
 ]]--
 
-function Randomat:EndActiveEvent(id)
+function Randomat:EndActiveEvent(id, skip_error)
     for k, evt in pairs(Randomat.ActiveEvents) do
         if evt.Id == id then
             EndEvent(evt)
@@ -229,7 +229,9 @@ function Randomat:EndActiveEvent(id)
         end
     end
 
-    error("Could not find active event '" .. id .. "'")
+    if not skip_error then
+        error("Could not find active event '" .. id .. "'")
+    end
 end
 
 function Randomat:IsEventActive(id)

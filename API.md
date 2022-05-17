@@ -329,10 +329,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *ply* - The player to print for
 - *msg* - The message to print
 
-**Randomat:EndActiveEvent(id)** - Ends the event with the given ID.\
+**Randomat:EndActiveEvent(id, skip_error)** - Ends the event with the given ID.\
 *Realm:* Server\
 *Parameters:*
 - *id* - The ID of the event to end
+- *skip_error* - Whether to skip causing an error if the event is not running
 
 **Randomat:EventNotify(title)** - Displays the given event title on all players' screens. Also plays a sound. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
