@@ -28,17 +28,12 @@ _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put i
 _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in history. Events in history will are ignored when searching for a random event to start.
 
 # Latest Events
-1. There's a cooldown on the jump!
-1. Jump Around!
-1. Trickle-Down Economics
-1. Insurance Policy
-1. Barrel (In)Justice
-1. Bomberman
 1. Red Light, Green Light
 1. Two Lies and a Truth
 1. A power you can't learn from the Jedi
 1. Fan Favorite
 1. Full of Crabs and Fire!
+1. Fault Lines
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -598,6 +593,19 @@ _randomat_fanfavorite_tiereses_ - Default: 1 - Whether ties result in a coin tos
 _randomat_fanfavorite_totalpct_ - Default: 50 - % of player votes needed for a vote to pass, set to 0 to disable.\
 _randomat_fanfavorite_show_votes_ - Default: 1 - Whether to show when a target is voted for in chat.\
 _randomat_fanfavorite_show_votes_anon_ - Default: 0 - Whether to hide who voted in chat.
+
+## Fault Lines
+Shakes all props, weapons, and ammo on the map with increasing severity
+\
+\
+**ConVars**
+\
+_ttt_randomat_faultlines_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_faultlines_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_faultlines_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_randomat_faultline_min_delay_ - Default: 20 - The minimum delay between quakes.\
+_randomat_faultline_severity_max_ - Default: 10 - The maximum severity the earthquakes will have.\
+_randomat_faultline_aftershocks_ - Default: 3 - The number of smaller quakes to happen after the peak.
 
 ## Fiends for Life
 Innocents win if they kill the jester, but traitors want them alive
