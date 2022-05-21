@@ -71,6 +71,7 @@ function EVENT:Begin()
     local round_time = GetConVar("randomat_prophunt_round_time"):GetInt()
     if round_time > 0 then
         SetGlobalFloat("ttt_round_end", CurTime() + round_time)
+        SetGlobalFloat("ttt_haste_end", CurTime() + round_time)
     end
 
     -- Disable prop possession
