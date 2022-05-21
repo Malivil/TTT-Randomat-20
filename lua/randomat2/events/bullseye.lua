@@ -19,4 +19,8 @@ function EVENT:Begin()
     end)
 end
 
+function EVENT:Condition()
+    return not ConVarExists("ttt_disable_headshots") or not GetConVar("ttt_disable_headshots"):GetBool()
+end
+
 Randomat:register(EVENT)
