@@ -119,6 +119,19 @@ function EVENT:Begin()
             return false
         end
     end)
+
+    -- Hide the role of the player's attacker so they can't reveal it when they respawn
+    self:AddHook("TTTDeathNotifyOverride", function(victim, inflictor, attacker, reason, killerName, role)
+        if GetRoundState() ~= ROUND_ACTIVE then return end
+        if not IsValid(inflictor) or not IsValid(attacker) then return end
+        if not attacker:IsPlayer() then return end
+        if victim == attacker then return end
+
+        local sid = victim:SteamID64()
+        if not timer.Exists("RdmtBlergRespawnTimer_" .. sid) then return end
+
+        return reason, killerName, ROLE_NONE
+    end)
 end
 
 function EVENT:End()
