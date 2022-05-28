@@ -20,7 +20,7 @@ net.Receive("JumpCooldownBegin", function()
         end
     end)
 
-    if HUD and HUD.PaintBar then
+    if CRHUD and CRHUD.PaintBar then
         local margin = 10
         local width, height = 200, 25
         local x = ScrW() / 2 - width / 2
