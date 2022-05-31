@@ -228,11 +228,11 @@ function EVENT:Begin()
             if team_only or safe[sid64] then return end
             if text:lower() == chosen then
                 ply:PrintMessage(HUD_PRINTTALK, "You're safe!")
-                ply:PrintMessage(HUD_PRINTCENTER, "You're safe!")
+                Randomat:Notify("You're safe!", nil, ply)
                 safe[sid64] = true
             else
                 ply:PrintMessage(HUD_PRINTTALK, "WRONG!")
-                ply:PrintMessage(HUD_PRINTCENTER, "WRONG!")
+                Randomat:Notify("WRONG!", nil, ply)
                 if kill_wrong then
                     ply:Kill()
                 end
@@ -245,7 +245,7 @@ function EVENT:Begin()
             for _, p in ipairs(self:GetAlivePlayers()) do
                 if not safe[p:SteamID64()] then
                     p:PrintMessage(HUD_PRINTTALK, "Time's up!")
-                    p:PrintMessage(HUD_PRINTCENTER, "Time's up!")
+                    Randomat:Notify("Time's up!", nil, p)
                     p:Kill()
                 end
             end
