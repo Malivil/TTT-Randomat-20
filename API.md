@@ -626,6 +626,14 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *msg* - The message to log
 
+**Randomat:Notify(msg, length, target, silent)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored.\
+*Realm:* Server\
+*Parameters:*
+- *msg* - The message to display
+- *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
+- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
+- *silent* - Whether the notification should not make a sound when it is displayed
+
 **Randomat:OverrideWeaponSound(wep, chosen_sound)** - Overrides the given weapon's `Primary.Sound` property with the given sound.\
 *Realm:* Client and Server\
 *Parameters:*
@@ -745,12 +753,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *ply* - The player who caused this event to be started
 
-**Randomat:SmallNotify(msg, length, target)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored.\
+**Randomat:SmallNotify(msg, length, target, silent)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
 *Parameters:*
 - *msg* - The message to display
 - *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
 - *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
+- *silent* - Whether the notification should not make a sound when it is displayed
 
 **Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)** - Spawns an explosive barrel near the provided position.\
 *Realm:* Server\

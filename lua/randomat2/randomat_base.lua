@@ -531,15 +531,31 @@ function Randomat:SilentTriggerEvent(cmd, ply, ...)
     end
 end
 
-function Randomat:SmallNotify(msg, length, targ)
+local function SendNotify(msg, big, length, targ, silent)
     -- Don't broadcast anything when "Secret" is running
     if Randomat:IsEventActive("secret") then return end
     if not isnumber(length) then length = 0 end
-    net.Start("randomat_message")
-    net.WriteBool(false)
+    net.Start(silent and "randomat_message_silent" or "randomat_message")
+    net.WriteBool(big)
     net.WriteString(msg)
     net.WriteUInt(length, 8)
     if not targ then net.Broadcast() else net.Send(targ) end
+end
+
+function Randomat:SmallNotify(msg, length, targ, silent)
+    SendNotify(msg, false, length, targ, silent)
+end
+
+function Randomat:Notify(msg, length, targ, silent)
+    SendNotify(msg, true, length, targ, silent)
+end
+
+function Randomat:EventNotify(title)
+    SendNotify(title, true)
+end
+
+function Randomat:EventNotifySilent(title)
+    SendNotify(title, true, nil, nil, true)
 end
 
 function Randomat:ChatNotify(ply, msg)
@@ -551,26 +567,6 @@ end
 function Randomat:LogEvent(msg)
     net.Start("TTT_LogInfo")
     net.WriteString(msg)
-    net.Broadcast()
-end
-
-function Randomat:EventNotify(title)
-    -- Don't broadcast anything when "Secret" is running
-    if Randomat:IsEventActive("secret") then return end
-    net.Start("randomat_message")
-    net.WriteBool(true)
-    net.WriteString(title)
-    net.WriteUInt(0, 8)
-    net.Broadcast()
-end
-
-function Randomat:EventNotifySilent(title)
-    -- Don't broadcast anything when "Secret" is running
-    if Randomat:IsEventActive("secret") then return end
-    net.Start("randomat_message_silent")
-    net.WriteBool(true)
-    net.WriteString(title)
-    net.WriteUInt(0, 8)
     net.Broadcast()
 end
 
