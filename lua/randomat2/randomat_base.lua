@@ -295,9 +295,13 @@ function Randomat:SetRole(ply, role, set_max_hp)
     -- Heal the Old Man back to full when they are converted
     if old_role == ROLE_OLDMAN and role ~= ROLE_OLDMAN and SetRoleStartingHealth then
         SetRoleStartingHealth(ply)
-    -- Reset "glitch round" logic if we are changing a player away from being the last glitch
-    elseif old_role == ROLE_GLITCH and role ~= ROLE_GLITCH and GetGlobalBool("ttt_glitch_round", false) and player.IsRoleLiving and not player.IsRoleLiving(ROLE_GLITCH) then
-        SetGlobalBool("ttt_glitch_round", false)
+    -- Reset special round logic for roles if we are changing a player away from being the last of that role
+    elseif player.IsRoleLiving then
+        if old_role == ROLE_GLITCH and role ~= ROLE_GLITCH and GetGlobalBool("ttt_glitch_round", false) and not player.IsRoleLiving(ROLE_GLITCH) then
+            SetGlobalBool("ttt_glitch_round", false)
+        elseif old_role == ROLE_ZOMBIE and role ~= ROLE_ZOMBIE and GetGlobalBool("ttt_zombie_round", false) and not player.IsRoleLiving(ROLE_ZOMBIE) then
+            SetGlobalBool("ttt_zombie_round", false)
+        end
     end
 
     net.Start("TTT_RoleChanged")
