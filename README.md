@@ -34,6 +34,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Fan Favorite
 1. Full of Crabs and Fire!
 1. Fault Lines
+1. Delayed Reaction
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -420,6 +421,17 @@ Prevents corpses from being searched
 _ttt_randomat_search_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_search_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_search_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Delayed Reaction
+Delays damage done to players for the configured amount of time
+\
+\
+**ConVars**
+\
+_ttt_randomat_delayedreaction_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_delayedreaction_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_delayedreaction_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_delayedreaction_time_ - Default: 5 - The time in seconds that damage should be delayed.
 
 ## Derptective
 Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite ammo and an adjusted rate of fire.
@@ -1750,6 +1762,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/Grizzledude8 on Reddit for the idea for the "Social Distancing" event
 - u/haladur on Reddit for the idea for the "Zom-Bees!" event
 - u/Ill_Worry7895 on Reddit for the idea for the "Black Market Buyout", "Double-Edged Sword", "Evasive Maneuvers", "Sharing is Caring", and "Total Magnetism" events
+- u/iStxr on Reddit for the idea for the "Delayed Reaction" event
 - u/LegateLaurie on Reddit for the idea for the "Shh... It's a Secret!" event
 - u/Mad_Hatt3r on Reddit for the idea for the "Don't be so Sensitive" event
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
