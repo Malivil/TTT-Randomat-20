@@ -29,6 +29,14 @@ function EVENT:End()
     net.Broadcast()
 end
 
+function EVENT:Condition()
+    -- If the enabled convar doesn't exist we assume sprint exists
+    local has_sprint = not ConVarExists("ttt_sprint_enabled") or GetConVar("ttt_sprint_enabled"):GetBool()
+
+    -- Don't run this while Olympic Sprint is running because then we can't actually track if someone is sprinting...
+    return has_sprint and not Randomat:IsEventActive("olympicsprint")
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in ipairs({"delay", "damage"}) do
