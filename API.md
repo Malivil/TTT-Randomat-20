@@ -335,6 +335,9 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *id* - The ID of the event to end
 - *skip_error* - Whether to skip causing an error if the event is not running
 
+**Randomat:EndActiveEvents()** - Ends all active events.\
+*Realm:* Server
+
 **Randomat:EventNotify(title)** - Displays the given event title on all players' screens. Also plays a sound. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
 *Parameters:*

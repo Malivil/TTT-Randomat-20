@@ -234,6 +234,16 @@ function Randomat:EndActiveEvent(id, skip_error)
     end
 end
 
+function Randomat:EndActiveEvents()
+    if Randomat.ActiveEvents ~= {} then
+        for _, evt in pairs(Randomat.ActiveEvents) do
+            EndEvent(evt)
+        end
+
+        Randomat.ActiveEvents = {}
+    end
+end
+
 function Randomat:IsEventActive(id)
     for _, v in pairs(Randomat.ActiveEvents) do
         if v.id == id then
@@ -1124,16 +1134,6 @@ end
  Commands
 ]]--
 
-local function EndActiveEvents()
-    if Randomat.ActiveEvents ~= {} then
-        for _, evt in pairs(Randomat.ActiveEvents) do
-            EndEvent(evt)
-        end
-
-        Randomat.ActiveEvents = {}
-    end
-end
-
 local function ClearAutoComplete(cmd, args)
     local name = string.Trim(args):lower()
     local options = {}
@@ -1150,7 +1150,9 @@ concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
     Randomat:EndActiveEvent(cmd)
 end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
 
-concommand.Add("ttt_randomat_clearevents", EndActiveEvents, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
+concommand.Add("ttt_randomat_clearevents", function()
+    Randomat:EndActiveEvents()
+end, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 
 local function TriggerAutoComplete(cmd, args)
     local name = string.Trim(args):lower()
@@ -1180,11 +1182,15 @@ end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
  Override TTT Stuff
 ]]--
 
-hook.Add("TTTEndRound", "RandomatEndRound", EndActiveEvents)
+hook.Add("TTTEndRound", "RandomatEndRound", function()
+    Randomat:EndActiveEvents()
+end)
 hook.Add("TTTPrepareRound", "RandomatPrepareRound", function()
     -- End ALL events rather than just active ones to prevent some event effects which maintain over map changes
     for _, v in pairs(Randomat.Events) do
         EndEvent(v)
     end
 end)
-hook.Add("ShutDown", "RandomatMapChange", EndActiveEvents)
+hook.Add("ShutDown", "RandomatMapChange", function()
+    Randomat:EndActiveEvents()
+end)
