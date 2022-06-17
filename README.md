@@ -35,6 +35,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Full of Crabs and Fire!
 1. Fault Lines
 1. Delayed Reaction
+1. Got any connies?!
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -780,6 +781,21 @@ _randomat_glitch_damage_scale_ - Default: 1.0 - The multiplier for damage that t
 _randomat_glitch_max_glitches_ - Default: 0 - The maximum number of Glitches this event will create. Setting to 0 will not limit the number of Glitches.\
 _randomat_glitch_starting_health_ - Default: 100 - The amount of health the Glitches should start with.\
 _randomat_glitch_min_traitors_ - Default: 0 - The minimum number of Traitors before this event will run.
+
+## Got any connies?!
+Announces players that have shop items after a configurable number of seconds
+\
+\
+**ConVars**
+\
+_ttt_randomat_connies_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_connies_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_connies_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_connies_timer_ - Default: 10 - The amount of time before the messages are shown.\
+_randomat_connies_show_role_ - Default: 0 - Whether to show the role of the person.\
+_randomat_connies_show_name_ - Default: 1 - Whether to show the name of the person.\
+_randomat_connies_show_equipment_ - Default: 0 - Whether to show the equipment a person has.\
+_randomat_connies_show_role_weapons_ - Default: 0 - Whether to show the role-specific weapons a person has.\
 
 ## Gun Game
 Periodically gives players random weapons that would normally be found throughout the map
