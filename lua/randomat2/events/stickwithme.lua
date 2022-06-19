@@ -27,6 +27,7 @@ end
 function EVENT:Begin()
     local ply1 = {}
     local ply2 = {}
+    local ply_pairs = {}
     local x = 0
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if x % 2 == 0 then
@@ -48,6 +49,9 @@ function EVENT:Begin()
         ply2[i]:PrintMessage(HUD_PRINTCENTER, "Your partner is " .. ply1[i]:Nick() .. ". You have " .. warningtime .. " seconds to find them!")
         Randomat:LogEvent("[RANDOMAT] " .. ply1[i]:Nick() .. " and " .. ply2[i]:Nick() .. " are now partners.")
 
+        ply_pairs[ply1[i]:SteamID64()] = ply2[i]
+        ply_pairs[ply2[i]:SteamID64()] = ply1[i]
+
         if highlight then
             net.Start("RdmtStickWithMeHighlightAdd")
             net.WriteEntity(ply2[i])
@@ -58,6 +62,14 @@ function EVENT:Begin()
             net.Send(ply2[i])
         end
     end
+
+    -- Bypass culling so you can always see your partner through walls
+    self:AddCullingBypass(nil, function(ply, tgt)
+        local sid64 = ply:SteamID64()
+        if not ply_pairs[sid64] then return false end
+
+        return ply_pairs[sid64] == tgt
+    end)
 
     timer.Create("RdmtStickWithMeDelay", warningtime, 1, function()
         local damagetime = GetConVar("randomat_stickwithme_damage_timer"):GetInt()

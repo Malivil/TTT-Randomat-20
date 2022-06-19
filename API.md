@@ -34,6 +34,12 @@ Creating an Randomat event involves defining the object with its associated meth
 ### Methods
 All methods below are automatically defined for every event but events can override them as needed.
 
+**EVENT:AddCullingBypass(ply_pred, tgt_pred)** - Adds behavior which bypasses map vis leafs and culling to have Target ID icons and highlighting show more consistently through walls.\
+*Realm:* Server\
+*Parameters:*
+- *ply_pred* - An optional function predicate that is given a player and returns whether that player should have their culling behavior bypassed
+- *tgt_pred* - An optional function predicate that is given a player and a target and returns whether that player should have their culling behavior bypassed for that target
+
 **EVENT:AddHook(hooktype, callbackfunc)** - Registers a new hook for this event.\
 *Realm:* Server\
 *Parameters:*

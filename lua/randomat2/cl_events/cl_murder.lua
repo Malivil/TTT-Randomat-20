@@ -40,7 +40,7 @@ net.Receive("MurderEventActive", function()
                     table.insert(Revolvers, wep)
                 end
             end
-            halo.Add(Revolvers, Color(0,255,0), 1, 1, 10)
+            halo.Add(Revolvers, Color(0,255,0), 1, 1, 10, true, false)
         end)
 
         -- Close any menu they may have open and block opening a new one

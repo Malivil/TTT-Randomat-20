@@ -40,6 +40,22 @@ Randomat.ActiveEvents = Randomat.ActiveEvents or {}
 local randomat_meta =  {}
 randomat_meta.__index = randomat_meta
 
+local concommand = concommand
+local ents = ents
+local file = file
+local hook = hook
+local ipairs = ipairs
+local IsValid = IsValid
+local math = math
+local net = net
+local pairs = pairs
+local player = player
+local string = string
+local table = table
+local timer = timer
+
+local GetAllPlayers = player.GetAll
+
 --[[
  Event History
 ]]--
@@ -206,7 +222,7 @@ local function TriggerEvent(event, ply, silent, ...)
             Randomat:NotifyDescription(event)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
-            for _, p in ipairs(player.GetAll()) do
+            for _, p in ipairs(GetAllPlayers()) do
                 Randomat:ChatDescription(p, event, has_description)
             end
         end
@@ -264,9 +280,9 @@ function Randomat:GetPlayers(shuffle, alive_only, dead_only)
     local plys = {}
     -- Optimize this to get the full raw list if both alive and dead should be included
     if alive_only == dead_only then
-        plys = player.GetAll()
+        plys = GetAllPlayers()
     else
-        for _, ply in ipairs(player.GetAll()) do
+        for _, ply in ipairs(GetAllPlayers()) do
             if IsValid(ply) and
             -- Anybody
             ((not alive_only and not dead_only) or
@@ -1123,11 +1139,28 @@ function randomat_meta:SetAllPlayerScales(scale)
 end
 
 function randomat_meta:ResetAllPlayerScales()
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in ipairs(GetAllPlayers()) do
         Randomat:ResetPlayerScale(ply, self.id)
     end
 
     self:RemoveHook("TTTSpeedMultiplier")
+end
+
+function randomat_meta:AddCullingBypass(ply_pred, tgt_pred)
+    self:AddHook("SetupPlayerVisibility", function(ply)
+        if ply.ShouldBypassCulling and not ply:ShouldBypassCulling() then return end
+        if ply_pred and not ply_pred(ply) then return end
+
+        for _, v in ipairs(GetAllPlayers()) do
+            if tgt_pred and not tgt_pred(ply, v) then continue end
+            if ply:TestPVS(v) then continue end
+
+            local pos = v:GetPos()
+            if not ply.IsOnScreen or ply:IsOnScreen(pos) then
+                AddOriginToPVS(pos)
+            end
+        end
+    end)
 end
 
 --[[

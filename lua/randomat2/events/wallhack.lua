@@ -11,6 +11,9 @@ util.AddNetworkString("haloeventend")
 function EVENT:Begin()
     net.Start("haloeventtrigger")
     net.Broadcast()
+
+    -- Bypass culling so you can always see everyone through walls
+    self:AddCullingBypass()
 end
 
 function EVENT:End()
