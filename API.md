@@ -40,11 +40,18 @@ All methods below are automatically defined for every event but events can overr
 - *ply_pred* - An optional function predicate that is given a player and returns whether that player should have their culling behavior bypassed
 - *tgt_pred* - An optional function predicate that is given a player and a target and returns whether that player should have their culling behavior bypassed for that target
 
-**EVENT:AddHook(hooktype, callbackfunc)** - Registers a new hook for this event.\
+**EVENT:AddEntityCullingBypass(ply_pred, tgt_pred)** - Adds behavior which bypasses map vis leafs and culling to have things like highlighting show more consistently through walls.\
+*Realm:* Server\
+*Parameters:*
+- *ply_pred* - An optional function predicate that is given a player and returns whether that player should have their culling behavior bypassed
+- *tgt_pred* - An optional function predicate that is given a player and a target entity and returns whether that player should have their culling behavior bypassed for that target
+
+**EVENT:AddHook(hooktype, callbackfunc, suffix)** - Registers a new hook for this event.\
 *Realm:* Server\
 *Parameters:*
 - *hooktype* - The type of hook to add
 - *callbackfunc* - The function to call for the hook
+- *suffix* - An optional suffix for the generated ID. Useful for when the same event wants to hook the same type multiple times.
 
 **EVENT:Begin(...)** - Called when an event is started. **Must be defined to for an event to work**.\
 *Realm:* Server\
@@ -113,10 +120,11 @@ All methods below are automatically defined for every event but events can overr
     - *active_class* - The player's current weapon class
     - *active_kind* - The player's current weapon kind
 
-**EVENT:RemoveHook(hooktype)** - Removes the hook of the given hook type bound to this event.\
+**EVENT:RemoveHook(hooktype, suffix)** - Removes the hook of the given hook type bound to this event.\
 *Realm:* Server\
 *Parameters:*
 - *hooktype* - The type of event to be removed
+- *suffix* - An optional suffix for the generated ID being removed. Useful for when the same event wants to hook the same type multiple times.
 
 **EVENT:RenameWeps(name)** - Gets the human-readable name of the given weapon name string.\
 *Realm:* Server\
