@@ -35,6 +35,7 @@ function EVENT:Begin()
     someone_has_connies = false
 
     timer.Create("RdmtConniesAnnounceTimer", time, 1, function()
+        local found_connies = false
         for _, p in ipairs(self:GetAlivePlayers()) do
             local role = self:GetRoleName(p, false)
             local player_name = "Someone"
@@ -61,6 +62,7 @@ function EVENT:Begin()
 
                 local weap_class = WEPS.GetClass(w)
                 TriggerAlert(weap_class, player_name, nil, p)
+                found_connies = true
             end
 
             if show_equipment then
@@ -68,11 +70,16 @@ function EVENT:Begin()
                 while i <= EQUIP_MAX do
                     if p:HasEquipmentItem(i) then
                         TriggerAlert(i, player_name, i, p)
+                        found_connies = true
                     end
                     -- Double the index since this is a bit-mask
                     i = i * 2
                 end
             end
+        end
+
+        if not found_connies then
+            self:SmallNotify("Nobody has connies! Yet...")
         end
     end)
 
