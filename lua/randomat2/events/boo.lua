@@ -59,6 +59,7 @@ function EVENT:Begin()
                 ghost:SetNotSolid(true)
                 ghost:SetColor(Color(245, 245, 245, 100))
                 ghost:SetRenderMode(RENDERMODE_GLOW)
+                ghost:AddFlags(FL_NOTARGET)
                 ghost:Spawn()
                 table.insert(ghosts, ghost)
 

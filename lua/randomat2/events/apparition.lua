@@ -25,6 +25,7 @@ local function CreateGhost(p)
     ghost:SetRenderMode(RENDERMODE_NONE)
     ghost:SetNotSolid(true)
     ghost:SetNWBool("RdmtApparition", true)
+    ghost:AddFlags(FL_NOTARGET)
     ghost:Spawn()
     ghosts[p:SteamID64()] = ghost
 end

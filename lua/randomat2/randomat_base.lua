@@ -776,7 +776,7 @@ end
 function Randomat:SpawnBee(ply, color, height)
     local spos = ply:GetPos() + Vector(math.random(-75, 75), math.random(-75, 75), height or math.random(200, 250))
     local headBee = Randomat:SpawnNPC(ply, spos, "npc_manhack")
-    headBee:SetNPCState(2)
+    headBee:SetNPCState(NPC_STATE_ALERT)
 
     local bee = EntsCreate("prop_dynamic")
     bee:SetModel("models/lucian/props/stupid_bee.mdl")
