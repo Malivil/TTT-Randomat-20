@@ -39,14 +39,20 @@ function EVENT:Begin()
         local player2 = ply2[i]
         local delay = math.random(min_delay, max_delay)
 
-        player1:PrintMessage(HUD_PRINTTALK, "Your buddy is " .. player2:Nick() .. ". You have " .. delay .. " seconds to find them.")
-        player2:PrintMessage(HUD_PRINTTALK, "Your buddy is " .. player1:Nick() .. ". You have " .. delay .. " seconds to find them.")
-        player1:PrintMessage(HUD_PRINTCENTER, "Your buddy is " .. player2:Nick() .. ". You have " .. delay .. " seconds to find them.")
-        player2:PrintMessage(HUD_PRINTCENTER, "Your buddy is " .. player1:Nick() .. ". You have " .. delay .. " seconds to find them.")
-        Randomat:LogEvent("[RANDOMAT] " .. player1:Nick() .. " and " .. player2:Nick() .. " are now buddies with a delay of " .. delay .. " seconds.")
-
         local timer_id = "RdmtOurSecretTimer_" .. player1:SteamID64() .. "_" .. player2:SteamID64()
         table.insert(timers, timer_id)
+
+        local message_timer_id = timer_id .. "_Message"
+        table.insert(timers, message_timer_id)
+
+        -- Delay these messages slightly so they come after the event description
+        timer.Create(message_timer_id, 0.25, 1, function()
+            player1:PrintMessage(HUD_PRINTTALK, "Your buddy is " .. player2:Nick() .. ". You have " .. delay .. " seconds to find them.")
+            player2:PrintMessage(HUD_PRINTTALK, "Your buddy is " .. player1:Nick() .. ". You have " .. delay .. " seconds to find them.")
+            player1:PrintMessage(HUD_PRINTCENTER, "Your buddy is " .. player2:Nick() .. ". You have " .. delay .. " seconds to find them.")
+            player2:PrintMessage(HUD_PRINTCENTER, "Your buddy is " .. player1:Nick() .. ". You have " .. delay .. " seconds to find them.")
+        end)
+        Randomat:LogEvent("[RANDOMAT] " .. player1:Nick() .. " and " .. player2:Nick() .. " are now buddies with a delay of " .. delay .. " seconds.")
 
         timer.Create(timer_id, 1, delay, function()
             local ply1_dead = not player1:Alive() or player1:IsSpec()
