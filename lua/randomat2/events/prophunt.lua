@@ -10,6 +10,7 @@ CreateConVar("randomat_prophunt_damage_scale", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY
 CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
 CreateConVar("randomat_prophunt_regen_timer", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often the hunters will regen health", 0, 60)
 CreateConVar("randomat_prophunt_regen_health", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health the hunters will heal", 1, 10)
+CreateConVar("randomat_prophunt_shop_disable", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to disable the weapon shop")
 
 local cvar_states = {}
 local default_weaponids = {"weapon_ttt_prop_disguiser", "weapon_ttt_prophide"}
@@ -22,6 +23,11 @@ if GetConVar("randomat_prophunt_strip"):GetBool() then
     EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 end
 EVENT.Categories = {"gamemode", "biased_traitor", "biased", "item", "rolechange", "largeimpact"}
+
+local banned_weapons = {
+    ["weapon_controllable_manhack"] = "Controllable Manhacks",
+    ["weapon_ttt_paper_plane"] = "Paper Airplanes"
+}
 
 local function PopulateWeaponId()
     if weaponid ~= nil then return end
@@ -80,29 +86,52 @@ function EVENT:Begin()
     OverrideCvar("ttt_prop_disguiser_time", 30)
     OverrideCvar("ttt_prop_disguiser_cooldown", 2)
 
+    local shop_disable = GetConVar("randomat_prophunt_shop_disable"):GetBool()
     for _, v in ipairs(self:GetAlivePlayers()) do
         local messages = {}
         -- Convert traitor team members to vanilla traitors
         if Randomat:IsTraitorTeam(v) then
             Randomat:SetRole(v, ROLE_TRAITOR)
 
-            -- Any player who has no credits most-likely was just transformed from a role without any credits so give them one to start with
-            -- If a traitor already spent all their credits this will give them one too but that's fine
-            if v:GetCredits() == 0 then
-                v:AddCredits(1)
-            end
+            -- Remove all credits, equipment, and shop weapons if the shop is disabled
+            if shop_disable then
+                v:SetCredits(0)
+                v:ResetEquipment()
 
-            -- Remove and refund the player's radar
-            if Randomat:RemoveEquipmentItem(v, EQUIP_RADAR) then
-                table.insert(messages, "Radars are disabled while Prop Hunt is active! Your purchase has been refunded.")
-                net.Start("PropHuntRemoveRadar")
-                net.Send(v)
-            end
+                for _, w in ipairs(v:GetWeapons()) do
+                    local is_role_weapon = WEAPON_CATEGORY_ROLE and w.Category == WEAPON_CATEGORY_ROLE
+                    -- Only run the other checks if this isn't a role weapon
+                    if not is_role_weapon then
+                        -- Only remove buyable weapons
+                        if w.AutoSpawnable or not w.CanBuy then continue end
+                    end
 
-            if v:HasWeapon("weapon_controllable_manhack") then
-                table.insert(messages, "Controllable Manhacks are disabled while Prop Hunt is active! Your purchase has been refunded.")
-                v:StripWeapon("weapon_controllable_manhack")
-                v:AddCredits(1)
+                    local weap_class = WEPS.GetClass(w)
+                    v:StripWeapon(weap_class)
+                end
+
+                table.insert(messages, "The shop has been disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active! Your purchases have been removed.")
+            else
+                -- Any player who has no credits most-likely was just transformed from a role without any credits so give them one to start with
+                -- If a traitor already spent all their credits this will give them one too but that's fine
+                if v:GetCredits() == 0 then
+                    v:AddCredits(1)
+                end
+
+                -- Remove and refund the player's radar
+                if Randomat:RemoveEquipmentItem(v, EQUIP_RADAR) then
+                    table.insert(messages, "Radars are disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active! Your purchase has been refunded.")
+                    net.Start("PropHuntRemoveRadar")
+                    net.Send(v)
+                end
+
+                for id, name in pairs(banned_weapons) do
+                    if v:HasWeapon(id) then
+                        table.insert(messages, name .. " are disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active! Your purchase has been refunded.")
+                        v:StripWeapon(id)
+                        v:AddCredits(1)
+                    end
+                end
             end
 
             table.insert(messages, 1, "Hunt Innocents disguised as props, but be careful -- shooting non-player props will cause you to take damage!")
@@ -193,8 +222,20 @@ function EVENT:Begin()
 
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
         if not IsValid(ply) then return end
+        if shop_disable then
+            ply:SetCredits(0)
+            ply:ChatPrint("The shop has been disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active!\nYour purchase has been prevented.")
+            return false
+        end
+
         if is_item == EQUIP_RADAR then
             ply:ChatPrint("Radars are disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active!\nYour purchase has been refunded.")
+            return false
+        end
+
+        local name = banned_weapons[id]
+        if name then
+            ply:ChatPrint(name .. " are disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active!\nYour purchase has been refunded.")
             return false
         end
     end)
@@ -230,7 +271,10 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    -- Don't use ragdoll because it messes with the prop stuff
     if Randomat:IsEventActive("ragdoll") then return false end
+    -- Don't mess around with shop items when the shop is mostly unusable
+    if Randomat:IsEventActive("blackmarket") then return false end
 
     PopulateWeaponId()
     if util.WeaponForClass(weaponid) == nil then return false end
@@ -266,7 +310,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"strip"}) do
+    for _, v in ipairs({"strip", "shop_disable"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
