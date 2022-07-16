@@ -230,6 +230,7 @@ function EVENT:Begin()
                 ply:PrintMessage(HUD_PRINTTALK, "You're safe!")
                 Randomat:Notify("You're safe!", nil, ply)
                 safe[sid64] = true
+                return ""
             else
                 ply:PrintMessage(HUD_PRINTTALK, "WRONG!")
                 Randomat:Notify("WRONG!", nil, ply)
@@ -237,7 +238,6 @@ function EVENT:Begin()
                     ply:Kill()
                 end
             end
-            return true
         end)
 
         timer.Create("RdmtTypeRacerTimer", time, 0, function()
