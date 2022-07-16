@@ -147,18 +147,24 @@ if file.Exists(custom_values_path, "DATA") then
     typeracer_data:Close()
 end
 
-local last_word = nil
+local last_words = {}
+local max_last_words = 5
 function EVENT:ChooseWord(first, quiz_time)
-    -- Get the word based on the current iteration so difficult scales over time
+    -- Get the word based on the current iteration so difficulty scales over time
     iteration = math.Clamp(iteration + 1, MIN_ITERATION, MAX_ITERATION)
     local bucket_values = bucketed_values[iteration]
 
-    -- Make sure we don't choose the same word twice in a row
+    -- Make sure we don't choose the same word multiple times
     local chosen
     repeat
         chosen = bucket_values[math.random(1, #bucket_values)]
-    until last_word == nil or last_word ~= chosen
-    last_word = chosen
+    until not table.HasValue(last_words, chosen)
+    table.insert(last_words, chosen)
+
+    -- Make sure we only keep a short history
+    while #last_words > max_last_words do
+        table.remove(last_words, 1)
+    end
 
     -- Let everyone know what the word is
     local message = "The " .. (first and "first" or "next") .. " word/phrase is: " .. chosen
