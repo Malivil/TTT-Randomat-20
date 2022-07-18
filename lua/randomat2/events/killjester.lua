@@ -3,7 +3,7 @@ local EVENT = {}
 util.AddNetworkString("RdmtKillJesterBegin")
 util.AddNetworkString("RdmtKillJesterEnd")
 
-EVENT.Title = "Fiends for Life"
+EVENT.Title = "Friends for Life"
 EVENT.Description = "Innocents win if they kill the jester, but traitors want them alive"
 EVENT.id = "killjester"
 EVENT.Categories = {"largeimpact"}
