@@ -64,8 +64,17 @@ function EVENT:Begin()
         if not IsValid(ply) or not ply:Alive() or ply:IsSpec() then return end
 
         local vel = mv:GetVelocity()
+
+        -- If this player is in an airboat, use the velocity of the airboat instead
+        local parent = ply:GetParent()
         local crouching = ply:Crouching()
         local prone = ply.IsProne and ply:IsProne()
+        if IsValid(parent) and parent:GetClass() == "prop_vehicle_airboat" then
+            vel = parent:GetVelocity()
+            crouching = false
+            prone = false
+        end
+
         if not ply:GetNWBool("RdmtTRexVisionRevealed", false) and IsTooSlow(crouching, prone, vel.x) and IsTooSlow(crouching, prone, vel.y) and IsTooSlow(crouching, prone, vel.z) then
             SetPlayerInvisible(ply)
         else
