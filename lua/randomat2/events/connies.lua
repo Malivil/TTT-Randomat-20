@@ -10,6 +10,7 @@ EVENT.Title = "Got any connies?!"
 EVENT.Description = "Announces players that have shop items after " .. GetConVar("randomat_connies_timer"):GetInt() .. " seconds"
 EVENT.id = "connies"
 EVENT.Categories = {"biased_innocent", "moderateimpact"}
+EVENT.MinRoundCompletePercent = 10
 
 local someone_has_connies = false
 
