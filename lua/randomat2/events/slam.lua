@@ -90,6 +90,15 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    -- Don't run this when there is a sapper
+    if ROLE_SAPPER and ROLE_SAPPER ~= -1 then
+        for _, p in ipairs(self:GetAlivePlayers()) do
+            if p:IsSapper() then
+                return false
+            end
+        end
+    end
+
     local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
     return util.WeaponForClass(weaponid) ~= nil
 end
