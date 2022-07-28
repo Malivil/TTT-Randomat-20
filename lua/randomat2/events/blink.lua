@@ -40,6 +40,10 @@ function EVENT:Begin()
     end)
 end
 
+function EVENT:Condition()
+    return util.WeaponForClass("ttt_weeping_angel") ~= nil
+end
+
 function EVENT:GetConVars()
     local sliders = {}
     for _, v in ipairs({"cap", "delay"}) do
