@@ -216,7 +216,9 @@ local function TriggerEvent(event, ply, silent, ...)
 
     -- Run this after the "Begin" so we have the latest title and description
     local title = Randomat:GetEventTitle(event)
-    Randomat:LogEvent("[RANDOMAT] Event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick())
+    local message = "[RANDOMAT] Event '" .. title .. "' (" .. event.Id .. ") started by " .. owner:Nick()
+    Randomat:LogEvent(message)
+    MsgN(message)
 
     if not silent then
         local has_description = event.Description ~= nil and #event.Description > 0
