@@ -33,6 +33,7 @@ ROLE_QUACK = ROLE_QUACK or -1
 ROLE_PARASITE = ROLE_PARASITE or -1
 ROLE_TRICKSTER = ROLE_TRICKSTER or -1
 ROLE_DETRAITOR = ROLE_DETRAITOR or -1
+ROLE_LOOTGOBLIN = ROLE_LOOTGOBLIN or -1
 
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = Randomat.ActiveEvents or {}
@@ -320,8 +321,9 @@ function Randomat:SetRole(ply, role, set_max_hp)
     if set_max_hp ~= false and SetRoleMaxHealth then
         SetRoleMaxHealth(ply)
     end
-    -- Heal the Old Man back to full when they are converted
-    if old_role == ROLE_OLDMAN and role ~= ROLE_OLDMAN and SetRoleStartingHealth then
+    -- Heal the Old Man and Loot Goblin back to full when they are converted
+    if ((old_role == ROLE_OLDMAN and role ~= ROLE_OLDMAN) or
+        (old_role == ROLE_LOOTGOBLIN and role ~= ROLE_LOOTGOBLIN)) and SetRoleStartingHealth then
         SetRoleStartingHealth(ply)
     -- Reset special round logic for roles if we are changing a player away from being the last of that role
     elseif player.IsRoleLiving then
