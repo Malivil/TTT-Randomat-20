@@ -11,6 +11,7 @@ CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", {FCVAR_A
 CreateConVar("randomat_prophunt_regen_timer", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often the hunters will regen health", 0, 60)
 CreateConVar("randomat_prophunt_regen_health", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health the hunters will heal", 1, 10)
 CreateConVar("randomat_prophunt_shop_disable", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to disable the weapon shop")
+CreateConVar("randomat_prophunt_props_join_hunters", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to have the props join the hunters when they are killed")
 
 local cvar_states = {}
 local default_weaponids = {"weapon_ttt_prop_disguiser", "weapon_ttt_prophide"}
@@ -252,6 +253,29 @@ function EVENT:Begin()
             att:TakeDamage(dmginfo:GetDamage() * damage_scale, att, att:GetActiveWeapon())
         end
     end)
+
+    if GetConVar("randomat_prophunt_props_join_hunters"):GetBool() then
+        self:AddHook("PostPlayerDeath", function(ply)
+            if not IsPlayer(ply) then return end
+            if ply:GetRole() ~= ROLE_INNOCENT then return end
+
+            local body = ply.server_ragdoll or ply:GetRagdollEntity()
+
+            Randomat:SetRole(ply, ROLE_TRAITOR)
+            SendFullStateUpdate()
+
+            ply:PrintMessage(HUD_PRINTTALK, "You have been killed by a hunter and are now on their team.")
+            ply:PrintMessage(HUD_PRINTCENTER, "You have been killed by a hunter and are now on their team.")
+            ply:SpawnForRound(true)
+
+            if IsValid(body) then
+                ply:SetDefaultCredits()
+                ply:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
+                ply:SetPos(FindRespawnLocation(body:GetPos()) or body:GetPos())
+                body:Remove()
+            end
+        end)
+    end
 end
 
 function EVENT:End()
@@ -310,7 +334,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"strip", "shop_disable"}) do
+    for _, v in ipairs({"strip", "shop_disable", "props_join_hunters"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

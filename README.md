@@ -1177,7 +1177,8 @@ _randomat_prophunt_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_prophunt_blind_time_ = Default: 0 - How long to blind the hunters for at the start.\
 _randomat_prophunt_round_time_ = Default: 0 - How many seconds the Prop Hunt round should last.\
 _randomat_prophunt_weaponid_ - Default: weapon_ttt_prophide - Id of the weapon given.\
-_randomat_prophunt_shop_disable_ - Default: 0 - Whether to disable the weapon shop.
+_randomat_prophunt_shop_disable_ - Default: 0 - Whether to disable the weapon shop.\
+_randomat_prophunt_props_join_hunters_ - Default: 0 - Whether to have the props join the hunters when they are killed.
 
 ## Quake Pro
 Increases each player's Field of View (FOV) so it looks like you're playing Quake
