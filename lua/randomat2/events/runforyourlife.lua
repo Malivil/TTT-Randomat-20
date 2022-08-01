@@ -13,14 +13,24 @@ EVENT.id = "runforyourlife"
 EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
+    local delay = GetConVar("randomat_runforyourlife_delay"):GetFloat()
     net.Start("RandomatRunForYourLifeStart")
-    net.WriteFloat(GetConVar("randomat_runforyourlife_delay"):GetFloat())
+    net.WriteFloat(delay)
     net.Broadcast()
 
+    local last_hurt_time = {}
+    local damage = GetConVar("randomat_runforyourlife_damage"):GetInt()
     net.Receive("RandomatRunForYourLifeDamage", function()
         local ply = net.ReadEntity()
-        local damage = GetConVar("randomat_runforyourlife_damage"):GetInt()
-        ply:TakeDamage(damage)
+        local last_hurt = net.ReadFloat()
+        if ply == nil or not IsValid(ply) or not ply:Alive() then return end
+
+        local sid64 = ply:SteamID64()
+        local diff = math.abs(last_hurt - (last_hurt_time[sid64] or 0))
+        if diff >= delay then
+            ply:TakeDamage(damage)
+            last_hurt_time[sid64] = last_hurt
+        end
     end)
 end
 
@@ -30,11 +40,15 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    -- Check that this variable exists by double negating
+    -- We can't just return the variable directly because it's not a boolean
+    -- The "TTTSprintStaminaPost" hook is only available in the new CR
+    local is_new_cr = not not CR_VERSION
     -- If the enabled convar doesn't exist we assume sprint exists
     local has_sprint = not ConVarExists("ttt_sprint_enabled") or GetConVar("ttt_sprint_enabled"):GetBool()
 
     -- Don't run this while Olympic Sprint is running because then we can't actually track if someone is sprinting...
-    return has_sprint and not Randomat:IsEventActive("olympicsprint")
+    return is_new_cr and has_sprint and not Randomat:IsEventActive("olympicsprint")
 end
 
 function EVENT:GetConVars()
