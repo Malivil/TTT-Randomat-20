@@ -105,10 +105,15 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    -- Check that this variable exists by double negating
-    -- We can't just return the variable directly because it's not a boolean
     -- The "TTTWinCheckBlocks" hook is only available in the new CR
-    return not not CR_VERSION
+    if not CR_VERSION then return false end
+
+    for _, p in ipairs(self:GetAlivePlayers()) do
+        if p:IsJester() then
+            return false
+        end
+    end
+    return true
 end
 
 net.Receive("RdmtHedgeBetsPlayerBet", function(ln, ply)
