@@ -986,7 +986,18 @@ end
 function randomat_meta:GetConVars() end
 
 function randomat_meta:GetRoleName(ply, hide_secret_roles)
-    return Randomat:GetRoleExtendedString(ply:GetRole(), hide_secret_roles)
+    local role = ply:GetRole()
+    -- If this is an impersonator, use the correct role to hide them depending on whether they are activated
+    if hide_secret_roles and CR_VERSION and ply:IsImpersonator() then
+        -- If they are active, pretend they are a deputy
+        if ply:IsRoleActive() then
+            role = ROLE_DEPUTY
+        -- Otherwise pretend they are a traitor because deputies (probably) can't buy anything and without this Communism will give them away
+        else
+            role = ROLE_TRAITOR
+        end
+    end
+    return Randomat:GetRoleExtendedString(role, hide_secret_roles)
 end
 
 -- Rename stock weapons so they are readable
