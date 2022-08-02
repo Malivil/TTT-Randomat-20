@@ -8,16 +8,6 @@ EVENT.Categories = {"fun", "moderateimpact"}
 
 CreateConVar("randomat_switch_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often players are switched", 5, 60)
 
-local function DismountPlayer(ply)
-    local parent = ply:GetParent()
-    if not IsValid(parent) then return end
-
-    local class = parent:GetClass()
-    if class ~= "prop_vehicle_airboat" then return end
-
-    parent:Input("ExitVehicle")
-end
-
 function EVENT:Begin()
     timer.Create("RandomatSwitchTimer", GetConVar("randomat_switch_timer"):GetInt(), 0, function()
         local i = 0
@@ -34,8 +24,8 @@ function EVENT:Begin()
         end
         i = 0
 
-        DismountPlayer(ply1)
-        DismountPlayer(ply2)
+        ply1:ExitVehicle()
+        ply2:ExitVehicle()
 
         -- Wait for the dismount to take effect
         timer.Simple(0.2, function()

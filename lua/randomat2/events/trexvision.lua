@@ -63,13 +63,13 @@ function EVENT:Begin()
     self:AddHook("FinishMove", function(ply, mv)
         if not IsValid(ply) or not ply:Alive() or ply:IsSpec() then return end
 
-        local vel = mv:GetVelocity()
-
-        -- If this player is in an airboat, use the velocity of the airboat instead
-        local parent = ply:GetParent()
         local crouching = ply:Crouching()
         local prone = ply.IsProne and ply:IsProne()
-        if IsValid(parent) and parent:GetClass() == "prop_vehicle_airboat" then
+
+        -- If this player is in a vehicle, use the velocity of the vehicle instead
+        local vel = mv:GetVelocity()
+        local in_vehicle, parent = Randomat:IsPlayerInVehicle(ply)
+        if in_vehicle then
             vel = parent:GetVelocity()
             crouching = false
             prone = false
