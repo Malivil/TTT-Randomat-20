@@ -436,6 +436,16 @@ function Randomat:SetPlayerVisible(ply)
     ply:SetRenderMode(RENDERMODE_NORMAL)
 end
 
+function Randomat:IsPlayerInVehicle(ply)
+    if not IsValid(ply) then return false, nil end
+
+    local parent = ply:GetParent()
+    if not IsValid(parent) then return false, nil end
+
+    local class = parent:GetClass()
+    return string.StartWith(class, "prop_vehicle_"), parent
+end
+
 -- Round Functions
 if SERVER then
     function Randomat:GetRoundCompletePercent()

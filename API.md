@@ -611,6 +611,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* `true` if the player passes the check, `false` otherwise
 
+**Randomat:IsPlayerInVehicle(ply)** - Determines whether the given player is in a vehicle.\
+*Realm:* Client and Server\
+*Parameters:*
+- *ply* - The player to check
+
+*Returns:*
+- *in_vehicle* - `true` if the player passes the check, `false` otherwise
+- *ent* - The vehicle entity the given player is in
+
 **Randomat:IsPlayerInvisible(ply)** - Determines whether the given player is invisible.\
 *Realm:* Client and Server\
 *Parameters:*
