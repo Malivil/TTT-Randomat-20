@@ -12,6 +12,7 @@ CreateConVar("randomat_prophunt_regen_timer", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, 
 CreateConVar("randomat_prophunt_regen_health", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health the hunters will heal", 1, 10)
 CreateConVar("randomat_prophunt_shop_disable", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to disable the weapon shop")
 CreateConVar("randomat_prophunt_props_join_hunters", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to have the props join the hunters when they are killed")
+CreateConVar("randomat_prophunt_specs_join_hunters", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to have the spectators join the hunters when the event starts")
 
 local cvar_states = {}
 local default_weaponids = {"weapon_ttt_prop_disguiser", "weapon_ttt_prophide"}
@@ -152,6 +153,31 @@ function EVENT:Begin()
             end
         end)
     end
+
+    if GetConVar("randomat_prophunt_specs_join_hunters"):GetBool() then
+        for _, v in ipairs(self:GetDeadPlayers()) do
+            local messages = {}
+
+            Randomat:SetRole(v, ROLE_TRAITOR)
+            v:SpawnForRound(true)
+
+            if shop_disable then
+                v:SetCredits(0)
+                v:ResetEquipment()
+                table.insert(messages, "The shop has been disabled while '" .. Randomat:GetEventTitle(EVENT) .. "' is active! Your purchases have been removed.")
+            end
+
+            table.insert(messages, 1, "Hunt Innocents disguised as props, but be careful -- shooting non-player props will cause you to take damage!")
+
+            -- Delay the messages so they come after the event notification in chat
+            timer.Create(v:Nick() .. "RandomatPropHuntMessageTimer", 1, 1, function()
+                for _, msg in ipairs(messages) do
+                    v:ChatPrint(msg)
+                end
+            end)
+        end
+    end
+
     SendFullStateUpdate()
 
     local strip = GetConVar("randomat_prophunt_strip"):GetBool()
@@ -338,7 +364,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"strip", "shop_disable", "props_join_hunters"}) do
+    for _, v in ipairs({"strip", "shop_disable", "props_join_hunters", "specs_join_hunters"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
