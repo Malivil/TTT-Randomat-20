@@ -6,8 +6,16 @@ EVENT.id = "bullseye"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 
+local has_head_cache = {}
+
 local function WasHeadHit(ply, hitgroup)
     if hitgroup == HITGROUP_HEAD then return true end
+
+    local model = ply:GetModel()
+    -- Use the cached answer if we have one so we don't have to reprocess the model every time they get shot
+    if type(has_head_cache[model]) == "boolean" then
+        return not has_head_cache[model]
+    end
 
     -- If the player wasn't hit in the head, search all the hitboxes to see if any of them belong to the head hitgroup
     local hitbox_count = ply:GetHitBoxCount(0)
@@ -15,11 +23,13 @@ local function WasHeadHit(ply, hitgroup)
         local box = ply:GetHitBoxHitGroup(i, 0)
         -- If they have a head hitgroup then we know for sure they weren't hit in the head
         if box == HITGROUP_HEAD then
+            has_head_cache[model] = true
             return false
         end
     end
 
     -- If they don't have a head hitgroup then any shot will count so they still take damage
+    has_head_cache[model] = false
     return true
 end
 
