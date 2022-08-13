@@ -29,6 +29,22 @@ local votableplayers = {}
 local playersvoted = {}
 local aliveplys = {}
 
+local function RespawnSaved(ply)
+    local body = ply.server_ragdoll or ply:GetRagdollEntity()
+
+    ply:PrintMessage(HUD_PRINTTALK, "You have been saved from death and given one more chance... don't waste it.")
+    ply:PrintMessage(HUD_PRINTCENTER, "You have been saved from death and given one more chance... don't waste it.")
+    ply:SpawnForRound(true)
+    ply:SetNWBool("RdmtReverseDemocracySaved", false)
+    if IsValid(body) then
+        local credits = CORPSE.GetCredits(body, 0) or 0
+        ply:SetCredits(credits)
+        ply:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
+        ply:SetPos(FindRespawnLocation(body:GetPos()) or body:GetPos())
+        body:Remove()
+    end
+end
+
 function EVENT:Begin()
     net.Start("ReverseDemocracyEventBegin")
     net.Broadcast()
@@ -93,8 +109,13 @@ function EVENT:Begin()
 
                 if skipsave == 0 then
                     endVote = true
-                    -- Mark the player as "saved" for later
-                    savedply:SetNWBool("RdmtReverseDemocracySaved", true)
+                    -- If the player is still alive, mark them as "saved" for later
+                    if savedply:Alive() and not savedply:IsSpec() then
+                        savedply:SetNWBool("RdmtReverseDemocracySaved", true)
+                    -- Otherwise just respawn them immediately
+                    else
+                        RespawnSaved(savedply)
+                    end
                     self:SmallNotify(savedply:Nick() .. " was voted for.")
                 else
                     skipsave = 0
@@ -128,19 +149,7 @@ function EVENT:Begin()
         if not ply:GetNWBool("RdmtReverseDemocracySaved", false) then return end
 
         timer.Create("RdmtReverseDemocracyRespawnTimer", 0.25, 1, function()
-            local body = ply.server_ragdoll or ply:GetRagdollEntity()
-
-            ply:PrintMessage(HUD_PRINTTALK, "You have been saved from death and given one more chance... don't waste it.")
-            ply:PrintMessage(HUD_PRINTCENTER, "You have been saved from death and given one more chance... don't waste it.")
-            ply:SpawnForRound(true)
-            ply:SetNWBool("RdmtReverseDemocracySaved", false)
-            if IsValid(body) then
-                local credits = CORPSE.GetCredits(body, 0) or 0
-                ply:SetCredits(credits)
-                ply:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
-                ply:SetPos(FindRespawnLocation(body:GetPos()) or body:GetPos())
-                body:Remove()
-            end
+            RespawnSaved(ply)
         end)
     end)
 
