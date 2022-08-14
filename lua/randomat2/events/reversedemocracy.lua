@@ -5,7 +5,6 @@ util.AddNetworkString("ReverseDemocracyEventEnd")
 util.AddNetworkString("ReverseDemocracyPlayerVoted")
 util.AddNetworkString("ReverseDemocracyReset")
 
-
 local eventnames = {}
 table.insert(eventnames, "A power you can't learn from the Jedi")
 table.insert(eventnames, "He could save others from death, but not himself")
@@ -27,7 +26,6 @@ EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 local playervotes = {}
 local votableplayers = {}
 local playersvoted = {}
-local aliveplys = {}
 
 local function RespawnSaved(ply)
     local body = ply.server_ragdoll or ply:GetRagdollEntity()
@@ -53,19 +51,16 @@ function EVENT:Begin()
     playervotes = {}
     votableplayers = {}
     playersvoted = {}
-    aliveplys = {}
+    local aliveplys = {}
     local skipsave = 0
     local savedply = 0
 
-    for k, v in ipairs(player.GetAll()) do
-        if not (v:Alive() and v:IsSpec()) then
-            votableplayers[k] = v
-            playervotes[k] = 0
-        end
+    for k, v in ipairs(self:GetAlivePlayers()) do
+        votableplayers[k] = v
+        playervotes[k] = 0
     end
 
     local repeater = 0
-
     timer.Create("RdmtReverseDemocracyTimer", 1, 0, function()
         repeater = repeater + 1
         if reversedemocracytimer > 19 and repeater == reversedemocracytimer - 10 then
@@ -233,8 +228,10 @@ net.Receive("ReverseDemocracyPlayerVoted", function(ln, ply)
 
     local num
     for k, v in pairs(votableplayers) do
-        if v:Nick() == votee then --find which player was voted for
-            playersvoted[ply] = v --insert player and target into table
+        -- Find which player was voted for
+        if v:Nick() == votee then
+            -- Save this player's vote target
+            playersvoted[ply] = v
 
             if GetConVar("randomat_reversedemocracy_show_votes"):GetBool() then
                 local anon = GetConVar("randomat_reversedemocracy_show_votes_anon"):GetBool()
@@ -245,7 +242,7 @@ net.Receive("ReverseDemocracyPlayerVoted", function(ln, ply)
                     else
                         name = ply:Nick()
                     end
-                    va:PrintMessage(HUD_PRINTTALK, name.." has voted to save "..votee)
+                    va:PrintMessage(HUD_PRINTTALK, name .. " has voted to save " .. votee)
                 end
             end
 
