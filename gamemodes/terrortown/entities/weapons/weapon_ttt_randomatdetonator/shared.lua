@@ -69,9 +69,8 @@ local function DetonatePlayer(owner, ply)
             explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
         end
     end
-    for _, v in ipairs(player.GetAll()) do
-        v:PrintMessage(HUD_PRINTTALK, owner:Nick().." has detonated "..ply:Nick())
-    end
+
+    Randomat:SendChatToAll(owner:Nick() .. " has detonated " .. ply:Nick())
 end
 
 function SWEP:PrimaryAttack()

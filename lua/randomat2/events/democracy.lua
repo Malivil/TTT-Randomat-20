@@ -207,15 +207,13 @@ net.Receive("DemocracyPlayerVoted", function(ln, ply)
 
             if GetConVar("randomat_democracy_show_votes"):GetBool() then
                 local anon = GetConVar("randomat_democracy_show_votes_anon"):GetBool()
-                for _, va in ipairs(player.GetAll()) do
-                    local name
-                    if anon then
-                        name = "Someone"
-                    else
-                        name = ply:Nick()
-                    end
-                    va:PrintMessage(HUD_PRINTTALK, name.." has voted to kill "..votee)
+                local name
+                if anon then
+                    name = "Someone"
+                else
+                    name = ply:Nick()
                 end
+                Randomat:SendChatToAll(name .. " has voted to kill " .. votee)
             end
 
             playervotes[k] = playervotes[k] + 1
@@ -238,9 +236,7 @@ net.Receive("DemocracyJesterVoted", function(ln, ply)
             v:Kill()
 
             if GetConVar("randomat_democracy_show_jester_votes"):GetBool() then
-                for _, va in ipairs(player.GetAll()) do
-                    va:PrintMessage(HUD_PRINTTALK, ply:Nick().." has decided to take revenge on "..votee.." for their vote")
-                end
+                Randomat:SendChatToAll(ply:Nick() .. " has decided to take revenge on " .. votee .. " for their vote")
             end
             return
         end

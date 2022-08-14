@@ -9,7 +9,7 @@ EVENT.Categories = {"rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Description = "Changes a random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT):lower() .. " into either " .. Randomat:GetRoleExtendedString(ROLE_GLITCH):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
+    EVENT.Description = "Changes a random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " into either " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_GLITCH)) .. " or " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_TRAITOR))
 
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_INNOCENT then

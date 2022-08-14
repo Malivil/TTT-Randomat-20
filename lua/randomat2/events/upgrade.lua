@@ -20,11 +20,11 @@ local function GetEventDescription()
     local choose = CanChooseRole()
     local action
     if choose then
-        action = "given the choice of becoming " .. Randomat:GetRoleExtendedString(ROLE_MERCENARY):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_KILLER):lower()
+        action = "given the choice of becoming " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_MERCENARY)) .. " or " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_KILLER))
     else
-        action = "upgraded to " .. Randomat:GetRoleExtendedString(ROLE_MERCENARY):lower()
+        action = "upgraded to " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_MERCENARY))
     end
-    return "A random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT):lower() .. " is " .. action
+    return "A random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT).. " is " .. action
 end
 
 local function UpdateToMerc(ply)

@@ -124,9 +124,7 @@ function EVENT:Begin()
 
         local wep = ply.GetActiveWeapon and ply:GetActiveWeapon() or nil
         if IsValid(wep) and WEPS.GetClass(wep) == "weapon_ttt_randomatrevolver" then
-            for _, v in ipairs(player.GetAll()) do
-                v:PrintMessage(HUD_PRINTTALK, ply:Nick() .. " killed an innocent bystander")
-            end
+            Randomat:SendChatToAll(ply:Nick() .. " killed an innocent bystander")
             ply:DropWeapon(wep)
             ply:SetNWBool("RdmtShouldBlind", true)
             timer.Create("RdmtBlindEndDelay_" .. ply:Nick(), 5, 1, function()

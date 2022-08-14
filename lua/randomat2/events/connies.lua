@@ -101,10 +101,7 @@ function EVENT:Begin()
             self:SmallNotify("Someone has connies! Check chat for the list...")
         end
 
-        local message = role .. " has connies: " .. weap_name .. "!"
-        for _, p in ipairs(player.GetAll()) do
-            p:PrintMessage(HUD_PRINTTALK, message)
-        end
+        Randomat:SendChatToAll(role .. " has connies: " .. weap_name .. "!")
     end)
 end
 

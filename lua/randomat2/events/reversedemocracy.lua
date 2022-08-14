@@ -235,15 +235,13 @@ net.Receive("ReverseDemocracyPlayerVoted", function(ln, ply)
 
             if GetConVar("randomat_reversedemocracy_show_votes"):GetBool() then
                 local anon = GetConVar("randomat_reversedemocracy_show_votes_anon"):GetBool()
-                for _, va in ipairs(player.GetAll()) do
-                    local name
-                    if anon then
-                        name = "Someone"
-                    else
-                        name = ply:Nick()
-                    end
-                    va:PrintMessage(HUD_PRINTTALK, name .. " has voted to save " .. votee)
+                local name
+                if anon then
+                    name = "Someone"
+                else
+                    name = ply:Nick()
                 end
+                Randomat:SendChatToAll(name .. " has voted to save " .. votee)
             end
 
             playervotes[k] = playervotes[k] + 1
