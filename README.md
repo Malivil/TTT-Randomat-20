@@ -36,6 +36,7 @@ _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in h
 1. Fault Lines
 1. Delayed Reaction
 1. Got any connies?!
+1. Pump You Up
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1181,6 +1182,24 @@ _randomat_prophunt_shop_disable_ - Default: 0 - Whether to disable the weapon sh
 _randomat_prophunt_props_join_hunters_ - Default: 0 - Whether to have the props join the hunters when they are killed.\
 _randomat_prophunt_specs_join_hunters_ - Default: 0 - Whether to have the spectators join the hunters when the event starts.
 
+## Pump You Up
+Vote to buff a player. Votes can be changed at any time
+\
+\
+**ConVars**
+\
+_ttt_randomat_pumpyouup_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_pumpyouup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_pumpyouup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_pumpyouup_buff_ - Default: 0 - Which buff the target should get. 0 - Damage, 1 - Speed, 2 - Health regeneration, 3 - Damage resistance.\
+_randomat_pumpyouup_damage_scale_ - Default: 1.1 - Target damage modifier (1.1 == 110% or a 10% bonus).\
+_randomat_pumpyouup_speed_factor_ - Default: 1.2 - Target speed modifier (1.1 == 110% or a 10% bonus).\
+_randomat_pumpyouup_regen_timer_ - Default: 0.66 - How often (in seconds) the target should be healed.\
+_randomat_pumpyouup_shield_factor_ - Default: 0.25 - Percent less damage the target should take.\
+_randomat_pumpyouup_allow_self_vote_ - Default: 0 - Whether to allow players to vote for themselves.\
+_randomat_pumpyouup_show_votes_ - Default: 1 - Whether to show when a target is voted for in chat.\
+_randomat_pumpyouup_show_votes_anon_ - Default: 0 - Whether to hide who voted in chat.
+
 ## Quake Pro
 Increases each player's Field of View (FOV) so it looks like you're playing Quake
 \
@@ -1787,6 +1806,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - u/MysticBloodWolf on Reddit for the idea for the "Big Head Mode", "Rock, Paper, Scissors", and "Run For Your Life!" events
 - u/PacoSoe on Reddit for the idea for the "Fiends for Life" event
 - u/plipyplop on Reddit for the idea for the "I'm feeling kinda ILL" event
+- u/ptatoface on Reddit for the idea for the "Pump You Up" event
 - u/PM_ME_OODS on Reddit for the idea for the "Lonely Yogs" event
 - u/Shark_Shooter on Reddit for the idea for the "Come on and SLAM!" event
 - u/Slowghost16 on Reddit for the idea for the _randomat_soulmates_sharedhealth_ ConVar for the "Soulmates" event
