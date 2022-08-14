@@ -19,6 +19,12 @@ function Randomat:Capitalize(msg, skip_lower)
     return first .. rest
 end
 
+function Randomat:LowerFirst(msg)
+    local first = msg:sub(1, 1):lower()
+    local rest = msg:sub(2)
+    return first .. rest
+end
+
 -- Team Functions
 function Randomat:IsInnocentTeam(ply, skip_detective)
     -- Handle this early because IsInnocentTeam doesn't
@@ -462,5 +468,16 @@ if SERVER then
 
     function Randomat:GetRoundsLeft()
         return math.max(0, GetGlobalInt("ttt_rounds_left", Randomat:GetRoundLimit()))
+    end
+end
+
+-- Chat functions
+function Randomat:SendChatToAll(msg, tbl)
+    if type(tbl) ~= "table" then
+        tbl = player.GetAll()
+    end
+
+    for _, p in pairs(tbl) do
+        p:PrintMessage(HUD_PRINTTALK, msg)
     end
 end

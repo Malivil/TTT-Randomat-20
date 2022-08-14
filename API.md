@@ -642,15 +642,17 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* `true` if the player passes the check, `false` otherwise
 
-**Randomat:NotifyDescription(event)** - Sends a notification message to all players with the given event's description. If the "secret" event is active, this call is ignored.\
-*Realm:* Server\
-*Parameters:*
-- *event* - The event whose description is being sent to all players
-
 **Randomat:LogEvent(msg)** - Logs the given message to the event log using the `TTT_LogInfo` net message.\
 *Realm:* Server\
 *Parameters:*
 - *msg* - The message to log
+
+**Randomat:LowerFirst(msg)** - Lowercases the first letter of the given message.\
+*Realm:* Client and Server\
+*Parameters:*
+- *msg* - The message to change
+
+*Returns:* The changed message
 
 **Randomat:Notify(msg, length, target, silent)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
@@ -659,6 +661,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
 - *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
 - *silent* - Whether the notification should not make a sound when it is displayed
+
+**Randomat:NotifyDescription(event)** - Sends a notification message to all players with the given event's description. If the "secret" event is active, this call is ignored.\
+*Realm:* Server\
+*Parameters:*
+- *event* - The event whose description is being sent to all players
 
 **Randomat:OverrideWeaponSound(wep, chosen_sound)** - Overrides the given weapon's `Primary.Sound` property with the given sound.\
 *Realm:* Client and Server\
@@ -752,13 +759,6 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *error_if_unsafe* - Whether to show an error message if the event cannot be started
 - *...* - All parameters that could be passed into this event. Allows you to change aspects of an event based on what code calls it
 
-**Randomat:ShouldActLikeJester(ply)** - Determines whether the given player should be acting like a Jester (e.g. not taking fall damage, not doing weapon damage, etc.).\
-*Realm:* Client and Server\
-*Parameters:*
-- *ply* - The player to check
-
-*Returns:* `true` if the player passes the check, `false` otherwise
-
 **Randomat:SetPlayerScale(ply, scale, id, skip_speed)** - Sets the given player's model scale.\
 *Realm:* Client and Server\
 *Parameters:*
@@ -766,6 +766,19 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *scale* - The scale factor to apply to the player. A value of 1.5, for example, will make someone appear as 150% the size they normally would
 - *id* - The unique ID to use when tracking the cause of this player scale change. Used, specifically, for tracking movement speed changes
 - *skip_speed* - Whether to skip changing the player's movement speed
+
+**Randomat:SendChatToAll(msg, tbl)** - Sends the message to all players in the given `tbl` (or all players if `tbl` is `nil`).\
+*Realm:* Client and Server\
+*Parameters:*
+- *msg* - The message to send
+- *tbl* - The table of players to send the message to. If not given or `nil`, the table of all players will be used instead
+
+**Randomat:ShouldActLikeJester(ply)** - Determines whether the given player should be acting like a Jester (e.g. not taking fall damage, not doing weapon damage, etc.).\
+*Realm:* Client and Server\
+*Parameters:*
+- *ply* - The player to check
+
+*Returns:* `true` if the player passes the check, `false` otherwise
 
 **Randomat:SilentTriggerEvent(id, ply, ...)** - Triggers the event with the given ID without notifying the players.\
 *Realm:* Server\
