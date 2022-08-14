@@ -11,7 +11,7 @@ EVENT.Categories = {"rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Description = "Changes a random player to either " .. Randomat:GetRoleExtendedString(ROLE_JESTER):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
+    EVENT.Description = "Changes a random player to either " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_JESTER)) .. " or " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_TRAITOR))
 
     local traitor = {}
     local suspicionply = nil
@@ -30,20 +30,22 @@ function EVENT:Begin()
     end
 
     if suspicionply ~= nil then
-        Randomat:EventNotifySilent(suspicionply:Nick().." is acting suspicious...")
+        Randomat:EventNotifySilent(suspicionply:Nick() .. " is acting suspicious...")
 
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
             Randomat:SetRole(suspicionply, ROLE_JESTER)
             suspicionply:SetCredits(0)
+            local role_string = Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_JESTER))
             for _, v in ipairs(traitor) do
-                v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick().." is a jester")
-                v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is a jester")
+                v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick() .. " is " .. role_string)
+                v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is " .. role_string)
             end
         else
             Randomat:SetRole(suspicionply, ROLE_TRAITOR)
+            local role_string = Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_TRAITOR))
             for _, v in ipairs(traitor) do
-                v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick().." is a traitor")
-                v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick().." is a traitor")
+                v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick() .. " is " .. role_string)
+                v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick() .. " is " .. role_string)
             end
         end
         SendFullStateUpdate()
