@@ -7,15 +7,15 @@ EVENT.Categories = {"rolechange", "smallimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Description =  "Converts the " .. Randomat:GetRoleString(ROLE_SWAPPER) .. " to a " .. Randomat:GetRoleString(ROLE_JESTER)
+    EVENT.Description =  "Converts the " .. Randomat:GetRoleString(ROLE_SWAPPER) .. " to " .. Randomat:GetRoleExtendedString(ROLE_JESTER)
 
     for _, j in ipairs(self:GetAlivePlayers()) do
         if j:GetRole() == ROLE_SWAPPER then
             Randomat:SetRole(j, ROLE_JESTER)
 
             for _, t in ipairs(self:GetAlivePlayers()) do
-                if t:GetRole() == ROLE_TRAITOR then
-                    t:PrintMessage(HUD_PRINTTALK, j:Nick().." is the Jester")
+                if Randomat:IsTraitorTeam(t) then
+                    t:PrintMessage(HUD_PRINTTALK, j:Nick() .. " is the " .. Randomat:GetRoleString(ROLE_JESTER))
                 end
             end
         end
