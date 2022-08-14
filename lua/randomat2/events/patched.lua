@@ -3,7 +3,7 @@ local EVENT = {}
 CreateConVar("randomat_patched_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the Glitch being made a Traitor", 0, 100)
 
 EVENT.Title = "A Glitch has been patched"
-EVENT.Description = "Changes a random Glitch into either an Innocent or a Traitor"
+EVENT.Description = "Changes a random glitch into either an innocent or a traitor"
 EVENT.id = "patched"
 EVENT.AltTitle = "Patched"
 EVENT.StartSecret = true
@@ -11,7 +11,7 @@ EVENT.Categories = {"rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Description = "Changes a random " .. Randomat:GetRoleString(ROLE_GLITCH) .. " into either " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_INNOCENT)) .. " or " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_TRAITOR))
+    EVENT.Description = "Changes a random " .. Randomat:GetRoleString(ROLE_GLITCH):lower() .. " into either " .. Randomat:GetRoleExtendedString(ROLE_INNOCENT):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
 
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_GLITCH then

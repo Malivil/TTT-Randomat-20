@@ -1,13 +1,13 @@
 local EVENT = {}
 
 EVENT.Title = "##BringBackOldJester"
-EVENT.Description = "Converts the Swapper to a Jester"
+EVENT.Description = "Converts the swapper to a jester"
 EVENT.id = "oldjester"
 EVENT.Categories = {"rolechange", "smallimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Description =  "Converts the " .. Randomat:GetRoleString(ROLE_SWAPPER) .. " to " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_JESTER))
+    EVENT.Description =  "Converts the " .. Randomat:GetRoleString(ROLE_SWAPPER):lower() .. " to " .. Randomat:GetRoleExtendedString(ROLE_JESTER):lower()
 
     for _, j in ipairs(self:GetAlivePlayers()) do
         if j:GetRole() == ROLE_SWAPPER then
@@ -15,7 +15,7 @@ function EVENT:Begin()
 
             for _, t in ipairs(self:GetAlivePlayers()) do
                 if Randomat:IsTraitorTeam(t) then
-                    t:PrintMessage(HUD_PRINTTALK, j:Nick() .. " is the " .. Randomat:LowerFirst(Randomat:GetRoleString(ROLE_JESTER)))
+                    t:PrintMessage(HUD_PRINTTALK, j:Nick() .. " is the " .. Randomat:GetRoleString(ROLE_JESTER):lower())
                 end
             end
         end

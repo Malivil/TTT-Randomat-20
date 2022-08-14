@@ -647,13 +647,6 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *msg* - The message to log
 
-**Randomat:LowerFirst(msg)** - Lowercases the first letter of the given message.\
-*Realm:* Client and Server\
-*Parameters:*
-- *msg* - The message to change
-
-*Returns:* The changed message
-
 **Randomat:Notify(msg, length, target, silent)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
 *Parameters:*

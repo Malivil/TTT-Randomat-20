@@ -1,12 +1,12 @@
 local EVENT = {}
 
-EVENT.Title = "One Traitor, one Detective. Everyone else is a Jester. Detective is stronger."
+EVENT.Title = "One traitor, one detective. Everyone else is a jester. Detective is stronger."
 EVENT.id = "jesters"
 EVENT.Categories = {"rolechange", "biased_traitor", "biased", "largeimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Title = "One " .. Randomat:GetRoleString(ROLE_TRAITOR) .. ", one " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. ". Everyone else is " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_JESTER)) .. ". " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " is stronger."
+    EVENT.Title = "One " .. Randomat:GetRoleString(ROLE_TRAITOR):lower() .. ", one " .. Randomat:GetRoleString(ROLE_DETECTIVE):lower() .. ". Everyone else is " .. Randomat:GetRoleExtendedString(ROLE_JESTER):lower() .. ". " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " is stronger."
 
     local tx = 0
     local dx = 0

@@ -8,7 +8,7 @@ util.AddNetworkString("RdmtPlayerChoseKiller")
 CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the innocent should choose their new role.")
 
 EVENT.Title = "An innocent has been upgraded!"
-EVENT.Description = "A random vanilla Innocent is upgraded to a Mercenary"
+EVENT.Description = "A random vanilla innocent is upgraded to a mercenary"
 EVENT.id = "upgrade"
 EVENT.Categories = {"rolechange", "biased_innocent", "biased", "moderateimpact"}
 
@@ -20,11 +20,11 @@ local function GetEventDescription()
     local choose = CanChooseRole()
     local action
     if choose then
-        action = "given the choice of becoming " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_MERCENARY)) .. " or " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_KILLER))
+        action = "given the choice of becoming " .. Randomat:GetRoleExtendedString(ROLE_MERCENARY):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_KILLER):lower()
     else
-        action = "upgraded to " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_MERCENARY))
+        action = "upgraded to " .. Randomat:GetRoleExtendedString(ROLE_MERCENARY):lower()
     end
-    return "A random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT).. " is " .. action
+    return "A random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT):lower() .. " is " .. action
 end
 
 local function UpdateToMerc(ply)

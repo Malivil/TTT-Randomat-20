@@ -19,12 +19,6 @@ function Randomat:Capitalize(msg, skip_lower)
     return first .. rest
 end
 
-function Randomat:LowerFirst(msg)
-    local first = msg:sub(1, 1):lower()
-    local rest = msg:sub(2)
-    return first .. rest
-end
-
 -- Team Functions
 function Randomat:IsInnocentTeam(ply, skip_detective)
     -- Handle this early because IsInnocentTeam doesn't

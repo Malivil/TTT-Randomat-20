@@ -1,14 +1,14 @@
 local EVENT = {}
 
 EVENT.Title = "Betrayed"
-EVENT.Description = "Randomly converts one vanilla Traitor to be a Glitch"
+EVENT.Description = "Randomly converts one vanilla traitor to be a glitch"
 EVENT.id = "betrayed"
 EVENT.StartSecret = true
 EVENT.Categories = {"rolechange", "moderateimpact"}
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Description = "Randomly converts one vanilla " .. Randomat:GetRoleString(ROLE_TRAITOR) .. " to be " .. Randomat:LowerFirst(Randomat:GetRoleExtendedString(ROLE_GLITCH))
+    EVENT.Description = "Randomly converts one vanilla " .. Randomat:GetRoleString(ROLE_TRAITOR):lower() .. " to be " .. Randomat:GetRoleExtendedString(ROLE_GLITCH):lower()
 
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_TRAITOR then
