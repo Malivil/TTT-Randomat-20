@@ -109,7 +109,7 @@ function EVENT:Begin()
                                     voter = v
                                 end
                             end
-                            self:SmallNotify(voter:Nick().." was dumb enough to vote for the " .. Randomat:GetRoleString(ROLE_JESTER) .. "!")
+                            self:SmallNotify(voter:Nick() .. " was dumb enough to vote for the " .. Randomat:GetRoleString(ROLE_JESTER) .. "!")
 
                             -- Only kill the jester if we know they are a Jester or a Swapper. The other ones might not like being killed so much
                             if jestermode == 1 and (slainply:GetRole() == ROLE_JESTER or slainply:GetRole() == ROLE_SWAPPER) then

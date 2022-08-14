@@ -21,7 +21,7 @@ CreateConVar("randomat_freeze_duration", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Dura
 CreateConVar("randomat_freeze_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) the Freeze occurs", 5, 60)
 
 local function GetEventDescription()
-    return "All Innocents will Freeze (and become immune) every "..GetConVar("randomat_freeze_timer"):GetInt().." seconds"
+    return "All Innocents will Freeze (and become immune) every " .. GetConVar("randomat_freeze_timer"):GetInt() .. " seconds"
 end
 
 EVENT.Title = table.Random(eventnames)

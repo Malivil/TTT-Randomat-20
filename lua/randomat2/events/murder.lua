@@ -65,7 +65,7 @@ function EVENT:Begin()
             end)
         elseif Randomat:IsTraitorTeam(v) then
             Randomat:SetRole(v, ROLE_TRAITOR)
-            timer.Create("RandomatKnifeTimer"..v:Nick(), 0.15, 1, function()
+            timer.Create("RandomatKnifeTimer" .. v:Nick(), 0.15, 1, function()
                 self:StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatknife")
 
@@ -81,7 +81,7 @@ function EVENT:Begin()
             Randomat:SetRole(v, ROLE_INNOCENT)
         end
         if v:GetRole() == ROLE_INNOCENT then
-            v:PrintMessage(HUD_PRINTTALK, "Stay alive and gather weapons! Gathering "..pck.." weapons will give you a revolver!")
+            v:PrintMessage(HUD_PRINTTALK, "Stay alive and gather weapons! Gathering " .. pck .. " weapons will give you a revolver!")
         end
     end
     SendFullStateUpdate()

@@ -206,10 +206,10 @@ local function ragdollPlayer(v)
 
     v.ragdoll = ragdoll
     local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
-    hook.Add("Think", v:Nick().."UnragdollTimer", function()
+    hook.Add("Think", v:Nick() .. "UnragdollTimer", function()
         -- Turn a ragdoll back into a player if they have essentially stopped moving and have been a ragdoll "long enough"
         if IsValid(ragdoll) and ragdoll:GetPhysicsObjectNum(1):GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
-            hook.Remove("Think", v:Nick().."UnragdollTimer")
+            hook.Remove("Think", v:Nick() .. "UnragdollTimer")
             unragdollPlayer(v)
         end
     end)
@@ -269,7 +269,7 @@ function EVENT:End()
         if v.inRagdoll then
             unragdollPlayer(v)
         end
-        hook.Remove("Think", v:Nick().."UnragdollTimer")
+        hook.Remove("Think", v:Nick() .. "UnragdollTimer")
     end
 end
 

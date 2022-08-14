@@ -3,14 +3,14 @@ local EVENT = {}
 CreateConVar("randomat_flash_scale", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The percentage the speed should increase", 1, 100)
 
 EVENT.Title = ""
-EVENT.AltTitle = "Everything is as fast as Flash now! ("..GetConVar("randomat_flash_scale"):GetInt().."% faster)"
+EVENT.AltTitle = "Everything is as fast as Flash now! (" .. GetConVar("randomat_flash_scale"):GetInt() .. "% faster)"
 EVENT.Description = "Causes everything (movement, firing speed, timers, etc.) to run faster than normal"
 EVENT.id = "flash"
 EVENT.SingleUse = false
 EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
-    Randomat:EventNotifySilent("Everything is as fast as Flash now! ("..GetConVar("randomat_flash_scale"):GetInt().."% faster)")
+    Randomat:EventNotifySilent("Everything is as fast as Flash now! (" .. GetConVar("randomat_flash_scale"):GetInt() .. "% faster)")
 
     local ts = game.GetTimeScale()
     game.SetTimeScale(ts + GetConVar("randomat_flash_scale"):GetInt()/100)

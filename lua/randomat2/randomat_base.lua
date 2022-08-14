@@ -423,7 +423,7 @@ function Randomat:CanEventRun(event, ignore_history)
     if not event:Condition() then return false, "Condition not fulfilled" end
 
     -- Check there are enough players
-    local min_players = GetConVar("ttt_randomat_"..event.Id.."_min_players"):GetInt()
+    local min_players = GetConVar("ttt_randomat_" .. event.Id .. "_min_players"):GetInt()
     local player_count = player.GetCount()
     if min_players > 0 and player_count < min_players then return false, "Not enough players (" .. player_count .. " vs. " .. min_players .. " required)" end
 

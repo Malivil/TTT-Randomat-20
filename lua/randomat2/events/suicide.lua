@@ -28,12 +28,12 @@ function EVENT:Begin()
         local ply = plylist[k]["ply"]
         local target = plylist[k]["tgt"]
         timer.Create("RandomatDetTimer_" .. ply:SteamID64(), 1, 5, function()
-            ply:PrintMessage(HUD_PRINTCENTER, "You have a detonator for "..target:Nick())
+            ply:PrintMessage(HUD_PRINTCENTER, "You have a detonator for " .. target:Nick())
         end)
 
         -- Delay this
         timer.Simple(0.1, function()
-            ply:PrintMessage(HUD_PRINTTALK, "You have a detonator for "..target:Nick())
+            ply:PrintMessage(HUD_PRINTTALK, "You have a detonator for " .. target:Nick())
         end)
 
         for _, wep in pairs(ply:GetWeapons()) do

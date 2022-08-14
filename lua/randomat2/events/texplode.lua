@@ -4,14 +4,14 @@ CreateConVar("randomat_texplode_timer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The 
 CreateConVar("randomat_texplode_radius", 600, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Radius of the traitor explosion", 50, 1000)
 
 EVENT.Title = ""
-EVENT.AltTitle = "A traitor will explode in "..GetConVar("randomat_texplode_timer"):GetInt().." seconds!"
+EVENT.AltTitle = "A traitor will explode in " .. GetConVar("randomat_texplode_timer"):GetInt() .. " seconds!"
 EVENT.ExtDescription = "Chooses a random traitor to explode after a configurable time"
 EVENT.id = "texplode"
 EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 
 function EVENT:Begin()
     local explodetimer = GetConVar("randomat_texplode_timer"):GetInt()
-    Randomat:EventNotifySilent("A traitor will explode in "..explodetimer.." seconds!")
+    Randomat:EventNotifySilent("A traitor will explode in " .. explodetimer .. " seconds!")
 
     local x = 0
     local tgt = nil
@@ -21,7 +21,7 @@ function EVENT:Begin()
                 tgt = ply
                 tgt:PrintMessage(HUD_PRINTTALK, "You have been chosen to explode. Watch out, and stay close to innocents.")
             else
-                ply:PrintMessage(HUD_PRINTTALK, tgt:Nick().." has been chosen to explode. Be careful.")
+                ply:PrintMessage(HUD_PRINTTALK, tgt:Nick() .. " has been chosen to explode. Be careful.")
             end
         end
     end
@@ -49,7 +49,7 @@ function EVENT:Begin()
             end
 
             if pos == nil then
-                self:SmallNotify("The traitor's body bomb was destroyed before it could explode! Phew...")
+                self:SmallNotify("The traitor's body bomb was destroyed before it could explode! Phew. .. ")
                 return
             end
 

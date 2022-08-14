@@ -6,7 +6,7 @@ CreateConVar("randomat_randomxn_multiple", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Al
 CreateConVar("randomat_randomxn_triggerbyotherrandom", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allow being triggered by other events like Randomness Intensifies.")
 
 EVENT.Title = ""
-EVENT.AltTitle = "Random x"..GetConVar("randomat_randomxn_triggers"):GetInt()
+EVENT.AltTitle = "Random x" .. GetConVar("randomat_randomxn_triggers"):GetInt()
 EVENT.Description = "Triggers a number of random events with a slight delay between each"
 EVENT.id = "randomxn"
 EVENT.SingleUse = false
@@ -15,10 +15,10 @@ EVENT.Categories = {"eventtrigger", "largeimpact"}
 local timers = {}
 
 function EVENT:Begin()
-    Randomat:EventNotifySilent("Random x"..GetConVar("randomat_randomxn_triggers"):GetInt())
+    Randomat:EventNotifySilent("Random x" .. GetConVar("randomat_randomxn_triggers"):GetInt())
 
     local timernum = table.Count(timers) + 1
-    local timername = "RandomxnTimer"..timernum
+    local timername = "RandomxnTimer" .. timernum
     table.insert(timers, timername)
     timer.Create(timername, GetConVar("randomat_randomxn_timer"):GetInt(), GetConVar("randomat_randomxn_triggers"):GetInt(), function()
         Randomat:TriggerRandomEvent(self.owner)

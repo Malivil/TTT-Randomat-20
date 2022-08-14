@@ -16,19 +16,19 @@ if SERVER then
 
     concommand.Add("ttt_randomat_disableall", function()
         for _, v in pairs(Randomat.Events) do
-            GetConVar("ttt_randomat_"..v.Id):SetBool(false)
+            GetConVar("ttt_randomat_" .. v.Id):SetBool(false)
         end
     end)
 
     concommand.Add("ttt_randomat_enableall", function()
         for _, v in pairs(Randomat.Events) do
-            GetConVar("ttt_randomat_"..v.Id):SetBool(true)
+            GetConVar("ttt_randomat_" .. v.Id):SetBool(true)
         end
     end)
 
     concommand.Add("ttt_randomat_resetweights", function()
         for _, v in pairs(Randomat.Events) do
-            GetConVar("ttt_randomat_"..v.Id.."_weight"):SetInt(-1)
+            GetConVar("ttt_randomat_" .. v.Id .. "_weight"):SetInt(-1)
         end
     end)
 

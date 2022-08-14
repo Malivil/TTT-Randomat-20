@@ -6,7 +6,7 @@ EVENT.id = "mayhem"
 EVENT.Categories = {"deathtrigger", "biased_traitor", "biased", "moderateimpact"}
 
 function ExplodeTgt(tgt, ply)
-    timer.Create("RdmtBombDelay"..tgt:Nick(), 0.1, 1, function()
+    timer.Create("RdmtBombDelay" .. tgt:Nick(), 0.1, 1, function()
         local explode = ents.Create("env_explosion")
         explode:SetPos(tgt:GetPos())
         explode:SetOwner(ply)
@@ -14,7 +14,7 @@ function ExplodeTgt(tgt, ply)
         explode:SetKeyValue("iMagnitude", "150")
         explode:Fire("Explode", 0,0)
         explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
-        timer.Remove("RdmtBombDelay"..tgt:Nick())
+        timer.Remove("RdmtBombDelay" .. tgt:Nick())
     end)
 end
 

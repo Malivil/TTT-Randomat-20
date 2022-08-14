@@ -584,7 +584,7 @@ local function HandleVote(ply, message)
                     else
                         name = ply:Nick()
                     end
-                    va:PrintMessage(HUD_PRINTTALK, name.." has voted for "..votee)
+                    va:PrintMessage(HUD_PRINTTALK, name .. " has voted for " .. votee)
                 end
             end
             break
