@@ -20,6 +20,7 @@ _ttt_randomat_auto_ - Default: 0 - Whether the Randomat should automatically tri
 _ttt_randomat_auto_min_rounds_ - Default: 0 - The minimum number of completed rounds before auto-Randomat can trigger.\
 _ttt_randomat_auto_chance_ - Default: 1 - Chance of the auto-Randomat triggering.\
 _ttt_randomat_auto_silent_ - Default: 0 - Whether the auto-started event should be silent.\
+_ttt_randomat_auto_choose_ - Default: 0 - Whether the auto-started event should be "Choose".\
 _ttt_randomat_chooseevent_ - Default: 0 - Allows you to choose out of a selection of events.\
 _ttt_randomat_rebuyable_ - Default: 0 - Whether you can buy more than one Randomat.\
 _ttt_randomat_event_weight_ - Default: 1 - The default selection weight each event should use.\
