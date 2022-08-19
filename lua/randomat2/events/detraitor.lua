@@ -41,14 +41,18 @@ function EVENT:Condition()
         return false
     end
 
-    -- Only run if there is at least one good detective-like player living
+    -- Only run if there is at least one good detective-like player living and no bad detective-like players living
+    local has_good = false
+    local has_bad = false
     for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsGoodDetectiveLike(v) then
-            return true
+            has_good = true
+        elseif Randomat:IsEvilDetectiveLike(v) then
+            has_bad = true
         end
     end
 
-    return false
+    return has_good and not has_bad
 end
 
 Randomat:register(EVENT)
