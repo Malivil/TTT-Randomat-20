@@ -198,23 +198,27 @@ net.Receive("PumpYouUpPlayerVoted", function(ln, ply)
         end
     end
 
-    -- Set the target based on votes (ties mean nobody wins) and tell everyone
+    -- Set the new target based on votes (ties mean nobody wins)
     local message
+    local new_target = nil
     if not max_votes then
-        target = nil
         message = "There is a tie, so nobody gets the buff!"
     else
-        target = votableplayers[max_index]
-        message = target:Nick() .. " has the most votes!"
+        new_target = votableplayers[max_index]
+        message = new_target:Nick() .. " has the most votes!"
     end
 
-    Randomat:SendChatToAll(message)
-    Randomat:SmallNotify(message)
+    -- Only perform updates and announcements when the target actually changes
+    if target ~= new_target then
+        target = new_target
+        Randomat:SendChatToAll(message)
+        Randomat:SmallNotify(message)
 
-    net.Start("PumpYouUpSetTarget")
-        net.WriteBool(IsPlayer(target))
-        net.WriteEntity(target)
-    net.Broadcast()
+        net.Start("PumpYouUpSetTarget")
+            net.WriteBool(IsPlayer(target))
+            net.WriteEntity(target)
+        net.Broadcast()
+    end
 end)
 
 Randomat:register(EVENT)
