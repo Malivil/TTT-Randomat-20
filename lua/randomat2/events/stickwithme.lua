@@ -24,6 +24,18 @@ local function ClearPlayerData(sid)
     end
 end
 
+local function SendPartnerMessage(ply, partner, warningtime)
+    local message = "Your partner is " .. partner .. ". You have " .. warningtime .. " seconds to find them!"
+    -- Delay this so it appears after the message in chat
+    timer.Simple(0.1, function()
+        ply:PrintMessage(HUD_PRINTTALK, message)
+    end)
+    -- Delay this so it appears after the description on screen
+    timer.Create("RandomatStickWithMePairTimer_" .. ply:SteamID64(), 1, 5, function()
+        ply:PrintMessage(HUD_PRINTCENTER, message)
+    end)
+end
+
 function EVENT:Begin()
     local ply1 = {}
     local ply2 = {}
@@ -43,10 +55,8 @@ function EVENT:Begin()
 
     local size = #ply2
     for i = 1, size do
-        ply1[i]:PrintMessage(HUD_PRINTTALK, "Your partner is " .. ply2[i]:Nick() .. ". You have " .. warningtime .. " seconds to find them!")
-        ply2[i]:PrintMessage(HUD_PRINTTALK, "Your partner is " .. ply1[i]:Nick() .. ". You have " .. warningtime .. " seconds to find them!")
-        ply1[i]:PrintMessage(HUD_PRINTCENTER, "Your partner is " .. ply2[i]:Nick() .. ". You have " .. warningtime .. " seconds to find them!")
-        ply2[i]:PrintMessage(HUD_PRINTCENTER, "Your partner is " .. ply1[i]:Nick() .. ". You have " .. warningtime .. " seconds to find them!")
+        SendPartnerMessage(ply1[i], ply2[i]:Nick(), warningtime)
+        SendPartnerMessage(ply2[i], ply1[i]:Nick(), warningtime)
         Randomat:LogEvent("[RANDOMAT] " .. ply1[i]:Nick() .. " and " .. ply2[i]:Nick() .. " are now partners.")
 
         ply_pairs[ply1[i]:SteamID64()] = ply2[i]
@@ -124,6 +134,10 @@ function EVENT:End()
     net.Broadcast()
     for k, _ in pairs(pairthinktime) do
         ClearPlayerData(k)
+    end
+
+    for _, v in ipairs(player.GetAll()) do
+        timer.Remove("RandomatStickWithMePairTimer_" .. v:SteamID64())
     end
 end
 
