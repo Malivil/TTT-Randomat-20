@@ -10,6 +10,7 @@ local function AddClient(fil)
 end
 
 if SERVER then
+    resource.AddSingleFile("materials/icon16/rdmt.png")
     resource.AddSingleFile("materials/icon32/copy.png")
     resource.AddSingleFile("materials/icon32/cut.png")
     resource.AddSingleFile("materials/icon32/stones.png")
