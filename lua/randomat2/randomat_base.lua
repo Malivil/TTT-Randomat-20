@@ -6,6 +6,8 @@ util.AddNetworkString("RdmtSetSpeedMultiplier")
 util.AddNetworkString("RdmtSetSpeedMultiplier_WithWeapon")
 util.AddNetworkString("RdmtRemoveSpeedMultiplier")
 util.AddNetworkString("RdmtRemoveSpeedMultipliers")
+util.AddNetworkString("RdmtEventBegin")
+util.AddNetworkString("RdmtEventEnd")
 util.AddNetworkString("TTT_RoleChanged")
 util.AddNetworkString("TTT_LogInfo")
 
@@ -195,6 +197,10 @@ local function EndEvent(evt)
         ErrorNoHalt("WARNING: Randomat event '" .. evt.Id .. "' caused an error when it was being Ended. Please report to the addon developer with the following error:\n", err, "\n")
     end
     xpcall(End, Catch)
+
+    net.Start("RdmtEventEnd")
+    net.WriteString(evt.Id)
+    net.Broadcast()
 end
 
 local function TriggerEvent(event, ply, silent, ...)
@@ -202,7 +208,7 @@ local function TriggerEvent(event, ply, silent, ...)
         -- If this event is supposed to start secretly, trigger "secret" with this specific event chosen
         -- Unless "secret" is already running in which case we don't care, just let it go
         if event.StartSecret and not Randomat:IsEventActive("secret") then
-            TriggerEvent(Randomat.Events["secret"], ply, false, event.id)
+            TriggerEvent(Randomat.Events["secret"], ply, false, event.Id)
             return
         end
 
@@ -232,6 +238,20 @@ local function TriggerEvent(event, ply, silent, ...)
             end
         end
     end
+
+    -- Broadcast this to every client, but hide what it really is if secret is active (and this isn't secret itself)
+    local should_hide = event.Id ~= "secret" and Randomat:IsEventActive("secret")
+    net.Start("RdmtEventBegin")
+    if should_hide then
+        net.WriteString("???")
+        net.WriteString("A 'Secret' Event")
+        net.WriteString("This event is hidden by '" .. Randomat:GetEventTitle(Randomat.Events["secret"]) .. "'")
+    else
+        net.WriteString(event.Id)
+        net.WriteString(title)
+        net.WriteString(event.Description or "")
+    end
+    net.Broadcast()
 
     -- Let other addons know that an event was started
     hook.Call("TTTRandomatTriggered", nil, event.Id, owner)
@@ -267,7 +287,7 @@ end
 
 function Randomat:IsEventActive(id)
     for _, v in pairs(Randomat.ActiveEvents) do
-        if v.id == id then
+        if v.Id == id then
             return true
         end
     end
@@ -980,7 +1000,7 @@ function randomat_meta:Condition()
 end
 
 function randomat_meta:Enabled()
-    return GetConVar("ttt_randomat_" .. self.id):GetBool()
+    return GetConVar("ttt_randomat_" .. self.Id):GetBool()
 end
 
 function randomat_meta:GetConVars() end
@@ -1151,7 +1171,7 @@ end
 
 function randomat_meta:SetAllPlayerScales(scale)
     for _, ply in ipairs(self:GetAlivePlayers()) do
-        Randomat:SetPlayerScale(ply, scale, self.id)
+        Randomat:SetPlayerScale(ply, scale, self.Id)
     end
 
     -- Reduce the player speed on the server
@@ -1164,7 +1184,7 @@ end
 
 function randomat_meta:ResetAllPlayerScales()
     for _, ply in ipairs(GetAllPlayers()) do
-        Randomat:ResetPlayerScale(ply, self.id)
+        Randomat:ResetPlayerScale(ply, self.Id)
     end
 
     self:RemoveHook("TTTSpeedMultiplier")
