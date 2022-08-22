@@ -24,4 +24,10 @@ function EVENT:Begin()
     end)
 end
 
+-- 'Contagious Morality' + this event causes rocket propelled corpses because
+-- the player that is killed keeps exploding as they change role over and over
+function EVENT:Condition()
+    return not Randomat:IsEventActive("contagiousmorality")
+end
+
 Randomat:register(EVENT)
