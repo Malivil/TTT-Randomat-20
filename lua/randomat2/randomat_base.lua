@@ -417,7 +417,7 @@ function Randomat:register(tbl)
 
     -- If the current weight matches the default, update the per-event weight to the new default of -1
     if weight:GetInt() == default_weight then
-        print("Event '" .. id .. "' weight (" .. weight:GetInt() .. ") matches default weight (" .. default_weight .. "), resetting to -1")
+        MsgN("Event '" .. id .. "' weight (" .. weight:GetInt() .. ") matches default weight (" .. default_weight .. "), resetting to -1")
         weight:SetInt(-1)
     end
 end

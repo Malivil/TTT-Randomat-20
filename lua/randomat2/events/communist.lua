@@ -22,6 +22,16 @@ function EVENT:Begin()
     self:AddHook("TTTOrderedEquipment", function(ply, item, is_item, fromrdmt)
         if fromrdmt then return end
 
+        -- Try to find this item by its ID
+        if is_item and GetEquipmentItemById then
+            local item_info = GetEquipmentItemById(item)
+            -- If we found it and it's marked as "From Randoman" then this is a Randoman buying an event
+            -- We can't "give" an event to other players, so just don't try
+            if item_info and item_info.randomanItem then
+                return
+            end
+        end
+
         local role_name = self:GetRoleName(ply, true)
         if not GetConVar("randomat_communist_show_roles"):GetBool() then
             role_name = "Someone"
