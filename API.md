@@ -548,7 +548,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *max_dist* - The max distance away smoke should be visible (Defaults to 3000)
 
 **Randomat:IsEventActive(id)** - Determines whether the event with the provided ID is current running.\
-*Realm:* Server\
+*Realm:* Client and Server\
 *Parameters:*
 - *id* - The ID of the event to search for
 

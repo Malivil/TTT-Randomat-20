@@ -285,15 +285,6 @@ function Randomat:EndActiveEvents()
     end
 end
 
-function Randomat:IsEventActive(id)
-    for _, v in pairs(Randomat.ActiveEvents) do
-        if v.Id == id then
-            return true
-        end
-    end
-    return false
-end
-
 function Randomat:GetEventTitle(event)
     if event.Title == "" then
         return event.AltTitle

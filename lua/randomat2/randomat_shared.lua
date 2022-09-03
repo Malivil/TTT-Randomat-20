@@ -1,4 +1,4 @@
--- Event Types
+-- Events
 EVENT_TYPE_DEFAULT = 0
 EVENT_TYPE_WEAPON_OVERRIDE = 1
 EVENT_TYPE_VOTING = 2
@@ -8,6 +8,15 @@ EVENT_TYPE_RESPAWN = 5
 EVENT_TYPE_GUNSOUNDS = 6
 EVENT_TYPE_JUMPING = 7
 EVENT_TYPE_MUSIC = 8
+
+function Randomat:IsEventActive(id)
+    for _, v in pairs(Randomat.ActiveEvents) do
+        if v.Id == id then
+            return true
+        end
+    end
+    return false
+end
 
 -- String Functions
 function Randomat:Capitalize(msg, skip_lower)
