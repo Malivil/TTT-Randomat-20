@@ -9,6 +9,7 @@ net.Receive("RdmtEventBegin", function()
     local desc = net.ReadString()
     table.insert(Randomat.ActiveEvents, {
         id = id,
+        Id = id,
         title = title,
         desc = desc
     })
