@@ -8,6 +8,7 @@ table.insert(eventnames, "Bleh!")
 table.insert(eventnames, "Blarg!")
 
 CreateConVar("randomat_blerg_respawntimer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Delay before dead players respawn", 5, 240)
+CreateConVar("randomat_blerg_respawnlimit", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum number of times a player can respawn", 0, 10)
 CreateConVar("randomat_blerg_weapondelay", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Delay before respawned can use weapons", 5, 60)
 
 EVENT.Title = table.Random(eventnames)
@@ -17,6 +18,7 @@ EVENT.Type = {EVENT_TYPE_RESPAWN, EVENT_TYPE_WEAPON_OVERRIDE}
 EVENT.Categories = {"deathtrigger", "largeimpact"}
 
 local respawntime = {}
+local respawncount = {}
 local permadead = {}
 
 local function CanPickup(ply, weapondelay)
@@ -29,9 +31,11 @@ end
 
 function EVENT:Begin()
     respawntime = {}
+    respawncount = {}
     permadead = {}
 
     local respawntimer = GetConVar("randomat_blerg_respawntimer"):GetInt()
+    local respawnlimit = GetConVar("randomat_blerg_respawnlimit"):GetInt()
     local weapondelay = GetConVar("randomat_blerg_weapondelay"):GetInt()
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
@@ -40,10 +44,25 @@ function EVENT:Begin()
         -- If they are permadead, don't start the timer again
         if permadead[sid] then return end
 
+        -- Keep track of how many times players have respawned
+        if not respawncount[sid] then
+            respawncount[sid] = 0
+        end
+
         -- If they are still in the no-weapon phase, dying again makes them permadead
         if not CanPickup(victim, weapondelay) then
             victim:PrintMessage(HUD_PRINTTALK, "You died too quickly and are now permanently dead")
             victim:PrintMessage(HUD_PRINTCENTER, "You died too quickly and are now permanently dead")
+            permadead[sid] = true
+            timer.Remove("RdmtBlergRespawnTimer_" .. sid)
+            timer.Remove("RdmtBlergWeaponTimer_" .. sid)
+            return
+        end
+
+        -- Limit the number of times a player can respawn, if that is enabled
+        if respawnlimit > 0 and respawncount[sid] > respawnlimit then
+            victim:PrintMessage(HUD_PRINTTALK, "You died too many times are now permanently dead")
+            victim:PrintMessage(HUD_PRINTCENTER, "You died too many times and are now permanently dead")
             permadead[sid] = true
             timer.Remove("RdmtBlergRespawnTimer_" .. sid)
             timer.Remove("RdmtBlergWeaponTimer_" .. sid)
@@ -58,6 +77,7 @@ function EVENT:Begin()
             victim:PrintMessage(HUD_PRINTTALK, "You're back! Try to survive without weapons for " .. weapondelay .. " seconds")
             victim:PrintMessage(HUD_PRINTCENTER, "You're back! Try to survive without weapons for " .. weapondelay .. " seconds")
             respawntime[sid] = CurTime()
+            respawncount[sid] = respawncount[sid] + 1
             -- Destroy their old body
             local body = victim.server_ragdoll or victim:GetRagdollEntity()
             local credits = 0
@@ -145,7 +165,7 @@ end
 
 function EVENT:GetConVars()
     local sliders = {}
-    for _, v in ipairs({"respawntimer", "weapondelay"}) do
+    for _, v in ipairs({"respawntimer", "respawnlimit", "weapondelay"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

@@ -220,6 +220,7 @@ _ttt_randomat_blerg_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blerg_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blerg_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_blerg_respawntimer_ - Default: 60 - Delay before dead players respawn.\
+_randomat_blerg_respawnlimit_ - Default: 3 - The maximum number of times a player can respawn.\
 _randomat_blerg_weapondelay_ - Default: 20 - Delay before respawned can use weapons.
 
 ## Blind Traitors
