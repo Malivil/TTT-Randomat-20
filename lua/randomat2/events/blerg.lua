@@ -76,7 +76,7 @@ function EVENT:Begin()
         end
 
         -- Limit the number of times a player can respawn, if that is enabled
-        if respawnlimit > 0 and respawncount[sid] > respawnlimit then
+        if respawnlimit > 0 and respawncount[sid] >= respawnlimit then
             victim:PrintMessage(HUD_PRINTTALK, "You died too many times are now permanently dead")
             victim:PrintMessage(HUD_PRINTCENTER, "You died too many times and are now permanently dead")
             permadead[sid] = true
