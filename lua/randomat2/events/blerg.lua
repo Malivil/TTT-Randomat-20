@@ -20,6 +20,7 @@ EVENT.Categories = {"deathtrigger", "largeimpact"}
 local respawntime = {}
 local respawncount = {}
 local permadead = {}
+local roleweapons = {}
 
 local function CanPickup(ply, weapondelay)
     local time = respawntime[ply:SteamID64()]
@@ -33,10 +34,25 @@ function EVENT:Begin()
     respawntime = {}
     respawncount = {}
     permadead = {}
+    roleweapons = {}
 
     local respawntimer = GetConVar("randomat_blerg_respawntimer"):GetInt()
     local respawnlimit = GetConVar("randomat_blerg_respawnlimit"):GetInt()
     local weapondelay = GetConVar("randomat_blerg_weapondelay"):GetInt()
+    self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)
+        if not IsValid(victim) then return end
+        if not WEAPON_CATEGORY_ROLE then return end
+
+        -- Track role weapons when using the version of CR for TTT that can do that
+        local sid = victim:SteamID64()
+        roleweapons[sid] = {}
+        for _, wep in ipairs(victim:GetWeapons()) do
+            if wep.Category == WEAPON_CATEGORY_ROLE and not wep.AllowDrop then
+                table.insert(roleweapons[sid], WEPS.GetClass(wep))
+            end
+        end
+    end)
+
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
 
@@ -119,6 +135,14 @@ function EVENT:Begin()
 
                 if not hasCrowbar and not victim:HasWeapon("weapon_zm_improvised") then
                     victim:Give("weapon_zm_improvised")
+                end
+
+                -- Make sure they get their role weapons back
+                if roleweapons[sid] then
+                    for _, wep in ipairs(roleweapons[sid]) do
+                        victim:Give(wep)
+                    end
+                    roleweapons[sid] = {}
                 end
             end)
         end)
