@@ -72,6 +72,7 @@ hook.Add("TTTHUDInfoPaint", "RandomatEventTrackingHUDInfoPaint", function(client
     end
 end)
 
+local expandState = false
 hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dtabs)
     if not GetGlobalBool("ttt_randomat_allow_client_list", false) then return end
     local padding = dtabs:GetPadding()
@@ -94,7 +95,11 @@ hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dta
     -- Active Events section
     local dactive = vgui.Create("DForm", drdmt)
     dactive:SetName("Active Randomat Events")
-    dactive:SetExpanded(false)
+    dactive:SetExpanded(expandState)
+    -- Keep track of the expanded state so you don't have to open it multiple times
+    dactive.OnToggle = function(state)
+        expandState = state
+    end
     drdmt:AddItem(dactive)
 
     local dactivecount = vgui.Create("DLabel", dactive)
