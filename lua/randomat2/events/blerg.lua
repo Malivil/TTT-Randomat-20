@@ -45,6 +45,8 @@ function EVENT:Begin()
             victim:PrintMessage(HUD_PRINTTALK, "You died too quickly and are now permanently dead")
             victim:PrintMessage(HUD_PRINTCENTER, "You died too quickly and are now permanently dead")
             permadead[sid] = true
+            timer.Remove("RdmtBlergRespawnTimer_" .. sid)
+            timer.Remove("RdmtBlergWeaponTimer_" .. sid)
             return
         end
 
