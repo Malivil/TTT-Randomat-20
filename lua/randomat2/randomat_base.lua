@@ -1232,6 +1232,10 @@ end
 
 concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
     local cmd = arg[1]
+    if not cmd or #cmd == 0 then
+        ErrorNoHalt("Required 'ID' parameter not provided")
+        return
+    end
     Randomat:EndActiveEvent(cmd)
 end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
 
