@@ -349,6 +349,7 @@ _randomat_choose_choices_ - Default: 3 - Number of events you can choose from.\
 _randomat_choose_vote_ - Default: 0 - Allows all players to vote on the event.\
 _randomat_choose_votetimer_ - Default: 10 - How long players have to vote on the event.\
 _randomat_choose_deadvoters_ - Default: 0 - Dead people can vote.\
+_randomat_choose_secret_ - Default: 0 - Whether to include secret events.\
 _randomat_choose_limitchoosetime_ - Default: 0 - Whether single player choosing has limited time.\
 _randomat_choose_limitchoosetime_random_ - Default: 0 - Whether to choose a random event if time runs out.
 

@@ -10,6 +10,7 @@ CreateConVar("randomat_choose_choices", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Numbe
 CreateConVar("randomat_choose_vote", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allows all players to vote on the event")
 CreateConVar("randomat_choose_votetimer", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long players have to vote on the event", 5, 60)
 CreateConVar("randomat_choose_deadvoters", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Dead people can vote")
+CreateConVar("randomat_choose_secret", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to include secret events")
 CreateConVar("randomat_choose_limitchoosetime", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether single player choosing has limited time")
 CreateConVar("randomat_choose_limitchoosetime_random", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to choose a random event if time runs out")
 
@@ -60,19 +61,28 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate)
     PlayersVoted = {}
     EventVotes = {}
     local choices = GetConVar("randomat_choose_choices"):GetInt()
-    local x = 0
+    local secret = GetConVar("randomat_choose_secret"):GetBool()
     for _, v in RandomPairs(Randomat.Events) do
-        if x < choices then
-            if Randomat:CanEventRun(v) and v.id ~= self.id and not v.StartSecret then
-                x = x+1
-                local title = Randomat:GetEventTitle(v)
-                EventChoices[x] = {
-                    title = title,
-                    id = v.id
-                }
-                EventVotes[v.id] = 0
-            end
+        if #EventChoices >= choices then break end
+
+        if v.id == self.id then continue end
+        if not Randomat:CanEventRun(v) then continue end
+
+        local title = Randomat:GetEventTitle(v)
+
+        -- If this is a secret event
+        if v.StartSecret then
+            -- Skip it if secret events are not enabled
+            if not secret then continue end
+            -- Otherwise use the title of "secret" so the actual event is hidden
+            title = Randomat:GetEventTitle(Randomat.Events["secret"])
         end
+
+        table.insert(EventChoices, {
+            title = title,
+            id = v.id
+        })
+        EventVotes[v.id] = 0
     end
 
     if vote or GetConVar("randomat_choose_vote"):GetBool() then
@@ -152,7 +162,7 @@ function EVENT:GetConVars()
     end
 
     local checks = {}
-    for _, v in ipairs({"vote", "deadvoters", "limitchoosetime", "limitchoosetime_random"}) do
+    for _, v in ipairs({"vote", "deadvoters", "secret", "limitchoosetime", "limitchoosetime_random"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
