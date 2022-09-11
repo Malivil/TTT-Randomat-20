@@ -11,8 +11,18 @@ CreateConVar("randomat_blerg_respawntimer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "
 CreateConVar("randomat_blerg_respawnlimit", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum number of times a player can respawn", 0, 10)
 CreateConVar("randomat_blerg_weapondelay", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Delay before respawned can use weapons", 5, 60)
 
+local function GetDescription(respawnlimit)
+    local desc = "Players respawn "
+    if respawnlimit > 0 then
+        desc = desc .. "up to " .. respawnlimit .. " time(s)"
+    else
+        desc = desc .. "repeatedly"
+    end
+    return desc .. " unless killed during a brief window where they can't use weapons"
+end
+
 EVENT.Title = table.Random(eventnames)
-EVENT.Description = "Players respawn repeatedly unless killed during a brief window where they can't use weapons"
+EVENT.Description = GetDescription(0)
 EVENT.id = "blerg"
 EVENT.Type = {EVENT_TYPE_RESPAWN, EVENT_TYPE_WEAPON_OVERRIDE}
 EVENT.Categories = {"deathtrigger", "largeimpact"}
@@ -39,6 +49,9 @@ function EVENT:Begin()
     local respawntimer = GetConVar("randomat_blerg_respawntimer"):GetInt()
     local respawnlimit = GetConVar("randomat_blerg_respawnlimit"):GetInt()
     local weapondelay = GetConVar("randomat_blerg_weapondelay"):GetInt()
+
+    EVENT.Description = GetDescription(respawnlimit)
+
     self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)
         if not IsValid(victim) then return end
         if not WEAPON_CATEGORY_ROLE then return end
