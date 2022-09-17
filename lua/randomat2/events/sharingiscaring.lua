@@ -1,7 +1,7 @@
 local EVENT = {}
 
 EVENT.Title = "Sharing is Caring"
-EVENT.Description = "When a player kills another, their inventory is swapped with thier victim's"
+EVENT.Description = "When a player kills another, their inventory is swapped with their victim's"
 EVENT.id = "sharingiscaring"
 EVENT.Categories = {"biased_innocent", "biased", "deathtrigger", "largeimpact"}
 
