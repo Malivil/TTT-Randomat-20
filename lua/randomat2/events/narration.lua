@@ -9,24 +9,51 @@ EVENT.Categories = {"fun", "smallimpact"}
 util.AddNetworkString("TriggerNarration")
 util.AddNetworkString("EndNarration")
 
+local StringFormat = string.format
+
+-- Sound file paths
+local beeping_sound_path = "beeping/beeping%s.mp3"
+local blerg_sound_path = "blerg/blerg%s.mp3"
+local bones_cracking_sound_path = "bones_cracking/bones_cracking%s.wav"
+local door_opening_sound_path = "door_opening/door_opening%s.mp3"
+local door_closing_sound_path = "door_closing/door_closing%s.mp3"
+local explosion_sound_path = "explosion/explosion%s.mp3"
+local footsteps_sound_path = "footsteps/footsteps%s.mp3"
+local gunshot_sound_path = "weapons/gunshot/gunshot%s.mp3"
+local jump_sound_path = "jump/jump%s.mp3"
+local reload_sound_path = "weapons/reload/reload%s.mp3"
+local smashing_glass_sound_path = "smashing_glass/smashing_glass%s.mp3"
+
+-- Sound file counts
+local beeping_sound_count = 7
+local blerg_sound_count = 10
+local bones_cracking_sound_count = 5
+local door_opening_sound_count = 5
+local door_closing_sound_count = 5
+local explosion_sound_count = 9
+local footsteps_sound_count = 9
+local gunshot_sound_count = 8
+local jump_sound_count = 5
+local reload_sound_count = 8
+local smashing_glass_sound_count = 8
+
+-- Sound patterns and path-count mappings
 local footsteps_pattern = ".*player/footsteps/.*%..*"
-local reload_sounds = {"weapons/reload/reload1.mp3", "weapons/reload/reload2.mp3", "weapons/reload/reload3.mp3", "weapons/reload/reload4.mp3", "weapons/reload/reload5.mp3", "weapons/reload/reload6.mp3", "weapons/reload/reload7.mp3", "weapons/reload/reload8.mp3"}
-local death_sounds = {"blerg/blerg1.mp3", "blerg/blerg2.mp3", "blerg/blerg3.mp3", "blerg/blerg4.mp3", "blerg/blerg5.mp3", "blerg/blerg6.mp3", "blerg/blerg7.mp3", "blerg/blerg8.mp3", "blerg/blerg9.mp3", "blerg/blerg10.mp3"}
-local gunshot_sounds = {"weapons/gunshot/gunshot1.mp3", "weapons/gunshot/gunshot2.mp3", "weapons/gunshot/gunshot3.mp3", "weapons/gunshot/gunshot4.mp3", "weapons/gunshot/gunshot5.mp3", "weapons/gunshot/gunshot6.mp3", "weapons/gunshot/gunshot7.mp3", "weapons/gunshot/gunshot8.mp3"}
-local door_opening_sounds = {"door_opening/door_opening1.mp3", "door_opening/door_opening2.mp3", "door_opening/door_opening3.mp3", "door_opening/door_opening4.mp3", "door_opening/door_opening5.mp3"}
-local door_closing_sounds = {"door_closing/door_closing1.mp3", "door_closing/door_closing2.mp3", "door_closing/door_closing3.mp3", "door_closing/door_closing4.mp3", "door_opening/door_closing5.mp3"}
-local jump_sounds = {"jump/jump1.mp3", "jump/jump2.mp3", "jump/jump3.mp3", "jump/jump4.mp3", "jump/jump5.mp3"}
+local reload_sounds = {reload_sound_path, reload_sound_count}
+local death_sounds = {blerg_sound_path, blerg_sound_count}
+local smashing_glass_sounds = {smashing_glass_sound_path, smashing_glass_sound_count}
 local sound_mapping = {
     -- Footsteps
-    [footsteps_pattern] = {"footsteps/footsteps1.mp3", "footsteps/footsteps2.mp3", "footsteps/footsteps3.mp3", "footsteps/footsteps4.mp3", "footsteps/footsteps5.mp3", "footsteps/footsteps6.mp3", "footsteps/footsteps7.mp3", "footsteps/footsteps8.mp3", "footsteps/footsteps9.mp3"},
+    [footsteps_pattern] = {footsteps_sound_path, footsteps_sound_count},
     -- Explosions
-    [".*weapons/.*explode.*%..*"] = {"explosion/explosion1.mp3", "explosion/explosion2.mp3", "explosion/explosion3.mp3", "explosion/explosion4.mp3", "explosion/explosion5.mp3", "explosion/explosion6.mp3", "explosion/explosion7.mp3", "explosion/explosion8.mp3", "explosion/explosion9.mp3"},
+    [".*weapons/.*explode.*%..*"] = {explosion_sound_path, explosion_sound_count},
     -- C4 Beeps
-    [".*weapons/.*beep.*%..*"] = {"beeping/beeping1.mp3", "beeping/beeping2.mp3", "beeping/beeping3.mp3", "beeping/beeping4.mp3", "beeping/beeping5.mp3", "beeping/beeping6.mp3", "beeping/beeping7.mp3"},
+    [".*weapons/.*beep.*%..*"] = {beeping_sound_path, beeping_sound_count},
     -- Glass breaking
-    [".*physics/glass/.*break.*%..*"] = {"smashing_glass/smashing_glass1.mp3", "smashing_glass/smashing_glass2.mp3", "smashing_glass/smashing_glass3.mp3", "smashing_glass/smashing_glass4.mp3", "smashing_glass/smashing_glass5.mp3", "smashing_glass/smashing_glass6.mp3", "smashing_glass/smashing_glass7.mp3", "smashing_glass/smashing_glass8.mp3"},
+    [".*physics/glass/.*break.*%..*"] = smashing_glass_sounds,
+    [".*physics/glass/glass_impact_.*%..*"] = smashing_glass_sounds,
     -- Fall damage (which don't work when converted to MP3 for some reason)
-    [".*player/damage*."] = {"bones_cracking/bones_cracking1.wav", "bones_cracking/bones_cracking2.wav", "bones_cracking/bones_cracking3.wav", "bones_cracking/bones_cracking4.wav", "bones_cracking/bones_cracking5.wav"},
+    [".*player/damage*."] = {bones_cracking_sound_path, bones_cracking_sound_count},
     -- Player death
     [".*player/death.*"] = death_sounds,
     [".*vo/npc/male01/pain*."] = death_sounds,
@@ -68,7 +95,7 @@ function EVENT:Begin()
     net.Broadcast()
     for _, ply in ipairs(player.GetAll()) do
         for _, wep in ipairs(ply:GetWeapons()) do
-            local chosen_sound = gunshot_sounds[math.random(1, #gunshot_sounds)]
+            local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
             Randomat:OverrideWeaponSound(wep, chosen_sound)
         end
     end
@@ -77,7 +104,7 @@ function EVENT:Begin()
         timer.Create("NarrationDelay", 0.1, 1, function()
             net.Start("TriggerNarration")
             net.Send(ply)
-            local chosen_sound = gunshot_sounds[math.random(1, #gunshot_sounds)]
+            local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
             Randomat:OverrideWeaponSound(wep, chosen_sound)
         end)
     end)
@@ -91,11 +118,14 @@ function EVENT:Begin()
                 if footsteps_pattern == pattern and IsPlayer(data.Entity) and not data.Entity:IsOnGround() then
                     -- Don't replace the sound if the player is on a ladder
                     if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
-                        new_sound = jump_sounds[math.random(1, #jump_sounds)]
+                        new_sound = StringFormat(jump_sound_path, math.random(1, jump_sound_count))
                     end
                 else
-                    new_sound = sounds[math.random(1, #sounds)]
+                    local sound_path = sounds[1]
+                    local sound_index = math.random(1, sounds[2])
+                    new_sound = StringFormat(sound_path, sound_index)
                 end
+                break
             end
         end
 
@@ -105,16 +135,16 @@ function EVENT:Begin()
         -- Door opening/closing
         elseif current_sound == "doors/default_move.wav" then
             if DoorIsOpen(data.Entity) then
-                data.SoundName = door_closing_sounds[math.random(1, #door_closing_sounds)]
+                data.SoundName = StringFormat(door_closing_sound_path, math.random(1, door_closing_sound_count))
             else
-                data.SoundName = door_opening_sounds[math.random(1, #door_opening_sounds)]
+                data.SoundName = StringFormat(door_opening_sound_path, math.random(1, door_opening_sound_count))
             end
             -- Increase the volume of these so they can be heard
             data.Volume = 2
             data.SoundLevel = 100
             return true
         else
-            local chosen_sound = gunshot_sounds[math.random(1, #gunshot_sounds)]
+            local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
             return Randomat:OverrideWeaponSoundData(data, chosen_sound)
         end
     end)
