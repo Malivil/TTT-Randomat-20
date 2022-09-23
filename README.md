@@ -34,15 +34,11 @@ _ttt_randomat_allow_client_list_ - Default: 1 - Whether to allow the clients to 
 _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*
 
 # Latest Events
-1. Red Light, Green Light
-1. Two Lies and a Truth
-1. A power you can't learn from the Jedi
-1. Fan Favorite
-1. Full of Crabs and Fire!
 1. Fault Lines
 1. Delayed Reaction
 1. Got any connies?!
 1. Pump You Up
+1. High Ground
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -865,6 +861,19 @@ _ttt_randomat_immunity_weight_ - Default: -1 - The weight this event should use 
 _randomat_immunity_timer_ - Default: 30 - The number of seconds the vote lasts.\
 _randomat_immunity_bullet_ - Default: 0 - Whether bullet damage can be voted for.\
 _randomat_immunity_slashing_ - Default: 0 - Whether slashing damage can be voted for.
+
+## High Ground
+Does damage over time to the player who is closest to the ground
+\
+\
+**ConVars**
+\
+_ttt_randomat_highground_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_highground_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_highground_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_highground_damage_ - Default: 1 - The amount of health the player will lose each interval.\
+_randomat_highground_damage_delay_ - Default: 10 - The delay before damage starts.\
+_randomat_highground_damage_interval_ - Default: 2 - How often the player will take damage.
 
 ## Honey, I shrunk the terrorists
 Scales each player's size by a configurable ratio
@@ -1847,6 +1856,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
+- Matt Warren from the Yogscast YouTube comments and Dangerzachattack from the Custom Roles for TTT for the idea for the "It's over Anakin! I have the high ground!" event
 - [AshuraaHunter](https://github.com/AshuraaHunter) from GitHub for the idea for adding player names to the "Typeracer" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
