@@ -34,11 +34,11 @@ _ttt_randomat_allow_client_list_ - Default: 1 - Whether to allow the clients to 
 _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*
 
 # Latest Events
-1. Fault Lines
 1. Delayed Reaction
 1. Got any connies?!
 1. Pump You Up
 1. High Ground
+1. It's hunting season!
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -985,6 +985,18 @@ _ttt_randomat_insurance_min_players_ - Default: 0 - The minimum number of player
 _ttt_randomat_insurance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_insurance_damage_ - Default: 20 - How much damage before a player gets paid.
 
+## It's hunting season!
+Randomly turns a vanilla Innocent into an active Loot Goblin
+\
+\
+**ConVars**
+\
+_ttt_randomat_huntingseason_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_huntingseason_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_huntingseason_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_huntingseason_delay_ - Default: 5 - How much damage before a player gets paid.\
+_randomat_huntingseason_show_name_ - Default: 1 - Whether to show the target player's name in the event title.
+
 ## Jump Around!
 Players can only move by multi-jumping\
 NOTE: Only runs if a double-jump mod which supports the "multijump_default_jumps" convar is running
@@ -1810,6 +1822,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the "TTT Randomat" mod which THAT was an update to
 - [Grodbert](https://steamcommunity.com/id/Grodbert) for the [SCP-871](https://steamcommunity.com/sharedfiles/filedetails/?id=1992626478) model which is used in the "The Cake is a Lie" event
 - u/A_Very_Lonely_Waffle and u/Agenta521 on Reddit for the idea for the "Election Day" event
+- u/alpha1812 on Reddit for the idea for the "It's hunting season!" event
 - u/alt----f4 on Reddit for the idea for the "A Glitch has been patched" event
 - u/dinnaehuv1 on Reddit for the idea for the "Double Cross" event
 - u/En_TioN on Reddit for the idea for the "Blerg!", "Gaseous Snake", and "Scouts Only" events
