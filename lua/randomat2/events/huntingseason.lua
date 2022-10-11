@@ -45,7 +45,10 @@ function EVENT:Begin()
         else
             self.AltTitle = "It's hunting season!"
         end
-        Randomat:EventNotifySilent(self.AltTitle)
+
+        if not self.Silent then
+            Randomat:EventNotifySilent(self.AltTitle)
+        end
     end)
 end
 

@@ -11,7 +11,9 @@ EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 
 function EVENT:Begin()
     local explodetimer = GetConVar("randomat_texplode_timer"):GetInt()
-    Randomat:EventNotifySilent("A traitor will explode in " .. explodetimer .. " seconds!")
+    if not self.Silent then
+        Randomat:EventNotifySilent("A traitor will explode in " .. explodetimer .. " seconds!")
+    end
 
     local x = 0
     local tgt = nil

@@ -8,7 +8,9 @@ EVENT.id = "explode"
 EVENT.Categories = {"largeimpact"}
 
 function EVENT:Begin()
-    Randomat:EventNotifySilent("A Random Person will explode every " .. GetConVar("randomat_explode_timer"):GetInt() .. " seconds! Watch out! (EXCEPT " .. Randomat:GetRolePluralString(ROLE_DETECTIVE):upper() .. ")")
+    if not self.Silent then
+        Randomat:EventNotifySilent("A Random Person will explode every " .. GetConVar("randomat_explode_timer"):GetInt() .. " seconds! Watch out! (EXCEPT " .. Randomat:GetRolePluralString(ROLE_DETECTIVE):upper() .. ")")
+    end
 
     local effectdata = EffectData()
 

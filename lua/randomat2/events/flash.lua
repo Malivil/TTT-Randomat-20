@@ -10,7 +10,9 @@ EVENT.SingleUse = false
 EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
-    Randomat:EventNotifySilent("Everything is as fast as Flash now! (" .. GetConVar("randomat_flash_scale"):GetInt() .. "% faster)")
+    if not self.Silent then
+        Randomat:EventNotifySilent("Everything is as fast as Flash now! (" .. GetConVar("randomat_flash_scale"):GetInt() .. "% faster)")
+    end
 
     local ts = game.GetTimeScale()
     game.SetTimeScale(ts + GetConVar("randomat_flash_scale"):GetInt()/100)

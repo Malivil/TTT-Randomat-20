@@ -15,7 +15,9 @@ EVENT.Categories = {"eventtrigger", "largeimpact"}
 local timers = {}
 
 function EVENT:Begin()
-    Randomat:EventNotifySilent("Random x" .. GetConVar("randomat_randomxn_triggers"):GetInt())
+    if not self.Silent then
+        Randomat:EventNotifySilent("Random x" .. GetConVar("randomat_randomxn_triggers"):GetInt())
+    end
 
     local timernum = table.Count(timers) + 1
     local timername = "RandomxnTimer" .. timernum

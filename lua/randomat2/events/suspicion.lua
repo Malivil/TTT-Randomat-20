@@ -30,7 +30,9 @@ function EVENT:Begin()
     end
 
     if suspicionply ~= nil then
-        Randomat:EventNotifySilent(suspicionply:Nick() .. " is acting suspicious...")
+        if not self.Silent then
+            Randomat:EventNotifySilent(suspicionply:Nick() .. " is acting suspicious...")
+        end
 
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
             Randomat:SetRole(suspicionply, ROLE_JESTER)

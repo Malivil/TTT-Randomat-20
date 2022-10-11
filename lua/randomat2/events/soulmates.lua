@@ -62,7 +62,9 @@ function EVENT:Begin(first_target, second_target)
     local size = 1
     if affect_all then
         size = #ply2
-        Randomat:EventNotifySilent("Soulmates")
+        if not self.Silent then
+            Randomat:EventNotifySilent("Soulmates")
+        end
 
         for i = 1, #ply2 do
             ply1[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is " .. ply2[i]:Nick())
@@ -85,7 +87,9 @@ function EVENT:Begin(first_target, second_target)
         if GetConVar("randomat_soulmates_sharedhealth"):GetBool() then
             InitializeSharedHealth(1)
         end
-        Randomat:EventNotifySilent(ply1[1]:Nick() .. " and " .. ply2[1]:Nick() .. " are now soulmates.")
+        if not self.Silent then
+            Randomat:EventNotifySilent(ply1[1]:Nick() .. " and " .. ply2[1]:Nick() .. " are now soulmates.")
+        end
         Randomat:LogEvent("[RANDOMAT] " .. ply1[1]:Nick() .. " and " .. ply2[1]:Nick() .. " are now soulmates.")
     end
 
