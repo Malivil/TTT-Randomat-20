@@ -8,12 +8,20 @@ EVENT.Description = "Innocents win if they kill the jester, but traitors want th
 EVENT.id = "killjester"
 EVENT.Categories = {"largeimpact"}
 
+local origPlayerDeath = origPlayerDeath or nil
+
 function EVENT:Begin()
     -- Update this in case the role names have been changed
-    EVENT.Description = Randomat:GetRolePluralString(ROLE_INNOCENT) .. " win if they kill the " .. Randomat:GetRoleString(ROLE_JESTER):lower() .. ", but " .. Randomat:GetRolePluralString(ROLE_TRAITOR):lower() .. " will share the win"
+    EVENT.Description = Randomat:GetRolePluralString(ROLE_INNOCENT) .. " win if they kill the " .. Randomat:GetRoleString(ROLE_JESTER):lower() .. ", but " .. Randomat:GetRolePluralString(ROLE_TRAITOR):lower() .. " want them alive"
 
     net.Start("RdmtKillJesterBegin")
     net.Broadcast()
+
+    -- Save the original hook and remove it
+    if not origPlayerDeath then
+        origPlayerDeath = hook.GetTable()["PlayerDeath"]["Jester_WinCheck_PlayerDeath"]
+        hook.Remove("PlayerDeath", "Jester_WinCheck_PlayerDeath")
+    end
 
     self:AddHook("TTTCheckForWin", function()
         -- If the jester is dead, the innocents win
@@ -28,6 +36,12 @@ end
 function EVENT:End()
     net.Start("RdmtKillJesterEnd")
     net.Broadcast()
+
+    -- Restore the original hook
+    if origPlayerDeath then
+        hook.Add("PlayerDeath", "Jester_WinCheck_PlayerDeath", origPlayerDeath)
+        origPlayerDeath = nil
+    end
 end
 
 function EVENT:Condition()
