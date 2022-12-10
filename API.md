@@ -152,12 +152,11 @@ All methods below are automatically defined for every event but events can overr
 - *ply* - The player whose role-specific events are being removed
 - *skip_add_crowbar* - Whether to skip giving the player a replacement crowbar
 
-**EVENT:SwapWeapons(ply, weapon_list, from_killer)** - Swaps all weapons from the given player with the specified list of weapons.\
+**EVENT:SwapWeapons(ply, weapon_list)** - Swaps all weapons from the given player with the specified list of weapons.\
 *Realm:* Server\
 *Parameters:*
 - *ply* - The player whose weapons are being swapped
 - *weapon_list* - The list of weapons to give the target player
-- *from_killer* - Whether the weapons being given came from a player with the Killer role
 
 ### Properties
 Properties used to define and describe an event and its running conditions
