@@ -124,11 +124,9 @@ end
 
 net.Receive("PumpYouUpPlayerVoted", function(ln, ply)
     local votee = net.ReadString()
-    if not GetConVar("randomat_pumpyouup_allow_self_vote"):GetBool() then
-        if ply:Nick() == votee then
-            ply:PrintMessage(HUD_PRINTTALK, "You can't vote for yourself.")
-            return
-        end
+    if not GetConVar("randomat_pumpyouup_allow_self_vote"):GetBool() and ply:Nick() == votee then
+        ply:PrintMessage(HUD_PRINTTALK, "You can't vote for yourself.")
+        return
     end
 
     local num
@@ -140,6 +138,11 @@ net.Receive("PumpYouUpPlayerVoted", function(ln, ply)
             -- If this player already voted, find their previous vote and remove it
             if playersvoted[ply] then
                 prev_vote = playersvoted[ply]:Nick()
+                -- If this player's vote didn't change, just don't do anything
+                if v:Nick() == prev_vote then
+                    return
+                end
+
                 for k2, v2 in pairs(votableplayers) do
                     if v2:Nick() == prev_vote then
                         playervotes[k2] = playervotes[k2] - 1
