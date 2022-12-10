@@ -28,8 +28,8 @@ function EVENT:Begin()
         if ply1 == nil or ply2 == nil then return end
 
         local ply1weps = ply1:GetWeapons()
-        self:SwapWeapons(ply1, ply2:GetWeapons(), ply2:GetRole() == ROLE_KILLER)
-        self:SwapWeapons(ply2, ply1weps, ply1:GetRole() == ROLE_KILLER)
+        self:SwapWeapons(ply1, ply2:GetWeapons())
+        self:SwapWeapons(ply2, ply1weps)
     end)
 end
 

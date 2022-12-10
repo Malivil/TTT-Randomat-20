@@ -15,7 +15,7 @@ function EVENT:Begin()
 
         victim:StripWeapons()
         -- Give the victim's weapons to the killer
-        self:SwapWeapons(attacker, weps, victim:GetRole() == ROLE_KILLER)
+        self:SwapWeapons(attacker, weps)
     end)
 end
 

@@ -1109,11 +1109,18 @@ function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
     end
 end
 
-function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
+function randomat_meta:SwapWeapons(ply, weapon_list)
+    local role_weapons = {}
+    -- If this is a version of CR for TTT that has role weapons defined, keep track of them
+    if WEAPON_CATEGORY_ROLE then
+        for _, w in ipairs(ply:GetWeapons()) do
+            if w.Category == WEAPON_CATEGORY_ROLE then
+                table.insert(role_weapons, WEPS.GetClass(w))
+            end
+        end
+    end
+    -- Hardcode these for backwards compatibility
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
-    local had_bodysnatch = ply:HasWeapon("weapon_bod_bodysnatch")
-    local had_paramedic_defib = ply:HasWeapon("weapon_med_defib")
-    local had_zombificator = ply:HasWeapon("weapon_mad_zombificator")
     local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
     self:HandleWeaponAddAndSelect(ply, function()
         ply:StripWeapons()
@@ -1127,14 +1134,8 @@ function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
             ply:Give("weapon_vam_fangs")
         elseif had_brainwash then
             ply:Give("weapon_hyp_brainwash")
-        elseif had_bodysnatch then
-            ply:Give("weapon_bod_bodysnatch")
         elseif had_scanner then
             ply:Give("weapon_ttt_wtester")
-        elseif had_paramedic_defib then
-            ply:Give("weapon_med_defib")
-        elseif had_zombificator then
-            ply:Give("weapon_mad_zombificator")
         elseif ply:GetRole() == ROLE_KILLER then
             if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
                 ply:Give("weapon_kil_knife")
@@ -1145,10 +1146,16 @@ function randomat_meta:SwapWeapons(ply, weapon_list, from_killer)
             end
         end
 
-        -- If the player that swapped to this player was a killer then they no longer have a crowbar
-        if from_killer then
-            ply:Give("weapon_zm_improvised")
+        -- Give their role weapon(s) back
+        for _, c in ipairs(role_weapons) do
+            ply:Give(c)
         end
+
+        -- Make sure everyone has these weapons
+        -- Roles that shouldn't, like the non-prime Zombie, won't be able to pick them up anyway
+        ply:Give("weapon_ttt_unarmed")
+        ply:Give("weapon_zm_carry")
+        ply:Give("weapon_zm_improvised")
 
         -- Handle inventory weapons last to make sure the roles get their specials
         for _, v in ipairs(weapon_list) do
