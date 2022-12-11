@@ -28,8 +28,17 @@ function EVENT:Begin()
     self:AddHook("Think", function()
         for _, ply in ipairs(self:GetAlivePlayers()) do
             if Randomat:IsDetectiveLike(ply) and ply:GetObserverMode() == OBS_MODE_NONE then
+                -- If we're being lifted by a barnacle, temporarily give the player the unarmed "weapon" so it can force them to switch
+                if ply:IsEFlagSet(EFL_IS_BEING_LIFTED_BY_BARNACLE) then
+                    ply:Give("weapon_ttt_unarmed")
+                    ply:SelectWeapon("weapon_ttt_unarmed")
+                    continue
+                else
+                    ply:StripWeapon("weapon_ttt_unarmed")
+                end
+
                 -- Force the player to use the H.U.G.E.
-                if not ply:HasWeapon("weapon_zm_sledge")  then
+                if not ply:HasWeapon("weapon_zm_sledge") then
                     ply:StripWeapons()
                     ply:Give("weapon_zm_sledge")
                     ply:SelectWeapon("weapon_zm_sledge")
@@ -57,7 +66,8 @@ function EVENT:Begin()
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         if not IsValid(ply) then return end
         if Randomat:IsDetectiveLike(ply) then
-            return WEPS.GetClass(wep) == "weapon_zm_sledge"
+            local weap_class = WEPS.GetClass(wep)
+            return weap_class == "weapon_zm_sledge" or (weap_class == "weapon_ttt_unarmed" and ply:IsEFlagSet(EFL_IS_BEING_LIFTED_BY_BARNACLE))
         end
     end)
 
