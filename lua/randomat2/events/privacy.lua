@@ -17,7 +17,9 @@ local function TriggerAlert(item, role, is_item, ply)
 end
 
 function EVENT:Begin()
-    self:AddHook("TTTOrderedEquipment", function(ply, item, is_item)
+    self:AddHook("TTTOrderedEquipment", function(ply, item, is_item, fromrdmt)
+        if fromrdmt then return end
+
         TriggerAlert(item, self:GetRoleName(ply, true), is_item, ply)
     end)
 
