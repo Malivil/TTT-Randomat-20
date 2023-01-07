@@ -14,7 +14,6 @@ EVENT.Categories = {"fun", "largeimpact"}
 
 local function SetTimeScale(ts)
     if ts == nil then return end
-    print("Time Scale set to " .. ts)
     game.SetTimeScale(ts)
 end
 
