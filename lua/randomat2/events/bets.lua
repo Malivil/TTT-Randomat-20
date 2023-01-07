@@ -90,8 +90,13 @@ function EVENT:Begin()
                     SendFullStateUpdate()
                 end
 
-                -- Remove the hook so this only happens once
+                -- Remove these hooks so this only happens once and people don't get the vote window still
                 self:RemoveHook("TTTWinCheckBlocks")
+                self:RemoveHook("PlayerDeath")
+
+                -- Broadcast the end to everyone so voting windows close
+                net.Start("RdmtHedgeBetsEnd")
+                net.Broadcast()
                 return WIN_NONE
             end
             return win_type
