@@ -39,6 +39,7 @@ _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" labe
 1. Pump You Up
 1. It's over Anakin! I have the high ground!
 1. It's hunting season!
+1. Praw emiTime Warp (aka Time Flip)
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1193,6 +1194,21 @@ _randomat_reversetimewarp_scale_ - Default: 15 - The percentage the speed should
 _randomat_reversetimewarp_scale_min_ - Default: 0.15 - The minimum scale the speed should decrease to.\
 _randomat_reversetimewarp_timer_ - Default: 15 - How often (in seconds) the speed will be decreased.
 
+## Praw emiTime Warp (aka Time Flip)
+Time scale is changed every few seconds for a short period of time before reverting to normal
+\
+\
+**ConVars**
+\
+_ttt_randomat_timeflip_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_timeflip_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_timeflip_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_timeflip_timer_ - Default: 30 - How often the time scale should change.\
+_randomat_timeflip_duration_slow_ - Default: 3 - How long the time scale should change for when slow.\
+_randomat_timeflip_duration_fast_ - Default: 30 - How long the time scale should change for when fast.\
+_randomat_timeflip_minimum_ - Default: 0.33 - The minimum time scale.\
+_randomat_timeflip_maximum_ - Default: 2.5 - The maximum time scale.
+
 ## Prop Hunt
 Converts all Jester/Swapper and innocent team members to the Innocent role, strip their weapons, and gives them a Prop Disguiser. Converts all monster and traitor team members to the Traitor role.
 \
@@ -1862,6 +1878,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
 - Tryhardsupreme from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Down Under" event
 - Woodysus from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Our Little Secret" event
+- Dylan from Nanotekkit for the idea for the "Praw emiTime Warp" event
 - Matt from Nanotekkit for the idea for the "Boo!", "RISE FROM YOUR... Bees?", and "Smoke Signals" events
 - Shahad from Nanotekkit for the idea for the "Earthquake" event
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
