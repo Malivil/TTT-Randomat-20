@@ -14,13 +14,15 @@ net.Receive("RdmtHerdImmunityBegin", function()
     local list = vgui.Create("DListView", voteframe)
     list:Dock(FILL)
     list:SetMultiSelect(false)
-    list:AddColumn("Type")
+    local typeColumn = list:AddColumn("Type")
     list:AddColumn("Votes")
 
     local options = net.ReadTable()
     for _, v in ipairs(options) do
         list:AddLine(v, 0)
     end
+
+    list:OnRequestResize(typeColumn, 125)
 
     list.OnRowSelected = function(lst, index, pnl)
         local ply = LocalPlayer()

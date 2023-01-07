@@ -30,11 +30,14 @@ local function closeAllChooseFrames()
     end
 end
 
-local function openFrame(x)
+local function openFrame(x, vote)
     frames = frames + 1
     local frame = vgui.Create("DFrame")
     frame:SetPos(10, ScrH() - 500)
-    frame:SetSize(200, 17 * x + 51)
+
+    local width = 250
+    if vote then width = 325 end
+    frame:SetSize(width, 17 * x + 51)
     frame:SetTitle("Choose an Event (Hold " .. Key("+showscores", "tab"):lower() .. ")")
     frame:SetDraggable(false)
     frame:ShowCloseButton(false)
@@ -70,18 +73,21 @@ end)
 net.Receive("ChooseVoteTrigger", function()
     local x = net.ReadInt(32)
     local tbl = net.ReadTable()
-    local frame = openFrame(x)
+    local frame = openFrame(x, true)
 
     --Event List
     local list = vgui.Create("DListView", frame)
     list:Dock(FILL)
     list:SetMultiSelect(false)
-    list:AddColumn("Events")
+    local eventColumn = list:AddColumn("Events")
     list:AddColumn("Votes")
 
     for _, v in pairs(tbl) do
         list:AddLine(v.title, 0, v.id)
     end
+
+    list:OnRequestResize(eventColumn, 250)
+
     chooseTables[frames] = frame
 
     list.OnRowSelected = function(lst, index, pnl)

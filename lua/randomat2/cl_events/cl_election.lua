@@ -12,7 +12,7 @@ net.Receive("ElectionNominateBegin", function()
     local listView = vgui.Create("DListView", frame)
     listView:Dock(FILL)
     listView:SetMultiSelect(false)
-    listView:AddColumn("Players")
+    local playerColumn = listView:AddColumn("Players")
     listView:AddColumn("Votes")
 
     for _, v in ipairs(player.GetAll()) do
@@ -21,6 +21,8 @@ net.Receive("ElectionNominateBegin", function()
             listView:AddLine(v:Nick(), 0)
         end
     end
+
+    listView:OnRequestResize(playerColumn, 125)
 
     listView.OnRowSelected = function(lst, index, pnl)
         local ply = LocalPlayer()

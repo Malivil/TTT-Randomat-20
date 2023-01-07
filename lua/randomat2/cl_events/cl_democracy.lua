@@ -15,7 +15,7 @@ net.Receive("DemocracyEventBegin", function()
     local list = vgui.Create("DListView", voteframe)
     list:Dock(FILL)
     list:SetMultiSelect(false)
-    list:AddColumn("Players")
+    local playerColumn = list:AddColumn("Players")
     list:AddColumn("Votes")
 
     for _, v in ipairs(player.GetAll()) do
@@ -23,6 +23,8 @@ net.Receive("DemocracyEventBegin", function()
             list:AddLine(v:Nick(), 0)
         end
     end
+
+    list:OnRequestResize(playerColumn, 125)
 
     list.OnRowSelected = function(lst, index, pnl)
         local ply = LocalPlayer()
