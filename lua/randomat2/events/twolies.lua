@@ -34,7 +34,7 @@ function EVENT:Begin()
 
         -- This is the one we're actually going to run
         local event = chosen[math.random(1, 3)]
-        Randomat:SilentTriggerEvent(event.Id, self.owner)
+        Randomat:SilentTriggerHiddenEvent(event.Id, self.owner, "This event is hidden by '" .. Randomat:GetEventTitle(EVENT) .. "'")
     end)
 end
 

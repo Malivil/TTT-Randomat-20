@@ -203,12 +203,14 @@ local function EndEvent(evt)
     net.Broadcast()
 end
 
-local function TriggerEvent(event, ply, silent, ...)
+local function TriggerEvent(event, ply, options, ...)
+    options = options or {}
+    local silent = options.Silent
     if not silent then
         -- If this event is supposed to start secretly, trigger "secret" with this specific event chosen
         -- Unless "secret" is already running in which case we don't care, just let it go
         if event.StartSecret and not Randomat:IsEventActive("secret") then
-            TriggerEvent(Randomat.Events["secret"], ply, false, event.Id)
+            TriggerEvent(Randomat.Events["secret"], ply, nil, event.Id)
             return
         end
 
@@ -241,12 +243,12 @@ local function TriggerEvent(event, ply, silent, ...)
     end
 
     -- Broadcast this to every client, but hide what it really is if secret is active (and this isn't secret itself)
-    local should_hide = event.Id ~= "secret" and Randomat:IsEventActive("secret")
+    local should_hide = options.Hidden or event.Id ~= "secret" and Randomat:IsEventActive("secret")
     net.Start("RdmtEventBegin")
     if should_hide then
         net.WriteString("???")
         net.WriteString("A 'Secret' Event")
-        net.WriteString("This event is hidden by '" .. Randomat:GetEventTitle(Randomat.Events["secret"]) .. "'")
+        net.WriteString(options.HiddenMessage or ("This event is hidden by '" .. Randomat:GetEventTitle(Randomat.Events["secret"]) .. "'"))
     else
         net.WriteString(event.Id)
         net.WriteString(title)
@@ -539,18 +541,18 @@ end
 
 function Randomat:TriggerRandomEvent(ply)
     local event = Randomat:GetRandomEvent()
-    TriggerEvent(event, ply, false)
+    TriggerEvent(event, ply)
 end
 
 function Randomat:SilentTriggerRandomEvent(ply)
     local event = Randomat:GetRandomEvent()
-    TriggerEvent(event, ply, true)
+    TriggerEvent(event, ply, {Silent=true})
 end
 
 function Randomat:TriggerEvent(cmd, ply, ...)
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
-        TriggerEvent(event, ply, false, ...)
+        TriggerEvent(event, ply, nil, ...)
     else
         error("Could not find event '" .. cmd .. "'")
     end
@@ -561,7 +563,7 @@ function Randomat:SafeTriggerEvent(cmd, ply, error_if_unsafe, ...)
         local event = Randomat.Events[cmd]
         local can_run, reason = Randomat:CanEventRun(event)
         if can_run then
-            TriggerEvent(event, ply, false, ...)
+            TriggerEvent(event, ply, nil, ...)
         elseif error_if_unsafe then
             error("Conditions for event not met: " .. reason)
         end
@@ -573,7 +575,25 @@ end
 function Randomat:SilentTriggerEvent(cmd, ply, ...)
     if Randomat.Events[cmd] ~= nil then
         local event = Randomat.Events[cmd]
-        TriggerEvent(event, ply, true, ...)
+        TriggerEvent(event, ply, {Silent=true}, ...)
+    else
+        error("Could not find event '" .. cmd .. "'")
+    end
+end
+
+function Randomat:TriggerHiddenEvent(cmd, ply, reason, ...)
+    if Randomat.Events[cmd] ~= nil then
+        local event = Randomat.Events[cmd]
+        TriggerEvent(event, ply, {Hidden=true,HiddenMessage=reason}, ...)
+    else
+        error("Could not find event '" .. cmd .. "'")
+    end
+end
+
+function Randomat:SilentTriggerHiddenEvent(cmd, ply, reason, ...)
+    if Randomat.Events[cmd] ~= nil then
+        local event = Randomat.Events[cmd]
+        TriggerEvent(event, ply, {Silent=true,Hidden=true,HiddenMessage=reason}, ...)
     else
         error("Could not find event '" .. cmd .. "'")
     end

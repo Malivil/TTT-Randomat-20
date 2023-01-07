@@ -779,6 +779,14 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *ply* - The player who caused this event to be started
 - *...* - All parameters that could be passed into this event. Allows you to change aspects of an event based on what code calls it
 
+**Randomat:SilentTriggerHiddenEvent(id, ply, reason, ...)** - Triggers the event with the given ID without notifying the players and also doesn't show it in the list of active events.\
+*Realm:* Server\
+*Parameters:*
+- *id* - The ID of the event being started
+- *ply* - The player who caused this event to be started
+- *reason* - A message explaining the reason why this event is hidden
+- *...* - All parameters that could be passed into this event. Allows you to change aspects of an event based on what code calls it
+
 **Randomat:SilentTriggerRandomEvent(ply)** - Triggers a random event without notifying the players.\
 *Realm:* Server\
 *Parameters:*
@@ -825,6 +833,14 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *id* - The ID of the event being started
 - *ply* - The player who caused this event to be started
+- *...* - All parameters that could be passed into this event. Allows you to change aspects of an event based on what code calls it
+
+**Randomat:TriggerHiddenEvent(id, ply, reason, ...)** - Triggers the event with the given ID, but doesn't show it in the list of active events.\
+*Realm:* Server\
+*Parameters:*
+- *id* - The ID of the event being started
+- *ply* - The player who caused this event to be started
+- *reason* - A message explaining the reason why this event is hidden
 - *...* - All parameters that could be passed into this event. Allows you to change aspects of an event based on what code calls it
 
 **Randomat:TriggerRandomEvent(ply)** - Triggers a random event.\
