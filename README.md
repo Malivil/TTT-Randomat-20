@@ -40,6 +40,7 @@ _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" labe
 1. It's over Anakin! I have the high ground!
 1. It's hunting season!
 1. Praw emiTime Warp (aka Time Flip)
+1. Somebody set us up the bomb
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1428,6 +1429,16 @@ _ttt_randomat_skyislava_weight_ - Default: -1 - The weight this event should use
 _randomat_skyislava_interval_ - Default: 0.25 - How often (in seconds) damage is done while players are in the air.\
 _randomat_skyislava_damage_ - Default: 1 - How much damage is done.
 
+## Somebody set us up the bomb
+Gives all traitors C4. If a C4 explodes by running out of time, the traitors win.
+\
+\
+**ConVars**
+\
+_ttt_randomat_defusemode_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_defusemode_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_defusemode_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
 ## Trickle-Down Economics
 Spent credits are redistributed to other people with shops
 \
@@ -1884,6 +1895,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targeting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
+- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb" event
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - Matt Warren from the Yogscast YouTube comments and Dangerzachattack from the Custom Roles for TTT for the idea for the "It's over Anakin! I have the high ground!" event
