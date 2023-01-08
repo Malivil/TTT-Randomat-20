@@ -39,6 +39,11 @@ function Randomat:IsInnocentTeam(ply, skip_detective)
     return role == ROLE_DETECTIVE or role == ROLE_INNOCENT or role == ROLE_MERCENARY or role == ROLE_PHANTOM or role == ROLE_GLITCH
 end
 
+function Randomat:IsDetectiveTeam(ply)
+    if ply.IsDetectiveTeam then return ply:IsDetectiveTeam() end
+    return ply:GetRole() == ROLE_DETECTIVE
+end
+
 function Randomat:IsTraitorTeam(ply, skip_evil_detective)
     -- Handle this early because IsTraitorTeam doesn't
     if skip_evil_detective and Randomat:IsEvilDetectiveLike(ply) then

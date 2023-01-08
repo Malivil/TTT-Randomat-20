@@ -567,6 +567,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* `true` if the player passes the check, `false` otherwise
 
+**Randomat:IsDetectiveTeam(ply)** - Determines whether the given player is on the Detective team.\
+*Realm:* Client and Server\
+*Parameters:*
+- *ply* - The player to check
+
+*Returns:* `true` if the player passes the check, `false` otherwise
+
 **Randomat:IsEvilDetectiveLike(ply)** - Determines whether the given player is a Detective-like role on the Traitor team.\
 *Realm:* Client and Server\
 *Parameters:*
