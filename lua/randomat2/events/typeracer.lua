@@ -123,6 +123,7 @@ concommand.Add("randomat_typeracer_add_phrase", function(ply, cmd, args, argStr)
         table.insert(custom_values, phrase)
     end
     SaveCustomValues()
+    CallHook("TTTRandomatCommand", nil, ply, cmd, args)
 end)
 concommand.Add("randomat_typeracer_remove_phrase", function(ply, cmd, args, argStr)
     local phrase = string.Trim(argStr):lower()
@@ -133,10 +134,12 @@ concommand.Add("randomat_typeracer_remove_phrase", function(ply, cmd, args, argS
         print("Phrase not found: '" .. phrase .. "'")
     end
     SaveCustomValues()
+    CallHook("TTTRandomatCommand", nil, ply, cmd, args)
 end)
 concommand.Add("randomat_typeracer_list_phrases", function(ply, cmd, args, argStr)
     print("Custom Phrases:")
     PrintTable(custom_values)
+    CallHook("TTTRandomatCommand", nil, ply, cmd, args)
 end)
 
 -- Read custom values out of the file on the disk

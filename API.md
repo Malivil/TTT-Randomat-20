@@ -231,6 +231,13 @@ For example, if there is a hook that returns three parameters: `first`, `second`
 
 *Note:* Return nothing to allow the default logic to run
 
+***TTTRandomatCommand(ply, cmd, args)** - Called when a Randomat console command is run.\
+*Realm:* Server\
+*Parameters:*
+- *ply* - The player who ran the command
+- *cmd* - Which command was run
+- *args* - The arguments passed in to the command
+
 **TTTRandomatTriggered(event_id, ply)** - Called when a Randomat event is started.\
 *Realm:* Server\
 *Parameters:*

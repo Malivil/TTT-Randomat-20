@@ -1,5 +1,15 @@
 Randomat = Randomat or {}
 
+local concommand = concommand
+local file = file
+local hook = hook
+local ipairs = ipairs
+local math = math
+local pairs = pairs
+local resource = resource
+
+local CallHook = hook.Call
+
 local function AddServer(fil)
     if SERVER then include(fil) end
 end
@@ -15,22 +25,25 @@ if SERVER then
     resource.AddSingleFile("materials/icon32/cut.png")
     resource.AddSingleFile("materials/icon32/stones.png")
 
-    concommand.Add("ttt_randomat_disableall", function()
+    concommand.Add("ttt_randomat_disableall", function(ply, cc, arg)
         for _, v in pairs(Randomat.Events) do
             GetConVar("ttt_randomat_" .. v.Id):SetBool(false)
         end
+        CallHook("TTTRandomatCommand", nil, ply, cc, arg)
     end)
 
-    concommand.Add("ttt_randomat_enableall", function()
+    concommand.Add("ttt_randomat_enableall", function(ply, cc, arg)
         for _, v in pairs(Randomat.Events) do
             GetConVar("ttt_randomat_" .. v.Id):SetBool(true)
         end
+        CallHook("TTTRandomatCommand", nil, ply, cc, arg)
     end)
 
-    concommand.Add("ttt_randomat_resetweights", function()
+    concommand.Add("ttt_randomat_resetweights", function(ply, cc, arg)
         for _, v in pairs(Randomat.Events) do
             GetConVar("ttt_randomat_" .. v.Id .. "_weight"):SetInt(-1)
         end
+        CallHook("TTTRandomatCommand", nil, ply, cc, arg)
     end)
 
     local auto = CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should automatically trigger on round start.")

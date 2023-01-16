@@ -57,6 +57,7 @@ local string = string
 local table = table
 local timer = timer
 
+local CallHook = hook.Call
 local EntsCreate = ents.Create
 local GetAllPlayers = player.GetAll
 local GetAllEnts = ents.GetAll
@@ -150,9 +151,10 @@ function Randomat:AddEventToHistory(event)
     SaveEventHistory()
 end
 
-concommand.Add("ttt_randomat_clearhistory", function()
+concommand.Add("ttt_randomat_clearhistory", function(ply, cc, arg)
     table.Empty(Randomat.EventHistory)
     SaveEventHistory()
+    CallHook("TTTRandomatCommand", nil, ply, cc, arg)
 end)
 
 --[[
@@ -257,7 +259,7 @@ local function TriggerEvent(event, ply, options, ...)
     net.Broadcast()
 
     -- Let other addons know that an event was started
-    hook.Call("TTTRandomatTriggered", nil, event.Id, owner)
+    CallHook("TTTRandomatTriggered", nil, event.Id, owner)
 end
 
 --[[
@@ -1265,10 +1267,12 @@ concommand.Add("ttt_randomat_clearevent", function(ply, cc, arg)
         return
     end
     Randomat:EndActiveEvent(cmd)
+    CallHook("TTTRandomatCommand", nil, ply, cc, arg)
 end, ClearAutoComplete, "Clears a specific randomat active event", FCVAR_SERVER_CAN_EXECUTE)
 
-concommand.Add("ttt_randomat_clearevents", function()
+concommand.Add("ttt_randomat_clearevents", function(ply, cc, arg)
     Randomat:EndActiveEvents()
+    CallHook("TTTRandomatCommand", nil, ply, cc, arg)
 end, nil, "Clears all active events", FCVAR_SERVER_CAN_EXECUTE)
 
 local function TriggerAutoComplete(cmd, args)
@@ -1284,15 +1288,18 @@ end
 
 concommand.Add("ttt_randomat_safetrigger", function(ply, cc, arg)
     Randomat:SafeTriggerEvent(arg[1], nil, true)
+    CallHook("TTTRandomatCommand", nil, ply, cc, arg)
 end, TriggerAutoComplete, "Triggers a specific randomat event with conditions", FCVAR_SERVER_CAN_EXECUTE)
 
 concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
     Randomat:TriggerEvent(arg[1], nil)
+    CallHook("TTTRandomatCommand", nil, ply, cc, arg)
 end, TriggerAutoComplete, "Triggers a specific randomat event without conditions", FCVAR_SERVER_CAN_EXECUTE)
 
-concommand.Add("ttt_randomat_triggerrandom", function()
+concommand.Add("ttt_randomat_triggerrandom", function(ply, cc, arg)
     local rdmply = Randomat:GetValidPlayer(nil)
     Randomat:TriggerRandomEvent(rdmply)
+    CallHook("TTTRandomatCommand", nil, ply, cc, arg)
 end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
 --[[
