@@ -139,12 +139,15 @@ All methods below are automatically defined for every event but events can overr
 *Parameters:*
 - *scale* - The player scale to be set
 
-**EVENT:SmallNotify(msg, length, target)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored.\
+**EVENT:SmallNotify(msg, length, target, silent, allow_secret, font_color)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
 - *msg* - The message to display
-- *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
-- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
+- *length* - The length of time (in seconds) the message should be displayed for (Optional, defaults to 5)
+- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players (Optional)
+- *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
+- *allow_secret* - Whether to allow this message to go through even when the `secret` event is running (Optional, defaults to `false`)
+- *font_color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the font (Optional, defaults to rgb(255, 200, 0))
 
 **EVENT:StripRoleWeapons(ply, skip_add_crowbar)** - Removes all role-specific weapons from the given player and gives them a crowbar (to replace the killer's crowbar).\
 *Realm:* Server\
@@ -662,18 +665,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *msg* - The message to log
 
-**Randomat:Notify(msg, length, target, silent)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored.\
+**Randomat:Notify(msg, length, target, silent, allow_secret, font_color)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
 - *msg* - The message to display
-- *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
-- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
-- *silent* - Whether the notification should not make a sound when it is displayed
-
-**Randomat:NotifyDescription(event)** - Sends a notification message to all players with the given event's description. If the "secret" event is active, this call is ignored.\
-*Realm:* Server\
-*Parameters:*
-- *event* - The event whose description is being sent to all players
+- *length* - The length of time (in seconds) the message should be displayed for (Optional, defaults to 5)
+- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players (Optional)
+- *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
+- *allow_secret* - Whether to allow this message to go through even when the `secret` event is running (Optional, defaults to `false`)
+- *font_color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the font (Optional, defaults to rgb(255, 200, 0))
 
 **Randomat:OverrideWeaponSound(wep, chosen_sound)** - Overrides the given weapon's `Primary.Sound` property with the given sound.\
 *Realm:* Client and Server\
@@ -808,13 +808,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *ply* - The player who caused this event to be started
 
-**Randomat:SmallNotify(msg, length, target, silent)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored.\
+**Randomat:SmallNotify(msg, length, target, silent, allow_secret, font_color)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
 - *msg* - The message to display
-- *length* - The length of time (in seconds) the message should be displayed for (Defaults to 5)
-- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players
-- *silent* - Whether the notification should not make a sound when it is displayed
+- *length* - The length of time (in seconds) the message should be displayed for (Optional, defaults to 5)
+- *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players (Optional)
+- *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
+- *allow_secret* - Whether to allow this message to go through even when the `secret` event is running (Optional, defaults to `false`)
+- *font_color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the font (Optional, defaults to rgb(255, 200, 0))
 
 **Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)** - Spawns an explosive barrel near the provided position.\
 *Realm:* Server\

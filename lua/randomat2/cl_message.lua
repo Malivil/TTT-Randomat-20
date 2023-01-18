@@ -8,8 +8,16 @@ surface.CreateFont("RandomatSmallMsg", {
     size = 32
 })
 
-local function ShowMessage(big, msg, length)
+local COLOR_DEFAULT = Color(255, 200, 0)
+
+local function ShowMessage()
+    local big = net.ReadBool()
+    local msg = net.ReadString()
+    local length = net.ReadUInt(8)
     if length == 0 then length = 5 end
+
+    local font_color = net.ReadColor()
+    if not font_color or font_color.a == 0 then font_color = COLOR_DEFAULT end
 
     local panel = vgui.Create("DNotify")
     panel:SetLife(length)
@@ -36,7 +44,7 @@ local function ShowMessage(big, msg, length)
     else
         lbl:SetFont("RandomatSmallMsg")
     end
-    lbl:SetTextColor(Color(255, 200, 0))
+    lbl:SetTextColor(font_color)
     lbl:SetWrap(true)
     lbl:Dock(FILL)
 
@@ -46,18 +54,10 @@ local function ShowMessage(big, msg, length)
 end
 
 net.Receive("randomat_message", function()
-    local big = net.ReadBool()
-    local msg = net.ReadString()
-    local length = net.ReadUInt(8)
-
-    ShowMessage(big, msg, length)
+    ShowMessage()
     surface.PlaySound("weapons/c4_initiate.mp3")
 end)
 
 net.Receive("randomat_message_silent", function()
-    local big = net.ReadBool()
-    local msg = net.ReadString()
-    local length = net.ReadUInt(8)
-
-    ShowMessage(big, msg, length)
+    ShowMessage()
 end)

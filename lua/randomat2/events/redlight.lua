@@ -47,11 +47,7 @@ function EVENT:Begin()
         timer.Adjust("RdmtRedLightTimer", delay)
 
         -- Tell everyone
-        net.Start("randomat_message")
-        net.WriteBool(true)
-        net.WriteString(color .. " Light!")
-        net.WriteUInt(delay, 8)
-        net.Broadcast()
+        Randomat:Notify(color .. " Light!", delay)
     end)
 
     self:AddHook("FinishMove", function(ply, mv)

@@ -62,6 +62,8 @@ local EntsCreate = ents.Create
 local GetAllPlayers = player.GetAll
 local GetAllEnts = ents.GetAll
 
+local COLOR_BLANK = Color(0, 0, 0, 0)
+
 --[[
  Event History
 ]]--
@@ -161,16 +163,6 @@ end)
  Event Notifications
 ]]--
 
-function Randomat:NotifyDescription(event)
-    -- Show this if "secret" is active if we're specifically showing the description for "secret"
-    if event.Id ~= "secret" and Randomat:IsEventActive("secret") then return end
-    net.Start("randomat_message")
-    net.WriteBool(false)
-    net.WriteString(event.Description)
-    net.WriteUInt(0, 8)
-    net.Broadcast()
-end
-
 function Randomat:ChatDescription(ply, event, has_description)
     -- Show this if "secret" is active if we're specifically showing the description for "secret"
     if event.Id ~= "secret" and Randomat:IsEventActive("secret") then return end
@@ -233,9 +225,10 @@ local function TriggerEvent(event, ply, options, ...)
 
     if not silent then
         local has_description = event.Description ~= nil and #event.Description > 0
-        if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() then
-            -- Show the small description message but don't use SmallNotify because it specifically mutes when "secret" is running and we want to show this if this event IS "secret"
-            Randomat:NotifyDescription(event)
+        -- Show description on screen if it has one, the notification is enabled,
+        -- and if "secret" is not active or if we're specifically showing the description for "secret"
+        if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() and (not Randomat:IsEventActive("secret") or event.Id == "secret") then
+            Randomat:SmallNotify(event.Description, nil, nil, false, true)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
             for _, p in ipairs(GetAllPlayers()) do
@@ -601,23 +594,24 @@ function Randomat:SilentTriggerHiddenEvent(cmd, ply, reason, ...)
     end
 end
 
-local function SendNotify(msg, big, length, targ, silent)
-    -- Don't broadcast anything when "Secret" is running
-    if Randomat:IsEventActive("secret") then return end
+local function SendNotify(msg, big, length, targ, silent, allow_secret, font_color)
+    -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
+    if not allow_secret and Randomat:IsEventActive("secret") then return end
     if not isnumber(length) then length = 0 end
     net.Start(silent and "randomat_message_silent" or "randomat_message")
     net.WriteBool(big)
     net.WriteString(msg)
     net.WriteUInt(length, 8)
+    net.WriteColor(font_color or COLOR_BLANK)
     if not targ then net.Broadcast() else net.Send(targ) end
 end
 
-function Randomat:SmallNotify(msg, length, targ, silent)
-    SendNotify(msg, false, length, targ, silent)
+function Randomat:SmallNotify(msg, length, targ, silent, allow_secret, font_color)
+    SendNotify(msg, false, length, targ, silent, allow_secret, font_color)
 end
 
-function Randomat:Notify(msg, length, targ, silent)
-    SendNotify(msg, true, length, targ, silent)
+function Randomat:Notify(msg, length, targ, silent, allow_secret, font_color)
+    SendNotify(msg, true, length, targ, silent, allow_secret, font_color)
 end
 
 function Randomat:EventNotify(title)
@@ -961,8 +955,8 @@ function randomat_meta:GetDeadPlayers(shuffle)
     return Randomat:GetPlayers(shuffle, false, true)
 end
 
-function randomat_meta:SmallNotify(msg, length, targ)
-    Randomat:SmallNotify(msg, length, targ)
+function randomat_meta:SmallNotify(msg, length, targ, silent, allow_secret, font_color)
+    Randomat:SmallNotify(msg, length, targ, silent, allow_secret, font_color)
 end
 
 function randomat_meta:AddHook(hooktype, callbackfunc, suffix)
