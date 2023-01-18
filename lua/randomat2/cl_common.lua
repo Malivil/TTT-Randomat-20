@@ -1,5 +1,5 @@
 -- Effects
-function Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist)
+function Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist, min_size, max_size)
     if not max_dist then
         max_dist = 3000
     end
@@ -19,7 +19,7 @@ function Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist)
                     particle:SetDieTime(math.Rand(0.5, 2))
                     particle:SetStartAlpha(math.random(150, 220))
                     particle:SetEndAlpha(0)
-                    local size = math.random(4, 7)
+                    local size = math.random(min_size or 4, max_size or 7)
                     particle:SetStartSize(size)
                     particle:SetEndSize(size + 1)
                     particle:SetRoll(0)

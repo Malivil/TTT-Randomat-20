@@ -534,7 +534,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *onitemgiven* - The callback method for after the player is given an item/weapon
 - *droppable_only* - Whether only droppable weapons should be given
 
-**Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist)** - Handles rendering smoke for all entities in the given table that match the specified predicate.\
+**Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist, min_size, max_size)** - Handles rendering smoke for all entities in the given table that match the specified predicate.\
 *Realm:* Client\
 *Parameters:*
 - *tbl* - The list of entities to check and potentially add smoke to
@@ -543,6 +543,8 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
   - *ent* - The entity being checked
 - *color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the smoke
 - *max_dist* - The max distance away smoke should be visible (Defaults to 3000)
+- *min_size* - The minimum size for the smoke particles
+- *max_size* - The maximum size for the smoke particles
 
 **Randomat:HandlePlayerSmoke(client, pred, color, max_dist)** - Handles rendering smoke for all players that match the specified predicate.\
 *Realm:* Client\
