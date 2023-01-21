@@ -20,7 +20,8 @@ net.Receive("RdmtHedgeBetsBegin", function()
     list:AddColumn("Players")
 
     for _, v in ipairs(player.GetAll()) do
-        if v ~= ply then
+        -- Exclude spectators and yourself
+        if v ~= ply and v:GetRole() ~= ROLE_NONE then
             list:AddLine(v:Nick())
         end
     end
