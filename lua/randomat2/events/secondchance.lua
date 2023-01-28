@@ -23,6 +23,7 @@ function EVENT:Begin()
             victim:SpawnForRound(true)
             -- Change the victim's role to either innocent or traitor
             Randomat:SetRole(victim, math.random(0, 1) == 1 and ROLE_INNOCENT or ROLE_TRAITOR)
+            self:StripRoleWeapons(victim)
             if IsValid(body) then
                 body:Remove()
             end
