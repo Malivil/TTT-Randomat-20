@@ -66,6 +66,9 @@ All methods below are automatically defined for every event but events can overr
 
 *Returns:* `true` by default, meaning an event should run. If overridden and changed to return `false`, this event will never start
 
+**EVENT:DisableRoundEndSounds()** - Disables the various methods that normally would play sounds at the end of the round. Credit to The Stig.\
+*Realm:* Server
+
 **EVENT:Enabled()** - Called when determining if an event is enabled.\
 *Realm:* Server
 

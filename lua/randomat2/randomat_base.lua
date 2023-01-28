@@ -1239,6 +1239,31 @@ function randomat_meta:AddEntityCullingBypass(ply_pred, tgt_pred)
     end, "Entities")
 end
 
+-- Credit to The Stig
+function randomat_meta:DisableRoundEndSounds()
+    -- Disables round end sounds mod and 'Ending Flair' event
+    -- So events that that play sounds at the end of the round can do so without overlapping with other sounds/music
+    SetGlobalBool("StopEndingFlairRandomat", true)
+    local roundEndSounds = false
+
+    if ConVarExists("ttt_roundendsounds") and GetConVar("ttt_roundendsounds"):GetBool() then
+        GetConVar("ttt_roundendsounds"):SetBool(false)
+        roundEndSounds = true
+    end
+
+    self:AddHook("TTTEndRound", function()
+        -- Re-enable round end sounds and 'Ending Flair' event
+        timer.Simple(1, function()
+            SetGlobalBool("StopEndingFlairRandomat", false)
+
+            -- Don't turn on round end sounds if they weren't on already
+            if roundEndSounds then
+                GetConVar("ttt_roundendsounds"):SetBool(true)
+            end
+        end)
+    end, "DisableRoundEndSounds")
+end
+
 --[[
  Commands
 ]]--
