@@ -19,8 +19,8 @@ function EVENT:Begin(magnitude)
     timer.Create("RdmtEarthquake", 0.25, 5 * magnitude, function()
         for _, ent in ipairs(ents.GetAll()) do
             local class = ent:GetClass()
-            if (string.StartWith(class, "prop_physics") or class == "prop_dynamic" or
-                string.StartWith(class, "item_ammo_") or string.StartWith(class, "item_box_") or
+            if (string.StartsWith(class, "prop_physics") or class == "prop_dynamic" or
+                string.StartsWith(class, "item_ammo_") or string.StartsWith(class, "item_box_") or
                 type(ent) == "Weapon") and not IsValid(ent:GetParent()) then
                 ent:PhysWake()
                 local phys = ent:GetPhysicsObject()

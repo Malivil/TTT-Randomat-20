@@ -268,7 +268,7 @@ function EVENT:Begin()
     end)
 
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
-        if not IsValid(ent) or not (string.StartWith(ent:GetClass(), "prop_physics") or ent:GetClass() == "prop_dynamic") then return end
+        if not IsValid(ent) or not (string.StartsWith(ent:GetClass(), "prop_physics") or ent:GetClass() == "prop_dynamic") then return end
         local att = dmginfo:GetAttacker()
         if not IsPlayer(att) then return end
 

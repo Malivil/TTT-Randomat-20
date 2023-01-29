@@ -457,7 +457,7 @@ function Randomat:IsPlayerInVehicle(ply)
     if not IsValid(parent) then return false, nil end
 
     local class = parent:GetClass()
-    return string.StartWith(class, "prop_vehicle_"), parent
+    return string.StartsWith(class, "prop_vehicle_"), parent
 end
 
 -- Round Functions

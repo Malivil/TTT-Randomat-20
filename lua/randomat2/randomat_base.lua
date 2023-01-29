@@ -863,7 +863,7 @@ function Randomat:GetReadableCategory(category)
         return "Game Mode"
     elseif category == "entityspawn" then
         return "Entity Spawn"
-    elseif string.StartWith(category, "biased_") then
+    elseif string.StartsWith(category, "biased_") then
         local parts = string.Explode("_", category)
         for k, p in ipairs(parts) do
             parts[k] = Randomat:Capitalize(p)
