@@ -152,6 +152,7 @@ local current_mults_withweapon = {}
 net.Receive("RdmtSetSpeedMultiplier", function()
     local mult = net.ReadFloat()
     local key = net.ReadString()
+    print("Adding mult of " .. mult .. " for " .. key)
     current_mults[key] = mult
 end)
 
@@ -185,8 +186,13 @@ net.Receive("RdmtRemoveSpeedMultipliers", function()
     end
 end)
 
+local localPlayer = nil
 hook.Add("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults)
-    if ply ~= LocalPlayer() or not ply:Alive() or ply:IsSpec() then return end
+    -- Cache this
+    if not localPlayer then
+        localPlayer = LocalPlayer()
+    end
+    if ply ~= localPlayer or not ply:Alive() or ply:IsSpec() then return end
 
     -- Apply all of these that are valid
     for _, m in pairs(current_mults) do
