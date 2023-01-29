@@ -102,3 +102,9 @@ local clientfiles, _ = file.Find("randomat2/cl_events/*.lua", "LUA")
 for _, fil in ipairs(clientfiles) do
     AddClient("randomat2/cl_events/" .. fil)
 end
+
+local sharedfiles, _ = file.Find("randomat2/sh_events/*.lua", "LUA")
+for _, fil in ipairs(sharedfiles) do
+    AddServer("randomat2/sh_events/" .. fil)
+    AddClient("randomat2/sh_events/" .. fil)
+end
