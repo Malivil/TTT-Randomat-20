@@ -97,7 +97,7 @@ hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dta
     dactive:SetName("Active Randomat Events")
     dactive:SetExpanded(expandState)
     -- Keep track of the expanded state so you don't have to open it multiple times
-    dactive.OnToggle = function(state)
+    dactive.OnToggle = function(panel, state)
         expandState = state
     end
     drdmt:AddItem(dactive)
