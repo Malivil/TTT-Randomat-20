@@ -152,7 +152,6 @@ local current_mults_withweapon = {}
 net.Receive("RdmtSetSpeedMultiplier", function()
     local mult = net.ReadFloat()
     local key = net.ReadString()
-    print("Adding mult of " .. mult .. " for " .. key)
     current_mults[key] = mult
 end)
 
