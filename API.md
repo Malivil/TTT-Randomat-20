@@ -290,6 +290,12 @@ Messages that the Randomat is set up to listen to in the defined realm.
 - *String* - The unique key for the speed multiplier. Used to remove the multiplier later
 - *String* - The weapon class the local player must have equipped for the speed multiplier to be in effect
 
+**RdmtSetSpeedMultiplier_Sprinting** - Registers a speed multiplier for when the local player is sprinting.\
+*Realm:* Client\
+*Parameters:*
+- *Float* - The speed multiplier to record
+- *String* - The unique key for the speed multiplier. Used to remove the multiplier later
+
 ## Randomat Namespace
 The methods and properties belonging to the static `Randomat` namespace, available globally
 
