@@ -56,7 +56,7 @@ function EVENT:Begin()
                     -- Disable ironsights
                     huge.NoSights = true
                     -- Give them infinite ammo
-                    huge:SetClip1(ply:GetActiveWeapon().Primary.ClipSize)
+                    huge:SetClip1(huge.Primary.ClipSize)
                 end
             end
         end
