@@ -81,8 +81,8 @@ function EVENT:StartTimer()
             timer.Create("RdmtParanoidShotTimer", 0.25, count, function()
                 sound.Play(chosen_sound, target_pos, volume, 100, 1)
 
-                -- Start the overall timer again
-                if timer.RepsLeft("RdmtParanoidShotTimer") then
+                -- Start the overall timer again once the shots are done
+                if timer.RepsLeft("RdmtParanoidShotTimer") == 0 then
                     self:StartTimer()
                 end
             end)
