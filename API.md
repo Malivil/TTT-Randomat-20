@@ -380,6 +380,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *title* - The event title
 
+**Randomat:ForceResetAllPlayermodels()** - Resets each player's model and associated data back to what it was at the start of the round. Credit to The Stig.\
+*Realm:* Client and Server\
+
+**Randomat:ForceSetPlayermodel(ply, data)** - Sets the given player's model and associated data (including model file path, skin data, bodygroups, etc.) to the given values. Credit to The Stig.\
+*Realm:* Client and Server\
+*Parameters:*
+- *ply* - The target player
+- *data* - The playermodel data table, including model file path, skin data, bodygroups, etc.
+
 **Randomat:GetAllEventCategories(readable)** - Gets the list of all categories used by registered events.\
 *Realm:* Server\
 *Parameters:*
@@ -434,6 +443,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Returns:* The list of players
 
 *Note:* Passing the same value for `alive_only` and `dead_only` with result in a list of all players
+
+**Randomat:GetPlayerModelData(ply)** - Gets the model data for the given player, including model file path, skin data, bodygroups, etc. Credit to The Stig.\
+*Realm:* Client and Server\
+*Parameters:*
+- *ply* - The target player
+
+*Returns:* A table of the playermodel data
 
 **Randomat:GetRandomEvent(skip_history, can_run)** - Gets a random event that can be started.\
 *Realm:* Server\
