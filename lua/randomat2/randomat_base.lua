@@ -260,6 +260,8 @@ end
  Randomat Namespace
 ]]--
 
+-- Events
+
 function Randomat:EndActiveEvent(id, skip_error)
     for k, evt in pairs(Randomat.ActiveEvents) do
         if evt.Id == id then
@@ -289,71 +291,6 @@ function Randomat:GetEventTitle(event)
         return event.AltTitle
     end
     return event.Title
-end
-
-function Randomat:GetPlayers(shuffle, alive_only, dead_only)
-    local plys = {}
-    -- Optimize this to get the full raw list if both alive and dead should be included
-    if alive_only == dead_only then
-        plys = GetAllPlayers()
-    else
-        for _, ply in ipairs(GetAllPlayers()) do
-            if IsValid(ply) and
-            -- Anybody
-            ((not alive_only and not dead_only) or
-            -- Alive and non-spec
-                (alive_only and (ply:Alive() and not ply:IsSpec())) or
-            -- Dead or spec
-                (dead_only and (not ply:Alive() or ply:IsSpec()))) then
-                table.insert(plys, ply)
-            end
-        end
-    end
-
-    if shuffle then
-        table.Shuffle(plys)
-    end
-
-    return plys
-end
-
-function Randomat:GetValidPlayer(ply)
-    if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
-        return ply
-    end
-
-    return Randomat:GetPlayers(true, true)[1]
-end
-
-function Randomat:SetRole(ply, role, set_max_hp)
-    local old_role = ply:GetRole()
-    ply:SetRole(role)
-
-    -- Set the player's max HP for their new role (Defaults to true)
-    if set_max_hp ~= false and SetRoleMaxHealth then
-        SetRoleMaxHealth(ply)
-    end
-    -- Heal the Old Man and Loot Goblin back to full when they are converted
-    if ((old_role == ROLE_OLDMAN and role ~= ROLE_OLDMAN) or
-        (old_role == ROLE_LOOTGOBLIN and role ~= ROLE_LOOTGOBLIN)) and SetRoleStartingHealth then
-        SetRoleStartingHealth(ply)
-    -- Reset special round logic for roles if we are changing a player away from being the last of that role
-    elseif player.IsRoleLiving then
-        if old_role == ROLE_GLITCH and role ~= ROLE_GLITCH and GetGlobalBool("ttt_glitch_round", false) and not player.IsRoleLiving(ROLE_GLITCH) then
-            SetGlobalBool("ttt_glitch_round", false)
-        elseif old_role == ROLE_ZOMBIE and role ~= ROLE_ZOMBIE and GetGlobalBool("ttt_zombie_round", false) and not player.IsRoleLiving(ROLE_ZOMBIE) then
-            SetGlobalBool("ttt_zombie_round", false)
-        end
-    end
-
-    net.Start("TTT_RoleChanged")
-    net.WriteString(ply:SteamID64())
-    if CR_VERSION then
-        net.WriteInt(role, 8)
-    else
-        net.WriteUInt(role, 8)
-    end
-    net.Broadcast()
 end
 
 function Randomat:register(tbl)
@@ -595,6 +532,177 @@ function Randomat:SilentTriggerHiddenEvent(cmd, ply, reason, ...)
     end
 end
 
+function Randomat:LogEvent(msg)
+    net.Start("TTT_LogInfo")
+    net.WriteString(msg)
+    net.Broadcast()
+end
+
+-- Event Categories
+
+function Randomat:GetReadableCategory(category)
+    if category == "smallimpact" then
+        return "Small Impact"
+    elseif category == "moderateimpact" then
+        return "Moderate Impact"
+    elseif category == "largeimpact" then
+        return "Large Impact"
+    elseif category == "rolechange" then
+        return "Role Change"
+    elseif category == "eventtrigger" then
+        return "Event Trigger"
+    elseif category == "deathtrigger" then
+        return "Death Trigger"
+    elseif category == "gamemode" then
+        return "Game Mode"
+    elseif category == "entityspawn" then
+        return "Entity Spawn"
+    elseif string.StartsWith(category, "biased_") then
+        local parts = string.Explode("_", category)
+        for k, p in ipairs(parts) do
+            parts[k] = Randomat:Capitalize(p)
+        end
+        return table.concat(parts, " - ")
+    end
+    return Randomat:Capitalize(category)
+end
+
+function Randomat:GetAllEventCategories(readable)
+    local categories = {}
+    for _, e in pairs(Randomat.Events) do
+        if type(e.Categories) ~= "table" then continue end
+
+        for _, c in ipairs(e.Categories) do
+            if not c or #c == 0 then continue end
+
+            local cat = c:lower()
+            if readable then
+                cat = Randomat:GetReadableCategory(cat)
+            end
+            if table.HasValue(categories, cat) then continue end
+
+            table.insert(categories, cat)
+        end
+    end
+    return categories
+end
+
+function Randomat:GetEventCategories(event, readable)
+    if type(event) ~= "table" then
+        event = Randomat.Events[event]
+    end
+    if event == nil then return nil end
+    if type(event.Categories) ~= "table" then return nil end
+
+    local categories
+    if readable then
+        categories = {}
+        for _, c in ipairs(event.Categories) do
+            table.insert(categories, Randomat:GetReadableCategory(c))
+        end
+    else
+        categories = event.Categories
+    end
+
+    return table.concat(categories, ", ")
+end
+
+function Randomat:GetEventsByCategory(category)
+    if not category or #category == 0 then return {} end
+
+    local events = {}
+    local lower_cat = category:lower()
+    for _, e in pairs(Randomat.Events) do
+        if type(e.Categories) == "table" and table.HasValue(e.Categories, lower_cat) then
+            table.insert(events, e)
+        end
+    end
+    return events
+end
+
+function Randomat:GetEventsByType(etype)
+    if type(etype) ~= "number" then return {} end
+
+    local events = {}
+    for _, e in pairs(Randomat.Events) do
+        if (e.Type == etype) or (type(e.Type) == "table" and table.HasValue(e.Type, etype)) then
+            table.insert(events, e)
+        end
+    end
+    return events
+end
+
+-- Players
+
+function Randomat:GetPlayers(shuffle, alive_only, dead_only)
+    local plys = {}
+    -- Optimize this to get the full raw list if both alive and dead should be included
+    if alive_only == dead_only then
+        plys = GetAllPlayers()
+    else
+        for _, ply in ipairs(GetAllPlayers()) do
+            if IsValid(ply) and
+            -- Anybody
+            ((not alive_only and not dead_only) or
+            -- Alive and non-spec
+                (alive_only and (ply:Alive() and not ply:IsSpec())) or
+            -- Dead or spec
+                (dead_only and (not ply:Alive() or ply:IsSpec()))) then
+                table.insert(plys, ply)
+            end
+        end
+    end
+
+    if shuffle then
+        table.Shuffle(plys)
+    end
+
+    return plys
+end
+
+function Randomat:GetValidPlayer(ply)
+    if IsValid(ply) and ply:Alive() and not ply:IsSpec() then
+        return ply
+    end
+
+    return Randomat:GetPlayers(true, true)[1]
+end
+
+-- Roles
+
+function Randomat:SetRole(ply, role, set_max_hp)
+    local old_role = ply:GetRole()
+    ply:SetRole(role)
+
+    -- Set the player's max HP for their new role (Defaults to true)
+    if set_max_hp ~= false and SetRoleMaxHealth then
+        SetRoleMaxHealth(ply)
+    end
+    -- Heal the Old Man and Loot Goblin back to full when they are converted
+    if ((old_role == ROLE_OLDMAN and role ~= ROLE_OLDMAN) or
+        (old_role == ROLE_LOOTGOBLIN and role ~= ROLE_LOOTGOBLIN)) and SetRoleStartingHealth then
+        SetRoleStartingHealth(ply)
+    -- Reset special round logic for roles if we are changing a player away from being the last of that role
+    elseif player.IsRoleLiving then
+        if old_role == ROLE_GLITCH and role ~= ROLE_GLITCH and GetGlobalBool("ttt_glitch_round", false) and not player.IsRoleLiving(ROLE_GLITCH) then
+            SetGlobalBool("ttt_glitch_round", false)
+        elseif old_role == ROLE_ZOMBIE and role ~= ROLE_ZOMBIE and GetGlobalBool("ttt_zombie_round", false) and not player.IsRoleLiving(ROLE_ZOMBIE) then
+            SetGlobalBool("ttt_zombie_round", false)
+        end
+    end
+
+    net.Start("TTT_RoleChanged")
+    net.WriteString(ply:SteamID64())
+    if CR_VERSION then
+        net.WriteInt(role, 8)
+    else
+        net.WriteUInt(role, 8)
+    end
+    net.Broadcast()
+end
+
+-- Notifications
+
 local function SendNotify(msg, big, length, targ, silent, allow_secret, font_color)
     -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
     if not allow_secret and Randomat:IsEventActive("secret") then return end
@@ -629,11 +737,7 @@ function Randomat:ChatNotify(ply, msg)
     ply:PrintMessage(HUD_PRINTTALK, msg)
 end
 
-function Randomat:LogEvent(msg)
-    net.Start("TTT_LogInfo")
-    net.WriteString(msg)
-    net.Broadcast()
-end
+-- Weapons/Equipment
 
 local function CanIncludeWeapon(role, weap, blocklist, droppable_only)
     -- Must be valid
@@ -745,6 +849,8 @@ function Randomat:CallShopHooks(isequip, id, ply)
     net.Send(ply)
 end
 
+-- Entities
+
 -- Adapted from Sandbox code by Jenssons
 function Randomat:SpawnNPC(ply, pos, cls)
     local npc_list = list.Get("NPC")
@@ -847,101 +953,27 @@ function Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)
     if not IsValid(phys) then ent:Remove() return end
 end
 
-function Randomat:GetReadableCategory(category)
-    if category == "smallimpact" then
-        return "Small Impact"
-    elseif category == "moderateimpact" then
-        return "Moderate Impact"
-    elseif category == "largeimpact" then
-        return "Large Impact"
-    elseif category == "rolechange" then
-        return "Role Change"
-    elseif category == "eventtrigger" then
-        return "Event Trigger"
-    elseif category == "deathtrigger" then
-        return "Death Trigger"
-    elseif category == "gamemode" then
-        return "Game Mode"
-    elseif category == "entityspawn" then
-        return "Entity Spawn"
-    elseif string.StartsWith(category, "biased_") then
-        local parts = string.Explode("_", category)
-        for k, p in ipairs(parts) do
-            parts[k] = Randomat:Capitalize(p)
-        end
-        return table.concat(parts, " - ")
-    end
-    return Randomat:Capitalize(category)
-end
-
-function Randomat:GetAllEventCategories(readable)
-    local categories = {}
-    for _, e in pairs(Randomat.Events) do
-        if type(e.Categories) ~= "table" then continue end
-
-        for _, c in ipairs(e.Categories) do
-            if not c or #c == 0 then continue end
-
-            local cat = c:lower()
-            if readable then
-                cat = Randomat:GetReadableCategory(cat)
-            end
-            if table.HasValue(categories, cat) then continue end
-
-            table.insert(categories, cat)
-        end
-    end
-    return categories
-end
-
-function Randomat:GetEventCategories(event, readable)
-    if type(event) ~= "table" then
-        event = Randomat.Events[event]
-    end
-    if event == nil then return nil end
-    if type(event.Categories) ~= "table" then return nil end
-
-    local categories
-    if readable then
-        categories = {}
-        for _, c in ipairs(event.Categories) do
-            table.insert(categories, Randomat:GetReadableCategory(c))
-        end
-    else
-        categories = event.Categories
-    end
-
-    return table.concat(categories, ", ")
-end
-
-function Randomat:GetEventsByCategory(category)
-    if not category or #category == 0 then return {} end
-
-    local events = {}
-    local lower_cat = category:lower()
-    for _, e in pairs(Randomat.Events) do
-        if type(e.Categories) == "table" and table.HasValue(e.Categories, lower_cat) then
-            table.insert(events, e)
-        end
-    end
-    return events
-end
-
-function Randomat:GetEventsByType(etype)
-    if type(etype) ~= "number" then return {} end
-
-    local events = {}
-    for _, e in pairs(Randomat.Events) do
-        if (e.Type == etype) or (type(e.Type) == "table" and table.HasValue(e.Type, etype)) then
-            table.insert(events, e)
-        end
-    end
-    return events
-end
-
 --[[
  Randomat Meta
 ]]--
+
+-- Skeleton
+
+function randomat_meta:Begin(...) end
+
+function randomat_meta:End() end
+
+function randomat_meta:Condition()
+    return true
+end
+
+function randomat_meta:Enabled()
+    return GetConVar("ttt_randomat_" .. self.Id):GetBool()
+end
+
+function randomat_meta:GetConVars() end
+
+-- Players
 
 -- Valid players not spec
 function randomat_meta:GetPlayers(shuffle)
@@ -956,9 +988,13 @@ function randomat_meta:GetDeadPlayers(shuffle)
     return Randomat:GetPlayers(shuffle, false, true)
 end
 
+-- Notifications
+
 function randomat_meta:SmallNotify(msg, length, targ, silent, allow_secret, font_color)
     Randomat:SmallNotify(msg, length, targ, silent, allow_secret, font_color)
 end
+
+-- Hooks
 
 function randomat_meta:AddHook(hooktype, callbackfunc, suffix)
     callbackfunc = callbackfunc or self[hooktype]
@@ -1000,19 +1036,7 @@ function randomat_meta:CleanUpHooks()
     table.Empty(self.Hooks)
 end
 
-function randomat_meta:Begin(...) end
-
-function randomat_meta:End() end
-
-function randomat_meta:Condition()
-    return true
-end
-
-function randomat_meta:Enabled()
-    return GetConVar("ttt_randomat_" .. self.Id):GetBool()
-end
-
-function randomat_meta:GetConVars() end
+-- Roles
 
 function randomat_meta:GetRoleName(ply, hide_secret_roles)
     local role = ply:GetRole()
@@ -1028,6 +1052,8 @@ function randomat_meta:GetRoleName(ply, hide_secret_roles)
     end
     return Randomat:GetRoleExtendedString(role, hide_secret_roles)
 end
+
+-- Weapons/Equipment
 
 -- Rename stock weapons so they are readable
 function randomat_meta:RenameWeps(name)
@@ -1185,6 +1211,8 @@ function randomat_meta:SwapWeapons(ply, weapon_list)
     end)
 end
 
+-- Players
+
 function randomat_meta:SetAllPlayerScales(scale)
     for _, ply in ipairs(self:GetAlivePlayers()) do
         Randomat:SetPlayerScale(ply, scale, self.Id)
@@ -1223,6 +1251,8 @@ function randomat_meta:AddCullingBypass(ply_pred, tgt_pred)
     end, "Players")
 end
 
+-- Entities
+
 function randomat_meta:AddEntityCullingBypass(ply_pred, tgt_pred)
     self:AddHook("SetupPlayerVisibility", function(ply)
         if ply.ShouldBypassCulling and not ply:ShouldBypassCulling() then return end
@@ -1239,6 +1269,8 @@ function randomat_meta:AddEntityCullingBypass(ply_pred, tgt_pred)
         end
     end, "Entities")
 end
+
+-- Misc.
 
 -- Credit to The Stig
 function randomat_meta:DisableRoundEndSounds()
