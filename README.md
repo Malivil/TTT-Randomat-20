@@ -34,13 +34,12 @@ _ttt_randomat_allow_client_list_ - Default: 1 - Whether to allow the clients to 
 _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*
 
 # Latest Events
-1. Delayed Reaction
 1. Got any connies?!
-1. Pump You Up
 1. It's over Anakin! I have the high ground!
 1. It's hunting season!
 1. Praw emiTime Warp (aka Time Flip)
 1. Somebody set us up the bomb
+1. Meet Cute
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1037,6 +1036,18 @@ _randomat_malfunction_lower_ - Default: 1 - The lower limit for the random timer
 _randomat_malfunction_affectall_ - Default: 0 - Set to 1 for the event to affect everyone at once.\
 _randomat_malfunction_duration_ - Default: 0.5 - Duration of gun malfunction (set to 0 for 1 shot).
 
+## Meet Cute
+Causes players who collide while sprinting to swap inventories
+\
+\
+**ConVars**
+\
+_ttt_randomat_meetcute_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_meetcute_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_meetcute_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_meetcute_distance_ - Default: 1400 - The maximum distance between two players to be considered 'touching'.\
+_randomat_meetcute_swap_delay_ - Default: 5 - The minimum delay (in seconds) between swaps.
+
 ## Narration
 Narrates common game activities
 \
@@ -1895,7 +1906,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targeting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
-- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb" event
+- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb" and "Meet Cute" events
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - Matt Warren from the Yogscast YouTube comments and Dangerzachattack from the Custom Roles for TTT for the idea for the "It's over Anakin! I have the high ground!" event
