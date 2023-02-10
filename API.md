@@ -194,6 +194,12 @@ Properties used to define and describe an event and its running conditions
 **MinRoundCompletePercent** - The minimum percentage of the current round that can be completed for this event to be randomly chosen to be started. Defaults to `nil`.\
 *Realm:* Server
 
+**Owner (aka owner)** - The player who started this event.\
+*Realm:* Server
+
+**Silent** - Whether this event was started silently.\
+*Realm:* Server
+
 **SingleUse** - Whether this event should not be allowed to start if it's already running. Defaults to `true`.\
 *Realm:* Server
 

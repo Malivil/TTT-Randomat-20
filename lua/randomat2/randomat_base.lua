@@ -213,10 +213,11 @@ local function TriggerEvent(event, ply, options, ...)
     end
 
     local owner = Randomat:GetValidPlayer(ply)
-    local index = table.insert(Randomat.ActiveEvents, event)
-    Randomat.ActiveEvents[index].owner = owner
-    Randomat.ActiveEvents[index].Silent = silent
-    Randomat.ActiveEvents[index]:Begin(...)
+    table.insert(Randomat.ActiveEvents, event)
+    event.owner = owner
+    event.Owner = owner
+    event.Silent = silent
+    event:Begin(...)
 
     -- Run this after the "Begin" so we have the latest title and description
     local title = Randomat:GetEventTitle(event)
