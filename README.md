@@ -1022,6 +1022,18 @@ _ttt_randomat_lonelyyogs_weight_ - Default: -1 - The weight this event should us
 _randomat_lonelyyogs_distance_ - Default: 200 - The minimum distance allowed between players.\
 _randomat_lonelyyogs_interval_ - Default: 2 - The number of seconds between discombob blasts.
 
+## Loose Clips
+Sprinting causes your gun clip to fall out, forcing reloads
+\
+\
+**ConVars**
+\
+_ttt_randomat_looseclips_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_looseclips_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_looseclips_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_looseclips_keep_ammo_ - Default: 1 - Whether drained ammo is kept or destroyed.\
+_randomat_looseclips_affectbuymenu_ - Default: 0 - Whether buy menu weapons lose ammo too.
+
 ## Malfunction
 Causes players to randomly shoot their gun
 \
@@ -1906,7 +1918,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targeting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
-- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb" and "Meet Cute" events
+- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb", "Meet Cute", and "Loose Clips" events
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - Matt Warren from the Yogscast YouTube comments and Dangerzachattack from the Custom Roles for TTT for the idea for the "It's over Anakin! I have the high ground!" event

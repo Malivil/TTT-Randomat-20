@@ -1,9 +1,9 @@
 local EVENT = {}
 
-CreateConVar("randomat_reload_wait_time", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Seconds after last shot before draining", 0.5, 10)
-CreateConVar("randomat_reload_drain_time", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Seconds between each ammo drain", 0.5, 10)
-CreateConVar("randomat_reload_keep_ammo", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether drained ammo is kept or destroyed")
-CreateConVar("randomat_reload_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether buy menu weapons lose ammo too")
+local reload_wait_time = CreateConVar("randomat_reload_wait_time", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Seconds after last shot before draining", 0.5, 10)
+local reload_drain_time = CreateConVar("randomat_reload_drain_time", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Seconds between each ammo drain", 0.5, 10)
+local reload_keep_ammo = CreateConVar("randomat_reload_keep_ammo", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether drained ammo is kept or destroyed")
+local reload_affectbuymenu = CreateConVar("randomat_reload_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether buy menu weapons lose ammo too")
 
 EVENT.Title = "Compulsive Reloading"
 EVENT.Description = "Slowly drains a user's ammo over time if they haven't fired a gun recently"
@@ -24,9 +24,10 @@ function EVENT:Begin()
         playerdraining[playername] = false
     end)
 
-    local wait_time = GetConVar("randomat_reload_wait_time"):GetFloat()
-    local drain_time = GetConVar("randomat_reload_drain_time"):GetFloat()
-    local affects_buy = GetConVar("randomat_reload_affectbuymenu"):GetBool()
+    local wait_time = reload_wait_time:GetFloat()
+    local drain_time = reload_drain_time:GetFloat()
+    local keep_ammo = reload_keep_ammo:GetBool()
+    local affects_buy = reload_affectbuymenu:GetBool()
     self:AddHook("Think", function()
         for _, v in ipairs(self:GetAlivePlayers()) do
             local playername = v:GetName()
@@ -58,7 +59,7 @@ function EVENT:Begin()
                                 active_weapon:SetClip1(current_clip)
 
                                 -- Give them their ammo back if we're configured to do so
-                                if GetConVar("randomat_reload_keep_ammo"):GetBool() then
+                                if keep_ammo then
                                     local ammo_type = active_weapon:GetPrimaryAmmoType()
                                     v:GiveAmmo(1, ammo_type, true)
                                 end
@@ -69,9 +70,6 @@ function EVENT:Begin()
             end
         end
     end)
-end
-
-function EVENT:End()
 end
 
 function EVENT:GetConVars()
