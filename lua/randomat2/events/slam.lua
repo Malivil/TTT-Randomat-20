@@ -14,8 +14,9 @@ EVENT.Categories = {"item", "rolechange", "largeimpact"}
 
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
+    local changing_teams = Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply)
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if (Randomat:IsTraitorTeam(ply) and ply:GetRole() ~= ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply) then
+    if (Randomat:IsTraitorTeam(ply) and ply:GetRole() ~= ROLE_TRAITOR) or changing_teams then
         Randomat:SetRole(ply, ROLE_TRAITOR)
         updated = true
     elseif Randomat:IsJesterTeam(ply) then
@@ -27,15 +28,22 @@ function EVENT:HandleRoleWeapons(ply)
     if Randomat:IsTraitorTeam(ply) then
         self:StripRoleWeapons(ply)
     end
-    return updated
+    return updated, changing_teams
 end
 
 function EVENT:Begin()
+    local new_traitors = {}
     for _, v in ipairs(self:GetAlivePlayers()) do
-        self:HandleRoleWeapons(v)
+        local _, new_traitor = self:HandleRoleWeapons(v)
         Randomat:RemovePhdFlopper(v)
+
+        if new_traitor then
+            table.insert(new_traitors, v)
+        end
     end
     SendFullStateUpdate()
+
+    self:NotifyTeamChange(new_traitors, ROLE_TEAM_TRAITOR)
 
     local strip = GetConVar("randomat_slam_strip"):GetBool()
     timer.Create("RandomatSlamTimer", GetConVar("randomat_slam_timer"):GetInt(), 0, function()

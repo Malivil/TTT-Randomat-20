@@ -9,8 +9,15 @@ EVENT.Categories = {"gamemode", "biased_traitor", "biased", "moderateimpact"}
 function EVENT:Begin()
     EVENT.Description = "Gives all " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " C4. If a C4 explodes by running out of time, the " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " win."
 
+    local new_traitors = {}
     for _, p in ipairs(player.GetAll()) do
-        if Randomat:IsTraitorTeam(p) or Randomat:IsMonsterTeam(p) or Randomat:IsIndependentTeam(p) then
+        -- Keep track of which players are joining the traitors
+        local changing_teams = Randomat:IsMonsterTeam(p) or Randomat:IsIndependentTeam(p)
+        if changing_teams then
+            table.insert(new_traitors, p)
+        end
+
+        if Randomat:IsTraitorTeam(p) or changing_teams then
             local set_credits = not Randomat:IsTraitorTeam(p)
             Randomat:SetRole(p, ROLE_TRAITOR)
             self:StripRoleWeapons(p)
@@ -28,6 +35,8 @@ function EVENT:Begin()
         end
     end
     SendFullStateUpdate()
+
+    self:NotifyTeamChange(new_traitors, ROLE_TEAM_TRAITOR)
 
     local traitors_win = false
     self:AddHook("TTTC4Explode", function(c4)

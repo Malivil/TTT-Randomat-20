@@ -23,12 +23,16 @@ function EVENT:Begin()
     end)
 
     -- Convert all players to vanilla roles and replace all their weapons with the rifle
+    local new_traitors = {}
     for _, p in ipairs(alive_players) do
         if Randomat:IsInnocentTeam(p) then
             if p:GetRole() ~= ROLE_INNOCENT then
                 Randomat:SetRole(p, ROLE_INNOCENT)
             end
         elseif p:GetRole() ~= ROLE_TRAITOR then
+            if not Randomat:IsTraitorTeam(p) then
+                table.insert(new_traitors, p)
+            end
             Randomat:SetRole(p, ROLE_TRAITOR)
         end
 
@@ -39,6 +43,8 @@ function EVENT:Begin()
         end
     end
     SendFullStateUpdate()
+
+    self:NotifyTeamChange(new_traitors, ROLE_TEAM_TRAITOR)
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         return false
