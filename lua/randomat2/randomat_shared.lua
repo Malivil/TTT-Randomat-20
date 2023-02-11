@@ -38,10 +38,12 @@ function Randomat:GetPlayerNameListString(players, includeAnd)
     local joined = table.concat(names, ", ")
     if includeAnd then
         if #names > 2 then
-            return string.gsub(joined, "(.*),", "%1, and")
+            local result, _ = string.gsub(joined, "(.*),", "%1, and")
+            return result
         -- Don't include the comma if there are only two entries
         else
-            return string.gsub(joined, "(.*),", "%1 and")
+            local result, _ = string.gsub(joined, "(.*),", "%1 and")
+            return result
         end
     end
     return joined
