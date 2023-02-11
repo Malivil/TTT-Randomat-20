@@ -29,6 +29,24 @@ function Randomat:Capitalize(msg, skip_lower)
     return first .. rest
 end
 
+function Randomat:GetPlayerNameListString(players, includeAnd)
+    local names = {}
+    for _, p in ipairs(players) do
+        table.insert(names, p:Nick())
+    end
+
+    local joined = table.concat(names, ", ")
+    if includeAnd then
+        if #names > 2 then
+            return string.gsub(joined, "(.*),", "%1, and")
+        -- Don't include the comma if there are only two entries
+        else
+            return string.gsub(joined, "(.*),", "%1 and")
+        end
+    end
+    return joined
+end
+
 -- Team Functions
 
 function Randomat:IsInnocentTeam(ply, skip_detective)
@@ -497,7 +515,7 @@ function Randomat:SendChatToAll(msg, tbl)
 end
 
 if SERVER then
-    function Randomat:SendMessageToTeam(msg, roleTeam, detectivesAreInnocent, aliveOnly, printTypes)
+    function Randomat:SendMessageToTeam(msg, roleTeam, detectivesAreInnocent, aliveOnly, printTypes, excludedPlayers)
         -- This method only works with CR for TTT
         if not CRVersion then return end
 
@@ -513,6 +531,9 @@ if SERVER then
         end
 
         player.ExecuteAgainstTeamPlayers(roleTeam, detectivesAreInnocent, aliveOnly, function(ply)
+            -- Skip excluded players, if we have any
+            if excludedPlayers and table.HasValue(excludedPlayers, ply) then return end
+
             for _, printType in ipairs(printTypes) do
                 ply:PrintMessage(printType, msg)
             end

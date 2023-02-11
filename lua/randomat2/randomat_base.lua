@@ -1273,6 +1273,22 @@ end
 
 -- Misc.
 
+function randomat_meta:NotifyTeamChange(newMembers, roleTeam)
+    if #newMembers <= 0 then return end
+
+    local members = Randomat:GetPlayerNameListString(newMembers, true)
+    local verb = " has "
+    if #newMembers > 1 then
+        verb = " have "
+    end
+
+    -- Delay this message slightly in case it's being shown when an event starts
+    -- The delay pushes it below the event description chat message
+    timer.Simple(0.1, function()
+        Randomat:SendMessageToTeam(members .. verb .. "joined your team", roleTeam, false, false, {HUD_PRINTTALK, HUD_PRINTCENTER}, newMembers)
+    end)
+end
+
 -- Credit to The Stig
 function randomat_meta:DisableRoundEndSounds()
     -- Disables round end sounds mod and 'Ending Flair' event

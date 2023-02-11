@@ -123,6 +123,12 @@ All methods below are automatically defined for every event but events can overr
     - *active_class* - The player's current weapon class
     - *active_kind* - The player's current weapon kind
 
+**EVENT:NotifyTeamChange(newMembers, roleTeam)** - Sends a message to the members of the targeted team, telling them the players in the `newMembers` list have joined them.
+*Realm:* Server\
+*Parameters:*
+- *newMembers* - The table of players who have switched teams
+- *roleTeam* - The `ROLE_TEAM_*` value from Custom Roles for TTT, specifying which team to send the message to
+
 **EVENT:RemoveHook(hooktype, suffix)** - Removes the hook of the given hook type bound to this event.\
 *Realm:* Server\
 *Parameters:*
@@ -438,6 +444,14 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *role* - The role ID which can buy the specified item
 
 *Returns:* The item's human-readable name
+
+**Randomat:GetPlayerNameListString(players, includeAnd)** - Gets a comma-delimited list of the names of the players from the given list.\
+*Realm:* Client and Server\
+*Parameters:*
+*players* - The table of players to process
+*includeAnd* - Whether to have an "and" between the last two entries in the list
+
+*Returns:* List of player names separated by a comma
 
 **Randomat:GetPlayers(shuffle, alive_only, dead_only)** - Gets a list of players.\
 *Realm:* Server\
@@ -820,6 +834,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *detectivesAreInnocent* - Whether to also send to members of the detective team when `ROLE_TEAM_INNOCENTS` is given for `roleTeam`
 - *aliveOnly* - Whether only alive players should be sent the message
 - *printTypes* - The [HUD_PRINT*](https://wiki.facepunch.com/gmod/Enums/HUD) value(s) specifying how the message should be displayed. Can be a single value or a table of values. If not provided, defaults to `HUD_PRINTTALK`
+- *excludedPlayers* - The table of players that should be skipped, even if they are on the target team
 
 **Randomat:ShouldActLikeJester(ply)** - Determines whether the given player should be acting like a Jester (e.g. not taking fall damage, not doing weapon damage, etc.).\
 *Realm:* Client and Server\
