@@ -496,6 +496,30 @@ function Randomat:SendChatToAll(msg, tbl)
     end
 end
 
+if SERVER then
+    function Randomat:SendMessageToTeam(msg, roleTeam, detectivesAreInnocent, aliveOnly, printTypes)
+        -- This method only works with CR for TTT
+        if not CRVersion then return end
+
+        -- This is required
+        if not roleTeam then return end
+
+        if type(printTypes) ~= "table" then
+            if type(printTypes) == "number" then
+                printTypes = {printTypes}
+            else
+                printTypes = {HUD_PRINTTALK}
+            end
+        end
+
+        player.ExecuteAgainstTeamPlayers(roleTeam, detectivesAreInnocent, aliveOnly, function(ply)
+            for _, printType in ipairs(printTypes) do
+                ply:PrintMessage(printType, msg)
+            end
+        end)
+    end
+end
+
 -- Player Model functions, credit to The Stig
 
 local playermodelData = {}

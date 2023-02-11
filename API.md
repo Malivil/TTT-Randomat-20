@@ -812,6 +812,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *msg* - The message to send
 - *tbl* - The table of players to send the message to. If not given or `nil`, the table of all players will be used instead
 
+**Randomat:SendMessageToTeam(msg, roleTeam, detectivesAreInnocent, aliveOnly, printTypes)** - .\
+*Realm:* Server\
+*Parameters:*
+- *msg* - The message to send
+- *roleTeam* - The `ROLE_TEAM_*` value from Custom Roles for TTT, specifying which team to send the message to
+- *detectivesAreInnocent* - Whether to also send to members of the detective team when `ROLE_TEAM_INNOCENTS` is given for `roleTeam`
+- *aliveOnly* - Whether only alive players should be sent the message
+- *printTypes* - The [HUD_PRINT*](https://wiki.facepunch.com/gmod/Enums/HUD) value(s) specifying how the message should be displayed. Can be a single value or a table of values. If not provided, defaults to `HUD_PRINTTALK`
+
 **Randomat:ShouldActLikeJester(ply)** - Determines whether the given player should be acting like a Jester (e.g. not taking fall damage, not doing weapon damage, etc.).\
 *Realm:* Client and Server\
 *Parameters:*
