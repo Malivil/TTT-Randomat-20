@@ -292,6 +292,21 @@ function Randomat:IsZombifying(ply)
     return (ply.IsZombifying and ply:IsZombifying()) or ply:GetNWBool("IsZombifying", false) or ply:GetPData("IsZombifying", 0) == 1
 end
 
+function Randomat:GetRoleTeamName(role_team)
+    if GetRoleTeamName and CLIENT then return GetRoleTeamName(role_team) end
+
+    if role_team == ROLE_TEAM_TRAITOR then
+        return "Traitor"
+    elseif role_team == ROLE_TEAM_MONSTER then
+        return "Monster"
+    elseif role_team == ROLE_TEAM_JESTER then
+        return "Jester"
+    elseif role_team == ROLE_TEAM_INDEPENDENT then
+        return "Independent"
+    end
+    return "Innocent"
+end
+
 -- Weapon Functions
 
 function Randomat:RestoreWeaponSound(wep)

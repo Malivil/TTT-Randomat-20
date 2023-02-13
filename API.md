@@ -518,6 +518,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* The name string for the given role
 
+**Randomat:GetRoleTeamName(roleTeam)** - Gets the team name string for the given role team.\
+*Realm:* Client and Server\
+*Parameters:*
+- *roleTeam* - The `ROLE_TEAM_*` value from Custom Roles for TTT, specifying which team to get the name of
+
+*Returns:* The team name string for the given role team
+
 **Randomat:GetRoundCompletePercent()** - Gets the percentage of the current round that is complete.\
 *Realm:* Server
 
