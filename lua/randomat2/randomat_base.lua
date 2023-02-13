@@ -1274,6 +1274,8 @@ end
 -- Misc.
 
 function randomat_meta:NotifyTeamChange(newMembers, roleTeam)
+    -- This method only works with CR for TTT
+    if not CRVersion then return end
     if #newMembers <= 0 then return end
 
     local members = Randomat:GetPlayerNameListString(newMembers, true)
@@ -1285,7 +1287,25 @@ function randomat_meta:NotifyTeamChange(newMembers, roleTeam)
     -- Delay this message slightly in case it's being shown when an event starts
     -- The delay pushes it below the event description chat message
     timer.Simple(0.1, function()
-        Randomat:SendMessageToTeam(members .. verb .. "joined your team", roleTeam, false, false, {HUD_PRINTTALK, HUD_PRINTCENTER}, newMembers)
+        local extendedReason = " due to being a role incompatible with a running event"
+
+        local joinedTeamMessage = members .. verb .. "joined your team"
+        local extendedJoinedTeamMessage = joinedTeamMessage .. extendedReason
+
+        local changedTeamMessage = "You have joined the " .. Randomat:GetRoleTeamName(roleTeam) .. " team"
+        local extendedChangedTeamMessage = changedTeamMessage .. extendedReason
+
+        player.ExecuteAgainstTeamPlayers(roleTeam, true, false, function(ply)
+            -- Tell players that changed teams what team they joined and why
+            if table.HasValue(newMembers, ply) then
+                ply:PrintMessage(HUD_PRINTCENTER, changedTeamMessage)
+                ply:PrintMessage(HUD_PRINTTALK, extendedChangedTeamMessage)
+            -- Tell members of their new team who has joined them
+            else
+                ply:PrintMessage(HUD_PRINTCENTER, joinedTeamMessage)
+                ply:PrintMessage(HUD_PRINTTALK, extendedJoinedTeamMessage)
+            end
+        end)
     end)
 end
 
