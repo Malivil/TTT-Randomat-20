@@ -1180,9 +1180,9 @@ Allows the dead to buff or debuff their targets
 \
 **ConVars**
 \
-_ttt_randomat_paranoid_ - Default: 1 - Whether this event is enabled.\
-_ttt_randomat_paranoid_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_paranoid_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_specbuff_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_specbuff_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_specbuff_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_specbuff_charge_time_ - Default: 60 - How many seconds it takes to charge to full power.\
 _randomat_specbuff_heal_power_ - Default: 75 - The amount of power to heal the target.\
 _randomat_specbuff_heal_amount_ - Default: 10 - The amount of to heal the target.\
