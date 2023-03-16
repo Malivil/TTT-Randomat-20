@@ -1,7 +1,7 @@
 local EVENT = {}
 
-EVENT.Title = "Get Down Mr President!"
-EVENT.Description = "Gives all Detectives extra health, but kills all members of the Innocent team if they get killed"
+EVENT.Title = "Get Down Mr. President!"
+EVENT.Description = "Gives Detectives extra health, but if they get killed, so do all other members of the Innocent team"
 EVENT.id = "president"
 EVENT.Categories = {"rolechange", "deathtrigger", "biased_traitor", "biased", "largeimpact"}
 
@@ -10,7 +10,7 @@ CreateConVar("randomat_president_announce", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "W
 
 function EVENT:Begin(target)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Gives all " .. Randomat:GetRolePluralString(ROLE_DETECTIVE) .. " extra health, but kills all members of the " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " team if they get killed"
+    EVENT.Description = "Gives " .. Randomat:GetRolePluralString(ROLE_DETECTIVE) .. " extra health, but if they get killed, so do all other members of the " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " team"
 
     -- Default to the player passed as a paramter, if there is one
     if not target then
@@ -31,7 +31,7 @@ function EVENT:Begin(target)
         Randomat:SetRole(target, ROLE_DETECTIVE)
         SendFullStateUpdate()
     end
-    target:SetMaxHealth(target:GetMaxHealth()+GetConVar("randomat_president_bonushealth"):GetInt())
+    target:SetMaxHealth(target:GetMaxHealth() + GetConVar("randomat_president_bonushealth"):GetInt())
     target:SetHealth(target:GetMaxHealth())
 
     local announce = GetConVar("randomat_president_announce"):GetBool()

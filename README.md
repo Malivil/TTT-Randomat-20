@@ -738,8 +738,8 @@ _ttt_randomat_gaseous_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_gaseous_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_gaseous_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
-## Get Down Mr President!
-Gives all Detectives extra health, but kills all members of the Innocent team if they get killed
+## Get Down Mr. President!
+Gives Detectives extra health, but if they get killed, so do all other members of the Innocent team
 \
 \
 **ConVars**
