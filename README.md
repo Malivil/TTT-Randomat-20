@@ -41,6 +41,7 @@ _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" labe
 1. Somebody set us up the bomb
 1. Meet Cute
 1. Good Cop, Bad Cop
+1. Get Down Mr. Romero!
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -748,7 +749,19 @@ _ttt_randomat_president_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_president_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_president_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.\
-_randomat_president_announce_ - Default: 1 - Whether to announce when the president dies
+_randomat_president_announce_ - Default: 1 - Whether to announce when the president dies.
+
+## Get Down Mr. Romero!
+Gives Detectives extra health, but if they get killed, all living members of the Innocent team are converted to Zombies
+\
+\
+**ConVars**
+\
+_ttt_randomat_romero_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_romero_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_romero_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_romero_bonushealth_ - Default: 100 - Extra health gained by the detective.\
+_randomat_romero_announce_ - Default: 1 - Whether to announce when Mr. Romero dies.
 
 ## Ghostly Apparition
 Dead players become ghosts who leave a trail of smoke as they drift through the world
@@ -1930,7 +1943,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targeting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
-- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb", "Meet Cute", "Loose Clips", and "Good Cop, Bad Cop" events
+- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb", "Meet Cute", "Loose Clips", "Good Cop, Bad Cop", and "Get Down Mr. Romero!" events
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - Matt Warren from the Yogscast YouTube comments and Dangerzachattack from the Custom Roles for TTT for the idea for the "It's over Anakin! I have the high ground!" event
