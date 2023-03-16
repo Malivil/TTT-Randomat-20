@@ -40,6 +40,7 @@ _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" labe
 1. Praw emiTime Warp (aka Time Flip)
 1. Somebody set us up the bomb
 1. Meet Cute
+1. Good Cop, Bad Cop
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -787,6 +788,17 @@ _randomat_glitch_damage_scale_ - Default: 1.0 - The multiplier for damage that t
 _randomat_glitch_max_glitches_ - Default: 0 - The maximum number of Glitches this event will create. Setting to 0 will not limit the number of Glitches.\
 _randomat_glitch_starting_health_ - Default: 100 - The amount of health the Glitches should start with.\
 _randomat_glitch_min_traitors_ - Default: 0 - The minimum number of Traitors before this event will run.
+
+
+## Good Cop, Bad Cop
+Instead of a detective, you now have two deputies... or is one an impersonator?
+\
+\
+**ConVars**
+\
+_ttt_randomat_goodcopbadcop_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_goodcopbadcop_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_goodcopbadcop_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Got any connies?!
 Announces players that have shop items after a configurable number of seconds
@@ -1918,7 +1930,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targeting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
-- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb", "Meet Cute", and "Loose Clips" events
+- Corvatile from the Custom Roles for TTT Discord for the idea for the "Somebody set us up the bomb", "Meet Cute", "Loose Clips", and "Good Cop, Bad Cop" events
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - Matt Warren from the Yogscast YouTube comments and Dangerzachattack from the Custom Roles for TTT for the idea for the "It's over Anakin! I have the high ground!" event
