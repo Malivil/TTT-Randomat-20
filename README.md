@@ -40,6 +40,7 @@ _cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" labe
 1. Praw emiTime Warp (aka Time Flip)
 1. Somebody set us up the bomb
 1. Meet Cute
+1. Loose Lips
 1. Good Cop, Bad Cop
 1. Get Down Mr. Romero!
 
