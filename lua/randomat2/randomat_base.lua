@@ -647,8 +647,8 @@ function Randomat:GetPlayers(shuffle, alive_only, dead_only)
             ((not alive_only and not dead_only) or
             -- Alive and non-spec
                 (alive_only and (ply:Alive() and not ply:IsSpec())) or
-            -- Dead or spec
-                (dead_only and (not ply:Alive() or ply:IsSpec()))) then
+            -- Dead but not spec
+                (dead_only and (not ply:Alive() or ply:IsSpec()) and ply:GetRole() ~= ROLE_NONE)) then
                 table.insert(plys, ply)
             end
         end
