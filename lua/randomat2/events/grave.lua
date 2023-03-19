@@ -12,7 +12,7 @@ CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The he
 CreateConVar("randomat_grave_include_dead", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to resurrect dead players at the start")
 
 local function ShouldZombify(ply)
-    return not ply:Alive() and ply:GetRole() ~= ROLE_ZOMBIE and not Randomat:IsZombifying(ply)
+    return not ply:Alive() and ply:GetRole() ~= ROLE_ZOMBIE
 end
 
 local function ZombifyPlayer(ply, skip_missing_corpse)
@@ -38,6 +38,8 @@ local function ZombifyPlayer(ply, skip_missing_corpse)
         body:Remove()
     end
 
+    ply:SetNWBool("IsZombifying", false)
+
     return true
 end
 
@@ -49,7 +51,7 @@ function EVENT:Begin(filter_class)
     if include_dead then
         local zombified = false
         for _, p in ipairs(self:GetDeadPlayers()) do
-            if ShouldZombify(p) then
+            if ShouldZombify(p) and not Randomat:IsZombifying(p) then
                 zombified = zombified or ZombifyPlayer(p, true)
             end
         end
@@ -62,8 +64,12 @@ function EVENT:Begin(filter_class)
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) then return end
+        if filter_class and IsValid(killer) and killer:GetClass() ~= filter_class then return end
+        if Randomat:IsZombifying(victim) then return end
+
+        victim:SetNWBool("IsZombifying", true)
         timer.Create(victim:SteamID64() .. "RdmtZombieTimer", 0.25, 1, function()
-            if (not filter_class or (IsValid(killer) and killer:GetClass() == filter_class)) and ShouldZombify(victim) then
+            if ShouldZombify(victim) then
                 ZombifyPlayer(victim, false)
                 SendFullStateUpdate()
             end
