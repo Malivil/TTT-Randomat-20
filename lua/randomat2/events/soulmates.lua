@@ -4,6 +4,7 @@ EVENT.Title = ""
 EVENT.Description = "Pairs players together. When either of the paired players is killed, the other is automatically killed as well"
 EVENT.id = "soulmates"
 EVENT.AltTitle = "Soulmates"
+EVENT.Type = EVENT_TYPE_FORCED_DEATH
 EVENT.Categories = {"biased_traitor", "biased", "largeimpact"}
 
 CreateConVar("randomat_soulmates_affectall", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether everyone should have a soulmate")
