@@ -14,6 +14,21 @@ function ENT:Initialize()
     if IsValid(phys) then
         phys:Wake()
     end
+
+    if CLIENT then
+        local GetPTranslation = LANG.GetParamTranslation
+        LANG.AddToLanguage("english", "rdmt_carepackage_name", "Care Package")
+        LANG.AddToLanguage("english", "rdmt_carepackage_hint", "Press '{usekey}' to receive item")
+        self.TargetIDHint = function()
+            return {
+                name = "rdmt_carepackage_name",
+                hint = "rdmt_carepackage_hint",
+                fmt  = function(ent, txt)
+                    return GetPTranslation(txt, { usekey = Key("+use", "USE") } )
+                end
+            };
+        end
+    end
 end
 
 function ENT:OnRemove()
