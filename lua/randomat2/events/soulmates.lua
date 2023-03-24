@@ -6,35 +6,32 @@ EVENT.id = "soulmates"
 EVENT.AltTitle = "Soulmates"
 EVENT.Type = EVENT_TYPE_FORCED_DEATH
 EVENT.Categories = {"biased_traitor", "biased", "largeimpact"}
+EVENT.SingleUse = false
 
 CreateConVar("randomat_soulmates_affectall", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether everyone should have a soulmate")
 CreateConVar("randomat_soulmates_sharedhealth", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether soulmates should have shared health")
 
-local ply1 = {}
-local ply1_health = {}
-local ply2 = {}
-local ply2_health = {}
-
-local function SetSharedHealth(i, shared_health)
-    ply1[i]:SetHealth(shared_health)
-    ply1_health[i] = shared_health
-    ply2[i]:SetHealth(shared_health)
-    ply2_health[i] = shared_health
-end
-
-local function InitializeSharedHealth(i)
-    ply1[i]:SetMaxHealth(200)
-    ply2[i]:SetMaxHealth(200)
-
-    local shared_health = ply1_health[i] + ply2_health[i]
-    SetSharedHealth(i, shared_health)
-end
-
+local timer_ids = {}
 function EVENT:Begin(first_target, second_target)
-    ply1 = {}
-    ply1_health = {}
-    ply2 = {}
-    ply2_health = {}
+    local ply1 = {}
+    local ply1_health = {}
+    local ply2 = {}
+    local ply2_health = {}
+
+    local function SetSharedHealth(i, shared_health)
+        ply1[i]:SetHealth(shared_health)
+        ply1_health[i] = shared_health
+        ply2[i]:SetHealth(shared_health)
+        ply2_health[i] = shared_health
+    end
+
+    local function InitializeSharedHealth(i)
+        ply1[i]:SetMaxHealth(200)
+        ply2[i]:SetMaxHealth(200)
+
+        local shared_health = ply1_health[i] + ply2_health[i]
+        SetSharedHealth(i, shared_health)
+    end
 
     local affect_all = GetConVar("randomat_soulmates_affectall"):GetBool()
     -- Allow the players to be overwritten if this is called from another event
@@ -94,7 +91,9 @@ function EVENT:Begin(first_target, second_target)
         Randomat:LogEvent("[RANDOMAT] " .. ply1[1]:Nick() .. " and " .. ply2[1]:Nick() .. " are now soulmates.")
     end
 
-    timer.Create("RdmtLinkTimer", 0.1, 0, function()
+    local timer_id = "RdmtLinkTimer_" .. self.StartTime
+    table.insert(timer_ids, timer_id)
+    timer.Create(timer_id, 0.1, 0, function()
         for i = 1, size do
             if not ply1[i]:Alive() and ply2[i]:Alive() then
                 ply2[i]:Kill()
@@ -118,7 +117,10 @@ function EVENT:Begin(first_target, second_target)
 end
 
 function EVENT:End()
-    timer.Remove("RdmtLinkTimer")
+    for _, timer_id in ipairs(timer_ids) do
+        timer.Remove(timer_id)
+    end
+    table.Empty(timer_ids)
 end
 
 function EVENT:GetConVars()
