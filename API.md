@@ -212,6 +212,9 @@ Properties used to define and describe an event and its running conditions
 **StartSecret** - Whether this event should be started in secret. Defaults to `false`.\
 *Realm:* Server
 
+**StartTime** - The time that this event was started. Useful for when a unique "running instance" identifier is needed.\
+*Realm:* Server
+
 **Title** - The title to use for this event. If this is not defined (and `AltTitle` is instead) the automatic "started" notification for this event will not happen.\
 *Realm:* Server
 
