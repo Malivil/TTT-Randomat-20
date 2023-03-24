@@ -12,6 +12,28 @@ if GetConVar("randomat_harpoon_strip"):GetBool() then
 end
 EVENT.Categories = {"item", "rolechange", "largeimpact"}
 
+local default_weaponids = {"ttt_m9k_harpoon", "weapon_ttt_hwapoon"}
+local weaponid = nil
+
+local function PopulateWeaponId()
+    if weaponid ~= nil then return end
+
+    local config_weapon = GetConVar("randomat_harpoon_weaponid"):GetString()
+    local weapon_options = table.Add({}, default_weaponids)
+    -- Insert this ID at the start of the table if it's not already there
+    if not table.HasValue(weapon_options, config_weapon) then
+        table.insert(weapon_options, 0, config_weapon)
+    end
+
+    -- Find the first weapon in the list (which has the config value first) that exists
+    for _, v in pairs(weapon_options) do
+        if util.WeaponForClass(v) ~= nil then
+            weaponid = v
+            break
+        end
+    end
+end
+
 function EVENT:HandleRoleWeapons(ply)
     local updated = false
     local changing_teams = Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply)
@@ -32,6 +54,8 @@ function EVENT:HandleRoleWeapons(ply)
 end
 
 function EVENT:Begin()
+    PopulateWeaponId()
+
     local new_traitors = {}
     for _, v in ipairs(self:GetAlivePlayers()) do
         local _, new_traitor = self:HandleRoleWeapons(v)
@@ -46,7 +70,6 @@ function EVENT:Begin()
 
     local strip = GetConVar("randomat_harpoon_strip"):GetBool()
     timer.Create("RandomatPoonTimer", GetConVar("randomat_harpoon_timer"):GetInt(), 0, function()
-        local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
         local updated = false
         for _, ply in ipairs(self:GetAlivePlayers()) do
             if strip then
@@ -94,7 +117,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    local weaponid = GetConVar("randomat_harpoon_weaponid"):GetString()
+    PopulateWeaponId()
     return util.WeaponForClass(weaponid) ~= nil
 end
 
