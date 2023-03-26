@@ -5,7 +5,7 @@ EVENT.Description = "Weapons explode if you try to fire them while empty"
 EVENT.id = "chamberpop"
 EVENT.Categories = {"moderateimpact"}
 
-CreateConVar("randomat_chamberpop_explosion_magnitude", 150, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Weapon explosion magnitude", 50, 250)
+local chamberpop_explosion_magnitude = CreateConVar("randomat_chamberpop_explosion_magnitude", 150, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Weapon explosion magnitude", 50, 250)
 
 function EVENT:SetupWeapon(ply, weap, magnitude)
     if weap.OldDryFire then return end
@@ -39,7 +39,7 @@ function EVENT:IsValidWeapon(weap)
 end
 
 function EVENT:Begin()
-    local magnitude = GetConVar("randomat_chamberpop_explosion_magnitude"):GetString()
+    local magnitude = chamberpop_explosion_magnitude:GetString()
 
     -- Rig all of the curretly-held weapons
     for _, p in ipairs(self:GetAlivePlayers()) do
