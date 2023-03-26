@@ -7,15 +7,11 @@ EVENT.Categories = {"moderateimpact"}
 
 local chamberpop_explosion_magnitude = CreateConVar("randomat_chamberpop_explosion_magnitude", 150, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Weapon explosion magnitude", 50, 250)
 
-function EVENT:SetupWeapon(ply, weap, magnitude)
-    if weap.OldDryFire then return end
-
-    print("Rig", ply, weap, magnitude)
-
-    weap.OldDryFire = weap.DryFire
-    weap.DryFire = function(w, setnext)
-        print("Dry fire")
-        w:OldDryFire(setnext)
+local function CheckAndPop(ply, weap, magnitude, can_fire, ammoTbl, ammoFn)
+    -- If we can't use the attack and we COULD have ammo but we don't... then just assume we're dry firing
+    -- This is necessary (as opposed to just overriding DryFire) because some custom weapons use a base mod that doens't use DryFire for... dry... firing
+    if not can_fire and not weap.RdmtChamberPopped and ammoTbl and ammoTbl.ClipSize > 0 and ammoFn(weap) == 0 then
+        weap.RdmtChamberPopped = true
 
         local explode = ents.Create("env_explosion")
         explode:SetPos(ply:GetPos())
@@ -27,10 +23,36 @@ function EVENT:SetupWeapon(ply, weap, magnitude)
     end
 end
 
+function EVENT:SetupWeapon(ply, weap, magnitude)
+    if not weap.OldCanPrimaryAttack and weap.CanPrimaryAttack then
+        weap.OldCanPrimaryAttack = weap.CanPrimaryAttack
+        weap.CanPrimaryAttack = function(w)
+            local can_primary = w:OldCanPrimaryAttack()
+            CheckAndPop(ply, w, magnitude, can_primary, w.Primary, w.Clip1)
+            return can_primary
+        end
+    end
+
+    if not weap.OldCanSecondaryAttack and weap.CanSecondaryAttack then
+        weap.OldCanSecondaryAttack = weap.CanSecondaryAttack
+        weap.CanSecondaryAttack = function(w)
+            local can_secondary = w:OldCanSecondaryAttack()
+            CheckAndPop(ply, w, magnitude, can_secondary, w.Secondary, w.Clip2)
+            return can_secondary
+        end
+    end
+end
+
 function EVENT:ResetWeapon(weap)
-    if not weap.OldDryFire then return end
-    weap.DryFire = weap.OldDryFire
-    weap.OldDryFire = nil
+    if weap.OldCanPrimaryAttack then
+        weap.CanPrimaryAttack = weap.OldCanPrimaryAttack
+        weap.OldCanPrimaryAttack = nil
+    end
+
+    if weap.OldCanSecondaryAttack then
+        weap.CanSecondaryAttack = weap.OldCanSecondaryAttack
+        weap.OldCanSecondaryAttack = nil
+    end
 end
 
 -- Only rig primary weapons and pistols
