@@ -16,6 +16,8 @@ local function ShouldZombify(ply)
 end
 
 local function ZombifyPlayer(ply, skip_missing_corpse)
+    ply:SetNWBool("IsZombifying", false)
+
     local body = ply.server_ragdoll or ply:GetRagdollEntity()
     if skip_missing_corpse and not IsValid(body) then return false end
 
@@ -37,8 +39,6 @@ local function ZombifyPlayer(ply, skip_missing_corpse)
         ply:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
         body:Remove()
     end
-
-    ply:SetNWBool("IsZombifying", false)
 
     return true
 end
@@ -67,7 +67,9 @@ function EVENT:Begin(filter_class)
         if filter_class and IsValid(killer) and killer:GetClass() ~= filter_class then return end
         if Randomat:IsZombifying(victim) then return end
 
-        victim:SetNWBool("IsZombifying", true)
+        if ShouldZombify(victim) then
+            victim:SetNWBool("IsZombifying", true)
+        end
         timer.Create(victim:SteamID64() .. "RdmtZombieTimer", 0.25, 1, function()
             if ShouldZombify(victim) then
                 ZombifyPlayer(victim, false)
