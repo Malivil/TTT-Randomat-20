@@ -60,6 +60,7 @@ local timer = timer
 
 local CallHook = hook.Call
 local EntsCreate = ents.Create
+local EntsFindByClass = ents.FindByClass
 local GetAllPlayers = player.GetAll
 local GetAllEnts = ents.GetAll
 
@@ -1255,12 +1256,19 @@ end
 
 -- Entities
 
-function randomat_meta:AddEntityCullingBypass(ply_pred, tgt_pred)
+function randomat_meta:AddEntityCullingBypass(ply_pred, tgt_pred, class)
     self:AddHook("SetupPlayerVisibility", function(ply)
         if ply.ShouldBypassCulling and not ply:ShouldBypassCulling() then return end
         if ply_pred and not ply_pred(ply) then return end
 
-        for _, v in ipairs(GetAllEnts()) do
+        local ent_table
+        if class then
+            ent_table = EntsFindByClass(class)
+        else
+            ent_table = GetAllEnts()
+        end
+
+        for _, v in ipairs(ent_table) do
             if tgt_pred and not tgt_pred(ply, v) then continue end
             if ply:TestPVS(v) then continue end
 

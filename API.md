@@ -40,11 +40,12 @@ All methods below are automatically defined for every event but events can overr
 - *ply_pred* - An optional function predicate that is given a player and returns whether that player should have their culling behavior bypassed
 - *tgt_pred* - An optional function predicate that is given a player and a target and returns whether that player should have their culling behavior bypassed for that target
 
-**EVENT:AddEntityCullingBypass(ply_pred, tgt_pred)** - Adds behavior which bypasses map vis leafs and culling to have things like highlighting show more consistently through walls.\
+**EVENT:AddEntityCullingBypass(ply_pred, tgt_pred, class)** - Adds behavior which bypasses map vis leafs and culling to have things like highlighting show more consistently through walls.\
 *Realm:* Server\
 *Parameters:*
 - *ply_pred* - An optional function predicate that is given a player and returns whether that player should have their culling behavior bypassed
 - *tgt_pred* - An optional function predicate that is given a player and a target entity and returns whether that player should have their culling behavior bypassed for that target
+- *class* - An optional entity class that will filter the list of entities being processed
 
 **EVENT:AddHook(hooktype, callbackfunc, suffix)** - Registers a new hook for this event.\
 *Realm:* Server\
