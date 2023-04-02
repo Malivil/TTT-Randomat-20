@@ -23,6 +23,9 @@ function EVENT:Begin()
         table.insert(blocklist, blocked_id:Trim())
     end
 
+    -- Set this as a glitch round so role assignment logic behaves correctly
+    SetGlobalBool("ttt_glitch_round", true)
+
     local players = self:GetAlivePlayers(true)
     local tcount = math.ceil(#players * (GetConVar("randomat_glitch_traitor_pct"):GetInt()/100))
 
