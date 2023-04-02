@@ -29,7 +29,7 @@ local function PopulateWeaponId()
     for _, v in pairs(weapon_options) do
         if util.WeaponForClass(v) ~= nil then
             weaponid = v
-            break
+            return
         end
     end
 end
@@ -100,7 +100,7 @@ function EVENT:Begin()
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
         if not strip then return end
-        return IsValid(wep) and WEPS.GetClass(wep) == GetConVar("randomat_harpoon_weaponid"):GetString()
+        return IsValid(wep) and WEPS.GetClass(wep) == weaponid
     end)
 
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
