@@ -1,5 +1,7 @@
 local EVENT = {}
 
+util.AddNetworkString("RdmtDefuseModePlanted")
+
 EVENT.Title = "Somebody set us up the bomb"
 EVENT.AltTitle = "Defuse Mode"
 EVENT.Description = "Gives all traitors C4. If a C4 explodes by running out of time, the traitors win."
@@ -44,6 +46,12 @@ function EVENT:Begin()
         if c4.DisarmCausedExplosion then return end
 
         traitors_win = true
+    end)
+
+    self:AddHook("TTTC4Arm", function(c4, ply)
+        if not IsValid(c4) then return end
+        net.Start("RdmtDefuseModePlanted")
+        net.Broadcast()
     end)
 
     self:AddHook("TTTCheckForWin", function()
