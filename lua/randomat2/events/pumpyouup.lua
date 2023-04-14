@@ -32,7 +32,11 @@ local playersvoted = {}
 local target = nil
 
 function EVENT:Begin()
+    local buff = GetConVar("randomat_pumpyouup_buff"):GetInt()
+    local speed_factor = GetConVar("randomat_pumpyouup_speed_factor"):GetFloat()
     net.Start("PumpYouUpEventBegin")
+    net.WriteUInt(buff, 4)
+    net.WriteFloat(speed_factor)
     net.Broadcast()
 
     playervotes = {}
@@ -44,7 +48,6 @@ function EVENT:Begin()
         playervotes[k] = 0
     end
 
-    local buff = GetConVar("randomat_pumpyouup_buff"):GetInt()
     if buff == BUFF_DAMAGE then
         EVENT.Description = "Vote to buff a player's damage."
         local damage_scale = GetConVar("randomat_pumpyouup_damage_scale"):GetFloat()
@@ -57,7 +60,6 @@ function EVENT:Begin()
         end)
     elseif buff == BUFF_SPEED then
         EVENT.Description = "Vote to buff a player's speed."
-        local speed_factor = GetConVar("randomat_pumpyouup_speed_factor"):GetFloat()
         self:AddHook("TTTSpeedMultiplier", function(ply, mults)
             if ply ~= target then return end
             if not IsPlayer(target) or not target:Alive() or target:IsSpec() then return end

@@ -1,6 +1,8 @@
 local voteframe = nil
 
 net.Receive("PumpYouUpEventBegin", function()
+    local buff = net.ReadUInt(4)
+    local speed_factor= net.ReadFloat()
     voteframe = vgui.Create("DFrame")
     voteframe:SetPos(10, ScrH() - 800)
     voteframe:SetSize(200, 300)
@@ -61,11 +63,14 @@ net.Receive("PumpYouUpEventBegin", function()
         end
     end)
 
-    hook.Add("TTTSpeedMultiplier", "PumpYouUp_TTTSpeedMultiplier", function(ply, mults)
-        if ply ~= target then return end
-        if not IsPlayer(target) or not target:Alive() or target:IsSpec() then return end
-        table.insert(mults, speed_factor)
-    end)
+    -- BUFF_SPEED
+    if buff == 1 then
+        hook.Add("TTTSpeedMultiplier", "PumpYouUp_TTTSpeedMultiplier", function(ply, mults)
+            if ply ~= target then return end
+            if not IsPlayer(target) or not target:Alive() or target:IsSpec() then return end
+            table.insert(mults, speed_factor)
+        end)
+    end
 end)
 
 net.Receive("PumpYouUpEventEnd", function()
