@@ -14,7 +14,7 @@ function EVENT:Begin(magnitude)
     end
     self.Description = "Magnitude " .. magnitude .. "!"
 
-    -- Shake the screen aroudn the owner's location in case there are really big maps with a lot of empty space
+    -- Shake the screen around the owner's location in case there are really big maps with a lot of empty space
     util.ScreenShake(self.owner:GetPos(), magnitude, 5, 2 * magnitude, 5000)
     timer.Create("RdmtEarthquake", 0.25, 5 * magnitude, function()
         for _, ent in ipairs(ents.GetAll()) do
