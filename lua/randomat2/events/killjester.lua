@@ -8,7 +8,7 @@ EVENT.Description = "Innocents win if they kill the jester, but traitors want th
 EVENT.id = "killjester"
 EVENT.Categories = {"largeimpact"}
 
-local origPlayerDeath = origPlayerDeath or nil
+local origPlayerDeath
 
 function EVENT:Begin()
     -- Update this in case the role names have been changed

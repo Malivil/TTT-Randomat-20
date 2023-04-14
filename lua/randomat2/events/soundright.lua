@@ -17,7 +17,7 @@ local wep_sounds = {}
 local function GetRandomWeaponSound(wep)
     local wep_class = WEPS.GetClass(wep)
     if not wep_sounds[wep_class] then
-        local chosen_sound = nil
+        local chosen_sound
         -- Choose a random (but valid) sound that is different than the one the weapon already has
         repeat
             local idx = math.random(1, #sounds)

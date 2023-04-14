@@ -22,7 +22,6 @@ function EVENT:Begin()
                 i = i+1
             end
         end
-        i = 0
 
         ply1:ExitVehicle()
         ply2:ExitVehicle()

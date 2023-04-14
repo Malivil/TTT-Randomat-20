@@ -209,7 +209,7 @@ function EVENT:Begin()
 
     -- The percent of the round that is complete is how much time has elapsed since the start of the round compared to the total amount of time the round will last
     local round_percent_complete = Randomat:GetRoundCompletePercent()
-    local templates = {}
+    local templates
     -- Use "new round" and "start" if <= 5% of the round has elapsed
     if round_percent_complete <= 5 then
         templates = table.Add(table.Copy(start_tmpl), new_round_tmpl)

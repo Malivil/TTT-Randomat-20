@@ -14,7 +14,7 @@ EVENT.StartSecret = true
 EVENT.Categories = {"largeimpact"}
 
 function EVENT:GetRandomWeaponSound(sounds)
-    local chosen_sound = nil
+    local chosen_sound
     -- Choose a random (but valid) sound
     repeat
         local idx = math.random(1, #sounds)

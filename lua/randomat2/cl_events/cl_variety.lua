@@ -6,7 +6,7 @@ net.Receive("RdmtVarietyBegin", function()
         surface.SetFont("TabLarge")
         surface.SetTextColor(255, 255, 255, 230)
 
-        text = "Damage Type Disabled: " .. damageType
+        local text = "Damage Type Disabled: " .. damageType
         local _, h = surface.GetTextSize(text)
 
         -- Move this up based on how many other labels here are

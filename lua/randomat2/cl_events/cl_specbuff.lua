@@ -66,7 +66,6 @@ net.Receive("RdmtSpecBuffBegin", function()
         if slap_power > 0 then
             local percentage = math.Round(100 * (slap_power / max_power))
             draw.SimpleText("RIGHT: Slap target (" .. percentage .. "%)", "TabLarge", ScrW() / 4 + ((ScrW() / (2 * (command_count + 1))) * current_command), y - margin, current_power >= slap_power and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_CENTER)
-            current_command = current_command + 1
         end
     end)
 
