@@ -138,6 +138,9 @@ globals = {
 	"CONTENTS_WINDOW",
 	"CONTINUOUS_USE",
 	"CORPSE_ICON_TYPES",
+	"D_HT",
+	"D_LI",
+	"D_NU",
 	"DEFINE_BASECLASS",
 	"DIRECTIONAL_USE",
 	"DMG_ACID",
@@ -375,6 +378,7 @@ globals = {
 	"MASK_VISIBLE_AND_NPCS",
 	"MASK_WATER",
 	"MAT_METAL",
+	"MATERIAL_FOG_LINEAR",
 	"MOUSE_4",
 	"MOUSE_5",
 	"MOUSE_COUNT",
@@ -401,6 +405,7 @@ globals = {
 	"MUTE_NONE",
 	"MUTE_SPEC",
 	"MUTE_TERROR",
+	"NPC_STATE_ALERT",
 	"NULL",
 	"OBS_MODE_CHASE",
 	"OBS_MODE_DEATHCAM",
@@ -449,6 +454,8 @@ globals = {
 	"SB_ROW_HEIGHT",
 	"SCORE",
 	"SERVER",
+	"SF_NPC_ALWAYSTHINK",
+	"SF_NPC_FADE_CORPSE",
 	"SIMPLE_USE",
 	"SOLID_BBOX",
 	"SOLID_BSP",
@@ -608,6 +615,7 @@ globals = {
 	"PrepareRound",
 	"PreprocSearch",
 	"PrintResultMessage",
+	"PrintTable",
 	"RandomPairs",
 	"RealFrameTime",
 	"RealTime",
@@ -642,6 +650,7 @@ globals = {
 	"ShowRoundStartPopup",
 	"ShowVersion",
 	"SortedPairsByMemberValue",
+	"SortedPairsByValue",
 	"Sound",
 	"SpawnWillingPlayers",
 	"StartFires",
@@ -999,7 +1008,32 @@ globals = {
 	"UpdateRoleWeaponState",
 
 	-- CR Namespaces
-	"CRHUD"
+	"CRHUD",
+
+	-- Randomat constants
+	"EVENT_TYPE_DEFAULT",
+	"EVENT_TYPE_FORCED_DEATH",
+	"EVENT_TYPE_GUNSOUNDS",
+	"EVENT_TYPE_JUMPING",
+	"EVENT_TYPE_MUSIC",
+	"EVENT_TYPE_RESPAWN",
+	"EVENT_TYPE_SMOKING",
+	"EVENT_TYPE_SPECTATOR_UI",
+	"EVENT_TYPE_VOTING",
+	"EVENT_TYPE_WEAPON_OVERRIDE",
+
+	-- Randomat Namespaces
+	"Randomat",
+
+	-- Legacy Roles
+	"ROLE_DETRAITOR",
+	"ROLE_PHOENIX",
+	"ROLE_SERIALKILLER",
+	"ROLE_SURVIVALIST",
+
+	-- External addon constants and namespaces
+	"EQUIP_PHD",
+	"ULib"
 }
 std = {
 	globals = {
@@ -1027,6 +1061,7 @@ std = {
 				HasValue = {},
 				IntersectedKeys  = {},
 				IsEmpty = {},
+				KeysFromValue = {},
 				LookupKeys = {},
 				Merge = {},
 				Random = {},
