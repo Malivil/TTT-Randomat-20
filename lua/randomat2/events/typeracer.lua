@@ -1,3 +1,5 @@
+local CallHook = hook.Call
+
 local EVENT = {}
 
 EVENT.Title = "Typeracer"
