@@ -12,6 +12,11 @@ function EVENT:Begin()
     EVENT.Description = "Gives all " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " C4. If a C4 explodes by running out of time, the " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " win."
 
     local new_traitors = {}
+    -- Use the sapper instead of the Detective if Sapper is enabled and they can see C4
+    local detective_role = ROLE_DETECTIVE
+    if ConVarExists("ttt_sapper_enabled") and GetConVar("ttt_sapper_enabled"):GetBool() and GetConVar("ttt_sapper_can_see_c4"):GetBool() then
+        detective_role = ROLE_SAPPER
+    end
     for _, p in ipairs(player.GetAll()) do
         -- Keep track of which players are joining the traitors
         local changing_teams = Randomat:IsMonsterTeam(p) or Randomat:IsIndependentTeam(p)
@@ -26,10 +31,12 @@ function EVENT:Begin()
             p:Give("weapon_ttt_c4")
             if set_credits then p:SetDefaultCredits() end
         elseif Randomat:IsDetectiveTeam(p) then
-            if not p:IsDetective() then
-                Randomat:SetRole(p, ROLE_DETECTIVE)
+            if not p:IsRole(detective_role) then
+                Randomat:SetRole(p, detective_role)
                 self:StripRoleWeapons(p)
-                p:Give("weapon_ttt_wtester")
+                if detective_role == ROLE_DETECTIVE then
+                    p:Give("weapon_ttt_wtester")
+                end
             end
         else
             Randomat:SetRole(p, ROLE_INNOCENT)
