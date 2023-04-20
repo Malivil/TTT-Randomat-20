@@ -230,6 +230,12 @@ function EVENT:Begin()
         for _, v in ipairs(self:GetAlivePlayers()) do
             -- Turn a player into a ragdoll if they are in the air, not already a ragdoll, not in the water, and haven't been ragdolled recently
             if not v:IsOnGround() and not v.inRagdoll and v:WaterLevel() == 0 and (v.lastRagdoll == nil or (CurTime() - v.lastRagdoll) > (ragdolltime + ragdolldelay)) then
+                -- If the player is on a ladder and would normally be ragdolled, reset the timer so there's a slight delay when they get off the ladder
+                if v:GetMoveType() == MOVETYPE_LADDER then
+                    v.lastRagdoll = CurTime()
+                    continue
+                end
+
                 local parent = v:GetParent()
                 -- Find out if something else is creating a ragdoll like the Taser/Stun Gun or Moon Ball
                 local has_ragdoll = (IsValid(parent) and parent:GetClass() == "prop_ragdoll") or IsValid(v.tazeragdoll) or IsValid(v.moonragdoll)
