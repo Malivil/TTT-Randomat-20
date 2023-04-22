@@ -31,7 +31,7 @@ _ttt_randomat_allow_client_list_ - Default: 1 - Whether to allow the clients to 
 
 # Client ConVars
 *NOTE*: These are manageable in the Randomat tab of the F1 menu.\
-_cl_randomat_show_count_ - Default: 0 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*
+_cl_randomat_show_active_ - Default: 1 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*
 
 # Latest Events
 1. Somebody set us up the bomb
