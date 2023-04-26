@@ -427,10 +427,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* The event's usable title
 
-**Randomat:GetEventsByCategory(category)** - Gets the list of all registered events with the given category.\
+**Randomat:GetEventsByCategory(category, active)** - Gets the list of events with the given category.\
 *Realm:* Server\
 *Parameters:*
 - *category* - The category of events to find
+- *active* - Whether to check active (running) events. Defaults to `false`
 
 *Returns:* The list of events with the given category
 
@@ -620,6 +621,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *id* - The ID of the event to search for
 
 *Returns:* `true` if the event id active, `false` otherwise
+
+**Randomat:IsEventCategoryActive(category)** - Determines whether an event with the provided category is current running.\
+*Realm:* Client and Server\
+*Parameters:*
+- *category* - The category of event to search for
+
+*Returns:* `true` if an event with the given category is active, `false` otherwise
 
 **Randomat:IsEventInHistory(event)** - Checks whether the given event is in tracking history.\
 *Realm:* Server\

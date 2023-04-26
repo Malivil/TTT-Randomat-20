@@ -612,18 +612,38 @@ function Randomat:GetEventCategories(event, readable)
     return table.concat(categories, ", ")
 end
 
-function Randomat:GetEventsByCategory(category)
+function Randomat:GetEventsByCategory(category, active)
     if not category or #category == 0 then return {} end
+    local tbl
+    if not active then
+        tbl = Randomat.Events
+    else
+        tbl = Randomat.ActiveEvents
+    end
 
     local events = {}
     local lower_cat = category:lower()
-    for _, e in pairs(Randomat.Events) do
+    for _, e in pairs(tbl) do
         if type(e.Categories) == "table" and table.HasValue(e.Categories, lower_cat) then
             table.insert(events, e)
         end
     end
     return events
 end
+
+function Randomat:IsEventCategoryActive(category)
+    if not category or #category == 0 then return false end
+
+    local lower_cat = category:lower()
+    for _, e in pairs(Randomat.ActiveEvents) do
+        if type(e.Categories) == "table" and table.HasValue(e.Categories, lower_cat) then
+            return true
+        end
+    end
+    return false
+end
+
+-- Event Types
 
 function Randomat:GetEventsByType(etype)
     if type(etype) ~= "number" then return {} end
