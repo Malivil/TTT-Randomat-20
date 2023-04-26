@@ -560,6 +560,8 @@ function Randomat:GetReadableCategory(category)
         return "Game Mode"
     elseif category == "entityspawn" then
         return "Entity Spawn"
+    elseif category == "modelchange" then
+        return "Model Change"
     elseif string.StartsWith(category, "biased_") then
         local parts = string.Explode("_", category)
         for k, p in ipairs(parts) do
