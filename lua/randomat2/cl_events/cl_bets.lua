@@ -37,8 +37,10 @@ net.Receive("RdmtHedgeBetsBegin", function()
             ply:PrintMessage(HUD_PRINTTALK, "Living people can't bet")
         end
 
-        betframe:Close()
-        betframe = nil
+        if IsValid(betframe) then
+            betframe:Close()
+            betframe = nil
+        end
     end
 end)
 

@@ -82,7 +82,9 @@ net.Receive("DemocracyJesterRevenge", function()
         net.Start("DemocracyJesterVoted")
         net.WriteString(pnl:GetColumnText(1))
         net.SendToServer()
-        jesterframe:Close()
+        if IsValid(jesterframe) then
+            jesterframe:Close()
+        end
     end
 end)
 
