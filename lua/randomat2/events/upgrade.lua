@@ -114,7 +114,7 @@ function EVENT:GetConVars()
 end
 
 net.Receive("RdmtPlayerChoseKiller", function(len, ply)
-    Randomat:SetRole(ply, ROLE_KILLER)
+    Randomat:SetRole(ply, ROLE_KILLER, false)
     SendFullStateUpdate()
 
     if ply.SetDefaultCredits then
@@ -150,6 +150,9 @@ net.Receive("RdmtPlayerChoseKiller", function(len, ply)
             ply:SetHealth(new_hp)
         end
     end
+
+    -- Make sure they get their loadout weapons
+    hook.Call("PlayerLoadout", GAMEMODE, ply)
 end)
 
 net.Receive("RdmtPlayerChoseMercenary", function(len, ply)
