@@ -39,6 +39,12 @@ function EVENT:Begin()
         net.WriteBool(hardmode)
         net.Send(ply)
     end)
+
+    -- Override the sprint key so living players can sprint forward while holding the back key
+    self:AddHook("TTTSprintKey", function(ply)
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+        return IN_BACK
+    end)
 end
 
 function EVENT:End()

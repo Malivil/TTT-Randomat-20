@@ -107,6 +107,13 @@ function EVENT:Begin()
             dmginfo:ScaleDamage(0.5)
         end
     end)
+
+    self:AddHook("TTTSprintStaminaPost", function(ply)
+        if ply ~= troll then return end
+
+        -- Infinite sprint through fixed infinite stamina
+        return 100
+    end)
 end
 
 function EVENT:End()
