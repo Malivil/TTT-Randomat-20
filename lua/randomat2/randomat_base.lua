@@ -800,7 +800,16 @@ local function GetRandomRoleWeapon(roles, blocklist, droppable_only)
 end
 
 function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
-    if tracking == nil then tracking = 0 end
+    -- Allow singular roles
+    if type(roles) ~= "table" then
+        roles = {roles}
+    end
+    -- Make this a no-op if it's not provided
+    if type(settrackingvar) ~= "function" then
+        settrackingvar = function(arg) end
+    end
+
+    if type(tracking) ~= "number" then tracking = 0 end
     if tracking >= 500 then return nil, nil, nil end
     tracking = tracking + 1
     settrackingvar(tracking)

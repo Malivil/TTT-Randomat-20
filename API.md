@@ -554,12 +554,12 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Realm:* Server\
 *Parameters:*
 - *ply* - The player to check for shop item/weapon compatibility
-- *roles* - The list of roles whose shops will be searched for a valid item/weapon
-- *blocklist* - The list of weapon class names (e.g. "weapon_ttt_knife") that shouldn't be retrieved
-- *include_equipment* - Whether to include equipment items (e.g. Radar, Body Armor, etc.)
-- *tracking* - The current iteration value used to ensure we don't infinite loop looking for an item
-- *settrackingvar* - The callback method allowing the caller to keep track of the updated tracking variable value
-- *droppable_only* - Whether only droppable weapons should be found
+- *roles* - The role or list of roles whose shops will be searched for a valid item/weapon
+- *blocklist* - The list of weapon class names (e.g. "weapon_ttt_knife") that shouldn't be retrieved. *Optional, defaults to an empty list*
+- *include_equipment* - Whether to include equipment items (e.g. Radar, Body Armor, etc.). *Optional, defaults to `false`*
+- *tracking* - The current iteration value used to ensure we don't infinite loop looking for an item. *Optional, defaults to `0`*
+- *settrackingvar* - The callback method allowing the caller to use the updated tracking variable value. Normally used to track the iteration count per-player. *Optional, defaults to no-op*
+- *droppable_only* - Whether only droppable weapons should be found. *Optional, defaults to `false`*
 
 *Returns:*
 - *item* - The item/weapon information from the shop. `nil` if no valid items/weapons are found
@@ -590,9 +590,9 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *blocklist* - The list of weapon class names (e.g. "weapon_ttt_knife") that shouldn't be given
 - *include_equipment* - Whether to include equipment items (e.g. Radar, Body Armor, etc.)
 - *gettrackingvar* - The callback method allowing the caller to provide of the value used to track search iterations so we don't infinite loop looking for an item
-- *settrackingvar* - The callback method allowing the caller to keep track of the updated tracking variable value
+- *settrackingvar* - The callback method allowing the caller to use the updated tracking variable value. Normally used to track the iteration count per-player. *Optional, defaults to no-op*
 - *onitemgiven* - The callback method for after the player is given an item/weapon
-- *droppable_only* - Whether only droppable weapons should be given
+- *droppable_only* - Whether only droppable weapons should be found. *Optional, defaults to `false`*
 
 **Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist, min_size, max_size)** - Handles rendering smoke for all entities in the given table that match the specified predicate.\
 *Realm:* Client\
