@@ -3,7 +3,7 @@ local last_stamina = 100
 
 net.Receive("RandomatRunForYourLifeStart", function()
     local delay = net.ReadFloat()
-    hook.Add("TTTSprintStaminaPost", "RunForYourLinkTTTSprintStaminaPost", function(ply, stamina, sprintTimer, consumption)
+    hook.Add("TTTSprintStaminaPost", "RdmtRunForYourLifeTTTSprintStaminaPost", function(ply, stamina, sprintTimer, consumption)
         if ply == nil or not IsValid(ply) or not ply:Alive() then return end
         if Randomat:ShouldActLikeJester(ply) then return end
         if stamina < last_stamina and (last_hurt_time + delay) < CurTime() then
@@ -18,5 +18,5 @@ net.Receive("RandomatRunForYourLifeStart", function()
 end)
 
 net.Receive("RandomatRunForYourLifeEnd", function()
-    hook.Remove("TTTSprintStaminaPost", "RunForYourLinkTTTSprintStaminaPost")
+    hook.Remove("TTTSprintStaminaPost", "RdmtRunForYourLifeTTTSprintStaminaPost")
 end)
