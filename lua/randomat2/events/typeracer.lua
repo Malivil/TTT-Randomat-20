@@ -19,6 +19,7 @@ table.insert(values, "banana")
 table.insert(values, "rhythm")
 table.insert(values, "racecar")
 table.insert(values, "pharaoh")
+table.insert(values, "bloxwich")
 table.insert(values, "randomat")
 table.insert(values, "misspell")
 table.insert(values, "tneconni")
@@ -245,7 +246,7 @@ function EVENT:Begin()
             if not IsValid(ply) or ply:IsSpec() then return end
 
             local sid64 = ply:SteamID64()
-            if team_only or safe[sid64] then return end
+            if safe[sid64] then return end
             if text:lower() == chosen then
                 ply:PrintMessage(HUD_PRINTTALK, "You're safe!")
                 Randomat:Notify("You're safe!", nil, ply)
