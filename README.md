@@ -1935,6 +1935,9 @@ That being said, I have created my [own version of the ULX Module](https://steam
 # Developers
 This section is information that is relevant to developers who want to create their own Randomat events
 
+## Forcing a Randomat-4000 Weapon to Trigger a Specific Event
+If, for whatever reason, you want to force a specific instance of a Randomat-4000 weapon to trigger a specific event, then you can set the `EventId` property on the weapon instance. For example: `ply:GetWeapon("weapon_ttt_randomat").EventId = "boo"`.
+
 ## Application Programming Interface (API)
 The API for the Randomat is available on GitHub [here](API.md).
 
