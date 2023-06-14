@@ -631,6 +631,34 @@ function Randomat:GetEventsByCategory(category, active)
     return events
 end
 
+function Randomat:GetEventsByCategories(categories, active)
+    if not categories or #categories == 0 then return {} end
+    local tbl
+    if not active then
+        tbl = Randomat.Events
+    else
+        tbl = Randomat.ActiveEvents
+    end
+
+    local events = {}
+    for _, e in pairs(tbl) do
+        if type(e.Categories) ~= "table" then continue end
+
+        local has_all = true
+        for _, category in ipairs(categories) do
+            local lower_cat = category:lower()
+            if not table.HasValue(e.Categories, lower_cat) then
+                has_all = false
+            end
+        end
+
+        if has_all then
+            table.insert(events, e)
+        end
+    end
+    return events
+end
+
 function Randomat:IsEventCategoryActive(category)
     if not category or #category == 0 then return false end
 

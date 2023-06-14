@@ -435,6 +435,14 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* The list of events with the given category
 
+**Randomat:GetEventsByCategories(categories, active)** - Gets the list of events with all of the given categories.\
+*Realm:* Server\
+*Parameters:*
+- *categories* - The categories that the events should have
+- *active* - Whether to check active (running) events. Defaults to `false`
+
+*Returns:* The list of events with all of the given categories.
+
 **Randomat:GetEventsByType(type)** - Gets the list of all registered events with the given type.\
 *Realm:* Server\
 *Parameters:*
