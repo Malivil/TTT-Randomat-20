@@ -415,8 +415,8 @@ if SERVER then
         end
 
         -- Use the current, not the saved, values so that this can run multiple times (in theory)
-        ply:SetViewOffset(ply:GetViewOffset()*scale)
-        ply:SetViewOffsetDucked(ply:GetViewOffsetDucked()*scale)
+        ply:SetViewOffset(ply:GetViewOffset() * scale)
+        ply:SetViewOffsetDucked(ply:GetViewOffsetDucked() * scale)
 
         local a, b = ply:GetHull()
         ply:SetHull(a * scale, b * scale)
@@ -484,8 +484,8 @@ function Randomat:SetPlayerInvisible(ply)
 end
 
 function Randomat:SetPlayerVisible(ply)
-    ply:SetColor(Color(255, 255, 255, 255))
-    ply:SetMaterial("models/glass")
+    ply:SetColor(COLOR_WHITE)
+    ply:SetMaterial("")
     ply:SetNWBool("RdmtInvisible", false)
     ply:SetRenderMode(RENDERMODE_NORMAL)
 end
