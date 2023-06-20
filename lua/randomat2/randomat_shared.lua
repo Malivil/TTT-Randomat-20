@@ -120,6 +120,10 @@ function Randomat:ShouldActLikeJester(ply)
 end
 
 function Randomat:GetRoleColor(role)
+    if type(role) == "Player" then
+        role = role:GetRole()
+    end
+
     local color = nil
     if type(ROLE_COLORS) == "table" then
         color = ROLE_COLORS[role]

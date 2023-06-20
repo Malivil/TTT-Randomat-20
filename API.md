@@ -503,7 +503,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 **Randomat:GetRoleColor(role)** - Gets the [Color](https://wiki.facepunch.com/gmod/Color) associated with the provided role.\
 *Realm:* Client and Server\
 *Parameters:*
-- *role* - The ID of the role whose [Color](https://wiki.facepunch.com/gmod/Color) is being retrieved
+- *role* - The ID of the role whose [Color](https://wiki.facepunch.com/gmod/Color) is being retrieved *or* the player whose role [Color](https://wiki.facepunch.com/gmod/Color) is being retrieved 
 
 *Returns:* The [Color](https://wiki.facepunch.com/gmod/Color) for the given role
 
