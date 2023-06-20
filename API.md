@@ -609,7 +609,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *client* - The local player
 - *pred* - The function used to determine if the current entity should have smoke added. Return `true` to have smoke added to the entity, `false` otherwise
   - *ent* - The entity being checked
-- *color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the smoke
+- *color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the smoke *or* a function used to determine the current entity's smoke [Color](https://wiki.facepunch.com/gmod/Color).
 - *max_dist* - The max distance away smoke should be visible (Defaults to 3000)
 - *min_size* - The minimum size for the smoke particles
 - *max_size* - The maximum size for the smoke particles

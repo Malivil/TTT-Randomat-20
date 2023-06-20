@@ -1,42 +1,43 @@
 -- Effects
 function Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist, min_size, max_size)
-    if not max_dist then
-        max_dist = 3000
-    end
+    if not max_dist then max_dist = 3000 end
+    if not min_size then min_size = 4 end
+    if not max_size then max_size = 7 end
 
     for _, v in ipairs(tbl) do
         if pred(v) then
             if not v.RdmtSmokeEmitter then v.RdmtSmokeEmitter = ParticleEmitter(v:GetPos()) end
             if not v.RdmtSmokeNextPart then v.RdmtSmokeNextPart = CurTime() end
             local pos = v:GetPos() + Vector(0, 0, 30)
-            if v.RdmtSmokeNextPart < CurTime() then
-                if client:GetPos():Distance(pos) <= max_dist then
-                    v.RdmtSmokeEmitter:SetPos(pos)
-                    v.RdmtSmokeNextPart = CurTime() + math.Rand(0.003, 0.01)
-                    local vec = Vector(math.Rand(-8, 8), math.Rand(-8, 8), math.Rand(10, 55))
-                    local particle = v.RdmtSmokeEmitter:Add("particle/snow.vmt", v:LocalToWorld(vec))
-                    particle:SetVelocity(Vector(0, 0, 4) + VectorRand() * 3)
-                    particle:SetDieTime(math.Rand(0.5, 2))
-                    particle:SetStartAlpha(math.random(150, 220))
-                    particle:SetEndAlpha(0)
-                    local size = math.random(min_size or 4, max_size or 7)
-                    particle:SetStartSize(size)
-                    particle:SetEndSize(size + 1)
-                    particle:SetRoll(0)
-                    particle:SetRollDelta(0)
-                    if color then
-                        local r, g, b, _ = color:Unpack()
-                        particle:SetColor(r, g, b)
-                    else
-                        particle:SetColor(0, 0, 0)
+            if v.RdmtSmokeNextPart < CurTime() and client:GetPos():Distance(pos) <= max_dist then
+                v.RdmtSmokeEmitter:SetPos(pos)
+                v.RdmtSmokeNextPart = CurTime() + math.Rand(0.003, 0.01)
+                local vec = Vector(math.Rand(-8, 8), math.Rand(-8, 8), math.Rand(10, 55))
+                local particle = v.RdmtSmokeEmitter:Add("particle/snow.vmt", v:LocalToWorld(vec))
+                particle:SetVelocity(Vector(0, 0, 4) + VectorRand() * 3)
+                particle:SetDieTime(math.Rand(0.5, 2))
+                particle:SetStartAlpha(math.random(150, 220))
+                particle:SetEndAlpha(0)
+                local size = math.random(min_size, max_size)
+                particle:SetStartSize(size)
+                particle:SetEndSize(size + 1)
+                particle:SetRoll(0)
+                particle:SetRollDelta(0)
+                if color then
+                    local smokeColor = color
+                    if type(color) == "function" then
+                        smokeColor = color(v) or Color(0, 0, 0)
                     end
+
+                    local r, g, b, _ = smokeColor:Unpack()
+                    particle:SetColor(r, g, b)
+                else
+                    particle:SetColor(0, 0, 0)
                 end
             end
-        else
-            if v.RdmtSmokeEmitter then
-                v.RdmtSmokeEmitter:Finish()
-                v.RdmtSmokeEmitter = nil
-            end
+        elseif v.RdmtSmokeEmitter then
+            v.RdmtSmokeEmitter:Finish()
+            v.RdmtSmokeEmitter = nil
         end
     end
 end
