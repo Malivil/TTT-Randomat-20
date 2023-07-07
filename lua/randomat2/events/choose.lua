@@ -21,10 +21,10 @@ local allow_dead = false
 local EventVotes = {}
 local PlayersVoted = {}
 
-local function GetEventDescription(choosetimer)
+local function GetEventDescription(vote, choosetimer)
     local target
     local extra = ""
-    if GetConVar("randomat_choose_vote"):GetBool() then
+    if vote then
         target = "vote"
     else
         if IsValid(owner) then
@@ -49,18 +49,24 @@ local function StartEventAndAddToHistory(id)
     Randomat:AddEventToHistory(id)
 end
 
-function EVENT:Begin(vote, dead_can_vote, vote_predicate)
+function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices)
+    owner = self.owner
+
+    if type(vote) ~= "boolean" then
+        vote = GetConVar("randomat_choose_vote"):GetBool()
+    end
+    allow_dead = dead_can_vote
+    choices = choices or GetConVar("randomat_choose_choices"):GetInt()
+
     local votetimer = GetConVar("randomat_choose_votetimer"):GetInt()
     local limitchoosetime = GetConVar("randomat_choose_limitchoosetime"):GetBool()
     local limitchoosetime_random = GetConVar("randomat_choose_limitchoosetime_random"):GetBool()
-    owner = self.owner
-    allow_dead = dead_can_vote
-    EVENT.Description = GetEventDescription(limitchoosetime and votetimer or 0)
+
+    EVENT.Description = GetEventDescription(vote, limitchoosetime and votetimer or 0)
 
     EventChoices = {}
     PlayersVoted = {}
     EventVotes = {}
-    local choices = GetConVar("randomat_choose_choices"):GetInt()
     local secret = GetConVar("randomat_choose_secret"):GetBool()
     for _, v in RandomPairs(Randomat.Events) do
         if #EventChoices >= choices then break end
@@ -85,7 +91,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate)
         EventVotes[v.id] = 0
     end
 
-    if vote or GetConVar("randomat_choose_vote"):GetBool() then
+    if vote then
         net.Start("ChooseVoteTrigger")
         net.WriteInt(choices, 32)
         net.WriteTable(EventChoices)
