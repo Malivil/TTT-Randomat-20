@@ -7,7 +7,7 @@ EVENT.Title = ""
 EVENT.AltTitle = "It's hunting season!"
 EVENT.Description = "Randomly turns a vanilla Innocent into an active Loot Goblin"
 EVENT.id = "huntingseason"
-EVENT.Categories = {"biased_innocent", "mediumimpact"}
+EVENT.Categories = {"biased_innocent", "moderateimpact"}
 
 local transform_timer_default = nil
 local transform_timer_default_max = nil

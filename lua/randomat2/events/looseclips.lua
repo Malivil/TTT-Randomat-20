@@ -6,7 +6,7 @@ local looseclips_affectbuymenu = CreateConVar("randomat_looseclips_affectbuymenu
 EVENT.Title = "Loose Clips"
 EVENT.Description = "Sprinting causes your gun clip to fall out, forcing reloads"
 EVENT.id = "looseclips"
-EVENT.Categories = {"mediumimpact"}
+EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     local keep_ammo = looseclips_keep_ammo:GetBool()
