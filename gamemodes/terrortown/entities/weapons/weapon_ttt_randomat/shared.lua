@@ -59,6 +59,7 @@ SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Sound = ""
 
 SWEP.EventId = nil
+SWEP.EventSilent = false
 SWEP.EventArgs = nil
 
 function SWEP:SetupDataTables()
@@ -102,7 +103,11 @@ function SWEP:PrimaryAttack()
                     args = {self.EventArgs}
                 end
             end
-            Randomat:TriggerEvent(self.EventId, self:GetOwner(), unpack(args))
+            if self.EventSilent then
+                Randomat:SilentTriggerEvent(self.EventId, self:GetOwner(), unpack(args))
+            else
+                Randomat:TriggerEvent(self.EventId, self:GetOwner(), unpack(args))
+            end
         else
             if GetConVar("ttt_randomat_chooseevent"):GetBool() then
                 Randomat:SilentTriggerEvent("choose", self:GetOwner())

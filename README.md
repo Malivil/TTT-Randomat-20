@@ -1946,6 +1946,14 @@ wep.EventId = "choose"
 wep.EventArgs = {false, false, nil, 4}
 ```
 
+Additionally, if you want the event to be started silently, you can set the `EventSilent` property. For example:
+
+```lua
+local wep = ply:Give("weapon_ttt_randomat")
+wep.EventId = "choose"
+wep.EventSilent = true
+```
+
 ## Application Programming Interface (API)
 The API for the Randomat is available on GitHub [here](API.md).
 
