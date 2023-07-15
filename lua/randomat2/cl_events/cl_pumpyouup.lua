@@ -2,7 +2,7 @@ local voteframe = nil
 
 net.Receive("PumpYouUpEventBegin", function()
     local buff = net.ReadUInt(4)
-    local speed_factor= net.ReadFloat()
+    local speed_factor = net.ReadFloat()
     voteframe = vgui.Create("DFrame")
     voteframe:SetPos(10, ScrH() - 800)
     voteframe:SetSize(200, 300)
@@ -20,9 +20,7 @@ net.Receive("PumpYouUpEventBegin", function()
     list:AddColumn("Votes")
 
     for _, v in ipairs(player.GetAll()) do
-        if (v:Alive() and not v:IsSpec()) or not v:Alive() then
-            list:AddLine(v:Nick(), 0)
-        end
+        list:AddLine(v:Nick(), 0)
     end
 
     list:OnRequestResize(playerColumn, 125)
