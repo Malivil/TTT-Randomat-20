@@ -40,10 +40,8 @@ function EVENT:Begin()
     local slainply = 0
 
     for k, v in ipairs(player.GetAll()) do
-        if not (v:Alive() and v:IsSpec()) then
-            votableplayers[k] = v
-            playervotes[k] = 0
-        end
+        votableplayers[k] = v
+        playervotes[k] = 0
     end
 
     local repeater = 0
