@@ -23,7 +23,7 @@ function EVENT:Begin()
         for _, ply in ipairs(self:GetAlivePlayers(true)) do
             if x == 0 or GetConVar("randomat_malfunction_affectall"):GetBool() then
                 local wep = ply:GetActiveWeapon()
-                if wep ~= nil then
+                if wep ~= nil and wep.Primary and type(wep.Primary.Delay) == "number" and wep.Primary.Delay > 0 then
                     local dur = GetConVar("randomat_malfunction_duration"):GetFloat()
                     local repeats = math.floor(dur/wep.Primary.Delay) + 1
                     timer.Create("RdmtMalfunctionActive", wep.Primary.Delay, repeats, function()
