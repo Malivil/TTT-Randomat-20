@@ -194,7 +194,6 @@ function EVENT:Begin()
             for i, r in ipairs(ROLE_STRINGS) do
                 -- Only include default or enabled roles
                 local rolestring = ROLE_STRINGS_RAW[i]
-                print(i, r, rolestring)
                 if DEFAULT_ROLES[i] or GetConVar("ttt_" .. rolestring .. "_enabled"):GetBool() then
                     table.insert(values, r:lower())
                 end
