@@ -1,6 +1,8 @@
 -- Event Tracking
 local show_count = CreateClientConVar("cl_randomat_show_active", "1", true, false, "Whether to show the active Randomat count on the HUD", 0, 1)
 
+local allow_client_list = GetConVar("ttt_randomat_allow_client_list")
+
 Randomat.ActiveEvents = Randomat.ActiveEvents or {}
 
 net.Receive("RdmtEventBegin", function()
@@ -42,7 +44,7 @@ end)
 local icon_tex = Material("icon16/rdmt.png")
 hook.Add("TTTHUDInfoPaint", "RandomatEventTrackingHUDInfoPaint", function(client, label_left, label_top, active_labels)
     if not show_count:GetBool() then return end
-    if not GetGlobalBool("ttt_randomat_allow_client_list", false) then return end
+    if not allow_client_list:GetBool() then return end
 
     surface.SetFont("TabLarge")
     surface.SetTextColor(255, 255, 255, 230)
@@ -74,7 +76,7 @@ end)
 
 local expandState = false
 hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dtabs)
-    if not GetGlobalBool("ttt_randomat_allow_client_list", false) then return end
+    if not allow_client_list:GetBool() then return end
     local padding = dtabs:GetPadding()
     padding = padding * 2
 
