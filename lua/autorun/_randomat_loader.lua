@@ -10,11 +10,6 @@ local resource = resource
 
 local CallHook = hook.Call
 
--- HACK: Workaround to make sure this is defined until the x86-64 branch is updated
-if not string.StartsWith then
-    string.StartsWith = string.StartWith
-end
-
 local function AddServer(fil)
     if SERVER then include(fil) end
 end
