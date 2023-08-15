@@ -723,13 +723,21 @@ end
 
 -- Roles
 
-function Randomat:SetRole(ply, role, set_max_hp)
+function Randomat:SetRole(ply, role, set_max_hp, scale_hp)
     local old_role = ply:GetRole()
     ply:SetRole(role)
 
     -- Set the player's max HP for their new role (Defaults to true)
     if set_max_hp ~= false and SetRoleMaxHealth then
+        local current_max = ply:GetMaxHealth()
         SetRoleMaxHealth(ply)
+
+        local new_max = ply:GetMaxHealth()
+        if scale_hp ~= false and current_max ~= new_max then
+            local fraction = ply:Health() / current_max
+            local new_hp = math.Round(fraction * new_max)
+            ply:SetHealth(new_hp)
+        end
     end
     -- Heal the Old Man and Loot Goblin back to full when they are converted
     if ((old_role == ROLE_OLDMAN and role ~= ROLE_OLDMAN) or

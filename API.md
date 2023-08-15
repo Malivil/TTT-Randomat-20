@@ -814,12 +814,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *h* - Height
 - *color* - The [Color](https://wiki.facepunch.com/gmod/Color) to use for the meter
 
-**Randomat:SetRole(ply, role, set_max_hp)** - Sets the given player's role to the provided value. Automatically broadcasts the change via the `TTT_RoleChanged` net message.\
+**Randomat:SetRole(ply, role, set_max_hp, scale_hp)** - Sets the given player's role to the provided value. Automatically broadcasts the change via the `TTT_RoleChanged` net message.\
 *Realm:* Server\
 *Parameters:*
 - *ply* - The player whose role is being changed
 - *role* - The role the player is changing to
 - *set_max_hp* - Whether to set the max HP of the player after their role is changed. Only works for the updated Custom Roles for TTT by Noxx and Malivil (Defaults to `true`)
+- *scale_hp* - Whether to scale the player's health to maintain the same health fraction after their max health is changed. Requires `set_max_hp` to be `true`. Only works for the updated Custom Roles for TTT by Noxx and Malivil (Defaults to `true`)
 
 **Randomat:SetPlayerInvisible(ply)** - Sets the given player to being invisible.\
 *Realm:* Client and Server\
