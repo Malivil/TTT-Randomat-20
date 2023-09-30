@@ -80,6 +80,9 @@ function EVENT:Begin()
                 return
             end
 
+            player1:PrintMessage(HUD_PRINTTALK, "Your buddy (" .. player2:Nick() .. ")'s role has been revealed for " .. highlight_time .. " seconds!")
+            player2:PrintMessage(HUD_PRINTTALK, "Your buddy (" .. player1:Nick() .. ")'s role has been revealed for " .. highlight_time .. " seconds!")
+
             -- Enable halo for both players
             net.Start("RdmtOurSecretHaloStart")
             net.WriteEntity(player2)
