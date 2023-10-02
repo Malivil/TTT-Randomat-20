@@ -21,9 +21,11 @@ EVENT.id = "derptective"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"biased_traitor", "biased", "item", "moderateimpact"}
 
-function EVENT:Begin()
-    EVENT.Description = GetEventDescription(ROLE_DETRAITOR ~= -1, ROLE_DEPUTY ~= -1 and ROLE_IMPERSONATOR ~= -1)
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    self.Description = GetEventDescription(ROLE_DETRAITOR ~= -1, ROLE_DEPUTY ~= -1 and ROLE_IMPERSONATOR ~= -1)
+end
 
+function EVENT:Begin()
     local rof = GetConVar("randomat_derptective_rate_of_fire"):GetInt()
     self:AddHook("Think", function()
         for _, ply in ipairs(self:GetAlivePlayers()) do

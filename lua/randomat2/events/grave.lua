@@ -43,10 +43,12 @@ local function ZombifyPlayer(ply, skip_missing_corpse)
     return true
 end
 
-function EVENT:Begin(filter_class)
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Causes the dead to rise again as " .. Randomat:GetRolePluralString(ROLE_ZOMBIE)
+    self.Description = "Causes the dead to rise again as " .. Randomat:GetRolePluralString(ROLE_ZOMBIE)
+end
 
+function EVENT:Begin(filter_class)
     local include_dead = not filter_class and GetConVar("randomat_grave_include_dead"):GetBool()
     if include_dead then
         local zombified = false

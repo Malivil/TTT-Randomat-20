@@ -201,6 +201,9 @@ end
 
 local function TriggerEvent(event, ply, options, ...)
     options = options or {}
+
+    event:BeforeEventTrigger(ply, options, ...)
+
     local silent = options.Silent
     if not silent then
         -- If this event is supposed to start secretly, trigger "secret" with this specific event chosen
@@ -1042,6 +1045,8 @@ function randomat_meta:Enabled()
 end
 
 function randomat_meta:GetConVars() end
+
+function randomat_meta:BeforeEventTrigger(ply, options, ...) end
 
 -- Players
 

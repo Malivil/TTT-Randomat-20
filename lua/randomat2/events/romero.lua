@@ -8,10 +8,12 @@ EVENT.Categories = {"rolechange", "deathtrigger", "biased_zombie", "biased", "la
 CreateConVar("randomat_romero_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
 CreateConVar("randomat_romero_announce", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to announce when Mr. Romero dies")
 
-function EVENT:Begin(target)
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Gives " .. Randomat:GetRolePluralString(ROLE_DETECTIVE) .. " extra health, but if they get killed, all living members of the " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " are converted to " .. Randomat:GetRolePluralString(ROLE_ZOMBIE)
+    self.Description = "Gives " .. Randomat:GetRolePluralString(ROLE_DETECTIVE) .. " extra health, but if they get killed, all living members of the " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " are converted to " .. Randomat:GetRolePluralString(ROLE_ZOMBIE)
+end
 
+function EVENT:Begin(target)
     -- Default to the player passed as a paramter, if there is one
     if not target then
         target = self.owner

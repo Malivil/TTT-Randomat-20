@@ -10,10 +10,12 @@ EVENT.Categories = {"largeimpact"}
 
 local origPlayerDeath
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = Randomat:GetRolePluralString(ROLE_INNOCENT) .. " win if they kill the " .. Randomat:GetRoleString(ROLE_JESTER):lower() .. ", but " .. Randomat:GetRolePluralString(ROLE_TRAITOR):lower() .. " want them alive"
+    self.Description = Randomat:GetRolePluralString(ROLE_INNOCENT) .. " win if they kill the " .. Randomat:GetRoleString(ROLE_JESTER):lower() .. ", but " .. Randomat:GetRolePluralString(ROLE_TRAITOR):lower() .. " want them alive"
+end
 
+function EVENT:Begin()
     net.Start("RdmtKillJesterBegin")
     net.Broadcast()
 

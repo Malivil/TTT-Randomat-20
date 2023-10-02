@@ -16,21 +16,26 @@ local function RemoveBlind()
     net.Broadcast()
 end
 
-function EVENT:Begin(duration)
+local function GetDuration(duration)
     -- Default to the duration passed as a paramter, if there is one
     if not duration then
         duration = GetConVar("randomat_blind_duration"):GetInt()
     end
+    return duration
+end
 
+function EVENT:BeforeEventTrigger(ply, options, duration)
     -- Update these in case the CVar or role names have been changed
-    EVENT.Title = "Blind " .. Randomat:GetRolePluralString(ROLE_TRAITOR)
-    EVENT.Description = "All " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " have been blinded for " .. duration .. " seconds!"
+    self.Title = "Blind " .. Randomat:GetRolePluralString(ROLE_TRAITOR)
+    self.Description = "All " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " have been blinded for " .. GetDuration(duration) .. " seconds!"
+end
 
+function EVENT:Begin(duration)
     net.Start("blindeventactive")
     net.WriteBool(true)
     net.Broadcast()
 
-    timer.Create("RandomatBlindTimer", duration, 1, function()
+    timer.Create("RandomatBlindTimer", GetDuration(duration), 1, function()
         RemoveBlind()
     end)
 end

@@ -49,20 +49,29 @@ local function StartEventAndAddToHistory(id)
     Randomat:AddEventToHistory(id)
 end
 
-function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices)
-    owner = self.owner
-
+local function GetVote(vote)
     if type(vote) ~= "boolean" then
         vote = GetConVar("randomat_choose_vote"):GetBool()
     end
+    return vote
+end
+
+function EVENT:BeforeEventTrigger(ply, options, vote, dead_can_vote, vote_predicate, choices)
+    local votetimer = GetConVar("randomat_choose_votetimer"):GetInt()
+    local limitchoosetime = GetConVar("randomat_choose_limitchoosetime"):GetBool()
+    self.Description = GetEventDescription(GetVote(vote), limitchoosetime and votetimer or 0)
+end
+
+function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices)
+    owner = self.owner
+
+    vote = GetVote(vote)
     allow_dead = dead_can_vote
     choices = choices or GetConVar("randomat_choose_choices"):GetInt()
 
     local votetimer = GetConVar("randomat_choose_votetimer"):GetInt()
     local limitchoosetime = GetConVar("randomat_choose_limitchoosetime"):GetBool()
     local limitchoosetime_random = GetConVar("randomat_choose_limitchoosetime_random"):GetBool()
-
-    EVENT.Description = GetEventDescription(vote, limitchoosetime and votetimer or 0)
 
     EventChoices = {}
     PlayersVoted = {}

@@ -37,11 +37,13 @@ local function UpdateToMerc(ply)
     SendFullStateUpdate()
 end
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update these in case the CVar or role names have been changed
-    EVENT.Title = Randomat:GetRoleExtendedString(ROLE_INNOCENT) .. " has been upgraded!"
-    EVENT.Description = GetEventDescription()
+    self.Title = Randomat:GetRoleExtendedString(ROLE_INNOCENT) .. " has been upgraded!"
+    self.Description = GetEventDescription()
+end
 
+function EVENT:Begin()
     local choose = CanChooseRole()
     local target = nil
     for _, ply in ipairs(self:GetAlivePlayers(true)) do

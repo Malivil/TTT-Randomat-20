@@ -10,13 +10,17 @@ EVENT.Description = "Swaps movement keys to their opposites (e.g. Left is Right,
 EVENT.id = "opposite"
 EVENT.Categories = {"largeimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     local hardmode = GetConVar("randomat_opposite_hardmode"):GetBool()
     local description = "Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys."
     if hardmode then
         description = description .. "\nHard Mode is enabled so Jump and Crouch buttons have also been swapped!"
     end
     self.Description = description
+end
+
+function EVENT:Begin()
+    local hardmode = GetConVar("randomat_opposite_hardmode"):GetBool()
 
     for _, p in ipairs(self:GetAlivePlayers()) do
         p:SetLadderClimbSpeed(-200)

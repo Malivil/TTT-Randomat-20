@@ -9,9 +9,12 @@ EVENT.Description = "Traitors get credits when one of their teammates is killed"
 EVENT.id = "lifeinsurance"
 EVENT.Categories = {"biased_traitor", "biased", "deathtrigger", "moderateimpact"}
 
-function EVENT:Begin()
-    EVENT.Description = Randomat:GetRolePluralString(ROLE_TRAITOR) .. " get credits when one of their teammates is killed"
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    -- Update this in case the role names have been changed
+    self.Description = Randomat:GetRolePluralString(ROLE_TRAITOR) .. " get credits when one of their teammates is killed"
+end
 
+function EVENT:Begin()
     self:AddHook("PostPlayerDeath", function(ply)
         if not IsPlayer(ply) then return end
         if not Randomat:IsTraitorTeam(ply) then return end

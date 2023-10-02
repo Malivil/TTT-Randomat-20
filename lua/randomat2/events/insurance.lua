@@ -7,10 +7,13 @@ EVENT.Description = "Players gain a credit every 20 damage they take"
 EVENT.id = "insurance"
 EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     local damage = GetConVar("randomat_insurance_damage"):GetInt()
     self.Description = "Players gain a credit every " .. damage .. " damage they take"
+end
 
+function EVENT:Begin()
+    local damage = GetConVar("randomat_insurance_damage"):GetInt()
     self:AddHook("PostEntityTakeDamage", function(ent, dmginfo, taken)
         if not taken then return end
         if not IsPlayer(ent) or not ent:Alive() or ent:IsSpec() then return end

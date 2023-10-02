@@ -15,9 +15,12 @@ EVENT.Categories = {"moderateimpact"}
 local blocklist = {}
 local oldSetCredits = nil
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Disables " .. Randomat:GetRoleString(ROLE_TRAITOR) .. " and " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " shops, but periodically gives out free items from both"
+    self.Description = "Disables " .. Randomat:GetRoleString(ROLE_TRAITOR) .. " and " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " shops, but periodically gives out free items from both"
+end
+
+function EVENT:Begin()
     blocklist = {}
     for blocked_id in string.gmatch(GetConVar("randomat_blackmarket_blocklist"):GetString(), "([^,]+)") do
         table.insert(blocklist, blocked_id:Trim())

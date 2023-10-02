@@ -8,9 +8,12 @@ EVENT.Description = "Gives all traitors C4. If a C4 explodes by running out of t
 EVENT.id = "defusemode"
 EVENT.Categories = {"gamemode", "biased_traitor", "biased", "moderateimpact"}
 
-function EVENT:Begin()
-    EVENT.Description = "Gives all " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " C4. If a C4 explodes by running out of time, the " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " win."
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    -- Update this in case the role names have been changed
+    self.Description = "Gives all " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " C4. If a C4 explodes by running out of time, the " .. Randomat:GetRolePluralString(ROLE_TRAITOR) .. " win."
+end
 
+function EVENT:Begin()
     local new_traitors = {}
     -- Use the sapper instead of the Detective if Sapper is enabled and they can see C4
     local detective_role = ROLE_DETECTIVE

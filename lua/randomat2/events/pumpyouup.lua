@@ -31,6 +31,20 @@ local votableplayers = {}
 local playersvoted = {}
 local target = nil
 
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    local buff = GetConVar("randomat_pumpyouup_buff"):GetInt()
+    if buff == BUFF_DAMAGE then
+        self.Description = "Vote to buff a player's damage."
+    elseif buff == BUFF_SPEED then
+        self.Description = "Vote to buff a player's speed."
+    elseif buff == BUFF_REGEN then
+        self.Description = "Vote to buff a player with health regen."
+    elseif buff == BUFF_SHIELD then
+        self.Description = "Vote to buff a player's damage resistance."
+    end
+    self.Description = self.Description .. " Votes can be changed at any time"
+end
+
 function EVENT:Begin()
     local buff = GetConVar("randomat_pumpyouup_buff"):GetInt()
     local speed_factor = GetConVar("randomat_pumpyouup_speed_factor"):GetFloat()
@@ -49,7 +63,6 @@ function EVENT:Begin()
     end
 
     if buff == BUFF_DAMAGE then
-        EVENT.Description = "Vote to buff a player's damage."
         local damage_scale = GetConVar("randomat_pumpyouup_damage_scale"):GetFloat()
         self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
             if not IsPlayer(ply) then return end
@@ -59,14 +72,12 @@ function EVENT:Begin()
             dmginfo:ScaleDamage(damage_scale)
         end)
     elseif buff == BUFF_SPEED then
-        EVENT.Description = "Vote to buff a player's speed."
         self:AddHook("TTTSpeedMultiplier", function(ply, mults)
             if ply ~= target then return end
             if not IsPlayer(target) or not target:Alive() or target:IsSpec() then return end
             table.insert(mults, speed_factor)
         end)
     elseif buff == BUFF_REGEN then
-        EVENT.Description = "Vote to buff a player with health regen."
         timer.Create("PumpYouUpRegen", 0.66, 0, function()
             if not IsPlayer(target) or not target:Alive() or target:IsSpec() then return end
 
@@ -76,15 +87,12 @@ function EVENT:Begin()
             end
         end)
     elseif buff == BUFF_SHIELD then
-        EVENT.Description = "Vote to buff a player's damage resistance."
         local shield_factor = GetConVar("randomat_pumpyouup_shield_factor"):GetFloat()
         self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
             if not IsPlayer(ply) or ply ~= target then return end
             dmginfo:ScaleDamage(1 - shield_factor)
         end)
     end
-
-    EVENT.Description = EVENT.Description .. " Votes can be changed at any time"
 end
 
 function EVENT:End()

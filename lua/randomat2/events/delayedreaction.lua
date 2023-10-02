@@ -9,9 +9,11 @@ EVENT.Categories = {"largeimpact"}
 
 local pending_damage = {}
 
-function EVENT:Begin()
-    EVENT.Description = "Delays damage done to players for " .. GetConVar("randomat_delayedreaction_time"):GetInt() .. " seconds"
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    self.Description = "Delays damage done to players for " .. GetConVar("randomat_delayedreaction_time"):GetInt() .. " seconds"
+end
 
+function EVENT:Begin()
     self:AddHook("EntityTakeDamage", function(ent, dmginfo)
         if not IsPlayer(ent) then return end
 

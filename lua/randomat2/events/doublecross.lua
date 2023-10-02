@@ -7,10 +7,12 @@ EVENT.Description = "Changes a random vanilla innocent into either a glitch or a
 EVENT.id = "doublecross"
 EVENT.Categories = {"rolechange", "moderateimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Changes a random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT):lower() .. " into either " .. Randomat:GetRoleExtendedString(ROLE_GLITCH):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
+    self.Description = "Changes a random vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT):lower() .. " into either " .. Randomat:GetRoleExtendedString(ROLE_GLITCH):lower() .. " or " .. Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
+end
 
+function EVENT:Begin()
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_INNOCENT then
             if math.random(1,100) <= GetConVar("randomat_doublecross_chance"):GetInt() then

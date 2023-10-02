@@ -5,10 +5,12 @@ EVENT.Description = "Instead of a detective, you now have two deputies... or is 
 EVENT.id = "goodcopbadcop"
 EVENT.Categories = {"rolechange", "biased_traitor", "biased", "moderateimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Instead of " .. Randomat:GetRoleExtendedString(ROLE_DETECTIVE):lower() .. " , you now have two " .. Randomat:GetRolePluralString(ROLE_DEPUTY):lower() .. "... or is one " .. Randomat:GetRoleExtendedString(ROLE_IMPERSONATOR):lower() .. "?"
+    self.Description = "Instead of " .. Randomat:GetRoleExtendedString(ROLE_DETECTIVE):lower() .. " , you now have two " .. Randomat:GetRolePluralString(ROLE_DEPUTY):lower() .. "... or is one " .. Randomat:GetRoleExtendedString(ROLE_IMPERSONATOR):lower() .. "?"
+end
 
+function EVENT:Begin()
     local detective = nil
     local traitor = nil
     local players = self:GetAlivePlayers(true)

@@ -24,16 +24,18 @@ local function GetEventDescription()
     return "All Innocents will Freeze (and become immune) every " .. GetConVar("randomat_freeze_timer"):GetInt() .. " seconds"
 end
 
-EVENT.Title = table.Random(eventnames)
-EVENT.AltTitle = "Freeze"
+EVENT.Title = "Freeze"
 EVENT.Description = GetEventDescription()
 EVENT.id = "freeze"
 EVENT.Categories = {"biased_traitor", "biased", "moderateimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    self.Title = table.Random(eventnames)
     -- Update this in case the CVar has been changed
-    EVENT.Description = GetEventDescription()
+    self.Description = GetEventDescription()
+end
 
+function EVENT:Begin()
     local tmr = GetConVar("randomat_freeze_timer"):GetInt()
     timer.Create("RdmtFreezeTimer", tmr, 0, function()
         self:SmallNotify("Freeze!")

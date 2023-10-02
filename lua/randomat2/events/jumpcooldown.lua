@@ -11,10 +11,13 @@ EVENT.id = "jumpcooldown"
 EVENT.Type = EVENT_TYPE_JUMPING
 EVENT.Categories = {"fun", "moderateimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     local cooldown = GetConVar("randomat_jumpcooldown_length"):GetInt()
     self.Description = "Players can only jump once every " .. cooldown .. " seconds"
+end
 
+function EVENT:Begin()
+    local cooldown = GetConVar("randomat_jumpcooldown_length"):GetInt()
     net.Start("JumpCooldownBegin")
     net.WriteUInt(cooldown, 8)
     net.Broadcast()

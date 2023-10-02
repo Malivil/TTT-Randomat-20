@@ -4,10 +4,12 @@ EVENT.Title = "One traitor, one detective. Everyone else is a jester. Detective 
 EVENT.id = "jesters"
 EVENT.Categories = {"rolechange", "biased_traitor", "biased", "largeimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Title = "One " .. Randomat:GetRoleString(ROLE_TRAITOR):lower() .. ", one " .. Randomat:GetRoleString(ROLE_DETECTIVE):lower() .. ". Everyone else is " .. Randomat:GetRoleExtendedString(ROLE_JESTER):lower() .. ". " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " is stronger."
+    self.Title = "One " .. Randomat:GetRoleString(ROLE_TRAITOR):lower() .. ", one " .. Randomat:GetRoleString(ROLE_DETECTIVE):lower() .. ". Everyone else is " .. Randomat:GetRoleExtendedString(ROLE_JESTER):lower() .. ". " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " is stronger."
+end
 
+function EVENT:Begin()
     local tx = 0
     local dx = 0
     for _, ply in ipairs(self:GetAlivePlayers(true)) do

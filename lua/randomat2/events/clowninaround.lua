@@ -7,10 +7,12 @@ EVENT.id = "clowninaround"
 EVENT.StartSecret = true
 EVENT.Categories = {"rolechange", "smallimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Converts a " .. Randomat:GetRoleString(ROLE_JESTER) .. "/" .. Randomat:GetRoleString(ROLE_SWAPPER) .. " to a " .. Randomat:GetRoleString(ROLE_CLOWN)
+    self.Description = "Converts a " .. Randomat:GetRoleString(ROLE_JESTER) .. "/" .. Randomat:GetRoleString(ROLE_SWAPPER) .. " to a " .. Randomat:GetRoleString(ROLE_CLOWN)
+end
 
+function EVENT:Begin()
     for _, v in ipairs(self:GetAlivePlayers(true)) do
         if v:GetRole() == ROLE_JESTER or v:GetRole() == ROLE_SWAPPER then
             Randomat:SetRole(v, ROLE_CLOWN)

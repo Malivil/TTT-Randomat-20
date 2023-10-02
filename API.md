@@ -54,6 +54,13 @@ All methods below are automatically defined for every event but events can overr
 - *callbackfunc* - The function to call for the hook
 - *suffix* - An optional suffix for the generated ID. Useful for when the same event wants to hook the same type multiple times.
 
+**EVENT:BeforeEventTrigger(ply, options, ...)** - Called on an event before `Begin`, allowing you to modify aspects of the event before it is started.\
+*Realm:* Server\
+*Parameters:*
+- *ply* - The player who started this event
+- *options* - The trigger options, including whether this event was started silently or hidden
+- *...* - All parameters that could be passed into this event. This is only used when one of the `TriggerEvent` methods is called, allowing you to change aspects of an event based on what code calls it
+
 **EVENT:Begin(...)** - Called when an event is started. **Must be defined to for an event to work**.\
 *Realm:* Server\
 *Parameters:*

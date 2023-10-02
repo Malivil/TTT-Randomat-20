@@ -25,6 +25,10 @@ local function TriggerAlert(item, role, is_item, ply)
     net.Send(ply)
 end
 
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    self.Description = "Announces players that have shop items after " .. GetConVar("randomat_connies_timer"):GetInt() .. " seconds"
+end
+
 function EVENT:Begin()
     local time = GetConVar("randomat_connies_timer"):GetInt()
     local show_role = GetConVar("randomat_connies_show_role"):GetBool()
@@ -32,7 +36,6 @@ function EVENT:Begin()
     local show_equipment = GetConVar("randomat_connies_show_equipment"):GetBool()
     local show_role_weapons = GetConVar("randomat_connies_show_role_weapons"):GetBool()
 
-    EVENT.Description = "Announces players that have shop items after " .. time .. " seconds"
     someone_has_connies = false
 
     timer.Create("RdmtConniesAnnounceTimer", time, 1, function()

@@ -184,6 +184,16 @@ function EVENT:ChooseWord(first, quiz_time)
     return chosen
 end
 
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    local time = GetConVar("randomat_typeracer_timer"):GetInt()
+    local kill_wrong = GetConVar("randomat_typeracer_kill_wrong"):GetBool()
+    local description = "Type each word/phrase in chat within " .. time .. " seconds OR DIE!"
+    if kill_wrong then
+        description = description .. " Wrong answers also mean death!"
+    end
+    self.Description = description
+end
+
 function EVENT:Begin()
     iteration = 0
 
@@ -231,11 +241,6 @@ function EVENT:Begin()
 
     local time = GetConVar("randomat_typeracer_timer"):GetInt()
     local kill_wrong = GetConVar("randomat_typeracer_kill_wrong"):GetBool()
-    local description = "Type each word/phrase in chat within " .. time .. " seconds OR DIE!"
-    if kill_wrong then
-        description = description .. " Wrong answers also mean death!"
-    end
-    self.Description = description
 
     timer.Create("RdmtTypeRacerDelay", time, 1, function()
         local safe = {}

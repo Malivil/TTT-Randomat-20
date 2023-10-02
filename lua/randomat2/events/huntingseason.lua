@@ -12,10 +12,12 @@ EVENT.Categories = {"biased_innocent", "moderateimpact"}
 local transform_timer_default = nil
 local transform_timer_default_max = nil
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "Randomly turns a vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " into an active " .. Randomat:GetRoleString(ROLE_LOOTGOBLIN)
+    self.Description = "Randomly turns a vanilla " .. Randomat:GetRoleString(ROLE_INNOCENT) .. " into an active " .. Randomat:GetRoleString(ROLE_LOOTGOBLIN)
+end
 
+function EVENT:Begin()
     -- Change the transform time min and max to match the event convar
     local tranform_delay = GetConVar("randomat_huntingseason_delay"):GetInt()
     local transform_timer = GetConVar("ttt_lootgoblin_activation_timer")

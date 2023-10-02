@@ -7,10 +7,12 @@ EVENT.StartSecret = true
 EVENT.MaxRoundCompletePercent = 15
 EVENT.Categories = {"biased_traitor", "biased", "rolechange", "largeimpact"}
 
-function EVENT:Begin()
+function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed
-    EVENT.Description = "The " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " has been corrupted and joined the " .. Randomat:GetRoleString(ROLE_TRAITOR) .. " team!"
+    self.Description = "The " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. " has been corrupted and joined the " .. Randomat:GetRoleString(ROLE_TRAITOR) .. " team!"
+end
 
+function EVENT:Begin()
     for _, v in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsGoodDetectiveLike(v) then
             if ROLE_IMPERSONATOR ~= -1 then

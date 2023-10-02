@@ -40,6 +40,10 @@ local function CanPickup(ply, weapondelay)
     return true
 end
 
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    self.Description = GetDescription(GetConVar("randomat_blerg_respawnlimit"):GetInt())
+end
+
 function EVENT:Begin()
     respawntime = {}
     respawncount = {}
@@ -49,8 +53,6 @@ function EVENT:Begin()
     local respawntimer = GetConVar("randomat_blerg_respawntimer"):GetInt()
     local respawnlimit = GetConVar("randomat_blerg_respawnlimit"):GetInt()
     local weapondelay = GetConVar("randomat_blerg_weapondelay"):GetInt()
-
-    EVENT.Description = GetDescription(respawnlimit)
 
     self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)
         if not IsValid(victim) then return end
