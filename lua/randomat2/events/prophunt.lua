@@ -285,23 +285,27 @@ function EVENT:Begin()
             if not IsPlayer(ply) then return end
             if ply:GetRole() ~= ROLE_INNOCENT then return end
 
-            local body = ply.server_ragdoll or ply:GetRagdollEntity()
+            timer.Create(ply:Nick() .. "RandomatPropHuntRespawnTimer", 0.25, 1, function()
+                if not IsPlayer(ply) then return end
+                if ply:GetRole() ~= ROLE_INNOCENT then return end
+                local body = ply.server_ragdoll or ply:GetRagdollEntity()
 
-            Randomat:SetRole(ply, ROLE_TRAITOR)
-            SendFullStateUpdate()
+                Randomat:SetRole(ply, ROLE_TRAITOR)
+                SendFullStateUpdate()
 
-            ply:PrintMessage(HUD_PRINTTALK, "You have been killed by a hunter and are now on their team.")
-            ply:PrintMessage(HUD_PRINTCENTER, "You have been killed by a hunter and are now on their team.")
-            ply:SpawnForRound(true)
+                ply:PrintMessage(HUD_PRINTTALK, "You have been killed by a hunter and are now on their team.")
+                ply:PrintMessage(HUD_PRINTCENTER, "You have been killed by a hunter and are now on their team.")
+                ply:SpawnForRound(true)
 
-            if IsValid(body) then
-                ply:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
-                ply:SetPos(FindRespawnLocation(body:GetPos()) or body:GetPos())
-                body:Remove()
-            end
+                if IsValid(body) then
+                    ply:SetEyeAngles(Angle(0, body:GetAngles().y, 0))
+                    ply:SetPos(FindRespawnLocation(body:GetPos()) or body:GetPos())
+                    body:Remove()
+                end
 
-            timer.Create(ply:Nick() .. "RandomatPropHuntCreditTimer", 0.25, 1, function()
-                ply:SetDefaultCredits()
+                timer.Create(ply:Nick() .. "RandomatPropHuntCreditTimer", 0.25, 1, function()
+                    ply:SetDefaultCredits()
+                end)
             end)
         end)
     end
@@ -315,6 +319,7 @@ function EVENT:End()
 
     for _, ply in ipairs(player.GetAll()) do
         timer.Remove(ply:GetName() .. "RandomatPropHuntMessageTimer")
+        timer.Remove(ply:GetName() .. "RandomatPropHuntRespawnTimer")
         timer.Remove(ply:GetName() .. "RandomatPropHuntCreditTimer")
         -- Reset the disguised status in case they were disguised as a prop when the round ended
         ply:SetNWBool("PD_Disguised", false)
