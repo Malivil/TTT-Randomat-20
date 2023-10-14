@@ -120,6 +120,10 @@ local function unragdollPlayer(v)
     v:SetModel(v.spawnInfo.model)
     v:SetPlayerColor(v.spawnInfo.playerColor)
 
+    -- Re-set Dead Ringer state
+    v:SetNWInt("DRStatus", v.spawnInfo.deadRinger.status)
+    v:SetNWInt("DRCharge", v.spawnInfo.deadRinger.charge)
+
     for i, j in pairs(v.spawnInfo.equipment) do
         if j then
             v:GiveEquipmentItem(i)
@@ -160,15 +164,21 @@ local function ragdollPlayer(v)
         i = i * 2
     end
 
-    local info = {}
-    info.weps = weps
-    info.activeWeapon = v:GetActiveWeapon().ClassName
-    info.health = v:Health()
-    info.maxhealth = v:GetMaxHealth()
-    info.model = v:GetModel()
-    info.credits = v:GetCredits()
-    info.equipment = equipment
-    info.playerColor = v:GetPlayerColor()
+    local info = {
+        weps = weps,
+        activeWeapon = v:GetActiveWeapon().ClassName,
+        health = v:Health(),
+        maxhealth = v:GetMaxHealth(),
+        model = v:GetModel(),
+        credits = v:GetCredits(),
+        equipment = equipment,
+        playerColor = v:GetPlayerColor(),
+        -- Save Dead Ringer state
+        deadRinger = {
+            status = v:GetNWInt("DRStatus", 0),
+            charge = v:GetNWInt("DRCharge", 8)
+        }
+    }
     v.spawnInfo = info
 
     local ragdoll = ents.Create("prop_ragdoll")
@@ -228,6 +238,9 @@ function EVENT:Begin()
     local ragdolldelay = GetConVar("randomat_ragdoll_delay"):GetFloat()
     self:AddHook("Think", function()
         for _, v in ipairs(self:GetAlivePlayers()) do
+            -- Ignore players who are faking their death because we can't accurately save the full state when they do this
+            if v.IsFakeDead and v:IsFakeDead() then continue end
+
             -- Turn a player into a ragdoll if they are in the air, not already a ragdoll, not in the water, and haven't been ragdolled recently
             if not v:IsOnGround() and not v.inRagdoll and v:WaterLevel() == 0 and (v.lastRagdoll == nil or (CurTime() - v.lastRagdoll) > (ragdolltime + ragdolldelay)) then
                 -- If the player is on a ladder and would normally be ragdolled, reset the timer so there's a slight delay when they get off the ladder
