@@ -15,7 +15,11 @@ function EVENT:Begin()
         if not IsPlayer(ply) or not sprinting then return end
 
         local active_weapon = ply:GetActiveWeapon()
-        if IsValid(active_weapon) and (active_weapon.AutoSpawnable or (not active_weapon.CanBuy or affects_buy)) then
+        if IsValid(active_weapon) and
+              -- Only affect weapons that spawn around the map unless buyables is enabled
+              (active_weapon.AutoSpawnable or (not active_weapon.CanBuy or affects_buy)) and
+              -- Don't affect weapons that don't actually have ammo
+              (not active_weapon.Primary or active_weapon.Primary.Ammo ~= "none") then
             local current_clip = active_weapon:Clip1()
             if current_clip > 0 then
                 active_weapon:SetClip1(0)
