@@ -22,7 +22,7 @@ function EVENT:Begin()
     end
     for _, p in ipairs(player.GetAll()) do
         -- Keep track of which players are joining the traitors
-        local changing_teams = Randomat:IsMonsterTeam(p) or Randomat:IsIndependentTeam(p)
+        local changing_teams = Randomat:IsMonsterTeam(p)
         if changing_teams then
             table.insert(new_traitors, p)
         end
