@@ -232,9 +232,9 @@ function EVENT:SwearIn(winner)
             if innocentCount == 0 or traitorCount == 0 then
                 local sacrifice
                 if innocentCount ~= 0 then
-                    sacrifice = innocents[math.random(1, #innocents)]
+                    sacrifice = innocents[math.random(#innocents)]
                 else
-                    sacrifice = traitors[math.random(1, #traitors)]
+                    sacrifice = traitors[math.random(#traitors)]
                 end
 
                 self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! " .. sacrifice:Nick() .. " has been sacrificed to make their victory easier.")
@@ -339,7 +339,7 @@ function EVENT:SwearIn(winner)
                     end
                 end
 
-                role = roles[math.random(1, #roles)]
+                role = roles[math.random(#roles)]
             end
 
             winner:PrintMessage(HUD_PRINTTALK, "You have pulled the knowledge how of to be " .. ROLE_STRINGS_EXT[role] .. " from the ether.")
@@ -474,7 +474,7 @@ function EVENT:SwearIn(winner)
                     end
                 end
 
-                target = voters[math.random(1, #voters)]
+                target = voters[math.random(#voters)]
                 target:PrintMessage(HUD_PRINTTALK, "The president you voted for has recruited you to their legion of monsters")
                 target:PrintMessage(HUD_PRINTCENTER, "The president you voted for has recruited you to their legion of monsters")
             else

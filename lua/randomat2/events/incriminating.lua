@@ -81,7 +81,7 @@ end
 
 local function ReplaceRandom(message, placeholder, options)
     if string.find(message, placeholder) then
-        return string.Replace(message, placeholder, options[math.random(1, #options)])
+        return string.Replace(message, placeholder, options[math.random(#options)])
     end
     return message
 end
@@ -245,7 +245,7 @@ function EVENT:Begin()
     local delay_max = math.max(delay_min, GetConVar("randomat_incriminating_timer_max"):GetInt())
     local delay = math.random(delay_min, delay_max)
     timer.Create("IncriminatingDelay", delay, 1, function()
-        local message = messages[math.random(1, #messages)]
+        local message = messages[math.random(#messages)]
         -- Replace the "%PLAYER%" placeholder
         -- Use a different placeholder for this so that the extra {'s and }'s for role names can be stripped out easily
         if string.find(message, "%PLAYER%", nil, true) then
@@ -257,7 +257,7 @@ function EVENT:Begin()
         -- Sometimes send a "mistake" message
         if math.random() <= mistake_chance then
             timer.Create("IncriminatingDelayOops", 1.5 + math.random(), 1, function()
-                local mistake = mistakes[math.random(1, #mistakes)]
+                local mistake = mistakes[math.random(#mistakes)]
                 SendMessage(ReplacePlaceholders(mistake), target)
             end)
         end

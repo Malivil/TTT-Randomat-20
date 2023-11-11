@@ -167,7 +167,7 @@ function EVENT:ChooseWord(first, quiz_time)
     -- Make sure we don't choose the same word multiple times
     local chosen
     repeat
-        chosen = bucket_values[math.random(1, #bucket_values)]
+        chosen = bucket_values[math.random(#bucket_values)]
     until not table.HasValue(last_words, chosen)
     table.insert(last_words, chosen)
 

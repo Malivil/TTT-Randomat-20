@@ -31,7 +31,7 @@ function EVENT:Begin()
                     v:StripWeapon(wep.ClassName)
                 end
             end
-            local wepGiven = table.Random(weps)
+            local wepGiven = weps[math.random(#weps)]
             v:Give(wepGiven.ClassName)
             -- Reset FOV to unscope
             v:SetFOV(0, 0.2)

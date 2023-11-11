@@ -52,7 +52,7 @@ local function SpreadFlu(ply)
     net.Send(ply)
 
     timer.Create(playername .. "RdmtFluSneezeTimer", interval, 0, function()
-        local sneeze = math.random(1, sneezecount)
+        local sneeze = math.random(sneezecount)
         ply:EmitSound(Sound("sneezes/sneeze" .. sneeze .. ".mp3"))
 
         local recoilDirection = 1
@@ -62,7 +62,7 @@ local function SpreadFlu(ply)
 
         -- Delay the punch so it kinda lines up with the sound
         timer.Simple(1, function()
-            ply:ViewPunch(Angle(math.random(1, 7) * recoilDirection, math.random(1, 7) * recoilDirection, 0))
+            ply:ViewPunch(Angle(math.random(7) * recoilDirection, math.random(7) * recoilDirection, 0))
         end)
     end)
 end

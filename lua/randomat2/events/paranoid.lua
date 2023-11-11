@@ -17,7 +17,7 @@ function EVENT:GetRandomWeaponSound(sounds)
     local chosen_sound
     -- Choose a random (but valid) sound
     repeat
-        local idx = math.random(1, #sounds)
+        local idx = math.random(#sounds)
         chosen_sound = sounds[idx]
     until chosen_sound and #chosen_sound > 0
 
@@ -64,8 +64,8 @@ function EVENT:StartTimer()
         target_pos.y = target_pos.y + math.random(-50, 50)
 
         -- Play death sounds 1/3 times
-        if math.random(1, 3) == 1 then
-            local idx = math.random(1, #deathsounds)
+        if math.random(3) == 1 then
+            local idx = math.random(#deathsounds)
             local chosen_sound = deathsounds[idx]
             sound.Play(chosen_sound, target_pos, volume, 100, 1)
 

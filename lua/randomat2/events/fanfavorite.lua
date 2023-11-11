@@ -80,7 +80,7 @@ function EVENT:Begin()
                 end
 
                 if GetConVar("randomat_fanfavorite_tiereses"):GetBool() then
-                    resedply = votableplayers[maxk[math.random(1, #maxk)]]
+                    resedply = votableplayers[maxk[math.random(#maxk)]]
                 elseif #maxk > 1 then
                     self:SmallNotify("The vote was a tie. Nobody was resurrected. For now.")
                     skipres = 1

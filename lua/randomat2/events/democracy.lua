@@ -78,7 +78,7 @@ function EVENT:Begin()
                 end
 
                 if GetConVar("randomat_democracy_tiekills"):GetBool() then
-                    slainply = votableplayers[maxk[math.random(1, #maxk)]]
+                    slainply = votableplayers[maxk[math.random(#maxk)]]
                 elseif #maxk > 1 then
                     self:SmallNotify("The vote was a tie. Everyone stays alive. For now.")
                     skipkill = 1

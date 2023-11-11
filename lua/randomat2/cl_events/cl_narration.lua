@@ -76,11 +76,11 @@ net.Receive("TriggerNarration", function()
                     if footsteps_pattern == pattern and IsPlayer(data.Entity) and not data.Entity:IsOnGround() then
                         -- Don't replace the sound if the player is on a ladder
                         if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
-                            new_sound = StringFormat(jump_sound_path, math.random(1, jump_sound_count))
+                            new_sound = StringFormat(jump_sound_path, math.random(jump_sound_count))
                         end
                     else
                         local sound_path = sounds[1]
-                        local sound_index = math.random(1, sounds[2])
+                        local sound_index = math.random(sounds[2])
                         new_sound = StringFormat(sound_path, sound_index)
                     end
                     break
@@ -91,7 +91,7 @@ net.Receive("TriggerNarration", function()
                 data.SoundName = new_sound
                 return true
             else
-                local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
+                local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
                 return Randomat:OverrideWeaponSoundData(data, chosen_sound)
             end
         end)
@@ -102,7 +102,7 @@ net.Receive("TriggerNarration", function()
     if not IsValid(client) then return end
 
     for _, wep in ipairs(client:GetWeapons()) do
-        local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
+        local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
         Randomat:OverrideWeaponSound(wep, chosen_sound)
     end
 end)

@@ -95,7 +95,7 @@ function EVENT:Begin()
     net.Broadcast()
     for _, ply in ipairs(player.GetAll()) do
         for _, wep in ipairs(ply:GetWeapons()) do
-            local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
+            local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
             Randomat:OverrideWeaponSound(wep, chosen_sound)
         end
     end
@@ -104,7 +104,7 @@ function EVENT:Begin()
         timer.Create("NarrationDelay", 0.1, 1, function()
             net.Start("TriggerNarration")
             net.Send(ply)
-            local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
+            local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
             Randomat:OverrideWeaponSound(wep, chosen_sound)
         end)
     end)
@@ -118,11 +118,11 @@ function EVENT:Begin()
                 if footsteps_pattern == pattern and IsPlayer(data.Entity) and not data.Entity:IsOnGround() then
                     -- Don't replace the sound if the player is on a ladder
                     if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
-                        new_sound = StringFormat(jump_sound_path, math.random(1, jump_sound_count))
+                        new_sound = StringFormat(jump_sound_path, math.random(jump_sound_count))
                     end
                 else
                     local sound_path = sounds[1]
-                    local sound_index = math.random(1, sounds[2])
+                    local sound_index = math.random(sounds[2])
                     new_sound = StringFormat(sound_path, sound_index)
                 end
                 break
@@ -135,16 +135,16 @@ function EVENT:Begin()
         -- Door opening/closing
         elseif current_sound == "doors/default_move.wav" then
             if DoorIsOpen(data.Entity) then
-                data.SoundName = StringFormat(door_closing_sound_path, math.random(1, door_closing_sound_count))
+                data.SoundName = StringFormat(door_closing_sound_path, math.random(door_closing_sound_count))
             else
-                data.SoundName = StringFormat(door_opening_sound_path, math.random(1, door_opening_sound_count))
+                data.SoundName = StringFormat(door_opening_sound_path, math.random(door_opening_sound_count))
             end
             -- Increase the volume of these so they can be heard
             data.Volume = 2
             data.SoundLevel = 100
             return true
         else
-            local chosen_sound = StringFormat(gunshot_sound_path, math.random(1, gunshot_sound_count))
+            local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
             return Randomat:OverrideWeaponSoundData(data, chosen_sound)
         end
     end)

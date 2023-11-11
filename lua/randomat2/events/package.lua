@@ -17,7 +17,7 @@ function EVENT:Begin()
             table.insert(spawns, e)
         end
     end
-    local random_spawn = table.Random(spawns)
+    local random_spawn = spawns[math.random(#spawns)]
     local pos = random_spawn:GetPos()
 
     local ent = ents.Create("ttt_randomat_carepackage")

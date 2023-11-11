@@ -20,7 +20,7 @@ local function GetRandomWeaponSound(wep)
         local chosen_sound
         -- Choose a random (but valid) sound that is different than the one the weapon already has
         repeat
-            local idx = math.random(1, #sounds)
+            local idx = math.random(#sounds)
             chosen_sound = sounds[idx]
         until chosen_sound and #chosen_sound > 0 and (not wep.Primary or wep.Primary.Sound ~= chosen_sound)
 
@@ -31,7 +31,7 @@ local function GetRandomWeaponSound(wep)
             local sound_property = properties.sound
             -- Choose a random sound from the options
             if type(sound_property) == "table" then
-                sound_property = sound_property[math.random(1, #sound_property)]
+                sound_property = sound_property[math.random(#sound_property)]
             end
             chosen_sound = sound_property
         end

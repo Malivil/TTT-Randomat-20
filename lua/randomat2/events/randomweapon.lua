@@ -33,8 +33,8 @@ function EVENT:Begin()
                 ply:SetFOV(0, 0.2)
             end
 
-            local rdmwep1 = table.Random(tbl1)
-            local rdmwep2 = table.Random(tbl2)
+            local rdmwep1 = tbl1[math.random(#tbl1)]
+            local rdmwep2 = tbl2[math.random(#tbl2)]
 
             local wep1 = ply:Give(rdmwep1.ClassName)
             local wep2 = ply:Give(rdmwep2.ClassName)

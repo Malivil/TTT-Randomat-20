@@ -94,7 +94,7 @@ function EVENT:Begin()
                 end
 
                 if GetConVar("randomat_reversedemocracy_tiesaves"):GetBool() then
-                    savedply = votableplayers[maxk[math.random(1, #maxk)]]
+                    savedply = votableplayers[maxk[math.random(#maxk)]]
                 elseif #maxk > 1 then
                     self:SmallNotify("The vote was a tie. Nobody was saved. For now.")
                     skipsave = 1

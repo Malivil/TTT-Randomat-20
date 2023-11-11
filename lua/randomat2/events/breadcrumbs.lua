@@ -25,7 +25,7 @@ local function CreateTrail(ply)
             COLOR_PINK,
             COLOR_ORANGE
         }
-        player_colors[sid] = colors[math.random(1, #colors)]
+        player_colors[sid] = colors[math.random(#colors)]
     end
 
     local startWidth = GetConVar("randomat_breadcrumbs_start_width"):GetInt()

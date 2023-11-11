@@ -20,9 +20,9 @@ function EVENT:Begin(color, count)
     end
 
     timer.Create("randomatbees", 0.1, count*x, function()
-        local rdmply = plys[math.random(1, #plys)]
+        local rdmply = plys[math.random(#plys)]
         while (not rdmply:Alive()) or rdmply:IsSpec() do
-            rdmply = plys[math.random(1, #plys)]
+            rdmply = plys[math.random(#plys)]
         end
         Randomat:SpawnBee(rdmply, color)
     end)

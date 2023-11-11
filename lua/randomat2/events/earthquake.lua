@@ -10,7 +10,7 @@ EVENT.Categories = {"fun", "smallimpact"}
 
 function EVENT:Begin(magnitude)
     if type(magnitude) ~= "number" then
-        magnitude = math.random(1, 10)
+        magnitude = math.random(10)
     end
     self.Description = "Magnitude " .. magnitude .. "!"
 

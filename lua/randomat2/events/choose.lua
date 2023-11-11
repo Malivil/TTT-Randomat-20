@@ -139,7 +139,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices)
                 local message = "You took too long to choose!"
                 if limitchoosetime_random then
                     message = message .. " Choosing a random one for you..."
-                    local choice = EventChoices[math.random(1, #EventChoices)]
+                    local choice = EventChoices[math.random(#EventChoices)]
                     StartEventAndAddToHistory(choice.id)
                 end
                 owner:PrintMessage(HUD_PRINTTALK, message)
