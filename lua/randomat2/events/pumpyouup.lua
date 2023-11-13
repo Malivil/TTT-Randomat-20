@@ -144,7 +144,7 @@ net.Receive("PumpYouUpPlayerVoted", function(ln, ply)
     local prev_vote_num = 0
     for k, v in pairs(votableplayers) do
         -- Find which player was voted for
-        if v:Nick() == votee then
+        if IsPlayer(v) and v:Nick() == votee then
             -- If this player already voted, find their previous vote and remove it
             if playersvoted[ply] then
                 prev_vote = playersvoted[ply]:Nick()

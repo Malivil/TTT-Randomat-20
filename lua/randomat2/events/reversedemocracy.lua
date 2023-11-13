@@ -229,7 +229,7 @@ net.Receive("ReverseDemocracyPlayerVoted", function(ln, ply)
     local num
     for k, v in pairs(votableplayers) do
         -- Find which player was voted for
-        if v:Nick() == votee then
+        if IsPlayer(v) and v:Nick() == votee then
             -- Save this player's vote target
             playersvoted[ply] = v
 

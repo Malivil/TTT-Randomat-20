@@ -200,7 +200,7 @@ net.Receive("DemocracyPlayerVoted", function(ln, ply)
     local votee = net.ReadString()
     local num
     for k, v in pairs(votableplayers) do
-        if v:Nick() == votee then --find which player was voted for
+        if IsPlayer(v) and v:Nick() == votee then --find which player was voted for
             playersvoted[ply] = v --insert player and target into table
 
             if GetConVar("randomat_democracy_show_votes"):GetBool() then
@@ -230,7 +230,7 @@ net.Receive("DemocracyJesterVoted", function(ln, ply)
     local votee = net.ReadString()
     for _, v in pairs(votableplayers) do
         -- Find which player was voted for and kill them
-        if v:Nick() == votee then
+        if IsPlayer(v) and v:Nick() == votee then
             v:Kill()
 
             if GetConVar("randomat_democracy_show_jester_votes"):GetBool() then

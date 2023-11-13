@@ -192,7 +192,7 @@ net.Receive("FanFavoritePlayerVoted", function(ln, ply)
         num = playervotes[votee]
     else
         for k, v in pairs(votableplayers) do
-            if v:Nick() == votee then --find which player was voted for
+            if IsPlayer(v) and v:Nick() == votee then --find which player was voted for
                 playersvoted[ply] = v --insert player and target into table
 
                 if GetConVar("randomat_fanfavorite_show_votes"):GetBool() then

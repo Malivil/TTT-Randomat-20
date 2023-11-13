@@ -570,7 +570,7 @@ local function HandleVote(ply, message)
     local num = 0
     local votee = net.ReadString()
     for _, v in pairs(votableplayers) do
-        if v:Nick() == votee then
+        if IsPlayer(v) and v:Nick() == votee then
             playersvoted[ply] = v
             playervotes[votee] = playervotes[votee] + 1
             num = playervotes[votee]
