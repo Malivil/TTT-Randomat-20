@@ -1356,7 +1356,7 @@ end
 
 function randomat_meta:NotifyTeamChange(newMembers, roleTeam)
     -- This method only works with CR for TTT
-    if not CRVersion then return end
+    if not CR_VERSION then return end
     if #newMembers <= 0 then return end
 
     local members = Randomat:GetPlayerNameListString(newMembers, true)

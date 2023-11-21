@@ -18,55 +18,30 @@ function EVENT:Begin()
     local delay = GetConVar("randomat_runforyourlife_delay"):GetFloat()
     local damage = GetConVar("randomat_runforyourlife_damage"):GetInt()
 
-    if CRVersion("1.8.8") then
-        self:AddHook("TTTSprintStateChange", function(ply, sprinting, wasSprinting)
-            if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+    self:AddHook("TTTSprintStateChange", function(ply, sprinting, wasSprinting)
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
 
-            local timerId = "RdmtRunForYourLifeHurtTimer_" .. ply:SteamID64()
-            if sprinting then
-                if not hurt_timers[timerId] then
-                    hurt_timers[timerId] = true
-                    timer.Create(timerId, delay, 0, function()
-                        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
-                        ply:TakeDamage(damage)
-                    end)
-                end
-            else
-                timer.Remove(timerId)
-                hurt_timers[timerId] = false
+        local timerId = "RdmtRunForYourLifeHurtTimer_" .. ply:SteamID64()
+        if sprinting then
+            if not hurt_timers[timerId] then
+                hurt_timers[timerId] = true
+                timer.Create(timerId, delay, 0, function()
+                    if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+                    ply:TakeDamage(damage)
+                end)
             end
-        end)
-    else
-        net.Start("RandomatRunForYourLifeStart")
-        net.WriteFloat(delay)
-        net.Broadcast()
-
-        local last_hurt_time = {}
-        net.Receive("RandomatRunForYourLifeDamage", function()
-            local ply = net.ReadEntity()
-            local last_hurt = net.ReadFloat()
-            if ply == nil or not IsValid(ply) or not ply:Alive() then return end
-
-            local sid64 = ply:SteamID64()
-            local diff = math.abs(last_hurt - (last_hurt_time[sid64] or 0))
-            if diff >= delay then
-                ply:TakeDamage(damage)
-                last_hurt_time[sid64] = last_hurt
-            end
-        end)
-    end
+        else
+            timer.Remove(timerId)
+            hurt_timers[timerId] = false
+        end
+    end)
 end
 
 function EVENT:End()
-    if CRVersion("1.8.8") then
-        for timerId, _ in pairs(hurt_timers) do
-            timer.Remove(timerId)
-        end
-        table.Empty(hurt_timers)
-    else
-        net.Start("RandomatRunForYourLifeEnd")
-        net.Broadcast()
+    for timerId, _ in pairs(hurt_timers) do
+        timer.Remove(timerId)
     end
+    table.Empty(hurt_timers)
 end
 
 function EVENT:Condition()

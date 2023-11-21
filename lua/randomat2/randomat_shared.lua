@@ -539,7 +539,7 @@ end
 if SERVER then
     function Randomat:SendMessageToTeam(msg, roleTeam, detectivesAreInnocent, aliveOnly, printTypes, excludedPlayers)
         -- This method only works with CR for TTT
-        if not CRVersion then return end
+        if not CR_VERSION then return end
 
         -- This is required
         if not roleTeam then return end
