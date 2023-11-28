@@ -96,8 +96,7 @@ function EVENT:Begin()
                         -- Resurrect the player
                         local body = resedply.server_ragdoll or resedply:GetRagdollEntity()
 
-                        resedply:PrintMessage(HUD_PRINTTALK, "You have been resurrected by your peers and given one more chance... don't waste it.")
-                        resedply:PrintMessage(HUD_PRINTCENTER, "You have been resurrected by your peers and given one more chance... don't waste it.")
+                        Randomat:PrintMessage(resedply, MSG_PRINTBOTH, "You have been resurrected by your peers and given one more chance... don't waste it.")
                         resedply:SpawnForRound(true)
                         if IsValid(body) then
                             local credits = CORPSE.GetCredits(body, 0) or 0

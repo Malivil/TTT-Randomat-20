@@ -17,8 +17,7 @@ function EVENT:Begin()
         if v:GetRole() == ROLE_JESTER or v:GetRole() == ROLE_SWAPPER then
             Randomat:SetRole(v, ROLE_CLOWN)
             timer.Create("RdmtClowninAroundNotify", 5, 1, function()
-                v:PrintMessage(HUD_PRINTTALK, "You've been inspired by the story of Pennywise the Clown. Prepare for your ramapge...")
-                v:PrintMessage(HUD_PRINTCENTER, "You've been inspired by the story of Pennywise the Clown. Prepare for your ramapge...")
+                Randomat:PrintMessage(v, MSG_PRINTBOTH, "You've been inspired by the story of Pennywise the Clown. Prepare for your ramapge...")
             end)
             SendFullStateUpdate()
             return

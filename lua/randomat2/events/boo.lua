@@ -63,7 +63,7 @@ function EVENT:Begin()
                 ghost:Spawn()
                 table.insert(ghosts, ghost)
 
-                target:PrintMessage(HUD_PRINTCENTER, "Boo!")
+                Randomat:PrintMessage(target, MSG_PRINTCENTER, "Boo!")
 
                 -- Keep track of the ghost timer
                 local id = "RdmtBooGhostTimer_" .. ply:SteamID64() .. "_" .. target:SteamID64()

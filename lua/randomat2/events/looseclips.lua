@@ -32,8 +32,7 @@ function EVENT:Begin()
                     ply:GiveAmmo(current_clip, ammo_type, true)
                 end
 
-                ply:PrintMessage(HUD_PRINTTALK, message .. "!")
-                ply:PrintMessage(HUD_PRINTCENTER, message .. "!")
+                Randomat:PrintMessage(ply, MSG_PRINTBOTH, message .. "!")
             end
         end
     end)

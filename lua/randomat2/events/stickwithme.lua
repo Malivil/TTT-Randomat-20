@@ -32,7 +32,7 @@ local function SendPartnerMessage(ply, partner, warningtime)
     end)
     -- Delay this so it appears after the description on screen
     timer.Create("RandomatStickWithMePairTimer_" .. ply:SteamID64(), 1, 5, function()
-        ply:PrintMessage(HUD_PRINTCENTER, message)
+        Randomat:PrintMessage(ply, MSG_PRINTCENTER, message)
     end)
 end
 

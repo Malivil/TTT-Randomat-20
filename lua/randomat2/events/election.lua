@@ -342,8 +342,7 @@ function EVENT:SwearIn(winner)
                 role = roles[math.random(#roles)]
             end
 
-            winner:PrintMessage(HUD_PRINTTALK, "You have pulled the knowledge how of to be " .. ROLE_STRINGS_EXT[role] .. " from the ether.")
-            winner:PrintMessage(HUD_PRINTCENTER, "You have pulled the knowledge how of to be " .. ROLE_STRINGS_EXT[role] .. " from the ether.")
+            Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You have pulled the knowledge how of to be " .. ROLE_STRINGS_EXT[role] .. " from the ether.")
 
             self:StripRoleWeapons(winner)
             Randomat:SetRole(winner, role)
@@ -389,8 +388,7 @@ function EVENT:SwearIn(winner)
 
                 winner:SetNWBool("WasDrunk", true)
                 Randomat:SetRole(winner, role)
-                winner:PrintMessage(HUD_PRINTTALK, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
-                winner:PrintMessage(HUD_PRINTCENTER, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
+                Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You have remembered that you are " .. ROLE_STRINGS_EXT[role] .. ".")
 
                 net.Start("TTT_DrunkSober")
                 net.WriteString(winner:Nick())
@@ -475,16 +473,13 @@ function EVENT:SwearIn(winner)
                 end
 
                 target = voters[math.random(#voters)]
-                target:PrintMessage(HUD_PRINTTALK, "The president you voted for has recruited you to their legion of monsters")
-                target:PrintMessage(HUD_PRINTCENTER, "The president you voted for has recruited you to their legion of monsters")
+                Randomat:PrintMessage(target, MSG_PRINTBOTH, "The president you voted for has recruited you to their legion of monsters")
             else
                 context_str = "brought back from the dead and "
-                target:PrintMessage(HUD_PRINTTALK, "You have been brought back to serve in the president's legion of monsters")
-                target:PrintMessage(HUD_PRINTCENTER, "You have been brought back to serve in the president's legion of monsters")
+                Randomat:PrintMessage(target, MSG_PRINTBOTH, "You have been brought back to serve in the president's legion of monsters")
             end
 
-            winner:PrintMessage(HUD_PRINTTALK, target:Nick() .. " has been " .. context_str .. "converted to your role")
-            winner:PrintMessage(HUD_PRINTCENTER, target:Nick() .. " has been " .. context_str .. "converted to your role")
+            Randomat:PrintMessage(winner, MSG_PRINTBOTH, target:Nick() .. " has been " .. context_str .. "converted to your role")
 
             -- Convert the target to the winner's role
             Randomat:SetRole(target, winner:GetRole())

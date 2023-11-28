@@ -89,14 +89,11 @@ function EVENT:Begin()
             -- Try to give this item to the current spectator target
             if IsPlayer(target) then
                 if target:CanCarryWeapon(weapons.GetStored(equip)) then
-                    ply:PrintMessage(HUD_PRINTTALK, "You gave " .. target:Nick() .. " your gift")
-                    ply:PrintMessage(HUD_PRINTCENTER, "You gave " .. target:Nick() .. " your gift")
-                    target:PrintMessage(HUD_PRINTTALK, ply:Nick() .. " gave you a gift")
-                    target:PrintMessage(HUD_PRINTCENTER, ply:Nick() .. " gave you a gift")
+                    Randomat:PrintMessage(ply, MSG_PRINTBOTH, "You gave " .. target:Nick() .. " your gift")
+                    Randomat:PrintMessage(target, MSG_PRINTBOTH, ply:Nick() .. " gave you a gift")
                     target:Give(equip)
                 else
-                    ply:PrintMessage(HUD_PRINTTALK, target:Nick() .. " can't use your gift")
-                    ply:PrintMessage(HUD_PRINTCENTER, target:Nick() .. " can't use your gift")
+                    Randomat:PrintMessage(ply, MSG_PRINTBOTH, target:Nick() .. " can't use your gift")
                     return
                 end
             -- If there is no target, just drop it on the ground
@@ -105,8 +102,7 @@ function EVENT:Begin()
                 ent:SetPos(ply:GetPos())
                 ent:Spawn()
 
-                ply:PrintMessage(HUD_PRINTTALK, "Your gift has been dropped on the ground")
-                ply:PrintMessage(HUD_PRINTCENTER, "Your gift has been dropped on the ground")
+                Randomat:PrintMessage(ply, MSG_PRINTBOTH, "Your gift has been dropped on the ground")
             end
 
             -- Reset the player's power

@@ -20,8 +20,7 @@ function EVENT:Begin()
         if not target then return end
 
         target:AddCredits(1)
-        target:PrintMessage(HUD_PRINTTALK, "Congratulations! Wealth has finally trickled down and you've been given a free credit!")
-        target:PrintMessage(HUD_PRINTCENTER, "Congratulations! Wealth has finally trickled down and you've been given a free credit!")
+        Randomat:PrintMessage(target, MSG_PRINTBOTH, "Congratulations! Wealth has finally trickled down and you've been given a free credit!")
     end)
 end
 

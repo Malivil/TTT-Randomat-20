@@ -48,8 +48,7 @@ function EVENT:Begin()
         if credits <= 0 then return end
 
         ent:AddCredits(credits)
-        ent:PrintMessage(HUD_PRINTTALK, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits!")
-        ent:PrintMessage(HUD_PRINTCENTER, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits!")
+        Randomat:PrintMessage(ent, MSG_PRINTBOTH, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits!")
     end)
 end
 

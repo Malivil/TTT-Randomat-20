@@ -37,8 +37,7 @@ function EVENT:Begin()
     local time = GetConVar("randomat_ransom_deathtimer"):GetInt()
     -- Alert the player they are on a timer
     timer.Create("RdmtRansomNotify", 5, 1, function()
-        target:PrintMessage(HUD_PRINTTALK, "Buy something in " .. time .. " seconds or you will die!")
-        target:PrintMessage(HUD_PRINTCENTER, "Buy something in " .. time .. " seconds or you will die!")
+        Randomat:PrintMessage(target, MSG_PRINTBOTH, "Buy something in " .. time .. " seconds or you will die!")
 
         -- Kill the player after a set time
         timer.Create("RdmtRansomKill", time, 1, function()
@@ -51,8 +50,7 @@ function EVENT:Begin()
             if ply ~= target or fromrdmt then return end
 
             timer.Remove("RdmtRansomKill")
-            ply:PrintMessage(HUD_PRINTTALK, "You live... for now!")
-            ply:PrintMessage(HUD_PRINTCENTER, "You live... for now!")
+            Randomat:PrintMessage(ply, MSG_PRINTBOTH, "You live... for now!")
         end)
     end)
 

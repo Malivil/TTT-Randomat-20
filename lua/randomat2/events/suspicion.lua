@@ -41,15 +41,13 @@ function EVENT:Begin()
             suspicionply:SetCredits(0)
             local role_string = Randomat:GetRoleExtendedString(ROLE_JESTER):lower()
             for _, v in ipairs(traitor) do
-                v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick() .. " is " .. role_string)
-                v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick() .. " is " .. role_string)
+                Randomat:PrintMessage(v, MSG_PRINTBOTH, suspicionply:Nick() .. " is " .. role_string)
             end
         else
             Randomat:SetRole(suspicionply, ROLE_TRAITOR)
             local role_string = Randomat:GetRoleExtendedString(ROLE_TRAITOR):lower()
             for _, v in ipairs(traitor) do
-                v:PrintMessage(HUD_PRINTCENTER, suspicionply:Nick() .. " is " .. role_string)
-                v:PrintMessage(HUD_PRINTTALK, suspicionply:Nick() .. " is " .. role_string)
+                Randomat:PrintMessage(v, MSG_PRINTBOTH, suspicionply:Nick() .. " is " .. role_string)
             end
         end
         SendFullStateUpdate()

@@ -41,7 +41,7 @@ function EVENT:Begin()
         dmginfo:SetDamageForce(Vector(0, 0, 0))
         lowest_ply:TakeDamageInfo(dmginfo)
 
-        lowest_ply:PrintMessage(HUD_PRINTCENTER, "You're taking damage because you're the closest to the ground!")
+        Randomat:PrintMessage(lowest_ply, MSG_PRINTCENTER, "You're taking damage because you're the closest to the ground!")
     end)
 end
 

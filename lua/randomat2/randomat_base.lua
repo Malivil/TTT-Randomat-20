@@ -1379,11 +1379,11 @@ function randomat_meta:NotifyTeamChange(newMembers, roleTeam)
         player.ExecuteAgainstTeamPlayers(roleTeam, true, false, function(ply)
             -- Tell players that changed teams what team they joined and why
             if table.HasValue(newMembers, ply) then
-                ply:PrintMessage(HUD_PRINTCENTER, changedTeamMessage)
+                Randomat:PrintMessage(ply, MSG_PRINTCENTER, changedTeamMessage)
                 ply:PrintMessage(HUD_PRINTTALK, extendedChangedTeamMessage)
             -- Tell members of their new team who has joined them
             else
-                ply:PrintMessage(HUD_PRINTCENTER, joinedTeamMessage)
+                Randomat:PrintMessage(ply, MSG_PRINTCENTER, joinedTeamMessage)
                 ply:PrintMessage(HUD_PRINTTALK, extendedJoinedTeamMessage)
             end
         end)

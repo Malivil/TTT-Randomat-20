@@ -526,6 +526,29 @@ end
 
 -- Chat functions
 
+-- Shim the CR4TTT message constants
+if not MSG_PRINTBOTH then
+    MSG_PRINTBOTH = 1
+    MSG_PRINTTALK = HUD_PRINTTALK
+    MSG_PRINTCENTER = HUD_PRINTCENTER
+end
+
+function Randomat:PrintMessage(ply, msgtype, message)
+    -- QueueMessage already handles immediately printing MSG/HUD_PRINTTALK so there's no reason for us to think too much about it here
+    if CR_VERSION and msgtype ~= HUD_PRINTCONSOLE then
+        ply:QueueMessage(msgtype, message)
+        return
+    end
+
+    -- If we're trying to print to both without the new CR version, just do that manually
+    if msgtype == MSG_PRINTBOTH then
+        ply:PrintMessage(HUD_PRINTTALK, message)
+        ply:PrintMessage(HUD_PRINTCENTER, message)
+    else
+        ply:PrintMessage(msgtype, message)
+    end
+end
+
 function Randomat:SendChatToAll(msg, tbl)
     if type(tbl) ~= "table" then
         tbl = player.GetAll()

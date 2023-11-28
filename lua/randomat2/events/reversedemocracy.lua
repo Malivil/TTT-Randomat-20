@@ -30,8 +30,7 @@ local playersvoted = {}
 local function RespawnSaved(ply)
     local body = ply.server_ragdoll or ply:GetRagdollEntity()
 
-    ply:PrintMessage(HUD_PRINTTALK, "You have been saved from death and given one more chance... don't waste it.")
-    ply:PrintMessage(HUD_PRINTCENTER, "You have been saved from death and given one more chance... don't waste it.")
+    Randomat:PrintMessage(ply, MSG_PRINTBOTH, "You have been saved from death and given one more chance... don't waste it.")
     ply:SpawnForRound(true)
     ply:SetNWBool("RdmtReverseDemocracySaved", false)
     if IsValid(body) then

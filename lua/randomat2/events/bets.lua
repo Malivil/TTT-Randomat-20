@@ -77,8 +77,7 @@ function EVENT:Begin()
                             Randomat:SetRole(ply, role)
                             updated = true
                         end
-                        ply:PrintMessage(HUD_PRINTTALK, "You won your bet and have respawned. Good luck!")
-                        ply:PrintMessage(HUD_PRINTCENTER, "You won your bet and have respawned. Good luck!")
+                        Randomat:PrintMessage(ply, MSG_PRINTBOTH, "You won your bet and have respawned. Good luck!")
                         ply:SpawnForRound(true)
                         local body = ply.server_ragdoll or ply:GetRagdollEntity()
                         if IsValid(body) then

@@ -65,10 +65,8 @@ function EVENT:Begin(first_target, second_target)
         end
 
         for i = 1, #ply2 do
-            ply1[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is " .. ply2[i]:Nick())
-            ply2[i]:PrintMessage(HUD_PRINTTALK, "Your soulmate is " .. ply1[i]:Nick())
-            ply1[i]:PrintMessage(HUD_PRINTCENTER, "Your soulmate is " .. ply2[i]:Nick())
-            ply2[i]:PrintMessage(HUD_PRINTCENTER, "Your soulmate is " .. ply1[i]:Nick())
+            Randomat:PrintMessage(ply1[i], MSG_PRINTBOTH, "Your soulmate is " .. ply2[i]:Nick())
+            Randomat:PrintMessage(ply2[i], MSG_PRINTBOTH, "Your soulmate is " .. ply1[i]:Nick())
             Randomat:LogEvent("[RANDOMAT] " .. ply1[i]:Nick() .. " and " .. ply2[i]:Nick() .. " are now soulmates.")
 
             if GetConVar("randomat_soulmates_sharedhealth"):GetBool() then
@@ -77,8 +75,7 @@ function EVENT:Begin(first_target, second_target)
         end
 
         if ply1[#ply2+1] then
-            ply1[#ply2+1]:PrintMessage(HUD_PRINTTALK, "You have no soulmate :(")
-            ply1[#ply2+1]:PrintMessage(HUD_PRINTCENTER, "You have no soulmate :(")
+            Randomat:PrintMessage(ply1[#ply2+1], MSG_PRINTBOTH, "You have no soulmate :(")
             Randomat:LogEvent("[RANDOMAT] " .. ply1[#ply2+1]:Nick() .. " has no soulmate :(")
         end
     else

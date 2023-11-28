@@ -293,8 +293,7 @@ function EVENT:Begin()
                 Randomat:SetRole(ply, ROLE_TRAITOR)
                 SendFullStateUpdate()
 
-                ply:PrintMessage(HUD_PRINTTALK, "You have been killed by a hunter and are now on their team.")
-                ply:PrintMessage(HUD_PRINTCENTER, "You have been killed by a hunter and are now on their team.")
+                Randomat:PrintMessage(ply, MSG_PRINTBOTH, "You have been killed by a hunter and are now on their team.")
                 ply:SpawnForRound(true)
 
                 if IsValid(body) then

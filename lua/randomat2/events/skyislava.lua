@@ -31,8 +31,7 @@ function EVENT:Begin()
             timer.Create(timerId, interval, 0, function()
                 local hp = ply:Health()
                 if hp <= damage then
-                    ply:PrintMessage(HUD_PRINTTALK, "You've flown close to the sun for too long and have burnt to a crisp.")
-                    ply:PrintMessage(HUD_PRINTCENTER, "You've flown close to the sun for too long and have burnt to a crisp.")
+                    Randomat:PrintMessage(ply, MSG_PRINTBOTH, "You've flown close to the sun for too long and have burnt to a crisp.")
                     ply:Kill()
                 else
                     ply:SetHealth(hp - damage)

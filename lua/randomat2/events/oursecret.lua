@@ -47,10 +47,8 @@ function EVENT:Begin()
 
         -- Delay these messages slightly so they come after the event description
         timer.Create(message_timer_id, 0.25, 1, function()
-            player1:PrintMessage(HUD_PRINTTALK, "Your buddy is " .. player2:Nick() .. ". You have " .. delay .. " seconds to find them.")
-            player2:PrintMessage(HUD_PRINTTALK, "Your buddy is " .. player1:Nick() .. ". You have " .. delay .. " seconds to find them.")
-            player1:PrintMessage(HUD_PRINTCENTER, "Your buddy is " .. player2:Nick() .. ". You have " .. delay .. " seconds to find them.")
-            player2:PrintMessage(HUD_PRINTCENTER, "Your buddy is " .. player1:Nick() .. ". You have " .. delay .. " seconds to find them.")
+            Randomat:PrintMessage(player1, MSG_PRINTBOTH, "Your buddy is " .. player2:Nick() .. ". You have " .. delay .. " seconds to find them.")
+            Randomat:PrintMessage(player2, MSG_PRINTBOTH, "Your buddy is " .. player1:Nick() .. ". You have " .. delay .. " seconds to find them.")
         end)
         Randomat:LogEvent("[RANDOMAT] " .. player1:Nick() .. " and " .. player2:Nick() .. " are now buddies with a delay of " .. delay .. " seconds.")
 
@@ -107,8 +105,7 @@ function EVENT:Begin()
     end
 
     if ply1[#ply2+1] then
-        ply1[#ply2+1]:PrintMessage(HUD_PRINTTALK, "You have no buddy :(")
-        ply1[#ply2+1]:PrintMessage(HUD_PRINTCENTER, "You have no buddy :(")
+        Randomat:PrintMessage(ply1[#ply2+1], MSG_PRINTBOTH, "You have no buddy :(")
         Randomat:LogEvent("[RANDOMAT] " .. ply1[#ply2+1]:Nick() .. " has no buddy :(")
     end
 end

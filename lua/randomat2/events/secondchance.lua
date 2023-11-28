@@ -16,8 +16,7 @@ function EVENT:Begin()
         self:RemoveHook("PlayerDeath")
 
         first = victim
-        victim:PrintMessage(HUD_PRINTTALK, "You will be respawning shortly...")
-        victim:PrintMessage(HUD_PRINTCENTER, "You will be respawning shortly...")
+        Randomat:PrintMessage(victim, MSG_PRINTBOTH, "You will be respawning shortly...")
         timer.Create("RdmtSecondChanceTimer", 1, 1, function()
             local body = victim.server_ragdoll or victim:GetRagdollEntity()
             victim:SpawnForRound(true)

@@ -174,10 +174,8 @@ function EVENT:Begin()
         end
 
         if spent > 0 then
-            ply:PrintMessage(HUD_PRINTTALK, "You have " .. verb .. " your target, " .. target:Nick())
-            ply:PrintMessage(HUD_PRINTCENTER, "You have " .. verb .. " your target, " .. target:Nick())
-            target:PrintMessage(HUD_PRINTTALK, "A ghost has " .. verb .. " you")
-            target:PrintMessage(HUD_PRINTCENTER, "A ghost has " .. verb .. " you")
+            Randomat:PrintMessage(ply, MSG_PRINTBOTH, "You have " .. verb .. " your target, " .. target:Nick())
+            Randomat:PrintMessage(target, MSG_PRINTBOTH, "A ghost has " .. verb .. " you")
 
             -- Update the player's power
             ply:SetNWInt("RdmtSpecBuffPower", power - spent)

@@ -27,8 +27,7 @@ function EVENT:Begin()
                 local credits = lifeinsurance_payment:GetInt()
                 p:AddCredits(credits)
 
-                p:PrintMessage(HUD_PRINTTALK, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits due to the death of " .. ply:Nick() .. "!")
-                p:PrintMessage(HUD_PRINTCENTER, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits due to the death of " .. ply:Nick() .. "!")
+                Randomat:PrintMessage(p, MSG_PRINTBOTH, "Congratulations! You have been awarded an insurance payout of " .. credits .. " credits due to the death of " .. ply:Nick() .. "!")
             end
         end
 

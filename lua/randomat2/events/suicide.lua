@@ -28,7 +28,7 @@ function EVENT:Begin()
         local ply = plylist[k]["ply"]
         local target = plylist[k]["tgt"]
         timer.Create("RandomatDetTimer_" .. ply:SteamID64(), 1, 5, function()
-            ply:PrintMessage(HUD_PRINTCENTER, "You have a detonator for " .. target:Nick())
+            Randomat:PrintMessage(ply, MSG_PRINTCENTER, "You have a detonator for " .. target:Nick())
         end)
 
         -- Delay this

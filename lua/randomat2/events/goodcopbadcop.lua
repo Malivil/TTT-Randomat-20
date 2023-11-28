@@ -51,11 +51,8 @@ function EVENT:Begin()
 
     -- Let the players know they've changed
     timer.Simple(0.25, function()
-        detective:PrintMessage(HUD_PRINTCENTER, "You have been changed to be " .. Randomat:GetRoleExtendedString(ROLE_DEPUTY):lower())
-        detective:PrintMessage(HUD_PRINTTALK, "You have been changed to be " .. Randomat:GetRoleExtendedString(ROLE_DEPUTY):lower())
-
-        traitor:PrintMessage(HUD_PRINTCENTER, "You have been changed to be " .. Randomat:GetRoleExtendedString(new_role):lower())
-        traitor:PrintMessage(HUD_PRINTTALK, "You have been changed to be " .. Randomat:GetRoleExtendedString(new_role):lower())
+        Randomat:PrintMessage(detective, MSG_PRINTBOTH, "You have been changed to be " .. Randomat:GetRoleExtendedString(ROLE_DEPUTY):lower())
+        Randomat:PrintMessage(traitor, MSG_PRINTBOTH, "You have been changed to be " .. Randomat:GetRoleExtendedString(new_role):lower())
     end)
 end
 

@@ -142,8 +142,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices)
                     local choice = EventChoices[math.random(#EventChoices)]
                     StartEventAndAddToHistory(choice.id)
                 end
-                owner:PrintMessage(HUD_PRINTTALK, message)
-                owner:PrintMessage(HUD_PRINTCENTER, message)
+                Randomat:PrintMessage(owner, MSG_PRINTBOTH, message)
                 net.Start("ChooseEventEnd")
                 net.Send(owner)
             end)

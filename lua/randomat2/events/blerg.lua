@@ -82,8 +82,7 @@ function EVENT:Begin()
 
         -- If they are still in the no-weapon phase, dying again makes them permadead
         if not CanPickup(victim, weapondelay) then
-            victim:PrintMessage(HUD_PRINTTALK, "You died too quickly and are now permanently dead")
-            victim:PrintMessage(HUD_PRINTCENTER, "You died too quickly and are now permanently dead")
+            Randomat:PrintMessage(victim, MSG_PRINTBOTH, "You died too quickly and are now permanently dead")
             permadead[sid] = true
             timer.Remove("RdmtBlergRespawnTimer_" .. sid)
             timer.Remove("RdmtBlergWeaponTimer_" .. sid)
@@ -92,21 +91,18 @@ function EVENT:Begin()
 
         -- Limit the number of times a player can respawn, if that is enabled
         if respawnlimit > 0 and respawncount[sid] >= respawnlimit then
-            victim:PrintMessage(HUD_PRINTTALK, "You died too many times are now permanently dead")
-            victim:PrintMessage(HUD_PRINTCENTER, "You died too many times and are now permanently dead")
+            Randomat:PrintMessage(victim, MSG_PRINTBOTH, "You died too many times and are now permanently dead")
             permadead[sid] = true
             timer.Remove("RdmtBlergRespawnTimer_" .. sid)
             timer.Remove("RdmtBlergWeaponTimer_" .. sid)
             return
         end
 
-        victim:PrintMessage(HUD_PRINTTALK, "You will automatically respawn in " .. respawntimer .. " seconds")
-        victim:PrintMessage(HUD_PRINTCENTER, "You will automatically respawn in " .. respawntimer .. " seconds")
+        Randomat:PrintMessage(victim, MSG_PRINTBOTH, "You will automatically respawn in " .. respawntimer .. " seconds")
 
         -- Respawn them after the delay and keep track of when it happens
         timer.Create("RdmtBlergRespawnTimer_" .. sid, respawntimer, 1, function()
-            victim:PrintMessage(HUD_PRINTTALK, "You're back! Try to survive without weapons for " .. weapondelay .. " seconds")
-            victim:PrintMessage(HUD_PRINTCENTER, "You're back! Try to survive without weapons for " .. weapondelay .. " seconds")
+            Randomat:PrintMessage(victim, MSG_PRINTBOTH, "You're back! Try to survive without weapons for " .. weapondelay .. " seconds")
             respawntime[sid] = CurTime()
             respawncount[sid] = respawncount[sid] + 1
             -- Destroy their old body
@@ -120,8 +116,7 @@ function EVENT:Begin()
             victim:SetCredits(credits)
             -- Let them know when they can use weapons and give their defaults back
             timer.Create("RdmtBlergWeaponTimer_" .. sid, weapondelay, 1, function()
-                victim:PrintMessage(HUD_PRINTTALK, "You made it! Get some weapons and get back to killing!")
-                victim:PrintMessage(HUD_PRINTCENTER, "You made it! Get some weapons and get back to killing!")
+                Randomat:PrintMessage(victim, MSG_PRINTBOTH, "You made it! Get some weapons and get back to killing!")
 
                 if not victim:HasWeapon("weapon_ttt_unarmed") then
                     victim:Give("weapon_ttt_unarmed")
