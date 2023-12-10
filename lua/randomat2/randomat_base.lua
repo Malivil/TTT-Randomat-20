@@ -818,21 +818,24 @@ local function CanIncludeWeapon(role, weap, blocklist, droppable_only)
 end
 
 local function GetRandomRoleWeapon(roles, blocklist, droppable_only)
-    local selected = math.random(#roles)
-    local role = roles[selected]
-    local tbl = table.Copy(EquipmentItems[role]) or {}
-    for _, v in ipairs(weapons.GetList()) do
-        if CanIncludeWeapon(role, v, blocklist, droppable_only) then
-            table.insert(tbl, v)
+    local tbl = {}
+    for _, role in ipairs(roles) do
+        for _, i in ipairs(table.Copy(EquipmentItems[role]) or {}) do
+            tbl[i.id] = i
+        end
+
+        for _, v in ipairs(weapons.GetList()) do
+            if CanIncludeWeapon(role, v, blocklist, droppable_only) then
+                tbl[v.ClassName] = v
+            end
         end
     end
+
     if #tbl == 0 then
         return nil, nil, nil
     end
 
-    table.Shuffle(tbl)
-
-    local item = tbl[math.random(#tbl)]
+    local item, _ = table.Random(tbl)
     local item_id = tonumber(item.id)
     local swep_table = (not item_id) and weapons.GetStored(item.ClassName) or nil
     return item, item_id, swep_table
