@@ -19,7 +19,10 @@ net.Receive("DemocracyEventBegin", function()
     list:AddColumn("Votes")
 
     for _, v in ipairs(player.GetAll()) do
-        list:AddLine(v:Nick(), 0)
+        -- Skip spectators who were not in this round
+        if (not v:Alive() or v:IsSpec()) and v:GetRole() ~= ROLE_NONE then
+            list:AddLine(v:Nick(), 0)
+        end
     end
 
     list:OnRequestResize(playerColumn, 125)
