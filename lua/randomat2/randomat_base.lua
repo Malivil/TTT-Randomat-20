@@ -202,21 +202,21 @@ end
 local function TriggerEvent(event, ply, options, ...)
     options = options or {}
 
-    event:BeforeEventTrigger(ply, options, ...)
+    local owner = Randomat:GetValidPlayer(ply)
+    event:BeforeEventTrigger(owner, options, ...)
 
     local silent = options.Silent
     if not silent then
         -- If this event is supposed to start secretly, trigger "secret" with this specific event chosen
         -- Unless "secret" is already running in which case we don't care, just let it go
         if event.StartSecret and not Randomat:IsEventActive("secret") then
-            TriggerEvent(Randomat.Events["secret"], ply, nil, event.Id)
+            TriggerEvent(Randomat.Events["secret"], owner, nil, event.Id)
             return
         end
 
         Randomat:EventNotify(event.Title)
     end
 
-    local owner = Randomat:GetValidPlayer(ply)
     table.insert(Randomat.ActiveEvents, event)
     event.owner = owner
     event.Owner = owner
