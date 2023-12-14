@@ -36,6 +36,7 @@ _cl_randomat_show_active_ - Default: 1 - Whether to show the "Active Events" lab
 # Latest Events
 1. No one can die from my sight
 1. Cause of Death
+1. Daredevil
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -425,6 +426,18 @@ _ttt_randomat_crabs_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_crabs_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_crabs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_crabs_count_ - Default: 5 - The amount of crabs spawned when someone dies.
+
+## Daredevil
+Scale a player's damage up the faster they move (including falling)
+\
+\
+**ConVars**
+\
+_ttt_randomat_daredevil_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_daredevil_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_daredevil_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_daredevil_min_damage_scale_ - Default: 1 - The minimum damage scale to use.\
+_randomat_daredevil_max_damage_scale_ - Default: 2.5 - The maximum damage scale to use.
 
 ## Dead Men Tell ALL Tales
 Allows dead players to text chat with the living
@@ -2020,7 +2033,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Ben of the Yogscast for the "Blerg" sounds used in the "Narration" event
 - Lewis of the Yogscast for the idea for the "Detraitor" event and the concepts of: events starting in secret, events having selection weight, and events targeting dead players
 - Zylus of the Yogscast for the idea for adding the jump/crouch switch to the "Opposite Day" event
-- Corvatile from the Custom Roles for TTT Discord for the idea for the "Cause of Death", "Chamber Pop", "Get Down Mr. Romero!", "Good Cop, Bad Cop", "Life Insurance", "Loose Clips", "Meet Cute", "No one can die from my sight", "Partial Mayhem", "Somebody set us up the bomb", and "Variety is the Spice of Life" events
+- Corvatile from the Custom Roles for TTT Discord for the idea for the "Cause of Death", "Chamber Pop", "Daredevil", "Get Down Mr. Romero!", "Good Cop, Bad Cop", "Life Insurance", "Loose Clips", "Meet Cute", "No one can die from my sight", "Partial Mayhem", "Somebody set us up the bomb", and "Variety is the Spice of Life" events
 - joelmw10er from the Custom Roles for TTT Discord for the idea for the "Poltergeists" event
 - Alkomere from the Yogscast twitch chat for the idea for the "T-Rex Vision" event
 - Matt Warren from the Yogscast YouTube comments and Dangerzachattack from the Custom Roles for TTT for the idea for the "It's over Anakin! I have the high ground!" event
