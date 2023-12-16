@@ -9,6 +9,7 @@ net.Receive("MurderEventActive", function()
         local maxpck = net.ReadInt(32)
         surface.CreateFont("HealthAmmo", {font = "Trebuchet24", size = 24, weight = 750})
 
+        local blindIdx = 0
         hook.Add("DrawOverlay", "RandomatMurderUI", function()
             local rl = pl:GetRole()
             local pks = pl:GetNWInt("MurderWeaponsEquipped")
@@ -27,6 +28,17 @@ net.Receive("MurderEventActive", function()
                 draw.RoundedBox(8, 19.6, y, 230, 25, Color(0, 0, 0, 175))
                 draw.RoundedBox(8, 19.6, y, (pks/maxpck)*230, 25, Color(205, 155, 0, 255))
                 draw.TextShadow(texttable, 2)
+            end
+
+            if pl:GetNWBool("RdmtShouldBlind", false) then
+                -- This is used below to determine the alpha
+                -- Cap it at 51*5 = 255, the maximum alpha possible
+                if blindIdx < 51 then
+                    blindIdx = blindIdx + 1
+                end
+                draw.RoundedBox(0,0,0,ScrW(),ScrH(), Color(0, 0, 0, blindIdx * 5))
+            else
+                blindIdx = 0
             end
         end)
 

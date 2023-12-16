@@ -67,15 +67,3 @@ function SWEP:PrimaryAttack(worldsnd)
         self:SetIronsights(false)
     end)
 end
-
-if CLIENT then
-    local i = 0
-    hook.Add("DrawOverlay", "RdmtMurderBlind", function()
-        if LocalPlayer():GetNWBool("RdmtShouldBlind") then
-            i = i+1
-            draw.RoundedBox(0,0,0,ScrW(),ScrH(), Color(0, 0, 0, i*5))
-        else
-            i = 0
-        end
-    end)
-end

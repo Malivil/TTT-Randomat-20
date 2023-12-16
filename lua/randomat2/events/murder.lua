@@ -146,8 +146,6 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatMurderTimer")
-    -- Added by the revolver weapon
-    hook.Remove("DrawOverlay", "RdmtMurderBlind")
     for _, v in ipairs(player.GetAll()) do
         v:SetNWInt("MurderWeaponsEquipped", 0)
         v:SetNWBool("RdmMurderRevolver", false)
