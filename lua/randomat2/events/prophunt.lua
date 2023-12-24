@@ -28,7 +28,12 @@ EVENT.Categories = {"gamemode", "biased_traitor", "biased", "item", "rolechange"
 
 local banned_weapons = {
     ["weapon_controllable_manhack"] = "Controllable Manhacks",
-    ["weapon_ttt_paper_plane"] = "Paper Airplanes"
+    ["weapon_ttt_paper_plane"] = "Paper Airplanes",
+    ["weapon_ttt_traitor_defib"] = "Defibrillators",
+    ["weapon_ttt_defib"] = "Defibrillators",
+    ["weapon_ttt_defib_traitor"] = "Defibrillators",
+    ["weapon_ttt_defibbs"] = "Defibrillators",
+    ["weapon_vadim_defib"] = "Defibrillators"
 }
 
 local function PopulateWeaponId()
