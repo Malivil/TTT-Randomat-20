@@ -58,6 +58,7 @@ if SERVER then
     CreateConVar("ttt_randomat_event_hint", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should print what each event does when they start.")
     CreateConVar("ttt_randomat_event_hint_chat", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether hints should also be put in chat.")
     CreateConVar("ttt_randomat_event_history", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many events to keep in history to prevent duplication.")
+    local always_trigger = CreateConVar("ttt_randomat_always_silently_trigger", "", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Specify an event to always trigger silently at the start of each round")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
         local rounds_complete = Randomat:GetRoundsComplete()
@@ -81,6 +82,11 @@ if SERVER then
                     Randomat:TriggerRandomEvent(nil)
                 end
             end
+        end
+
+        local always_trigger_event = always_trigger:GetString()
+        if always_trigger_event ~= "" and not Randomat:IsEventActive(always_trigger_event) then
+            Randomat:SilentTriggerEvent(always_trigger_event)
         end
     end)
 end
