@@ -27,7 +27,7 @@ _ttt_randomat_event_weight_ - Default: 1 - The default selection weight each eve
 _ttt_randomat_event_hint_ - Default: 1 - Whether the Randomat should print what each event does when they start.\
 _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put in chat.\
 _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in history. Events in history will are ignored when searching for a random event to start.\
-_ttt_randomat_allow_client_list_ - Default: 1 - Whether to allow the clients to have the "Active Events" label and list available.
+_ttt_randomat_allow_client_list_ - Default: 1 - Whether to allow the clients to have the "Active Events" label and list available.\
 _ttt_randomat_always_silently_trigger_ - Default: "" - Specify an event ID to always trigger that event silently at the start of each round. E.g. "moongravity" for the "What? Moon gravity on Earth?" randomat
 
 # Client ConVars
