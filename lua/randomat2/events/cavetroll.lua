@@ -123,13 +123,17 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
+    local has_traitor = false
     for _, p in ipairs(self:GetAlivePlayers()) do
         if Randomat:IsTraitorTeam(p) then
-            return true
+            has_traitor = true
+        -- This event make it easy for the guesser to guess roles and also can break the game for the cave troll that is turned into the guesser as they won't have their guessing device
+        elseif ROLE_GUESSER and p:IsRole(ROLE_GUESSER) then
+            return false
         end
     end
 
-    return false
+    return has_traitor
 end
 
 function EVENT:GetConVars()
