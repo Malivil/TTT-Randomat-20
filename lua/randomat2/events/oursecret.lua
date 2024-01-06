@@ -20,8 +20,8 @@ function EVENT:Begin()
     local ply2 = {}
     local x = 0
     for _, v in ipairs(self:GetAlivePlayers(true)) do
-        -- Don't pick the Detective since everyone knows who they are already
-        if v:GetRole() ~= ROLE_DETECTIVE then
+        -- Don't pick the detective since everyone knows who they are already
+        if Randomat:IsDetectiveTeam(v) then
             if x % 2 == 0 then
                 table.insert(ply1, v)
             else
