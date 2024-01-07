@@ -56,13 +56,13 @@ local function GetVote(vote)
     return vote
 end
 
-function EVENT:BeforeEventTrigger(ply, options, vote, dead_can_vote, vote_predicate, choices)
+function EVENT:BeforeEventTrigger(ply, options, vote, dead_can_vote, vote_predicate, choices, choice_list)
     local votetimer = GetConVar("randomat_choose_votetimer"):GetInt()
     local limitchoosetime = GetConVar("randomat_choose_limitchoosetime"):GetBool()
     self.Description = GetEventDescription(GetVote(vote), limitchoosetime and votetimer or 0)
 end
 
-function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices)
+function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices, choice_list)
     owner = self.owner
 
     vote = GetVote(vote)
@@ -82,6 +82,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices)
 
         if v.id == self.id then continue end
         if not Randomat:CanEventRun(v) then continue end
+        if choice_list and not table.HasValue(choice_list, v.id) then continue end
 
         local title = Randomat:GetEventTitle(v)
 
