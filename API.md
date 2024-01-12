@@ -186,25 +186,25 @@ Properties used to define and describe an event and its running conditions
 
 **Categories** - What categories this event belongs to. Useful for finding events with specific purposes. Also displayed in the ULX admin menu.\
 *Realm:* Server
-|Category|Display Name|Icon|
-|--------|------------|----|
-|biased_innocent|Biased (Innocent)|![biased_innocent.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_innocent.png)
-|biased_traitor|Biased (Traitor)|![biased_traitor.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_traitor.png)
-|biased_zombie|Biased (Zombie)|![biased_zombie.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_zombie.png)
-|biased|Biased|![biased.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased.png)
-|deathtrigger|Death Trigger|![deathtrigger.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/deathtrigger.png)
-|entityspawn|Entity Spawn|![entityspawn.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/entityspawn.png)
-|eventtrigger|Event Trigger|![eventtrigger.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/eventtrigger.png)
-|fun|Fun|![fun.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/fun.png)
-|gamemode|Game Mode|![gamemode.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/gamemode.png)
-|item|Item|![item.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/item.png)
-|largeimpact|Large Impact|![largeimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/largeimpact.png)
-|modelchange|Model Change|![modelchange.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/modelchange.png)
-|moderateimpact|Moderate Impact|![moderateimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/moderateimpact.png)
-|rolechange|Role Change|![rolechange.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/rolechange.png)
-|smallimpact|Small Impact|![smallimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/smallimpact.png)
-|spectator|Spectator|![spectator.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/spectator.png)
-|stats|Stats|![stats.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/stats.png)
+|Category|Display Name|Icon|Description|
+|--------|------------|----|-----------|
+|biased_innocent|Biased - Innocent|![biased_innocent.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_innocent.png)|Biased toward the innocent team, potentially making it easier for them to win the round|
+|biased_traitor|Biased - Traitor|![biased_traitor.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_traitor.png)|Biased toward the traitor team, potentially making it easier for them to win the round|
+|biased_zombie|Biased - Zombie|![biased_zombie.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_zombie.png)|Biased toward the zombies, potentially making it easier for them to win the round|
+|biased|Biased|![biased.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased.png)|Biased toward a particular group, potentially making it easier for them to win the round|
+|deathtrigger|Death Trigger|![deathtrigger.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/deathtrigger.png)|Causes some functionality to happen when a player dies|
+|entityspawn|Entity Spawn|![entityspawn.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/entityspawn.png)|Causes some entity (or entities) to spawn|
+|eventtrigger|Event Trigger|![eventtrigger.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/eventtrigger.png)|Triggers another event|
+|fun|Fun|![fun.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/fun.png)|Fun, but most likely disruptive to a normal round of TTT|
+|gamemode|Game Mode|![gamemode.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/gamemode.png)|It's like it's a whole new game... within TTT of course|
+|item|Item|![item.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/item.png)|Provides an item or items to a player or a group of players|
+|largeimpact|Large Impact|![largeimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/largeimpact.png)|Has a large impact on the round|
+|modelchange|Model Change|![modelchange.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/modelchange.png)|Causes models to change for at least one player|
+|moderateimpact|Moderate Impact|![moderateimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/moderateimpact.png)|Has a moderate (medium) impact on the round|
+|rolechange|Role Change|![rolechange.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/rolechange.png)|Causes roles to change for at least one player|
+|smallimpact|Small Impact|![smallimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/smallimpact.png)|Has a small impact on the round|
+|spectator|Spectator|![spectator.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/spectator.png)|Affects spectators|
+|stats|Stats|![stats.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/stats.png)|Uses previously-recorded statistics about the players|
 
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
