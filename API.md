@@ -186,6 +186,25 @@ Properties used to define and describe an event and its running conditions
 
 **Categories** - What categories this event belongs to. Useful for finding events with specific purposes. Also displayed in the ULX admin menu.\
 *Realm:* Server
+|Category|Display Name|Icon|
+|--------|------------|----|
+|biased_innocent|Biased (Innocent)||![biased_innocent.png](  https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_innocent.png)
+|biased_traitor|Biased (Traitor)|![biased_traitor.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_traitor.png)
+|biased_zombie|Biased (Zombie)|![biased_zombie.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_zombie.png)
+|biased|Biased|![biased.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased.png)
+|deathtrigger|Death Trigger|![deathtrigger.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/deathtrigger.png)
+|entityspawn|Entity Spawn|![entityspawn.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/entityspawn.png)
+|eventtrigger|Event Trigger|![eventtrigger.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/eventtrigger.png)
+|fun|Fun|![fun.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/fun.png)
+|gamemode|Game Mode|![gamemode.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/gamemode.png)
+|item|Item|![item.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/item.png)
+|largeimpact|Large Impact|![largeimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/largeimpact.png)
+|modelchange|Model Change|![modelchange.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/modelchange.png)
+|moderateimpact|Moderate Impact|![moderateimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/moderateimpact.png)
+|rolechange|Role Change|![rolechange.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/rolechange.png)
+|smallimpact|Small Impact|![smallimpact.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/smallimpact.png)
+|spectator|Spectator|![spectator.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/spectator.png)
+|stats|Stats|![stats.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/stats.png)
 
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
