@@ -188,7 +188,7 @@ Properties used to define and describe an event and its running conditions
 *Realm:* Server
 |Category|Display Name|Icon|
 |--------|------------|----|
-|biased_innocent|Biased (Innocent)||![biased_innocent.png](  https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_innocent.png)
+|biased_innocent|Biased (Innocent)||![biased_innocent.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_innocent.png)
 |biased_traitor|Biased (Traitor)|![biased_traitor.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_traitor.png)
 |biased_zombie|Biased (Zombie)|![biased_zombie.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased_zombie.png)
 |biased|Biased|![biased.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/biased.png)
