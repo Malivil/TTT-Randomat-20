@@ -38,6 +38,7 @@ _cl_randomat_show_active_ - Default: 1 - Whether to show the "Active Events" lab
 1. No one can die from my sight
 1. Cause of Death
 1. Daredevil
+1. Tunnel Vision
 
 # Events
 **NOTE:** All "blocklist" ConVars are hidden from the ULX menu because they can cause errors if the ConVar value is too long
@@ -1527,18 +1528,6 @@ _ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_shutup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_shutup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
-## The Sky is Lava
-Players take damage while they are in the air
-\
-\
-**ConVars**
-\
-_ttt_randomat_skyislava_ - Default: 1 - Whether this event is enabled.\
-_ttt_randomat_skyislava_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_skyislava_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_skyislava_interval_ - Default: 0.25 - How often (in seconds) damage is done while players are in the air.\
-_randomat_skyislava_damage_ - Default: 1 - How much damage is done.
-
 ## Somebody set us up the bomb
 Gives all traitors C4. If a C4 explodes by running out of time, the traitors win.
 \
@@ -1548,27 +1537,6 @@ Gives all traitors C4. If a C4 explodes by running out of time, the traitors win
 _ttt_randomat_defusemode_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_defusemode_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_defusemode_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
-
-## Trickle-Down Economics
-Spent credits are redistributed to other people with shops
-\
-\
-**ConVars**
-\
-_ttt_randomat_trickledown_ - Default: 1 - Whether this event is enabled.\
-_ttt_randomat_trickledown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_trickledown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
-
-## Two Lies and a Truth
-One of these three events has been started... but which one?
-\
-\
-**ConVars**
-\
-_ttt_randomat_twolies_ - Default: 1 - Whether this event is enabled.\
-_ttt_randomat_twolies_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_twolies_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_twolies_blocklist_ - Default: - The comma-separated list of event IDs to not start. For example: "skyislava,boo".
 
 ## Smoke Signals
 Allows dead players to envelope their target in smoke
@@ -1729,6 +1697,18 @@ _randomat_cakes_damage_time_ - Default: 30 - The amount of time the player will 
 _randomat_cakes_damage_interval_ - Default: 1 - How often the player will take damage after eating a cake, in seconds.\
 _randomat_cakes_damage_over_time_ - Default: 1 - The amount of health the player will lose each tick after eating a cake.
 
+## The Sky is Lava
+Players take damage while they are in the air
+\
+\
+**ConVars**
+\
+_ttt_randomat_skyislava_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_skyislava_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_skyislava_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_skyislava_interval_ - Default: 0.25 - How often (in seconds) damage is done while players are in the air.\
+_randomat_skyislava_damage_ - Default: 1 - How much damage is done.
+
 ## There's a cooldown on the jump!
 Players can only jump once every configurable number of seconds
 \
@@ -1800,6 +1780,38 @@ Causes players to explode when killed
 _ttt_randomat_mayhem_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_mayhem_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_mayhem_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Trickle-Down Economics
+Spent credits are redistributed to other people with shops
+\
+\
+**ConVars**
+\
+_ttt_randomat_trickledown_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_trickledown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_trickledown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+
+## Tunnel Vision
+Players are having trouble seeing things on the edge of their screen...
+\
+\
+**ConVars**
+\
+_ttt_randomat_tunnelvision_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_tunnelvision_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_tunnelvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_tunnelvision_viewpct_ - Default: 33 - What percent of the screen the player should be able to see through
+
+## Two Lies and a Truth
+One of these three events has been started... but which one?
+\
+\
+**ConVars**
+\
+_ttt_randomat_twolies_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_twolies_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_twolies_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_twolies_blocklist_ - Default: - The comma-separated list of event IDs to not start. For example: "skyislava,boo".
 
 ## Try your best...
 Gives each player a random pistol and main weapon that they cannot drop
@@ -2023,6 +2035,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - [Fyxen](https://steamcommunity.com/profiles/76561198810121546/) for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
+- Noxx from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord and the Custom Roles for TTT Discord for the help, support, and many ideas
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events and the name of the "Down Under" event
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
