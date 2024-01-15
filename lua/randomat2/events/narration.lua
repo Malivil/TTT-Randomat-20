@@ -90,6 +90,26 @@ local function DoorIsOpen(door)
     return false
 end
 
+function EVENT:Initialize()
+    local function PrecacheSounds(path, count)
+        for i=1,count do
+            util.PrecacheSound(StringFormat(path, i))
+        end
+    end
+
+    PrecacheSounds(beeping_sound_path, beeping_sound_count)
+    PrecacheSounds(blerg_sound_path, blerg_sound_count)
+    PrecacheSounds(bones_cracking_sound_path, bones_cracking_sound_count)
+    PrecacheSounds(door_opening_sound_path, door_opening_sound_count)
+    PrecacheSounds(door_closing_sound_path, door_closing_sound_count)
+    PrecacheSounds(explosion_sound_path, explosion_sound_count)
+    PrecacheSounds(footsteps_sound_path, footsteps_sound_count)
+    PrecacheSounds(gunshot_sound_path, gunshot_sound_count)
+    PrecacheSounds(jump_sound_path, jump_sound_count)
+    PrecacheSounds(reload_sound_path, reload_sound_count)
+    PrecacheSounds(smashing_glass_sound_path, smashing_glass_sound_count)
+end
+
 function EVENT:Begin()
     net.Start("TriggerNarration")
     net.Broadcast()

@@ -87,6 +87,8 @@ All methods below are automatically defined for every event but events can overr
 
 *NOTE:* **All** events are automatically ended during every round prep phase to ensure leftover event processes are stopped between events
 
+**EVENT:Initialize()** - Called after an event is finished registering.
+
 **EVENT:GetAlivePlayers(shuffle)** - Gets a table of all living players.\
 *Realm:* Server\
 *Parameters:*

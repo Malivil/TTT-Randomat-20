@@ -353,6 +353,8 @@ function Randomat:register(tbl)
         MsgN("Event '" .. id .. "' weight (" .. weight:GetInt() .. ") matches default weight (" .. default_weight .. "), resetting to -1")
         weight:SetInt(-1)
     end
+
+    tbl:Initialize()
 end
 
 function Randomat:unregister(id)
@@ -1034,6 +1036,8 @@ end
 ]]--
 
 -- Skeleton
+
+function randomat_meta:Initialize() end
 
 function randomat_meta:Begin(...) end
 
