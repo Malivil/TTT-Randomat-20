@@ -117,7 +117,7 @@ function EVENT:Begin()
 
     local tick = GetConVar("randomat_gifts_charge_time"):GetInt() / 100
     timer.Create("RdmtDeadGiftPowerTimer", tick, 0, function()
-        for _, p in ipairs(self:GetDeadPlayers()) do
+        for _, p in ipairs(self:GetDeadPlayers(false, true)) do
             if not p:GetNWBool("RdmtDeadGiftSent", false) then
                 local power = p:GetNWInt("RdmtDeadGiftPower", 0)
                 if power < 100 then

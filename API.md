@@ -118,6 +118,17 @@ All methods below are automatically defined for every event but events can overr
 *Parameters:*
 - *shuffle* - Whether to shuffle the table after generating it
 
+**EVENT:GetAlivePlayers(shuffle)** - Gets a table of all living players.\
+*Realm:* Server\
+*Parameters:*
+- *shuffle* - Whether to shuffle the table after generating it
+
+**EVENT:GetDeadPlayers(shuffle, include_spec)** - Gets a table of all dead players.\
+*Realm:* Server\
+*Parameters:*
+- *shuffle* - Whether to shuffle the table after generating it
+- *include_spec* - Whether to include players who are spectators as well, not players who died this round
+
 **EVENT:GetRoleName(ply, hide_secret_roles)** - Calls `Randomat:GetRoleExtendedString` for the given player's role.\
 *Realm:* Server\
 *Parameters:*
@@ -494,12 +505,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* List of player names separated by a comma
 
-**Randomat:GetPlayers(shuffle, alive_only, dead_only)** - Gets a list of players.\
+**Randomat:GetPlayers(shuffle, alive_only, dead_only, dead_includes_spec)** - Gets a list of players.\
 *Realm:* Server\
 *Parameters:*
 - *shuffle* - Whether to shuffle the list after generating it
 - *alive_only* - Whether only alive players should be in the list
 - *dead_only* - Whether only dead players should be in the list
+- *dead_includes_spec* - Whether *dead_only* should include spectators as well
 
 *Returns:* The list of players
 

@@ -81,7 +81,7 @@ function EVENT:Begin()
 
     local tick = GetConVar("randomat_boo_charge_time"):GetInt() / 100
     timer.Create("RdmtBooPowerTimer", tick, 0, function()
-        for _, p in ipairs(self:GetDeadPlayers()) do
+        for _, p in ipairs(self:GetDeadPlayers(false, true)) do
             local power = p:GetNWInt("RdmtBooPower", 0)
             if power < 100 then
                 p:SetNWInt("RdmtBooPower", power + 1)

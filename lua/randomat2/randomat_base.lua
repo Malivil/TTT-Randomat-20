@@ -692,7 +692,7 @@ end
 
 -- Players
 
-function Randomat:GetPlayers(shuffle, alive_only, dead_only)
+function Randomat:GetPlayers(shuffle, alive_only, dead_only, dead_includes_spec)
     local plys = {}
     -- Optimize this to get the full raw list if both alive and dead should be included
     if alive_only == dead_only then
@@ -704,8 +704,8 @@ function Randomat:GetPlayers(shuffle, alive_only, dead_only)
             ((not alive_only and not dead_only) or
             -- Alive and non-spec
                 (alive_only and (ply:Alive() and not ply:IsSpec())) or
-            -- Dead but not spec
-                (dead_only and (not ply:Alive() or ply:IsSpec()) and ply:GetRole() ~= ROLE_NONE)) then
+            -- Dead but not spec unless that's enabled
+                (dead_only and (not ply:Alive() or ply:IsSpec()) and (dead_includes_spec or ply:GetRole() ~= ROLE_NONE))) then
                 table.insert(plys, ply)
             end
         end
@@ -1066,8 +1066,8 @@ function randomat_meta:GetAlivePlayers(shuffle)
     return Randomat:GetPlayers(shuffle, true)
 end
 
-function randomat_meta:GetDeadPlayers(shuffle)
-    return Randomat:GetPlayers(shuffle, false, true)
+function randomat_meta:GetDeadPlayers(shuffle, include_spec)
+    return Randomat:GetPlayers(shuffle, false, true, include_spec)
 end
 
 -- Notifications

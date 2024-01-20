@@ -200,7 +200,7 @@ function EVENT:Begin()
 
     local tick = GetConVar("randomat_specbuff_charge_time"):GetInt() / 100
     timer.Create("RdmtSpecBuffPowerTimer", tick, 0, function()
-        for _, p in ipairs(self:GetDeadPlayers()) do
+        for _, p in ipairs(self:GetDeadPlayers(false, true)) do
             local power = p:GetNWInt("RdmtSpecBuffPower", 0)
             if power < 100 then
                 p:SetNWInt("RdmtSpecBuffPower", power + 1)
