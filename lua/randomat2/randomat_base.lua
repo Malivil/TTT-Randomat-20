@@ -813,7 +813,7 @@ local function CanIncludeWeapon(role, weap, blocklist, droppable_only)
     -- Must be droppable if droppable_only is true
     if droppable_only and not weap.AllowDrop then return false end
     -- Must be buyable by the given role
-    if not weap.CanBuy or not table.HasValue(weap.CanBuy, role) then return false end
+    if not Randomat:IsWeaponBuyable(weap) or not table.HasValue(weap.CanBuy, role) then return false end
     -- Must not be blocked
     if blocklist and table.HasValue(blocklist, WEPS.GetClass(weap)) then return false end
     return true

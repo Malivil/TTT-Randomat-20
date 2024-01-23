@@ -17,7 +17,7 @@ function EVENT:Begin()
         local active_weapon = ply:GetActiveWeapon()
         if IsValid(active_weapon) and
               -- Only affect weapons that spawn around the map unless buyables is enabled
-              (active_weapon.AutoSpawnable or (not active_weapon.CanBuy or affects_buy)) and
+              (active_weapon.AutoSpawnable or (not Randomat:IsWeaponBuyable(active_weapon) or affects_buy)) and
               -- Don't affect weapons that don't actually have ammo
               (not active_weapon.Primary or active_weapon.Primary.Ammo ~= "none") then
             local current_clip = active_weapon:Clip1()

@@ -110,7 +110,7 @@ function EVENT:Begin()
                     -- Only run the other checks if this isn't a role weapon
                     if not is_role_weapon then
                         -- Only remove buyable weapons
-                        if w.AutoSpawnable or not w.CanBuy then continue end
+                        if w.AutoSpawnable or not Randomat:IsWeaponBuyable(w) then continue end
                     end
 
                     local weap_class = WEPS.GetClass(w)

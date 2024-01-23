@@ -59,7 +59,7 @@ function EVENT:Begin()
                 -- Only run the other checks if this isn't a role weapon
                 if not is_role_weapon then
                     -- Only announce buyable weapons
-                    if w.AutoSpawnable or not w.CanBuy then continue end
+                    if w.AutoSpawnable or not Randomat:IsWeaponBuyable(w) then continue end
                     -- Specifically skip the joke weapons
                     -- Even if someone bought them they don't really DO anything so it doesn't matter
                     if w.Kind == 317 then continue end

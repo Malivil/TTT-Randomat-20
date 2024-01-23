@@ -761,9 +761,16 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Realm:* Client and Server\
 *Parameters:*
 - *ply* - The player to check
-- *skip_evil_detective* - 
+- *skip_evil_detective* - If `true`, causes this function to return `false` if `Randomat:IsEvilDetective(ply)` is `true`
 
 *Returns:* `true` if the player passes the check, `false` otherwise
+
+**Randomat:IsWeaponBuyable(wep)** - Determines whether the weapon is buyable.\
+*Realm:* Client and Server\
+*Parameters:*
+- *wep* - The weapon to check
+
+*Returns:* `true` if the weapon is buyable, `false` otherwise
 
 **Randomat:IsZombifying(ply)** - Determines whether the given player is in the process of converting to be a Zombie.\
 *Realm:* Client and Server\

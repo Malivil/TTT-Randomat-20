@@ -314,6 +314,11 @@ end
 
 -- Weapon Functions
 
+function Randomat:IsWeaponBuyable(wep)
+    if not wep or not wep.CanBuy then return false end
+    return #wep.CanBuy > 0
+end
+
 function Randomat:RestoreWeaponSound(wep)
     if not IsValid(wep) or not wep.Primary then return end
     if wep.Primary.OriginalSound then
