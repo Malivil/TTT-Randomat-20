@@ -2058,6 +2058,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
 - [Tygron](https://steamcommunity.com/id/Tygron), [The Stig](https://steamcommunity.com/id/The-Stig-294), and [TilSchwantje](https://github.com/TilSchwantje) for providing feedback and verifying bug fixes
+- [Yami Kaiser](https://steamcommunity.com/id/Devil_Yami) for the icon used by the revolver weapon, from their [TTT icon pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2482080782)
 
 # Steam Workshop
 https://steamcommunity.com/sharedfiles/filedetails/?id=2055805086
