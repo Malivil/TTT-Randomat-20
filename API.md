@@ -322,6 +322,35 @@ Messages that the Randomat is set up to listen to in the defined realm.
 - *String* - The message being displayed 
 - *UInt(8)* - The number of seconds the message should be displayed for
 
+**RdmtRemoveSpeedMultiplier** - Removes a speed multiplier for the local player.\
+*Realm:* Client\
+*Parameters:*
+- *String* - The unique key for the speed multiplier to remove
+
+**RdmtRemoveSpeedMultipliers** - Removes all speed multipliers for the local player which have keys that start with the given string.\
+*Realm:* Client\
+*Parameters:*
+- *String* - The value that multiplier keys must start with to be removed
+
+**RdmtSetSpeedMultiplier** - Registers a speed multiplier for the local player.\
+*Realm:* Client\
+*Parameters:*
+- *Float* - The speed multiplier to record
+- *String* - The unique key for the speed multiplier. Used to remove the multiplier later
+
+**RdmtSetSpeedMultiplier_WithWeapon** - Registers a speed multiplier for the local player that only takes effect when they have a specific weapon equipped.\
+*Realm:* Client\
+*Parameters:*
+- *Float* - The speed multiplier to record
+- *String* - The unique key for the speed multiplier. Used to remove the multiplier later
+- *String* - The weapon class the local player must have equipped for the speed multiplier to be in effect
+
+**RdmtSetSpeedMultiplier_Sprinting** - Registers a speed multiplier for when the local player is sprinting.\
+*Realm:* Client\
+*Parameters:*
+- *Float* - The speed multiplier to record
+- *String* - The unique key for the speed multiplier. Used to remove the multiplier later
+
 ## Randomat Namespace
 The methods and properties belonging to the static `Randomat` namespace, available globally
 
@@ -818,18 +847,6 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *ply* - The player whose PHD Flopper is being removed
 - *block_message* - Whether to prevent the message explaining the the PHD Flopper has been removed
 
-**Randomat:RemoveSpeedMultiplier(ply, key)** - Removes a speed multiplier for the local player. When called on the server, this is automatically synced to the client.\
-*Realm:* Client and Server\
-*Parameters:*
-- *ply* - The player having their speed multiplier removed
-- *key* - The unique key for the speed multiplier to remove
-
-**Randomat:RemoveSpeedMultipliers(ply, key)** - Removes all speed multipliers for the local player which have keys that start with the given string. When called on the server, this is automatically synced to the client.\
-*Realm:* Client and Server\
-*Parameters:*
-- *ply* - The player having their speed multiplier removed
-- *key* - The value that multiplier keys must start with to be removed
-
 **Randomat:ResetPlayerScale(ply, id)** - Resets a player's model scale back to the default.\
 *Realm:* Client and Server\
 *Parameters:*
@@ -884,28 +901,6 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *scale* - The scale factor to apply to the player. A value of 1.5, for example, will make someone appear as 150% the size they normally would
 - *id* - The unique ID to use when tracking the cause of this player scale change. Used, specifically, for tracking movement speed changes
 - *skip_speed* - Whether to skip changing the player's movement speed
-
-**Randomat:SetSpeedMultiplier(ply, mult, key)** - Registers a speed multiplier for the local player. When called on the server, this is automatically synced to the client.\
-*Realm:* Client and Server\
-*Parameters:*
-- *ply* - The player getting the speed multiplier
-- *mult* - The speed multiplier to record
-- *key* - The unique key for the speed multiplier. Used to remove the multiplier later
-
-**Randomat:SetSpeedMultiplier_WithWeapon(ply, mult, key, wep_class)** - Registers a speed multiplier for the local player that only takes effect when they have a specific weapon equipped. When called on the server, this is automatically synced to the client.\
-*Realm:* Client and Server\
-*Parameters:*
-- *ply* - The player getting the speed multiplier
-- *mult* - The speed multiplier to record
-- *key* - The unique key for the speed multiplier. Used to remove the multiplier later
-- *wep_class* - The weapon class the local player must have equipped for the speed multiplier to be in effect
-
-**Randomat:SetSpeedMultiplier_Sprinting(ply, mult, key)** - Registers a speed multiplier for when the local player is sprinting. When called on the server, this is automatically synced to the client.\
-*Realm:* Client and Server\
-*Parameters:*
-- *ply* - The player getting the speed multiplier
-- *mult* - The speed multiplier to record
-- *key* - The unique key for the speed multiplier. Used to remove the multiplier later
 
 **Randomat:SendChatToAll(msg, tbl)** - Sends the message to all players in the given `tbl` (or all players if `tbl` is `nil`).\
 *Realm:* Client and Server\

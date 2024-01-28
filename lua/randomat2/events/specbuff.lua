@@ -88,7 +88,10 @@ function EVENT:Begin()
             timers[timer_id] = true
 
             local speed_id = "RdmtSpecBuffFastSpeed_" .. ply_sid .. "_" .. target_sid
-            Randomat:SetSpeedMultiplier(target, fast_factor, speed_id)
+            net.Start("RdmtSetSpeedMultiplier")
+            net.WriteFloat(fast_factor)
+            net.WriteString(speed_id)
+            net.Send(target)
 
             if not fast_players[target_sid] then
                 fast_players[target_sid] = 0
@@ -97,7 +100,9 @@ function EVENT:Begin()
 
             timer.Create(timer_id, fast_timer, 1, function()
                 timer.Remove(timer_id)
-                Randomat:RemoveSpeedMultiplier(target, speed_id)
+                net.Start("RdmtRemoveSpeedMultiplier")
+                net.WriteString(speed_id)
+                net.Send(target)
 
                 fast_players[target_sid] = fast_players[target_sid] - 1
             end)
@@ -111,7 +116,10 @@ function EVENT:Begin()
             timers[timer_id] = true
 
             local speed_id = "RdmtSpecBuffSlowSpeed_" .. ply_sid .. "_" .. target_sid
-            Randomat:SetSpeedMultiplier(target, slow_factor, speed_id)
+            net.Start("RdmtSetSpeedMultiplier")
+            net.WriteFloat(slow_factor)
+            net.WriteString(speed_id)
+            net.Send(target)
 
             if not slow_players[target_sid] then
                 slow_players[target_sid] = 0
@@ -120,7 +128,9 @@ function EVENT:Begin()
 
             timer.Create(timer_id, slow_timer, 1, function()
                 timer.Remove(timer_id)
-                Randomat:RemoveSpeedMultiplier(target, speed_id)
+                net.Start("RdmtRemoveSpeedMultiplier")
+                net.WriteString(speed_id)
+                net.Send(target)
 
                 slow_players[target_sid] = slow_players[target_sid] - 1
             end)
@@ -208,9 +218,9 @@ function EVENT:End()
     net.Start("RdmtSpecBuffEnd")
     net.Broadcast()
 
-    for _, v in ipairs(player.GetAll()) do
-        Randomat:RemoveSpeedMultiplier(v, "RdmtSpecBuff")
-    end
+    net.Start("RdmtRemoveSpeedMultipliers")
+    net.WriteString("RdmtSpecBuff")
+    net.Broadcast()
 end
 
 function EVENT:GetConVars()

@@ -436,9 +436,12 @@ if SERVER then
         -- If we don't want to adjust the player's speed, we're done here
         if skip_speed then return end
 
-        -- Reduce the player speed
+        -- Reduce the player speed on the client
         local speed_factor = math.Clamp(ply:GetStepSize() / 9, 0.25, 1)
-        Randomat:SetSpeedMultiplier(ply, speed_factor, "Rdmt" .. id .. "Speed")
+        net.Start("RdmtSetSpeedMultiplier")
+        net.WriteFloat(speed_factor)
+        net.WriteString("Rdmt" .. id .. "Speed")
+        net.Send(ply)
     end
 
     function Randomat:ResetPlayerScale(ply, id)
@@ -471,8 +474,10 @@ if SERVER then
         ply:ResetHull()
         ply:SetStepSize(18)
 
-        -- Reset the player speed
-        Randomat:RemoveSpeedMultiplier(ply, "Rdmt" .. id .. "Speed")
+        -- Reset the player speed on the client
+        net.Start("RdmtRemoveSpeedMultiplier")
+        net.WriteString("Rdmt" .. id .. "Speed")
+        net.Send(ply)
     end
 end
 
@@ -503,191 +508,6 @@ function Randomat:IsPlayerInVehicle(ply)
     local class = parent:GetClass()
     return string.StartsWith(class, "prop_vehicle_"), parent
 end
-
--- Player Speed
-local current_mults = {}
-local current_mults_withweapon = {}
-local current_mults_sprinting = {}
-function Randomat:SetSpeedMultiplier(ply, mult, key)
-    if not current_mults[ply] then
-        current_mults[ply] = {}
-    end
-    current_mults[ply][key] = mult
-
-    if SERVER then
-        net.Start("RdmtSetSpeedMultiplier")
-        net.WriteFloat(mult)
-        net.WriteString(key)
-        net.Send(ply)
-    end
-end
-
-function Randomat:SetSpeedMultiplierWithWeapon(ply, mult, key, wep_class)
-    if not current_mults_withweapon[ply] then
-        current_mults_withweapon[ply] = {}
-    end
-    current_mults_withweapon[ply][key] = {
-        wep_class = wep_class,
-        mult = mult
-    }
-
-    if SERVER then
-        net.Start("RdmtSetSpeedMultiplier_WithWeapon")
-        net.WriteFloat(mult)
-        net.WriteString(key)
-        net.WriteString(wep_class)
-        net.Send(ply)
-    end
-end
-
-function Randomat:SetSpeedMultiplierWhileSprinting(ply, mult, key)
-    if not current_mults_sprinting[ply] then
-        current_mults_sprinting[ply] = {}
-    end
-    current_mults_sprinting[ply][key] = mult
-
-    if SERVER then
-        net.Start("RdmtSetSpeedMultiplier_Sprinting")
-        net.WriteFloat(mult)
-        net.WriteString(key)
-        net.Send(ply)
-    end
-end
-
-function Randomat:RemoveSpeedMultiplier(ply, key)
-    if current_mults[ply] then
-        current_mults[ply][key] = nil
-    end
-    if current_mults_withweapon[ply] then
-        current_mults_withweapon[ply][key] = nil
-    end
-    if current_mults_sprinting[ply] then
-        current_mults_sprinting[ply][key] = nil
-    end
-
-    if SERVER then
-        net.Start("RdmtRemoveSpeedMultiplier")
-        net.WriteString(key)
-        net.Send(ply)
-    end
-end
-
-function Randomat:RemoveSpeedMultipliers(ply, key)
-    for k, _ in pairs(current_mults[ply] or {}) do
-        if string.StartsWith(k, key) then
-            current_mults[ply][k] = nil
-        end
-    end
-    for k, _ in pairs(current_mults_withweapon[ply] or {}) do
-        if string.StartsWith(k, key) then
-            current_mults_withweapon[ply][k] = nil
-        end
-    end
-    for k, _ in pairs(current_mults_sprinting[ply] or {}) do
-        if string.StartsWith(k, key) then
-            current_mults_sprinting[ply][k] = nil
-        end
-    end
-
-    if SERVER then
-        net.Start("RdmtRemoveSpeedMultipliers")
-        net.WriteString(key)
-        net.Send(ply)
-    end
-end
-
-if CLIENT then
-    local localPlayer = nil
-    net.Receive("RdmtSetSpeedMultiplier", function()
-        -- Cache this
-        if not localPlayer then
-            localPlayer = LocalPlayer()
-        end
-
-        local mult = net.ReadFloat()
-        local key = net.ReadString()
-        Randomat:SetSpeedMultiplier(localPlayer, mult, key)
-    end)
-
-    net.Receive("RdmtSetSpeedMultiplier_WithWeapon", function()
-        -- Cache this
-        if not localPlayer then
-            localPlayer = LocalPlayer()
-        end
-
-        local mult = net.ReadFloat()
-        local key = net.ReadString()
-        local wep_class = net.ReadString()
-        Randomat:SetSpeedMultiplierWithWeapon(localPlayer, mult, key, wep_class)
-    end)
-
-    net.Receive("RdmtSetSpeedMultiplier_Sprinting", function()
-        -- Cache this
-        if not localPlayer then
-            localPlayer = LocalPlayer()
-        end
-
-        local mult = net.ReadFloat()
-        local key = net.ReadString()
-        Randomat:SetSpeedMultiplierWhileSprinting(localPlayer, mult, key)
-    end)
-
-    net.Receive("RdmtRemoveSpeedMultiplier", function()
-        -- Cache this
-        if not localPlayer then
-            localPlayer = LocalPlayer()
-        end
-
-        local key = net.ReadString()
-        Randomat:RemoveSpeedMultiplier(localPlayer, key)
-    end)
-
-    net.Receive("RdmtRemoveSpeedMultipliers", function()
-        -- Cache this
-        if not localPlayer then
-            localPlayer = LocalPlayer()
-        end
-
-        local key = net.ReadString()
-        Randomat:RemoveSpeedMultipliers(localPlayer, key)
-    end)
-end
-
-hook.Add("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults, sprinting)
-    if CLIENT and ply ~= LocalPlayer() then return end
-    if not ply:Alive() or ply:IsSpec() then return end
-
-    -- Apply all of these that are valid
-    if current_mults[ply] then
-        for _, m in pairs(current_mults[ply] or {}) do
-            if m ~= nil then
-                table.insert(mults, m)
-            end
-        end
-    end
-
-    -- Apply all of these that are valid when the player is sprinting
-    if sprinting and current_mults_sprinting[ply] then
-        for _, m in pairs(current_mults_sprinting) do
-            if m ~= nil then
-                table.insert(mults, m)
-            end
-        end
-    end
-
-    -- Apply all of these that are valid and have a weapon that matches the specific class
-    if current_mults_withweapon[ply] then
-        local wep = ply:GetActiveWeapon()
-        if IsValid(wep) then
-            local wep_class = wep:GetClass()
-            for _, m in pairs(current_mults_withweapon[ply]) do
-                if m ~= nil and wep_class == m.wep_class then
-                    table.insert(mults, m.mult)
-                end
-            end
-        end
-    end
-end)
 
 -- Round Functions
 

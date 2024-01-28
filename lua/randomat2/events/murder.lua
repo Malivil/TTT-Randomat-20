@@ -69,8 +69,12 @@ function EVENT:Begin()
                 self:StripBannedWeapons(v)
                 v:Give("weapon_ttt_randomatknife")
 
-                -- Increase the player speed
-                Randomat:SetSpeedMultiplierWithWeapon(v, speed_factor, "RdmtMurderSpeed", "weapon_ttt_randomatknife")
+                -- Increase the player speed on the client
+                net.Start("RdmtSetSpeedMultiplier_WithWeapon")
+                net.WriteFloat(speed_factor)
+                net.WriteString("RdmtMurderSpeed")
+                net.WriteString("weapon_ttt_randomatknife")
+                net.Send(v)
             end)
         -- Anyone else except Killers become Innocent
         elseif v:GetRole() ~= ROLE_KILLER then
@@ -146,10 +150,14 @@ function EVENT:End()
         v:SetNWInt("MurderWeaponsEquipped", 0)
         v:SetNWBool("RdmMurderRevolver", false)
         timer.Remove("RdmtBlindEndDelay_" .. v:Nick())
-        Randomat:RemoveSpeedMultiplier(v, "RdmtMurderSpeed")
     end
     net.Start("MurderEventActive")
     net.WriteBool(false)
+    net.Broadcast()
+
+    -- Reset the player speed on the client
+    net.Start("RdmtRemoveSpeedMultiplier")
+    net.WriteString("RdmtMurderSpeed")
     net.Broadcast()
 end
 

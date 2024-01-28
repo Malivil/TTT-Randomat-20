@@ -46,7 +46,10 @@ local function SpreadFlu(ply)
 
     -- Reduce the player speed on the client
     local speed_factor = GetConVar("randomat_flu_speed_factor"):GetFloat()
-    Randomat:SetSpeedMultiplier(ply, speed_factor, "RdmtFluSpeed")
+    net.Start("RdmtSetSpeedMultiplier")
+    net.WriteFloat(speed_factor)
+    net.WriteString("RdmtFluSpeed")
+    net.Send(ply)
 
     timer.Create(playername .. "RdmtFluSneezeTimer", interval, 0, function()
         local sneeze = math.random(sneezecount)
@@ -162,8 +165,12 @@ end
 function EVENT:End()
     for _, v in ipairs(player.GetAll()) do
         ClearPlayerData(v)
-        Randomat:RemoveSpeedMultiplier(v, "RdmtFluSpeed")
     end
+
+    -- Reset the player speed on the client
+    net.Start("RdmtRemoveSpeedMultiplier")
+    net.WriteString("RdmtFluSpeed")
+    net.Broadcast()
 end
 
 function EVENT:GetConVars()

@@ -147,3 +147,91 @@ net.Receive("alerteventtrigger", function()
     net.WriteString(role_string)
     net.SendToServer()
 end)
+
+-- Player Speed
+local current_mults = {}
+local current_mults_withweapon = {}
+local current_mults_sprinting = {}
+net.Receive("RdmtSetSpeedMultiplier", function()
+    local mult = net.ReadFloat()
+    local key = net.ReadString()
+    current_mults[key] = mult
+end)
+
+net.Receive("RdmtSetSpeedMultiplier_WithWeapon", function()
+    local mult = net.ReadFloat()
+    local key = net.ReadString()
+    local wep_class = net.ReadString()
+    current_mults_withweapon[key] = {
+        wep_class = wep_class,
+        mult = mult
+    }
+end)
+
+net.Receive("RdmtSetSpeedMultiplier_Sprinting", function()
+    local mult = net.ReadFloat()
+    local key = net.ReadString()
+    current_mults_sprinting[key] = mult
+end)
+
+net.Receive("RdmtRemoveSpeedMultiplier", function()
+    local key = net.ReadString()
+    current_mults[key] = nil
+    current_mults_withweapon[key] = nil
+    current_mults_sprinting[key] = nil
+end)
+
+net.Receive("RdmtRemoveSpeedMultipliers", function()
+    local key = net.ReadString()
+    for k, _ in pairs(current_mults) do
+        if string.StartsWith(k, key) then
+            current_mults[k] = nil
+        end
+    end
+    for k, _ in pairs(current_mults_withweapon) do
+        if string.StartsWith(k, key) then
+            current_mults_withweapon[k] = nil
+        end
+    end
+    for k, _ in pairs(current_mults_sprinting) do
+        if string.StartsWith(k, key) then
+            current_mults_sprinting[k] = nil
+        end
+    end
+end)
+
+local localPlayer = nil
+hook.Add("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults, sprinting)
+    -- Cache this
+    if not localPlayer then
+        localPlayer = LocalPlayer()
+    end
+    if ply ~= localPlayer or not ply:Alive() or ply:IsSpec() then return end
+
+    -- Apply all of these that are valid
+    for _, m in pairs(current_mults) do
+        if m ~= nil then
+            table.insert(mults, m)
+        end
+    end
+
+    -- Apply all of these that are valid when the player is sprinting
+    if sprinting then
+        for _, m in pairs(current_mults_sprinting) do
+            if m ~= nil then
+                table.insert(mults, m)
+            end
+        end
+    end
+
+    -- Apply all of these that are valid and have a weapon that matches the specific class
+    local wep = ply:GetActiveWeapon()
+    if IsValid(wep) then
+        local wep_class = wep:GetClass()
+        for _, m in pairs(current_mults_withweapon) do
+            if m ~= nil and wep_class == m.wep_class then
+                table.insert(mults, m.mult)
+            end
+        end
+    end
+end)
