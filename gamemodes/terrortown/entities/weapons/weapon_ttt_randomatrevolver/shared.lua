@@ -36,8 +36,7 @@ SWEP.AmmoEnt = "none"
 SWEP.AllowDrop = false
 SWEP.IsSilent = false
 SWEP.NoSights = false
-
-local LastOwner = 0
+SWEP.ForceReload = true
 
 function SWEP:PrimaryAttack(worldsnd)
     self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
@@ -51,17 +50,15 @@ function SWEP:PrimaryAttack(worldsnd)
 
     self:ShootBullet(self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone())
 
-    LastOwner = self:GetOwner()
-    if not IsValid(LastOwner) or LastOwner:IsNPC() or (not LastOwner.ViewPunch) then return end
+    local owner = self:GetOwner()
+    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
-    LastOwner:ViewPunch(Angle(util.SharedRandom(self:GetClass(), -0.2, -0.1, 0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),  -0.1, 0.1, 1) * self.Primary.Recoil, 0))
+    owner:ViewPunch(Angle(util.SharedRandom(self:GetClass(), -0.2, -0.1, 0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),  -0.1, 0.1, 1) * self.Primary.Recoil, 0))
 
-    timer.Create("RandomatRevolverReload", 0.5, 1, function()
-        if IsPlayer(LastOwner) and LastOwner:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" then
-            local owner = self:GetOwner()
-            if IsPlayer(owner) then
-                owner:GetViewModel():SetPlaybackRate(0.5)
-            end
+    if not self.ForceReload then return end
+    timer.Create("RandomatRevolverReload_" .. self:EntIndex(), 0.5, 1, function()
+        if IsPlayer(owner) and owner:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" then
+            owner:GetViewModel():SetPlaybackRate(0.5)
         end
         self:SendWeaponAnim(self.ReloadAnim)
         self:SetIronsights(false)
