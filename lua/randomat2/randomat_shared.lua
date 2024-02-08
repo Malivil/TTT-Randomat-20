@@ -350,6 +350,17 @@ end
 
 if SERVER then
     function Randomat:RemoveEquipmentItem(ply, item_id)
+        -- Use the new method if it exists
+        if ply.RemoveEquipmentItem then
+            if ply:HasEquipmentItem(item_id) then
+                ply:RemoveEquipmentItem(item_id)
+                -- Give the player enough credits to compensate for the equipment they can no longer use
+                ply:AddCredits(1)
+                return true
+            end
+            return false
+        end
+
         -- Keep track of what equipment the player had
         local i = 1
         local equip = {}
