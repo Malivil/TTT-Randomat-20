@@ -15,6 +15,7 @@ local function SetSpectatorValues(p)
     p:SpectateEntity(nil)
     p:SetPos(pos)
     p:SetEyeAngles(ang)
+    PROPSPEC.Clear(p)
 end
 
 local engineSound = Sound("NPC_Manhack.EngineSound1")
