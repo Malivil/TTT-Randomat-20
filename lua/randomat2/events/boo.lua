@@ -47,6 +47,8 @@ function EVENT:Begin()
 
                 -- Make the target drop their weapon
                 target:DropWeapon()
+                -- Reset FOV to unscope
+                target:SetFOV(0, 0.2)
 
                 -- Create and deploy ghost
                 local ghost = ents.Create("npc_kleiner")
