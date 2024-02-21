@@ -31,7 +31,7 @@ end
 
 function EVENT:Condition()
     -- Don't allow this if there is no Clown enabled
-    if ROLE_CLOWN == -1 or not GetConVar("ttt_clown_enabled"):GetBool() then
+    if not Randomat:CanRoleSpawn(ROLE_CLOWN) then
         return false
     end
 

@@ -114,14 +114,10 @@ local function AddRoleStrings(target, roles, messages)
 
     for r, tr in pairs(roles) do
         if tr then
-            local rs = (ROLE_STRINGS_RAW and ROLE_STRINGS_RAW[r]) or ROLE_STRINGS[r]
-            if rs then
-                local convar = "ttt_" .. rs .. "_enabled"
-                if ConVarExists(convar) and GetConVar(convar):GetBool() then
-                    for _, tmpl in ipairs(messages) do
-                        local message = string.Replace(tmpl, "{ROLE}", ROLE_STRINGS[r])
-                        table.insert(target, message)
-                    end
+            if Randomat:CanRoleSpawn(r) then
+                for _, tmpl in ipairs(messages) do
+                    local message = string.Replace(tmpl, "{ROLE}", ROLE_STRINGS[r])
+                    table.insert(target, message)
                 end
             end
         end
@@ -145,13 +141,13 @@ function EVENT:Begin()
         first_time = false
 
         -- Only include these if they target roles are enabled
-        if ConVarExists("ttt_swapper_enabled") and GetConVar("ttt_swapper_enabled"):GetBool() then
+        if Randomat:CanRoleSpawn(ROLE_SWAPPER) then
             table.insert(mid_tmpl, "i think %PLAYER% is a {swapper}")
         end
-        if ConVarExists("ttt_deputy_enabled") and GetConVar("ttt_deputy_enabled"):GetBool() then
+        if Randomat:CanRoleSpawn(ROLE_DEPUTY) then
             table.insert(mid_tmpl, "i think %PLAYER% is the {deputy}, kill them before they get promoted")
         end
-        if ConVarExists("ttt_impersonator_enabled") and GetConVar("ttt_impersonator_enabled"):GetBool() then
+        if Randomat:CanRoleSpawn(ROLE_IMPERSONATOR) then
             table.insert(mid_tmpl, "{im} {impersonator}, please kill {detective}")
         end
 

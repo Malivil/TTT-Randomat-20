@@ -13,7 +13,7 @@ EVENT.id = "upgrade"
 EVENT.Categories = {"rolechange", "biased_innocent", "biased", "moderateimpact"}
 
 local function CanChooseRole()
-    return ConVarExists("ttt_killer_enabled") and GetConVar("ttt_killer_enabled"):GetBool() and GetConVar("randomat_upgrade_chooserole"):GetBool()
+    return Randomat:CanRoleSpawn(ROLE_KILLER) and GetConVar("randomat_upgrade_chooserole"):GetBool()
 end
 
 local function GetEventDescription()
@@ -78,7 +78,7 @@ end
 
 function EVENT:Condition()
     -- Don't allow this if Mercenary is disabled
-    if ConVarExists("ttt_mercenary_enabled") and not GetConVar("ttt_mercenary_enabled"):GetBool() then
+    if Randomat:CanRoleSpawn(ROLE_MERCENARY) then
         return false
     end
 

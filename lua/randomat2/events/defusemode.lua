@@ -17,7 +17,7 @@ function EVENT:Begin()
     local new_traitors = {}
     -- Use the sapper instead of the Detective if Sapper is enabled and they can see C4
     local detective_role = ROLE_DETECTIVE
-    if ConVarExists("ttt_sapper_enabled") and GetConVar("ttt_sapper_enabled"):GetBool() and GetConVar("ttt_sapper_can_see_c4"):GetBool() then
+    if Randomat:CanRoleSpawn(ROLE_SAPPER) and GetConVar("ttt_sapper_can_see_c4"):GetBool() then
         detective_role = ROLE_SAPPER
     end
     for _, p in ipairs(player.GetAll()) do

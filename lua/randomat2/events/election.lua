@@ -332,8 +332,7 @@ function EVENT:SwearIn(winner)
                 for r = 0, ROLE_MAX do
                     -- Don't make them another jester and if there is already an independent, don't choose one of those either
                     if not JESTER_ROLES[r] and (not hasIndependent or not INDEPENDENT_ROLES[r]) then
-                        local rolestring = ROLE_STRINGS_RAW[r]
-                        if DEFAULT_ROLES[r] or GetConVar("ttt_" .. rolestring .. "_enabled"):GetBool() then
+                        if Randomat:CanRoleSpawn(r) then
                             table.insert(roles, r)
                         end
                     end

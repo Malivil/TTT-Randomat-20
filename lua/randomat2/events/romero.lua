@@ -68,7 +68,7 @@ function EVENT:Begin(target)
 end
 
 function EVENT:Condition()
-    if not ConVarExists("ttt_zombie_enabled") or not GetConVar("ttt_zombie_enabled"):GetBool() then
+    if not Randomat:CanRoleSpawn(ROLE_ZOMBIE) then
         return false
     end
 

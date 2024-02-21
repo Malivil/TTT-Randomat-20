@@ -388,6 +388,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *can_run* - `true` if the event can be started, `false` otherwise
 - *failure_reason* - If `can_run` is `false`, this will be a string representing the reason for the failure
 
+**Randomat:CanRoleSpawn(role)** - Whether the given role can spawn.\
+*Realm:* Client and Server\
+*Parameters:*
+- *role* - The role to check
+
+*Returns:* `true` if the role can spawn, `false` otherwise
+
 **Randomat:CanUseShop(ply)** - Whether the given player can open the shop.\
 *Realm:* Client and Server\
 *Parameters:*

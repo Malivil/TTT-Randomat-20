@@ -30,7 +30,7 @@ end
 
 function EVENT:Condition()
     -- Don't allow this if there is no Glitch enabled
-    if ROLE_GLITCH == -1 or not GetConVar("ttt_glitch_enabled"):GetBool() then
+    if not Randomat:CanRoleSpawn(ROLE_GLITCH) then
         return false
     end
 

@@ -98,6 +98,25 @@ end
 
 -- Role Functions
 
+function Randomat:CanRoleSpawn(role)
+    if not role or role == -1 then return false end
+
+    if util.CanRoleSpawn then
+        return util.CanRoleSpawn(role)
+    end
+
+    if role == ROLE_DETECTIVE or role == ROLE_INNOCENT or role == ROLE_TRAITOR then
+        return true
+    end
+
+    if ROLE_STRINGS_RAW or ROLE_STRINGS then
+        local cvar = "ttt_" .. (ROLE_STRINGS_RAW[role] or ROLE_STRINGS[role]) .. "_enabled"
+        return ConVarExists(cvar) and GetConVar(cvar):GetBool()
+    end
+
+    return false
+end
+
 function Randomat:IsDetectiveLike(ply)
     if ply.IsDetectiveLike then return ply:IsDetectiveLike() end
     local role = ply:GetRole()

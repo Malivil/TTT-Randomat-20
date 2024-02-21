@@ -36,8 +36,7 @@ end
 
 function EVENT:Condition()
     -- Make sure the Impersonator or Detraitor exists
-    local evil_exists = (ROLE_IMPERSONATOR ~= -1 and GetConVar("ttt_impersonator_enabled"):GetBool()) or
-                            (ROLE_DETRAITOR ~= -1 and GetConVar("ttt_detraitor_enabled"):GetBool())
+    local evil_exists = Randomat:CanRoleSpawn(ROLE_IMPERSONATOR) or Randomat:CanRoleSpawn(ROLE_DETRAITOR)
     if not evil_exists then
         return false
     end

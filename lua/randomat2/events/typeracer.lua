@@ -200,11 +200,10 @@ function EVENT:Begin()
     -- Only add to the values arrays the first time
     if table.Count(bucketed_values) == 0 then
         -- Add all the role names
-        if ROLE_STRINGS and ROLE_STRINGS_RAW and DEFAULT_ROLES then
+        if ROLE_STRINGS then
             for i, r in ipairs(ROLE_STRINGS) do
                 -- Only include default or enabled roles
-                local rolestring = ROLE_STRINGS_RAW[i]
-                if DEFAULT_ROLES[i] or GetConVar("ttt_" .. rolestring .. "_enabled"):GetBool() then
+                if Randomat:CanRoleSpawn(i) then
                     table.insert(values, r:lower())
                 end
             end

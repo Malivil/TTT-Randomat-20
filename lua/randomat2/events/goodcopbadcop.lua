@@ -57,8 +57,8 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
-    local deputy_enabled = ConVarExists("ttt_deputy_enabled") and GetConVar("ttt_deputy_enabled"):GetBool()
-    local impersonator_enabled = ConVarExists("ttt_impersonator_enabled") and GetConVar("ttt_impersonator_enabled"):GetBool()
+    local deputy_enabled = Randomat:CanRoleSpawn(ROLE_DEPUTY)
+    local impersonator_enabled = Randomat:CanRoleSpawn(ROLE_IMPERSONATOR)
 
     -- If one of the roles isn't enabled, don't allow this event
     if not deputy_enabled or not impersonator_enabled then
