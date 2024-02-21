@@ -79,8 +79,12 @@ function EVENT:Begin()
                         TriggerAlert(i, player_name, i, p)
                         found_connies = true
                     end
+                    if CRVersion and CRVersion("2.1.2") then
+                        i = i + 1
                     -- Double the index since this is a bit-mask
-                    i = i * 2
+                    else
+                        i = i * 2
+                    end
                 end
             end
         end
