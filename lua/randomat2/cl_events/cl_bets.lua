@@ -20,10 +20,12 @@ net.Receive("RdmtHedgeBetsBegin", function()
     list:AddColumn("Players")
 
     for _, v in ipairs(player.GetAll()) do
-        -- Exclude spectators and yourself
-        if v ~= ply and v:GetRole() ~= ROLE_NONE then
-            list:AddLine(v:Nick())
-        end
+        -- Skip spectators who weren't in this round
+        if (not v:Alive() or v:IsSpec()) and v:GetRole() == ROLE_NONE then continue end
+        -- Skip yourself
+        if v == ply then continue end
+
+        list:AddLine(v:Nick(), 0)
     end
 
     list.OnRowSelected = function(lst, index, pnl)

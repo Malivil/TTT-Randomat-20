@@ -19,9 +19,9 @@ net.Receive("ReverseDemocracyEventBegin", function()
 
     for _, v in ipairs(player.GetAll()) do
         -- Skip spectators who weren't in this round
-        if v:GetRole() ~= ROLE_NONE then
-            list:AddLine(v:Nick(), 0)
-        end
+        if (not v:Alive() or v:IsSpec()) and v:GetRole() == ROLE_NONE then continue end
+
+        list:AddLine(v:Nick(), 0)
     end
 
     list:OnRequestResize(playerColumn, 125)
