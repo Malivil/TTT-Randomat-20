@@ -59,6 +59,27 @@ function EVENT:End()
     net.Broadcast()
 end
 
+function EVENT:Condition()
+    if not ROLE_BODYSNATCHER or ROLE_BODYSNATCHER == -1 then return true end
+
+    local hardmode = GetConVar("randomat_opposite_hardmode"):GetBool()
+    if hardmode then
+        -- Swap Mode 2 swaps positions and crouching
+        -- If hardmode is enabled I don't want to figure out to get that logic to work with other keys
+        local bodysnatcher_swap_mode = cvars.Number("ttt_bodysnatcher_swap_mode", 0)
+        if bodysnatcher_swap_mode < 2 then return true end
+
+        -- If it is enabled, don't run this event if we have a bodysnatcher
+        for _, v in ipairs(player.GetAll()) do
+            if v:GetRole() == ROLE_BODYSNATCHER then
+                return false
+            end
+        end
+    end
+
+    return true
+end
+
 function EVENT:GetConVars()
     local checks = {}
     for _, v in ipairs({"hardmode"}) do
