@@ -1,5 +1,5 @@
 net.Receive("RdmtOurSecretHaloStart", function()
-    local target = net.ReadEntity()
+    local target = net.ReadPlayer()
 
     hook.Add("PreDrawHalos", "RdmtOurSecretHighlight", function()
         if not IsValid(target) or not target:Alive() or target:IsSpec() then return end

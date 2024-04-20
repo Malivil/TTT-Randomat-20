@@ -229,7 +229,7 @@ net.Receive("PumpYouUpPlayerVoted", function(ln, ply)
 
         net.Start("PumpYouUpSetTarget")
             net.WriteBool(IsPlayer(target))
-            net.WriteEntity(target)
+            net.WritePlayer(target)
         net.Broadcast()
     end
 end)

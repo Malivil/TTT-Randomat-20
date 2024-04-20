@@ -64,11 +64,11 @@ function EVENT:Begin()
 
         if highlight then
             net.Start("RdmtStickWithMeHighlightAdd")
-            net.WriteEntity(ply2[i])
+            net.WritePlayer(ply2[i])
             net.Send(ply1[i])
 
             net.Start("RdmtStickWithMeHighlightAdd")
-            net.WriteEntity(ply1[i])
+            net.WritePlayer(ply1[i])
             net.Send(ply2[i])
         end
     end

@@ -57,7 +57,7 @@ net.Receive("PumpYouUpEventBegin", function()
         if net.ReadBool() then
             target = nil
         else
-            target = net.ReadEntity()
+            target = net.ReadPlayer()
         end
     end)
 

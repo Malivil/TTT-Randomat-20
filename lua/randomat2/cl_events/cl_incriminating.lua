@@ -1,5 +1,5 @@
 net.Receive("RdmtIncriminatingMessage", function()
     local message = net.ReadString()
-    local target = net.ReadEntity()
+    local target = net.ReadPlayer()
     chat.AddText(target, COLOR_WHITE, ": ", message)
 end)

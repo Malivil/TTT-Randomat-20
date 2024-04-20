@@ -9,7 +9,7 @@ net.Receive("RandomatRunForYourLifeStart", function()
         if stamina < last_stamina and (last_hurt_time + delay) < CurTime() then
             last_hurt_time = CurTime()
             net.Start("RandomatRunForYourLifeDamage")
-            net.WriteEntity(ply)
+            net.WritePlayer(ply)
             net.WriteFloat(last_hurt_time)
             net.SendToServer()
         end

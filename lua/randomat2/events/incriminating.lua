@@ -75,7 +75,7 @@ table.insert(weapons_options, "c4")
 local function SendMessage(message, target)
     net.Start("RdmtIncriminatingMessage")
     net.WriteString(message)
-    net.WriteEntity(target)
+    net.WritePlayer(target)
     net.Send(GetPlayerFilter(function(p) return p ~= target end))
 end
 

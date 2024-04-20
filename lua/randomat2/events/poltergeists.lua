@@ -31,7 +31,7 @@ function EVENT:Begin()
     -- It requires this back-and-forth because only the client knows when it's fully loaded
     -- and only the server knows if the event is running already.
     net.Receive("RdmtPoltergeistsClientReady", function()
-        local ply = net.ReadEntity()
+        local ply = net.ReadPlayer()
         net.Start("RdmtPoltergeistsBegin")
         net.Send(ply)
     end)

@@ -83,11 +83,11 @@ function EVENT:Begin()
 
             -- Enable halo for both players
             net.Start("RdmtOurSecretHaloStart")
-            net.WriteEntity(player2)
+            net.WritePlayer(player2)
             net.Send(player1)
 
             net.Start("RdmtOurSecretHaloStart")
-            net.WriteEntity(player1)
+            net.WritePlayer(player1)
             net.Send(player2)
 
             -- Disable the halo for both players after a certain amount of time
