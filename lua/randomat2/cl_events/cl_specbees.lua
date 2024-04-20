@@ -6,7 +6,7 @@ net.Receive("RdmtSpecBeesBegin", function()
     end)
 
     hook.Add("Think", "RdmtSpecBeesThink", function()
-        for _, e in ipairs(ents.GetAll()) do
+        for _, e in ents.Iterator() do
             if e:GetNWBool("RdmtSpecBee", false) then
                 e:SetNotSolid(true)
             end

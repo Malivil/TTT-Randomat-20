@@ -9,9 +9,8 @@ EVENT.SingleUse = false
 EVENT.Categories = {"entityspawn", "smallimpact"}
 
 function EVENT:Begin()
-    local all_entities = ents.GetAll()
     local spawns = {}
-    for _, e in ipairs(all_entities) do
+    for _, e in ents.Iterator() do
         local entity_class = e:GetClass()
         if (string.StartsWith(entity_class, "info_") or string.StartsWith(entity_class, "weapon_") or string.StartsWith(entity_class, "item_")) and not IsValid(e:GetParent()) then
             table.insert(spawns, e)

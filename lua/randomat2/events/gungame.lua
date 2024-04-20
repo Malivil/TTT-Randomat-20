@@ -10,7 +10,7 @@ CreateConVar("randomat_gungame_timer", 5, {FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Time be
 
 function EVENT:Begin()
     local weps = {}
-    for _, ent in ipairs(ents.GetAll()) do
+    for _, ent in ents.Iterator() do
         if ent.Base == "weapon_tttbase" and ent.AutoSpawnable then
             ent:Remove()
         end

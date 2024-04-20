@@ -41,7 +41,7 @@ function EVENT:Begin()
     local players = #self:GetAlivePlayers()
     local wepspawns = 0
 
-    for _, v in ipairs(ents.GetAll()) do
+    for _, v in ents.Iterator() do
         if v.Base == "weapon_tttbase" and v.AutoSpawnable then
             wepspawns = wepspawns+1
         end
