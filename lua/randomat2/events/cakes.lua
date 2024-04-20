@@ -16,7 +16,7 @@ EVENT.Categories = {"entityspawn", "moderateimpact"}
 
 local function TriggerCakes()
     local plys = {}
-    for k, ply in ipairs(player.GetAll()) do
+    for k, ply in player.Iterator() do
         if not ply:IsSpec() then
             plys[k] = ply
         end
@@ -53,7 +53,7 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtCakeSpawnTimer")
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         timer.Remove(ply:GetName() .. "RdmtCakeDamageTimer")
     end
 end

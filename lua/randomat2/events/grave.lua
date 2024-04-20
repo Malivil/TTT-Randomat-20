@@ -82,7 +82,7 @@ function EVENT:Begin(filter_class)
 end
 
 function EVENT:End()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         timer.Remove(v:SteamID64() .. "RdmtZombieTimer")
     end
 end
@@ -90,7 +90,7 @@ end
 function EVENT:Condition()
     -- Don't do zombies if there is a Mad Scientist because that just makes their job too easy
     if ConVarExists("ttt_madscientist_enabled") then
-        for _, p in ipairs(player.GetAll()) do
+        for _, p in player.Iterator() do
             if p:GetRole() == ROLE_MADSCIENTIST then
                 return false
             end

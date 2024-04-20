@@ -87,7 +87,7 @@ function EVENT:End()
     net.Start("RdmtTRexVisionEnd")
     net.Broadcast()
 
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         SetPlayerVisible(p)
         timer.Remove("RdmtTRexVisionRevealTimer_" .. p:Nick())
     end
@@ -97,7 +97,7 @@ function EVENT:Condition()
     -- Don't run this event if there are zombies because it makes their role basically impossible
     -- Don't both running the check if zombies don't exist though
     if ROLE_ZOMBIE ~= -1 then
-        for _, v in ipairs(player.GetAll()) do
+        for _, v in player.Iterator() do
             if v:GetRole() == ROLE_ZOMBIE then
                 return false
             end

@@ -25,7 +25,7 @@ function EVENT:Begin()
     end)
 
     local plys = {}
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         plys[v:GetName()] = v
     end
 

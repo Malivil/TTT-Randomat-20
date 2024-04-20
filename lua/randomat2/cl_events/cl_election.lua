@@ -15,7 +15,7 @@ net.Receive("ElectionNominateBegin", function()
     local playerColumn = listView:AddColumn("Players")
     listView:AddColumn("Votes")
 
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         -- Don't allow dead people, spectators, and detective-like players to get nominated
         if v:Alive() and not v:IsSpec() and not Randomat:IsDetectiveLike(v) then
             listView:AddLine(v:Nick(), 0)

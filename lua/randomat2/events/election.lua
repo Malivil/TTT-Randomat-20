@@ -502,7 +502,7 @@ function EVENT:SwearIn(winner)
 end
 
 function EVENT:Begin()
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in player.Iterator() do
         if not (v:Alive() and v:IsSpec()) then
             votableplayers[k] = v
             playervotes[v:Nick()] = 0
@@ -571,7 +571,7 @@ local function HandleVote(ply, message)
 
             if GetConVar("randomat_election_show_votes"):GetBool() then
                 local anon = GetConVar("randomat_election_show_votes_anon"):GetBool()
-                for _, va in ipairs(player.GetAll()) do
+                for _, va in player.Iterator() do
                     local name
                     if anon then
                         name = "Someone"

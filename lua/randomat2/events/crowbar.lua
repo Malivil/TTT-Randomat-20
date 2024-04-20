@@ -18,7 +18,7 @@ function EVENT:Begin()
     RunConsoleCommand("ttt_crowbar_pushforce", current_push * GetConVar("randomat_crowbar_push"):GetFloat())
 
     local damage = GetConVar("randomat_crowbar_damage"):GetFloat()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         for _, wep in ipairs(v:GetWeapons()) do
             if wep:GetClass() == "weapon_zm_improvised" then
                 if wep.Primary.OriginalDamage == nil then
@@ -34,7 +34,7 @@ function EVENT:End()
     if original_push ~= nil then
         RunConsoleCommand("ttt_crowbar_pushforce", original_push)
     end
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         for _, wep in ipairs(v:GetWeapons()) do
             if wep:GetClass() == "weapon_zm_improvised" and wep.Primary.OriginalDamage ~= nil then
                 wep.Primary.Damage = wep.Primary.OriginalDamage

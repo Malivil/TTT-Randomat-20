@@ -20,7 +20,7 @@ function EVENT:Begin()
     if Randomat:CanRoleSpawn(ROLE_SAPPER) and GetConVar("ttt_sapper_can_see_c4"):GetBool() then
         detective_role = ROLE_SAPPER
     end
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         -- Keep track of which players are joining the traitors
         local changing_teams = Randomat:IsMonsterTeam(p)
         if changing_teams then

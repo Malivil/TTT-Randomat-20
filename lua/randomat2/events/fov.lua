@@ -21,7 +21,7 @@ function EVENT:Begin()
     local scale = GetConVar("randomat_fov_scale"):GetFloat()
     local scaleIronsight = GetConVar("randomat_fov_scale_ironsight"):GetFloat()
     local originalFOV = {}
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         if PlayerInIronsights(v) then
             v:GetActiveWeapon():SetIronsights(false)
             v:SetFOV(0, 0)
@@ -31,7 +31,7 @@ function EVENT:Begin()
     net.Broadcast()
 
     timer.Create("RandomatFOVTimer", 0.1, 0, function()
-        for _, v in ipairs(player.GetAll()) do
+        for _, v in player.Iterator() do
             if v:Alive() and not v:IsSpec() then
                 local fovScale
                 if PlayerInIronsights(v) then
@@ -55,7 +55,7 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatFOVTimer")
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         v:SetFOV(0, 0)
     end
 end

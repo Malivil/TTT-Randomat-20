@@ -146,7 +146,7 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatMurderTimer")
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         v:SetNWInt("MurderWeaponsEquipped", 0)
         v:SetNWBool("RdmMurderRevolver", false)
         timer.Remove("RdmtBlindEndDelay_" .. v:Nick())

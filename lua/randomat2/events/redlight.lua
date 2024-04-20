@@ -38,7 +38,7 @@ function EVENT:Begin()
         local color = "Red"
         if isgreen then
             color = "Green"
-            for _, p in ipairs(player.GetAll()) do
+            for _, p in player.Iterator() do
                 timer.Remove("RdmtRedLightDamageTimer_" .. p:SteamID64())
             end
         end
@@ -89,7 +89,7 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtRedLightTimer")
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         timer.Remove("RdmtRedLightDamageTimer_" .. p:SteamID64())
     end
 end

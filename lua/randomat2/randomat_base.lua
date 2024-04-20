@@ -63,6 +63,7 @@ local EntsCreate = ents.Create
 local EntsFindByClass = ents.FindByClass
 local GetAllPlayers = player.GetAll
 local GetAllEnts = ents.GetAll
+local PlayerIterator = player.Iterator
 
 local COLOR_BLANK = Color(0, 0, 0, 0)
 
@@ -238,7 +239,7 @@ local function TriggerEvent(event, ply, options, ...)
             Randomat:SmallNotify(event.Description, nil, nil, false, true)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
-            for _, p in ipairs(GetAllPlayers()) do
+            for _, p in PlayerIterator() do
                 Randomat:ChatDescription(p, event, has_description)
             end
         end
@@ -698,7 +699,7 @@ function Randomat:GetPlayers(shuffle, alive_only, dead_only, dead_includes_spec)
     if alive_only == dead_only then
         plys = GetAllPlayers()
     else
-        for _, ply in ipairs(GetAllPlayers()) do
+        for _, ply in PlayerIterator() do
             if IsValid(ply) and
             -- Anybody
             ((not alive_only and not dead_only) or
@@ -1309,7 +1310,7 @@ function randomat_meta:SetAllPlayerScales(scale)
 end
 
 function randomat_meta:ResetAllPlayerScales()
-    for _, ply in ipairs(GetAllPlayers()) do
+    for _, ply in PlayerIterator() do
         Randomat:ResetPlayerScale(ply, self.Id)
     end
 
@@ -1321,7 +1322,7 @@ function randomat_meta:AddCullingBypass(ply_pred, tgt_pred)
         if ply.ShouldBypassCulling and not ply:ShouldBypassCulling() then return end
         if ply_pred and not ply_pred(ply) then return end
 
-        for _, v in ipairs(GetAllPlayers()) do
+        for _, v in PlayerIterator() do
             if tgt_pred and not tgt_pred(ply, v) then continue end
             if ply:TestPVS(v) then continue end
 

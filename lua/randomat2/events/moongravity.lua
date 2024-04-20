@@ -27,7 +27,7 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatMoonGravityTimer")
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         ply:SetGravity(1)
     end
 end

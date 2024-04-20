@@ -21,7 +21,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         timer.Remove("RdmtTotalMayhemDelay" .. p:Nick())
     end
 end

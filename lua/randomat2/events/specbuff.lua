@@ -44,7 +44,7 @@ function EVENT:Begin()
     timers = {}
     slow_players = {}
     fast_players = {}
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         p:SetNWInt("RdmtSpecBuffPower", 0)
         if not p:Alive() or p:IsSpec() then
             net.Start("RdmtSpecBuffBegin")

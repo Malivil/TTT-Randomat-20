@@ -9,7 +9,7 @@ CreateConVar("randomat_cantstop_disableback", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, 
 
 function EVENT:Begin()
     local plys = {}
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in player.Iterator() do
         plys[k] = v
     end
 
@@ -39,7 +39,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         v:ConCommand("-forward")
         v:ConCommand("-back")
     end

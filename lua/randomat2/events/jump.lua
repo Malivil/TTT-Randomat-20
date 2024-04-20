@@ -12,7 +12,7 @@ CreateConVar("randomat_jump_kill_blast_immune", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}
 local timerIds = {}
 
 function EVENT:Begin()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         v.rdmtJumps = 0
     end
 
@@ -41,7 +41,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         v.rdmtJumps = nil
     end
     for _, timerId in ipairs(timerIds) do

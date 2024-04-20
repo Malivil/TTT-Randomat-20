@@ -74,7 +74,7 @@ function EVENT:Condition()
 
     local vanilla_innocent = 0
     local innocent = 0
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         -- Don't run if there is already a Loot Goblin this round
         if p:IsLootGoblin() then
             return false

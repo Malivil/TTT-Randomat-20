@@ -11,7 +11,7 @@ EVENT.Categories = {"moderateimpact"}
 
 local function TriggerBarrels()
     local plys = {}
-    for k, ply in ipairs(player.GetAll()) do
+    for k, ply in player.Iterator() do
         if not ply:IsSpec() then
             plys[k] = ply
         end

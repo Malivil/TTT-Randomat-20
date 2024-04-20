@@ -24,7 +24,7 @@ function EVENT:Begin()
         end
 
         -- Tell everyone what's happening
-        for _, p in ipairs(player.GetAll()) do
+        for _, p in player.Iterator() do
             p:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] One of these events has been started:")
             for _, e in ipairs(chosen) do
                 local has_description = e.Description ~= nil and #e.Description > 0

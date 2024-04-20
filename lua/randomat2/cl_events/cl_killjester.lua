@@ -4,7 +4,7 @@ net.Receive("RdmtKillJesterBegin", function()
         if wintype ~= WIN_TRAITOR then return end
 
         local jester_alive = false
-        for _, p in ipairs(player.GetAll()) do
+        for _, p in player.Iterator() do
             if p:Alive() and not p:IsSpec() and p:GetRole() == ROLE_JESTER then
                 jester_alive = true
                 break

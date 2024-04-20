@@ -70,7 +70,7 @@ end
 
 function EVENT:End()
     timer.Remove("RandomatScoutsOnlyTimer")
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         ply:SetGravity(1)
         ply:Give("weapon_ttt_unarmed")
         ply:Give("weapon_zm_carry")

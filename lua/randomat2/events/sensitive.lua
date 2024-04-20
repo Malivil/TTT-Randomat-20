@@ -22,7 +22,7 @@ function EVENT:Begin()
     local min = GetConVar("randomat_sensitive_scale_min"):GetInt()
     local max = GetConVar("randomat_sensitive_scale_max"):GetInt()
     timer.Create("RdmtSensitivityChangeTimer", interval, 0, function()
-        for _, v in ipairs(player.GetAll()) do
+        for _, v in player.Iterator() do
             local sensitivity = 0
             if v:Alive() and not v:IsSpec() then
                 sensitivity = math.random(min, max) / 100
@@ -42,7 +42,7 @@ function EVENT:End()
     timer.Remove("RdmtSensitivityChangeTimer")
     -- Added in cl_sensitive
     hook.Remove("AdjustMouseSensitivity", "RdmtSensitiveChangeHook")
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         SetSensitivity(v, 0)
     end
 end

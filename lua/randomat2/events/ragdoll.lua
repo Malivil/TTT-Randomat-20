@@ -233,7 +233,7 @@ function EVENT:Begin()
     net.Start("RdmtRagdollBegin")
     net.Broadcast()
 
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         v.inRagdoll = false
         v.lastRagdoll = nil
     end
@@ -272,7 +272,7 @@ function EVENT:Begin()
         if not IsValid(ent) or ent:GetClass() ~= "prop_ragdoll" then return end
         -- Skip crush damage. This is to prevent taking damage just by turning into a ragdoll
         if dmg:IsDamageType(DMG_CRUSH) then return end
-        for _, v in ipairs(player.GetAll()) do
+        for _, v in player.Iterator() do
             for _, j in ipairs(ent:GetChildren()) do
                 if j == v then
                     v.spawnInfo.health = v.spawnInfo.health - dmg:GetDamage()
@@ -288,7 +288,7 @@ function EVENT:End()
     net.Start("RdmtRagdollEnd")
     net.Broadcast()
 
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         if v.inRagdoll then
             unragdollPlayer(v)
         end

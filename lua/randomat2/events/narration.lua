@@ -113,7 +113,7 @@ end
 function EVENT:Begin()
     net.Start("TriggerNarration")
     net.Broadcast()
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
             Randomat:OverrideWeaponSound(wep, chosen_sound)
@@ -174,7 +174,7 @@ function EVENT:End()
     net.Start("EndNarration")
     net.Broadcast()
     timer.Remove("NarrationDelay")
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             Randomat:RestoreWeaponSound(wep)
         end

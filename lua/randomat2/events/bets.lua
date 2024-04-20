@@ -131,7 +131,7 @@ net.Receive("RdmtHedgeBetsPlayerBet", function(ln, ply)
 
     local bet_name = net.ReadString()
     local bet_sid = nil
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         if v:Nick() == bet_name then
             bet_sid = v:SteamID64()
             break

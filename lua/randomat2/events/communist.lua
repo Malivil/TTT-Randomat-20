@@ -38,7 +38,7 @@ function EVENT:Begin()
         end
         TriggerAlert(item, role_name, is_item, ply)
 
-        for _, p in ipairs(player.GetAll()) do
+        for _, p in player.Iterator() do
             if p ~= ply then
                 if is_item then
                     p:GiveEquipmentItem(tonumber(item))

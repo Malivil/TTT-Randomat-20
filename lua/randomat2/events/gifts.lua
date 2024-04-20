@@ -59,7 +59,7 @@ function EVENT:Begin()
         table.insert(blocklist, blocked_id:Trim())
     end
 
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         p:SetNWInt("RdmtDeadGiftPower", 0)
         p:SetNWBool("RdmtDeadGiftSent", false)
         if not p:Alive() or p:IsSpec() then

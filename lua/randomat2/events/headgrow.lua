@@ -47,7 +47,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         p.HeadScale = 0
         ScalePlayerHead(p, 1)
     end

@@ -168,7 +168,7 @@ function EVENT:End()
     timer.Remove("RdmtReverseDemocracyRespawnTimer")
     net.Start("ReverseDemocracyEventEnd")
     net.Broadcast()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         v:SetNWBool("RdmtReverseDemocracySaved", false)
     end
 end

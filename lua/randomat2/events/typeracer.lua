@@ -210,7 +210,7 @@ function EVENT:Begin()
         end
 
         -- Add all player names without special characters
-        for _, p in ipairs(player.GetAll()) do
+        for _, p in player.Iterator() do
             local nick = p:Nick():lower()
             if not nick:match("%W") then
                 table.insert(values, nick)

@@ -15,7 +15,7 @@ local sosig_sound = "weapons/sosig.mp3"
 function EVENT:Begin()
     net.Start("TriggerSosig")
     net.Broadcast()
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             Randomat:OverrideWeaponSound(wep, sosig_sound)
         end
@@ -38,7 +38,7 @@ function EVENT:End()
     net.Start("EndSosig")
     net.Broadcast()
     timer.Remove("SosigDelay")
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             Randomat:RestoreWeaponSound(wep)
         end

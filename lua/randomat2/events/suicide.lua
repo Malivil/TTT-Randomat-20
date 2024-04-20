@@ -50,7 +50,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         timer.Remove("RandomatDetTimer_" .. v:SteamID64())
     end
 end

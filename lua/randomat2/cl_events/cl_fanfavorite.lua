@@ -17,7 +17,7 @@ net.Receive("FanFavoriteEventBegin", function()
     local playerColumn = list:AddColumn("Players")
     list:AddColumn("Votes")
 
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         -- Skip spectators who weren't in this round
         if (not v:Alive() or v:IsSpec()) and v:GetRole() == ROLE_NONE then continue end
 

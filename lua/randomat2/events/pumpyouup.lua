@@ -57,7 +57,7 @@ function EVENT:Begin()
     votableplayers = {}
     playersvoted = {}
 
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in player.Iterator() do
         votableplayers[k] = v
         playervotes[k] = 0
     end

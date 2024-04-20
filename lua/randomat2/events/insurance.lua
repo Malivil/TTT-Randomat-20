@@ -54,7 +54,7 @@ end
 
 function EVENT:End()
     -- Reset the damage recorded in case this runs again
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         p.insuranceDamageTaken = nil
     end
 end

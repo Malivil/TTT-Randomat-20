@@ -136,7 +136,7 @@ function EVENT:End()
         ClearPlayerData(k)
     end
 
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         timer.Remove("RandomatStickWithMePairTimer_" .. v:SteamID64())
     end
 end

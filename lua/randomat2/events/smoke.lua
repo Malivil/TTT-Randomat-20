@@ -17,7 +17,7 @@ EVENT.Categories = {"spectator", "moderateimpact"}
 local timers = {}
 function EVENT:Begin()
     timers = {}
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         p:SetNWInt("RdmtSmokeSignalsPower", 0)
         if not p:Alive() or p:IsSpec() then
             net.Start("RdmtSmokeSignalsBegin")

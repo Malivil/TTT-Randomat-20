@@ -19,7 +19,7 @@ net.Receive("PumpYouUpEventBegin", function()
     local playerColumn = list:AddColumn("Players")
     list:AddColumn("Votes")
 
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         list:AddLine(v:Nick(), 0)
     end
 

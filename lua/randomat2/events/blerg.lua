@@ -191,7 +191,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, p in pairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         timer.Remove("RdmtBlergRespawnTimer_" .. p:SteamID64())
         timer.Remove("RdmtBlergWeaponTimer_" .. p:SteamID64())
     end

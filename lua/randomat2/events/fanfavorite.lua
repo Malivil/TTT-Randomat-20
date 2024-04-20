@@ -36,7 +36,7 @@ function EVENT:Begin()
     local skipres = 0
     local resedply = 0
 
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in player.Iterator() do
         if not v:Alive() or v:IsSpec() then
             votableplayers[k] = v
             playervotes[k] = 0

@@ -106,7 +106,7 @@ function EVENT:End()
             DestroyBee(b)
         end
     end
-    for _, p in pairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         timer.Remove("RdmtSpecBeesStart_" .. p:SteamID64())
     end
 

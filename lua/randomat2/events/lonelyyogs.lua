@@ -28,7 +28,7 @@ function EVENT:Begin()
     end)
 
     local plys = {}
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         plys[v:SteamID64()] = v
     end
 
@@ -82,7 +82,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, v in ipairs(player.GetAll()) do
+    for _, v in player.Iterator() do
         ClearPlayerData(v:SteamID64())
     end
 end

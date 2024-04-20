@@ -321,7 +321,7 @@ function EVENT:End()
         RunConsoleCommand(k, v)
     end
 
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         timer.Remove(ply:GetName() .. "RandomatPropHuntMessageTimer")
         timer.Remove(ply:GetName() .. "RandomatPropHuntRespawnTimer")
         timer.Remove(ply:GetName() .. "RandomatPropHuntCreditTimer")

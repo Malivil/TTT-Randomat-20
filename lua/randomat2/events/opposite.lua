@@ -52,7 +52,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         p:SetLadderClimbSpeed(200)
     end
     net.Start("OppositeDayEnd")
@@ -70,7 +70,7 @@ function EVENT:Condition()
         if bodysnatcher_swap_mode < 2 then return true end
 
         -- If it is enabled, don't run this event if we have a bodysnatcher
-        for _, v in ipairs(player.GetAll()) do
+        for _, v in player.Iterator() do
             if v:GetRole() == ROLE_BODYSNATCHER then
                 return false
             end

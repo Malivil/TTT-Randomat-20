@@ -9,7 +9,7 @@ EVENT.Categories = {"fun", "smallimpact"}
 
 local function ScalePlayerHeads(mult)
     local scale = Vector(mult, mult, mult)
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         local boneId = p:LookupBone("ValveBiped.Bip01_Head1")
         if boneId ~= nil then
             p:ManipulateBoneScale(boneId, scale)

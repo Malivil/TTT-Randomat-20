@@ -7,7 +7,7 @@ EVENT.Categories = {"moderateimpact"}
 
 function EVENT:Begin()
     timer.Create("GiveCredsTimer", 0, 0, function()
-        for _, ply in ipairs(player.GetAll()) do
+        for _, ply in player.Iterator() do
             ply:SetCredits(10)
         end
     end)

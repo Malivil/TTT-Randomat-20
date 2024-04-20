@@ -21,7 +21,7 @@ function EVENT:Begin()
         end
     end
     timer.Create("RdmtWeaponShuffle", GetConVar("randomat_gungame_timer"):GetInt(), 0, function()
-        for _, v in ipairs(player.GetAll()) do
+        for _, v in player.Iterator() do
             local ac = false
             if v:GetActiveWeapon().Kind == WEAPON_HEAVY or v:GetActiveWeapon().Kind == WEAPON_PISTOL then
                 ac = true

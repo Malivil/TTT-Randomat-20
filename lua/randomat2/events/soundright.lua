@@ -64,7 +64,7 @@ function EVENT:Begin()
         end
     end
 
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             SetRandomWeaponSound(ply, wep)
         end
@@ -95,7 +95,7 @@ function EVENT:End()
     net.Start("RdmtSoundRightEnd")
     net.Broadcast()
     timer.Remove("SoundRightDelay")
-    for _, ply in ipairs(player.GetAll()) do
+    for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             Randomat:RestoreWeaponSound(wep)
         end

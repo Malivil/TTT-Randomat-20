@@ -40,7 +40,7 @@ function EVENT:End()
     net.Start("RdmtGaseousEnd")
     net.Broadcast()
 
-    for _, p in ipairs(player.GetAll()) do
+    for _, p in player.Iterator() do
         Randomat:SetPlayerVisible(p)
     end
 
