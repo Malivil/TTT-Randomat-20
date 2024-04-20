@@ -79,6 +79,16 @@ function EVENT:Begin(filter_class)
             end
         end)
     end)
+
+    self:AddHook("TTTStopPlayerRespawning", function(ply)
+        if not IsPlayer(ply) then return end
+        if ply:Alive() then return end
+
+        if Randomat:IsZombifying(ply) then
+            timer.Remove(ply:SteamID64() .. "RdmtZombieTimer")
+            ply:SetNWBool("IsZombifying", false)
+        end
+    end)
 end
 
 function EVENT:End()
