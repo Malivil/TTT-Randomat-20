@@ -48,7 +48,7 @@ end
 
 net.Receive("ChooseEventTrigger", function()
     local x = net.ReadInt(32)
-    local tbl = net.ReadTable()
+    local tbl = net.ReadTable(true)
     local frame = openFrame(x)
 
     --Event List
@@ -72,7 +72,7 @@ end)
 
 net.Receive("ChooseVoteTrigger", function()
     local x = net.ReadInt(32)
-    local tbl = net.ReadTable()
+    local tbl = net.ReadTable(true)
     local frame = openFrame(x, true)
 
     --Event List

@@ -104,7 +104,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices, choice_list)
     if vote then
         net.Start("ChooseVoteTrigger")
         net.WriteInt(choices, 32)
-        net.WriteTable(EventChoices)
+        net.WriteTable(EventChoices, true)
         if type(vote_predicate) == "function" then
             net.Send(GetPlayerFilter(vote_predicate))
         else
@@ -132,7 +132,7 @@ function EVENT:Begin(vote, dead_can_vote, vote_predicate, choices, choice_list)
     else
         net.Start("ChooseEventTrigger")
         net.WriteInt(choices, 32)
-        net.WriteTable(EventChoices)
+        net.WriteTable(EventChoices, true)
         net.Send(owner)
 
         if limitchoosetime then

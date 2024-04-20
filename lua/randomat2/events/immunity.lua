@@ -41,7 +41,7 @@ function EVENT:Begin()
     end
 
     net.Start("RdmtHerdImmunityBegin")
-    net.WriteTable(options)
+    net.WriteTable(options, true)
     net.Broadcast()
 
     local immunity = nil

@@ -98,7 +98,7 @@ function EVENT:Begin()
                         local jestermode = GetConVar("randomat_democracy_jestermode"):GetInt()
                         if jestermode == 2 then
                             net.Start("DemocracyJesterRevenge")
-                            net.WriteTable(jestervoters)
+                            net.WriteTable(jestervoters, true)
                             net.Send(slainply)
                         else
                             local voter = nil

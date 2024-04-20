@@ -72,7 +72,7 @@ net.Receive("DemocracyJesterRevenge", function()
     plylist:SetMultiSelect(false)
     plylist:AddColumn("Players")
 
-    local voters = net.ReadTable()
+    local voters = net.ReadTable(true)
     for _, v in ipairs(voters) do
         if v:Alive() and not v:IsSpec() then
             plylist:AddLine(v:Nick())

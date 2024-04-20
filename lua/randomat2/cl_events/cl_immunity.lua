@@ -17,7 +17,7 @@ net.Receive("RdmtHerdImmunityBegin", function()
     local typeColumn = list:AddColumn("Type")
     list:AddColumn("Votes")
 
-    local options = net.ReadTable()
+    local options = net.ReadTable(true)
     for _, v in ipairs(options) do
         list:AddLine(v, 0)
     end
