@@ -47,7 +47,7 @@ function EVENT:Begin()
 
                 -- Start the target smoking
                 net.Start("RdmtSmokeSignalsAdd")
-                net.WriteString(target:SteamID64())
+                net.WriteUInt64(target:SteamID64())
                 net.Broadcast()
 
                 -- Keep track of the smoke timer
@@ -57,7 +57,7 @@ function EVENT:Begin()
                 -- Remove smoke after the timer
                 timer.Create(id, time, 1, function()
                     net.Start("RdmtSmokeSignalsRemove")
-                    net.WriteString(target:SteamID64())
+                    net.WriteUInt64(target:SteamID64())
                     net.Broadcast()
                 end)
             end

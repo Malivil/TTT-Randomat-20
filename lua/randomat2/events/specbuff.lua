@@ -144,7 +144,7 @@ function EVENT:Begin()
             timers[timer_id] = true
 
             net.Start("RdmtSpecBuffHealStart")
-            net.WriteString(target:SteamID64())
+            net.WriteUInt64(target:SteamID64())
             net.Broadcast()
 
             timer.Create(timer_id, 1, heal_amount, function()
@@ -161,7 +161,7 @@ function EVENT:Begin()
                 timer.Remove(timer_id)
                 timer.Remove(timer_id .. "_Smoke")
                 net.Start("RdmtSpecBuffHealEnd")
-                net.WriteString(target:SteamID64())
+                net.WriteUInt64(target:SteamID64())
                 net.Broadcast()
             end)
 

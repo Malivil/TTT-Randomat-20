@@ -77,11 +77,11 @@ net.Receive("RdmtSpecBuffBegin", function()
 end)
 
 net.Receive("RdmtSpecBuffHealStart", function()
-    healing[net.ReadString()] = true
+    healing[net.ReadUInt64()] = true
 end)
 
 net.Receive("RdmtSpecBuffHealEnd", function()
-    healing[net.ReadString()] = false
+    healing[net.ReadUInt64()] = false
 end)
 
 net.Receive("RdmtSpecBuffEnd", function()

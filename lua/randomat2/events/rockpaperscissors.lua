@@ -70,17 +70,17 @@ function EVENT:Begin()
     net.Send(ply2)
 
     net.Receive("RdmtPlayerChoseRock", function()
-        local steam64 = net.ReadString()
+        local steam64 = net.ReadUInt64()
         self:HandleRound(steam64, CHOSEN_ROCK)
     end)
 
     net.Receive("RdmtPlayerChosePaper", function()
-        local steam64 = net.ReadString()
+        local steam64 = net.ReadUInt64()
         self:HandleRound(steam64, CHOSEN_PAPER)
     end)
 
     net.Receive("RdmtPlayerChoseScissors", function()
-        local steam64 = net.ReadString()
+        local steam64 = net.ReadUInt64()
         self:HandleRound(steam64, CHOSEN_SCISSORS)
     end)
 

@@ -31,11 +31,11 @@ net.Receive("RdmtSmokeSignalsBegin", function()
 end)
 
 net.Receive("RdmtSmokeSignalsAdd", function()
-    smokers[net.ReadString()] = true
+    smokers[net.ReadUInt64()] = true
 end)
 
 net.Receive("RdmtSmokeSignalsRemove", function()
-    smokers[net.ReadString()] = false
+    smokers[net.ReadUInt64()] = false
 end)
 
 net.Receive("RdmtSmokeSignalsEnd", function()
