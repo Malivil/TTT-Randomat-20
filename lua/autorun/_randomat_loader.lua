@@ -23,10 +23,7 @@ local auto = CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE, 
 CreateConVar("ttt_randomat_allow_client_list", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Whether to allow the client to view the list of active events.")
 
 if SERVER then
-    resource.AddSingleFile("materials/icon16/rdmt.png")
-    resource.AddSingleFile("materials/icon32/copy.png")
-    resource.AddSingleFile("materials/icon32/cut.png")
-    resource.AddSingleFile("materials/icon32/stones.png")
+    resource.AddWorkshop("2055805086")
 
     concommand.Add("ttt_randomat_disableall", function(ply, cc, arg)
         for _, v in pairs(Randomat.Events) do

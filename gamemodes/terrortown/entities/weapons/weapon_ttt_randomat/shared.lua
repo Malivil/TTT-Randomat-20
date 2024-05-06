@@ -1,6 +1,5 @@
 if SERVER then
     AddCSLuaFile()
-    resource.AddFile("materials/VGUI/ttt/icon_randomat.vmt")
     util.AddNetworkString("TTT_ResetBuyableWeaponsCache")
 end
 
