@@ -28,8 +28,8 @@ _ttt_randomat_event_hint_ - Default: 1 - Whether the Randomat should print what 
 _ttt_randomat_event_hint_chat_ - Default: 1 - Whether hints should also be put in chat.\
 _ttt_randomat_event_history_ - Default: 10 - How many events should be kept in history. Events in history will are ignored when searching for a random event to start.\
 _ttt_randomat_allow_client_list_ - Default: 1 - Whether to allow the clients to have the "Active Events" label and list available.\
-_ttt_randomat_always_silently_trigger_ - Default: "" - Specify an event ID to always trigger that event silently at the start of each round. E.g. "moongravity" for the "What? Moon gravity on Earth?" randomat\
-_ttt_randomat_event_hint_chat_hidden_ - Default: 1 - Whether the hidden events that triggered during a round should be displayed in chat at round end
+_ttt_randomat_always_silently_trigger_ - Default: "" - Specify an event ID to always trigger that event silently at the start of each round. E.g. "moongravity" for the "What? Moon gravity on Earth?" randomat.\
+_ttt_randomat_event_hint_chat_secret_ - Default: 0 - Whether the secret events that triggered during a round should be displayed in chat at round end.
 
 # Client ConVars
 *NOTE*: These are manageable in the Randomat tab of the F1 menu.\
