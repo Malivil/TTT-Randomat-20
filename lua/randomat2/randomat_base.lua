@@ -277,11 +277,11 @@ local function TriggerEvent(event, ply, options, ...)
     -- Getting info for printing the names and descriptions of hidden randomats in chat if enabled
     if GetConVar("ttt_randomat_event_hint_chat_hidden"):GetBool() and should_hide then
         local msg = title
-        
+
         if event.Description ~= nil and #event.Description > 0 then
             msg = msg .. " | " .. event.Description
         end
-        
+
         table.insert(hidden_event_chat_msgs, msg)
     end
 
