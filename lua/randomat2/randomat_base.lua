@@ -200,20 +200,19 @@ local function EndEvent(evt)
     net.Broadcast()
 end
 
--- Prints the names of any hidden events that triggered to chat at the end of the round
-local hidden_event_chat_msgs = {}
+-- Prints the names of any secret events that triggered to chat at the end of the round
+local secret_event_chat_msgs = {}
+local function PrintSecretEventsList()
+    if #secret_event_chat_msgs > 0 then
+        PrintMessage(HUD_PRINTTALK, "[RANDOMAT] Secret events this round:")
 
-hook.Add("TTTEndRound", "RandomatHiddenEventChatHint", function()
-    if not table.IsEmpty(hidden_event_chat_msgs) then
-        PrintMessage(HUD_PRINTTALK, "[RANDOMAT] Hidden events this round:")
-
-        for _, msg in ipairs(hidden_event_chat_msgs) do
+        for _, msg in ipairs(secret_event_chat_msgs) do
             PrintMessage(HUD_PRINTTALK, msg)
         end
 
-        table.Empty(hidden_event_chat_msgs)
+        table.Empty(secret_event_chat_msgs)
     end
-end)
+end
 
 local function TriggerEvent(event, ply, options, ...)
     options = options or {}
@@ -275,14 +274,12 @@ local function TriggerEvent(event, ply, options, ...)
     net.Broadcast()
 
     -- Getting info for printing the names and descriptions of hidden randomats in chat if enabled
-    if GetConVar("ttt_randomat_event_hint_chat_hidden"):GetBool() and should_hide then
+    if GetConVar("ttt_randomat_event_hint_chat_secret"):GetBool() and should_hide then
         local msg = title
-
         if event.Description ~= nil and #event.Description > 0 then
             msg = msg .. " | " .. event.Description
         end
-
-        table.insert(hidden_event_chat_msgs, msg)
+        table.insert(secret_event_chat_msgs, msg)
     end
 
     -- Let other addons know that an event was started
@@ -1512,6 +1509,7 @@ end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
 hook.Add("TTTEndRound", "RandomatEndRound", function()
     Randomat:EndActiveEvents()
+    PrintSecretEventsList()
 end)
 hook.Add("TTTPrepareRound", "RandomatPrepareRound", function()
     -- End ALL events rather than just active ones to prevent some event effects which maintain over map changes
