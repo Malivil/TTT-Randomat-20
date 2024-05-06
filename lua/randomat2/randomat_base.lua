@@ -200,6 +200,21 @@ local function EndEvent(evt)
     net.Broadcast()
 end
 
+-- Prints the names of any hidden events that triggered to chat at the end of the round
+local hidden_event_chat_msgs = {}
+
+hook.Add("TTTEndRound", "RandomatHiddenEventChatHint", function()
+    if not table.IsEmpty(hidden_event_chat_msgs) then
+        PrintMessage(HUD_PRINTTALK, "[RANDOMAT] Hidden events this round:")
+
+        for _, msg in ipairs(hidden_event_chat_msgs) do
+            PrintMessage(HUD_PRINTTALK, msg)
+        end
+
+        table.Empty(hidden_event_chat_msgs)
+    end
+end)
+
 local function TriggerEvent(event, ply, options, ...)
     options = options or {}
 
@@ -258,6 +273,17 @@ local function TriggerEvent(event, ply, options, ...)
         net.WriteString(event.Description or "")
     end
     net.Broadcast()
+
+    -- Getting info for printing the names and descriptions of hidden randomats in chat if enabled
+    if GetConVar("ttt_randomat_event_hint_chat_hidden"):GetBool() and should_hide then
+        local msg = title
+        
+        if event.Description ~= nil and #event.Description > 0 then
+            msg = msg .. " | " .. event.Description
+        end
+        
+        table.insert(hidden_event_chat_msgs, msg)
+    end
 
     -- Let other addons know that an event was started
     CallHook("TTTRandomatTriggered", nil, event.Id, owner)
