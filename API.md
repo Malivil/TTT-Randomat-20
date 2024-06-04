@@ -96,7 +96,7 @@ All methods below are automatically defined for every event but events can overr
 
 *Returns:* A table of all living players
 
-**EVENT:GetConVars()** - Gets tables of the convars defined for an event. Used primarily by the Randomat 2.0 ULX module to dynamically create configuration pages for each event.\
+**EVENT:GetConVars()** - Gets tables of the convars defined for an event. Used primarily by the Randomat 2.0 ULX module to dynamically create configuration pages for each event. *NOTE*: All convars MUST be named in this format: `randomat_{EVENT ID}_{restofthename}` \
 *Realm:* Server
 
 *Returns:*
