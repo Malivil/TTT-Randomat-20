@@ -75,9 +75,9 @@ if SERVER then
                 end
             else
                 if silent then
-                    Randomat:SilentTriggerRandomEvent(nil)
+                    Randomat:SilentTriggerRandomEvent(nil, false)
                 else
-                    Randomat:TriggerRandomEvent(nil)
+                    Randomat:TriggerRandomEvent(nil, false)
                 end
             end
         end

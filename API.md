@@ -243,6 +243,9 @@ Properties used to define and describe an event and its running conditions
 **Owner (aka owner)** - The player who started this event.\
 *Realm:* Server
 
+**Selectable** - Whether this should be selectable by events trying to randomly trigger another event. Defaults to `true`.\
+*Realm:* Server
+
 **Silent** - Whether this event was started silently.\
 *Realm:* Server
 
@@ -369,7 +372,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *id* - The weapon class name (e.g., "weapon_ttt_knife") or item ID (e.g., EQUIP_ARMOR) that the player received
 - *ply* - The player who received the shop item
 
-**Randomat:CanEventRun(event, ignore_history)** - Determines whether the given event can start based on whether it conforms to the following conditions:
+**Randomat:CanEventRun(event, ignore_history, random_selection)** - Determines whether the given event can start based on whether it conforms to the following conditions:
 1. It exists
 1. It's `Enabled` method returns `true` (By default, this means whether the `ttt_randomat_{EVENT_ID}` convar is `1`)
 1. It's `Condition` method returns `true` (By default, this always returns `true`)
@@ -383,6 +386,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *event* - The event object or event ID to check
 - *ignore_history* - Whether to ignore the event history check
+- *random_selection* - Whether this is being checked as part of an event randomly choosing another event. Defaults to `true`.
 
 *Returns:*
 - *can_run* - `true` if the event can be started, `false` otherwise
@@ -531,12 +535,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* A table of the playermodel data
 
-**Randomat:GetRandomEvent(skip_history, can_run)** - Gets a random event that can be started.\
+**Randomat:GetRandomEvent(skip_history, can_run, random_selection)** - Gets a random event that can be started.\
 *Realm:* Server\
 *Parameters:*
 - *skip_history* - If `true`, the found event is not added to the history list
 - *can_run* - Optional predicate function which is used to determine if the event can run in addition to the normal `Randomat.CanEventRun` checks
   - *evt* - The event being checked
+- *random_selection* - Whether this is being checked as part of an event randomly choosing another event. Defaults to `true`.
 
 *Returns:* A random event that can be started
 
@@ -947,10 +952,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *reason* - A message explaining the reason why this event is hidden
 - *...* - All parameters that could be passed into this event. Allows you to change aspects of an event based on what code calls it
 
-**Randomat:SilentTriggerRandomEvent(ply)** - Triggers a random event without notifying the players.\
+**Randomat:SilentTriggerRandomEvent(ply, random_selection)** - Triggers a random event without notifying the players.\
 *Realm:* Server\
 *Parameters:*
 - *ply* - The player who caused this event to be started
+- *random_selection* - Whether this is being checked as part of an event randomly choosing another event. Defaults to `true`.
 
 **Randomat:SmallNotify(msg, length, target, silent, allow_secret, font_color)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
@@ -1005,10 +1011,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *reason* - A message explaining the reason why this event is hidden
 - *...* - All parameters that could be passed into this event. Allows you to change aspects of an event based on what code calls it
 
-**Randomat:TriggerRandomEvent(ply)** - Triggers a random event.\
+**Randomat:TriggerRandomEvent(ply, random_selection)** - Triggers a random event.\
 *Realm:* Server\
 *Parameters:*
 - *ply* - The player who caused this event to be started
+- *random_selection* - Whether this is being checked as part of an event randomly choosing another event. Defaults to `true`.
 
 **Randomat:unregister(id)** - Un-registers the event with the given ID, preventing it from being found or starting.\
 *Realm:* Server\

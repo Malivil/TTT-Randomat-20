@@ -52,7 +52,8 @@ Converts the Swapper to a Jester
 \
 _ttt_randomat_oldjester_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_oldjester_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_oldjester_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_oldjester_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_oldjester_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## A Glitch has been patched
 Changes a random Glitch into either an Innocent or a Traitor. There is a configurable chance that the player will be turned into an Innocent rather than a Traitor.
@@ -63,6 +64,7 @@ Changes a random Glitch into either an Innocent or a Traitor. There is a configu
 _ttt_randomat_patched_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_patched_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_patched_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_patched_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_patched_chance_ - Default: 50 - The chance of the Glitch being made a Traitor.
 
 ## A player is acting suspicious
@@ -74,6 +76,7 @@ Changes a random player to either a Jester or a Traitor. There is a configurable
 _ttt_randomat_suspicion_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_suspicion_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_suspicion_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_suspicion_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_suspicion_chance_ - Default: 50 - The chance of the player being a Jester.
 
 ## A power you can't learn from the Jedi
@@ -88,6 +91,7 @@ Cast your vote to save a player from dying one time. Vote will only happen once.
 _ttt_randomat_reversedemocracy_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_reversedemocracy_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_reversedemocracy_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_reversedemocracy_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_reversedemocracy_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_reversedemocracy_tiesaves_ - Default: 1 - Whether ties result in a coin toss; otherwise, nobody is saved.\
 _randomat_reversedemocracy_totalpct_ - Default: 50 - % of player votes needed for a vote to pass, set to 0 to disable.\
@@ -103,6 +107,7 @@ This one is pretty self-explanatory. Detraitors are also excluded from explosion
 _ttt_randomat_explode_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_explode_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_explode_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_explode_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_explode_timer_ - Default: 30 - The time between explosions.
 
 ## A traitor will explode in X seconds!
@@ -114,6 +119,7 @@ This one is pretty self-explanatory
 _ttt_randomat_texplode_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_texplode_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_texplode_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_texplode_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_texplode_timer_ - Default: 60 - The time before the traitor explodes.\
 _randomat_texplode_radius_ - Default: 600 - Radius of the traitor explosion.
 
@@ -126,6 +132,7 @@ A random vanilla innocent is upgraded to a Mercenary or is given the choice of b
 _ttt_randomat_upgrade_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_upgrade_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_upgrade_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_upgrade_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_upgrade_chooserole_ - Default: 1 - Whether the innocent should choose their new role.
 
 ## Bad Gas
@@ -137,6 +144,7 @@ Drops random grenades (from the enabled types) at random players' feet on a conf
 _ttt_randomat_gas_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_gas_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_gas_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_gas_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_gas_timer_ - Default: 15 - Changes the time between grenade drops.\
 _randomat_gas_affectall_ - Default: 0 - Set to 1 for the event to drop a grenade at everyone's feet on trigger.\
 _randomat_gas_discombob_ - Default: 1 - Whether discombobs drop.\
@@ -152,6 +160,7 @@ Causes any player who is off the ground (by jumping, falling, etc.) to turn into
 _ttt_randomat_ragdoll_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_ragdoll_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_ragdoll_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_ragdoll_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_ragdoll_time_ - Default: 1.5 - The time the player is ragdolled.\
 _randomat_ragdoll_delay_ - Default: 1.5 - The time between ragdolls.
 
@@ -164,6 +173,7 @@ Explodes barrels if a player gets too close and then spawns more
 _ttt_randomat_barrelinjustice_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_barrelinjustice_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_barrelinjustice_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_barrelinjustice_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_barrelinjustice_count_ - Default: 2 - Number of barrels spawned after one is exploded.\
 _randomat_barrelinjustice_range_ - Default: 100 - Minimum distance from the player for a barrel to explode
 
@@ -175,7 +185,8 @@ Randomly converts one vanilla Traitor to be a Glitch
 \
 _ttt_randomat_betrayed_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_betrayed_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_betrayed_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_betrayed_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_betrayed_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Big Head Mode
 Causes all players to have their heads grow to massive proportions.\
@@ -187,6 +198,7 @@ Causes all players to have their heads grow to massive proportions.\
 _ttt_randomat_bighead_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_bighead_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_bighead_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_bighead_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_bighead_scale_ - Default: 2 - Head size multiplier.
 
 ## Black Market Buyout
@@ -198,6 +210,7 @@ Disables Traitor and Detective shop, but periodically gives out free items from 
 _ttt_randomat_blackmarket_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blackmarket_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blackmarket_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_blackmarket_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_blackmarket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".\
 _randomat_blackmarket_timer_traitor_ - Default: 25 - How often (in seconds) traitors should get items.\
 _randomat_blackmarket_timer_detective_ - Default: 15 - How often (in seconds) detectives should get items.
@@ -216,6 +229,7 @@ Players respawn repeatedly unless killed during a brief window where they can't 
 _ttt_randomat_blerg_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blerg_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blerg_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_blerg_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_blerg_respawntimer_ - Default: 60 - Delay before dead players respawn.\
 _randomat_blerg_respawnlimit_ - Default: 3 - The maximum number of times a player can respawn.\
 _randomat_blerg_weapondelay_ - Default: 20 - Delay before respawned can use weapons.
@@ -229,6 +243,7 @@ Blinds all traitors for a configurable amount of seconds
 _ttt_randomat_blind_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blind_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blind_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_blind_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_blind_duration_ - Default: 15 - The duration the players should be blinded for.
 
 ## Bomberman
@@ -239,7 +254,8 @@ Spawns an explosive barrel behind a player when they crouch
 \
 _ttt_randomat_bomberman_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_bomberman_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_bomberman_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_bomberman_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_bomberman_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Boo!
 Allows dead players to scare their target and make them drop their weapon
@@ -250,6 +266,7 @@ Allows dead players to scare their target and make them drop their weapon
 _ttt_randomat_boo_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_boo_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_boo_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_boo_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_boo_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
 _randomat_boo_ghost_time_ - Default: 5 - How many seconds the ghost lasts.
 
@@ -262,6 +279,7 @@ Follow the colorful trails to find the other players
 _ttt_randomat_breadcrumbs_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_breadcrumbs_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_breadcrumbs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_breadcrumbs_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_breadcrumbs_start_width_ - Default: 30 - The trail's starting width.\
 _randomat_breadcrumbs_end_width_ - Default: 1 - The trail's ending width.\
 _randomat_breadcrumbs_fade_time_ - Default: 3 - How many seconds the trail should last.
@@ -274,7 +292,8 @@ Only headshots do damage
 \
 _ttt_randomat_bullseye_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_bullseye_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_bullseye_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_bullseye_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_bullseye_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Butterfingers
 Causes weapons to periodically slip out of players' hands
@@ -285,6 +304,7 @@ Causes weapons to periodically slip out of players' hands
 _ttt_randomat_butter_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_butter_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_butter_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_butter_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_butter_timer_ - Default: 10 - The time between each weapon drop.\
 _randomat_butter_affectall_ - Default: 0 -Whether to affect every player at once rather than just a single random player.
 
@@ -297,6 +317,7 @@ Sets any player that is camping (has not moved far enough in the configurable ti
 _ttt_randomat_campfire_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_campfire_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_campfire_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_campfire_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_campfire_timer_ - Default: 20 - Amount of time (in seconds) a player must camp before they are punished.\
 _randomat_campfire_distance_ - Default: 35 - The distance a player must move before they are considered not camping anymore.
 
@@ -309,6 +330,7 @@ Causes every player to constantly move forward
 _ttt_randomat_cantstop_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_cantstop_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_cantstop_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_cantstop_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_cantstop_disableback_ - Default: 1 - Whether the "s" key is disabled.
 
 ## Care Package
@@ -320,6 +342,7 @@ Spawns an ammo crate somewhere in the map that contains a free item from the var
 _ttt_randomat_package_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_package_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_package_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_package_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_package_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## Careful...
@@ -331,6 +354,7 @@ Set all Jesters and Swappers to a reduced (and configurable) amount of health.
 _ttt_randomat_careful_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_careful_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_careful_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_careful_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_careful_health_ - Default: 1 - Health to set Jester/Swapper to.
 
 ## Cause of Death
@@ -341,7 +365,8 @@ Display a player's cause of death on screen for everyone.
 \
 _ttt_randomat_causeofdeath_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_causeofdeath_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_causeofdeath_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_causeofdeath_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_causeofdeath_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Chamber Pop
 Weapons explode if you try to fire them while empty
@@ -352,6 +377,7 @@ Weapons explode if you try to fire them while empty
 _ttt_randomat_chamberpop_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_chamberpop_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_chamberpop_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_chamberpop_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_chamberpop_explosion_magnitude_ - Default: 150 - Weapon explosion magnitude.
 
 ## Choose an Event!
@@ -363,6 +389,7 @@ Presents random events to be chosen, either by a single player or by vote
 _ttt_randomat_choose_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_choose_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_choose_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_choose_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_choose_choices_ - Default: 3 - Number of events you can choose from.\
 _randomat_choose_vote_ - Default: 0 - Allows all players to vote on the event.\
 _randomat_choose_votetimer_ - Default: 10 - How long players have to vote on the event.\
@@ -379,7 +406,8 @@ Converts a Jester/Swapper to a Killer Clown
 \
 _ttt_randomat_clowninaround - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_clowninaround_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_clowninaround_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_clowninaround_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_clowninaround_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Come on and SLAM!
 Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the duration of the event. Will not trigger if there is a Jester or a Swapper since they cannot win during this event.
@@ -390,6 +418,7 @@ Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the dur
 _ttt_randomat_slam_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_slam_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_slam_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_slam_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_slam_timer_ - Default: 3 - Time between being given slams.\
 _randomat_slam_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_slam_weaponid_ - Default: weapon_ttt_slam - Id of the weapon given.
@@ -403,6 +432,7 @@ Whenever anyone buys a weapon from a shop, all other players get that weapon too
 _ttt_randomat_communist_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_communist_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_communist_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_communist_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_communist_show_roles_ - Default: 1 - Whether to show the role of the purchasing player.
 
 ## Compulsive Reloading
@@ -414,6 +444,7 @@ Slowly drains a user's ammo over time if they haven't fired recently.
 _ttt_randomat_reload_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_reload_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_reload_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_reload_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_reload_wait_time_ - Default: 5.0 - Seconds after last shot to wait before draining.\
 _randomat_reload_drain_time_ - Default: 2.0 - Seconds between each ammo drain.\
 _randomat_reload_keep_ammo_ - Default: 1 - Whether drained ammo is kept (1) or destroyed (0).\
@@ -428,6 +459,7 @@ Spawns a configurable number of hostile headcrabs when a player is killed
 _ttt_randomat_crabs_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_crabs_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_crabs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_crabs_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_crabs_count_ - Default: 5 - The amount of crabs spawned when someone dies.
 
 ## Daredevil
@@ -439,6 +471,7 @@ Scale a player's damage up the faster they move (including falling)
 _ttt_randomat_daredevil_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_daredevil_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_daredevil_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_daredevil_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_daredevil_min_damage_scale_ - Default: 1 - The minimum damage scale to use.\
 _randomat_daredevil_max_damage_scale_ - Default: 2.5 - The maximum damage scale to use.
 
@@ -450,7 +483,8 @@ Allows dead players to text chat with the living
 \
 _ttt_randomat_deadchat_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_deadchat_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_deadchat_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_deadchat_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_deadchat_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Dead Men Tell No Tales
 Prevents corpses from being searched
@@ -460,7 +494,8 @@ Prevents corpses from being searched
 \
 _ttt_randomat_search_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_search_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_search_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_search_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_search_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Delayed Reaction
 Delays damage done to players for the configured amount of time
@@ -471,6 +506,7 @@ Delays damage done to players for the configured amount of time
 _ttt_randomat_delayedreaction_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_delayedreaction_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_delayedreaction_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_delayedreaction_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_delayedreaction_time_ - Default: 5 - The time in seconds that damage should be delayed.
 
 ## Derptective
@@ -482,6 +518,7 @@ Forces the detective(s) and detraitor(s) to use the M249 H.U.G.E. with infinite 
 _ttt_randomat_derptective_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_derptective_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_derptective_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_derptective_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_derptective_rate_of_fire_ - Default: 2 - Rate of Fire multiplier for the H.U.G.E..
 
 ## Detraitor
@@ -492,7 +529,8 @@ The Detective has been corrupted and joined the Traitor team!
 \
 _ttt_randomat_detraitor_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_detraitor_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_detraitor_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_detraitor_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_detraitor_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Don't be so Sensitive
 Periodically changes each player's mouse sensitivity to a number within the configurable range
@@ -503,6 +541,7 @@ Periodically changes each player's mouse sensitivity to a number within the conf
 _ttt_randomat_sensitive_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_sensitive_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_sensitive_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_sensitive_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_sensitive_change_interval_ - Default: 15 - How often to change each player's sensitivity.\
 _randomat_sensitive_scale_min_ - Default: 25 - The minimum sensitivity to use.\
 _randomat_sensitive_scale_max_ - Default: 500 - The maximum sensitivity to use.
@@ -516,6 +555,7 @@ Spawns a configurable number of Weeping Angels, each attached to a different pla
 _ttt_randomat_blink_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_blink_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_blink_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_blink_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_blink_cap_ - Default: 12 - Maximum number of Weeping Angels spawned.\
 _randomat_blink_delay_ - Default: 0.5 - Delay before Weeping Angels are spawned.
 
@@ -528,6 +568,7 @@ Grows a player's head by a set amount each time they kill. Also grows by the sam
 _ttt_randomat_headgrow_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_headgrow_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_headgrow_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_headgrow_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_headgrow_max_ - Default: 2.5 - The maximum head size multiplier.\
 _randomat_headgrow_per_kill_ - Default: 0.25 - The head size increase per kill.\
 _randomat_headgrow_steal_ - Default: 1 - Whether to steal a player's head size on kill.
@@ -541,6 +582,7 @@ Changes a random vanilla Innocent into either a Glitch or a Traitor. There is a 
 _ttt_randomat_doublecross_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_doublecross_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_doublecross_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_doublecross_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_doublecross_chance_ - Default: 50 - The chance of the Innocent being made a Traitor.
 
 ## Double-Edged Sword
@@ -552,6 +594,7 @@ Reflects 1/2 of the damage you do back on yourself, but you also heal self-damag
 _ttt_randomat_doubleedge_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_doubleedge_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_doubleedge_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_doubleedge_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_doubleedge_interval_ - Default: 1 - How often (in seconds) to heal self-damage.\
 _randomat_doubleedge_amount_ - Default: 2 - How much self-damage to heal per interval.
 
@@ -563,7 +606,8 @@ Flips your view upside-down
 \
 _ttt_randomat_downunder_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_downunder_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_downunder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_downunder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_downunder_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Earthquake
 Moves all props, ammo, and weapons a random amount in a random direction.
@@ -574,6 +618,7 @@ Moves all props, ammo, and weapons a random amount in a random direction.
 _ttt_randomat_earthquake_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_earthquake_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_earthquake_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_earthquake_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_earthquake_blocklist_ - Default: - The comma-separated list of maps to not allow this map on. For example: "ttt_lego,gm_flatgrass".
 
 ## Election Day
@@ -600,6 +645,7 @@ If a member of the monster team (that doesn't have a specific rule above) wins, 
 _ttt_randomat_election_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_election_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_election_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_election_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_election_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_election_winner_credits_ - Default: 2 - The number of credits given as a reward, if appropriate.\
 _randomat_election_vamp_turn_innocents_ - Default: 0 - Whether Vampires turn innocents. Otherwise, turns traitors.\
@@ -617,6 +663,7 @@ Causes players who are shot to "dodge" out of the way of further bullets
 _ttt_randomat_evasive_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_evasive_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_evasive_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_evasive_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_evasive_force_ - Default: 2000 - Amount of force to push players with.\
 _randomat_evasive_jumping_force_ - Default: 1000 - Amount of force to push jumping players with.
 
@@ -629,6 +676,7 @@ Causes everything (movement, firing speed, timers, etc.) to run a configurable a
 _ttt_randomat_flash_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_flash_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_flash_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_flash_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_flash_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5)
 
 ## Fan Favorite
@@ -640,6 +688,7 @@ Cast your vote to resurrect a dead player
 _ttt_randomat_fanfavorite_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_fanfavorite_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_fanfavorite_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_fanfavorite_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_fanfavorite_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_fanfavorite_tiereses_ - Default: 1 - Whether ties result in a coin toss; otherwise, nobody is resurrected.\
 _randomat_fanfavorite_totalpct_ - Default: 50 - % of player votes needed for a vote to pass, set to 0 to disable.\
@@ -654,7 +703,8 @@ Shakes all props, weapons, and ammo on the map with increasing severity
 \
 _ttt_randomat_faultlines_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_faultlines_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_faultlines_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_faultlines_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_faultlines_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 _randomat_faultline_min_delay_ - Default: 20 - The minimum delay between quakes.\
 _randomat_faultline_severity_max_ - Default: 10 - The maximum severity the earthquakes will have.\
 _randomat_faultline_aftershocks_ - Default: 3 - The number of smaller quakes to happen after the peak.
@@ -667,7 +717,8 @@ Innocents win if they kill the jester, but traitors want them alive
 \
 _ttt_randomat_killjester_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_killjester_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_killjester_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_killjester_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_killjester_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Flip the Script
 Inverses everyone's health
@@ -677,7 +728,8 @@ Inverses everyone's health
 \
 _ttt_randomat_flipthescript_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_flipthescript_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_flipthescript_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_flipthescript_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_flipthescript_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Flu Season
 Randomly infects a player with the flu, causing them to sneeze occasionally. Also has a chance to spread to other players within a configurable distance
@@ -688,6 +740,7 @@ Randomly infects a player with the flu, causing them to sneeze occasionally. Als
 _ttt_randomat_flu_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_flu_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_flu_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_flu_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_flu_timer_ - Default: 1 - Time a player must be near someone before it spreads.\
 _randomat_flu_interval_ - Default: 10 - How often effects happen to infected.\
 _randomat_flu_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
@@ -703,6 +756,7 @@ Covers the map in a fog which restricts player view
 _ttt_randomat_fogofwar_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_fogofwar_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_fogofwar_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_fogofwar_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_fogofwar_default_ - Default: 1.0 - The fog distance scale for non-traitors.\
 _randomat_fogofwar_traitor_ - Default: 1.5 - The fog distance scale for traitors.
 
@@ -731,6 +785,7 @@ All Innocents will Freeze (and become immune) every X seconds
 _ttt_randomat_freeze_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_freeze_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_freeze_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_freeze_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_freeze_duration_ - Default: 5 - Duration of the Freeze (in seconds).\
 _randomat_freeze_timer_ - Default: 30 - How often (in seconds) the Freeze occurs.\
 _randomat_freeze_hint_ - Default: 1 - Whether to explain the event after triggering.
@@ -744,6 +799,7 @@ Spawns hostile headcrabs and fire around the detective when they are killed
 _ttt_randomat_crabsandfire_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_crabsandfire_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_crabsandfire_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_crabsandfire_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_crabsandfire_crab_count_ - Default: - The number of crabs to spawn.\
 _randomat_crabsandfire_fire_count_ - Default: - The amount of fire to spawn.\
 _randomat_crabsandfire_fire_length_ - Default: - How long the fire should last.\
@@ -757,6 +813,7 @@ Heals players who kill other players
 _ttt_randomat_lifesteal_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_lifesteal_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_lifesteal_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_lifesteal_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_lifesteal_health_ - Default: 25 - The health gained per kill.\
 _randomat_lifesteal_cap_ - Default: 0 - The maximum health a player can get from killing people. Set to 0 to disable.
 
@@ -768,7 +825,8 @@ Turns everyone invisible but envelopes them in smoke
 \
 _ttt_randomat_gaseous_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_gaseous_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_gaseous_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_gaseous_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_gaseous_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Get Down Mr. President!
 Gives Detectives extra health, but if they get killed, so do all other members of the Innocent team
@@ -779,6 +837,7 @@ Gives Detectives extra health, but if they get killed, so do all other members o
 _ttt_randomat_president_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_president_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_president_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_president_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_president_bonushealth_ - Default: 100 - Extra health gained by the detective.\
 _randomat_president_announce_ - Default: 1 - Whether to announce when the president dies.
 
@@ -791,6 +850,7 @@ Gives Detectives extra health, but if they get killed, all living members of the
 _ttt_randomat_romero_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_romero_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_romero_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_romero_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_romero_bonushealth_ - Default: 100 - Extra health gained by the detective.\
 _randomat_romero_announce_ - Default: 1 - Whether to announce when Mr. Romero dies.
 
@@ -802,7 +862,8 @@ Dead players become ghosts who leave a trail of smoke as they drift through the 
 \
 _ttt_randomat_apparition_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_apparition_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_apparition_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_apparition_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_apparition_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Gifts from the Dead
 Allows dead players to give the living a single gift
@@ -813,6 +874,7 @@ Allows dead players to give the living a single gift
 _ttt_randomat_gifts_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_gifts_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_gifts_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_gifts_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_gifts_charge_time_ - Default: 60 - How many seconds before the dead can give a gift.\
 _randomat_gifts_random_items_ - Default: 1 - Whether everyone should get a random item to gift.\
 _randomat_gifts_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
@@ -826,6 +888,7 @@ Changes everyone's role to be either Glitch or Traitor and gives a random shop i
 _ttt_randomat_glitch_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_glitch_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_glitch_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_glitch_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_glitch_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".\
 _randomat_glitch_traitor_pct_ - Default: 25 - The percentage of players that will be traitors.\
 _randomat_glitch_damage_scale_ - Default: 1.0 - The multiplier for damage that the Glitches will take.\
@@ -842,7 +905,8 @@ Instead of a detective, you now have two deputies... or is one an impersonator?
 \
 _ttt_randomat_goodcopbadcop_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_goodcopbadcop_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_goodcopbadcop_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_goodcopbadcop_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_goodcopbadcop_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Got any connies?!
 Announces players that have shop items after a configurable number of seconds
@@ -853,6 +917,7 @@ Announces players that have shop items after a configurable number of seconds
 _ttt_randomat_connies_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_connies_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_connies_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_connies_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_connies_timer_ - Default: 10 - The amount of time before the messages are shown.\
 _randomat_connies_show_role_ - Default: 0 - Whether to show the role of the person.\
 _randomat_connies_show_name_ - Default: 1 - Whether to show the name of the person.\
@@ -868,6 +933,7 @@ Periodically gives players random weapons that would normally be found throughou
 _ttt_randomat_gungame_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_gungame_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_gungame_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_gungame_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_gungame_timer_ - Default: 5 - Time between weapon changes.
 
 ## Gunpowder, Treason, and Plot
@@ -879,6 +945,7 @@ Spawns explosive barrels around every player repeatedly until the event ends
 _ttt_randomat_barrels_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_barrels_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_barrels_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_barrels_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_barrels_count_ - Default: 3 - Number of barrels spawned per person.\
 _randomat_barrels_range_ - Default: 100 - Distance barrels spawn from the player.\
 _randomat_barrels_timer_ - Default: 60 - Time between barrel spawns.
@@ -892,6 +959,7 @@ Gives everyone a Harpoon and only allows players to use the Harpoon for the dura
 _ttt_randomat_harpoon_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_harpoon_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_harpoon_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_harpoon_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_harpoon_timer_ - Default: 3 - Time between being given harpoons.\
 _randomat_harpoon_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_harpoon_weaponid_ - Default: ttt_m9k_harpoon - Id of the weapon given.
@@ -904,7 +972,8 @@ Dead players bet on who is going to live to the end. Winners are respawned to fi
 \
 _ttt_randomat_bets_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_bets_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_bets_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_bets_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_bets_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Herd Immunity
 Players vote for what type of damage they will be immune to for the rest of the round
@@ -915,6 +984,7 @@ Players vote for what type of damage they will be immune to for the rest of the 
 _ttt_randomat_immunity_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_immunity_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_immunity_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_immunity_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_immunity_timer_ - Default: 30 - The number of seconds the vote lasts.\
 _randomat_immunity_bullet_ - Default: 0 - Whether bullet damage can be voted for.\
 _randomat_immunity_slashing_ - Default: 0 - Whether slashing damage can be voted for.
@@ -928,6 +998,7 @@ Scales each player's size by a configurable ratio
 _ttt_randomat_shrink_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_shrink_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_shrink_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_shrink_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_shrink_scale_ - Default: 0.5 - The shrinking scale factor.
 
 ## I don't think you realise the gravity of the situation.
@@ -940,6 +1011,7 @@ It goes back and forth between being lowered and raised each time.
 _ttt_randomat_gravity_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_gravity_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_gravity_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_gravity_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_gravity_timer_ - Default: 30 - How long between changes.\
 _randomat_gravity_duration_ - Default: 3 - How many seconds the change lasts.\
 _randomat_gravity_minimum_ - Default: 70 - The gravity when it is lowered.\
@@ -954,6 +1026,7 @@ Allows players to vote to kill someone repeatedly until the event ends
 _ttt_randomat_democracy_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_democracy_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_democracy_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_democracy_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_democracy_timer_ - Default: 40 - The number of seconds each round of voting lasts.\
 _randomat_democracy_tiekills_ - Default: 1 - If 1, ties result in a coin toss; if 0, nobody dies in a tied vote.\
 _randomat_democracy_totalpct_ - Default: 50 - Percent of total player votes required for a vote to pass, set to 0 to disable.\
@@ -970,7 +1043,8 @@ Drops a Visualizer whenever a player is killed
 \
 _ttt_randomat_visualiser_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_visualiser_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_visualiser_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_visualiser_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_visualiser_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## I'm feeling kinda ILL
 Causes players to slowly lose health over time
@@ -981,6 +1055,7 @@ Causes players to slowly lose health over time
 _ttt_randomat_feelingill_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_feelingill_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_feelingill_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_feelingill_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_feelingill_timer_ - Default: 3 - How often (in seconds) a player will lose health.\
 _randomat_feelingill_health_ - Default: 1 - How much health per tick you lose.
 
@@ -993,6 +1068,7 @@ Forces a random player to say something incriminating without their knowledge
 _ttt_randomat_incriminating_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_incriminating_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_incriminating_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_incriminating_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_incriminating_timer_min_ - Default: 3 - The minimum time before the message is sent.\
 _randomat_incriminating_timer_max_ - Default: 10 - The maximum time before the message is sent.\
 _randomat_incriminating_mistake_chance_ - Default: 0.2 - The chance that an "oops" message is sent.
@@ -1006,6 +1082,7 @@ Gives all weapons infinite ammo, allowing players to constantly shoot without re
 _ttt_randomat_ammo_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_ammo_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_ammo_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_ammo_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_ammo_affectbuymenu_ - Default: 0 - Whether it gives buy menu weapons infinite ammo too.
 
 ## Infinite Credits for Everyone!
@@ -1016,7 +1093,8 @@ Gives all players essentially infinite credits for use in their shop menus (if t
 \
 _ttt_randomat_credits_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_credits_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_credits_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_credits_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_credits_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Insurance Policy
 Players gain a credit every X damage they take
@@ -1027,6 +1105,7 @@ Players gain a credit every X damage they take
 _ttt_randomat_insurance_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_insurance_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_insurance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_insurance_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_insurance_damage_ - Default: 20 - How much damage before a player gets paid.
 
 ## It's hunting season!
@@ -1038,6 +1117,7 @@ Randomly turns a vanilla Innocent into an active Loot Goblin
 _ttt_randomat_huntingseason_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_huntingseason_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_huntingseason_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_huntingseason_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_huntingseason_delay_ - Default: 5 - How much damage before a player gets paid.\
 _randomat_huntingseason_show_name_ - Default: 1 - Whether to show the target player's name in the event title.
 
@@ -1050,6 +1130,7 @@ Does damage over time to the player who is closest to the ground
 _ttt_randomat_highground_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_highground_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_highground_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_highground_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_highground_damage_ - Default: 1 - The amount of health the player will lose each interval.\
 _randomat_highground_damage_delay_ - Default: 10 - The delay before damage starts.\
 _randomat_highground_damage_interval_ - Default: 2 - How often the player will take damage.
@@ -1064,6 +1145,7 @@ NOTE: Only runs if a double-jump mod which supports the "multijump_default_jumps
 _ttt_randomat_jumparound_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jumparound_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_jumparound_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_jumparound_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_jumparound_jumps_ - Default: 5 - How many multi-jumps the players can do.
 
 ## Life Insurance
@@ -1075,6 +1157,7 @@ Traitors get credits when one of their teammates is killed
 _ttt_randomat_lifeinsurance_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_lifeinsurance_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_lifeinsurance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_lifeinsurance_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_lifeinsurance_first_traitor_ - Default: 0 - Whether only first traitor death pays.\
 _randomat_lifeinsurance_first_per_player_ - Default: 1 - Whether only first death per player pays.\
 _randomat_lifeinsurance_payment_ - Default: 3 - Amount of credits to pay.
@@ -1088,6 +1171,7 @@ Drops a discombob between two players who get too close
 _ttt_randomat_lonelyyogs_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_lonelyyogs_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_lonelyyogs_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_lonelyyogs_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_lonelyyogs_distance_ - Default: 200 - The minimum distance allowed between players.\
 _randomat_lonelyyogs_interval_ - Default: 2 - The number of seconds between discombob blasts.
 
@@ -1100,6 +1184,7 @@ Sprinting causes your gun clip to fall out, forcing reloads
 _ttt_randomat_looseclips_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_looseclips_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_looseclips_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_looseclips_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_looseclips_keep_ammo_ - Default: 1 - Whether drained ammo is kept or destroyed.\
 _randomat_looseclips_affectbuymenu_ - Default: 0 - Whether buy menu weapons lose ammo too.
 
@@ -1112,6 +1197,7 @@ Causes players to randomly shoot their gun
 _ttt_randomat_malfunction_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_malfunction_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_malfunction_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_malfunction_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_malfunction_upper_ - Default: 15 - The upper limit for the random timer.\
 _randomat_malfunction_lower_ - Default: 1 - The lower limit for the random timer.\
 _randomat_malfunction_affectall_ - Default: 0 - Set to 1 for the event to affect everyone at once.\
@@ -1126,6 +1212,7 @@ Causes players who collide while sprinting to swap inventories
 _ttt_randomat_meetcute_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_meetcute_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_meetcute_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_meetcute_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_meetcute_distance_ - Default: 1400 - The maximum distance between two players to be considered 'touching'.\
 _randomat_meetcute_swap_delay_ - Default: 5 - The minimum delay (in seconds) between swaps.
 
@@ -1137,7 +1224,8 @@ Narrates common game activities
 \
 _ttt_randomat_narration_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_narration_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_narration_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_narration_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_narration_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## No more Fall Damage!
 Prevents any player from taking damage when they fall
@@ -1147,7 +1235,8 @@ Prevents any player from taking damage when they fall
 \
 _ttt_randomat_falldamage_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_falldamage_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_falldamage_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_falldamage_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_falldamage_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## NO NERD HEALING
 Prevents any player from regaining lost health
@@ -1157,7 +1246,8 @@ Prevents any player from regaining lost health
 \
 _ttt_randomat_noheal_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_noheal_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_noheal_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_noheal_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_noheal_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## No one can die from my sight
 Puts a green outline around every dead player
@@ -1167,7 +1257,8 @@ Puts a green outline around every dead player
 \
 _ttt_randomat_corpsehighlight_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_corpsehighlight_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_corpsehighlight_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_corpsehighlight_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_corpsehighlight_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## No one can hide from my sight
 Puts a green outline around every player
@@ -1177,7 +1268,8 @@ Puts a green outline around every player
 \
 _ttt_randomat_wallhack_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_wallhack_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_wallhack_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_wallhack_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_wallhack_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## NOT THE BEES
 Spawns bees randomly around players
@@ -1188,6 +1280,7 @@ Spawns bees randomly around players
 _ttt_randomat_bees_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_bees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_bees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_bees_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_bees_count_ - Default: 4 - The number of bees spawned per player.
 
 ## Olympic Sprint (aka Infinite Sprint)
@@ -1199,7 +1292,8 @@ NOTE: Only works with the latest Custom Roles version and will auto-disable on o
 \
 _ttt_randomat_olympicsprint_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_olympicsprint_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_olympicsprint_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_olympicsprint_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_olympicsprint_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## One traitor, One Detective. Everyone else is a Jester. Detective is stronger.
 This one is pretty self-explanatory except for the "Detective is stronger" part. That just means the detective has 200 health.\
@@ -1210,7 +1304,8 @@ NOTE: This event is automatically disabled in the outdated version of Custom Rol
 \
 _ttt_randomat_jesters_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jesters_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_jesters_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_jesters_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_jesters_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Opposite Day
 Swaps movement keys to their opposites (e.g. Left is Right, Forward is Backward) and swaps the Fire and Reload keys.\
@@ -1222,6 +1317,7 @@ NOTE: Sprinting will only work when going backwards in the outdated version of C
 _ttt_randomat_opposite_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_opposite_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_opposite_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_opposite_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_opposite_hardmode_ - Default: 1 - Whether to enable hard mode and switch Jump/Crouch.
 
 ## Our Little Secret
@@ -1233,6 +1329,7 @@ Pairs players together, temporarily revealing their roles after a short delay
 _ttt_randomat_oursecret_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_oursecret_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_oursecret_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_oursecret_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_oursecret_min_delay_ - Default: 15 - The minimum delay before showing role.\
 _randomat_oursecret_max_delay_ - Default: 30 - The maximum delay before showing role.\
 _randomat_oursecret_highlight_time_ - Default: 5 - How long to show the player's role color.
@@ -1246,6 +1343,7 @@ Periodically plays gun and death sounds randomly around players
 _ttt_randomat_paranoid_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_paranoid_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_paranoid_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_paranoid_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_paranoid_timer_min_ - Default: 15 - The minimum time before the sound should play.\
 _randomat_paranoid_timer_max_ - Default: 30 - The maximum time before the sound should play.\
 _randomat_paranoid_shots_min_ - Default: 2 - The minimum times the sound should play.\
@@ -1262,6 +1360,7 @@ Allows the dead to buff or debuff their targets
 _ttt_randomat_specbuff_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_specbuff_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_specbuff_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_specbuff_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_specbuff_charge_time_ - Default: 60 - How many seconds it takes to charge to full power.\
 _randomat_specbuff_heal_power_ - Default: 75 - The amount of power to heal the target.\
 _randomat_specbuff_heal_amount_ - Default: 10 - The amount of to heal the target.\
@@ -1282,7 +1381,8 @@ Causes players to explode when killed by teammates
 \
 _ttt_randomat_partialmayhem_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_partialmayhem_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_partialmayhem_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_partialmayhem_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_partialmayhem_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Poltergeists
 Allows dead players to see and activate traitor traps
@@ -1292,7 +1392,8 @@ Allows dead players to see and activate traitor traps
 \
 _ttt_randomat_poltergeists_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_poltergeists_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_poltergeists_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_poltergeists_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_poltergeists_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## praW emiT (aka Reverse Time Warp)
 Causes everything (movement, firing speed, timers, etc.) to run a configurable amount slower than normal and intensifies on a configurable interval
@@ -1303,6 +1404,7 @@ Causes everything (movement, firing speed, timers, etc.) to run a configurable a
 _ttt_randomat_reversetimewarp_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_reversetimewarp_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_reversetimewarp_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_reversetimewarp_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_reversetimewarp_scale_ - Default: 15 - The percentage the speed should decrease. Treated as an subtractive decrease on multiple uses (e.g. 1.0 -> 0.85 -> 0.7 (0.85 - 0.15) rather than 1.0 -> 0.85 -> 0.1275 (0.85 - 0.85x0.15).\
 _randomat_reversetimewarp_scale_min_ - Default: 0.15 - The minimum scale the speed should decrease to.\
 _randomat_reversetimewarp_timer_ - Default: 15 - How often (in seconds) the speed will be decreased.
@@ -1316,6 +1418,7 @@ Time scale is changed every few seconds for a short period of time before revert
 _ttt_randomat_timeflip_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_timeflip_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_timeflip_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_timeflip_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_timeflip_timer_ - Default: 30 - How often the time scale should change.\
 _randomat_timeflip_duration_slow_ - Default: 3 - How long the time scale should change for when slow.\
 _randomat_timeflip_duration_fast_ - Default: 30 - How long the time scale should change for when fast.\
@@ -1331,6 +1434,7 @@ Converts all Jester/Swapper and innocent team members to the Innocent role, stri
 _ttt_randomat_prophunt_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_prophunt_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_prophunt_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_prophunt_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_prophunt_timer_ - Default: 3 - Time between being given prop disguisers.\
 _randomat_prophunt_strip_ - Default: 1 - The event strips your other weapons.\
 _randomat_prophunt_blind_time_ = Default: 0 - How long to blind the hunters for at the start.\
@@ -1349,6 +1453,7 @@ Vote to buff a player. Votes can be changed at any time
 _ttt_randomat_pumpyouup_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_pumpyouup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_pumpyouup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_pumpyouup_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_pumpyouup_buff_ - Default: 0 - Which buff the target should get. 0 - Damage, 1 - Speed, 2 - Health regeneration, 3 - Damage resistance.\
 _randomat_pumpyouup_damage_scale_ - Default: 1.1 - Target damage modifier (1.1 == 110% or a 10% bonus).\
 _randomat_pumpyouup_speed_factor_ - Default: 1.2 - Target speed modifier (1.1 == 110% or a 10% bonus).\
@@ -1367,6 +1472,7 @@ Increases each player's Field of View (FOV) so it looks like you're playing Quak
 _ttt_randomat_fov_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_fov_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_fov_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_fov_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_fov_scale_ - Default: 1.5 - Scale of the FOV increase.\
 _randomat_fov_scale_ironsight_ - Default: 1.0 - Scale of the FOV increase when ironsighted.
 
@@ -1379,6 +1485,7 @@ Gives everyone a random amount of health within the configurable boundaries
 _ttt_randomat_randomhealth_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_randomhealth_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_randomhealth_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_randomhealth_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_randomhealth_upper_ - Default: 100 - The upper limit of health gained.\
 _randomat_randomhealth_lower_ - Default: 0 - The lower limit of health gained.
 
@@ -1391,6 +1498,7 @@ Triggers a configurable number of random events, one every 5 seconds
 _ttt_randomat_randomxn_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_randomxn_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_randomxn_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_randomxn_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_randomxn_triggers_ - Default: 5 - Number of Randomat events activated.\
 _randomat_randomxn_timer_ - Default: 5 - How often (in seconds) a random event will be triggered.\
 _randomat_randomxn_multiple_ - Default: 1 - Allow event to run multiple times.\
@@ -1405,6 +1513,7 @@ Periodically triggers random Randomat events for the duration of this event
 _ttt_randomat_intensifies_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_intensifies_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_intensifies_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_intensifies_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_intensifies_timer_ - Default: 20 - How often (in seconds) a random event will be triggered.\
 _randomat_intensifies_triggerbyotherrandom_ - Default: 1 - Allow being triggered by other events like Random xN.
 
@@ -1417,6 +1526,7 @@ Chooses a random person with a buy menu and forces them to buy an item from the 
 _ttt_randomat_ransom_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_ransom_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_ransom_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_ransom_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_ransom_traitorsonly_ - Default: 0 - Only target Traitors for the event.\
 _randomat_ransom_deathtimer_ - Default: 60 - The amount of time the person has to buy something.
 
@@ -1429,6 +1539,7 @@ Hurts a player if they move during a red light
 _ttt_randomat_redlight_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_redlight_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_redlight_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_redlight_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_redlight_mindelay_ - Default: 3 - Minimum time for each phase.\
 _randomat_redlight_maxdelay_ - Default: 10 - Maximum time for each phase.\
 _randomat_redlight_damage_ - Default: 3 - Amount of damage a player takes per second.
@@ -1442,6 +1553,7 @@ Causes anyone who dies to be resurrected as a Zombie
 _ttt_randomat_grave_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_grave_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_grave_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_grave_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_grave_health_ - Default: 30 - The health that the Zombies respawn with.\
 _randomat_grave_include_dead_ - Default: 1 - Whether to resurrect dead players at the start.
 
@@ -1453,7 +1565,8 @@ Dead players become harmless bees
 \
 _ttt_randomat_specbees_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_specbees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_specbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_specbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_specbees_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Rock, Paper, Scissors
 Starts a game of Rock, Paper, Scissors between two players... to the death! A tie results in the players being soulbound to each other.
@@ -1464,6 +1577,7 @@ Starts a game of Rock, Paper, Scissors between two players... to the death! A ti
 _ttt_randomat_rockpaperscissors_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_rockpaperscissors_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_rockpaperscissors_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_rockpaperscissors_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_rockpaperscissors_bestof_ - Default: 3 - How many rounds to play.
 
 ## Run For Your Life!
@@ -1475,6 +1589,7 @@ Hurts a player while they are sprinting
 _ttt_randomat_runforyourlife_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_runforyourlife_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_runforyourlife_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_runforyourlife_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_runforyourlife_delay_ - Default: 0.2 - Time between player taking damage.\
 _randomat_runforyourlife_damage_ - Default: 3 - Amount of damage a player takes.
 
@@ -1487,6 +1602,7 @@ Forces everyone to use a rifle and lowers everyone's gravity
 _ttt_randomat_scoutsonly_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_scoutsonly_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_scoutsonly_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_scoutsonly_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_scoutsonly_gravity_ - Default: 0.1 - The gravity scale.
 
 ## Second Chance
@@ -1497,7 +1613,8 @@ Respawns the first player who is killed as a random vanilla role
 \
 _ttt_randomat_secondchance_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_secondchance_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_secondchance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_secondchance_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_secondchance_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Sharing is Caring
 When a player kills another, their inventory is swapped with their victim's.
@@ -1507,7 +1624,8 @@ When a player kills another, their inventory is swapped with their victim's.
 \
 _ttt_randomat_sharingiscaring_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_sharingiscaring_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_sharingiscaring_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_sharingiscaring_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_sharingiscaring_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Shh... It's a Secret!
 Runs another random Randomat event without notifying the players. Also silences all future Randomat events while this event is active.
@@ -1517,7 +1635,8 @@ Runs another random Randomat event without notifying the players. Also silences 
 \
 _ttt_randomat_secret_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_secret_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_secret_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_secret_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_secret_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## SHUT UP!
 Disables all sounds for the duration of the event
@@ -1527,7 +1646,8 @@ Disables all sounds for the duration of the event
 \
 _ttt_randomat_shutup_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_shutup_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_shutup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_shutup_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_shutup_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Somebody set us up the bomb
 Gives all traitors C4. If a C4 explodes by running out of time, the traitors win.
@@ -1537,7 +1657,8 @@ Gives all traitors C4. If a C4 explodes by running out of time, the traitors win
 \
 _ttt_randomat_defusemode_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_defusemode_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_defusemode_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_defusemode_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_defusemode_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Smoke Signals
 Allows dead players to envelope their target in smoke
@@ -1548,6 +1669,7 @@ Allows dead players to envelope their target in smoke
 _ttt_randomat_smoke_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_smoke_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_smoke_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_smoke_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_smoke_charge_time_ - Default: 30 - How many seconds it takes to charge the next attack.\
 _randomat_smoke_time_ - Default: 5 - How many seconds the smoke lasts.
 
@@ -1559,7 +1681,8 @@ Gives everyone a detonator for a random other player. When that detonator is use
 \
 _ttt_randomat_suicide_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_suicide_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_suicide_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_suicide_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_suicide_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Social Distancing
 Does a small amount of damage over time to players who spend too much time close to each other.
@@ -1570,6 +1693,7 @@ Does a small amount of damage over time to players who spend too much time close
 _ttt_randomat_distancing_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_distancing_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_distancing_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_distancing_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_distancing_timer_ - Default: 10 - Seconds a player must be near another player before damage starts.\
 _randomat_distancing_interval_ - Default: 2 - How often damage is done when players are too close.\
 _randomat_distancing_distance_ - Default: 100 - Distance a player must be from another to be considered "near".\
@@ -1583,7 +1707,8 @@ Changes all primary weapon shooting sounds to "Sosig"
 \
 _ttt_randomat_sosig_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_sosig_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_sosig_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_sosig_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_sosig_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Soulmates
 Pairs random players together. When either of the paired players is killed, the other is automatically killed as well
@@ -1594,6 +1719,7 @@ Pairs random players together. When either of the paired players is killed, the 
 _ttt_randomat_soulmates_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_soulmates_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_soulmates_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_soulmates_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_soulmates_affectall_ - Default: 0 - Whether everyone should have a soulmate.\
 _randomat_soulmates_sharedhealth_ - Default: 0 - Whether soulmates should have shared health.
 
@@ -1606,6 +1732,7 @@ Pairs all players with another random player. Does a small amount of damage over
 _ttt_randomat_stickwithme_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_stickwithme_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_stickwithme_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_stickwithme_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_stickwithme_warning_timer_ - Default: 30 - Time a player has to find their partner at the start of the event.\
 _randomat_stickwithme_damage_timer_ - Default: 10 - Time a player must be away from their partner before damage starts.\
 _randomat_stickwithme_damage_interval_ - Default: 2 - How often damage is done when partners are too far".\
@@ -1622,6 +1749,7 @@ Spawns a configurable number of bees when a player is killed
 _ttt_randomat_imbees_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_imbees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_imbees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_imbees_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_imbees_count_ - Default: 3 - The amount of bees spawned when someone dies.
 
 ## Sudden Death!
@@ -1632,7 +1760,8 @@ Changes everyone to have only 1 health
 \
 _ttt_randomat_suddendeath_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_suddendeath_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_suddendeath_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_suddendeath_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_suddendeath_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## T-Rex Vision
 Your vision is now based on movement. All players who aren't moving are invisible
@@ -1643,6 +1772,7 @@ Your vision is now based on movement. All players who aren't moving are invisibl
 _ttt_randomat_trexvision_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_trexvision_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_trexvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_trexvision_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_trexvision_reveal_time_ - Default: 5 - How long to reveal a player who shoots their gun.
 
 ## Taking Inventory
@@ -1656,6 +1786,7 @@ Swaps player inventories periodically throughout the round. There are some cavea
 _ttt_randomat_inventory_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_inventory_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_inventory_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_inventory_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_inventory_timer_ - Default: 15 - Time between inventory swaps.
 
 ## That Doesn't Sound Right
@@ -1666,6 +1797,7 @@ Shuffles weapon sounds at the start of the event
 _ttt_randomat_soundright_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_soundright_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_soundright_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_soundright_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_soundright_blocklist_ - Default: weapon_pulserif,weapon_ttt_dislocator,tfa_jetgun - The comma-separated list of weapon IDs to not use for sounds. For example: "weapon_pulserif,weapon_ttt_dislocator".
 
 ## The 'bar has been raised!
@@ -1677,6 +1809,7 @@ Increases the damage and push force of the crowbar
 _ttt_randomat_crowbar_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_crowbar_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_crowbar_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_crowbar_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_crowbar_damage_ - Default: 2.5 - Damage multiplier for the crowbar.\
 _randomat_crowbar_push_ - Default: 30 - Push force multiplier for the crowbar.
 
@@ -1689,6 +1822,7 @@ Rains cakes down around players which have a 50/50 chance or either healing or h
 _ttt_randomat_cakes_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_cakes_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_cakes_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_cakes_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_cakes_count_ - Default: 2 - Number of cakes spawned per person.\
 _randomat_cakes_range_ - Default: 200 - Distance cakes spawn from the player.\
 _randomat_cakes_timer_ - Default: 60 - Time between cake spawns, in seconds.\
@@ -1707,6 +1841,7 @@ Players take damage while they are in the air
 _ttt_randomat_skyislava_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_skyislava_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_skyislava_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_skyislava_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_skyislava_interval_ - Default: 0.25 - How often (in seconds) damage is done while players are in the air.\
 _randomat_skyislava_damage_ - Default: 1 - How much damage is done.
 
@@ -1719,6 +1854,7 @@ Players can only jump once every configurable number of seconds
 _ttt_randomat_jumpcooldown_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jumpcooldown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_jumpcooldown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_jumpcooldown_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_jumpcooldown_length_ - Default: 5 - The length of the jump cooldown.
 
 ## There's this game my father taught me years ago, it's called "Switch"
@@ -1730,6 +1866,7 @@ Randomly switches positions of two players on a configurable interval
 _ttt_randomat_switch_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_switch_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_switch_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_switch_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_switch_timer_ - Default: 15 - How often players are switched.
 
 ## They have a cave troll
@@ -1741,6 +1878,7 @@ Chooses a random traitor and makes them a strong giant with a club. Other random
 _ttt_randomat_cavetroll_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_cavetroll_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_cavetroll_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_cavetroll_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_cavetroll_troll_scale_ - Default: 1.5 - The scale factor to use for the troll.\
 _randomat_cavetroll_troll_damage_ - Default: 50 - How much damage the troll's "club" should do.\
 _randomat_cavetroll_troll_health_ - Default: 150 - The amount of health the troll should have.\
@@ -1757,6 +1895,7 @@ Causes everything (movement, firing speed, timers, etc.) to run a configurable a
 _ttt_randomat_timewarp_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_timewarp_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_timewarp_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_timewarp_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_timewarp_scale_ - Default: 50 - The percentage the speed should increase. Treated as an additive increase on multiple uses (e.g. 1.0 -> 1.5 -> 2.0 (1.5 + 0.5) rather than 1.0 -> 1.5 -> 2.25 (1.5 + 1.5x0.5).\
 _randomat_timewarp_scale_max_ - Default: 8 - The maximum scale the speed should increase to.\
 _randomat_timewarp_timer_ - Default: 15 - How often (in seconds) the speed will be increased.
@@ -1770,6 +1909,7 @@ When a player dies, all nearby players will be pulled toward their corpse
 _ttt_randomat_magnetism_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_magnetism_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_magnetism_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_magnetism_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_magnetism_radius_ - Default: 1000 - The radius around the dead player for magnetism.
 
 ## Total Mayhem
@@ -1780,7 +1920,8 @@ Causes players to explode when killed
 \
 _ttt_randomat_mayhem_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_mayhem_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_mayhem_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_mayhem_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_mayhem_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Trickle-Down Economics
 Spent credits are redistributed to other people with shops
@@ -1790,7 +1931,8 @@ Spent credits are redistributed to other people with shops
 \
 _ttt_randomat_trickledown_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_trickledown_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_trickledown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_trickledown_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_trickledown_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Tunnel Vision
 Players are having trouble seeing things on the edge of their screen...
@@ -1801,6 +1943,7 @@ Players are having trouble seeing things on the edge of their screen...
 _ttt_randomat_tunnelvision_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_tunnelvision_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_tunnelvision_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_tunnelvision_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_tunnelvision_viewpct_ - Default: 33 - What percent of the screen the player should be able to see through
 
 ## Two Lies and a Truth
@@ -1812,6 +1955,7 @@ One of these three events has been started... but which one?
 _ttt_randomat_twolies_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_twolies_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_twolies_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_twolies_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_twolies_blocklist_ - Default: - The comma-separated list of event IDs to not start. For example: "skyislava,boo".
 
 ## Try your best...
@@ -1822,7 +1966,8 @@ Gives each player a random pistol and main weapon that they cannot drop
 \
 _ttt_randomat_randomweapon_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_randomweapon_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_randomweapon_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_randomweapon_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_randomweapon_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Typeracer
 Type each word/phrase in chat within the configurable amount of time OR DIE!
@@ -1833,6 +1978,7 @@ Type each word/phrase in chat within the configurable amount of time OR DIE!
 _ttt_randomat_typeracer_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_typeracer_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_typeracer_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_typeracer_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_typeracer_timer_ - Default: 15 - The amount of time players have to type each given word.\
 _randomat_typeracer_kill_wrong_ - Default: 1 - Whether to kill players who type the word incorrectly.
 
@@ -1855,7 +2001,8 @@ Prevents players from killing using the same type of damage (bullets, crowbar, e
 \
 _ttt_randomat_variety_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_variety_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_variety_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_variety_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_variety_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## Wasteful!
 Every gun shot uses two bullets
@@ -1865,7 +2012,8 @@ Every gun shot uses two bullets
 \
 _ttt_randomat_wasteful_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_wasteful_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_wasteful_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_wasteful_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_wasteful_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## We learned how to heal over time, its hard, but definitely possible... (aka Regeneration)
 Causes players to slowly regenerate lost health over time
@@ -1876,6 +2024,7 @@ Causes players to slowly regenerate lost health over time
 _ttt_randomat_regeneration_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_regeneration_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_regeneration_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_regeneration_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_regeneration_delay_ - Default: 10 - How long after taking damage you will start to regen health.\
 _randomat_regeneration_health_ - Default: 1 - How much health per second you heal.
 
@@ -1887,7 +2036,8 @@ Alerts all players when an item is bought from a shop
 \
 _ttt_randomat_privacy_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_privacy_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
-_ttt_randomat_privacy_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
+_ttt_randomat_privacy_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_privacy_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.
 
 ## What? Moon Gravity on Earth?
 Changes the gravity of each player to the configurable scale
@@ -1898,6 +2048,7 @@ Changes the gravity of each player to the configurable scale
 _ttt_randomat_moongravity_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_moongravity_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_moongravity_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_moongravity_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_moongravity_gravity_ - Default: 0.1 - The gravity scale.
 
 ## What did I find in my pocket?
@@ -1909,6 +2060,7 @@ Gives each player a random buyable weapon
 _ttt_randomat_pocket_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_pocket_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_pocket_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_pocket_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_pocket_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "ttt_m9k_harpoon,weapon_ttt_slam".
 
 ## What gamemode is this again? (aka Murder)
@@ -1928,6 +2080,7 @@ Player roles are also adjusted when this event begins:
 _ttt_randomat_murder_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_murder_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_murder_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_murder_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_murder_pickups_ratio_ - Default: 0.75 - Ratio of weapons required to get a revolver. Value = (ConVarValue x TotalWeapons)/Players.\
 _randomat_murder_knifespeed_ - Default: 1.2 - Player move speed multiplier whilst knife is held.\
 _randomat_murder_knifedmg_ - Default: 50 - Damage of the traitor's knife.\
@@ -1943,6 +2096,7 @@ Kills any player who jumps a second time after this event has triggered
 _ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jump_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_jump_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_jump_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_jump_spam_ - Default: 0 - Whether to show the message again for a player who doesn't die.\
 _randomat_jump_kill_blast_immune_ - Default: 1 - Whether to kill players who are immune to blast damage.
 
@@ -1955,6 +2109,7 @@ Spawns bees who spread zombiism to their victims. See the "RISE FROM YOUR GRAVE"
 _ttt_randomat_zombees_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_zombees_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_zombees_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_ttt_randomat_zombees_selectable_ - Default: 1 - Whether this should be selectable by events trying to randomly trigger another event.\
 _randomat_zombees_count_ - Default: 1 - The number of bees spawned per player.
 
 # ULX Support

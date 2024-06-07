@@ -330,13 +330,15 @@ function Randomat:register(tbl)
     tbl.Id = id
     tbl.id = id
     tbl.__index = tbl
-    -- Default IsEnabled to true if it isn't specified
+    -- Default these to true if they are't specified
     if tbl.IsEnabled ~= false then
         tbl.IsEnabled = true
     end
-    -- Default SingleUse to true if it isn't specified
     if tbl.SingleUse ~= false then
         tbl.SingleUse = true
+    end
+    if tbl.Selectable ~= false then
+        tbl.Selectable = true
     end
     -- Default StartSecret to false if it isn't specified
     if tbl.StartSecret ~= true then
@@ -370,6 +372,7 @@ function Randomat:register(tbl)
 
     CreateConVar("ttt_randomat_" .. id, tbl.IsEnabled and 1 or 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
     CreateConVar("ttt_randomat_" .. id .. "_min_players", tbl.MinPlayers, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    CreateConVar("ttt_randomat_" .. id .. "_selectable", tbl.Selectable and 1 or 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
     local weight = CreateConVar("ttt_randomat_" .. id .. "_weight", tbl.Weight, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 
     -- If the current weight matches the default, update the per-event weight to the new default of -1
@@ -386,7 +389,7 @@ function Randomat:unregister(id)
     Randomat.Events[id] = nil
 end
 
-function Randomat:CanEventRun(event, ignore_history)
+function Randomat:CanEventRun(event, ignore_history, random_selection)
     if type(event) ~= "table" then
         event = Randomat.Events[event]
     end
@@ -400,6 +403,9 @@ function Randomat:CanEventRun(event, ignore_history)
 
     if not event:Enabled() then return false, "Not enabled" end
     if not event:Condition() then return false, "Condition not fulfilled" end
+
+    local selectable = GetConVar("ttt_randomat_" .. event.Id .. "_selectable"):GetBool()
+    if random_selection and not selectable then return false, "Not randomly selectable" end
 
     -- Check there are enough players
     local min_players = GetConVar("ttt_randomat_" .. event.Id .. "_min_players"):GetInt()
@@ -476,12 +482,17 @@ local function GetRandomWeightedEvent(events, can_run)
     return events[key]
 end
 
-function Randomat:GetRandomEvent(skip_history, can_run)
+function Randomat:GetRandomEvent(skip_history, can_run, random_selection)
     local events = Randomat.Events
+
+    -- Default this parameter to "true"
+    if random_selection ~= false then
+        random_selection = true
+    end
 
     local found = false
     for _, v in pairs(events) do
-        if Randomat:CanEventRun(v) and ((not can_run) or can_run(v)) then
+        if Randomat:CanEventRun(v, false, random_selection) and ((not can_run) or can_run(v)) then
             found = true
             break
         end
@@ -492,7 +503,7 @@ function Randomat:GetRandomEvent(skip_history, can_run)
     end
 
     local event = GetRandomWeightedEvent(events, can_run)
-    while not Randomat:CanEventRun(event) do
+    while not Randomat:CanEventRun(event, false, random_selection) do
         event = GetRandomWeightedEvent(events, can_run)
     end
 
@@ -504,13 +515,13 @@ function Randomat:GetRandomEvent(skip_history, can_run)
     return event
 end
 
-function Randomat:TriggerRandomEvent(ply)
-    local event = Randomat:GetRandomEvent()
+function Randomat:TriggerRandomEvent(ply, random_selection)
+    local event = Randomat:GetRandomEvent(false, nil, random_selection)
     TriggerEvent(event, ply)
 end
 
-function Randomat:SilentTriggerRandomEvent(ply)
-    local event = Randomat:GetRandomEvent()
+function Randomat:SilentTriggerRandomEvent(ply, random_selection)
+    local event = Randomat:GetRandomEvent(false, nil, random_selection)
     TriggerEvent(event, ply, {Silent=true})
 end
 
@@ -1498,8 +1509,7 @@ concommand.Add("ttt_randomat_trigger", function(ply, cc, arg)
 end, TriggerAutoComplete, "Triggers a specific randomat event without conditions", FCVAR_SERVER_CAN_EXECUTE)
 
 concommand.Add("ttt_randomat_triggerrandom", function(ply, cc, arg)
-    local rdmply = Randomat:GetValidPlayer(nil)
-    Randomat:TriggerRandomEvent(rdmply)
+    Randomat:TriggerRandomEvent(nil, false)
     CallHook("TTTRandomatCommand", nil, ply, cc, arg)
 end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
