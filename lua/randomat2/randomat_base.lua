@@ -347,9 +347,24 @@ function Randomat:register(tbl)
         tbl.Type = EVENT_TYPE_DEFAULT
     end
     -- Default MinPlayers to 0 if it's not specified
-    if tbl.MinPlayers == nil then
-        tbl.MinPlayers = 0
+    if type(tbl.MinPlayers) ~= "table" then
+        tbl.MinPlayers = {
+            Min = 0,
+            Max = 32,
+            Default = tbl.MinPlayers or 0
+        }
     end
+    -- Ensure the pieces of MinPlayers make sense with eachother
+    tbl.MinPlayers.Min = tbl.MinPlayers.Min or 0
+    tbl.MinPlayers.Max = tbl.MinPlayers.Max or 32
+    if tbl.MinPlayers.Min > tbl.MinPlayers.Min then
+        tbl.MinPlayers.Min = tbl.MinPlayers.Min
+    end
+    tbl.MinPlayers.Default = tbl.MinPlayers.Default or tbl.MinPlayers.Min or 0
+    if tbl.MinPlayers.Default < tbl.MinPlayers.Min then
+        tbl.MinPlayers.Default = tbl.MinPlayers.Min
+    end
+
     -- Default Weight to -1 if it's not specified or matches the global default
     if tbl.Weight == nil or tbl.Weight == default_weight then
         tbl.Weight = -1
@@ -368,9 +383,13 @@ function Randomat:register(tbl)
 
     Randomat.Events[id] = tbl
 
-    CreateConVar("ttt_randomat_" .. id, tbl.IsEnabled and 1 or 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-    CreateConVar("ttt_randomat_" .. id .. "_min_players", tbl.MinPlayers, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
-    local weight = CreateConVar("ttt_randomat_" .. id .. "_weight", tbl.Weight, {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+    CreateConVar("ttt_randomat_" .. id, tbl.IsEnabled and 1 or 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether this event is enabled.", 0, 1)
+    local minPlayers = CreateConVar("ttt_randomat_" .. id .. "_min_players", tbl.MinPlayers.Default, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum number of players required for this event to start.", tbl.MinPlayers.Min, tbl.MinPlayers.Max)
+    -- Update the value of the convar if it already exists but the min value has been changed
+    if minPlayers:GetInt() < tbl.MinPlayers.Min then
+        minPlayers:SetInt(tbl.MinPlayers.Min)
+    end
+    local weight = CreateConVar("ttt_randomat_" .. id .. "_weight", tbl.Weight, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The weight this event should use during the randomized event selection process.", -1, 50)
 
     -- If the current weight matches the default, update the per-event weight to the new default of -1
     if weight:GetInt() == default_weight then

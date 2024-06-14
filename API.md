@@ -231,7 +231,14 @@ Properties used to define and describe an event and its running conditions
 **IsEnabled** - Whether this event should be enabled by default. This changes the default value for created the `ttt_randomat_{EVENT_ID}` convar. Changing this after the event has already been loaded on a server will only change the default convar value, not the current value. Defaults to `true`.\
 *Realm:* Server
 
-**MinPlayers** - The minimum number of players that must be in the server before this event can be chosen. This changes the default value for the created `ttt_randomat_{EVENT_ID}_min_players` convar. Changing this after the event has already been loaded on a server will only change the default convar value, not the current value. Defaults to `0`.\
+**MinPlayers** - The minimum number of players that must be in the server before this event can be chosen.\
+If this is a number, it changes the default value for the created `ttt_randomat_{EVENT_ID}_min_players` convar and defaults to `0`.\
+Alternately, this can be set to a table with three properties:
+- *Min* - The convar's minimum allowed value. Defaults to `0`.
+- *Max* - The convar's maximum allowed value. Defaults to `32`.
+- *Default* - The convar's default value. Defaults to `0`.
+
+Changing the default after the event has already been loaded on a server will only change the default convar value, not the current value.\
 *Realm:* Server
 
 **MaxRoundCompletePercent** - The maximum percentage of the current round that can be completed for this event to be randomly chosen to be started. Defaults to `nil`.\
