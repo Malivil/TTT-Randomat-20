@@ -5,7 +5,7 @@ if CLIENT then
     SWEP.ViewModelFOV = 60
 end
 
-SWEP.ViewModel = "models/weapons/v_slam.mdl"
+SWEP.ViewModel = "models/weapons/c_slam.mdl"
 SWEP.WorldModel = "models/weapons/w_slam.mdl"
 SWEP.Weight = 2
 
