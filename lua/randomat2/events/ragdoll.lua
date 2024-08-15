@@ -113,6 +113,9 @@ local function unragdollPlayer(v)
             end
             v:SetAmmo(v.spawnInfo.weps[i].Reserve, wep:GetPrimaryAmmoType(), true)
         end
+    end
+
+    if v.spawnInfo.activeWeapon then
         v:SelectWeapon(v.spawnInfo.activeWeapon)
     end
 
@@ -170,7 +173,7 @@ local function ragdollPlayer(v)
 
     local info = {
         weps = weps,
-        activeWeapon = v:GetActiveWeapon().ClassName,
+        activeWeapon = WEPS.GetClass(v:GetActiveWeapon()),
         health = v:Health(),
         maxhealth = v:GetMaxHealth(),
         model = v:GetModel(),
@@ -221,8 +224,14 @@ local function ragdollPlayer(v)
     v.ragdoll = ragdoll
     local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
     hook.Add("Think", v:Nick() .. "UnragdollTimer", function()
+        if not IsValid(v) then return end
+        if not IsValid(ragdoll) then return end
+
+        local physObj = ragdoll:GetPhysicsObjectNum(1)
+        if not IsValid(physObj) then return end
+
         -- Turn a ragdoll back into a player if they have essentially stopped moving and have been a ragdoll "long enough"
-        if IsValid(ragdoll) and ragdoll:GetPhysicsObjectNum(1):GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
+        if physObj:GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
             hook.Remove("Think", v:Nick() .. "UnragdollTimer")
             unragdollPlayer(v)
         end
@@ -255,7 +264,10 @@ function EVENT:Begin()
 
                 local parent = v:GetParent()
                 -- Find out if something else is creating a ragdoll like the Taser/Stun Gun or Moon Ball
-                local has_ragdoll = (IsValid(parent) and parent:GetClass() == "prop_ragdoll") or IsValid(v.tazeragdoll) or IsValid(v.moonragdoll)
+                -- Or if this player is disguised via:
+                --   A property added by the Prop Disguiser [310403737] (and the Prop Disguiser Improved [2127939503])
+                --   An NW bool added by TTT PropHuntGun [2796353349]
+                local has_ragdoll = (IsValid(parent) and parent:GetClass() == "prop_ragdoll") or IsValid(v.tazeragdoll) or IsValid(v.moonragdoll) or v.IsADisguise or v:GetNWBool("PHR_Disguised", false)
 
                 -- Don't create a ragdoll for this player if something else already is, just add to the delay and check again later
                 if has_ragdoll then
