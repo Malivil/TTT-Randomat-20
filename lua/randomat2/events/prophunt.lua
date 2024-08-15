@@ -279,7 +279,8 @@ function EVENT:Begin()
 
         -- If the thing they attacked is not a disguise and not the resulting damage of exploding a barrel then they should take the damage
         -- This property is added by the Prop Disguiser [310403737] (and the Prop Disguiser Improved [2127939503])
-        if not ent.IsADisguise and not dmginfo:IsDamageType(DMG_BLAST_SURFACE) then
+        -- The NW bool is added by TTT PropHuntGun [2796353349]
+        if not ent.IsADisguise and not ent:GetNWBool("PHR_Disguised", false) and not dmginfo:IsDamageType(DMG_BLAST_SURFACE) then
             local damage_scale = GetConVar("randomat_prophunt_damage_scale"):GetFloat()
             att:TakeDamage(dmginfo:GetDamage() * damage_scale, att, att:GetActiveWeapon())
         end
