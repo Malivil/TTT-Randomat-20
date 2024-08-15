@@ -12,6 +12,8 @@
     "*.rockspec",
     "*.svn*",
     "*.vcproj",
-    "LICENSE"
+    "LICENSE",
+    "*.sw.vtx",
+    "*.xbox.vtx"
   ]
 }
