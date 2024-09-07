@@ -31,40 +31,42 @@ function EVENT:Begin()
     self:AddHook("Think", function()
         for _, v in ipairs(self:GetAlivePlayers()) do
             local playername = v:GetName()
-            if v:Alive() and not v:IsSpec() then
-                if playerdraining[playername] == nil then
-                    playerdraining[playername] = false
-                end
-                if playerlastshottime[playername] == nil then
-                    playerlastshottime[playername] = CurTime()
-                end
+            if playerdraining[playername] == nil then
+                playerdraining[playername] = false
+            end
+            if playerlastshottime[playername] == nil then
+                playerlastshottime[playername] = CurTime()
+            end
 
-                -- We've waited long enough, start draining
-                if CurTime() - playerlastshottime[playername] > wait_time then
-                    playerdraining[playername] = true
-                end
+            -- We've waited long enough, start draining
+            if CurTime() - playerlastshottime[playername] > wait_time then
+                playerdraining[playername] = true
+            end
 
-                if playerdraining[playername] then
-                    if playerlastdraintime[playername] == nil then
-                        playerlastdraintime[playername] = CurTime()
-                    end
+            if not playerdraining[playername] then continue end
 
-                    -- Time to drain again
-                    if CurTime() - playerlastdraintime[playername] > drain_time then
-                        playerlastdraintime[playername] = CurTime()
-                        local active_weapon = v:GetActiveWeapon()
-                        if IsValid(active_weapon) and (active_weapon.AutoSpawnable or (not Randomat:IsWeaponBuyable(active_weapon) or affects_buy)) then
-                            local current_clip = active_weapon:Clip1() - 1
-                            if current_clip >= 0 then
-                                active_weapon:SetClip1(current_clip)
+            if playerlastdraintime[playername] == nil then
+                playerlastdraintime[playername] = CurTime()
+            end
 
-                                -- Give them their ammo back if we're configured to do so
-                                if keep_ammo then
-                                    local ammo_type = active_weapon:GetPrimaryAmmoType()
-                                    v:GiveAmmo(1, ammo_type, true)
-                                end
-                            end
-                        end
+            -- Not time to drain again
+            if CurTime() - playerlastdraintime[playername] < drain_time then continue end
+
+            playerlastdraintime[playername] = CurTime()
+
+            local active_weapon = v:GetActiveWeapon()
+            if IsValid(active_weapon) and (active_weapon.AutoSpawnable or (not Randomat:IsWeaponBuyable(active_weapon) or affects_buy)) then
+                -- Weapons that have matching clip size and clip max have no extra clips so removing their Clip1 just deletes ammo which is not cool... unless we aren't doing that anyway
+                if keep_ammo and (not active_weapon.Primary or not active_weapon.Primary.ClipMax or not active_weapon.Primary.ClipSize or active_weapon.Primary.ClipSize == active_weapon.Primary.ClipMax) then continue end
+
+                local current_clip = active_weapon:Clip1() - 1
+                if current_clip >= 0 then
+                    active_weapon:SetClip1(current_clip)
+
+                    -- Give them their ammo back if we're configured to do so
+                    if keep_ammo then
+                        local ammo_type = active_weapon:GetPrimaryAmmoType()
+                        v:GiveAmmo(1, ammo_type, true)
                     end
                 end
             end
