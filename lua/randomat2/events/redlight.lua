@@ -9,6 +9,9 @@ EVENT.Description = "Hurts a player if they move during a red light"
 EVENT.id = "redlight"
 EVENT.Categories = {"gamemode", "largeimpact"}
 
+local MathAbs = math.abs
+local MathRandom = math.random
+
 local function GetDelay()
     local min = GetConVar("randomat_redlight_mindelay"):GetInt()
     local max = GetConVar("randomat_redlight_maxdelay"):GetInt()
@@ -16,7 +19,7 @@ local function GetDelay()
         return max
     end
 
-    return math.random(min, max)
+    return MathRandom(min, max)
 end
 
 local function DoDamage(ply, damage)
@@ -26,6 +29,22 @@ local function DoDamage(ply, damage)
     else
         ply:SetHealth(health)
     end
+end
+
+local function GetPlayerVelocity(ply)
+    -- If this player is in a vehicle, use the velocity of the vehicle instead
+    local vel = ply:GetVelocity()
+    local in_vehicle, parent = Randomat:IsPlayerInVehicle(ply)
+    if in_vehicle then
+        vel = parent:GetVelocity()
+    end
+    return vel
+end
+
+local function IsPlayerMoving(ply)
+    local vel = GetPlayerVelocity(ply)
+    -- We can't use 0,0,0 because when a player is in a vehicle, like an airboat, their velocity is something like this when stopped: Vector(0.005939, -0.000339, -0.000001)
+    return MathAbs(vel.x) >= 1 or MathAbs(vel.y) >= 1 or MathAbs(vel.z) >= 1
 end
 
 function EVENT:Begin()
@@ -54,8 +73,7 @@ function EVENT:Begin()
         if isgreen then return end
         if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
 
-        local vel = ply:GetVelocity()
-        local moving = vel ~= Vector(0, 0, 0)
+        local moving = IsPlayerMoving(ply)
 
         -- If there is already a timer, don't start it again
         local timerId = "RdmtRedLightDamageTimer_" .. ply:SteamID64()
@@ -74,8 +92,7 @@ function EVENT:Begin()
         DoDamage(ply, damage)
         timer.Create(timerId, 1, 0, function()
             -- Double-check they are still moving
-            vel = ply:GetVelocity()
-            if vel == Vector(0, 0, 0) then return end
+            if not IsPlayerMoving(ply) then return end
 
             DoDamage(ply, damage)
         end)
