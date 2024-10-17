@@ -27,7 +27,7 @@ function EVENT:Begin()
 
     self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
         local atk = dmginfo:GetAttacker()
-        if not IsValid(atk) or not atk:Alive() or atk:IsSpec() then return end
+        if not IsPlayer(atk) or not atk:Alive() or atk:IsSpec() then return end
         local sid64 = atk:SteamID64()
         if not lastVelocity[sid64] then return end
 
