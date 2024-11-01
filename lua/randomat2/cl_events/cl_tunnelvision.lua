@@ -13,30 +13,30 @@ net.Receive("TriggerTunnelVision", function()
     hook.Add("HUDPaint", "RdmtTunnelVisionHUDPaint", function()
         if not IsValid(client) or not client:Alive() or client:IsSpec() then return end
 
-         -- Reset everything to known good
-         render.SetStencilWriteMask(0xFF)
-         render.SetStencilTestMask(0xFF)
-         render.SetStencilReferenceValue(0)
-         render.SetStencilCompareFunction(STENCIL_ALWAYS)
-         render.SetStencilPassOperation(STENCIL_KEEP)
-         render.SetStencilFailOperation(STENCIL_KEEP)
-         render.SetStencilZFailOperation(STENCIL_KEEP)
-         render.ClearStencil()
+        -- Reset everything to known good
+        render.SetStencilWriteMask(0xFF)
+        render.SetStencilTestMask(0xFF)
+        render.SetStencilReferenceValue(0)
+        render.SetStencilCompareFunction(STENCIL_ALWAYS)
+        render.SetStencilPassOperation(STENCIL_KEEP)
+        render.SetStencilFailOperation(STENCIL_KEEP)
+        render.SetStencilZFailOperation(STENCIL_KEEP)
+        render.ClearStencil()
 
-         -- Enable stencils
-         render.SetStencilEnable(true)
-         -- Set everything up everything draws to the stencil buffer instead of the screen
-         render.SetStencilReferenceValue(1)
-         render.SetStencilCompareFunction(STENCIL_NEVER)
-         render.SetStencilFailOperation(STENCIL_REPLACE)
+        -- Enable stencils
+        render.SetStencilEnable(true)
+        -- Set everything up so it draws to the stencil buffer instead of the screen
+        render.SetStencilReferenceValue(1)
+        render.SetStencilCompareFunction(STENCIL_NEVER)
+        render.SetStencilFailOperation(STENCIL_REPLACE)
 
-         draw.NoTexture()
-         surface.SetDrawColor(COLOR_WHITE)
-         DrawCircle(ScrW() / 2, ScrH() / 2, ScrH() - (ScrH() * (viewpct / 100)), 100)
+        draw.NoTexture()
+        surface.SetDrawColor(COLOR_WHITE)
+        DrawCircle(ScrW() / 2, ScrH() / 2, ScrH() - (ScrH() * (viewpct / 100)), 100)
 
-         -- Only draw things that are not in the stencil buffer
-         render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
-         render.SetStencilFailOperation(STENCIL_KEEP)
+        -- Only draw things that are not in the stencil buffer
+        render.SetStencilCompareFunction(STENCIL_NOTEQUAL)
+        render.SetStencilFailOperation(STENCIL_KEEP)
 
          -- Draw the background
         surface.SetDrawColor(COLOR_BLACK)
