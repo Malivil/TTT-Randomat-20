@@ -6,8 +6,8 @@ EVENT.id = "jump"
 EVENT.Type = EVENT_TYPE_JUMPING
 EVENT.Categories = {"largeimpact"}
 
-CreateConVar("randomat_jump_spam", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show the message again for a player who doesn't die")
-CreateConVar("randomat_jump_kill_blast_immune", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to kill players who are immune to blast damage")
+CreateConVar("randomat_jump_spam", 0, FCVAR_ARCHIVE, "Whether to show the message again for a player who doesn't die")
+CreateConVar("randomat_jump_kill_blast_immune", 1, FCVAR_ARCHIVE, "Whether to kill players who are immune to blast damage")
 
 local timerIds = {}
 

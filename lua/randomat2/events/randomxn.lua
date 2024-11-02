@@ -1,9 +1,9 @@
 local EVENT = {}
 
-CreateConVar("randomat_randomxn_triggers", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Number of Randomat events activated.", 1, 10)
-CreateConVar("randomat_randomxn_timer", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) a random event will be triggered.", 1, 60)
-CreateConVar("randomat_randomxn_multiple", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allow event to run multiple times.")
-CreateConVar("randomat_randomxn_triggerbyotherrandom", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allow being triggered by other events like Randomness Intensifies.")
+CreateConVar("randomat_randomxn_triggers", 5, FCVAR_ARCHIVE, "Number of Randomat events activated.", 1, 10)
+CreateConVar("randomat_randomxn_timer", 5, FCVAR_ARCHIVE, "How often (in seconds) a random event will be triggered.", 1, 60)
+CreateConVar("randomat_randomxn_multiple", 1, FCVAR_ARCHIVE, "Allow event to run multiple times.")
+CreateConVar("randomat_randomxn_triggerbyotherrandom", 1, FCVAR_ARCHIVE, "Allow being triggered by other events like Randomness Intensifies.")
 
 EVENT.Title = ""
 EVENT.AltTitle = "Random x" .. GetConVar("randomat_randomxn_triggers"):GetInt()

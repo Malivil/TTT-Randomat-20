@@ -5,11 +5,11 @@ util.AddNetworkString("FanFavoriteEventEnd")
 util.AddNetworkString("FanFavoritePlayerVoted")
 util.AddNetworkString("FanFavoriteReset")
 
-CreateConVar("randomat_fanfavorite_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 10, 90)
-CreateConVar("randomat_fanfavorite_tiereses", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody is resurrected")
-CreateConVar("randomat_fanfavorite_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
-CreateConVar("randomat_fanfavorite_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
-CreateConVar("randomat_fanfavorite_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
+CreateConVar("randomat_fanfavorite_timer", 40, FCVAR_ARCHIVE, "The number of seconds each round of voting lasts", 10, 90)
+CreateConVar("randomat_fanfavorite_tiereses", 1, FCVAR_ARCHIVE, "Whether ties result in a coin toss; otherwise, nobody is resurrected")
+CreateConVar("randomat_fanfavorite_totalpct", 50, FCVAR_ARCHIVE, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
+CreateConVar("randomat_fanfavorite_show_votes", 1, FCVAR_ARCHIVE, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_fanfavorite_show_votes_anon", 0, FCVAR_ARCHIVE, "Whether to hide who voted in chat")
 
 EVENT.Title = "Fan Favorite"
 EVENT.Description = "Cast your vote to resurrect a dead player"

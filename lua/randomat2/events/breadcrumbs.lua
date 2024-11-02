@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_breadcrumbs_start_width", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The trail's starting width", 1, 100)
-CreateConVar("randomat_breadcrumbs_end_width", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The trail's ending width", 1, 100)
-CreateConVar("randomat_breadcrumbs_fade_time", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many seconds the trail should last", 1, 60)
+CreateConVar("randomat_breadcrumbs_start_width", 30, FCVAR_ARCHIVE, "The trail's starting width", 1, 100)
+CreateConVar("randomat_breadcrumbs_end_width", 1, FCVAR_ARCHIVE, "The trail's ending width", 1, 100)
+CreateConVar("randomat_breadcrumbs_fade_time", 3, FCVAR_ARCHIVE, "How many seconds the trail should last", 1, 60)
 
 EVENT.Title = "Breadcrumbs"
 EVENT.Description = "Follow the colorful trails to find the other players"

@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_lonelyyogs_distance", 200, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum distance allowed between players", 25, 1000)
-CreateConVar("randomat_lonelyyogs_interval", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The number of seconds between discombob blasts", 1, 600)
+CreateConVar("randomat_lonelyyogs_distance", 200, FCVAR_ARCHIVE, "The minimum distance allowed between players", 25, 1000)
+CreateConVar("randomat_lonelyyogs_interval", 2, FCVAR_ARCHIVE, "The number of seconds between discombob blasts", 1, 600)
 
 EVENT.Title = "Lonely Yogs"
 EVENT.Description = "Drops a discombob between two players who get too close"

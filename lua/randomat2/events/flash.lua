@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_flash_scale", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The percentage the speed should increase", 1, 100)
+CreateConVar("randomat_flash_scale", 50, FCVAR_ARCHIVE, "The percentage the speed should increase", 1, 100)
 
 EVENT.Title = ""
 EVENT.AltTitle = "Everything is as fast as Flash now! (" .. GetConVar("randomat_flash_scale"):GetInt() .. "% faster)"

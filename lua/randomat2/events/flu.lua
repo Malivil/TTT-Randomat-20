@@ -11,11 +11,11 @@ local playermoveloc = {}
 local playerflustatus = {}
 local playerhealth = {}
 
-CreateConVar("randomat_flu_timer", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time a player must be near someone before it spreads", 1, 600)
-CreateConVar("randomat_flu_interval", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often effects happen to infected", 1, 600)
-CreateConVar("randomat_flu_distance", 100, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Distance a player must be from another to be considered \"near\"", 1, 1000)
-CreateConVar("randomat_flu_chance", 25, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Spreading chance", 1, 100)
-CreateConVar("randomat_flu_speed_factor", 0.8, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "What speed the infected player should be reduced to", 0.5, 1)
+CreateConVar("randomat_flu_timer", 1, FCVAR_ARCHIVE, "Time a player must be near someone before it spreads", 1, 600)
+CreateConVar("randomat_flu_interval", 5, FCVAR_ARCHIVE, "How often effects happen to infected", 1, 600)
+CreateConVar("randomat_flu_distance", 100, FCVAR_ARCHIVE, "Distance a player must be from another to be considered \"near\"", 1, 1000)
+CreateConVar("randomat_flu_chance", 25, FCVAR_ARCHIVE, "Spreading chance", 1, 100)
+CreateConVar("randomat_flu_speed_factor", 0.8, FCVAR_ARCHIVE, "What speed the infected player should be reduced to", 0.5, 1)
 
 for i = 1, sneezecount do
     util.PrecacheSound("sneezes/sneeze" .. i .. ".mp3")

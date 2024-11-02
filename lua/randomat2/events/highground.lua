@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_highground_damage", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of health the player will lose each interval", 1, 100)
-CreateConVar("randomat_highground_damage_delay", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The delay before damage starts", 1, 60)
-CreateConVar("randomat_highground_damage_interval", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How often the player will take damage", 1, 60)
+CreateConVar("randomat_highground_damage", 1, FCVAR_ARCHIVE, "The amount of health the player will lose each interval", 1, 100)
+CreateConVar("randomat_highground_damage_delay", 10, FCVAR_ARCHIVE, "The delay before damage starts", 1, 60)
+CreateConVar("randomat_highground_damage_interval", 2, FCVAR_ARCHIVE, "How often the player will take damage", 1, 60)
 
 EVENT.Title = "It's over Anakin! I have the high ground!"
 EVENT.Description = "Does damage over time to the player who is closest to the ground"

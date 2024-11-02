@@ -5,8 +5,8 @@ EVENT.Description = "Gives Detectives extra health, but if they get killed, all 
 EVENT.id = "romero"
 EVENT.Categories = {"rolechange", "deathtrigger", "biased_zombie", "biased", "largeimpact"}
 
-CreateConVar("randomat_romero_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
-CreateConVar("randomat_romero_announce", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to announce when Mr. Romero dies")
+CreateConVar("randomat_romero_bonushealth", 100, FCVAR_ARCHIVE, "Extra health gained by the detective", 1, 200)
+CreateConVar("randomat_romero_announce", 1, FCVAR_ARCHIVE, "Whether to announce when Mr. Romero dies")
 
 function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed

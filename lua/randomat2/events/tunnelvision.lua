@@ -1,6 +1,6 @@
 local EVENT = {}
 
-local viewpct = CreateConVar("randomat_tunnelvision_viewpct", 33, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "What percent of the screen the player should be able to see through", 1, 99)
+local viewpct = CreateConVar("randomat_tunnelvision_viewpct", 33, FCVAR_ARCHIVE, "What percent of the screen the player should be able to see through", 1, 99)
 
 EVENT.Title = "Tunnel Vision"
 EVENT.Description = "Players are having trouble seeing things on the edge of their screen..."

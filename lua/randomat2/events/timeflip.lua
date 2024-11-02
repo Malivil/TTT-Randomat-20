@@ -1,10 +1,10 @@
 local EVENT = {}
 
-CreateConVar("randomat_timeflip_timer", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often the time scale should change", 5, 90)
-CreateConVar("randomat_timeflip_duration_slow", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long the time scale should change for when slow", 1, 30)
-CreateConVar("randomat_timeflip_duration_fast", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How long the time scale should change for when fast", 1, 120)
-CreateConVar("randomat_timeflip_minimum", 0.33, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum time scale", 0.15, 0.9)
-CreateConVar("randomat_timeflip_maximum", 2.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum time scale", 1.1, 4)
+CreateConVar("randomat_timeflip_timer", 30, FCVAR_ARCHIVE, "How often the time scale should change", 5, 90)
+CreateConVar("randomat_timeflip_duration_slow", 3, FCVAR_ARCHIVE, "How long the time scale should change for when slow", 1, 30)
+CreateConVar("randomat_timeflip_duration_fast", 30, FCVAR_ARCHIVE, "How long the time scale should change for when fast", 1, 120)
+CreateConVar("randomat_timeflip_minimum", 0.33, FCVAR_ARCHIVE, "The minimum time scale", 0.15, 0.9)
+CreateConVar("randomat_timeflip_maximum", 2.5, FCVAR_ARCHIVE, "The maximum time scale", 1.1, 4)
 
 EVENT.Title = "Praw emiTime Warp"
 EVENT.AltTitle = "Time Flip"

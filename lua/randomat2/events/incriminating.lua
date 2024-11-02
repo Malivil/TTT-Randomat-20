@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_incriminating_timer_min", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The minimum time before the message is sent", 1, 120)
-CreateConVar("randomat_incriminating_timer_max", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum time before the message is sent", 1, 120)
-CreateConVar("randomat_incriminating_mistake_chance", 0.2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance that an \"oops\" message is sent", 0, 1)
+CreateConVar("randomat_incriminating_timer_min", 3, FCVAR_ARCHIVE, "The minimum time before the message is sent", 1, 120)
+CreateConVar("randomat_incriminating_timer_max", 10, FCVAR_ARCHIVE, "The maximum time before the message is sent", 1, 120)
+CreateConVar("randomat_incriminating_mistake_chance", 0.2, FCVAR_ARCHIVE, "The chance that an \"oops\" message is sent", 0, 1)
 
 EVENT.Title = "Incriminating Evidence"
 EVENT.Description = "Forces a random player to say something incriminating without their knowledge"

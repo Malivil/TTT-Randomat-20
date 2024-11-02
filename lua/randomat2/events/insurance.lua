@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_insurance_damage", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much damage before a player gets paid", 1, 100)
+CreateConVar("randomat_insurance_damage", 20, FCVAR_ARCHIVE, "How much damage before a player gets paid", 1, 100)
 
 EVENT.Title = "Insurance Policy"
 EVENT.Description = "Players gain a credit every 20 damage they take"

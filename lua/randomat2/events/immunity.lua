@@ -5,9 +5,9 @@ util.AddNetworkString("RdmtHerdImmunityEnd")
 util.AddNetworkString("RdmtHerdImmunityPlayerVoted")
 util.AddNetworkString("RdmtHerdImmunityReset")
 
-CreateConVar("randomat_immunity_timer", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds the vote lasts", 10, 90)
-CreateConVar("randomat_immunity_bullet", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether bullet damage can be voted for")
-CreateConVar("randomat_immunity_slashing", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether slashing damage can be voted for")
+CreateConVar("randomat_immunity_timer", 30, FCVAR_ARCHIVE, "The number of seconds the vote lasts", 10, 90)
+CreateConVar("randomat_immunity_bullet", 0, FCVAR_ARCHIVE, "Whether bullet damage can be voted for")
+CreateConVar("randomat_immunity_slashing", 0, FCVAR_ARCHIVE, "Whether slashing damage can be voted for")
 
 EVENT.Title = "Herd Immunity"
 EVENT.Description = "Players vote for what type of damage they will be immune to for the rest of the round"

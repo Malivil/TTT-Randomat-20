@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_crabs_count", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of crabs spawned when someone dies", 1, 10)
+CreateConVar("randomat_crabs_count", 5, FCVAR_ARCHIVE, "The amount of crabs spawned when someone dies", 1, 10)
 
 EVENT.Title = "Crabs are People"
 EVENT.Description = "Spawns hostile headcrabs when a player is killed"

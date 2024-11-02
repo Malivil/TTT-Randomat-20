@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_ransom_traitorsonly", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to only target Traitors")
-CreateConVar("randomat_ransom_deathtimer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Seconds a player has to buy something before they die", 10, 180)
+CreateConVar("randomat_ransom_traitorsonly", 0, FCVAR_ARCHIVE, "Whether to only target Traitors")
+CreateConVar("randomat_ransom_deathtimer", 60, FCVAR_ARCHIVE, "Seconds a player has to buy something before they die", 10, 180)
 
 EVENT.Title = "Ransomat"
 EVENT.id = "ransom"

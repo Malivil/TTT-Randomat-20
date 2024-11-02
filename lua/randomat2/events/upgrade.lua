@@ -5,7 +5,7 @@ util.AddNetworkString("RdmtCloseUpgradeFrame")
 util.AddNetworkString("RdmtPlayerChoseMercenary")
 util.AddNetworkString("RdmtPlayerChoseKiller")
 
-CreateConVar("randomat_upgrade_chooserole", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the innocent should choose their new role.")
+CreateConVar("randomat_upgrade_chooserole", 1, FCVAR_ARCHIVE, "Whether the innocent should choose their new role.")
 
 EVENT.Title = "An innocent has been upgraded!"
 EVENT.Description = "A random vanilla innocent is upgraded to a mercenary"

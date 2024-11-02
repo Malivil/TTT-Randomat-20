@@ -7,13 +7,13 @@ util.AddNetworkString("DemocracyPlayerVoted")
 util.AddNetworkString("DemocracyJesterVoted")
 util.AddNetworkString("DemocracyReset")
 
-CreateConVar("randomat_democracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 10, 90)
-CreateConVar("randomat_democracy_tiekills", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody dies")
-CreateConVar("randomat_democracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
-CreateConVar("randomat_democracy_jestermode", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How to handle when Jester/Swapper is voted for. See documentation", 0, 2)
-CreateConVar("randomat_democracy_show_jester_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a jester votes for revenge in chat")
-CreateConVar("randomat_democracy_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
-CreateConVar("randomat_democracy_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
+CreateConVar("randomat_democracy_timer", 40, FCVAR_ARCHIVE, "The number of seconds each round of voting lasts", 10, 90)
+CreateConVar("randomat_democracy_tiekills", 1, FCVAR_ARCHIVE, "Whether ties result in a coin toss; otherwise, nobody dies")
+CreateConVar("randomat_democracy_totalpct", 50, FCVAR_ARCHIVE, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
+CreateConVar("randomat_democracy_jestermode", 0, FCVAR_ARCHIVE, "How to handle when Jester/Swapper is voted for. See documentation", 0, 2)
+CreateConVar("randomat_democracy_show_jester_votes", 1, FCVAR_ARCHIVE, "Whether to show when a jester votes for revenge in chat")
+CreateConVar("randomat_democracy_show_votes", 1, FCVAR_ARCHIVE, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_democracy_show_votes_anon", 0, FCVAR_ARCHIVE, "Whether to hide who voted in chat")
 
 EVENT.Title = "I love democracy, I love the republic."
 EVENT.AltTitle = "Democracy"

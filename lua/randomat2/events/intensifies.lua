@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_intensifies_timer", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often (in seconds) a random event will be triggered.", 5, 60)
-CreateConVar("randomat_intensifies_triggerbyotherrandom", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Allow being triggered by other events like Random xN.")
+CreateConVar("randomat_intensifies_timer", 20, FCVAR_ARCHIVE, "How often (in seconds) a random event will be triggered.", 5, 60)
+CreateConVar("randomat_intensifies_triggerbyotherrandom", 1, FCVAR_ARCHIVE, "Allow being triggered by other events like Random xN.")
 
 EVENT.Title = "Randomness Intensifies"
 EVENT.Description = "Continuously triggers random events for the rest of the round"

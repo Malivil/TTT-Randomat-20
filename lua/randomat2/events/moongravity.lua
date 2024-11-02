@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_moongravity_gravity", 0.1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The gravity scale", 0.1, 0.9)
+CreateConVar("randomat_moongravity_gravity", 0.1, FCVAR_ARCHIVE, "The gravity scale", 0.1, 0.9)
 
 EVENT.Title = "What? Moon Gravity on Earth?"
 EVENT.Description = "Lowers everyone's gravity to a fraction of what it is normally"

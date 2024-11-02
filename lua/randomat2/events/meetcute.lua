@@ -1,7 +1,7 @@
 local EVENT = {}
 
-local meetcute_distance = CreateConVar("randomat_meetcute_distance", 1400, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The distance to be considered 'touching'", 250, 5000)
-local meetcute_swap_delay = CreateConVar("randomat_meetcute_swap_delay", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Minimum delay between swaps", 1, 60)
+local meetcute_distance = CreateConVar("randomat_meetcute_distance", 1400, FCVAR_ARCHIVE, "The distance to be considered 'touching'", 250, 5000)
+local meetcute_swap_delay = CreateConVar("randomat_meetcute_swap_delay", 5, FCVAR_ARCHIVE, "Minimum delay between swaps", 1, 60)
 
 EVENT.Title = "Meet Cute"
 EVENT.Description = "Causes players who collide while sprinting to swap inventories"

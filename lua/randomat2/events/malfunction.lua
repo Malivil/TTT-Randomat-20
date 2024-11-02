@@ -5,10 +5,10 @@ EVENT.Description = "Causes players to randomly shoot their gun"
 EVENT.id = "malfunction"
 EVENT.Categories = {"moderateimpact"}
 
-CreateConVar("randomat_malfunction_upper", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The upper limit for the random timer", 2, 60)
-CreateConVar("randomat_malfunction_lower", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The lower limit for the random timer", 1, 60)
-CreateConVar("randomat_malfunction_affectall", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Set to 1 for the event to affect everyone at once")
-CreateConVar("randomat_malfunction_duration", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Duration of gun malfunction (set to 0 for 1 shot)", 0.0, 3.0)
+CreateConVar("randomat_malfunction_upper", 15, FCVAR_ARCHIVE, "The upper limit for the random timer", 2, 60)
+CreateConVar("randomat_malfunction_lower", 1, FCVAR_ARCHIVE, "The lower limit for the random timer", 1, 60)
+CreateConVar("randomat_malfunction_affectall", 0, FCVAR_ARCHIVE, "Set to 1 for the event to affect everyone at once")
+CreateConVar("randomat_malfunction_duration", 0.5, FCVAR_ARCHIVE, "Duration of gun malfunction (set to 0 for 1 shot)", 0.0, 3.0)
 
 function EVENT:Begin()
     local lower = GetConVar("randomat_malfunction_lower"):GetInt()

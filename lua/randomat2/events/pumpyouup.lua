@@ -6,14 +6,14 @@ util.AddNetworkString("PumpYouUpPlayerVoted")
 util.AddNetworkString("PumpYouUpReset")
 util.AddNetworkString("PumpYouUpSetTarget")
 
-CreateConVar("randomat_pumpyouup_buff", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Which buff the target should get", 0, 3)
-CreateConVar("randomat_pumpyouup_damage_scale", 1.1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Target damage modifier (1.1 == 110% or a 10% bonus)", 0.05, 3)
-CreateConVar("randomat_pumpyouup_speed_factor", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Target speed modifier (1.1 == 110% or a 10% bonus)", 0.05, 3)
-CreateConVar("randomat_pumpyouup_regen_timer", 0.66, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How often (in seconds) the target should be healed", 0, 5)
-CreateConVar("randomat_pumpyouup_shield_factor", 0.25, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Percent less damage the target should take", 0.05, 1)
-CreateConVar("randomat_pumpyouup_allow_self_vote", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to allow players to vote for themselves")
-CreateConVar("randomat_pumpyouup_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
-CreateConVar("randomat_pumpyouup_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
+CreateConVar("randomat_pumpyouup_buff", 0, FCVAR_ARCHIVE, "Which buff the target should get", 0, 3)
+CreateConVar("randomat_pumpyouup_damage_scale", 1.1, FCVAR_ARCHIVE, "Target damage modifier (1.1 == 110% or a 10% bonus)", 0.05, 3)
+CreateConVar("randomat_pumpyouup_speed_factor", 1.2, FCVAR_ARCHIVE, "Target speed modifier (1.1 == 110% or a 10% bonus)", 0.05, 3)
+CreateConVar("randomat_pumpyouup_regen_timer", 0.66, FCVAR_ARCHIVE, "How often (in seconds) the target should be healed", 0, 5)
+CreateConVar("randomat_pumpyouup_shield_factor", 0.25, FCVAR_ARCHIVE, "Percent less damage the target should take", 0.05, 1)
+CreateConVar("randomat_pumpyouup_allow_self_vote", 0, FCVAR_ARCHIVE, "Whether to allow players to vote for themselves")
+CreateConVar("randomat_pumpyouup_show_votes", 1, FCVAR_ARCHIVE, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_pumpyouup_show_votes_anon", 0, FCVAR_ARCHIVE, "Whether to hide who voted in chat")
 
 EVENT.Title = "Pump You Up"
 EVENT.Description = "Vote to buff a player. Votes can be changed at any time"

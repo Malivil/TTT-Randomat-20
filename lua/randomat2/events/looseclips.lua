@@ -1,7 +1,7 @@
 local EVENT = {}
 
-local looseclips_keep_ammo = CreateConVar("randomat_looseclips_keep_ammo", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether drained ammo is kept or destroyed")
-local looseclips_affectbuymenu = CreateConVar("randomat_looseclips_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether buy menu weapons lose ammo too")
+local looseclips_keep_ammo = CreateConVar("randomat_looseclips_keep_ammo", 1, FCVAR_ARCHIVE, "Whether drained ammo is kept or destroyed")
+local looseclips_affectbuymenu = CreateConVar("randomat_looseclips_affectbuymenu", 0, FCVAR_ARCHIVE, "Whether buy menu weapons lose ammo too")
 
 EVENT.Title = "Loose Clips"
 EVENT.Description = "Sprinting causes your gun clip to fall out, forcing reloads"

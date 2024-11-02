@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_derptective_rate_of_fire", 2, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Rate of Fire multiplier for the H.U.G.E.", 2, 5)
+CreateConVar("randomat_derptective_rate_of_fire", 2, FCVAR_ARCHIVE, "Rate of Fire multiplier for the H.U.G.E.", 2, 5)
 
 local function GetEventDescription(has_detraitor, has_deputy_and_imposter)
     local msg = "Forces the " .. Randomat:GetRoleString(ROLE_DETECTIVE) .. "(s)"

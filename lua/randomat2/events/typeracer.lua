@@ -7,8 +7,8 @@ EVENT.Description = "Type each word/phrase in chat within the configurable amoun
 EVENT.id = "typeracer"
 EVENT.Categories = {"gamemode", "largeimpact"}
 
-CreateConVar("randomat_typeracer_timer", 15, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The amount of time players have to type each given word", 5, 60)
-CreateConVar("randomat_typeracer_kill_wrong", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to kill players who type the word incorrectly")
+CreateConVar("randomat_typeracer_timer", 15, FCVAR_ARCHIVE, "The amount of time players have to type each given word", 5, 60)
+CreateConVar("randomat_typeracer_kill_wrong", 1, FCVAR_ARCHIVE, "Whether to kill players who type the word incorrectly")
 
 local values = {}
 table.insert(values, "kayak")

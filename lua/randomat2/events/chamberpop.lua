@@ -5,7 +5,7 @@ EVENT.Description = "Weapons explode if you try to fire them while empty"
 EVENT.id = "chamberpop"
 EVENT.Categories = {"moderateimpact"}
 
-local chamberpop_explosion_magnitude = CreateConVar("randomat_chamberpop_explosion_magnitude", 150, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Weapon explosion magnitude", 50, 250)
+local chamberpop_explosion_magnitude = CreateConVar("randomat_chamberpop_explosion_magnitude", 150, FCVAR_ARCHIVE, "Weapon explosion magnitude", 50, 250)
 
 local function CheckAndPop(ply, weap, magnitude, can_fire, ammoTbl, ammoFn)
     -- If we can't use the attack and we COULD have ammo but we don't... then just assume we're dry firing

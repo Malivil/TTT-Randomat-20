@@ -5,8 +5,8 @@ EVENT.Description = "Gives Detectives extra health, but if they get killed, so d
 EVENT.id = "president"
 EVENT.Categories = {"rolechange", "deathtrigger", "biased_traitor", "biased", "largeimpact"}
 
-CreateConVar("randomat_president_bonushealth", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Extra health gained by the detective", 1, 200)
-CreateConVar("randomat_president_announce", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to announce when the president dies")
+CreateConVar("randomat_president_bonushealth", 100, FCVAR_ARCHIVE, "Extra health gained by the detective", 1, 200)
+CreateConVar("randomat_president_announce", 1, FCVAR_ARCHIVE, "Whether to announce when the president dies")
 
 function EVENT:BeforeEventTrigger(ply, options, ...)
     -- Update this in case the role names have been changed

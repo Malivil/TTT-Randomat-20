@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_butter_timer", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The time between each weapon drop.", 5, 60)
-CreateConVar("randomat_butter_affectall", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE} , "Whether to affect everyone or just a single random player.")
+CreateConVar("randomat_butter_timer", 10, FCVAR_ARCHIVE, "The time between each weapon drop.", 5, 60)
+CreateConVar("randomat_butter_affectall", 0, FCVAR_ARCHIVE, "Whether to affect everyone or just a single random player.")
 
 EVENT.Title = "Butterfingers"
 EVENT.Description = "Causes weapons to periodically slip out of players' hands"

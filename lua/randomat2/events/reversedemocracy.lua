@@ -9,11 +9,11 @@ local eventnames = {}
 table.insert(eventnames, "A power you can't learn from the Jedi")
 table.insert(eventnames, "He could save others from death, but not himself")
 
-CreateConVar("randomat_reversedemocracy_timer", 40, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The number of seconds each round of voting lasts", 10, 90)
-CreateConVar("randomat_reversedemocracy_tiesaves", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether ties result in a coin toss; otherwise, nobody is saved")
-CreateConVar("randomat_reversedemocracy_totalpct", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
-CreateConVar("randomat_reversedemocracy_show_votes", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show when a target is voted for in chat")
-CreateConVar("randomat_reversedemocracy_show_votes_anon", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to hide who voted in chat")
+CreateConVar("randomat_reversedemocracy_timer", 40, FCVAR_ARCHIVE, "The number of seconds each round of voting lasts", 10, 90)
+CreateConVar("randomat_reversedemocracy_tiesaves", 1, FCVAR_ARCHIVE, "Whether ties result in a coin toss; otherwise, nobody is saved")
+CreateConVar("randomat_reversedemocracy_totalpct", 50, FCVAR_ARCHIVE, "% of player votes needed for a vote to pass, set to 0 to disable", 0, 100)
+CreateConVar("randomat_reversedemocracy_show_votes", 1, FCVAR_ARCHIVE, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_reversedemocracy_show_votes_anon", 0, FCVAR_ARCHIVE, "Whether to hide who voted in chat")
 
 EVENT.Title = table.Random(eventnames)
 EVENT.AltTitle = "ycarcomeD"

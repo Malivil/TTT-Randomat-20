@@ -5,8 +5,8 @@ EVENT.Description = "Causes players to slowly lose health over time"
 EVENT.id = "feelingill"
 EVENT.Categories = {"moderateimpact"}
 
-CreateConVar("randomat_feelingill_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How often a player will lose health", 1, 60)
-CreateConVar("randomat_feelingill_health", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much health per tick you lose", 1, 10)
+CreateConVar("randomat_feelingill_timer", 3, FCVAR_ARCHIVE, "How often a player will lose health", 1, 60)
+CreateConVar("randomat_feelingill_health", 1, FCVAR_ARCHIVE, "How much health per tick you lose", 1, 10)
 
 function EVENT:Begin()
     local illtime = GetConVar("randomat_feelingill_timer"):GetInt()

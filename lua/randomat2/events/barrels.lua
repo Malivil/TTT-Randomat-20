@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_barrels_count", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Number of barrels spawned per person", 1, 5)
-CreateConVar("randomat_barrels_range", 100, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Distance barrels spawn from the player", 50, 200)
-CreateConVar("randomat_barrels_timer", 60, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Time between barrel spawns", 10, 120)
+CreateConVar("randomat_barrels_count", 3, FCVAR_ARCHIVE, "Number of barrels spawned per person", 1, 5)
+CreateConVar("randomat_barrels_range", 100, FCVAR_ARCHIVE, "Distance barrels spawn from the player", 50, 200)
+CreateConVar("randomat_barrels_timer", 60, FCVAR_ARCHIVE, "Time between barrel spawns", 10, 120)
 
 EVENT.Title = "Gunpowder, Treason, and Plot"
 EVENT.Description = "Spawns explosive barrels around every player repeatedly until the event ends"

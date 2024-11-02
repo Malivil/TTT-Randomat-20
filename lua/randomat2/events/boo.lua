@@ -3,8 +3,8 @@ local EVENT = {}
 util.AddNetworkString("RdmtBooBegin")
 util.AddNetworkString("RdmtBooEnd")
 
-CreateConVar("randomat_boo_charge_time", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many seconds it takes to charge the next attack", 10, 120)
-CreateConVar("randomat_boo_ghost_time", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many seconds the ghost lasts", 1, 30)
+CreateConVar("randomat_boo_charge_time", 30, FCVAR_ARCHIVE, "How many seconds it takes to charge the next attack", 10, 120)
+CreateConVar("randomat_boo_ghost_time", 5, FCVAR_ARCHIVE, "How many seconds the ghost lasts", 1, 30)
 
 EVENT.Title = "Boo!"
 EVENT.Description = "Allows dead players to scare their target and make them drop their weapon"

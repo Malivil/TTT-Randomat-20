@@ -7,9 +7,9 @@ table.insert(eventnames, "Blergh!")
 table.insert(eventnames, "Bleh!")
 table.insert(eventnames, "Blarg!")
 
-CreateConVar("randomat_blerg_respawntimer", 60, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Delay before dead players respawn", 5, 240)
-CreateConVar("randomat_blerg_respawnlimit", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The maximum number of times a player can respawn", 0, 10)
-CreateConVar("randomat_blerg_weapondelay", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Delay before respawned can use weapons", 5, 60)
+CreateConVar("randomat_blerg_respawntimer", 60, FCVAR_ARCHIVE, "Delay before dead players respawn", 5, 240)
+CreateConVar("randomat_blerg_respawnlimit", 3, FCVAR_ARCHIVE, "The maximum number of times a player can respawn", 0, 10)
+CreateConVar("randomat_blerg_weapondelay", 20, FCVAR_ARCHIVE, "Delay before respawned can use weapons", 5, 60)
 
 local function GetDescription(respawnlimit)
     local desc = "Players respawn "

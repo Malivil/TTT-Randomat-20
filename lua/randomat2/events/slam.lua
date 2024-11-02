@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_slam_timer", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Time between being given slams")
-CreateConVar("randomat_slam_strip", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The event strips your other weapons")
-CreateConVar("randomat_slam_weaponid", "weapon_ttt_slam", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Id of the weapon given")
+CreateConVar("randomat_slam_timer", 3, FCVAR_ARCHIVE, "Time between being given slams")
+CreateConVar("randomat_slam_strip", 1, FCVAR_ARCHIVE, "The event strips your other weapons")
+CreateConVar("randomat_slam_weaponid", "weapon_ttt_slam", FCVAR_ARCHIVE, "Id of the weapon given")
 
 EVENT.Title = "Come on and SLAM!"
 EVENT.Description = "Gives everyone an M4 SLAM and only allows players to use the M4 SLAM for the duration of the event"

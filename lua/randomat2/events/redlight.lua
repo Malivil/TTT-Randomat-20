@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_redlight_mindelay", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Minimum time for each phase", 1, 30)
-CreateConVar("randomat_redlight_maxdelay", 10, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Maximum time for each phase", 1, 30)
-CreateConVar("randomat_redlight_damage", 3, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Amount of damage a player takes per second", 1, 10)
+CreateConVar("randomat_redlight_mindelay", 3, FCVAR_ARCHIVE, "Minimum time for each phase", 1, 30)
+CreateConVar("randomat_redlight_maxdelay", 10, FCVAR_ARCHIVE, "Maximum time for each phase", 1, 30)
+CreateConVar("randomat_redlight_damage", 3, FCVAR_ARCHIVE, "Amount of damage a player takes per second", 1, 10)
 
 EVENT.Title = "Red Light, Green Light"
 EVENT.Description = "Hurts a player if they move during a red light"

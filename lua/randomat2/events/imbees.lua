@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_imbees_count", 3, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The amount of bees spawned when someone dies", 1, 10)
+CreateConVar("randomat_imbees_count", 3, FCVAR_ARCHIVE, "The amount of bees spawned when someone dies", 1, 10)
 
 EVENT.Title = "Stop, I'm Bees!"
 EVENT.Description = "Spawns bees when a player is killed"

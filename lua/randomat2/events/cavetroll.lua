@@ -9,12 +9,12 @@ EVENT.id = "cavetroll"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"biased_innocent", "biased", "rolechange", "item", "largeimpact"}
 
-CreateConVar("randomat_cavetroll_troll_scale", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The scale factor to use for the troll", 1.1, 3.0)
-CreateConVar("randomat_cavetroll_troll_damage", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much damage the club should do", 0, 100)
-CreateConVar("randomat_cavetroll_troll_health", 150, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The amount of health the troll should have", 100, 300)
-CreateConVar("randomat_cavetroll_hobbit_scale", 0.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The scale factor to use for the hobbits", 0.1, 0.9)
-CreateConVar("randomat_cavetroll_hobbit_pct", 0.34, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The percent of non-traitors to be hobbits", 0, 0.5)
-CreateConVar("randomat_cavetroll_hobbit_damage", 20, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "How much damage the swords should do", 1, 100)
+CreateConVar("randomat_cavetroll_troll_scale", 1.5, FCVAR_ARCHIVE, "The scale factor to use for the troll", 1.1, 3.0)
+CreateConVar("randomat_cavetroll_troll_damage", 50, FCVAR_ARCHIVE, "How much damage the club should do", 0, 100)
+CreateConVar("randomat_cavetroll_troll_health", 150, FCVAR_ARCHIVE, "The amount of health the troll should have", 100, 300)
+CreateConVar("randomat_cavetroll_hobbit_scale", 0.5, FCVAR_ARCHIVE, "The scale factor to use for the hobbits", 0.1, 0.9)
+CreateConVar("randomat_cavetroll_hobbit_pct", 0.34, FCVAR_ARCHIVE, "The percent of non-traitors to be hobbits", 0, 0.5)
+CreateConVar("randomat_cavetroll_hobbit_damage", 20, FCVAR_ARCHIVE, "How much damage the swords should do", 1, 100)
 
 function EVENT:Begin()
     local troll_scale = GetConVar("randomat_cavetroll_troll_scale"):GetFloat()

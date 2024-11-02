@@ -19,8 +19,8 @@ local function AddClient(fil)
     if CLIENT then include(fil) end
 end
 
-local auto = CreateConVar("ttt_randomat_auto", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Whether the Randomat should automatically trigger on round start.")
-CreateConVar("ttt_randomat_allow_client_list", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Whether to allow the client to view the list of active events.")
+local auto = CreateConVar("ttt_randomat_auto", 0, {FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Whether the Randomat should automatically trigger on round start.")
+CreateConVar("ttt_randomat_allow_client_list", 1, {FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Whether to allow the client to view the list of active events.")
 
 if SERVER then
     resource.AddWorkshop("2055805086")
@@ -46,17 +46,17 @@ if SERVER then
         CallHook("TTTRandomatCommand", nil, ply, cc, arg)
     end)
 
-    local auto_min_rounds = CreateConVar("ttt_randomat_auto_min_rounds", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The minimum number of completed rounds before auto-Randomat can trigger.")
-    local auto_chance = CreateConVar("ttt_randomat_auto_chance", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Chance of the auto-Randomat triggering.")
-    local auto_choose = CreateConVar("ttt_randomat_auto_choose", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the auto-started event is always \"choose\"")
-    local auto_silent = CreateConVar("ttt_randomat_auto_silent", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the auto-started event should be silent.")
-    CreateConVar("ttt_randomat_rebuyable", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether you can buy more than one Randomat.")
-    CreateConVar("ttt_randomat_event_weight", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The default selection weight each event should use.", 1)
-    CreateConVar("ttt_randomat_event_hint", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the Randomat should print what each event does when they start.")
-    CreateConVar("ttt_randomat_event_hint_chat", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether hints should also be put in chat.")
-    CreateConVar("ttt_randomat_event_history", 10, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many events to keep in history to prevent duplication.")
-    local always_trigger = CreateConVar("ttt_randomat_always_silently_trigger", "", {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Specify an event to always trigger silently at the start of each round.")
-    CreateConVar("ttt_randomat_event_hint_chat_secret", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether the secret events that triggered during a round should be displayed in chat at round end.")
+    local auto_min_rounds = CreateConVar("ttt_randomat_auto_min_rounds", 0, FCVAR_ARCHIVE, "The minimum number of completed rounds before auto-Randomat can trigger.")
+    local auto_chance = CreateConVar("ttt_randomat_auto_chance", 1, FCVAR_ARCHIVE, "Chance of the auto-Randomat triggering.")
+    local auto_choose = CreateConVar("ttt_randomat_auto_choose", 0, FCVAR_ARCHIVE, "Whether the auto-started event is always \"choose\"")
+    local auto_silent = CreateConVar("ttt_randomat_auto_silent", 0, FCVAR_ARCHIVE, "Whether the auto-started event should be silent.")
+    CreateConVar("ttt_randomat_rebuyable", 0, FCVAR_ARCHIVE, "Whether you can buy more than one Randomat.")
+    CreateConVar("ttt_randomat_event_weight", 1, FCVAR_ARCHIVE, "The default selection weight each event should use.", 1)
+    CreateConVar("ttt_randomat_event_hint", 1, FCVAR_ARCHIVE, "Whether the Randomat should print what each event does when they start.")
+    CreateConVar("ttt_randomat_event_hint_chat", 1, FCVAR_ARCHIVE, "Whether hints should also be put in chat.")
+    CreateConVar("ttt_randomat_event_history", 10, FCVAR_ARCHIVE, "How many events to keep in history to prevent duplication.")
+    local always_trigger = CreateConVar("ttt_randomat_always_silently_trigger", "", FCVAR_ARCHIVE, "Specify an event to always trigger silently at the start of each round.")
+    CreateConVar("ttt_randomat_event_hint_chat_secret", 0, FCVAR_ARCHIVE, "Whether the secret events that triggered during a round should be displayed in chat at round end.")
 
     hook.Add("TTTBeginRound", "AutoRandomat", function()
         local rounds_complete = Randomat:GetRoundsComplete()

@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_patched_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the Glitch being made a Traitor", 0, 100)
+CreateConVar("randomat_patched_chance", 50, FCVAR_ARCHIVE, "The chance of the Glitch being made a Traitor", 0, 100)
 
 EVENT.Title = "A Glitch has been patched"
 EVENT.Description = "Changes a random glitch into either an innocent or a traitor"

@@ -6,7 +6,7 @@ EVENT.id = "gungame"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"item", "moderateimpact"}
 
-CreateConVar("randomat_gungame_timer", 5, {FCVAR_ARCHIVE,FCVAR_NOTIFY}, "Time between weapon changes", 5, 60)
+CreateConVar("randomat_gungame_timer", 5, FCVAR_ARCHIVE, "Time between weapon changes", 5, 60)
 
 function EVENT:Begin()
     local weps = {}

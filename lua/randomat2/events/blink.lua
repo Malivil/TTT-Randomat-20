@@ -5,8 +5,8 @@ EVENT.Description = "Spawns Weeping Angels that follow players around, killing t
 EVENT.id = "blink"
 EVENT.Categories = {"entityspawn", "moderateimpact"}
 
-CreateConVar("randomat_blink_cap", 12, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Maximum number of Weeping Angels spawned", 0, 15)
-CreateConVar("randomat_blink_delay", 0.5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Delay before Weeping Angels are spawned", 0.1, 2.0)
+CreateConVar("randomat_blink_cap", 12, FCVAR_ARCHIVE, "Maximum number of Weeping Angels spawned", 0, 15)
+CreateConVar("randomat_blink_delay", 0.5, FCVAR_ARCHIVE, "Delay before Weeping Angels are spawned", 0.1, 2.0)
 
 function EVENT:Begin()
     local cap = GetConVar("randomat_blink_cap"):GetInt()

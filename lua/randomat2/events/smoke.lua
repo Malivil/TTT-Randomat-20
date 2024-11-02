@@ -5,8 +5,8 @@ util.AddNetworkString("RdmtSmokeSignalsAdd")
 util.AddNetworkString("RdmtSmokeSignalsRemove")
 util.AddNetworkString("RdmtSmokeSignalsEnd")
 
-CreateConVar("randomat_smoke_charge_time", 30, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many seconds it takes to charge the next attack", 10, 120)
-CreateConVar("randomat_smoke_time", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "How many seconds the smoke lasts", 1, 30)
+CreateConVar("randomat_smoke_charge_time", 30, FCVAR_ARCHIVE, "How many seconds it takes to charge the next attack", 10, 120)
+CreateConVar("randomat_smoke_time", 5, FCVAR_ARCHIVE, "How many seconds the smoke lasts", 1, 30)
 
 EVENT.Title = "Smoke Signals"
 EVENT.Description = "Allows dead players to envelope their target in smoke"

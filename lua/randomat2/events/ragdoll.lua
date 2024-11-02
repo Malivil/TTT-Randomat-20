@@ -3,8 +3,8 @@ local EVENT = {}
 util.AddNetworkString("RdmtRagdollBegin")
 util.AddNetworkString("RdmtRagdollEnd")
 
-CreateConVar("randomat_ragdoll_time", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time the player is ragdolled", 0.5, 10)
-CreateConVar("randomat_ragdoll_delay", 1.5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time between ragdolls", 0.5, 10)
+CreateConVar("randomat_ragdoll_time", 1.5, FCVAR_ARCHIVE, "The time the player is ragdolled", 0.5, 10)
+CreateConVar("randomat_ragdoll_delay", 1.5, FCVAR_ARCHIVE, "The time between ragdolls", 0.5, 10)
 
 EVENT.Title = "Bad Trip"
 EVENT.Description = "Causes any player who is off the ground (by jumping, falling, etc.) to turn into a ragdoll temporarily"

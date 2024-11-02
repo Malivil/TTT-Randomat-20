@@ -7,10 +7,10 @@ EVENT.id = "murder"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"gamemode", "biased_traitor", "biased", "item", "rolechange", "largeimpact"}
 
-CreateConVar("randomat_murder_pickups_ratio", 0.75, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Ratio of weapons required to get a revolver.", 1, 5)
-CreateConVar("randomat_murder_highlight_gun", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to highlight dropped revolvers.")
-CreateConVar("randomat_murder_knifespeed", 1.2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Player move speed multiplier whilst knife is held.", 1, 2)
-CreateConVar("randomat_murder_allow_shop", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to allow the shop to be used.")
+CreateConVar("randomat_murder_pickups_ratio", 0.75, FCVAR_ARCHIVE, "Ratio of weapons required to get a revolver.", 1, 5)
+CreateConVar("randomat_murder_highlight_gun", 1, FCVAR_ARCHIVE, "Whether to highlight dropped revolvers.")
+CreateConVar("randomat_murder_knifespeed", 1.2, FCVAR_ARCHIVE, "Player move speed multiplier whilst knife is held.", 1, 2)
+CreateConVar("randomat_murder_allow_shop", 0, FCVAR_ARCHIVE, "Whether to allow the shop to be used.")
 
 util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")

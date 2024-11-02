@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_doublecross_chance", 50, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The chance of the Innocent being made a Traitor", 0, 100)
+CreateConVar("randomat_doublecross_chance", 50, FCVAR_ARCHIVE, "The chance of the Innocent being made a Traitor", 0, 100)
 
 EVENT.Title = "Double Cross"
 EVENT.Description = "Changes a random vanilla innocent into either a glitch or a traitor"

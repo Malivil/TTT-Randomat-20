@@ -1,9 +1,9 @@
 local EVENT = {}
 
-local reload_wait_time = CreateConVar("randomat_reload_wait_time", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Seconds after last shot before draining", 0.5, 10)
-local reload_drain_time = CreateConVar("randomat_reload_drain_time", 2, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Seconds between each ammo drain", 0.5, 10)
-local reload_keep_ammo = CreateConVar("randomat_reload_keep_ammo", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether drained ammo is kept or destroyed")
-local reload_affectbuymenu = CreateConVar("randomat_reload_affectbuymenu", 0, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether buy menu weapons lose ammo too")
+local reload_wait_time = CreateConVar("randomat_reload_wait_time", 5, FCVAR_ARCHIVE, "Seconds after last shot before draining", 0.5, 10)
+local reload_drain_time = CreateConVar("randomat_reload_drain_time", 2, FCVAR_ARCHIVE, "Seconds between each ammo drain", 0.5, 10)
+local reload_keep_ammo = CreateConVar("randomat_reload_keep_ammo", 1, FCVAR_ARCHIVE, "Whether drained ammo is kept or destroyed")
+local reload_affectbuymenu = CreateConVar("randomat_reload_affectbuymenu", 0, FCVAR_ARCHIVE, "Whether buy menu weapons lose ammo too")
 
 EVENT.Title = "Compulsive Reloading"
 EVENT.Description = "Slowly drains a user's ammo over time if they haven't fired a gun recently"

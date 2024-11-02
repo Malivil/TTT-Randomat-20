@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_delayedreaction_time", 5, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The time in seconds that damage should be delayed", 1, 100)
+CreateConVar("randomat_delayedreaction_time", 5, FCVAR_ARCHIVE, "The time in seconds that damage should be delayed", 1, 100)
 
 EVENT.Title = "Delayed Reaction"
 EVENT.Description = "Delays damage done to players for " .. GetConVar("randomat_delayedreaction_time"):GetInt() .. " seconds"

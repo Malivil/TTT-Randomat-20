@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_huntingseason_delay", 5, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "The delay before the player changes", 1, 60)
-CreateConVar("randomat_huntingseason_show_name", 1, {FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Whether to show the target player's name in the event title", 1, 60)
+CreateConVar("randomat_huntingseason_delay", 5, FCVAR_ARCHIVE, "The delay before the player changes", 1, 60)
+CreateConVar("randomat_huntingseason_show_name", 1, FCVAR_ARCHIVE, "Whether to show the target player's name in the event title", 1, 60)
 
 EVENT.Title = ""
 EVENT.AltTitle = "It's hunting season!"

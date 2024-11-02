@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_communist_show_roles", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to show the role of the purchasing player")
+CreateConVar("randomat_communist_show_roles", 1, FCVAR_ARCHIVE, "Whether to show the role of the purchasing player")
 
 EVENT.Title = "Communism! Time to learn how to share..."
 EVENT.Description = "Whenever anyone buys something from a shop, all other players get that thing too"

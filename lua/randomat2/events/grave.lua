@@ -8,8 +8,8 @@ EVENT.id = "grave"
 EVENT.Type = {EVENT_TYPE_WEAPON_OVERRIDE, EVENT_TYPE_RESPAWN}
 EVENT.Categories = {"deathtrigger", "rolechange", "biased_zombie", "biased", "largeimpact"}
 
-CreateConVar("randomat_grave_health", 30, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "The health that the Zombies respawn with", 10, 100)
-CreateConVar("randomat_grave_include_dead", 1, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Whether to resurrect dead players at the start")
+CreateConVar("randomat_grave_health", 30, FCVAR_ARCHIVE, "The health that the Zombies respawn with", 10, 100)
+CreateConVar("randomat_grave_include_dead", 1, FCVAR_ARCHIVE, "Whether to resurrect dead players at the start")
 
 local function ShouldZombify(ply)
     return not ply:Alive() and ply:GetRole() ~= ROLE_ZOMBIE
