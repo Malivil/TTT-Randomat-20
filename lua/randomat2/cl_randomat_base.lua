@@ -31,9 +31,9 @@ local allow_client_list = GetConVar("ttt_randomat_allow_client_list")
 
 local function EndEvent(evt)
     if not evt then return end
+    if type(evt.End) ~= "function" then return end
 
     local function End()
-        if type(evt.End) ~= "function" then return end
         evt:End()
     end
     local function Catch(err)
