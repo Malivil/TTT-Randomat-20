@@ -6,7 +6,7 @@ local function IsPlayerValid(p)
 end
 
 function EVENT:Begin()
-    hook.Add("TTTTargetIDPlayerBlockIcon", "RdmtTRexVisionBlockTargetIcon", function(ply, cli)
+    self:AddHook("TTTTargetIDPlayerBlockIcon", function(ply, cli)
         if not IsPlayerValid(cli) or not IsPlayerValid(ply) then return end
 
         if ply:GetNWBool("RdmtInvisible") then
@@ -14,18 +14,13 @@ function EVENT:Begin()
         end
     end)
 
-    hook.Add("TTTTargetIDPlayerBlockInfo", "RdmtTRexVisionBlockTargetInfo", function(ply, cli)
+    self:AddHook("TTTTargetIDPlayerBlockInfo", function(ply, cli)
         if not IsPlayerValid(cli) or not IsPlayerValid(ply) then return end
 
         if ply:GetNWBool("RdmtInvisible") then
             return true
         end
     end)
-end
-
-function EVENT:End()
-    hook.Remove("TTTTargetIDPlayerBlockIcon", "RdmtTRexVisionBlockTargetIcon")
-    hook.Remove("TTTTargetIDPlayerBlockInfo", "RdmtTRexVisionBlockTargetInfo")
 end
 
 Randomat:register(EVENT)

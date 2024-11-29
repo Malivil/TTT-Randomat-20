@@ -77,7 +77,7 @@ local function UpdateWeaponSounds()
 end
 
 function EVENT:Begin()
-    hook.Add("EntityEmitSound", "NarrationOverrideHook", function(data)
+    self:AddHook("EntityEmitSound", function(data)
         local current_sound = data.SoundName:lower()
         local new_sound = nil
         for pattern, sounds in pairs(sound_mapping) do
@@ -110,8 +110,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    hook.Remove("EntityEmitSound", "NarrationOverrideHook")
-
     local client = LocalPlayer()
     if not IsValid(client) then return end
 

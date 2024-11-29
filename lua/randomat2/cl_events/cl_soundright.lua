@@ -3,7 +3,7 @@ EVENT.id = "soundright"
 
 local wep_sounds = {}
 function EVENT:Begin()
-    hook.Add("EntityEmitSound", "SoundRightOverrideHook", function(data)
+    self:AddHook("EntityEmitSound", function(data)
         if not IsPlayer(data.Entity) or not data.Entity.GetActiveWeapon then return end
         local wep = data.Entity:GetActiveWeapon()
         if not IsValid(wep) then return end
@@ -19,8 +19,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    hook.Remove("EntityEmitSound", "SoundRightOverrideHook")
-
     table.Empty(wep_sounds)
     local client = LocalPlayer()
     if not IsValid(client) then return end

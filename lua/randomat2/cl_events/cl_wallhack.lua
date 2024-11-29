@@ -1,5 +1,4 @@
 local halo = halo
-local hook = hook
 
 local PlayerIterator = player.Iterator
 
@@ -12,7 +11,7 @@ end
 
 function EVENT:Begin()
     local client = LocalPlayer()
-    hook.Add("PreDrawHalos", "RdmtWallhackHalos", function()
+    self:AddHook("PreDrawHalos", function()
         local alivePlys = {}
         for k, v in PlayerIterator() do
             if v:Alive() and not v:IsSpec() and not IsTargetHighlighted(client, v) then
@@ -22,10 +21,6 @@ function EVENT:Begin()
 
         halo.Add(alivePlys, Color(0, 255, 0), 0, 0, 1, true, true)
     end)
-end
-
-function EVENT:End()
-    hook.Remove("PreDrawHalos", "RdmtWallhackHalos")
 end
 
 Randomat:register(EVENT)

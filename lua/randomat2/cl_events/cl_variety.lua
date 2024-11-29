@@ -1,9 +1,10 @@
 local EVENT = {}
 EVENT.id = "variety"
 
-local damageType = "None"
+local damageType = nil
 function EVENT:Begin()
-    hook.Add("TTTHUDInfoPaint", "RdmtVarietyTTTHUDInfoPaint", function(client, label_left, label_top, active_labels)
+    damageType = "None"
+    self:AddHook("TTTHUDInfoPaint", function(client, label_left, label_top, active_labels)
         if not IsPlayer(client) or not client:Alive() or client:IsSpec() then return end
 
         surface.SetFont("TabLarge")
@@ -27,11 +28,6 @@ function EVENT:Begin()
             table.insert(active_labels, "rdmtvariety")
         end
     end)
-end
-
-function EVENT:End()
-    hook.Remove("TTTHUDInfoPaint", "RdmtVarietyTTTHUDInfoPaint")
-    damageType = "None"
 end
 
 Randomat:register(EVENT)

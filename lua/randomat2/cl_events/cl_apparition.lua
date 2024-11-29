@@ -3,7 +3,7 @@ EVENT.id = "apparition"
 
 function EVENT:Begin()
     local client = LocalPlayer()
-    hook.Add("Think", "RdmtApparitionThink", function()
+    self:AddHook("Think", function()
         Randomat:HandleEntitySmoke(ents.GetAll(), client, function(v)
             if v:GetNWBool("RdmtApparition", false) then
                 v:SetNoDraw(true)
@@ -14,10 +14,6 @@ function EVENT:Begin()
             return false
         end)
     end)
-end
-
-function EVENT:End()
-    hook.Remove("Think", "RdmtApparitionThink")
 end
 
 Randomat:register(EVENT)

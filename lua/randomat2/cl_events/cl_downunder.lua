@@ -4,7 +4,7 @@ EVENT.id = "downunder"
 
 function EVENT:Begin()
     local view = { origin = vector_origin, angles = angle_zero, fov = 0 }
-    hook.Add("CalcView", "RdmtDownUnderCalcView", function(ply, origin, angles, fov)
+    self:AddHook("CalcView", function(ply, origin, angles, fov)
         if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
 
         -- Get the views as given plus whatever is calculated from the current weapon
@@ -28,7 +28,7 @@ function EVENT:Begin()
 
     -- Inverts mouse input to make this event easier to control
     local client = LocalPlayer()
-    hook.Add("InputMouseApply", "RdmtDownUnderInputMouseApply", function(cmd, x, y, ang)
+    self:AddHook("InputMouseApply", function(cmd, x, y, ang)
         if not IsPlayer(client) or not client:Alive() or client:IsSpec() then return end
 
         ang.yaw = ang.yaw + (x / 50)
@@ -37,11 +37,6 @@ function EVENT:Begin()
 
         return true
     end)
-end
-
-function EVENT:End()
-    hook.Remove("CalcView", "RdmtDownUnderCalcView")
-    hook.Remove("InputMouseApply", "RdmtDownUnderInputMouseApply")
 end
 
 Randomat:register(EVENT)

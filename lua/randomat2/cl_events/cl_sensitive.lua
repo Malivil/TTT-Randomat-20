@@ -3,15 +3,11 @@ EVENT.id = "sensitive"
 
 local sensitivity = nil
 function EVENT:Begin()
-    hook.Add("AdjustMouseSensitivity", "RdmtSensitiveChangeHook", function(default_sensitivity)
+    self:AddHook("AdjustMouseSensitivity", function(default_sensitivity)
         if sensitivity ~= nil then
             return sensitivity
         end
     end)
-end
-
-function EVENT:End()
-    hook.Remove("AdjustMouseSensitivity", "RdmtSensitiveChangeHook")
 end
 
 Randomat:register(EVENT)

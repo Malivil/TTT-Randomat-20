@@ -2,7 +2,7 @@ local EVENT = {}
 EVENT.id = "killjester"
 
 function EVENT:Begin()
-    hook.Add("TTTScoringSecondaryWins", "RdmtKillJesterWinScoringSecondaryWins", function(wintype, secondary_wins)
+    self:AddHook("TTTScoringSecondaryWins", function(wintype, secondary_wins)
         -- Jester can only share win with the traitors
         if wintype ~= WIN_TRAITOR then return end
 
@@ -19,10 +19,6 @@ function EVENT:Begin()
             table.insert(secondary_wins, ROLE_JESTER)
         end
     end)
-end
-
-function EVENT:End()
-    hook.Remove("TTTScoringSecondaryWins", "RdmtKillJesterWinScoringSecondaryWins")
 end
 
 Randomat:register(EVENT)

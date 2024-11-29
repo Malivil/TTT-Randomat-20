@@ -1,6 +1,9 @@
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = Randomat.ActiveEvents or {}
 
+local randomat_meta =  {}
+randomat_meta.__index = randomat_meta
+
 --[[
  Event Registration
 ]]--
@@ -9,6 +12,9 @@ function Randomat:register(tbl)
     local id = tbl.id or tbl.Id
     tbl.Id = id
     tbl.id = id
+    tbl.__index = tbl
+    setmetatable(tbl, randomat_meta)
+
     Randomat.Events[id] = tbl
 
     if type(tbl.Initialize) == "function" then
@@ -22,6 +28,49 @@ function Randomat:unregister(id)
 end
 
 --[[
+  Event Hooks
+]]--
+
+function randomat_meta:AddHook(hooktype, callbackfunc, suffix)
+    callbackfunc = callbackfunc or self[hooktype]
+
+    local id = "RandomatEvent." .. self.Id .. ":" .. hooktype
+    if suffix and type(suffix) == "string" and #suffix > 0 then
+        id = id .. ":" .. suffix
+    end
+    hook.Add(hooktype, id, function(...)
+        return callbackfunc(...)
+    end)
+
+    self.Hooks = self.Hooks or {}
+
+    table.insert(self.Hooks, {hooktype, id})
+end
+
+function randomat_meta:RemoveHook(hooktype, suffix)
+    local id = "RandomatEvent." .. self.Id .. ":" .. hooktype
+    if suffix and type(suffix) == "string" and #suffix > 0 then
+        id = id .. ":" .. suffix
+    end
+    for idx, ahook in ipairs(self.Hooks or {}) do
+        if ahook[1] == hooktype and ahook[2] == id then
+            hook.Remove(ahook[1], ahook[2])
+            table.remove(self.Hooks, idx)
+            return
+        end
+    end
+end
+
+function randomat_meta:CleanUpHooks()
+    if not self.Hooks then return end
+    for _, ahook in ipairs(self.Hooks) do
+        hook.Remove(ahook[1], ahook[2])
+    end
+
+    table.Empty(self.Hooks)
+end
+
+--[[
  Event Tracking
 ]]--
 
@@ -31,6 +80,8 @@ local allow_client_list = GetConVar("ttt_randomat_allow_client_list")
 
 local function EndEvent(evt)
     if not evt then return end
+    evt:CleanUpHooks()
+
     if type(evt.End) ~= "function" then return end
 
     local function End()

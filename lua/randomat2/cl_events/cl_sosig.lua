@@ -12,7 +12,7 @@ local function UpdateWeaponSounds()
 end
 
 function EVENT:Begin()
-    hook.Add("EntityEmitSound", "SosigOverrideHook", function(data)
+    self:AddHook("EntityEmitSound", function(data)
         return Randomat:OverrideWeaponSoundData(data, sosig_sound)
     end)
 
@@ -20,8 +20,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    hook.Remove("EntityEmitSound", "SosigOverrideHook")
-
     local client = LocalPlayer()
     if not IsValid(client) then return end
 

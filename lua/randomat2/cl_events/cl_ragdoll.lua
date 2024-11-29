@@ -10,15 +10,9 @@ local function BlockTargetID(ent, client, text, color)
 end
 
 function EVENT:Begin()
-    hook.Add("TTTTargetIDRagdollName", "RdmtRagdollTTTTargetIDRagdollName", BlockTargetID)
-    hook.Add("TTTTargetIDEntityHintLabel", "RdmtRagdollTTTTargetIDEntityHintLabel", BlockTargetID)
-    hook.Add("TTTTargetIDPlayerHintText", "RdmtRagdollTTTTargetIDPlayerHintText", BlockTargetID)
-end
-
-function EVENT:End()
-    hook.Remove("TTTTargetIDRagdollName", "RdmtRagdollTTTTargetIDRagdollName")
-    hook.Remove("TTTTargetIDEntityHintLabel", "RdmtRagdollTTTTargetIDEntityHintLabel")
-    hook.Remove("TTTTargetIDPlayerHintText", "RdmtRagdollTTTTargetIDPlayerHintText")
+    self:AddHook("TTTTargetIDRagdollName", BlockTargetID)
+    self:AddHook("TTTTargetIDEntityHintLabel", BlockTargetID)
+    self:AddHook("TTTTargetIDPlayerHintText", BlockTargetID)
 end
 
 Randomat:register(EVENT)
