@@ -520,6 +520,7 @@ function Randomat:SetPlayerInvisible(ply)
     ply:SetMaterial("sprites/heatwave")
     ply:SetNWBool("RdmtInvisible", true)
     ply:SetRenderMode(RENDERMODE_TRANSALPHA)
+    ply:SetNoDraw(true)
 end
 
 function Randomat:SetPlayerVisible(ply)
@@ -527,6 +528,7 @@ function Randomat:SetPlayerVisible(ply)
     ply:SetMaterial("")
     ply:SetNWBool("RdmtInvisible", false)
     ply:SetRenderMode(RENDERMODE_NORMAL)
+    ply:SetNoDraw(false)
 end
 
 function Randomat:IsPlayerInVehicle(ply)
