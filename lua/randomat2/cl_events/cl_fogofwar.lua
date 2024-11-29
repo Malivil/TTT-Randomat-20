@@ -1,3 +1,13 @@
+local EVENT = {}
+EVENT.id = "fogofwar"
+
+function EVENT:End()
+    hook.Remove("SetupWorldFog", "RdmtFogOfWarWorldFog")
+    hook.Remove("SetupSkyboxFog", "RdmtFogOfWarSkyboxFog")
+end
+
+Randomat:register(EVENT)
+
 net.Receive("RdmtFogOfWarBegin", function()
     local default = net.ReadFloat()
     local traitor = net.ReadFloat()
@@ -36,10 +46,4 @@ net.Receive("RdmtFogOfWarBegin", function()
 
         return true
     end)
-end)
-
-
-net.Receive("RdmtFogOfWarEnd", function()
-    hook.Remove("SetupWorldFog", "RdmtFogOfWarWorldFog")
-    hook.Remove("SetupSkyboxFog", "RdmtFogOfWarSkyboxFog")
 end)

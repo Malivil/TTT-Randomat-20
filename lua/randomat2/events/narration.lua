@@ -6,8 +6,7 @@ EVENT.id = "narration"
 EVENT.Type = EVENT_TYPE_GUNSOUNDS
 EVENT.Categories = {"fun", "smallimpact"}
 
-util.AddNetworkString("TriggerNarration")
-util.AddNetworkString("EndNarration")
+util.AddNetworkString("RdmtNarrationUpdateWeaponSounds")
 
 local StringFormat = string.format
 
@@ -111,8 +110,6 @@ function EVENT:Initialize()
 end
 
 function EVENT:Begin()
-    net.Start("TriggerNarration")
-    net.Broadcast()
     for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
@@ -122,7 +119,7 @@ function EVENT:Begin()
 
     self:AddHook("WeaponEquip", function(wep, ply)
         timer.Create("NarrationDelay", 0.1, 1, function()
-            net.Start("TriggerNarration")
+            net.Start("RdmtNarrationUpdateWeaponSounds")
             net.Send(ply)
             local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
             Randomat:OverrideWeaponSound(wep, chosen_sound)
@@ -171,8 +168,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    net.Start("EndNarration")
-    net.Broadcast()
     timer.Remove("NarrationDelay")
     for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do

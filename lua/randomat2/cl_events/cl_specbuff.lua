@@ -1,4 +1,19 @@
+local EVENT = {}
+EVENT.id = "specbuff"
+
 local healing = {}
+local function ClearState()
+    healing = {}
+    hook.Remove("HUDPaint", "RdmtSpecBuffUI")
+    hook.Remove("Think", "RdmtSpecBuffThink")
+end
+
+function EVENT:End()
+    ClearState()
+    Randomat:RemoveSpeedMultipliers("RdmtSpecBuff")
+end
+
+Randomat:register(EVENT)
 
 net.Receive("RdmtSpecBuffBegin", function()
     healing = {}
@@ -84,8 +99,4 @@ net.Receive("RdmtSpecBuffHealEnd", function()
     healing[net.ReadUInt64()] = false
 end)
 
-net.Receive("RdmtSpecBuffEnd", function()
-    healing = {}
-    hook.Remove("HUDPaint", "RdmtSpecBuffUI")
-    hook.Remove("Think", "RdmtSpecBuffThink")
-end)
+net.Receive("RdmtSpecBuffEnd", ClearState)

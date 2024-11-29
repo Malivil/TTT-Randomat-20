@@ -1,14 +1,27 @@
+local EVENT = {}
+EVENT.id = "choose"
+
 local chooseTables = {}
 local frames = 0
 
-local function closeFrame(frame, idx)
+local function CloseFrame(frame, idx)
     if frame ~= nil then
         frame:Close()
         chooseTables[idx] = nil
     end
 end
 
-local function closeChooseFrame()
+local function CloseAllChooseFrames()
+    for k, v in pairs(chooseTables) do
+        CloseFrame(v, k)
+    end
+end
+
+EVENT.End = CloseAllChooseFrames
+
+Randomat:register(EVENT)
+
+local function CloseChooseFrame()
     local lastidx = nil
     -- Frames not not necessarily stored in order when multiple are shown at once
     -- Find that last index since that will be the frame on top (visually)
@@ -20,17 +33,11 @@ local function closeChooseFrame()
 
     if lastidx then
         local frame = chooseTables[lastidx]
-        closeFrame(frame, lastidx)
+        CloseFrame(frame, lastidx)
     end
 end
 
-local function closeAllChooseFrames()
-    for k, v in pairs(chooseTables) do
-        closeFrame(v, k)
-    end
-end
-
-local function openFrame(x, vote)
+local function OpenFrame(x, vote)
     frames = frames + 1
     local frame = vgui.Create("DFrame")
     frame:SetPos(10, ScrH() - 500)
@@ -49,7 +56,7 @@ end
 net.Receive("ChooseEventTrigger", function()
     local x = net.ReadInt(32)
     local tbl = net.ReadTable(true)
-    local frame = openFrame(x)
+    local frame = OpenFrame(x)
 
     --Event List
     local list = vgui.Create("DListView", frame)
@@ -66,14 +73,14 @@ net.Receive("ChooseEventTrigger", function()
         net.Start("ChoosePlayerChose")
         net.WriteString(pnl:GetColumnText(2))
         net.SendToServer()
-        closeChooseFrame()
+        CloseChooseFrame()
     end
 end)
 
 net.Receive("ChooseVoteTrigger", function()
     local x = net.ReadInt(32)
     local tbl = net.ReadTable(true)
-    local frame = openFrame(x, true)
+    local frame = OpenFrame(x, true)
 
     --Event List
     local list = vgui.Create("DListView", frame)
@@ -106,6 +113,4 @@ net.Receive("ChooseVoteTrigger", function()
     end)
 end)
 
-net.Receive("ChooseEventEnd", function()
-    closeAllChooseFrames()
-end)
+net.Receive("ChooseEventEnd", CloseAllChooseFrames)

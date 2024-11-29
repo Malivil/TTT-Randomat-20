@@ -1,13 +1,19 @@
-local upgradeFrame
+local EVENT = {}
+EVENT.id = "upgrade"
 
-local function closeFrame()
+local upgradeFrame = nil
+local function CloseFrame()
     if upgradeFrame ~= nil then
         upgradeFrame:Close()
         upgradeFrame = nil
     end
 end
 
-net.Receive("UpgradeEventBegin", function()
+EVENT.End = CloseFrame
+
+Randomat:register(EVENT)
+
+net.Receive("RdmtUpgradeBegin", function()
     --Frame Setup
     upgradeFrame = vgui.Create("DFrame")
     local ht = 190
@@ -40,7 +46,7 @@ net.Receive("UpgradeEventBegin", function()
     btn1.DoClick = function()
         net.Start("RdmtPlayerChoseMercenary")
         net.SendToServer()
-        closeFrame()
+        CloseFrame()
     end
 
     local btn2 = vgui.Create("DButton", upgradeFrame)
@@ -55,10 +61,8 @@ net.Receive("UpgradeEventBegin", function()
     btn2.DoClick = function()
         net.Start("RdmtPlayerChoseKiller")
         net.SendToServer()
-        closeFrame()
+        CloseFrame()
     end
 end)
 
-net.Receive("RdmtCloseUpgradeFrame", function()
-    closeFrame()
-end)
+net.Receive("RdmtCloseUpgradeFrame", CloseFrame)

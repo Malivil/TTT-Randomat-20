@@ -1,8 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("RdmtSpecBeesBegin")
-util.AddNetworkString("RdmtSpecBeesEnd")
-
 EVENT.Title = "RISE FROM YOUR... Bees?"
 EVENT.Description = "Dead players become harmless bees"
 EVENT.id = "specbees"
@@ -65,9 +62,6 @@ function EVENT:Begin()
     bees = {}
     dead = {}
 
-    net.Start("RdmtSpecBeesBegin")
-    net.Broadcast()
-
     for _, p in ipairs(self:GetDeadPlayers()) do
         SetupBee(p)
     end
@@ -112,9 +106,6 @@ function EVENT:End()
 
     table.Empty(bees)
     table.Empty(dead)
-
-    net.Start("RdmtSpecBeesEnd")
-    net.Broadcast()
 end
 
 Randomat:register(EVENT)

@@ -8,12 +8,11 @@ CreateConVar("randomat_stickwithme_damage_amount", 1, FCVAR_ARCHIVE, "Damage don
 CreateConVar("randomat_stickwithme_highlight", 1, FCVAR_ARCHIVE, "Whether to highlight player partners")
 
 EVENT.Title = "Stick With Me"
-EVENT.Description = "Pairs players together, forcing them to stay close to eachother or take damage"
+EVENT.Description = "Pairs players together, forcing them to stay close to each other or take damage"
 EVENT.id = "stickwithme"
 EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
 util.AddNetworkString("RdmtStickWithMeHighlightAdd")
-util.AddNetworkString("RdmtStickWithMeHighlightRemove")
 
 local pairthinktime = {}
 
@@ -130,8 +129,6 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtStickWithMeDelay")
-    net.Start("RdmtStickWithMeHighlightRemove")
-    net.Broadcast()
     for k, _ in pairs(pairthinktime) do
         ClearPlayerData(k)
     end

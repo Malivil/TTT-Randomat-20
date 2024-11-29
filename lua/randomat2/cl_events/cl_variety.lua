@@ -1,5 +1,8 @@
+local EVENT = {}
+EVENT.id = "variety"
+
 local damageType = "None"
-net.Receive("RdmtVarietyBegin", function()
+function EVENT:Begin()
     hook.Add("TTTHUDInfoPaint", "RdmtVarietyTTTHUDInfoPaint", function(client, label_left, label_top, active_labels)
         if not IsPlayer(client) or not client:Alive() or client:IsSpec() then return end
 
@@ -24,12 +27,15 @@ net.Receive("RdmtVarietyBegin", function()
             table.insert(active_labels, "rdmtvariety")
         end
     end)
-end)
+end
+
+function EVENT:End()
+    hook.Remove("TTTHUDInfoPaint", "RdmtVarietyTTTHUDInfoPaint")
+    damageType = "None"
+end
+
+Randomat:register(EVENT)
 
 net.Receive("RdmtVarietyTypeSet", function()
     damageType = net.ReadString()
-end)
-
-net.Receive("RdmtVarietyEnd", function()
-    hook.Remove("TTTHUDInfoPaint", "RdmtVarietyTTTHUDInfoPaint")
 end)

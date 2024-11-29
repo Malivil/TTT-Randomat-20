@@ -8,9 +8,7 @@ EVENT.id = "soundright"
 EVENT.Type = EVENT_TYPE_GUNSOUNDS
 EVENT.Categories = {"fun", "smallimpact"}
 
-util.AddNetworkString("RdmtSoundRightBegin")
 util.AddNetworkString("RdmtSoundRightUpdate")
-util.AddNetworkString("RdmtSoundRightEnd")
 
 local sounds = {}
 local wep_sounds = {}
@@ -26,9 +24,9 @@ local function GetRandomWeaponSound(wep)
 
         -- If this is a sound script, extract the file out of it.
         -- Some weapons have to be overwritten by the EntityEmitSound hook and that can't use scripts
-        local properties = sound.GetProperties(chosen_sound)
-        if properties then
-            local sound_property = properties.sound
+        local sound_props = sound.GetProperties(chosen_sound)
+        if sound_props then
+            local sound_property = sound_props.sound
             -- Choose a random sound from the options
             if type(sound_property) == "table" then
                 sound_property = sound_property[math.random(#sound_property)]
@@ -84,16 +82,11 @@ function EVENT:Begin()
         local chosen_sound = GetRandomWeaponSound(wep)
         return Randomat:OverrideWeaponSoundData(data, chosen_sound)
     end)
-
-    net.Start("RdmtSoundRightBegin")
-    net.Broadcast()
 end
 
 function EVENT:End()
     table.Empty(sounds)
     table.Empty(wep_sounds)
-    net.Start("RdmtSoundRightEnd")
-    net.Broadcast()
     timer.Remove("SoundRightDelay")
     for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do

@@ -1,5 +1,7 @@
+local EVENT = {}
+EVENT.id = "jumparound"
 
-net.Receive("JumpAroundBegin", function()
+function EVENT:Begin()
     hook.Add("StartCommand", "RdmtJumpAroundCommandHook", function(ply, cmd)
         if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
         if ply:IsOnGround() then
@@ -7,8 +9,10 @@ net.Receive("JumpAroundBegin", function()
             cmd:SetSideMove(0)
         end
     end)
-end)
+end
 
-net.Receive("JumpAroundEnd", function()
+function EVENT:End()
     hook.Remove("StartCommand", "RdmtJumpAroundCommandHook")
-end)
+end
+
+Randomat:register(EVENT)

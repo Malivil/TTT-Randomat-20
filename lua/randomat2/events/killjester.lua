@@ -1,8 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("RdmtKillJesterBegin")
-util.AddNetworkString("RdmtKillJesterEnd")
-
 EVENT.Title = "Fiends for Life"
 EVENT.Description = "Innocents win if they kill the jester, but traitors want them alive"
 EVENT.id = "killjester"
@@ -16,9 +13,6 @@ function EVENT:BeforeEventTrigger(ply, options, ...)
 end
 
 function EVENT:Begin()
-    net.Start("RdmtKillJesterBegin")
-    net.Broadcast()
-
     -- Save the original hook and remove it
     if not origPlayerDeath then
         origPlayerDeath = hook.GetTable()["PlayerDeath"]["Jester_WinCheck_PlayerDeath"]
@@ -36,9 +30,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    net.Start("RdmtKillJesterEnd")
-    net.Broadcast()
-
     -- Restore the original hook
     if origPlayerDeath then
         hook.Add("PlayerDeath", "Jester_WinCheck_PlayerDeath", origPlayerDeath)

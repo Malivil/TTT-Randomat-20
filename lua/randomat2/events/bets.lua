@@ -103,11 +103,6 @@ function EVENT:Begin()
     end)
 end
 
-function EVENT:End()
-    net.Start("RdmtHedgeBetsEnd")
-    net.Broadcast()
-end
-
 function EVENT:Condition()
     -- The "TTTWinCheckBlocks" hook is only available in the new CR
     if not CR_VERSION then return false end

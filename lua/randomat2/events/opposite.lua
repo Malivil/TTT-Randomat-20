@@ -55,8 +55,6 @@ function EVENT:End()
     for _, p in player.Iterator() do
         p:SetLadderClimbSpeed(200)
     end
-    net.Start("OppositeDayEnd")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

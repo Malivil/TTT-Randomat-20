@@ -102,8 +102,6 @@ function EVENT:End()
             ghost:Remove()
         end
     end
-    net.Start("RdmtBooEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

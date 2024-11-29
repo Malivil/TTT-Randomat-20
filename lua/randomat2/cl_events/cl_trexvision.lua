@@ -1,8 +1,11 @@
+local EVENT = {}
+EVENT.id = "trexvision"
+
 local function IsPlayerValid(p)
     return IsPlayer(p) and p:Alive() and not p:IsSpec()
 end
 
-net.Receive("RdmtTRexVisionBegin", function()
+function EVENT:Begin()
     hook.Add("TTTTargetIDPlayerBlockIcon", "RdmtTRexVisionBlockTargetIcon", function(ply, cli)
         if not IsPlayerValid(cli) or not IsPlayerValid(ply) then return end
 
@@ -18,9 +21,11 @@ net.Receive("RdmtTRexVisionBegin", function()
             return true
         end
     end)
-end)
+end
 
-net.Receive("RdmtTRexVisionEnd", function()
+function EVENT:End()
     hook.Remove("TTTTargetIDPlayerBlockIcon", "RdmtTRexVisionBlockTargetIcon")
     hook.Remove("TTTTargetIDPlayerBlockInfo", "RdmtTRexVisionBlockTargetInfo")
-end)
+end
+
+Randomat:register(EVENT)

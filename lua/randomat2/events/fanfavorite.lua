@@ -1,6 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("FanFavoriteEventBegin")
 util.AddNetworkString("FanFavoriteEventEnd")
 util.AddNetworkString("FanFavoritePlayerVoted")
 util.AddNetworkString("FanFavoriteReset")
@@ -25,8 +24,6 @@ local aliveplys = {}
 local noneLabel = "None of the Above"
 
 function EVENT:Begin()
-    net.Start("FanFavoriteEventBegin")
-    net.Broadcast()
     local fanfavoritetimer = GetConVar("randomat_fanfavorite_timer"):GetInt()
 
     playervotes = {}
@@ -137,8 +134,6 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtFanFavoriteTimer")
-    net.Start("FanFavoriteEventEnd")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

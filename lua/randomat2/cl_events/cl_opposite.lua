@@ -1,3 +1,15 @@
+local EVENT = {}
+EVENT.id = "opposite"
+
+local function RemoveHooks()
+    hook.Remove("StartCommand", "RdmtOppositeCommandHook")
+    hook.Remove("TTTSprintKey", "RdmtOppositeSprintKeyHook")
+end
+
+EVENT.End = RemoveHooks
+
+Randomat:register(EVENT)
+
 net.Receive("OppositeDayBegin", function()
     local hardmode = net.ReadBool()
     hook.Add("StartCommand", "RdmtOppositeCommandHook", function(ply, cmd)
@@ -30,7 +42,4 @@ net.Receive("OppositeDayBegin", function()
     end)
 end)
 
-net.Receive("OppositeDayEnd", function()
-    hook.Remove("StartCommand", "RdmtOppositeCommandHook")
-    hook.Remove("TTTSprintKey", "RdmtOppositeSprintKeyHook")
-end)
+net.Receive("OppositeDayEnd", RemoveHooks)

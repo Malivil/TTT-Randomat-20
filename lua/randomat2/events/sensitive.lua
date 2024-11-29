@@ -40,11 +40,6 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtSensitivityChangeTimer")
-    -- Added in cl_sensitive
-    hook.Remove("AdjustMouseSensitivity", "RdmtSensitiveChangeHook")
-    for _, v in player.Iterator() do
-        SetSensitivity(v, 0)
-    end
 end
 
 function EVENT:GetConVars()

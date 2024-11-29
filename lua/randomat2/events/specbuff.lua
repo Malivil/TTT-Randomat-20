@@ -214,13 +214,6 @@ function EVENT:End()
     for id, _ in pairs(timers) do
         timer.Remove(id)
     end
-
-    net.Start("RdmtSpecBuffEnd")
-    net.Broadcast()
-
-    net.Start("RdmtRemoveSpeedMultipliers")
-    net.WriteString("RdmtSpecBuff")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

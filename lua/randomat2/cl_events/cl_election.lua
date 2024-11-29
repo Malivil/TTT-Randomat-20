@@ -1,15 +1,39 @@
-net.Receive("ElectionNominateBegin", function()
-    local frame = vgui.Create("DFrame")
-    frame:SetPos(10, ScrH() - 800)
-    frame:SetSize(200, 300)
-    frame:SetTitle("Nominate Presidents (Hold " .. Key("+showscores", "tab"):lower() .. ")")
-    frame:SetDraggable(false)
-    frame:ShowCloseButton(false)
-    frame:SetVisible(true)
-    frame:SetDeleteOnClose(true)
+local EVENT = {}
+EVENT.id = "election"
 
-    --Player List
-    local listView = vgui.Create("DListView", frame)
+local nominateframe = nil
+local voteframe = nil
+
+local function CloseNominateFrame()
+    if IsValid(nominateframe) then
+        nominateframe:Close()
+    end
+end
+local function CloseVoteFrame()
+    if IsValid(voteframe) then
+        voteframe:Close()
+    end
+end
+
+function EVENT:End()
+    CloseNominateFrame()
+    CloseVoteFrame()
+end
+
+Randomat:register(EVENT)
+
+net.Receive("ElectionNominateBegin", function()
+    nominateframe = vgui.Create("DFrame")
+    nominateframe:SetPos(10, ScrH() - 800)
+    nominateframe:SetSize(200, 300)
+    nominateframe:SetTitle("Nominate Presidents (Hold " .. Key("+showscores", "tab"):lower() .. ")")
+    nominateframe:SetDraggable(false)
+    nominateframe:ShowCloseButton(false)
+    nominateframe:SetVisible(true)
+    nominateframe:SetDeleteOnClose(true)
+
+    -- Player List
+    local listView = vgui.Create("DListView", nominateframe)
     listView:Dock(FILL)
     listView:SetMultiSelect(false)
     local playerColumn = listView:AddColumn("Players")
@@ -55,31 +79,27 @@ net.Receive("ElectionNominateBegin", function()
         end
     end)
 
-    net.Receive("ElectionNominateEnd", function()
-        if IsValid(frame) then
-            frame:Close()
-        end
-    end)
+    net.Receive("ElectionNominateEnd", CloseNominateFrame)
 end)
 
 net.Receive("ElectionVoteBegin", function()
-    local frame = vgui.Create("DFrame")
-    frame:SetPos(10, ScrH() - 800)
-    frame:SetSize(200, 300)
-    frame:SetTitle("Vote for President (Hold " .. Key("+showscores", "tab"):lower() .. ")")
-    frame:SetDraggable(false)
-    frame:ShowCloseButton(false)
-    frame:SetVisible(true)
-    frame:SetDeleteOnClose(true)
+    voteframe = vgui.Create("DFrame")
+    voteframe:SetPos(10, ScrH() - 800)
+    voteframe:SetSize(200, 300)
+    voteframe:SetTitle("Vote for President (Hold " .. Key("+showscores", "tab"):lower() .. ")")
+    voteframe:SetDraggable(false)
+    voteframe:ShowCloseButton(false)
+    voteframe:SetVisible(true)
+    voteframe:SetDeleteOnClose(true)
 
-    --Player List
-    local listView = vgui.Create("DListView", frame)
+    -- Player List
+    local listView = vgui.Create("DListView", voteframe)
     listView:Dock(FILL)
     listView:SetMultiSelect(false)
     listView:AddColumn("Players")
     listView:AddColumn("Votes")
 
-    --Add the two options
+    -- Add the two options
     listView:AddLine(net.ReadString(), 0)
     listView:AddLine(net.ReadString(), 0)
 
@@ -114,9 +134,5 @@ net.Receive("ElectionVoteBegin", function()
         end
     end)
 
-    net.Receive("ElectionVoteEnd", function()
-        if IsValid(frame) then
-            frame:Close()
-        end
-    end)
+    net.Receive("ElectionVoteEnd", CloseVoteFrame)
 end)

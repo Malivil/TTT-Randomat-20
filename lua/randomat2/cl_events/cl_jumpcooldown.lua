@@ -1,3 +1,13 @@
+local EVENT = {}
+EVENT.id = "jumpcooldown"
+
+function EVENT:End()
+    hook.Remove("StartCommand", "RdmtJumpCooldownCommandHook")
+    hook.Remove("HUDPaint", "RdmtJumpCooldownHUDPaintHook")
+end
+
+Randomat:register(EVENT)
+
 surface.CreateFont("Cooldown", {
     font = "Trebuchet24",
     size = 22,
@@ -37,9 +47,4 @@ net.Receive("JumpCooldownBegin", function()
             end
         end)
     end
-end)
-
-net.Receive("JumpCooldownEnd", function()
-    hook.Remove("StartCommand", "RdmtJumpCooldownCommandHook")
-    hook.Remove("HUDPaint", "RdmtJumpCooldownHUDPaintHook")
 end)

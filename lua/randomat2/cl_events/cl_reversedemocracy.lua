@@ -1,6 +1,15 @@
+local EVENT = {}
+EVENT.id = "reversedemocracy"
+
 local voteframe = nil
 
-net.Receive("ReverseDemocracyEventBegin", function()
+local function CloseFrame()
+    if IsValid(voteframe) then
+        voteframe:Close()
+    end
+end
+
+function EVENT:Begin()
     voteframe = vgui.Create("DFrame")
     voteframe:SetPos(10, ScrH() - 800)
     voteframe:SetSize(200, 300)
@@ -52,10 +61,10 @@ net.Receive("ReverseDemocracyEventBegin", function()
             v:SetColumnText(2, 0)
         end
     end)
-end)
+end
 
-net.Receive("ReverseDemocracyEventEnd", function()
-    if IsValid(voteframe) then
-        voteframe:Close()
-    end
-end)
+EVENT.End = CloseFrame
+
+Randomat:register(EVENT)
+
+net.Receive("ReverseDemocracyEventEnd", CloseFrame)

@@ -2,7 +2,6 @@ local EVENT = {}
 
 util.AddNetworkString("DemocracyEventBegin")
 util.AddNetworkString("DemocracyJesterRevenge")
-util.AddNetworkString("DemocracyEventEnd")
 util.AddNetworkString("DemocracyPlayerVoted")
 util.AddNetworkString("DemocracyJesterVoted")
 util.AddNetworkString("DemocracyReset")
@@ -154,8 +153,6 @@ end
 
 function EVENT:End()
     timer.Remove("votekilltimer")
-    net.Start("DemocracyEventEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

@@ -80,8 +80,6 @@ function EVENT:End()
     for id, _ in pairs(timers) do
         timer.Remove(id)
     end
-    net.Start("RdmtSmokeSignalsEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

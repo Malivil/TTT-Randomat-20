@@ -1,8 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("JumpAroundBegin")
-util.AddNetworkString("JumpAroundEnd")
-
 CreateConVar("randomat_jumparound_jumps", 5, FCVAR_ARCHIVE, "How many multi-jumps the players can do", 2, 10)
 
 EVENT.Title = "Jump Around!"
@@ -18,18 +15,12 @@ function EVENT:Begin()
         jumps = jumpConVar:GetInt()
         jumpConVar:SetInt(GetConVar("randomat_jumparound_jumps"):GetInt())
     end
-
-    net.Start("JumpAroundBegin")
-    net.Broadcast()
 end
 
 function EVENT:End()
     if jumps then
         GetConVar("multijump_default_jumps"):SetInt(jumps)
     end
-
-    net.Start("JumpAroundEnd")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

@@ -1,11 +1,17 @@
-local rockPaperScissorsFrame
+local EVENT = {}
+EVENT.id = "rockpaperscissors"
 
-local function closeFrame()
+local rockPaperScissorsFrame = nil
+local function CloseFrame()
     if rockPaperScissorsFrame ~= nil then
         rockPaperScissorsFrame:Close()
         rockPaperScissorsFrame = nil
     end
 end
+
+EVENT.End = CloseFrame
+
+Randomat:register(EVENT)
 
 net.Receive("RockPaperScissorsEventBegin", function()
     --Frame Setup
@@ -40,7 +46,7 @@ net.Receive("RockPaperScissorsEventBegin", function()
         net.Start("RdmtPlayerChoseRock")
         net.WriteUInt64(LocalPlayer():SteamID64())
         net.SendToServer()
-        closeFrame()
+        CloseFrame()
     end
 
     -- Paper
@@ -54,7 +60,7 @@ net.Receive("RockPaperScissorsEventBegin", function()
         net.Start("RdmtPlayerChosePaper")
         net.WriteUInt64(LocalPlayer():SteamID64())
         net.SendToServer()
-        closeFrame()
+        CloseFrame()
     end
 
     -- Scissors
@@ -68,10 +74,6 @@ net.Receive("RockPaperScissorsEventBegin", function()
         net.Start("RdmtPlayerChoseScissors")
         net.WriteUInt64(LocalPlayer():SteamID64())
         net.SendToServer()
-        closeFrame()
+        CloseFrame()
     end
-end)
-
-net.Receive("RdmtCloseRockPaperScissorsFrame", function()
-    closeFrame()
 end)

@@ -1,3 +1,14 @@
+local EVENT = {}
+EVENT.id = "boo"
+
+local function RemoveHook()
+    hook.Remove("HUDPaint", "RdmtBooUI")
+end
+
+EVENT.End = RemoveHook
+
+Randomat:register(EVENT)
+
 net.Receive("RdmtBooBegin", function()
     local client = LocalPlayer()
     hook.Add("HUDPaint", "RdmtBooUI", function()
@@ -21,6 +32,4 @@ net.Receive("RdmtBooBegin", function()
     end)
 end)
 
-net.Receive("RdmtBooEnd", function()
-    hook.Remove("HUDPaint", "RdmtBooUI")
-end)
+net.Receive("RdmtBooEnd", RemoveHook)

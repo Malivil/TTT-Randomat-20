@@ -516,10 +516,6 @@ function EVENT:End()
     ResetVotes()
     timer.Remove("ElectionNominateTimer")
     timer.Remove("ElectionVoteTimer")
-    net.Start("ElectionNominateEnd")
-    net.Broadcast()
-    net.Start("ElectionVoteEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

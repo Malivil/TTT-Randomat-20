@@ -1,6 +1,8 @@
-local wep_sounds = {}
+local EVENT = {}
+EVENT.id = "soundright"
 
-net.Receive("RdmtSoundRightBegin", function()
+local wep_sounds = {}
+function EVENT:Begin()
     hook.Add("EntityEmitSound", "SoundRightOverrideHook", function(data)
         if not IsPlayer(data.Entity) or not data.Entity.GetActiveWeapon then return end
         local wep = data.Entity:GetActiveWeapon()
@@ -14,7 +16,21 @@ net.Receive("RdmtSoundRightBegin", function()
         local chosen_sound = wep_sounds[wep_class]
         return Randomat:OverrideWeaponSoundData(data, chosen_sound)
     end)
-end)
+end
+
+function EVENT:End()
+    hook.Remove("EntityEmitSound", "SoundRightOverrideHook")
+
+    table.Empty(wep_sounds)
+    local client = LocalPlayer()
+    if not IsValid(client) then return end
+
+    for _, wep in ipairs(client:GetWeapons()) do
+        Randomat:RestoreWeaponSound(wep)
+    end
+end
+
+Randomat:register(EVENT)
 
 net.Receive("RdmtSoundRightUpdate", function()
     local client = LocalPlayer()
@@ -29,17 +45,5 @@ net.Receive("RdmtSoundRightUpdate", function()
             Randomat:OverrideWeaponSound(wep, chosen_sound)
             return
         end
-    end
-end)
-
-net.Receive("RdmtSoundRightEnd", function()
-    hook.Remove("EntityEmitSound", "SoundRightOverrideHook")
-
-    table.Empty(wep_sounds)
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
-
-    for _, wep in ipairs(client:GetWeapons()) do
-        Randomat:RestoreWeaponSound(wep)
     end
 end)

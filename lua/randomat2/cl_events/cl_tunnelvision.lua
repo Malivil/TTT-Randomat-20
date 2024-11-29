@@ -1,3 +1,12 @@
+local EVENT = {}
+EVENT.id = "tunnelvision"
+
+function EVENT:End()
+    hook.Remove("HUDPaint", "RdmtTunnelVisionHUDPaint")
+end
+
+Randomat:register(EVENT)
+
 local function DrawCircle(x, y, radius, seg)
     local cir = {}
     for i = 0, seg do
@@ -45,8 +54,4 @@ net.Receive("TriggerTunnelVision", function()
         -- Let everything render normally again
         render.SetStencilEnable(false)
     end)
-end)
-
-net.Receive("EndTunnelVision", function()
-    hook.Remove("HUDPaint", "RdmtTunnelVisionHUDPaint")
 end)

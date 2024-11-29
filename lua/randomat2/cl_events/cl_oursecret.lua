@@ -1,3 +1,14 @@
+local EVENT = {}
+EVENT.id = "oursecret"
+
+local function RemoveHook()
+    hook.Remove("PreDrawHalos", "RdmtOurSecretHighlight")
+end
+
+EVENT.End = RemoveHook
+
+Randomat:register(EVENT)
+
 net.Receive("RdmtOurSecretHaloStart", function()
     local target = net.ReadPlayer()
 
@@ -9,6 +20,4 @@ net.Receive("RdmtOurSecretHaloStart", function()
     end)
 end)
 
-net.Receive("RdmtOurSecretHaloEnd", function()
-    hook.Remove("PreDrawHalos", "RdmtOurSecretHighlight")
-end)
+net.Receive("RdmtOurSecretHaloEnd", RemoveHook)

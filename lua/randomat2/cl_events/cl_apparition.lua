@@ -1,4 +1,7 @@
-net.Receive("RdmtApparitionBegin", function()
+local EVENT = {}
+EVENT.id = "apparition"
+
+function EVENT:Begin()
     local client = LocalPlayer()
     hook.Add("Think", "RdmtApparitionThink", function()
         Randomat:HandleEntitySmoke(ents.GetAll(), client, function(v)
@@ -11,8 +14,10 @@ net.Receive("RdmtApparitionBegin", function()
             return false
         end)
     end)
-end)
+end
 
-net.Receive("RdmtApparitionEnd", function()
+function EVENT:End()
     hook.Remove("Think", "RdmtApparitionThink")
-end)
+end
+
+Randomat:register(EVENT)

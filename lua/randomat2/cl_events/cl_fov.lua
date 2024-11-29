@@ -1,4 +1,7 @@
-net.Receive("RdmtFOVBegin", function()
+local EVENT = {}
+EVENT.id = "fov"
+
+function EVENT:Begin()
     local client = LocalPlayer()
     if not IsValid(client) then return end
     if not client.GetActiveWeapon then return end
@@ -8,4 +11,6 @@ net.Receive("RdmtFOVBegin", function()
 
     weap:SetIronsights(false)
     client:SetFOV(0, 0)
-end)
+end
+
+Randomat:register(EVENT)

@@ -130,8 +130,6 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtDeadGiftPowerTimer")
-    net.Start("RdmtDeadGiftEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

@@ -1,7 +1,6 @@
 local EVENT = {}
 
 util.AddNetworkString("RdmtCaveTrollBegin")
-util.AddNetworkString("RdmtCaveTrollEnd")
 
 EVENT.Title = "They have a cave troll"
 EVENT.Description = "Chooses a random traitor and makes them a strong giant with a club.\nOther random players are chosen to be smaller and given knives"
@@ -118,8 +117,6 @@ end
 
 function EVENT:End()
     self:ResetAllPlayerScales()
-    net.Start("RdmtCaveTrollEnd")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

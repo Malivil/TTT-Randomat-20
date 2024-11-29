@@ -1,8 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("RdmtOlympicSprintBegin")
-util.AddNetworkString("RdmtOlympicSprintEnd")
-
 EVENT.Title = "Olympic Sprint"
 EVENT.AltTitle = "Infinite Sprint"
 EVENT.Description = "Disables sprint stamina consumption, allowing players to sprint forever"
@@ -10,18 +7,10 @@ EVENT.id = "olympicsprint"
 EVENT.Categories = {"smallimpact"}
 
 function EVENT:Begin()
-    net.Start("RdmtOlympicSprintBegin")
-    net.Broadcast()
-
     self:AddHook("TTTSprintStaminaPost", function()
         -- Infinite sprint through fixed infinite stamina
         return 100
     end)
-end
-
-function EVENT:End()
-    net.Start("RdmtOlympicSprintEnd")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

@@ -4,7 +4,6 @@ util.AddNetworkString("RockPaperScissorsEventBegin")
 util.AddNetworkString("RdmtPlayerChoseRock")
 util.AddNetworkString("RdmtPlayerChosePaper")
 util.AddNetworkString("RdmtPlayerChoseScissors")
-util.AddNetworkString("RdmtCloseRockPaperScissorsFrame")
 
 EVENT.Title = "Rock, Paper, Scissors"
 EVENT.ExtDescription = "Pits two players against eachother in a Rock, Paper, Scissors fight to the death"
@@ -99,8 +98,6 @@ function EVENT:End()
     timer.Remove("RdmtRockPaperScissorsEndSoulTimer")
     timer.Remove("RdmtRockPaperScissorsNextRoundMessageTimer")
     timer.Remove("RdmtRockPaperScissorsNextRoundTimer")
-    net.Start("RdmtCloseRockPaperScissorsFrame")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

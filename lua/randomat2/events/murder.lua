@@ -12,7 +12,6 @@ CreateConVar("randomat_murder_highlight_gun", 1, FCVAR_ARCHIVE, "Whether to high
 CreateConVar("randomat_murder_knifespeed", 1.2, FCVAR_ARCHIVE, "Player move speed multiplier whilst knife is held.", 1, 2)
 CreateConVar("randomat_murder_allow_shop", 0, FCVAR_ARCHIVE, "Whether to allow the shop to be used.")
 
-util.AddNetworkString("RandomatRevolverHalo")
 util.AddNetworkString("MurderEventActive")
 
 local function IsEvil(ply)
@@ -50,7 +49,6 @@ function EVENT:Begin()
     local ratio = GetConVar("randomat_murder_pickups_ratio"):GetFloat()
     local pck = math.ceil((wepspawns * ratio)/players)
     net.Start("MurderEventActive")
-    net.WriteBool(true)
     net.WriteBool(allow_shop)
     net.WriteInt(pck, 32)
     net.WriteBool(GetConVar("randomat_murder_highlight_gun"):GetBool())
@@ -151,14 +149,6 @@ function EVENT:End()
         v:SetNWBool("RdmMurderRevolver", false)
         timer.Remove("RdmtBlindEndDelay_" .. v:Nick())
     end
-    net.Start("MurderEventActive")
-    net.WriteBool(false)
-    net.Broadcast()
-
-    -- Reset the player speed on the client
-    net.Start("RdmtRemoveSpeedMultiplier")
-    net.WriteString("RdmtMurderSpeed")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

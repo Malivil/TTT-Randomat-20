@@ -8,16 +8,10 @@ EVENT.id = "tunnelvision"
 EVENT.Categories = {"moderateimpact"}
 
 util.AddNetworkString("TriggerTunnelVision")
-util.AddNetworkString("EndTunnelVision")
 
 function EVENT:Begin()
     net.Start("TriggerTunnelVision")
     net.WriteUInt(viewpct:GetInt(), 7)
-    net.Broadcast()
-end
-
-function EVENT:End()
-    net.Start("EndTunnelVision")
     net.Broadcast()
 end
 

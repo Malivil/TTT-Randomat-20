@@ -1,5 +1,22 @@
+local EVENT = {}
+EVENT.id = "democracy"
+
 local voteframe = nil
 local jesterframes = {}
+
+function EVENT:End()
+    if IsValid(voteframe) then
+        voteframe:Close()
+    end
+
+    for _, f in ipairs(jesterframes) do
+        if IsValid(f) then
+            f:Close()
+        end
+    end
+end
+
+Randomat:register(EVENT)
 
 net.Receive("DemocracyEventBegin", function()
     voteframe = vgui.Create("DFrame")
@@ -85,18 +102,6 @@ net.Receive("DemocracyJesterRevenge", function()
         net.SendToServer()
         if IsValid(jesterframe) then
             jesterframe:Close()
-        end
-    end
-end)
-
-net.Receive("DemocracyEventEnd", function()
-    if IsValid(voteframe) then
-        voteframe:Close()
-    end
-
-    for _, f in ipairs(jesterframes) do
-        if IsValid(f) then
-            f:Close()
         end
     end
 end)

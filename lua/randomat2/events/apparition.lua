@@ -1,8 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("RdmtApparitionBegin")
-util.AddNetworkString("RdmtApparitionEnd")
-
 EVENT.Title = "Ghostly Apparition"
 EVENT.Description = "Dead players become ghosts who leave a trail of smoke as they drift through the world"
 EVENT.id = "apparition"
@@ -56,9 +53,6 @@ function EVENT:Begin()
     ghosts = {}
     dead = {}
 
-    net.Start("RdmtApparitionBegin")
-    net.Broadcast()
-
     for _, p in ipairs(self:GetDeadPlayers()) do
         SetupGhost(p)
     end
@@ -101,9 +95,6 @@ function EVENT:End()
 
     table.Empty(ghosts)
     table.Empty(dead)
-
-    net.Start("RdmtApparitionEnd")
-    net.Broadcast()
 end
 
 Randomat:register(EVENT)

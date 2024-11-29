@@ -1,5 +1,16 @@
+local EVENT = {}
+EVENT.id = "bets"
 
 local betframe = nil
+local function CloseFrame()
+    if IsValid(betframe) then
+        betframe:Close()
+    end
+end
+
+EVENT.End = CloseFrame
+
+Randomat:register(EVENT)
 
 net.Receive("RdmtHedgeBetsBegin", function()
     local ply = LocalPlayer()
@@ -46,8 +57,4 @@ net.Receive("RdmtHedgeBetsBegin", function()
     end
 end)
 
-net.Receive("RdmtHedgeBetsEnd", function()
-    if IsValid(betframe) then
-        betframe:Close()
-    end
-end)
+net.Receive("RdmtHedgeBetsEnd", CloseFrame)

@@ -1,10 +1,15 @@
-net.Receive("RdmtOlympicSprintBegin", function()
+local EVENT = {}
+EVENT.id = "olympicsprint"
+
+function EVENT:Begin()
     hook.Add("TTTSprintStaminaPost", "RdmtOlympicSprintPost", function()
         -- Infinite sprint through fixed infinite stamina
         return 100
     end)
-end)
+end
 
-net.Receive("RdmtOlympicSprintEnd", function()
+function EVENT:End()
     hook.Remove("TTTSprintStaminaPost", "RdmtOlympicSprintPost")
-end)
+end
+
+Randomat:register(EVENT)

@@ -114,8 +114,6 @@ function EVENT:End()
     for _, timer_id in ipairs(timers) do
         timer.Remove(timer_id)
     end
-    net.Start("RdmtOurSecretHaloEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

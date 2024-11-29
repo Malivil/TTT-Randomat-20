@@ -1,6 +1,7 @@
 local StringFormat = string.format
 
-local hooked = false
+local EVENT = {}
+EVENT.id = "narration"
 
 -- Sound file paths
 local beeping_sound_path = "beeping/beeping%s.mp3"
@@ -64,40 +65,8 @@ local sound_mapping = {
     [".*weapons/.*lidclose.*%..*"] = reload_sounds,
     [".*weapons/.*magslap.*%..*"] = reload_sounds
 }
-net.Receive("TriggerNarration", function()
-    -- This event can be called multiple times but we only want to add the hook once
-    if not hooked then
-        hook.Add("EntityEmitSound", "NarrationOverrideHook", function(data)
-            local current_sound = data.SoundName:lower()
-            local new_sound = nil
-            for pattern, sounds in pairs(sound_mapping) do
-                if string.find(current_sound, pattern) then
-                    -- If this is a player "footstep"-ing in mid-air, they are jumping or using a ladder
-                    if footsteps_pattern == pattern and IsPlayer(data.Entity) and not data.Entity:IsOnGround() then
-                        -- Don't replace the sound if the player is on a ladder
-                        if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
-                            new_sound = StringFormat(jump_sound_path, math.random(jump_sound_count))
-                        end
-                    else
-                        local sound_path = sounds[1]
-                        local sound_index = math.random(sounds[2])
-                        new_sound = StringFormat(sound_path, sound_index)
-                    end
-                    break
-                end
-            end
 
-            if new_sound then
-                data.SoundName = new_sound
-                return true
-            else
-                local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
-                return Randomat:OverrideWeaponSoundData(data, chosen_sound)
-            end
-        end)
-        hooked = true
-    end
-
+local function UpdateWeaponSounds()
     local client = LocalPlayer()
     if not IsValid(client) then return end
 
@@ -105,11 +74,43 @@ net.Receive("TriggerNarration", function()
         local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
         Randomat:OverrideWeaponSound(wep, chosen_sound)
     end
-end)
+end
 
-net.Receive("EndNarration", function()
+function EVENT:Begin()
+    hook.Add("EntityEmitSound", "NarrationOverrideHook", function(data)
+        local current_sound = data.SoundName:lower()
+        local new_sound = nil
+        for pattern, sounds in pairs(sound_mapping) do
+            if string.find(current_sound, pattern) then
+                -- If this is a player "footstep"-ing in mid-air, they are jumping or using a ladder
+                if footsteps_pattern == pattern and IsPlayer(data.Entity) and not data.Entity:IsOnGround() then
+                    -- Don't replace the sound if the player is on a ladder
+                    if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
+                        new_sound = StringFormat(jump_sound_path, math.random(jump_sound_count))
+                    end
+                else
+                    local sound_path = sounds[1]
+                    local sound_index = math.random(sounds[2])
+                    new_sound = StringFormat(sound_path, sound_index)
+                end
+                break
+            end
+        end
+
+        if new_sound then
+            data.SoundName = new_sound
+            return true
+        else
+            local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
+            return Randomat:OverrideWeaponSoundData(data, chosen_sound)
+        end
+    end)
+
+    UpdateWeaponSounds()
+end
+
+function EVENT:End()
     hook.Remove("EntityEmitSound", "NarrationOverrideHook")
-    hooked = false
 
     local client = LocalPlayer()
     if not IsValid(client) then return end
@@ -117,4 +118,8 @@ net.Receive("EndNarration", function()
     for _, wep in ipairs(client:GetWeapons()) do
         Randomat:RestoreWeaponSound(wep)
     end
-end)
+end
+
+Randomat:register(EVENT)
+
+net.Receive("RdmtNarrationUpdateWeaponSounds", UpdateWeaponSounds)

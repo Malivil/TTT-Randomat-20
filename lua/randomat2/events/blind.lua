@@ -2,7 +2,7 @@ local EVENT = {}
 
 CreateConVar("randomat_blind_duration", 15, FCVAR_ARCHIVE , "The duration the players should be blinded for", 5, 60)
 
-util.AddNetworkString("blindeventactive")
+util.AddNetworkString("RdmtBlindRemove")
 
 EVENT.Title = "Blind Traitors"
 EVENT.Description = "All traitors have been blinded for " .. GetConVar("randomat_blind_duration"):GetInt() .. " seconds!"
@@ -10,14 +10,8 @@ EVENT.id = "blind"
 EVENT.SingleUse = false
 EVENT.Categories = {"biased_innocent", "biased", "moderateimpact"}
 
-local function RemoveBlind()
-    net.Start("blindeventactive")
-    net.WriteBool(false)
-    net.Broadcast()
-end
-
 local function GetDuration(duration)
-    -- Default to the duration passed as a paramter, if there is one
+    -- Default to the duration passed as a parameter, if there is one
     if not duration then
         duration = GetConVar("randomat_blind_duration"):GetInt()
     end
@@ -31,17 +25,14 @@ function EVENT:BeforeEventTrigger(ply, options, duration)
 end
 
 function EVENT:Begin(duration)
-    net.Start("blindeventactive")
-    net.WriteBool(true)
-    net.Broadcast()
-
     timer.Create("RandomatBlindTimer", GetDuration(duration), 1, function()
-        RemoveBlind()
+        net.Start("RdmtBlindRemove")
+        net.Broadcast()
     end)
 end
 
 function EVENT:End()
-    RemoveBlind()
+    timer.Remove("RandomatBlindTimer")
 end
 
 function EVENT:Condition()

@@ -1,3 +1,14 @@
+local EVENT = {}
+EVENT.id = "gifts"
+
+local function RemoveHook()
+    hook.Remove("HUDPaint", "RdmtDeadGiftUI")
+end
+
+EVENT.End = RemoveHook
+
+Randomat:register(EVENT)
+
 net.Receive("RdmtDeadGiftBegin", function()
     local equip = Randomat:GetWeaponName(net.ReadString())
     local client = LocalPlayer()
@@ -27,6 +38,4 @@ net.Receive("RdmtDeadGiftBegin", function()
     end)
 end)
 
-net.Receive("RdmtDeadGiftEnd", function()
-    hook.Remove("HUDPaint", "RdmtDeadGiftUI")
-end)
+net.Receive("RdmtDeadGiftEnd", RemoveHook)

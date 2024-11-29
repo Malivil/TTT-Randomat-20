@@ -1,14 +1,16 @@
 local halo = halo
 local hook = hook
-local net = net
 
 local PlayerIterator = player.Iterator
+
+local EVENT = {}
+EVENT.id = "wallhack"
 
 local function IsTargetHighlighted(ply, target)
     return ply.IsTargetHighlighted and ply:IsTargetHighlighted(target)
 end
 
-net.Receive("RdmtWallhackStart", function()
+function EVENT:Begin()
     local client = LocalPlayer()
     hook.Add("PreDrawHalos", "RdmtWallhackHalos", function()
         local alivePlys = {}
@@ -20,8 +22,10 @@ net.Receive("RdmtWallhackStart", function()
 
         halo.Add(alivePlys, Color(0, 255, 0), 0, 0, 1, true, true)
     end)
-end)
+end
 
-net.Receive("RdmtWallhackEnd", function()
+function EVENT:End()
     hook.Remove("PreDrawHalos", "RdmtWallhackHalos")
-end)
+end
+
+Randomat:register(EVENT)

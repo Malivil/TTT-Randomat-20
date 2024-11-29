@@ -1,7 +1,6 @@
 local EVENT = {}
 
 util.AddNetworkString("PumpYouUpEventBegin")
-util.AddNetworkString("PumpYouUpEventEnd")
 util.AddNetworkString("PumpYouUpPlayerVoted")
 util.AddNetworkString("PumpYouUpReset")
 util.AddNetworkString("PumpYouUpSetTarget")
@@ -96,8 +95,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    net.Start("PumpYouUpEventEnd")
-    net.Broadcast()
     timer.Remove("PumpYouUpRegen")
 end
 

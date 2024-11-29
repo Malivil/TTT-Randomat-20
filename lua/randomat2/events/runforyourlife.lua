@@ -1,9 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("RandomatRunForYourLifeStart")
-util.AddNetworkString("RandomatRunForYourLifeEnd")
-util.AddNetworkString("RandomatRunForYourLifeDamage")
-
 CreateConVar("randomat_runforyourlife_delay", 0.2, FCVAR_ARCHIVE, "Time between player taking damage", 0.1, 5)
 CreateConVar("randomat_runforyourlife_damage", 3, FCVAR_ARCHIVE, "Amount of damage a player takes", 1, 10)
 

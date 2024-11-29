@@ -9,16 +9,8 @@ EVENT.id = "wallhack"
 EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 
 function EVENT:Begin()
-    net.Start("RdmtWallhackStart")
-    net.Broadcast()
-
     -- Bypass culling so you can always see everyone through walls
     self:AddCullingBypass()
-end
-
-function EVENT:End()
-    net.Start("RdmtWallhackEnd")
-    net.Broadcast()
 end
 
 Randomat:register(EVENT)

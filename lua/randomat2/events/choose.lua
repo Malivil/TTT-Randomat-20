@@ -154,10 +154,6 @@ end
 function EVENT:End()
     timer.Remove("RdmtChooseVoteTimer")
     timer.Remove("RdmtChooseTimer")
-
-    if owner == nil then return end
-    net.Start("ChooseEventEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

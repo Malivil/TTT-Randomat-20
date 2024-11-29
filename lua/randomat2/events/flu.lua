@@ -166,11 +166,6 @@ function EVENT:End()
     for _, v in player.Iterator() do
         ClearPlayerData(v)
     end
-
-    -- Reset the player speed on the client
-    net.Start("RdmtRemoveSpeedMultiplier")
-    net.WriteString("RdmtFluSpeed")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

@@ -1,4 +1,8 @@
-net.Receive("RdmtDownUnderBegin", function()
+local EVENT = {}
+
+EVENT.id = "downunder"
+
+function EVENT:Begin()
     local view = { origin = vector_origin, angles = angle_zero, fov = 0 }
     hook.Add("CalcView", "RdmtDownUnderCalcView", function(ply, origin, angles, fov)
         if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
@@ -16,7 +20,7 @@ net.Receive("RdmtDownUnderBegin", function()
             end
         end
 
-        -- And then flip it upsidedown
+        -- And then flip it upside-down
         view.angles.r = view.angles.r + 180
 
         return view
@@ -33,9 +37,11 @@ net.Receive("RdmtDownUnderBegin", function()
 
         return true
     end)
-end)
+end
 
-net.Receive("RdmtDownUnderEnd", function()
+function EVENT:End()
     hook.Remove("CalcView", "RdmtDownUnderCalcView")
     hook.Remove("InputMouseApply", "RdmtDownUnderInputMouseApply")
-end)
+end
+
+Randomat:register(EVENT)

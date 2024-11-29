@@ -1,4 +1,15 @@
+local EVENT = {}
+EVENT.id = "pumpyouup"
+
 local voteframe = nil
+function EVENT:End()
+    if IsValid(voteframe) then
+        voteframe:Close()
+    end
+    hook.Remove("TTTSpeedMultiplier", "PumpYouUp_TTTSpeedMultiplier")
+end
+
+Randomat:register(EVENT)
 
 net.Receive("PumpYouUpEventBegin", function()
     local buff = net.ReadUInt(4)
@@ -69,11 +80,4 @@ net.Receive("PumpYouUpEventBegin", function()
             table.insert(mults, speed_factor)
         end)
     end
-end)
-
-net.Receive("PumpYouUpEventEnd", function()
-    if IsValid(voteframe) then
-        voteframe:Close()
-    end
-    hook.Remove("TTTSpeedMultiplier", "PumpYouUp_TTTSpeedMultiplier")
 end)

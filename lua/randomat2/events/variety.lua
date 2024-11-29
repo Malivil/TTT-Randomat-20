@@ -1,8 +1,6 @@
 local EVENT = {}
 
-util.AddNetworkString("RdmtVarietyBegin")
 util.AddNetworkString("RdmtVarietyTypeSet")
-util.AddNetworkString("RdmtVarietyEnd")
 
 EVENT.Title = "Variety is the Spice of Life"
 EVENT.Description = "Prevents players from killing using the same type of damage (bullets, crowbar, etc.) twice in a row"
@@ -36,9 +34,6 @@ local function GetDamageType(dmginfo)
 end
 
 function EVENT:Begin()
-    net.Start("RdmtVarietyBegin")
-    net.Broadcast()
-
     -- Track the last type of damage used to kill a player
     local lastKillDamage = {}
     self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)
@@ -71,11 +66,6 @@ function EVENT:Begin()
             dmginfo:SetDamage(0)
         end
     end)
-end
-
-function EVENT:End()
-    net.Start("RdmtVarietyEnd")
-    net.Broadcast()
 end
 
 Randomat:register(EVENT)

@@ -7,14 +7,11 @@ EVENT.id = "sosig"
 EVENT.Type = EVENT_TYPE_GUNSOUNDS
 EVENT.Categories = {"fun", "smallimpact"}
 
-util.AddNetworkString("TriggerSosig")
-util.AddNetworkString("EndSosig")
+util.AddNetworkString("RdmtSosigUpdateWeaponSounds")
 
 local sosig_sound = "weapons/sosig.mp3"
 
 function EVENT:Begin()
-    net.Start("TriggerSosig")
-    net.Broadcast()
     for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do
             Randomat:OverrideWeaponSound(wep, sosig_sound)
@@ -23,7 +20,7 @@ function EVENT:Begin()
 
     self:AddHook("WeaponEquip", function(wep, ply)
         timer.Create("SosigDelay", 0.1, 1, function()
-            net.Start("TriggerSosig")
+            net.Start("RdmtSosigUpdateWeaponSounds")
             net.Send(ply)
             Randomat:OverrideWeaponSound(wep, sosig_sound)
         end)
@@ -35,8 +32,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    net.Start("EndSosig")
-    net.Broadcast()
     timer.Remove("SosigDelay")
     for _, ply in player.Iterator() do
         for _, wep in ipairs(ply:GetWeapons()) do

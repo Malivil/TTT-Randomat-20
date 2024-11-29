@@ -1,5 +1,17 @@
+local EVENT = {}
+EVENT.id = "immunity"
 
 local voteframe = nil
+
+local function CloseFrame()
+    if IsValid(voteframe) then
+        voteframe:Close()
+    end
+end
+
+EVENT.End = CloseFrame
+
+Randomat:register(EVENT)
 
 net.Receive("RdmtHerdImmunityBegin", function()
     voteframe = vgui.Create("DFrame")
@@ -52,8 +64,4 @@ net.Receive("RdmtHerdImmunityBegin", function()
     end)
 end)
 
-net.Receive("RdmtHerdImmunityEnd", function()
-    if IsValid(voteframe) then
-        voteframe:Close()
-    end
-end)
+net.Receive("RdmtHerdImmunityEnd", CloseFrame)

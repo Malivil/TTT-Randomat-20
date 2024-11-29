@@ -1,7 +1,6 @@
 local EVENT = {}
 
 util.AddNetworkString("JumpCooldownBegin")
-util.AddNetworkString("JumpCooldownEnd")
 
 CreateConVar("randomat_jumpcooldown_length", "5", FCVAR_ARCHIVE, "The length of the jump cooldown", 1, 180)
 
@@ -20,11 +19,6 @@ function EVENT:Begin()
     local cooldown = GetConVar("randomat_jumpcooldown_length"):GetInt()
     net.Start("JumpCooldownBegin")
     net.WriteUInt(cooldown, 8)
-    net.Broadcast()
-end
-
-function EVENT:End()
-    net.Start("JumpCooldownEnd")
     net.Broadcast()
 end
 

@@ -103,8 +103,6 @@ end
 
 function EVENT:End()
     timer.Remove("RdmtHerdImmunityVoteTimer")
-    net.Start("RdmtHerdImmunityEnd")
-    net.Broadcast()
 end
 
 function EVENT:GetConVars()

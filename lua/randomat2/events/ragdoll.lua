@@ -1,8 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("RdmtRagdollBegin")
-util.AddNetworkString("RdmtRagdollEnd")
-
 CreateConVar("randomat_ragdoll_time", 1.5, FCVAR_ARCHIVE, "The time the player is ragdolled", 0.5, 10)
 CreateConVar("randomat_ragdoll_delay", 1.5, FCVAR_ARCHIVE, "The time between ragdolls", 0.5, 10)
 
@@ -239,9 +236,6 @@ local function ragdollPlayer(v)
 end
 
 function EVENT:Begin()
-    net.Start("RdmtRagdollBegin")
-    net.Broadcast()
-
     for _, v in player.Iterator() do
         v.inRagdoll = false
         v.lastRagdoll = nil
@@ -297,9 +291,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    net.Start("RdmtRagdollEnd")
-    net.Broadcast()
-
     for _, v in player.Iterator() do
         if v.inRagdoll then
             unragdollPlayer(v)

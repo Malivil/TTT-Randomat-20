@@ -1,6 +1,6 @@
 local EVENT = {}
 
-util.AddNetworkString("UpgradeEventBegin")
+util.AddNetworkString("RdmtUpgradeBegin")
 util.AddNetworkString("RdmtCloseUpgradeFrame")
 util.AddNetworkString("RdmtPlayerChoseMercenary")
 util.AddNetworkString("RdmtPlayerChoseKiller")
@@ -50,8 +50,8 @@ function EVENT:Begin()
         if ply:GetRole() == ROLE_INNOCENT then
             if choose then
                 -- Wait for the notification to go away first
-                timer.Create("UpgradeBegin", 5, 1, function()
-                    net.Start("UpgradeEventBegin")
+                timer.Create("RdmtUpgradeBegin", 5, 1, function()
+                    net.Start("RdmtUpgradeBegin")
                     net.Send(ply)
                 end)
             else
@@ -64,16 +64,14 @@ function EVENT:Begin()
 
     self:AddHook("PlayerDeath", function(ply)
         if not IsValid(ply) or target ~= ply then return end
-        timer.Remove("UpgradeBegin")
+        timer.Remove("RdmtUpgradeBegin")
         net.Start("RdmtCloseUpgradeFrame")
         net.Send(ply)
     end)
 end
 
 function EVENT:End()
-    timer.Remove("UpgradeBegin")
-    net.Start("RdmtCloseUpgradeFrame")
-    net.Broadcast()
+    timer.Remove("RdmtUpgradeBegin")
 end
 
 function EVENT:Condition()

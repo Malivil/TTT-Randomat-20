@@ -1,4 +1,7 @@
-net.Receive("RdmtKillJesterBegin", function()
+local EVENT = {}
+EVENT.id = "killjester"
+
+function EVENT:Begin()
     hook.Add("TTTScoringSecondaryWins", "RdmtKillJesterWinScoringSecondaryWins", function(wintype, secondary_wins)
         -- Jester can only share win with the traitors
         if wintype ~= WIN_TRAITOR then return end
@@ -16,8 +19,10 @@ net.Receive("RdmtKillJesterBegin", function()
             table.insert(secondary_wins, ROLE_JESTER)
         end
     end)
-end)
+end
 
-net.Receive("RdmtKillJesterEnd", function()
+function EVENT:End()
     hook.Remove("TTTScoringSecondaryWins", "RdmtKillJesterWinScoringSecondaryWins")
-end)
+end
+
+Randomat:register(EVENT)

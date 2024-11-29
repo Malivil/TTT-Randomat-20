@@ -3,10 +3,6 @@ if not plymeta then return end
 
 local EVENT = {}
 
-util.AddNetworkString("RdmtPoltergeistsBegin")
-util.AddNetworkString("RdmtPoltergeistsEnd")
-util.AddNetworkString("RdmtPoltergeistsClientReady")
-
 EVENT.Title = "Poltergeists"
 EVENT.Description = "Allows dead players to see and activate traitor traps"
 EVENT.id = "poltergeists"
@@ -15,26 +11,13 @@ EVENT.Categories = {"spectator", "moderateimpact"}
 local oldCanUseTraitorButton = nil
 
 function EVENT:Begin()
-    if not oldCanUseTraitorButton then
-        oldCanUseTraitorButton = plymeta.CanUseTraitorButton
+    if oldCanUseTraitorButton then return end
+    oldCanUseTraitorButton = plymeta.CanUseTraitorButton
 
-        -- Let dead players use traitor buttons
-        plymeta.CanUseTraitorButton = function(ply, active_only)
-            return not ply:Alive() or ply:IsSpec() or oldCanUseTraitorButton(ply, active_only)
-        end
+    -- Let dead players use traitor buttons
+    plymeta.CanUseTraitorButton = function(ply, active_only)
+        return not ply:Alive() or ply:IsSpec() or oldCanUseTraitorButton(ply, active_only)
     end
-
-    net.Start("RdmtPoltergeistsBegin")
-    net.Broadcast()
-
-    -- This handles the case where a client loads in after the event has already started
-    -- It requires this back-and-forth because only the client knows when it's fully loaded
-    -- and only the server knows if the event is running already.
-    net.Receive("RdmtPoltergeistsClientReady", function()
-        local ply = net.ReadPlayer()
-        net.Start("RdmtPoltergeistsBegin")
-        net.Send(ply)
-    end)
 end
 
 function EVENT:End()
@@ -42,9 +25,6 @@ function EVENT:End()
         plymeta.CanUseTraitorButton = oldCanUseTraitorButton
         oldCanUseTraitorButton = nil
     end
-
-    net.Start("RdmtPoltergeistsEnd")
-    net.Broadcast()
 end
 
 function EVENT:Condition()

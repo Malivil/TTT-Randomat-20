@@ -1,4 +1,16 @@
+local EVENT = {}
+EVENT.id = "smoke"
+
 local smokers = {}
+local function ClearState()
+    smokers = {}
+    hook.Remove("HUDPaint", "RdmtSmokeSignalsUI")
+    hook.Remove("Think", "RdmtSmokeSignalsThink")
+end
+
+EVENT.End = ClearState
+
+Randomat:register(EVENT)
 
 net.Receive("RdmtSmokeSignalsBegin", function()
     smokers = {}
@@ -38,8 +50,4 @@ net.Receive("RdmtSmokeSignalsRemove", function()
     smokers[net.ReadUInt64()] = false
 end)
 
-net.Receive("RdmtSmokeSignalsEnd", function()
-    smokers = {}
-    hook.Remove("HUDPaint", "RdmtSmokeSignalsUI")
-    hook.Remove("Think", "RdmtSmokeSignalsThink")
-end)
+net.Receive("RdmtSmokeSignalsEnd", ClearState)

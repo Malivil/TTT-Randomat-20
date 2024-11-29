@@ -1,8 +1,5 @@
 local EVENT = {}
 
-util.AddNetworkString("RdmtTRexVisionBegin")
-util.AddNetworkString("RdmtTRexVisionEnd")
-
 CreateConVar("randomat_trexvision_reveal_time", 5, FCVAR_ARCHIVE, "How long to reveal a player who shoots their gun", 0, 30)
 
 EVENT.Title = "T-Rex Vision"
@@ -31,9 +28,6 @@ local function SetPlayerVisible(ply)
 end
 
 function EVENT:Begin()
-    net.Start("RdmtTRexVisionBegin")
-    net.Broadcast()
-
     for _, p in ipairs(self:GetAlivePlayers()) do
         SetPlayerInvisible(p)
     end
@@ -84,9 +78,6 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    net.Start("RdmtTRexVisionEnd")
-    net.Broadcast()
-
     for _, p in player.Iterator() do
         SetPlayerVisible(p)
         timer.Remove("RdmtTRexVisionRevealTimer_" .. p:Nick())

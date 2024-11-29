@@ -43,8 +43,6 @@ local function RespawnSaved(ply)
 end
 
 function EVENT:Begin()
-    net.Start("ReverseDemocracyEventBegin")
-    net.Broadcast()
     local reversedemocracytimer = GetConVar("randomat_reversedemocracy_timer"):GetInt()
 
     playervotes = {}
@@ -166,8 +164,6 @@ end
 function EVENT:End()
     timer.Remove("RdmtReverseDemocracyTimer")
     timer.Remove("RdmtReverseDemocracyRespawnTimer")
-    net.Start("ReverseDemocracyEventEnd")
-    net.Broadcast()
     for _, v in player.Iterator() do
         v:SetNWBool("RdmtReverseDemocracySaved", false)
     end
