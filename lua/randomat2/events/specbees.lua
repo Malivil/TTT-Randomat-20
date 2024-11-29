@@ -37,7 +37,7 @@ end
 local dead = {}
 local function SetupBee(p)
     -- Haunting phantoms and infecting parasites shouldn't be bees
-    if p:GetNWBool("Haunting", false) or p:GetNWBool("Infecting", false) then return end
+    if p:GetNWBool("PhantomHaunting", false) or p:GetNWBool("ParasiteInfecting", false) then return end
 
     dead[p:SteamID64()] = true
     SetSpectatorValues(p)
