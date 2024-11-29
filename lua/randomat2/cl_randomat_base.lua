@@ -208,39 +208,30 @@ end)
 ]]--
 
 local current_mults = {}
-local current_mults_withweapon = {}
-local current_mults_sprinting = {}
-net.Receive("RdmtSetSpeedMultiplier", function()
-    local mult = net.ReadFloat()
-    local key = net.ReadString()
+function Randomat:SetSpeedMultiplier(mult, key)
     current_mults[key] = mult
-end)
+end
 
-net.Receive("RdmtSetSpeedMultiplier_WithWeapon", function()
-    local mult = net.ReadFloat()
-    local key = net.ReadString()
-    local wep_class = net.ReadString()
+local current_mults_withweapon = {}
+function Randomat:SetSpeedMultiplierWithWeapon(mult, key, wep_class)
     current_mults_withweapon[key] = {
         wep_class = wep_class,
         mult = mult
     }
-end)
+end
 
-net.Receive("RdmtSetSpeedMultiplier_Sprinting", function()
-    local mult = net.ReadFloat()
-    local key = net.ReadString()
+local current_mults_sprinting = {}
+function Randomat:SetSpeedMultiplierWhileSprinting(mult, key)
     current_mults_sprinting[key] = mult
-end)
+end
 
-net.Receive("RdmtRemoveSpeedMultiplier", function()
-    local key = net.ReadString()
+function Randomat:RemoveSpeedMultiplier(key)
     current_mults[key] = nil
     current_mults_withweapon[key] = nil
     current_mults_sprinting[key] = nil
-end)
+end
 
-net.Receive("RdmtRemoveSpeedMultipliers", function()
-    local key = net.ReadString()
+function Randomat:RemoveSpeedMultipliers(key)
     for k, _ in pairs(current_mults) do
         if string.StartsWith(k, key) then
             current_mults[k] = nil
@@ -256,6 +247,35 @@ net.Receive("RdmtRemoveSpeedMultipliers", function()
             current_mults_sprinting[k] = nil
         end
     end
+end
+
+net.Receive("RdmtSetSpeedMultiplier", function()
+    local mult = net.ReadFloat()
+    local key = net.ReadString()
+    Randomat:SetSpeedMultiplier(mult, key)
+end)
+
+net.Receive("RdmtSetSpeedMultiplier_WithWeapon", function()
+    local mult = net.ReadFloat()
+    local key = net.ReadString()
+    local wep_class = net.ReadString()
+    Randomat:SetSpeedMultiplierWithWeapon(mult, key, wep_class)
+end)
+
+net.Receive("RdmtSetSpeedMultiplier_Sprinting", function()
+    local mult = net.ReadFloat()
+    local key = net.ReadString()
+    Randomat:SetSpeedMultiplierWhileSprinting(mult, key)
+end)
+
+net.Receive("RdmtRemoveSpeedMultiplier", function()
+    local key = net.ReadString()
+    Randomat:RemoveSpeedMultiplier(key)
+end)
+
+net.Receive("RdmtRemoveSpeedMultipliers", function()
+    local key = net.ReadString()
+    Randomat:RemoveSpeedMultipliers(key)
 end)
 
 local localPlayer = nil
