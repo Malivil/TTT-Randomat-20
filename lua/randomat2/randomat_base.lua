@@ -184,16 +184,19 @@ end
  Event Control
 ]]--
 
-local function EndEvent(evt)
+local function EndEvent(evt, skipNetMessage)
     evt:CleanUpHooks()
 
     local function End()
+        if type(evt.End) ~= "function" then return end
         evt:End()
     end
     local function Catch(err)
         ErrorNoHalt("WARNING: Randomat event '" .. evt.Id .. "' caused an error when it was being Ended. Please report to the addon developer with the following error:\n", err, "\n")
     end
     xpcall(End, Catch)
+
+    if skipNetMessage then return end
 
     net.Start("RdmtEventEnd")
     net.WriteString(evt.Id)
@@ -354,7 +357,7 @@ function Randomat:register(tbl)
             Default = tbl.MinPlayers or 0
         }
     end
-    -- Ensure the pieces of MinPlayers make sense with eachother
+    -- Ensure the pieces of MinPlayers make sense with each other
     tbl.MinPlayers.Min = tbl.MinPlayers.Min or 0
     tbl.MinPlayers.Max = tbl.MinPlayers.Max or 32
     if tbl.MinPlayers.Min > tbl.MinPlayers.Min then
@@ -397,7 +400,9 @@ function Randomat:register(tbl)
         weight:SetInt(-1)
     end
 
-    tbl:Initialize()
+    if type(tbl.Initialize) == "function" then
+        tbl:Initialize()
+    end
 end
 
 function Randomat:unregister(id)
@@ -1080,11 +1085,7 @@ end
 
 -- Skeleton
 
-function randomat_meta:Initialize() end
-
 function randomat_meta:Begin(...) end
-
-function randomat_meta:End() end
 
 function randomat_meta:Condition()
     return true
@@ -1533,7 +1534,7 @@ end)
 hook.Add("TTTPrepareRound", "RandomatPrepareRound", function()
     -- End ALL events rather than just active ones to prevent some event effects which maintain over map changes
     for _, v in pairs(Randomat.Events) do
-        EndEvent(v)
+        EndEvent(v, true)
     end
 end)
 hook.Add("ShutDown", "RandomatMapChange", function()

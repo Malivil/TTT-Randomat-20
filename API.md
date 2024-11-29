@@ -61,10 +61,10 @@ All methods below are automatically defined for every event but events can overr
 - *options* - The trigger options, including whether this event was started silently or hidden
 - *...* - All parameters that could be passed into this event. This is only used when one of the `TriggerEvent` methods is called, allowing you to change aspects of an event based on what code calls it
 
-**EVENT:Begin(...)** - Called when an event is started. **Must be defined to for an event to work**.\
-*Realm:* Server\
+**EVENT:Begin(...)** - Called when an event is started. **Must be defined on the server to for an event to work**.\
+*Realm:* Client and Server\
 *Parameters:*
-- *...* - All parameters that could be passed into this event. This is only used when one of the `TriggerEvent` methods is called, allowing you to change aspects of an event based on what code calls it
+- *...* - All parameters that could be passed into this event. This is only used when one of the `TriggerEvent` methods is called, allowing you to change aspects of an event based on what code calls it. *Server only*
 
 **EVENT:CleanUpHooks()** - Removes all hooks registered to this event.\
 *Realm:* Server
@@ -83,11 +83,12 @@ All methods below are automatically defined for every event but events can overr
 *Returns:* The current value of the the automatically-generated `ttt_randomat_{EVENT_ID}` convar. If overridden and changed to return `false`, this event will never start
 
 **EVENT:End()** - Called when an event is stopped. Used to do manual cleanup of processes started in the event.\
-*Realm:* Server
+*Realm:* Client and Server
 
 *NOTE:* **All** events are automatically ended during every round prep phase to ensure leftover event processes are stopped between events
 
-**EVENT:Initialize()** - Called after an event is finished registering.
+**EVENT:Initialize()** - Called after an event is finished registering.\
+*Realm:* Client and Server
 
 **EVENT:GetAlivePlayers(shuffle)** - Gets a table of all living players.\
 *Realm:* Server\
