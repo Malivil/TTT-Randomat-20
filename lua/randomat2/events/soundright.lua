@@ -51,7 +51,7 @@ end
 
 function EVENT:Begin()
     local blocklist = {}
-    for blocked_id in string.gmatch(GetConVar("randomat_paranoid_blocklist"):GetString(), "([^,]+)") do
+    for blocked_id in string.gmatch(GetConVar("randomat_soundright_blocklist"):GetString(), "([^,]+)") do
         table.insert(blocklist, blocked_id:Trim())
     end
 
