@@ -1101,6 +1101,7 @@ globals = {
     "DEATHRADAR",
 
     -- TTT2 globals,
+    "TTT2",
     "gameloop",
 
     -- Randomat constants
