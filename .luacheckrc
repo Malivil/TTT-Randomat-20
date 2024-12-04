@@ -1100,6 +1100,9 @@ globals = {
     "CRHUD",
     "DEATHRADAR",
 
+    -- TTT2 globals,
+    "gameloop",
+
     -- Randomat constants
     "EVENT_TYPE_DEFAULT",
     "EVENT_TYPE_FORCED_DEATH",
