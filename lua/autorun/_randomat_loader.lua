@@ -1,3 +1,5 @@
+if engine.ActiveGamemode() ~= "terrortown" then return end
+
 Randomat = Randomat or {}
 
 local concommand = concommand
