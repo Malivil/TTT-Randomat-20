@@ -9,7 +9,7 @@ local chamberpop_explosion_magnitude = CreateConVar("randomat_chamberpop_explosi
 
 local function CheckAndPop(ply, weap, magnitude, can_fire, ammoTbl, ammoFn)
     -- If we can't use the attack and we COULD have ammo but we don't... then just assume we're dry firing
-    -- This is necessary (as opposed to just overriding DryFire) because some custom weapons use a base mod that doens't use DryFire for... dry... firing
+    -- This is necessary (as opposed to just overriding DryFire) because some custom weapons use a base mod that doesn't use DryFire for... dry... firing
     if not can_fire and not weap.RdmtChamberPopped and ammoTbl and ammoTbl.ClipSize > 0 and ammoFn(weap) == 0 then
         weap.RdmtChamberPopped = true
 
@@ -63,7 +63,7 @@ end
 function EVENT:Begin()
     local magnitude = chamberpop_explosion_magnitude:GetString()
 
-    -- Rig all of the curretly-held weapons
+    -- Rig all of the currently-held weapons
     for _, p in ipairs(self:GetAlivePlayers()) do
         for _, w in ipairs(p:GetWeapons()) do
             if self:IsValidWeapon(w) then
@@ -88,7 +88,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    -- Reset all of the curretly-held weapons
+    -- Reset all of the currently-held weapons
     for _, p in ipairs(self:GetAlivePlayers()) do
         for _, w in ipairs(p:GetWeapons()) do
             if self:IsValidWeapon(w) then
