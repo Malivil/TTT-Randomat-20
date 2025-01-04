@@ -14,7 +14,8 @@ function EVENT:Begin()
     self:AddHook("Think", function()
         for _, v in ipairs(self:GetAlivePlayers()) do
             local active_weapon = v:GetActiveWeapon()
-            if IsValid(active_weapon) and (active_weapon.AutoSpawnable or (not Randomat:IsWeaponBuyable(active_weapon) or affects_buy)) then
+            if IsValid(active_weapon) and active_weapon.Primary and
+                (active_weapon.AutoSpawnable or (not Randomat:IsWeaponBuyable(active_weapon) or affects_buy)) then
                 active_weapon:SetClip1(active_weapon.Primary.ClipSize)
             end
         end

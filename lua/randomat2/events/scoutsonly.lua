@@ -61,7 +61,7 @@ function EVENT:Begin()
     self:AddHook("Think", function()
         for _, v in ipairs(self:GetAlivePlayers()) do
             local active_weapon = v:GetActiveWeapon()
-            if IsValid(active_weapon) then
+            if IsValid(active_weapon) and active_weapon.Primary then
                 active_weapon:SetClip1(active_weapon.Primary.ClipSize)
             end
         end

@@ -57,7 +57,7 @@ function EVENT:Begin()
 
     -- Add all non-blocked weapon sounds
     for _, v in pairs(weapons.GetList()) do
-        if v and v.Primary.Sound and not table.HasValue(blocklist, v.ClassName) and not string.find(v.Primary.Sound, "base") then
+        if v and v.Primary and v.Primary.Sound and not table.HasValue(blocklist, v.ClassName) and not string.find(v.Primary.Sound, "base") then
             table.insert(sounds, v.Primary.Sound)
         end
     end
