@@ -87,8 +87,7 @@ function EVENT:Begin()
     self:AddHook("PlayerDeath", function(victim, entity, killer)
         if not IsValid(victim) or (victim ~= ply1 and victim ~= ply2) then return end
         HandlePlayerDeath()
-        self:RemoveHook("PlayerDeath")
-        self:End()
+        Randomat:EndActiveEvent(self.id, true)
     end)
 end
 
