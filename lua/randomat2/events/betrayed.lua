@@ -16,7 +16,7 @@ function EVENT:Begin()
         if v:GetRole() == ROLE_TRAITOR then
             Randomat:SetRole(v, ROLE_GLITCH)
             timer.Create("RdmtBetrayedNotify", 3, 1, function()
-                Randomat:PrintMessage(v, MSG_PRINTBOTH, "Your conscious has gotten the better of you and you've betrayed your former team!")
+                Randomat:PrintMessage(v, MSG_PRINTBOTH, "Your conscience has gotten the better of you and you've betrayed your former team!")
             end)
             SendFullStateUpdate()
             return
