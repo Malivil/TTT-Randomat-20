@@ -1279,60 +1279,77 @@ function randomat_meta:HandleWeaponAddAndSelect(ply, addweapons)
     end
 end
 
+function randomat_meta:HandleWeaponPAP(weap, upgrade)
+    -- If PAP is installed, this weapon was given successfully, and the old one was PAP'd, then PAP the new one too
+    if not TTTPAP then return end
+    if not upgrade then return end
+    if not IsValid(weap) then return end
+
+    TTTPAP:ApplyUpgrade(weap, upgrade)
+end
+
 function randomat_meta:SwapWeapons(ply, weapon_list)
     local role_weapons = {}
+    local new_cr = false
     -- If this is a version of CR for TTT that has role weapons defined, keep track of them
     if WEAPON_CATEGORY_ROLE then
+        new_cr = true
         for _, w in ipairs(ply:GetWeapons()) do
             if w.Category == WEAPON_CATEGORY_ROLE then
-                table.insert(role_weapons, WEPS.GetClass(w))
+                table.insert(role_weapons, w)
             end
         end
     end
+
     -- Hardcode these for backwards compatibility
     local had_brainwash = ply:HasWeapon("weapon_hyp_brainwash")
     local had_scanner = ply:HasWeapon("weapon_ttt_wtester")
+    local old_unarmed = ply:GetWeapon("weapon_ttt_unarmed")
+    local old_carry = ply:GetWeapon("weapon_zm_carry")
+    local old_improvised = ply:GetWeapon("weapon_zm_improvised")
     self:HandleWeaponAddAndSelect(ply, function()
         ply:StripWeapons()
         -- Reset FOV to unscope
         ply:SetFOV(0, 0.2)
 
-        -- Have roles keep their special weapons
-        if ply:GetRole() == ROLE_ZOMBIE then
-            ply:Give("weapon_zom_claws")
-        elseif ply:GetRole() == ROLE_VAMPIRE then
-            ply:Give("weapon_vam_fangs")
-        elseif had_brainwash then
-            ply:Give("weapon_hyp_brainwash")
-        elseif had_scanner then
-            ply:Give("weapon_ttt_wtester")
-        elseif ply:GetRole() == ROLE_KILLER then
-            if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
-                ply:Give("weapon_kil_knife")
-            end
-            if ConVarExists("ttt_killer_crowbar_enabled") and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
-                ply:StripWeapon("weapon_zm_improvised")
-                ply:Give("weapon_kil_crowbar")
+        -- Have roles keep their special weapons if we're not already tracking them in the role_weapons table
+        if not new_cr then
+            if ply:GetRole() == ROLE_ZOMBIE then
+                ply:Give("weapon_zom_claws")
+            elseif ply:GetRole() == ROLE_VAMPIRE then
+                ply:Give("weapon_vam_fangs")
+            elseif had_brainwash then
+                ply:Give("weapon_hyp_brainwash")
+            elseif had_scanner then
+                ply:Give("weapon_ttt_wtester")
+            elseif ply:GetRole() == ROLE_KILLER then
+                if ConVarExists("ttt_killer_knife_enabled") and GetConVar("ttt_killer_knife_enabled"):GetBool() then
+                    ply:Give("weapon_kil_knife")
+                end
+                if ConVarExists("ttt_killer_crowbar_enabled") and GetConVar("ttt_killer_crowbar_enabled"):GetBool() then
+                    ply:StripWeapon("weapon_zm_improvised")
+                    ply:Give("weapon_kil_crowbar")
+                end
             end
         end
 
         -- Give their role weapon(s) back
-        for _, c in ipairs(role_weapons) do
-            ply:Give(c)
+        for _, v in ipairs(role_weapons) do
+            self:HandleWeaponPAP(ply:Give(WEPS.GetClass(v)), v.PAPUpgrade)
         end
 
         -- Make sure everyone has these weapons
         -- Roles that shouldn't, like the non-prime Zombie, won't be able to pick them up anyway
-        ply:Give("weapon_ttt_unarmed")
-        ply:Give("weapon_zm_carry")
-        ply:Give("weapon_zm_improvised")
+        self:HandleWeaponPAP(ply:Give("weapon_ttt_unarmed"), old_unarmed.PAPUpgrade)
+        self:HandleWeaponPAP(ply:Give("weapon_zm_carry"), old_carry.PAPUpgrade)
+        self:HandleWeaponPAP(ply:Give("weapon_zm_improvised"), old_improvised.PAPUpgrade)
 
         -- Handle inventory weapons last to make sure the roles get their specials
         for _, v in ipairs(weapon_list) do
             local wep_class = WEPS.GetClass(v)
             -- Don't give players the detective's tester or other role weapons
             if wep_class ~= "weapon_ttt_wtester" and (not WEAPON_CATEGORY_ROLE or v.Category ~= WEAPON_CATEGORY_ROLE) then
-                ply:Give(wep_class)
+                self:HandleWeaponPAP(ply:Give(wep_class), v.PAPUpgrade)
             end
         end
     end)

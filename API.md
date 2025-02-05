@@ -145,6 +145,12 @@ All methods below are automatically defined for every event but events can overr
     - *active_class* - The player's current weapon class
     - *active_kind* - The player's current weapon kind
 
+**EVENT:HandleWeaponPAP(weap, upgrade)** - Handles applying the specific PAP upgrade to the given weapon instantly with no delay or sound. Useful when copying or moving a weapon from one player to another.\
+*Realm:* Server\
+*Parameters:*
+- *weap* - The weapon to upgrade
+- *upgrade* - The upgrade to apply
+
 **EVENT:NotifyTeamChange(newMembers, roleTeam)** - Sends a message to the members of the targeted team, telling them the players in the `newMembers` list have joined them.
 *Realm:* Server\
 *Parameters:*

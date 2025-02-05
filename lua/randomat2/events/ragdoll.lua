@@ -77,7 +77,7 @@ local function UnstuckPlayer(ply)
     end
 end
 
-local function unragdollPlayer(v)
+function EVENT:UnRagdollPlayer(v)
     v.inRagdoll = false
     v:SetParent()
 
@@ -102,14 +102,14 @@ local function unragdollPlayer(v)
     end
 
     for i, _ in pairs(v.spawnInfo.weps) do
-        v:Give(i)
-        local wep = v:GetWeapon(i)
-        if IsValid(wep) then
-            if v.spawnInfo.weps[i].Clip then
-                wep:SetClip1(v.spawnInfo.weps[i].Clip)
-            end
-            v:SetAmmo(v.spawnInfo.weps[i].Reserve, wep:GetPrimaryAmmoType(), true)
+        local wep = v:Give(i)
+        if not IsValid(wep) then continue end
+
+        if v.spawnInfo.weps[i].Clip then
+            wep:SetClip1(v.spawnInfo.weps[i].Clip)
         end
+        v:SetAmmo(v.spawnInfo.weps[i].Reserve, wep:GetPrimaryAmmoType(), true)
+        self:HandleWeaponPAP(wep, v.spawnInfo.weps[i].PAPUpgrade)
     end
 
     if v.spawnInfo.activeWeapon then
@@ -143,7 +143,7 @@ local function unragdollPlayer(v)
     end
 end
 
-local function ragdollPlayer(v)
+function EVENT:RagdollPlayer(v)
     v.inRagdoll = true
     v.lastRagdoll = CurTime()
     v.spawnInfo = {}
@@ -153,6 +153,7 @@ local function ragdollPlayer(v)
         weps[j.ClassName] = {}
         weps[j.ClassName].Clip = j:Clip1()
         weps[j.ClassName].Reserve = v:GetAmmoCount(j:GetPrimaryAmmoType())
+        weps[j.ClassName].PAPUpgrade = j.PAPUpgrade
     end
 
     local equipment = {}
@@ -230,7 +231,7 @@ local function ragdollPlayer(v)
         -- Turn a ragdoll back into a player if they have essentially stopped moving and have been a ragdoll "long enough"
         if physObj:GetVelocity():Length() <= 10 and (CurTime() - v.lastRagdoll) > ragdolltime then
             hook.Remove("Think", v:Nick() .. "UnragdollTimer")
-            unragdollPlayer(v)
+            self:UnRagdollPlayer(v)
         end
     end)
 end
@@ -267,7 +268,7 @@ function EVENT:Begin()
                 if has_ragdoll then
                     v.lastRagdoll = CurTime()
                 else
-                    ragdollPlayer(v)
+                    self:RagdollPlayer(v)
                 end
             end
         end
@@ -293,7 +294,7 @@ end
 function EVENT:End()
     for _, v in player.Iterator() do
         if v.inRagdoll then
-            unragdollPlayer(v)
+            self:UnRagdollPlayer(v)
         end
         hook.Remove("Think", v:Nick() .. "UnragdollTimer")
     end

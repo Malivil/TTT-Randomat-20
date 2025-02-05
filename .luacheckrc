@@ -1127,7 +1127,8 @@ globals = {
 
     -- External addon constants and namespaces
     "EQUIP_PHD",
-    "ULib"
+    "ULib",
+    "TTTPAP"
 }
 std = {
     globals = {
