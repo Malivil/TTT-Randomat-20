@@ -65,16 +65,22 @@ local sound_mapping = {
     [".*weapons/.*out%..*"] = reload_sounds,
     [".*weapons/.*in%..*"] = reload_sounds,
     [".*weapons/.*reload.*%..*"] = reload_sounds,
-    [".*weapons/.*boltcatch.*%..*"] = reload_sounds,
+    [".*weapons/.*bolt.*%..*"] = reload_sounds,
     [".*weapons/.*insertshell.*%..*"] = reload_sounds,
     [".*weapons/.*selectorswitch.*%..*"] = reload_sounds,
     [".*weapons/.*rattle.*%..*"] = reload_sounds,
     [".*weapons/.*lidopen.*%..*"] = reload_sounds,
+    [".*weapons/.*lidclose.*%..*"] = reload_sounds,
+    [".*weapons/.*coverup.*%..*"] = reload_sounds,
+    [".*weapons/.*coverdown.*%..*"] = reload_sounds,
     [".*weapons/.*fetchmag.*%..*"] = reload_sounds,
     [".*weapons/.*beltjingle.*%..*"] = reload_sounds,
     [".*weapons/.*beltalign.*%..*"] = reload_sounds,
-    [".*weapons/.*lidclose.*%..*"] = reload_sounds,
-    [".*weapons/.*magslap.*%..*"] = reload_sounds
+    [".*weapons/.*magslap.*%..*"] = reload_sounds,
+    [".*weapons/.*slidepull.*%..*"] = reload_sounds,
+    [".*weapons/.*slideback.*%..*"] = reload_sounds,
+    [".*weapons/.*sliderelease.*%..*"] = reload_sounds,
+    [".*weapons/.*shotgun_shell.*%..*"] = reload_sounds
 }
 
 local function DoorIsOpen(door)
