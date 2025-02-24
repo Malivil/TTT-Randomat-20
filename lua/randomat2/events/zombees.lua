@@ -7,7 +7,6 @@ EVENT.Description = "Spawns bees who spread zombiism to their victims"
 EVENT.id = "zombees"
 EVENT.Categories = {"rolechange", "biased_zombie", "biased", "largeimpact"}
 
-
 local function IsBee(ent)
     if ent:GetClass() == "npc_manhack" then
         local children = ent:GetChildren()
