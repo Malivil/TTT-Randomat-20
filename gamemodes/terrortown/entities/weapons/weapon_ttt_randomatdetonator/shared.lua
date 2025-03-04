@@ -65,7 +65,7 @@ local function DetonatePlayer(owner, ply)
             explode:SetOwner(owner)
             explode:Spawn()
             explode:SetKeyValue("iMagnitude", "230")
-            explode:Fire("Explode", 0,0)
+            explode:Fire("Explode", 0, 0)
             explode:EmitSound("ambient/explosions/explode_4.wav", 400, 400)
         end
     end
