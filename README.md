@@ -1420,6 +1420,17 @@ _ttt_randomat_ransom_weight_ - Default: -1 - The weight this event should use du
 _randomat_ransom_traitorsonly_ - Default: 0 - Only target Traitors for the event.\
 _randomat_ransom_deathtimer_ - Default: 60 - The amount of time the person has to buy something.
 
+## REAL Gun Game
+Everyone starts with the same weapon. Each time you kill the other team, you get the next weapon. First player to kill with every weapon wins for their team.
+\
+\
+**ConVars**
+\
+_ttt_randomat_realgungame_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_realgungame_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_realgungame_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_realgungame_respawn_time_ - Default: 5 - How long before a dead player respawns.
+
 ## Red Light, Green Light
 Hurts a player if they move during a red light
 \
