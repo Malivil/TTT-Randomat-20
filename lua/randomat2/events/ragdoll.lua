@@ -108,7 +108,7 @@ function EVENT:UnRagdollPlayer(v)
         if v.spawnInfo.weps[i].Clip then
             wep:SetClip1(v.spawnInfo.weps[i].Clip)
         end
-        v:SetAmmo(v.spawnInfo.weps[i].Reserve, wep:GetPrimaryAmmoType(), true)
+        v:SetAmmo(v.spawnInfo.weps[i].Reserve, wep:GetPrimaryAmmoType())
         self:HandleWeaponPAP(wep, v.spawnInfo.weps[i].PAPUpgrade)
     end
 
