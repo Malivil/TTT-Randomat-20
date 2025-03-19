@@ -4,7 +4,7 @@ EVENT.Title = "REAL Gun Game"
 EVENT.Description = "Everyone starts with the same weapon. First player to kill with every weapon wins for their team\nEach time you kill the other team, you get the next weapon"
 EVENT.id = "realgungame"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
-EVENT.Categories = {"item", "largeimpact"}
+EVENT.Categories = {"gamemode", "rolechange", "item", "largeimpact"}
 
 CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_ARCHIVE, "How long before a dead player respawns", 0, 60)
 
