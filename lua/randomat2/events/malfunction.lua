@@ -27,6 +27,7 @@ function EVENT:Begin()
                     local dur = GetConVar("randomat_malfunction_duration"):GetFloat()
                     local repeats = math.floor(dur/wep.Primary.Delay) + 1
                     timer.Create("RdmtMalfunctionActive", wep.Primary.Delay, repeats, function()
+                        if not IsValid(wep) then return end
                         if wep:Clip1() ~= 0 then
                             wep:PrimaryAttack()
                             wep:SetNextPrimaryFire(CurTime() + wep.Primary.Delay)
