@@ -5,7 +5,7 @@ EVENT.Description = "Scales each player's size and speed"
 EVENT.id = "shrink"
 EVENT.Categories = {"fun", "moderateimpact"}
 
-CreateConVar("randomat_shrink_scale", 0.5, FCVAR_ARCHIVE, "The shrinking scale factor", 0.1, 0.9)
+CreateConVar("randomat_shrink_scale", 0.5, FCVAR_NONE, "The shrinking scale factor", 0.1, 0.9)
 
 function EVENT:Begin()
     local sc = GetConVar("randomat_shrink_scale"):GetFloat()

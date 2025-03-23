@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_runforyourlife_delay", 0.2, FCVAR_ARCHIVE, "Time between player taking damage", 0.1, 5)
-CreateConVar("randomat_runforyourlife_damage", 3, FCVAR_ARCHIVE, "Amount of damage a player takes", 1, 10)
+CreateConVar("randomat_runforyourlife_delay", 0.2, FCVAR_NONE, "Time between player taking damage", 0.1, 5)
+CreateConVar("randomat_runforyourlife_damage", 3, FCVAR_NONE, "Amount of damage a player takes", 1, 10)
 
 EVENT.Title = "Run For Your Life!"
 EVENT.Description = "Hurts a player while they are sprinting"

@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_evasive_force", 2000, FCVAR_ARCHIVE, "Amount of force to push players with", 1000, 5000)
-CreateConVar("randomat_evasive_jumping_force", 1000, FCVAR_ARCHIVE, "Amount of force to push jumping players with", 256, 5000)
+CreateConVar("randomat_evasive_force", 2000, FCVAR_NONE, "Amount of force to push players with", 1000, 5000)
+CreateConVar("randomat_evasive_jumping_force", 1000, FCVAR_NONE, "Amount of force to push jumping players with", 256, 5000)
 
 EVENT.Title = "Evasive Maneuvers"
 EVENT.Description = "Causes players who are shot to \"dodge\" out of the way of further bullets"

@@ -17,8 +17,8 @@ table.insert(eventnames, "Let's kick some ice!")
 table.insert(eventnames, "Can you feel it coming? The icy cold of space!")
 table.insert(eventnames, "Freeze in hell, Batman!")
 
-CreateConVar("randomat_freeze_duration", 5, FCVAR_ARCHIVE, "Duration of the Freeze (in seconds)", 1, 60)
-CreateConVar("randomat_freeze_timer", 30, FCVAR_ARCHIVE, "How often (in seconds) the Freeze occurs", 5, 60)
+CreateConVar("randomat_freeze_duration", 5, FCVAR_NONE, "Duration of the Freeze (in seconds)", 1, 60)
+CreateConVar("randomat_freeze_timer", 30, FCVAR_NONE, "How often (in seconds) the Freeze occurs", 5, 60)
 
 local function GetEventDescription()
     return "All Innocents will Freeze (and become immune) every " .. GetConVar("randomat_freeze_timer"):GetInt() .. " seconds"

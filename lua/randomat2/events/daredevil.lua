@@ -1,7 +1,7 @@
 local EVENT = {}
 
-local min_damage_scale = CreateConVar("randomat_daredevil_min_damage_scale", 1, FCVAR_ARCHIVE, "", 0, 1)
-local max_damage_scale = CreateConVar("randomat_daredevil_max_damage_scale", 2.5, FCVAR_ARCHIVE, "", 1.1, 5)
+local min_damage_scale = CreateConVar("randomat_daredevil_min_damage_scale", 1, FCVAR_NONE, "", 0, 1)
+local max_damage_scale = CreateConVar("randomat_daredevil_max_damage_scale", 2.5, FCVAR_NONE, "", 1.1, 5)
 
 EVENT.Title = "Daredevil"
 EVENT.Description = "Scale a player's damage up the faster they move (including falling)"

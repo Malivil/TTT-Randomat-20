@@ -6,7 +6,7 @@ EVENT.id = "realgungame"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"gamemode", "rolechange", "item", "largeimpact"}
 
-CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_ARCHIVE, "How long before a dead player respawns", 0, 60)
+CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_NONE, "How long before a dead player respawns", 0, 60)
 
 function EVENT:EquipPlayer(ply, wepClass)
     ply:StripWeapons()

@@ -6,8 +6,8 @@ EVENT.id = "crowbar"
 EVENT.SingleUse = false
 EVENT.Categories = {"smallimpact"}
 
-CreateConVar("randomat_crowbar_damage", 2.5, FCVAR_ARCHIVE, "Damage multiplier for the crowbar", 1.1, 3.0)
-CreateConVar("randomat_crowbar_push", 20, FCVAR_ARCHIVE, "Push force multiplier for the crowbar", 5, 50)
+CreateConVar("randomat_crowbar_damage", 2.5, FCVAR_NONE, "Damage multiplier for the crowbar", 1.1, 3.0)
+CreateConVar("randomat_crowbar_push", 20, FCVAR_NONE, "Push force multiplier for the crowbar", 5, 50)
 
 local original_push = nil
 function EVENT:Begin()

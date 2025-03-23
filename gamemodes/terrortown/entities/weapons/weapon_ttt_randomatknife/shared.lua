@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-CreateConVar("randomat_murder_knifedmg", 50, FCVAR_ARCHIVE, "Damage of the traitor's knife", 10, 200)
+CreateConVar("randomat_murder_knifedmg", 50, FCVAR_NONE, "Damage of the traitor's knife", 10, 200)
 
 SWEP.HoldType               = "knife"
 

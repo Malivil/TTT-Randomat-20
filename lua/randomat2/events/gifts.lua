@@ -3,9 +3,9 @@ local EVENT = {}
 util.AddNetworkString("RdmtDeadGiftBegin")
 util.AddNetworkString("RdmtDeadGiftEnd")
 
-CreateConVar("randomat_gifts_charge_time", 60, FCVAR_ARCHIVE, "How many seconds before the dead can give a gift", 10, 120)
-CreateConVar("randomat_gifts_random_items", 1, FCVAR_ARCHIVE, "Whether everyone should get a random item to gift")
-CreateConVar("randomat_gifts_blocklist", "", FCVAR_ARCHIVE, "The comma-separated list of weapon IDs to not give out")
+CreateConVar("randomat_gifts_charge_time", 60, FCVAR_NONE, "How many seconds before the dead can give a gift", 10, 120)
+CreateConVar("randomat_gifts_random_items", 1, FCVAR_NONE, "Whether everyone should get a random item to gift")
+CreateConVar("randomat_gifts_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")
 
 EVENT.Title = "Gifts from the Dead"
 EVENT.Description = "Allows dead players to give the living a single gift"

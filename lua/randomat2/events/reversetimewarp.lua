@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_reversetimewarp_scale", 15, FCVAR_ARCHIVE, "The percentage the speed should decrease", 1, 200)
-CreateConVar("randomat_reversetimewarp_scale_min", 0.15, FCVAR_ARCHIVE, "The minimum scale the speed should decrease to", 0.1, 0.9)
-CreateConVar("randomat_reversetimewarp_timer", 15, FCVAR_ARCHIVE, "How often (in seconds) the speed will be decreased", 1, 60)
+CreateConVar("randomat_reversetimewarp_scale", 15, FCVAR_NONE, "The percentage the speed should decrease", 1, 200)
+CreateConVar("randomat_reversetimewarp_scale_min", 0.15, FCVAR_NONE, "The minimum scale the speed should decrease to", 0.1, 0.9)
+CreateConVar("randomat_reversetimewarp_timer", 15, FCVAR_NONE, "How often (in seconds) the speed will be decreased", 1, 60)
 
 EVENT.Title = "praW emiT"
 EVENT.AltTitle = "Reverse Time Warp"

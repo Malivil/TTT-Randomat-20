@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_fov_scale", 1.5, FCVAR_ARCHIVE, "Scale of the FOV increase", 1.1, 2.0)
-CreateConVar("randomat_fov_scale_ironsight", 1.0, FCVAR_ARCHIVE, "Scale of the FOV increase when ironsighted", 0.8, 2.0)
+CreateConVar("randomat_fov_scale", 1.5, FCVAR_NONE, "Scale of the FOV increase", 1.1, 2.0)
+CreateConVar("randomat_fov_scale_ironsight", 1.0, FCVAR_NONE, "Scale of the FOV increase when ironsighted", 0.8, 2.0)
 
 EVENT.Title = "Quake Pro"
 EVENT.Description = "Increases each player's Field of View (FOV) so it looks like you're playing Quake"

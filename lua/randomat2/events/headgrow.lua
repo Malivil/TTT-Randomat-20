@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_headgrow_max", 2.5, FCVAR_ARCHIVE, "The maximum head size multiplier", 2, 5)
-CreateConVar("randomat_headgrow_per_kill", 0.25, FCVAR_ARCHIVE, "The head size increase per kill", 0.25, 1)
-CreateConVar("randomat_headgrow_steal", 1, FCVAR_ARCHIVE, "Whether to steal a player's head size on kill")
+CreateConVar("randomat_headgrow_max", 2.5, FCVAR_NONE, "The maximum head size multiplier", 2, 5)
+CreateConVar("randomat_headgrow_per_kill", 0.25, FCVAR_NONE, "The head size increase per kill", 0.25, 1)
+CreateConVar("randomat_headgrow_steal", 1, FCVAR_NONE, "Whether to steal a player's head size on kill")
 
 EVENT.Title = "Don't Let it Go to Your Head"
 EVENT.Description = "Grows a player's head each time they kill"

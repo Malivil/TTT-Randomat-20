@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_bighead_scale", 2, FCVAR_ARCHIVE, "Head size multiplier", 1.5, 5)
+CreateConVar("randomat_bighead_scale", 2, FCVAR_NONE, "Head size multiplier", 1.5, 5)
 
 EVENT.Title = "Big Head Mode"
 EVENT.ExtDescription = "Changes every player's heads to be big"

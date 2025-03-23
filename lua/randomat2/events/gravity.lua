@@ -1,9 +1,9 @@
 local EVENT = {}
 
-CreateConVar("randomat_gravity_timer", 30, FCVAR_ARCHIVE, "Timer", 5, 90)
-CreateConVar("randomat_gravity_duration", 3, FCVAR_ARCHIVE, "Duration", 1, 15)
-CreateConVar("randomat_gravity_minimum", 70, FCVAR_ARCHIVE, "The minimum gravity", 10, 500)
-CreateConVar("randomat_gravity_maximum", 2000, FCVAR_ARCHIVE, "The maximum gravity", 700, 4000)
+CreateConVar("randomat_gravity_timer", 30, FCVAR_NONE, "Timer", 5, 90)
+CreateConVar("randomat_gravity_duration", 3, FCVAR_NONE, "Duration", 1, 15)
+CreateConVar("randomat_gravity_minimum", 70, FCVAR_NONE, "The minimum gravity", 10, 500)
+CreateConVar("randomat_gravity_maximum", 2000, FCVAR_NONE, "The maximum gravity", 700, 4000)
 
 EVENT.Title = "I don't think you realise the gravity of the situation."
 EVENT.AltTitle = "Gravity Changer"

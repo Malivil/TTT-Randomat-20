@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_barrelinjustice_count", 2, FCVAR_ARCHIVE, "Number of barrels spawned", 0, 5)
-CreateConVar("randomat_barrelinjustice_range", 100, FCVAR_ARCHIVE, "Minimum distance from the player for a barrel to explode", 50, 200)
+CreateConVar("randomat_barrelinjustice_count", 2, FCVAR_NONE, "Number of barrels spawned", 0, 5)
+CreateConVar("randomat_barrelinjustice_range", 100, FCVAR_NONE, "Minimum distance from the player for a barrel to explode", 50, 200)
 
 EVENT.Title = "Barrel (In)Justice"
 EVENT.Description = "Explodes barrels if a player gets too close and then spawns more"

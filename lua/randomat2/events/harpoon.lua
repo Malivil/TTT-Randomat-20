@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_harpoon_timer", 3, FCVAR_ARCHIVE, "Time between being given harpoons")
-CreateConVar("randomat_harpoon_strip", 1, FCVAR_ARCHIVE, "The event strips your other weapons")
-CreateConVar("randomat_harpoon_weaponid", "ttt_m9k_harpoon", FCVAR_ARCHIVE, "Id of the weapon given")
+CreateConVar("randomat_harpoon_timer", 3, FCVAR_NONE, "Time between being given harpoons")
+CreateConVar("randomat_harpoon_strip", 1, FCVAR_NONE, "The event strips your other weapons")
+CreateConVar("randomat_harpoon_weaponid", "ttt_m9k_harpoon", FCVAR_NONE, "Id of the weapon given")
 
 EVENT.Title = "Harpooooooooooooooooooooon!!"
 EVENT.ExtDescription = "Forces everyone to use harpoons"

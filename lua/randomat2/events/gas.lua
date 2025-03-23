@@ -1,10 +1,10 @@
 local EVENT = {}
 
-CreateConVar("randomat_gas_timer", 15, FCVAR_ARCHIVE, "Changes the time between grenade drops", 5, 60)
-CreateConVar("randomat_gas_affectall", 0, FCVAR_ARCHIVE, "Set to 1 for the event to drop a grenade at everyone's feet on trigger")
-CreateConVar("randomat_gas_discombob", 1, FCVAR_ARCHIVE, "Whether discombobs drop")
-CreateConVar("randomat_gas_incendiary", 0, FCVAR_ARCHIVE, "Whether incendiaries drop")
-CreateConVar("randomat_gas_smoke", 0, FCVAR_ARCHIVE, "Whether smokes drop")
+CreateConVar("randomat_gas_timer", 15, FCVAR_NONE, "Changes the time between grenade drops", 5, 60)
+CreateConVar("randomat_gas_affectall", 0, FCVAR_NONE, "Set to 1 for the event to drop a grenade at everyone's feet on trigger")
+CreateConVar("randomat_gas_discombob", 1, FCVAR_NONE, "Whether discombobs drop")
+CreateConVar("randomat_gas_incendiary", 0, FCVAR_NONE, "Whether incendiaries drop")
+CreateConVar("randomat_gas_smoke", 0, FCVAR_NONE, "Whether smokes drop")
 
 EVENT.Title = "Bad Gas"
 EVENT.Description = "Drops grenades at random players' feet periodically"

@@ -8,8 +8,8 @@ EVENT.Type = EVENT_TYPE_FORCED_DEATH
 EVENT.Categories = {"biased_traitor", "biased", "largeimpact"}
 EVENT.SingleUse = false
 
-CreateConVar("randomat_soulmates_affectall", 0, FCVAR_ARCHIVE, "Whether everyone should have a soulmate")
-CreateConVar("randomat_soulmates_sharedhealth", 0, FCVAR_ARCHIVE, "Whether soulmates should have shared health")
+CreateConVar("randomat_soulmates_affectall", 0, FCVAR_NONE, "Whether everyone should have a soulmate")
+CreateConVar("randomat_soulmates_sharedhealth", 0, FCVAR_NONE, "Whether soulmates should have shared health")
 
 local timer_ids = {}
 function EVENT:Begin(first_target, second_target)

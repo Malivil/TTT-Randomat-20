@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_doubleedge_interval", 1, FCVAR_ARCHIVE, "How often (in seconds) to heal self-damage", 1, 60)
-CreateConVar("randomat_doubleedge_amount", 2, FCVAR_ARCHIVE, "How much self-damage to heal per interval", 1, 20)
+CreateConVar("randomat_doubleedge_interval", 1, FCVAR_NONE, "How often (in seconds) to heal self-damage", 1, 60)
+CreateConVar("randomat_doubleedge_amount", 2, FCVAR_NONE, "How much self-damage to heal per interval", 1, 20)
 
 EVENT.Title = "Double-Edged Sword"
 EVENT.Description = "Reflects 1/2 of the damage you do back on yourself, but you also heal self-damage slowly"

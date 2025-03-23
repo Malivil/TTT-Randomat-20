@@ -5,12 +5,12 @@ EVENT.Description = "Changes everyone's role to be either Glitch or Traitor and 
 EVENT.id = "glitch"
 EVENT.Categories = {"rolechange", "largeimpact"}
 
-CreateConVar("randomat_glitch_traitor_pct", 25, FCVAR_ARCHIVE, "The percentage of players that will be traitors", 1, 100)
-CreateConVar("randomat_glitch_blocklist", "", FCVAR_ARCHIVE, "The comma-separated list of weapon IDs to not give out")
-CreateConVar("randomat_glitch_damage_scale", 1.0, FCVAR_ARCHIVE, "The multiplier for damage that the Glitches will take", 0.1, 2.0)
-CreateConVar("randomat_glitch_max_glitches", 0, FCVAR_ARCHIVE, "The maximum number of Glitches this event will create", 0, 16)
-CreateConVar("randomat_glitch_starting_health", 100, FCVAR_ARCHIVE, "The amount of health the Glitches should start with", 1, 200)
-CreateConVar("randomat_glitch_min_traitors", 0, FCVAR_ARCHIVE, "The minimum number of Traitors before this event will run", 0, 32)
+CreateConVar("randomat_glitch_traitor_pct", 25, FCVAR_NONE, "The percentage of players that will be traitors", 1, 100)
+CreateConVar("randomat_glitch_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")
+CreateConVar("randomat_glitch_damage_scale", 1.0, FCVAR_NONE, "The multiplier for damage that the Glitches will take", 0.1, 2.0)
+CreateConVar("randomat_glitch_max_glitches", 0, FCVAR_NONE, "The maximum number of Glitches this event will create", 0, 16)
+CreateConVar("randomat_glitch_starting_health", 100, FCVAR_NONE, "The amount of health the Glitches should start with", 1, 200)
+CreateConVar("randomat_glitch_min_traitors", 0, FCVAR_NONE, "The minimum number of Traitors before this event will run", 0, 32)
 
 local blocklist = {}
 

@@ -7,7 +7,7 @@ EVENT.id = "ammo"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"moderateimpact"}
 
-CreateConVar("randomat_ammo_affectbuymenu", 0, FCVAR_ARCHIVE, "Whether it gives buy menu weapons infinite ammo too.")
+CreateConVar("randomat_ammo_affectbuymenu", 0, FCVAR_NONE, "Whether it gives buy menu weapons infinite ammo too.")
 
 function EVENT:Begin()
     local affects_buy = GetConVar("randomat_ammo_affectbuymenu"):GetBool()

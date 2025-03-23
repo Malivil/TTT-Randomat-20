@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_texplode_timer", 60, FCVAR_ARCHIVE, "The time before the traitor explodes", 1, 120)
-CreateConVar("randomat_texplode_radius", 600, FCVAR_ARCHIVE, "Radius of the traitor explosion", 50, 1000)
+CreateConVar("randomat_texplode_timer", 60, FCVAR_NONE, "The time before the traitor explodes", 1, 120)
+CreateConVar("randomat_texplode_radius", 600, FCVAR_NONE, "Radius of the traitor explosion", 50, 1000)
 
 EVENT.Title = ""
 EVENT.AltTitle = "A traitor will explode in " .. GetConVar("randomat_texplode_timer"):GetInt() .. " seconds!"

@@ -6,7 +6,7 @@ EVENT.id = "inventory"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"item", "moderateimpact"}
 
-CreateConVar("randomat_inventory_timer", 15, FCVAR_ARCHIVE, "Time between inventory swaps", 5, 60)
+CreateConVar("randomat_inventory_timer", 15, FCVAR_NONE, "Time between inventory swaps", 5, 60)
 
 function EVENT:Begin()
     local ply1 = nil

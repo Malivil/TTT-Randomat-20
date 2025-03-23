@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_scoutsonly_gravity", 0.1, FCVAR_ARCHIVE, "The gravity scale", 0.1, 0.9)
+CreateConVar("randomat_scoutsonly_gravity", 0.1, FCVAR_NONE, "The gravity scale", 0.1, 0.9)
 
 EVENT.Title = "Scouts Only"
 EVENT.Description = "Forces everyone to use a rifle and lowers everyone's gravity"

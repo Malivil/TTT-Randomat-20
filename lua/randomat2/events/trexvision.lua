@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_trexvision_reveal_time", 5, FCVAR_ARCHIVE, "How long to reveal a player who shoots their gun", 0, 30)
+CreateConVar("randomat_trexvision_reveal_time", 5, FCVAR_NONE, "How long to reveal a player who shoots their gun", 0, 30)
 
 EVENT.Title = "T-Rex Vision"
 EVENT.Description = "Your vision is now based on movement"

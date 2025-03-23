@@ -1,11 +1,11 @@
 local EVENT = {}
 
-CreateConVar("randomat_stickwithme_warning_timer", 30, FCVAR_ARCHIVE, "Time a player has to find their partner at the start of the event", 1, 600)
-CreateConVar("randomat_stickwithme_damage_timer", 10, FCVAR_ARCHIVE, "Time a player must be away from their partner before damage starts", 1, 600)
-CreateConVar("randomat_stickwithme_damage_interval", 2, FCVAR_ARCHIVE, "How often damage is done when partners are too far", 1, 600)
-CreateConVar("randomat_stickwithme_damage_distance", 200, FCVAR_ARCHIVE, "Maximum partner distance before damage", 1, 1000)
-CreateConVar("randomat_stickwithme_damage_amount", 1, FCVAR_ARCHIVE, "Damage done to each player who is too far", 1, 100)
-CreateConVar("randomat_stickwithme_highlight", 1, FCVAR_ARCHIVE, "Whether to highlight player partners")
+CreateConVar("randomat_stickwithme_warning_timer", 30, FCVAR_NONE, "Time a player has to find their partner at the start of the event", 1, 600)
+CreateConVar("randomat_stickwithme_damage_timer", 10, FCVAR_NONE, "Time a player must be away from their partner before damage starts", 1, 600)
+CreateConVar("randomat_stickwithme_damage_interval", 2, FCVAR_NONE, "How often damage is done when partners are too far", 1, 600)
+CreateConVar("randomat_stickwithme_damage_distance", 200, FCVAR_NONE, "Maximum partner distance before damage", 1, 1000)
+CreateConVar("randomat_stickwithme_damage_amount", 1, FCVAR_NONE, "Damage done to each player who is too far", 1, 100)
+CreateConVar("randomat_stickwithme_highlight", 1, FCVAR_NONE, "Whether to highlight player partners")
 
 EVENT.Title = "Stick With Me"
 EVENT.Description = "Pairs players together, forcing them to stay close to each other or take damage"

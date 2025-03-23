@@ -2,17 +2,17 @@ local EVENT = {}
 
 util.AddNetworkString("PropHuntRemoveRadar")
 
-CreateConVar("randomat_prophunt_timer", 3, FCVAR_ARCHIVE, "Time between being given prop disguisers", 1, 15)
-CreateConVar("randomat_prophunt_strip", 1, FCVAR_ARCHIVE, "Whether the event strips your other weapons")
-CreateConVar("randomat_prophunt_blind_time", 0, FCVAR_ARCHIVE, "How long to blind the hunters for at the start", 0, 60)
-CreateConVar("randomat_prophunt_round_time", 0, FCVAR_ARCHIVE, "How many seconds the Prop Hunt round should last", 0, 600)
-CreateConVar("randomat_prophunt_damage_scale", 0.5, FCVAR_ARCHIVE, "Damage scale when a hunter shoots a wrong prop", 0, 2)
-CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", FCVAR_ARCHIVE, "Id of the weapon given")
-CreateConVar("randomat_prophunt_regen_timer", 5, FCVAR_ARCHIVE, "How often the hunters will regen health", 0, 60)
-CreateConVar("randomat_prophunt_regen_health", 5, FCVAR_ARCHIVE, "How much health the hunters will heal", 1, 10)
-CreateConVar("randomat_prophunt_shop_disable", 0, FCVAR_ARCHIVE, "Whether to disable the weapon shop")
-CreateConVar("randomat_prophunt_props_join_hunters", 0, FCVAR_ARCHIVE, "Whether to have the props join the hunters when they are killed")
-CreateConVar("randomat_prophunt_specs_join_hunters", 0, FCVAR_ARCHIVE, "Whether to have the spectators join the hunters when the event starts")
+CreateConVar("randomat_prophunt_timer", 3, FCVAR_NONE, "Time between being given prop disguisers", 1, 15)
+CreateConVar("randomat_prophunt_strip", 1, FCVAR_NONE, "Whether the event strips your other weapons")
+CreateConVar("randomat_prophunt_blind_time", 0, FCVAR_NONE, "How long to blind the hunters for at the start", 0, 60)
+CreateConVar("randomat_prophunt_round_time", 0, FCVAR_NONE, "How many seconds the Prop Hunt round should last", 0, 600)
+CreateConVar("randomat_prophunt_damage_scale", 0.5, FCVAR_NONE, "Damage scale when a hunter shoots a wrong prop", 0, 2)
+CreateConVar("randomat_prophunt_weaponid", "weapon_ttt_prop_disguiser", FCVAR_NONE, "Id of the weapon given")
+CreateConVar("randomat_prophunt_regen_timer", 5, FCVAR_NONE, "How often the hunters will regen health", 0, 60)
+CreateConVar("randomat_prophunt_regen_health", 5, FCVAR_NONE, "How much health the hunters will heal", 1, 10)
+CreateConVar("randomat_prophunt_shop_disable", 0, FCVAR_NONE, "Whether to disable the weapon shop")
+CreateConVar("randomat_prophunt_props_join_hunters", 0, FCVAR_NONE, "Whether to have the props join the hunters when they are killed")
+CreateConVar("randomat_prophunt_specs_join_hunters", 0, FCVAR_NONE, "Whether to have the spectators join the hunters when the event starts")
 
 local cvar_states = {}
 local default_weaponids = {"weapon_ttt_prop_disguiser", "weapon_ttt_prophide"}

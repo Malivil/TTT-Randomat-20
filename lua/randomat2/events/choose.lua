@@ -6,13 +6,13 @@ util.AddNetworkString("ChooseEventEnd")
 util.AddNetworkString("ChoosePlayerChose")
 util.AddNetworkString("ChoosePlayerVoted")
 
-CreateConVar("randomat_choose_choices", 3, FCVAR_ARCHIVE, "Number of events you can choose from", 2, 5)
-CreateConVar("randomat_choose_vote", 0, FCVAR_ARCHIVE, "Allows all players to vote on the event")
-CreateConVar("randomat_choose_votetimer", 10, FCVAR_ARCHIVE, "How long players have to vote on the event", 5, 60)
-CreateConVar("randomat_choose_deadvoters", 0, FCVAR_ARCHIVE, "Dead people can vote")
-CreateConVar("randomat_choose_secret", 0, FCVAR_ARCHIVE, "Whether to include secret events")
-CreateConVar("randomat_choose_limitchoosetime", 0, FCVAR_ARCHIVE, "Whether single player choosing has limited time")
-CreateConVar("randomat_choose_limitchoosetime_random", 0, FCVAR_ARCHIVE, "Whether to choose a random event if time runs out")
+CreateConVar("randomat_choose_choices", 3, FCVAR_NONE, "Number of events you can choose from", 2, 5)
+CreateConVar("randomat_choose_vote", 0, FCVAR_NONE, "Allows all players to vote on the event")
+CreateConVar("randomat_choose_votetimer", 10, FCVAR_NONE, "How long players have to vote on the event", 5, 60)
+CreateConVar("randomat_choose_deadvoters", 0, FCVAR_NONE, "Dead people can vote")
+CreateConVar("randomat_choose_secret", 0, FCVAR_NONE, "Whether to include secret events")
+CreateConVar("randomat_choose_limitchoosetime", 0, FCVAR_NONE, "Whether single player choosing has limited time")
+CreateConVar("randomat_choose_limitchoosetime_random", 0, FCVAR_NONE, "Whether to choose a random event if time runs out")
 
 local EventChoices = {}
 local owner = nil

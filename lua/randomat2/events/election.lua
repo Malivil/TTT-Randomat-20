@@ -10,13 +10,13 @@ util.AddNetworkString("ElectionVoteReset")
 util.AddNetworkString("ElectionVoteEnd")
 util.AddNetworkString("TTT_DrunkSober")
 
-CreateConVar("randomat_election_timer", 40, FCVAR_ARCHIVE, "The number of seconds each round of voting lasts", 30, 180)
-CreateConVar("randomat_election_winner_credits", 2, FCVAR_ARCHIVE, "The number of credits given as a reward, if appropriate", 1, 10)
-CreateConVar("randomat_election_vamp_turn_innocents", 0, FCVAR_ARCHIVE, "Whether Vampires turn innocents. Otherwise, turns traitors")
-CreateConVar("randomat_election_show_votes", 1, FCVAR_ARCHIVE, "Whether to show when a target is voted for in chat")
-CreateConVar("randomat_election_show_votes_anon", 0, FCVAR_ARCHIVE, "Whether to hide who voted in chat")
-CreateConVar("randomat_election_trigger_mrpresident", 0, FCVAR_ARCHIVE, "Whether to trigger Get Down Mr. President if an Innocent wins")
-CreateConVar("randomat_election_break_ties", 0, FCVAR_ARCHIVE, "Whether to break ties by choosing a random winner")
+CreateConVar("randomat_election_timer", 40, FCVAR_NONE, "The number of seconds each round of voting lasts", 30, 180)
+CreateConVar("randomat_election_winner_credits", 2, FCVAR_NONE, "The number of credits given as a reward, if appropriate", 1, 10)
+CreateConVar("randomat_election_vamp_turn_innocents", 0, FCVAR_NONE, "Whether Vampires turn innocents. Otherwise, turns traitors")
+CreateConVar("randomat_election_show_votes", 1, FCVAR_NONE, "Whether to show when a target is voted for in chat")
+CreateConVar("randomat_election_show_votes_anon", 0, FCVAR_NONE, "Whether to hide who voted in chat")
+CreateConVar("randomat_election_trigger_mrpresident", 0, FCVAR_NONE, "Whether to trigger Get Down Mr. President if an Innocent wins")
+CreateConVar("randomat_election_break_ties", 0, FCVAR_NONE, "Whether to break ties by choosing a random winner")
 
 EVENT.Title = "Election Day"
 EVENT.Description = "Nominate and then elect players to become President. Each role gets a different reward for being elected"

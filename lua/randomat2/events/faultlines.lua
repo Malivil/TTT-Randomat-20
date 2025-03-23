@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_faultline_min_delay", "20", FCVAR_ARCHIVE, "The minimum delay between quakes", 5, 120)
-CreateConVar("randomat_faultline_severity_max", "10", FCVAR_ARCHIVE, "The maximum severity the earthquakes will have", 1, 10)
-CreateConVar("randomat_faultline_aftershocks", "3", FCVAR_ARCHIVE, "The number of smaller quakes to happen after the peak", 0, 9)
+CreateConVar("randomat_faultline_min_delay", "20", FCVAR_NONE, "The minimum delay between quakes", 5, 120)
+CreateConVar("randomat_faultline_severity_max", "10", FCVAR_NONE, "The maximum severity the earthquakes will have", 1, 10)
+CreateConVar("randomat_faultline_aftershocks", "3", FCVAR_NONE, "The number of smaller quakes to happen after the peak", 0, 9)
 
 EVENT.Title = "Fault Lines"
 EVENT.Description = "This map is located on a fault line, watch out for the quakes!"

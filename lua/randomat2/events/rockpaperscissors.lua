@@ -10,7 +10,7 @@ EVENT.ExtDescription = "Pits two players against eachother in a Rock, Paper, Sci
 EVENT.id = "rockpaperscissors"
 EVENT.Categories = {"gamemode", "largeimpact"}
 
-CreateConVar("randomat_rockpaperscissors_bestof", 3, FCVAR_ARCHIVE, "How many rounds to play", 1, 5)
+CreateConVar("randomat_rockpaperscissors_bestof", 3, FCVAR_NONE, "How many rounds to play", 1, 5)
 cvars.AddChangeCallback("randomat_rockpaperscissors_bestof", function(convar_name, value_old, value_new)
     -- If this value is even, subtract 1 to make it odd again
     if value_new % 2 == 0 then

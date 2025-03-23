@@ -6,7 +6,7 @@ EVENT.Description = "Randomly switches positions of two players periodically"
 EVENT.id = "switch"
 EVENT.Categories = {"fun", "moderateimpact"}
 
-CreateConVar("randomat_switch_timer", 15, FCVAR_ARCHIVE, "How often players are switched", 5, 60)
+CreateConVar("randomat_switch_timer", 15, FCVAR_NONE, "How often players are switched", 5, 60)
 
 function EVENT:Begin()
     timer.Create("RandomatSwitchTimer", GetConVar("randomat_switch_timer"):GetInt(), 0, function()

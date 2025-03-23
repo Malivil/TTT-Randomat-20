@@ -1,10 +1,10 @@
 local EVENT = {}
 
-CreateConVar("randomat_connies_timer", 10, FCVAR_ARCHIVE, "The amount of time before the messages are shown")
-CreateConVar("randomat_connies_show_role", 0, FCVAR_ARCHIVE, "Whether to show the role of the person")
-CreateConVar("randomat_connies_show_name", 1, FCVAR_ARCHIVE, "Whether to show the name of the person")
-CreateConVar("randomat_connies_show_equipment", 0, FCVAR_ARCHIVE, "Whether to show the equipment a person has")
-CreateConVar("randomat_connies_show_role_weapons", 0, FCVAR_ARCHIVE, "Whether to show the role-specific weapons a person has")
+CreateConVar("randomat_connies_timer", 10, FCVAR_NONE, "The amount of time before the messages are shown")
+CreateConVar("randomat_connies_show_role", 0, FCVAR_NONE, "Whether to show the role of the person")
+CreateConVar("randomat_connies_show_name", 1, FCVAR_NONE, "Whether to show the name of the person")
+CreateConVar("randomat_connies_show_equipment", 0, FCVAR_NONE, "Whether to show the equipment a person has")
+CreateConVar("randomat_connies_show_role_weapons", 0, FCVAR_NONE, "Whether to show the role-specific weapons a person has")
 
 EVENT.Title = "Got any connies?!"
 EVENT.Description = "Announces players that have shop items after " .. GetConVar("randomat_connies_timer"):GetInt() .. " seconds"

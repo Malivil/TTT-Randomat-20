@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_magnetism_radius", 1000, FCVAR_ARCHIVE, "The radius around the dead player for magnetism", 250, 5000)
+CreateConVar("randomat_magnetism_radius", 1000, FCVAR_NONE, "The radius around the dead player for magnetism", 250, 5000)
 
 EVENT.Title = "Total Magnetism"
 EVENT.Description = "When a player dies, all nearby players will be pulled toward their corpse"

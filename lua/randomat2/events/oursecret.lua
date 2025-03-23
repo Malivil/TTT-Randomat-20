@@ -3,9 +3,9 @@ local EVENT = {}
 util.AddNetworkString("RdmtOurSecretHaloStart")
 util.AddNetworkString("RdmtOurSecretHaloEnd")
 
-CreateConVar("randomat_oursecret_min_delay", 15, FCVAR_ARCHIVE, "The minimum delay before showing role", 1, 60)
-CreateConVar("randomat_oursecret_max_delay", 30, FCVAR_ARCHIVE, "The maximum delay before showing role", 1, 120)
-CreateConVar("randomat_oursecret_highlight_time", 5, FCVAR_ARCHIVE, "How long to show role color", 1, 60)
+CreateConVar("randomat_oursecret_min_delay", 15, FCVAR_NONE, "The minimum delay before showing role", 1, 60)
+CreateConVar("randomat_oursecret_max_delay", 30, FCVAR_NONE, "The maximum delay before showing role", 1, 120)
+CreateConVar("randomat_oursecret_highlight_time", 5, FCVAR_NONE, "How long to show role color", 1, 60)
 
 EVENT.Title = "Our Little Secret"
 EVENT.Description = "Pairs players together, temporarily revealing their roles after a short delay"

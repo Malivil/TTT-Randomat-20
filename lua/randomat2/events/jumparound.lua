@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_jumparound_jumps", 5, FCVAR_ARCHIVE, "How many multi-jumps the players can do", 2, 10)
+CreateConVar("randomat_jumparound_jumps", 5, FCVAR_NONE, "How many multi-jumps the players can do", 2, 10)
 
 EVENT.Title = "Jump Around!"
 EVENT.Description = "Players can only move by multi-jumping"

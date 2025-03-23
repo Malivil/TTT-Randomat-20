@@ -3,9 +3,9 @@ if not plymeta then return end
 
 local EVENT = {}
 
-CreateConVar("randomat_blackmarket_blocklist", "", FCVAR_ARCHIVE, "The comma-separated list of weapon IDs to not give out")
-CreateConVar("randomat_blackmarket_timer_traitor", 25, FCVAR_ARCHIVE, "How often traitors should get items", 1, 60)
-CreateConVar("randomat_blackmarket_timer_detective", 15, FCVAR_ARCHIVE, "How often detectives should get items", 1, 60)
+CreateConVar("randomat_blackmarket_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")
+CreateConVar("randomat_blackmarket_timer_traitor", 25, FCVAR_NONE, "How often traitors should get items", 1, 60)
+CreateConVar("randomat_blackmarket_timer_detective", 15, FCVAR_NONE, "How often detectives should get items", 1, 60)
 
 EVENT.Title = "Black Market Buyout"
 EVENT.Description = "Disables Traitor and Detective shops, but periodically gives out free items from both"

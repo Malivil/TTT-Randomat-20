@@ -1,8 +1,8 @@
 local EVENT = {}
 
-CreateConVar("randomat_crabsandfire_crab_count", 5, FCVAR_ARCHIVE, "The amount of crabs spawned", 1, 10)
-CreateConVar("randomat_crabsandfire_fire_count", 5, FCVAR_ARCHIVE, "The amount of fire spawned", 1, 10)
-CreateConVar("randomat_crabsandfire_fire_length", 20, FCVAR_ARCHIVE, "The amount of time fire will last", 1, 10)
+CreateConVar("randomat_crabsandfire_crab_count", 5, FCVAR_NONE, "The amount of crabs spawned", 1, 10)
+CreateConVar("randomat_crabsandfire_fire_count", 5, FCVAR_NONE, "The amount of fire spawned", 1, 10)
+CreateConVar("randomat_crabsandfire_fire_length", 20, FCVAR_NONE, "The amount of time fire will last", 1, 10)
 
 EVENT.Title = "Full of Crabs and Fire!"
 EVENT.Description = "Spawns hostile headcrabs and fire around the detective when they are killed"

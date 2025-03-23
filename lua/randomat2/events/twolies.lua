@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_twolies_blocklist", "", FCVAR_ARCHIVE, "The comma-separated list of event IDs to not start")
+CreateConVar("randomat_twolies_blocklist", "", FCVAR_NONE, "The comma-separated list of event IDs to not start")
 
 EVENT.Title = "Two Lies and a Truth"
 EVENT.Description = "One of these three events has been started... but which one?"

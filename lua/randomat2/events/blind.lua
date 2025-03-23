@@ -1,6 +1,6 @@
 local EVENT = {}
 
-CreateConVar("randomat_blind_duration", 15, FCVAR_ARCHIVE , "The duration the players should be blinded for", 5, 60)
+CreateConVar("randomat_blind_duration", 15, FCVAR_NONE, "The duration the players should be blinded for", 5, 60)
 
 util.AddNetworkString("RdmtBlindRemove")
 

@@ -1,8 +1,8 @@
 local EVENT = {}
 
-local lifeinsurance_first_traitor = CreateConVar("randomat_lifeinsurance_first_traitor", 0, FCVAR_ARCHIVE, "Whether only first traitor death pays", 0, 1)
-local lifeinsurance_first_per_player = CreateConVar("randomat_lifeinsurance_first_per_player", 1, FCVAR_ARCHIVE, "Whether only first death per player pays", 0, 1)
-local lifeinsurance_payment = CreateConVar("randomat_lifeinsurance_payment", 3, FCVAR_ARCHIVE, "Amount of credits to pay", 1, 10)
+local lifeinsurance_first_traitor = CreateConVar("randomat_lifeinsurance_first_traitor", 0, FCVAR_NONE, "Whether only first traitor death pays", 0, 1)
+local lifeinsurance_first_per_player = CreateConVar("randomat_lifeinsurance_first_per_player", 1, FCVAR_NONE, "Whether only first death per player pays", 0, 1)
+local lifeinsurance_payment = CreateConVar("randomat_lifeinsurance_payment", 3, FCVAR_NONE, "Amount of credits to pay", 1, 10)
 
 EVENT.Title = "Life Insurance"
 EVENT.Description = "Traitors get credits when one of their teammates is killed"

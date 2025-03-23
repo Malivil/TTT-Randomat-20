@@ -387,13 +387,13 @@ function Randomat:register(tbl)
 
     Randomat.Events[id] = tbl
 
-    CreateConVar("ttt_randomat_" .. id, tbl.IsEnabled and 1 or 0, FCVAR_ARCHIVE, "Whether this event is enabled.", 0, 1)
-    local minPlayers = CreateConVar("ttt_randomat_" .. id .. "_min_players", tbl.MinPlayers.Default, FCVAR_ARCHIVE, "The minimum number of players required for this event to start.", tbl.MinPlayers.Min, tbl.MinPlayers.Max)
+    CreateConVar("ttt_randomat_" .. id, tbl.IsEnabled and 1 or 0, FCVAR_NONE, "Whether this event is enabled.", 0, 1)
+    local minPlayers = CreateConVar("ttt_randomat_" .. id .. "_min_players", tbl.MinPlayers.Default, FCVAR_NONE, "The minimum number of players required for this event to start.", tbl.MinPlayers.Min, tbl.MinPlayers.Max)
     -- Update the value of the convar if it already exists but the min value has been changed
     if minPlayers:GetInt() < tbl.MinPlayers.Min then
         minPlayers:SetInt(tbl.MinPlayers.Min)
     end
-    local weight = CreateConVar("ttt_randomat_" .. id .. "_weight", tbl.Weight, FCVAR_ARCHIVE, "The weight this event should use during the randomized event selection process.", -1, 50)
+    local weight = CreateConVar("ttt_randomat_" .. id .. "_weight", tbl.Weight, FCVAR_NONE, "The weight this event should use during the randomized event selection process.", -1, 50)
 
     -- If the current weight matches the default, update the per-event weight to the new default of -1
     if weight:GetInt() == default_weight then

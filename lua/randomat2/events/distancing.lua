@@ -1,9 +1,9 @@
 local EVENT = {}
 
-CreateConVar("randomat_distancing_timer", 10, FCVAR_ARCHIVE, "Time a player must be near someone before damage starts", 1, 600)
-CreateConVar("randomat_distancing_interval", 2, FCVAR_ARCHIVE, "How often damage is done when players are too close", 1, 600)
-CreateConVar("randomat_distancing_distance", 100, FCVAR_ARCHIVE, "Distance a player must be from another to be considered \"near\"", 1, 1000)
-CreateConVar("randomat_distancing_damage", 1, FCVAR_ARCHIVE, "Damage done to each player who is too close", 1, 100)
+CreateConVar("randomat_distancing_timer", 10, FCVAR_NONE, "Time a player must be near someone before damage starts", 1, 600)
+CreateConVar("randomat_distancing_interval", 2, FCVAR_NONE, "How often damage is done when players are too close", 1, 600)
+CreateConVar("randomat_distancing_distance", 100, FCVAR_NONE, "Distance a player must be from another to be considered \"near\"", 1, 1000)
+CreateConVar("randomat_distancing_damage", 1, FCVAR_NONE, "Damage done to each player who is too close", 1, 100)
 
 EVENT.Title = "Social Distancing"
 EVENT.Description = "Does a small amount of damage over time to players who spend too much time close to eachother"

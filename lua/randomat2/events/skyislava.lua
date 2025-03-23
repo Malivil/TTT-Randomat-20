@@ -1,7 +1,7 @@
 local EVENT = {}
 
-CreateConVar("randomat_skyislava_interval", 0.25, FCVAR_ARCHIVE, "How often damage is done", 0.1, 1)
-CreateConVar("randomat_skyislava_damage", 1, FCVAR_ARCHIVE, "Damage done to each player", 1, 100)
+CreateConVar("randomat_skyislava_interval", 0.25, FCVAR_NONE, "How often damage is done", 0.1, 1)
+CreateConVar("randomat_skyislava_damage", 1, FCVAR_NONE, "Damage done to each player", 1, 100)
 
 EVENT.Title = "The Sky is Lava"
 EVENT.Description = "Players take damage while they are in the air"

@@ -2,8 +2,8 @@ local EVENT = {}
 
 util.AddNetworkString("RdmtFogOfWarBegin")
 
-local default = CreateConVar("randomat_fogofwar_default", 1, FCVAR_ARCHIVE, "The fog distance scale for non-traitors", 0.2, 5)
-local traitor = CreateConVar("randomat_fogofwar_traitor", 1.5, FCVAR_ARCHIVE, "The fog distance scale for traitors", 0.2, 5)
+local default = CreateConVar("randomat_fogofwar_default", 1, FCVAR_NONE, "The fog distance scale for non-traitors", 0.2, 5)
+local traitor = CreateConVar("randomat_fogofwar_traitor", 1.5, FCVAR_NONE, "The fog distance scale for traitors", 0.2, 5)
 
 EVENT.Title = "Fog of War"
 EVENT.Description = "Covers the map in a fog which restricts player view"
