@@ -16,6 +16,7 @@ function EVENT:EquipPlayer(ply, wepClass)
     -- Give them their weapon and don't let them drop it
     local wep = ply:Give(wepClass)
     wep.AllowDrop = false
+    wep.OnDrop = function() SafeRemoveEntity(wep) end
 
     -- Give them enough ammo to fill their clip and their reserve
     if wep.Primary and wep.Primary.ClipSize and wep.Primary.ClipSize > 0 then
@@ -31,6 +32,9 @@ function EVENT:EquipPlayer(ply, wepClass)
 end
 
 function EVENT:Begin()
+    -- Stop win checks so the only way to win is if someone gets all the gun kills
+    StopWinChecks()
+
     local weps = {
         [WEAPON_HEAVY] = {},
         [WEAPON_PISTOL] = {}
@@ -129,7 +133,6 @@ function EVENT:Begin()
                     Randomat:EventNotify(attacker:GetNick() .. " WINS!")
                     Randomat:SmallNotify("They killed an enemy with every weapon and won the round for their team!")
                     currentWepData[attSid64] = nil
-                    StopWinChecks()
                     if attacker:IsDetective() then
                         EndRound(WIN_INNOCENT)
                     else
