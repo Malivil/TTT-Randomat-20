@@ -22,27 +22,27 @@ for i = 1, sneezecount do
 end
 
 local function ClearPlayerData(ply)
-    local playername = ply:GetName()
-    timer.Remove(playername .. "RdmtFluSneezeTimer")
-    if playerthinktime[playername] ~= nil then
-        playerthinktime[playername] = nil
+    local sid64 = ply:SteamID64()
+    timer.Remove(sid64 .. "RdmtFluSneezeTimer")
+    if playerthinktime[sid64] ~= nil then
+        playerthinktime[sid64] = nil
     end
-    if playermoveloc[playername] ~= nil then
-        playermoveloc[playername] = nil
+    if playermoveloc[sid64] ~= nil then
+        playermoveloc[sid64] = nil
     end
-    if playerhealth[playername] ~= nil then
-        playerhealth[playername] = nil
+    if playerhealth[sid64] ~= nil then
+        playerhealth[sid64] = nil
     end
-    if playerflustatus[playername] ~= nil then
-        playerflustatus[playername] = false
+    if playerflustatus[sid64] ~= nil then
+        playerflustatus[sid64] = false
     end
 end
 
 local function SpreadFlu(ply)
     local interval = GetConVar("randomat_flu_interval"):GetInt()
-    local playername = ply:GetName()
-    playerflustatus[playername] = true
-    playerhealth[playername] = ply:Health()
+    local sid64 = ply:SteamID64()
+    playerflustatus[sid64] = true
+    playerhealth[sid64] = ply:Health()
 
     -- Reduce the player speed on the client
     local speed_factor = GetConVar("randomat_flu_speed_factor"):GetFloat()
@@ -51,7 +51,7 @@ local function SpreadFlu(ply)
     net.WriteString("RdmtFluSpeed")
     net.Send(ply)
 
-    timer.Create(playername .. "RdmtFluSneezeTimer", interval, 0, function()
+    timer.Create(sid64 .. "RdmtFluSneezeTimer", interval, 0, function()
         local sneeze = math.random(sneezecount)
         ply:EmitSound(Sound("sneezes/sneeze" .. sneeze .. ".mp3"))
 
@@ -70,7 +70,7 @@ end
 function EVENT:Begin()
     self:AddHook("FinishMove", function(ply, mv)
         if ply:Alive() and not ply:IsSpec() then
-            playermoveloc[ply:GetName()] = ply:GetPos()
+            playermoveloc[ply:SteamID64()] = ply:GetPos()
         end
     end)
 
@@ -78,8 +78,8 @@ function EVENT:Begin()
     local speed_factor = GetConVar("randomat_flu_speed_factor"):GetFloat()
     self:AddHook("TTTSpeedMultiplier", function(ply, mults)
         if not ply:Alive() or ply:IsSpec() then return end
-        local playername = ply:GetName()
-        if playerflustatus[playername] then
+        local sid64 = ply:SteamID64()
+        if playerflustatus[sid64] then
             table.insert(mults, speed_factor)
         end
     end)
@@ -87,14 +87,14 @@ function EVENT:Begin()
     local plys = {}
     local first = true
     for _, v in ipairs(self:GetAlivePlayers(true)) do
-        local playername = v:GetName()
-        plys[playername] = v
+        local sid64 = v:SteamID64()
+        plys[sid64] = v
 
         -- First random player starts with the flu
         if first then
             SpreadFlu(v)
         else
-            playerflustatus[playername] = false
+            playerflustatus[sid64] = false
         end
         first = false
     end
@@ -104,14 +104,14 @@ function EVENT:Begin()
     local chance = GetConVar("randomat_flu_chance"):GetInt()
     self:AddHook("Think", function()
         for _, v in pairs(plys) do
-            local playername = v:GetName()
+            local sid64 = v:SteamID64()
             if v:Alive() and not v:IsSpec() then
-                if not playerflustatus[playername] then
+                if not playerflustatus[sid64] then
                     local playerloc = v:GetPos()
                     local tooclose = false
                     -- Check if this player is within the configurable distance of any other player with the flu
                     for name, loc in pairs(playermoveloc) do
-                        if name ~= playername and playerflustatus[name] and math.abs(playerloc:Distance(loc)) < distance then
+                        if name ~= sid64 and playerflustatus[name] and math.abs(playerloc:Distance(loc)) < distance then
                             tooclose = true
                             break
                         end
@@ -120,33 +120,33 @@ function EVENT:Begin()
                     -- If they are
                     if tooclose then
                         -- and they don't have a time recorded yet then record the time
-                        if playerthinktime[playername] == nil then
-                            playerthinktime[playername] = CurTime()
+                        if playerthinktime[sid64] == nil then
+                            playerthinktime[sid64] = CurTime()
                         end
-                        if playerflustatus[playername] == nil then
-                            playerflustatus[playername] = false
+                        if playerflustatus[sid64] == nil then
+                            playerflustatus[sid64] = false
                         end
 
                         --- If they have been near other players for more than the configurable amount of time and they don't already have the flu, check if they should get it
-                        if (CurTime() - playerthinktime[playername]) > checktime and not playerflustatus[playername] and math.random(0, 100) <= chance then
+                        if (CurTime() - playerthinktime[sid64]) > checktime and not playerflustatus[sid64] and math.random(0, 100) <= chance then
                             SpreadFlu(v)
                         end
                     -- Otherwise, reset the timer
                     else
-                        if playerthinktime[playername] ~= nil then
-                            playerthinktime[playername] = nil
+                        if playerthinktime[sid64] ~= nil then
+                            playerthinktime[sid64] = nil
                         end
                     end
                 -- Cure the player if they are healed
-                elseif v:Health() > playerhealth[playername] then
+                elseif v:Health() > playerhealth[sid64] then
                     ClearPlayerData(v)
                 -- Otherwise track their current health
                 else
-                    playerhealth[playername] = v:Health()
+                    playerhealth[sid64] = v:Health()
                 end
             else
-                if plys[playername] ~= nil then
-                    plys[playername] = nil
+                if plys[sid64] ~= nil then
+                    plys[sid64] = nil
                 end
                 ClearPlayerData(v)
             end
@@ -154,11 +154,12 @@ function EVENT:Begin()
     end)
 
     self:AddHook("PlayerSpawn", function(ply)
-        local playername = ply:GetName()
-        if plys[playername] ~= nil then
-            plys[playername] = nil
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+        local sid64 = ply:SteamID64()
+        if plys[sid64] == nil then
+            plys[sid64] = ply
         end
-        ClearPlayerData(ply)
     end)
 end
 

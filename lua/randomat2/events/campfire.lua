@@ -17,30 +17,32 @@ function EVENT:Begin()
             local loc = ply:GetPos()
             local distance = GetConVar("randomat_campfire_distance"):GetInt()
             -- If we haven't seen the player move yet or they are now in a different location, save their location and update the movement time
-            if playermoveloc[ply:GetName()] == nil or math.abs(playermoveloc[ply:GetName()]:Distance(loc)) > distance then
-                playermoveloc[ply:GetName()] = loc
-                playermovetime[ply:GetName()] = CurTime()
+            local sid64 = ply:SteamID64()
+            if playermoveloc[sid64] == nil or math.abs(playermoveloc[sid64]:Distance(loc)) > distance then
+                playermoveloc[sid64] = loc
+                playermovetime[sid64] = CurTime()
             end
         end
     end)
 
     local plys = {}
     for _, v in player.Iterator() do
-        plys[v:GetName()] = v
+        plys[v:SteamID64()] = v
     end
 
     local tmr = GetConVar("randomat_campfire_timer"):GetInt()
     self:AddHook("Think", function()
         for _, v in pairs(plys) do
+            local sid64 = v:SteamID64()
             if v:Alive() and not v:IsSpec() then
                 -- If we haven't seen this player move yet, save the current time
                 -- This handles the case where the player hasn't moved since the event started
-                if playermovetime[v:GetName()] == nil then
-                    playermovetime[v:GetName()] = CurTime()
+                if playermovetime[sid64] == nil then
+                    playermovetime[sid64] = CurTime()
                 end
 
                 -- If the player hasn't moved in the configured amount of time, set them on fire
-                if (CurTime() - playermovetime[v:GetName()]) > tmr then
+                if (CurTime() - playermovetime[sid64]) > tmr then
                     if not v:IsOnFire() then
                         v:ChatPrint("Here's a fire for all that camping you've been doing.")
                         v:Ignite(tmr * 10)
@@ -50,19 +52,22 @@ function EVENT:Begin()
                     v:Extinguish()
                 end
             else
-                if playermovetime[v:GetName()] ~= nil then
-                    playermovetime[v:GetName()] = nil
+                if playermovetime[sid64] ~= nil then
+                    playermovetime[sid64] = nil
                 end
-                if plys[v:GetName()] ~= nil then
-                    plys[v:GetName()] = nil
+                if plys[sid64] ~= nil then
+                    plys[sid64] = nil
                 end
             end
         end
     end)
 
     self:AddHook("PlayerSpawn", function(ply)
-        if plys[ply:GetName()] == nil then
-            plys[ply:GetName()] = ply
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+        local sid64 = ply:SteamID64()
+        if plys[sid64] == nil then
+            plys[sid64] = ply
         end
     end)
 end

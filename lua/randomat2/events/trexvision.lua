@@ -33,6 +33,8 @@ function EVENT:Begin()
     end
 
     self:AddHook("PlayerSpawn", function(ply)
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
         SetPlayerInvisible(ply)
     end)
 

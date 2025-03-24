@@ -160,7 +160,8 @@ function EVENT:Begin()
 
     -- Stop the timer if something else resurrects them
     self:AddHook("PlayerSpawn", function(ply)
-        if not IsValid(ply) then return end
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
         local sid = ply:SteamID64()
         permadead[sid] = false
         timer.Remove("RdmtBlergRespawnTimer_" .. sid)

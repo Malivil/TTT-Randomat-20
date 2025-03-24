@@ -59,7 +59,7 @@ function EVENT:Begin()
     local firstWeapon = weps[WEAPON_HEAVY][1]
     local currentWepData = {}
     -- Set up each player with their first weapon
-    for i, p in ipairs(self:GetAlivePlayers()) do
+    for i, p in player.Iterator() do
         local sid64 = p:SteamID64()
         currentWepData[sid64] = {
             Kind = WEAPON_HEAVY,
@@ -130,7 +130,7 @@ function EVENT:Begin()
                 wepKind = wepKind - 1
                 -- If they've used all of the kinds too, they win!
                 if wepKind <= 0 then
-                    Randomat:EventNotify(attacker:GetNick() .. " WINS!")
+                    Randomat:EventNotify(attacker:Nick() .. " WINS!")
                     Randomat:SmallNotify("They killed an enemy with every weapon and won the round for their team!")
                     currentWepData[attSid64] = nil
                     if attacker:IsDetective() then
@@ -198,7 +198,8 @@ function EVENT:Begin()
 
     -- Anyone who spawns should be locked in too
     self:AddHook("PlayerSpawn", function(ply)
-        if not IsValid(ply) then return end
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
 
         local sid64 = ply:SteamID64()
         local wepData = currentWepData[sid64]

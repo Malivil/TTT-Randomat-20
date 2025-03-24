@@ -9,23 +9,26 @@ local playerhealth = {}
 
 function EVENT:Begin()
     for _, v in ipairs(self:GetAlivePlayers()) do
-        playerhealth[v:GetName()] = v:Health()
+        playerhealth[v:SteamID64()] = v:Health()
     end
 
     self:AddHook("Think", function()
         for _, v in ipairs(self:GetAlivePlayers()) do
-            local playername = v:GetName()
-            if v:Health() > playerhealth[playername] then
-                v:SetHealth(playerhealth[playername])
+            local sid64 = v:SteamID64()
+            local hp = v:Health()
+            if hp > playerhealth[sid64] then
+                v:SetHealth(playerhealth[sid64])
             else
-                playerhealth[playername] = v:Health()
+                playerhealth[sid64] = hp
             end
         end
     end)
 
     self:AddHook("PlayerSpawn", function(ply)
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
         -- Save the player's initial health on spawn so if they get ressed, it resets to full
-        playerhealth[ply:GetName()] = ply:Health()
+        playerhealth[ply:SteamID64()] = ply:Health()
     end)
 end
 

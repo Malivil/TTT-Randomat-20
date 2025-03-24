@@ -84,11 +84,12 @@ function EVENT:Begin()
     end)
 
     self:AddHook("PlayerSpawn", function(ply)
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
         local sid = ply:SteamID64()
-        if plys[sid] ~= nil then
-            plys[sid] = nil
+        if plys[sid] == nil then
+            plys[sid] = ply
         end
-        ClearPlayerData(sid)
     end)
 end
 

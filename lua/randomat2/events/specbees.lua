@@ -72,7 +72,11 @@ function EVENT:Begin()
         if dead[ply:SteamID64()] then return false end
     end)
 
-    self:AddHook("PlayerSpawn", StopBee)
+    self:AddHook("PlayerSpawn", function(ply)
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+        StopBee(ply)
+    end)
     self:AddHook("PlayerDisconnected", StopBee)
 
     self:AddHook("PlayerDeath", function(victim, entity, killer)
