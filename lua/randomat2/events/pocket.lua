@@ -7,6 +7,7 @@ EVENT.Description = "Gives each player a random buyable weapon"
 EVENT.id = "pocket"
 EVENT.SingleUse = false
 EVENT.Categories = {"moderateimpact"}
+EVENT.ConVars = {"randomat_pocket_blocklist"}
 
 local blocklist = {}
 

@@ -6,6 +6,7 @@ EVENT.Title = "Two Lies and a Truth"
 EVENT.Description = "One of these three events has been started... but which one?"
 EVENT.id = "twolies"
 EVENT.Categories = {"eventtrigger", "largeimpact"}
+EVENT.ConVars = {"randomat_twolies_blocklist"}
 
 function EVENT:Begin()
     local blocklist = {}

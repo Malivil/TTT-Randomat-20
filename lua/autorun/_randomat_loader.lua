@@ -89,6 +89,63 @@ if SERVER then
             Randomat:SilentTriggerEvent(always_trigger_event)
         end
     end)
+
+    -- Per The Stig's research, this happens before the server.cfg is loaded so anything we load from the .json will be overwritten by that
+    hook.Add("InitPostEntity", "Randomat_LoadConVars_InitPostEntity", function()
+        if not file.IsDir("randomat", "DATA") then
+            file.CreateDir("randomat")
+        elseif file.Exists("randomat/convars.json", "DATA") then
+            local convarsJson = file.Read("randomat/convars.json", "DATA")
+            if not convarsJson then return end
+
+            local convars = util.JSONToTable(convarsJson)
+            if not convars then return end
+
+            for name, value in ipairs(convars) do
+                local convar = GetConVar(name)
+                if not convar then continue end
+
+                convar:SetString(value)
+            end
+        end
+    end)
+
+    local function GetConVarValues(tbl, convars, prefix)
+        if not convars then return end
+
+        for _, name in ipairs(convars) do
+            if name.cmd then
+                name = name.cmd
+            end
+            if prefix then
+                name = prefix .. name
+            end
+
+            tbl[name] = GetConVar(name):GetString()
+        end
+    end
+
+    hook.Add("ShutDown", "Randomat_SaveConVars_ShutDown", function()
+        local convars = {}
+        -- Start with the shared convars
+        GetConVarValues(convars, Randomat.ConVars)
+
+        for _, evt in pairs(Randomat.Events) do
+            -- Get any saved into the convars table
+            GetConVarValues(convars, evt.ConVars)
+
+            -- And just in case, get the ones defined for ULX too
+            local sliders, checks, textboxes = evt:GetConVars()
+            GetConVarValues(convars, sliders, "randomat_" .. evt.id .. "_")
+            GetConVarValues(convars, checks, "randomat_" .. evt.id .. "_")
+            GetConVarValues(convars, textboxes, "randomat_" .. evt.id .. "_")
+        end
+
+        local convarsJson = util.TableToJSON(convars)
+        if not convarsJson then return end
+
+        file.Write("randomat/convars.json", convarsJson)
+    end)
 end
 
 AddServer("randomat2/randomat_base.lua")

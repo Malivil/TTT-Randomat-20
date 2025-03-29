@@ -11,6 +11,7 @@ EVENT.Title = "Black Market Buyout"
 EVENT.Description = "Disables Traitor and Detective shops, but periodically gives out free items from both"
 EVENT.id = "blackmarket"
 EVENT.Categories = {"moderateimpact"}
+EVENT.ConVars = {"randomat_blackmarket_blocklist"}
 
 local blocklist = {}
 local oldSetCredits = nil

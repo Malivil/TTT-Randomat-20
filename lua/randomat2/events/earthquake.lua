@@ -7,6 +7,7 @@ EVENT.ExtDescription = "Shakes all props, weapons, and ammo on the map"
 EVENT.id = "earthquake"
 EVENT.SingleUse = false
 EVENT.Categories = {"fun", "smallimpact"}
+EVENT.ConVars = {"randomat_earthquake_blocklist"}
 
 function EVENT:Begin(magnitude)
     if type(magnitude) ~= "number" then

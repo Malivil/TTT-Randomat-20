@@ -38,6 +38,22 @@ ROLE_TRICKSTER = ROLE_TRICKSTER or -1
 ROLE_DETRAITOR = ROLE_DETRAITOR or -1
 ROLE_LOOTGOBLIN = ROLE_LOOTGOBLIN or -1
 
+Randomat.ConVars = {
+    "ttt_randomat_allow_client_list",
+    "ttt_randomat_always_silently_trigger",
+    "ttt_randomat_auto",
+    "ttt_randomat_auto_chance",
+    "ttt_randomat_auto_choose",
+    "ttt_randomat_auto_min_rounds",
+    "ttt_randomat_auto_silent",
+    "ttt_randomat_chooseevent",
+    "ttt_randomat_event_hint",
+    "ttt_randomat_event_hint_chat",
+    "ttt_randomat_event_hint_chat_secret",
+    "ttt_randomat_event_history",
+    "ttt_randomat_event_weight",
+    "ttt_randomat_rebuyable"
+}
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = Randomat.ActiveEvents or {}
 
@@ -383,6 +399,15 @@ function Randomat:register(tbl)
         end
         tbl.Categories = lower_cats
     end
+    -- Make sure the list of convars exists
+    if type(tbl.ConVars) ~= "table" then
+        tbl.ConVars = {}
+    end
+    -- And then save the default ones into it
+    table.insert(tbl.ConVars, "ttt_randomat_" .. id)
+    table.insert(tbl.ConVars, "ttt_randomat_" .. id .. "_min_players")
+    table.insert(tbl.ConVars, "ttt_randomat_" .. id .. "_weight")
+
     setmetatable(tbl, randomat_meta)
 
     Randomat.Events[id] = tbl

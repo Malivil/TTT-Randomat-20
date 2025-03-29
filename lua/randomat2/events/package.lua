@@ -7,6 +7,7 @@ EVENT.Description = "Spawns an ammo crate somewhere in the map that contains a f
 EVENT.id = "package"
 EVENT.SingleUse = false
 EVENT.Categories = {"entityspawn", "smallimpact"}
+EVENT.ConVars = {"randomat_package_blocklist"}
 
 function EVENT:Begin()
     local spawns = {}
