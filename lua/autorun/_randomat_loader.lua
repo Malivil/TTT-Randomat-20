@@ -101,7 +101,7 @@ if SERVER then
             local convars = util.JSONToTable(convarsJson)
             if not convars then return end
 
-            for name, value in ipairs(convars) do
+            for name, value in pairs(convars) do
                 local convar = GetConVar(name)
                 if not convar then continue end
 
