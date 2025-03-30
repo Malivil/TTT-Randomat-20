@@ -226,6 +226,9 @@ Properties used to define and describe an event and its running conditions
 |spectator|Spectator|![spectator.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/spectator.png)|Affects spectators|
 |stats|Stats|![stats.png](https://raw.githubusercontent.com/Custom-Roles-for-TTT/TTT-Jingle-Jam-Roles-2021/main/gamemodes/terrortown/content/materials/vgui/ttt/roles/ran/items/stats.png)|Uses previously-recorded statistics about the players|
 
+**ConVars** - The table of ConVar names to save and load automatically, in addition to what is provided by `EVENT:GetConVars()`. Defaults to a table containing the auto-generated ConVars for this event.\
+*Realm:* Server
+
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
 
