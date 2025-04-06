@@ -161,7 +161,7 @@ function EVENT:RagdollPlayer(v)
     local i = 1
     while i <= EQUIP_MAX do
         equipment[i] = v:HasEquipmentItem(i)
-        if CRVersion and CRVersion("2.1.2") then
+        if CR_VERSION then
             i = i + 1
         -- Double the index since this is a bit-mask
         else
