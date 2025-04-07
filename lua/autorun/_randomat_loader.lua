@@ -121,7 +121,15 @@ if SERVER then
                 name = prefix .. name
             end
 
-            tbl[name] = GetConVar(name):GetString()
+            local convar = GetConVar(name)
+            if not convar then continue end
+
+            local value = convar:GetString()
+            -- Don't bother saving the default value because that will just use up more space
+            -- and make it difficult for us to change defaults in the future
+            if value == convar:GetDefault() then continue end
+
+            tbl[name] = value
         end
     end
 
