@@ -1,3 +1,11 @@
+local ents = ents
+local string = string
+
+local EntsFindInSphere = ents.FindInSphere
+local EntsFindByModel = ents.FindByModel
+local StringMatch = string.match
+local StringStartsWith = string.StartsWith
+
 local EVENT = {}
 
 CreateConVar("randomat_barrelinjustice_count", 2, FCVAR_NONE, "Number of barrels spawned", 0, 5)
@@ -15,9 +23,12 @@ function EVENT:Begin()
         if not IsValid(ply) or not ply:Alive() or ply:IsSpec() then return end
 
         -- If there are any barrels near to this player
-        for _, ent in ipairs(ents.FindInSphere(ply:GetPos(), range)) do
-            if ent:GetClass() ~= "prop_physics" then continue end
-            if ent:GetModel() ~= "models/props_c17/oildrum001_explosive.mdl" then continue end
+        for _, ent in ipairs(EntsFindInSphere(ply:GetPos(), range)) do
+            local entClass = ent:GetClass()
+            if not StringStartsWith(entClass, "prop_physics") and entClass ~= "prop_dynamic" then continue end
+
+            local entModel = ent:GetModel()
+            if not StringMatch(entModel, "models/(.*)/oildrum001_explosive.mdl") then continue end
 
             -- Explode the barrel
             local dmginfo = DamageInfo()
@@ -30,7 +41,7 @@ function EVENT:Begin()
             -- Spawn more
             if count > 0 then
                 for _ = 1, count do
-                    Randomat:SpawnBarrel(ply:GetPos(), range * 3, range * 2)
+                    Randomat:SpawnBarrel(ply:GetPos(), range * 3, range * 2, false, entModel)
                 end
             end
         end
@@ -38,6 +49,10 @@ function EVENT:Begin()
 end
 
 function EVENT:Condition()
+    -- Make sure there are explosive barrels on the map
+    local barrelEnts = EntsFindByModel("models/*/oildrum001_explosive.mdl")
+    if #barrelEnts == 0 then return false end
+
     return not Randomat:IsEventActive("bomberman")
 end
 

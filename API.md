@@ -1008,13 +1008,14 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *allow_secret* - Whether to allow this message to go through even when the `secret` event is running (Optional, defaults to `false`)
 - *font_color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the font (Optional, defaults to rgb(255, 200, 0))
 
-**Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)** - Spawns an explosive barrel near the provided position.\
+**Randomat:SpawnBarrel(pos, range, min_range, ignore_negative, model_override)** - Spawns an explosive barrel near the provided position.\
 *Realm:* Server\
 *Parameters:*
 - *pos* - The position to spawn the barrel at
 - *range* - The range away from the given position to spawn the barrel
 - *min_range* - The minimum range away from the given position to spawn the barrel. (Optional, defaults to `range`)
 - *ignore_negative* - Whether to disallow negative ranges
+- *model_override* - Model to use in place of the default. (Optional, defaults to `models/props_c17/oildrum001_explosive.mdl`)
 
 *Note:* If `range` and `min_range` are provided, a random range between `min_range` and `range` is selected for the X and Y locations
 

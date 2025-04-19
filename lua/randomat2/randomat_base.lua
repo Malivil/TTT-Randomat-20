@@ -1082,7 +1082,7 @@ function Randomat:SpawnBee(ply, color, height)
     return headBee
 end
 
-function Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)
+function Randomat:SpawnBarrel(pos, range, min_range, ignore_negative, model_override)
     local ent = EntsCreate("prop_physics")
     if not IsValid(ent) then return end
 
@@ -1097,7 +1097,11 @@ function Randomat:SpawnBarrel(pos, range, min_range, ignore_negative)
         if math.random(0, 1) == 1 then y = -y end
     end
 
-    ent:SetModel("models/props_c17/oildrum001_explosive.mdl")
+    if not model_override or #model_override == 0 then
+        model_override = "models/props_c17/oildrum001_explosive.mdl"
+    end
+
+    ent:SetModel(model_override)
     ent:SetPos(pos + Vector(x, y, math.random(5, range)))
     ent:Spawn()
 
