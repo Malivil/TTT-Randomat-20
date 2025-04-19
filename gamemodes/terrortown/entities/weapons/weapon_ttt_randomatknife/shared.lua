@@ -122,41 +122,8 @@ function SWEP:Equip()
     self:SetNextSecondaryFire(CurTime() + (self.Secondary.Delay * 1.5))
 end
 
-function SWEP:PreDrop()
-    -- for consistency, dropped knife should not have DNA/prints
-    self.fingerprints = {}
-end
-
 function SWEP:OnRemove()
     if CLIENT and IsValid(self:GetOwner()) and self:GetOwner() == LocalPlayer() and self:GetOwner():Alive() then
         RunConsoleCommand("lastinv")
-    end
-end
-
-if CLIENT then
-    local T = LANG.GetTranslation
-    function SWEP:DrawHUD()
-        local tr = self:GetOwner():GetEyeTrace(MASK_SHOT)
-
-        if tr.HitNonWorld and IsPlayer(tr.Entity)
-            and tr.Entity:Health() < (self.Primary.Damage + 10) then
-
-            local x = ScrW() / 2.0
-            local y = ScrH() / 2.0
-
-            surface.SetDrawColor(255, 0, 0, 255)
-
-            local outer = 20
-            local inner = 10
-            surface.DrawLine(x - outer, y - outer, x - inner, y - inner)
-            surface.DrawLine(x + outer, y + outer, x + inner, y + inner)
-
-            surface.DrawLine(x - outer, y + outer, x - inner, y + inner)
-            surface.DrawLine(x + outer, y - outer, x + inner, y - inner)
-
-            draw.SimpleText(T("knife_instant"), "TabLarge", x, y - 30, COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
-        end
-
-        return self.BaseClass.DrawHUD(self)
     end
 end
