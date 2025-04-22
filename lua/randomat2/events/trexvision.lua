@@ -18,11 +18,15 @@ local function IsTooSlow(crouching, prone, vel)
 end
 
 local function SetPlayerInvisible(ply)
+    if ply:GetObserverMode() ~= OBS_MODE_NONE then return end
+
     Randomat:SetPlayerInvisible(ply)
     ply:DrawWorldModel(false)
 end
 
 local function SetPlayerVisible(ply)
+    if ply:GetObserverMode() ~= OBS_MODE_NONE then return end
+
     Randomat:SetPlayerVisible(ply)
     ply:DrawWorldModel(true)
 end

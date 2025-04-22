@@ -516,6 +516,8 @@ function Randomat:IsPlayerInvisible(ply)
 end
 
 function Randomat:SetPlayerInvisible(ply)
+    if ply:GetObserverMode() ~= OBS_MODE_NONE then return end
+
     ply:SetColor(Color(255, 255, 255, 0))
     ply:SetMaterial("sprites/heatwave")
     ply:SetNWBool("RdmtInvisible", true)
@@ -524,6 +526,8 @@ function Randomat:SetPlayerInvisible(ply)
 end
 
 function Randomat:SetPlayerVisible(ply)
+    if ply:GetObserverMode() ~= OBS_MODE_NONE then return end
+
     ply:SetColor(COLOR_WHITE)
     ply:SetMaterial("")
     ply:SetNWBool("RdmtInvisible", false)
