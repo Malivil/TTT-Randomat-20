@@ -15,39 +15,50 @@ local function SetGravity(alive_players)
     end
 end
 
+local function SetupPlayer(p)
+    p:StripWeapons()
+    local weap = p:Give("weapon_zm_rifle")
+    if weap then
+        weap.AllowDrop = false
+    end
+end
+
 function EVENT:Begin()
-    local alive_players = self:GetAlivePlayers()
-    SetGravity(alive_players)
+    SetGravity(self:GetAlivePlayers())
     timer.Create("RandomatScoutsOnlyTimer", 1, 0, function()
         SetGravity(self:GetAlivePlayers())
     end)
 
     -- Convert all players to vanilla roles and replace all their weapons with the rifle
     local new_traitors = {}
-    for _, p in ipairs(alive_players) do
+    local updated = false
+    for _, p in player.Iterator() do
         if Randomat:IsInnocentTeam(p) then
             if p:GetRole() ~= ROLE_INNOCENT then
                 Randomat:SetRole(p, ROLE_INNOCENT)
+                updated = true
             end
         elseif p:GetRole() ~= ROLE_TRAITOR then
             if not Randomat:IsTraitorTeam(p) then
                 table.insert(new_traitors, p)
             end
             Randomat:SetRole(p, ROLE_TRAITOR)
+            updated = true
         end
 
-        p:StripWeapons()
-        local weap = p:Give("weapon_zm_rifle")
-        if weap then
-            weap.AllowDrop = false
+        if p:Alive() and not p:IsSpec() then
+            SetupPlayer(p)
         end
     end
-    SendFullStateUpdate()
+
+    if updated then
+        SendFullStateUpdate()
+    end
 
     self:NotifyTeamChange(new_traitors, ROLE_TEAM_TRAITOR)
 
     self:AddHook("PlayerCanPickupWeapon", function(ply, wep)
-        return false
+        return WEPS.GetClass(wep) == "weapon_zm_rifle"
     end)
 
     self:AddHook("TTTCanOrderEquipment", function(ply, id, is_item)
@@ -65,6 +76,12 @@ function EVENT:Begin()
                 active_weapon:SetClip1(active_weapon.Primary.ClipSize)
             end
         end
+    end)
+
+    self:AddHook("PlayerSpawn", function(ply)
+        -- "PlayerSpawn" also gets called when a player is moved to AFK
+        if not IsPlayer(ply) or not ply:Alive() or ply:IsSpec() then return end
+        SetupPlayer(ply)
     end)
 end
 
