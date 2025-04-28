@@ -22,11 +22,17 @@ function EVENT:EquipPlayer(ply, wepClass)
     if wep.Primary and wep.Primary.ClipSize and wep.Primary.ClipSize > 0 then
         wep:SetClip1(wep.Primary.ClipSize)
 
+        local amount
         if wep.Primary.ClipMax and wep.Primary.ClipMax > 0 then
-            local ammoType = wep:GetPrimaryAmmoType()
-            if ammoType >= 0 then
-                ply:SetAmmo(wep.Primary.ClipMax, ammoType)
-            end
+            amount = wep.Primary.ClipMax
+        else
+            -- If we don't know the max clip size, just give them 3 clips
+            amount = wep.Primary.ClipSize * 3
+        end
+
+        local ammoType = wep:GetPrimaryAmmoType()
+        if ammoType >= 0 then
+            ply:SetAmmo(amount, ammoType)
         end
     end
 end
@@ -120,7 +126,7 @@ function EVENT:Begin()
         -- Get the inflictor class, but if it's a weapon
         -- get the attacker's current weapon instead
         local inflClass = WEPS.GetClass(inflictor)
-        if inflClass == "player" then
+        if inflClass ~= wepClass then
             inflClass = WEPS.GetClass(attacker:GetActiveWeapon())
         end
 
