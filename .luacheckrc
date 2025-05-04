@@ -1141,6 +1141,7 @@ std = {
             fields = {
                 concat = {},
                 insert = {},
+                move = {},
                 remove = {},
                 sort = {},
                 Add = {},
