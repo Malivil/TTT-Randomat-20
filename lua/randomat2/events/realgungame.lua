@@ -6,7 +6,9 @@ EVENT.id = "realgungame"
 EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"gamemode", "rolechange", "item", "largeimpact"}
 
+CreateConVar("randomat_realgungame_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")
 CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_NONE, "How long before a dead player respawns", 0, 60)
+CreateConVar("randomat_realgungame_round_limit", 0, FCVAR_NONE, "How many rounds to limit the game to, maximum (Limited by the number of available weapons). Set to 0 to go through every weapon available")
 
 function EVENT:EquipPlayer(ply, wepClass)
     ply:StripWeapons()
@@ -37,7 +39,13 @@ function EVENT:EquipPlayer(ply, wepClass)
     end
 end
 
+local blocklist = {}
 function EVENT:Begin()
+    blocklist = {}
+    for blocked_id in string.gmatch(GetConVar("randomat_realgungame_blocklist"):GetString(), "([^,]+)") do
+        table.insert(blocklist, blocked_id:Trim())
+    end
+
     -- Stop win checks so the only way to win is if someone gets all the gun kills
     StopWinChecks()
 
@@ -52,6 +60,9 @@ function EVENT:Begin()
         if not weps[wep.Kind] then continue end
 
         local wepClass = WEPS.GetClass(wep)
+        -- Ignore blocked weapons
+        if table.HasValue(blocklist, wepClass) then continue end
+
         table.insert(weps[wep.Kind], wepClass)
     end
 
@@ -62,13 +73,63 @@ function EVENT:Begin()
     table.Shuffle(weps[WEAPON_HEAVY])
     table.Shuffle(weps[WEAPON_PISTOL])
 
-    local firstWeapon = weps[WEAPON_HEAVY][1]
+    local round_limit = GetConVar("randomat_realgungame_round_limit"):GetInt() - 1
+    if round_limit > 0 then
+        local non_melee_round_count = math.floor(round_limit / 2)
+        local rounds_per_type = {
+            [WEAPON_HEAVY] = non_melee_round_count,
+            [WEAPON_PISTOL] = non_melee_round_count,
+            [WEAPON_MELEE] = 1
+        }
+
+        -- If this was an odd number, add one to the first round to get to the round limit
+        if (round_limit % 2) ~= 0 then
+            rounds_per_type[WEAPON_HEAVY] = rounds_per_type[WEAPON_HEAVY] + 1
+        end
+
+        -- Limit the rounds for each type by the number of weapons available
+        rounds_per_type[WEAPON_HEAVY] = math.min(rounds_per_type[WEAPON_HEAVY], #weps[WEAPON_HEAVY])
+        rounds_per_type[WEAPON_PISTOL] = math.min(rounds_per_type[WEAPON_PISTOL], #weps[WEAPON_PISTOL])
+
+        -- If we've limited the rounds for each type, make sure we've used all available rounds according to the configured limit
+        if (round_limit - rounds_per_type[WEAPON_HEAVY] - rounds_per_type[WEAPON_PISTOL]) > 0 then
+            -- At this point we know one of the lists was capped by the number of weapons
+            -- So if we adjust the size of each list to contain the maximum number they can hold of the remaining rounds,
+            -- the maxed weapon type will be unchanged and the other type will have as many weapons assigned to it as it can hold
+            -- If both of them are maxed already then neither number will change, but no harm done
+            rounds_per_type[WEAPON_HEAVY] = math.min(round_limit - rounds_per_type[WEAPON_PISTOL], #weps[WEAPON_HEAVY])
+            rounds_per_type[WEAPON_PISTOL] = math.min(round_limit - rounds_per_type[WEAPON_HEAVY], #weps[WEAPON_PISTOL])
+        end
+
+        -- "Resize" each weapon list to the new limit, or empty the table if the limit is 0
+        if rounds_per_type[WEAPON_HEAVY] > 0 then
+            weps[WEAPON_HEAVY] = table.move(weps[WEAPON_HEAVY], 1, rounds_per_type[WEAPON_HEAVY], 1, {})
+        else
+            weps[WEAPON_HEAVY] = {}
+        end
+        if rounds_per_type[WEAPON_PISTOL] > 0 then
+            weps[WEAPON_PISTOL] = table.move(weps[WEAPON_PISTOL], 1, rounds_per_type[WEAPON_PISTOL], 1, {})
+        else
+            weps[WEAPON_PISTOL] = {}
+        end
+    end
+
+    local firstKind = WEAPON_HEAVY
+    -- Make sure we have weapons in each list
+    if #weps[WEAPON_HEAVY] == 0 then
+        if #weps[WEAPON_PISTOL] == 0 then
+            firstKind = WEAPON_MELEE
+        else
+            firstKind = WEAPON_PISTOL
+        end
+    end
+    local firstWeapon = weps[firstKind][1]
     local currentWepData = {}
     -- Set up each player with their first weapon
     for i, p in player.Iterator() do
         local sid64 = p:SteamID64()
         currentWepData[sid64] = {
-            Kind = WEAPON_HEAVY,
+            Kind = firstKind,
             Index = 1
         }
 
@@ -250,7 +311,7 @@ end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in ipairs({"respawn_time"}) do
+    for _, v in ipairs({"respawn_time", "round_limit"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)

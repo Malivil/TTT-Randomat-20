@@ -1433,7 +1433,9 @@ Everyone starts with the same weapon. Each time you kill the other team, you get
 _ttt_randomat_realgungame_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_realgungame_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_realgungame_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_realgungame_respawn_time_ - Default: 5 - How long before a dead player respawns.
+_randomat_realgungame_respawn_time_ - Default: 5 - How long before a dead player respawns.\
+_randomat_realgungame_round_limit_ - Default: 0 - How many rounds to limit the game to, maximum (Limited by the number of available weapons). Set to 0 to go through every weapon available.\
+_randomat_realgungame_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "weapon_zm_rifle,weapon_ttt_pistol".\
 
 ## Red Light, Green Light
 Hurts a player if they move during a red light
