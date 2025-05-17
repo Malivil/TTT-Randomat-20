@@ -29,6 +29,19 @@ function EVENT:Begin()
         SetGravity(self:GetAlivePlayers())
     end)
 
+    local traitors = 0
+    local innocents = 0
+    local others = {}
+    for _, p in player.Iterator() do
+        if Randomat:IsInnocentTeam(p) then
+            innocents = innocents + 1
+        elseif Randomat:IsTraitorTeam(p) then
+            traitors = traitors + 1
+        else
+            table.insert(others, p)
+        end
+    end
+
     -- Convert all players to vanilla roles and replace all their weapons with the rifle
     local new_traitors = {}
     local updated = false
@@ -38,11 +51,21 @@ function EVENT:Begin()
                 Randomat:SetRole(p, ROLE_INNOCENT)
                 updated = true
             end
-        elseif p:GetRole() ~= ROLE_TRAITOR then
-            if not Randomat:IsTraitorTeam(p) then
-                table.insert(new_traitors, p)
+        elseif Randomat:IsTraitorTeam(p) then
+            if p:GetRole() ~= ROLE_TRAITOR then
+                Randomat:SetRole(p, ROLE_TRAITOR)
+                updated = true
             end
-            Randomat:SetRole(p, ROLE_TRAITOR)
+        else
+            -- Keep the teams mostly even by moving any members of other teams to whichever has fewer members
+            if innocents > traitors then
+                Randomat:SetRole(p, ROLE_TRAITOR)
+                table.insert(new_traitors, p)
+                traitors = traitors + 1
+            else
+                Randomat:SetRole(p, ROLE_INNOCENT)
+                innocents = innocents + 1
+            end
             updated = true
         end
 
