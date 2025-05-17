@@ -7,6 +7,7 @@ EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"gamemode", "rolechange", "item", "largeimpact"}
 
 CreateConVar("randomat_realgungame_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")
+CreateConVar("randomat_realgungame_protect_time", 15, FCVAR_NONE, "How long after player respawns that they are immune to damage. Breaks when they do damage.", 0, 60)
 CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_NONE, "How long before a dead player respawns", 0, 60)
 CreateConVar("randomat_realgungame_round_limit", 0, FCVAR_NONE, "How many rounds to limit the game to, maximum (Limited by the number of available weapons). Set to 0 to go through every weapon available")
 
@@ -276,7 +277,28 @@ function EVENT:Begin()
         local wepIndex = wepData.Index
         local wepClass = weps[wepKind][wepIndex]
         self:EquipPlayer(ply, wepClass)
+        ply.RdmtRGGRespawnTime = CurTime()
     end)
+
+    local protect_time = GetConVar("randomat_realgungame_protect_time"):GetInt()
+    if protect_time > 0 then
+        self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
+            if not IsValid(ply) or not ply:Alive() or ply:IsSpec() then return end
+
+            -- If the target has respawn protection, don't let them get damaged
+            if ply.RdmtRGGRespawnTime and (ply.RdmtRGGRespawnTime + protect_time > CurTime()) then
+                dmginfo:SetDamage(0)
+                dmginfo:ScaleDamage(0)
+            end
+
+            local attacker = dmginfo:GetAttacker()
+            if not IsPlayer(attacker) then return end
+            if not attacker:Alive() or attacker:IsSpec() then return end
+
+            -- If the attacker was a player, reset their respawn time marker so they aren't immune anymore
+            attacker.RdmtRGGRespawnTime = nil
+        end)
+    end
 
     -- Print out which weapon the player is now using
     -- Event started in cl_networkstrings
@@ -305,13 +327,14 @@ function EVENT:End()
     timer.Remove("RealGunGameNoCreditsTimer")
     for _, p in player.Iterator() do
         if not IsPlayer(p) then continue end
+        p.RdmtRGGRespawnTime = nil
         timer.Remove("RealGunGameRespawn_" .. p:SteamID64())
     end
 end
 
 function EVENT:GetConVars()
     local checks = {}
-    for _, v in ipairs({"respawn_time", "round_limit"}) do
+    for _, v in ipairs({"respawn_time", "round_limit", "protect_time"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
