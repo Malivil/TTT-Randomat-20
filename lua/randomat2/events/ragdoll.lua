@@ -119,6 +119,7 @@ function EVENT:UnRagdollPlayer(v)
     v:SetCredits(v.spawnInfo.credits)
     v:SetModel(v.spawnInfo.model)
     v:SetPlayerColor(v.spawnInfo.playerColor)
+    v:DrawViewModel(true)
 
     -- Re-set Dead Ringer state
     v:SetNWInt("DRStatus", v.spawnInfo.deadRinger.status)
@@ -223,6 +224,9 @@ function EVENT:RagdollPlayer(v)
     local ragdolltime = GetConVar("randomat_ragdoll_time"):GetFloat()
     hook.Add("Think", v:Nick() .. "UnragdollTimer", function()
         if not IsValid(v) then return end
+
+        v:DrawViewModel(false)
+
         if not IsValid(ragdoll) then return end
 
         local physObj = ragdoll:GetPhysicsObjectNum(1)
