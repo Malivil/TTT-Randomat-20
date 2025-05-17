@@ -1884,7 +1884,7 @@ _ttt_randomat_wasteful_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_wasteful_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_wasteful_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
-## We learned how to heal over time, its hard, but definitely possible... (aka Regeneration)
+## We learned how to heal over time, it's hard, but definitely possible... (aka Regeneration)
 Causes players to slowly regenerate lost health over time
 \
 \

@@ -1,6 +1,6 @@
 local EVENT = {}
 
-EVENT.Title = "We learned how to heal over time, its hard, but definitely possible..."
+EVENT.Title = "We learned how to heal over time, it's hard, but definitely possible..."
 EVENT.Description = "Causes players to slowly regenerate lost health over time"
 EVENT.id = "regeneration"
 EVENT.Categories = {"moderateimpact"}
