@@ -52,7 +52,9 @@ function EVENT:Begin()
 
     local weps = {
         [WEAPON_HEAVY] = {},
-        [WEAPON_PISTOL] = {}
+        [WEAPON_PISTOL] = {},
+        -- Put this in by default since it's not a spawnable weapon but we want it in as an option
+        [WEAPON_MELEE] = { "weapon_zm_improvised" }
     }
 
     -- Gather spawnable weapons
@@ -67,12 +69,12 @@ function EVENT:Begin()
         table.insert(weps[wep.Kind], wepClass)
     end
 
-    -- End it with the crowbar
-    weps[WEAPON_MELEE] = { "weapon_zm_improvised" }
-
     -- Shuffle the tables so the weapons aren't the same every time
     table.Shuffle(weps[WEAPON_HEAVY])
     table.Shuffle(weps[WEAPON_PISTOL])
+
+    -- Choose a single random melee weapon
+    weps[WEAPON_MELEE] = { weps[WEAPON_MELEE][math.random(#weps[WEAPON_MELEE])] }
 
     local round_limit = GetConVar("randomat_realgungame_round_limit"):GetInt() - 1
     if round_limit > 0 then
