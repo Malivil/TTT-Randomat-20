@@ -14,7 +14,7 @@ function EVENT:BeforeEventTrigger(ply, options, ...)
 end
 
 function EVENT:Begin(target)
-    -- Default to the player passed as a paramter, if there is one
+    -- Default to the player passed as a parameter, if there is one
     if not target then
         target = self.owner
     end
@@ -30,7 +30,10 @@ function EVENT:Begin(target)
         if not has_detective then
             target = self.owner
         end
+        print("Changing ", target)
         Randomat:SetRole(target, ROLE_DETECTIVE)
+        self:StripRoleWeapons(target)
+        hook.Call("PlayerLoadout", GAMEMODE, target)
         SendFullStateUpdate()
     end
     target:SetMaxHealth(target:GetMaxHealth() + GetConVar("randomat_president_bonushealth"):GetInt())
