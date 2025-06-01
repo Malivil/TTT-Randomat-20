@@ -1436,7 +1436,9 @@ _ttt_randomat_realgungame_weight_ - Default: -1 - The weight this event should u
 _randomat_realgungame_respawn_time_ - Default: 5 - How long before a dead player respawns.\
 _randomat_realgungame_protect_time_ - Default: 15 - How long after player respawns that they are immune to damage. Breaks when they do damage.\
 _randomat_realgungame_round_limit_ - Default: 0 - How many rounds to limit the game to, maximum (Limited by the number of available weapons). Set to 0 to go through every weapon available.\
-_randomat_realgungame_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "weapon_zm_rifle,weapon_ttt_pistol".\
+_randomat_realgungame_teamkill_lose_level_ - Default: 0 - Whether you lose a level when killing a member of your team.\
+_randomat_realgungame_suicide_lose_level_ - Default: 0 - Whether you lose a level when killing killing yourself.\
+_randomat_realgungame_blocklist_ - Default: - The comma-separated list of weapon IDs to not give out. For example: "weapon_zm_rifle,weapon_ttt_pistol".
 
 ## Red Light, Green Light
 Hurts a player if they move during a red light

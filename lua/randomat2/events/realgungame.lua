@@ -10,6 +10,11 @@ CreateConVar("randomat_realgungame_blocklist", "", FCVAR_NONE, "The comma-separa
 CreateConVar("randomat_realgungame_protect_time", 15, FCVAR_NONE, "How long after player respawns that they are immune to damage. Breaks when they do damage.", 0, 60)
 CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_NONE, "How long before a dead player respawns", 0, 60)
 CreateConVar("randomat_realgungame_round_limit", 0, FCVAR_NONE, "How many rounds to limit the game to, maximum (Limited by the number of available weapons). Set to 0 to go through every weapon available")
+CreateConVar("randomat_realgungame_teamkill_lose_level", 0, FCVAR_NONE, "Whether you lose a level when killing a member of your team", 0, 1)
+CreateConVar("randomat_realgungame_suicide_lose_level", 1, FCVAR_NONE, "Whether you lose a level when killing yourself", 0, 1)
+
+local currentWepData = {}
+local blocklist = {}
 
 function EVENT:EquipPlayer(ply, wepClass)
     ply:StripWeapons()
@@ -40,16 +45,52 @@ function EVENT:EquipPlayer(ply, wepClass)
     end
 end
 
-local blocklist = {}
-function EVENT:Begin()
-    blocklist = {}
-    for blocked_id in string.gmatch(GetConVar("randomat_realgungame_blocklist"):GetString(), "([^,]+)") do
-        table.insert(blocklist, blocked_id:Trim())
+function EVENT:UpdatePlayerWeapon(ply, wepKind, wepIndex, wepClass, fail)
+    local sid64 = ply:SteamID64()
+    currentWepData[sid64] = {
+        Kind = wepKind,
+        Index = wepIndex
+    }
+
+    -- Give them their new weapon
+    self:EquipPlayer(ply, wepClass)
+
+    -- Send a request for the weapon name to the client
+    -- Event handler located in cl_networkstrings
+    net.Start("alerteventtrigger")
+    net.WriteString(EVENT.id)
+    net.WriteString(wepClass)
+    -- Repurpose this string as the player's SID64, and prefix it with a "-" to mark if this person failed
+    -- This is a hack to pass some extra information to the messaging logic handled in "AlertTriggerFinal" below
+    if fail then
+        net.WriteString("-" .. sid64)
+    else
+        net.WriteString(sid64)
+    end
+    -- We only care about weapons so always send 0 for the is_item
+    net.WriteUInt(0, 32)
+    net.WriteInt(ply:GetRole(), 16)
+    net.Send(ply)
+end
+
+function EVENT:RemoveLevel(ply, weps, wepIndex, wepKind)
+    -- Can't go any further back
+    if wepIndex == 1 and wepKind == WEAPON_HEAVY then return end
+
+    -- If we aren't at the start of the table, go back by one
+    if wepIndex > 1 then
+        wepIndex = wepIndex - 1
+    -- If we are, then go back to the previous kind
+    else
+        wepKind = wepKind + 1
+        wepIndex = #weps[wepKind]
     end
 
-    -- Stop win checks so the only way to win is if someone gets all the gun kills
-    StopWinChecks()
+    local newClass = weps[wepKind][wepIndex]
+    self:UpdatePlayerWeapon(ply, wepKind, wepIndex, newClass, true)
+end
 
+local function GetWeaponLists()
     local weps = {
         [WEAPON_HEAVY] = {},
         [WEAPON_PISTOL] = {},
@@ -117,6 +158,21 @@ function EVENT:Begin()
         end
     end
 
+    return weps
+end
+
+function EVENT:Begin()
+    currentWepData = {}
+    blocklist = {}
+
+    for blocked_id in string.gmatch(GetConVar("randomat_realgungame_blocklist"):GetString(), "([^,]+)") do
+        table.insert(blocklist, blocked_id:Trim())
+    end
+
+    -- Stop win checks so the only way to win is if someone gets all the gun kills
+    StopWinChecks()
+
+    local weps = GetWeaponLists()
     local firstKind = WEAPON_HEAVY
     -- Make sure we have weapons in each list
     if #weps[WEAPON_HEAVY] == 0 then
@@ -127,7 +183,6 @@ function EVENT:Begin()
         end
     end
     local firstWeapon = weps[firstKind][1]
-    local currentWepData = {}
     -- Set up each player with their first weapon
     for i, p in player.Iterator() do
         local sid64 = p:SteamID64()
@@ -151,6 +206,8 @@ function EVENT:Begin()
     SendFullStateUpdate()
 
     local respawnTime = GetConVar("randomat_realgungame_respawn_time"):GetInt()
+    local tkLoseLevel = GetConVar("randomat_realgungame_teamkill_lose_level")
+    local suicideLoseLevel = GetConVar("randomat_realgungame_suicide_lose_level")
     self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)
         if not IsPlayer(victim) then return end
 
@@ -169,15 +226,6 @@ function EVENT:Begin()
         end
 
         if not IsPlayer(attacker) then return end
-        if victim:GetRole() == attacker:GetRole() then return end
-
-        -- Get the weapon used
-        local inflictor = dmginfo.GetWeapon and dmginfo:GetWeapon() or nil
-        if not IsValid(inflictor) then
-            -- If it wasn't set, get the inflictor
-            inflictor = dmginfo:GetInflictor()
-            if not IsValid(inflictor) then return end
-        end
 
         local attSid64 = attacker:SteamID64()
         local wepData = currentWepData[attSid64]
@@ -186,6 +234,25 @@ function EVENT:Begin()
         local wepKind = wepData.Kind
         local wepIndex = wepData.Index
         local wepClass = weps[wepKind][wepIndex]
+
+        if victim:GetRole() == attacker:GetRole() then
+            if victim == attacker then
+                if suicideLoseLevel:GetBool() then
+                    self:RemoveLevel(attacker, weps, wepIndex, wepKind)
+                end
+            elseif tkLoseLevel:GetBool() then
+                self:RemoveLevel(attacker, weps, wepIndex, wepKind)
+            end
+            return
+        end
+
+        -- Get the weapon used
+        local inflictor = dmginfo.GetWeapon and dmginfo:GetWeapon() or nil
+        if not IsValid(inflictor) then
+            -- If it wasn't set, get the inflictor
+            inflictor = dmginfo:GetInflictor()
+            if not IsValid(inflictor) then return end
+        end
 
         -- Get the inflictor class, but if it's a weapon
         -- get the attacker's current weapon instead
@@ -214,26 +281,8 @@ function EVENT:Begin()
                 end
             end
 
-            currentWepData[attSid64] = {
-                Kind = wepKind,
-                Index = wepIndex
-            }
-
-            -- Give them their new weapon
             local newClass = weps[wepKind][wepIndex]
-            self:EquipPlayer(attacker, newClass)
-
-            -- Send a request for the weapon name to the client
-            -- Event handler located in cl_networkstrings
-            net.Start("alerteventtrigger")
-            net.WriteString(EVENT.id)
-            net.WriteString(newClass)
-            -- Repurpose this string as the player's name
-            net.WriteString(attSid64)
-            -- We only care about weapons so always send 0 for the is_item
-            net.WriteUInt(0, 32)
-            net.WriteInt(attacker:GetRole(), 16)
-            net.Send(attacker)
+            self:UpdatePlayerWeapon(attacker, wepKind, wepIndex, newClass)
         end
     end)
 
@@ -310,11 +359,23 @@ function EVENT:Begin()
 
         local name = self:RenameWeps(net.ReadString())
         local sid64 = net.ReadString()
+        local fail = false
+        -- Use this as a hacky way of telling whether the player failed and lost a level
+        if string.StartsWith(sid64, "-") then
+            fail = true
+            sid64 = string.sub(sid64, 2)
+        end
+
         local ply = player.GetBySteamID64(sid64)
         if not ply or not IsPlayer(ply) then return end
-        if not ply:Alive() or ply:IsSpec() then return end
+        -- Only fail messages should be shown to the dead
+        if not fail and (not ply:Alive() or ply:IsSpec()) then return end
 
-        Randomat:PrintMessage(ply, MSG_PRINTBOTH, "Success! Your new weapon is '" .. name .. "'")
+        if fail then
+            Randomat:PrintMessage(ply, MSG_PRINTBOTH, "Ouch! You're back to '" .. name .. "'. Try again!")
+        else
+            Randomat:PrintMessage(ply, MSG_PRINTBOTH, "Success! Your new weapon is '" .. name .. "'")
+        end
     end)
 
     -- Disable shops by removing credits
@@ -335,8 +396,23 @@ function EVENT:End()
 end
 
 function EVENT:GetConVars()
-    local checks = {}
+    local sliders = {}
     for _, v in ipairs({"respawn_time", "round_limit", "protect_time"}) do
+        local name = "randomat_" .. self.id .. "_" .. v
+        if ConVarExists(name) then
+            local convar = GetConVar(name)
+            table.insert(sliders, {
+                cmd = v,
+                dsc = convar:GetHelpText(),
+                min = convar:GetMin(),
+                max = convar:GetMax(),
+                dcm = 0
+            })
+        end
+    end
+
+    local checks = {}
+    for _, v in ipairs({"teamkill_lose_level", "suicide_lose_level"}) do
         local name = "randomat_" .. self.id .. "_" .. v
         if ConVarExists(name) then
             local convar = GetConVar(name)
@@ -346,7 +422,8 @@ function EVENT:GetConVars()
             })
         end
     end
-    return {}, checks
+
+    return checks, checks
 end
 
 Randomat:register(EVENT)
