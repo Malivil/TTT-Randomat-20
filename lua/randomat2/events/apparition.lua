@@ -30,8 +30,8 @@ end
 
 local dead = {}
 local function SetupGhost(p)
-    -- Haunting phantoms and infecting parasites shouldn't be ghosts
-    if p:GetNWBool("PhantomHaunting", false) or p:GetNWBool("ParasiteInfecting", false) then return end
+    -- Haunting phantoms (or enhanced mediums) and infecting parasites shouldn't be ghosts
+    if p:GetNWBool("PhantomHaunting", false) or p:GetNWBool("MediumHaunting", false) or p:GetNWBool("ParasiteInfecting", false) then return end
 
     dead[p:SteamID64()] = true
     SetSpectatorValues(p)
