@@ -49,15 +49,15 @@ local iteration
 local difficulty_options
 
 function EVENT:GenerateEquationNode(type)
-    local operation = difficulty_options["operations"][math.random(#difficulty_options["operations"])]
+    local operation = difficulty_options.operations[math.random(#difficulty_options.operations)]
     return {
         left = {
             value = false,
-            type = operations[operation]["left"]
+            type = operations[operation].left
         },
         right = {
             value = false,
-            type = operations[operation]["right"]
+            type = operations[operation].right
         },
         operation = operation,
         parentheses = parentheses[type][operation]
@@ -71,11 +71,11 @@ function EVENT:GenerateEquationTree(iterations, tree)
         if tree then
             local node = tree
             local side = math.random() < 0.5 and "left" or "right"
-            while node[side]["value"] do
-                node = node[side]["value"]
+            while node[side].value do
+                node = node[side].value
                 side = math.random() < 0.5 and "left" or "right"
             end
-            node[side]["value"] = self:GenerateEquationNode(node[side]["type"])
+            node[side].value = self:GenerateEquationNode(node[side].type)
             return self:GenerateEquationTree(iterations - 1, tree)
         else
             return self:GenerateEquationTree(iterations - 1, self:GenerateEquationNode("base"))
@@ -87,42 +87,42 @@ function EVENT:IsValidAnswer(answer)
     if answer == math.huge then return false end
     if answer == -math.huge then return false end
     if answer ~= math.floor(answer) then return false end
-    if answer < difficulty_options["answerLowerBound"] then return false end
-    if answer > difficulty_options["answerUpperBound"] then return false end
+    if answer < difficulty_options.answerLowerBound then return false end
+    if answer > difficulty_options.answerUpperBound then return false end
     return true
 end
 
 function EVENT:TraverseEquationTree(node)
-    if node["value"] then
-        node = self:SolveEquationTree(node["value"])
+    if node.value then
+        node = self:SolveEquationTree(node.value)
     else
-        if difficulty_options["termLowerBound"] < 0 then
-            if math.random() < difficulty_options["negativeChance"] then
-                node["value"] = math.random(difficulty_options["termLowerBound"], -1)
+        if difficulty_options.termLowerBound < 0 then
+            if math.random() < difficulty_options.negativeChance then
+                node.value = math.random(difficulty_options.termLowerBound, -1)
             else
-                node["value"] = math.random(0, difficulty_options["termUpperBound"])
+                node.value = math.random(0, difficulty_options.termUpperBound)
             end
         else
-            node["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
+            node.value = math.random(difficulty_options.termLowerBound, difficulty_options.termUpperBound)
         end
-        node["equation"] = node["value"]
-        if node["value"] < 0 then
-            node["equation"] = "(" .. node["equation"] .. ")"
+        node.equation = node.value
+        if node.value < 0 then
+            node.equation = "(" .. node.equation .. ")"
         end
     end
 end
 
 function EVENT:SolveEquationTree(tree)
-    self:TraverseEquationTree(tree["left"])
-    self:TraverseEquationTree(tree["right"])
+    self:TraverseEquationTree(tree.left)
+    self:TraverseEquationTree(tree.right)
 
-    if tree["left"] == false or tree["right"] == false then return false end
+    if tree.left == false or tree.right == false then return false end
 
-    local answer = operations[tree["operation"]]["calc"](tree["left"]["value"], tree["right"]["value"])
+    local answer = operations[tree.operation].calc(tree.left.value, tree.right.value)
     if not self:IsValidAnswer(answer) then return false end
 
-    local equation = tree["left"]["equation"] .. operations[tree["operation"]]["symbol"] .. tree["right"]["equation"]
-    if (tree["parentheses"]) then
+    local equation = tree.left.equation .. operations[tree.operation].symbol .. tree.right.equation
+    if (tree.parentheses) then
         equation = "(" .. equation .. ")"
     end
 
@@ -135,43 +135,43 @@ end
 function EVENT:GenerateEquation(first, time)
     iteration = iteration + 1
     if iteration == 2 then
-        difficulty_options["terms"] = 3
+        difficulty_options.terms = 3
     elseif iteration == 3 then
-        difficulty_options["termUpperBound"] = 12
+        difficulty_options.termUpperBound = 12
     elseif iteration == 4 then
-        difficulty_options["termLowerBound"] = -12
-        difficulty_options["answerLowerBound"] = -100
+        difficulty_options.termLowerBound = -12
+        difficulty_options.answerLowerBound = -100
     elseif iteration == 5 then
-        difficulty_options["terms"] = 4
+        difficulty_options.terms = 4
     elseif iteration == 6 then
-        difficulty_options["answerLowerBound"] = -500
-        difficulty_options["answerUpperBound"] = 500
+        difficulty_options.answerLowerBound = -500
+        difficulty_options.answerUpperBound = 500
     elseif iteration == 7 then
-        difficulty_options["termLowerBound"] = -15
-        difficulty_options["termUpperBound"] = 15
+        difficulty_options.termLowerBound = -15
+        difficulty_options.termUpperBound = 15
     elseif iteration == 8 then
-        difficulty_options["terms"] = 5
+        difficulty_options.terms = 5
     elseif iteration == 9 then
-        difficulty_options["negativeChance"] = 0.33
-        difficulty_options["answerLowerBound"] = -1000
-        difficulty_options["answerUpperBound"] = 1000
+        difficulty_options.negativeChance = 0.33
+        difficulty_options.answerLowerBound = -1000
+        difficulty_options.answerUpperBound = 1000
     elseif iteration >= 10 and iteration % 2 == 0 then
-        difficulty_options["terms"] = difficulty_options["terms"] + 1
+        difficulty_options.terms = difficulty_options.terms + 1
     end
 
-    local equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1))
+    local equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options.terms - 1))
     while not equation do
-        equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1))
+        equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options.terms - 1))
     end
 
-    local message = "The " .. (first and "first" or "next") .. " equation is: " .. equation["equation"]
+    local message = "The " .. (first and "first" or "next") .. " equation is: " .. equation.equation
     self:SmallNotify(message, time)
     for _, p in player.Iterator() do
         p:PrintMessage(HUD_PRINTTALK, message)
     end
 
-    if equation["value"] == -0 then return 0 end
-    return equation["value"]
+    if equation.value == -0 then return 0 end
+    return equation.value
 end
 
 function EVENT:BeforeEventTrigger(ply, options, ...)
