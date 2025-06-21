@@ -286,8 +286,9 @@ function EVENT:End()
 end
 
 -- "Secret" causes this event to essentially just kill everyone, since they can't see the prompts
+-- "Mathracer" also essentially kills everyone because answering either the maths or spelling question correctly will incorrectly answer the other
 function EVENT:Condition()
-    return not Randomat:IsEventActive("secret")
+    return not (Randomat:IsEventActive("secret") or Randomat:IsEventActive("mathracer"))
 end
 
 function EVENT:GetConVars()
