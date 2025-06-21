@@ -41,6 +41,7 @@ _cl_randomat_show_active_ - Default: 1 - Whether to show the "Active Events" lab
 
 # Latest Events
 1. Mathracer
+1. REAL Gun Game
 1. No one can die from my sight
 1. Cause of Death
 1. Daredevil
