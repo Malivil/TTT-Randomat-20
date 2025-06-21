@@ -97,7 +97,15 @@ function EVENT:SolveEquationTree(tree, options)
     if tree["left"]["value"] then
         tree["left"] = self:SolveEquationTree(tree["left"]["value"], options)
     else
-        tree["left"]["value"] = math.random(options["termLowerBound"],options["termUpperBound"])
+        if (options["termLowerBound"] < 0) then
+            if (math.random() < options["negativeChance"]) then
+                tree["left"]["value"] = math.random(options["termLowerBound"], -1)
+            else
+                tree["left"]["value"] = math.random(0 ,options["termUpperBound"])
+            end
+        else
+            tree["left"]["value"] = math.random(options["termLowerBound"], options["termUpperBound"])
+        end
         tree["left"]["equation"] = tree["left"]["value"]
         if tree["left"]["value"] < 0 then
             tree["left"]["equation"] = "(" .. tree["left"]["equation"] .. ")"
@@ -107,7 +115,15 @@ function EVENT:SolveEquationTree(tree, options)
     if tree["right"]["value"] then
         tree["right"] = self:SolveEquationTree(tree["right"]["value"], options)
     else
-        tree["right"]["value"] = math.random(options["termLowerBound"],options["termUpperBound"])
+        if options["termLowerBound"] < 0 then
+            if (math.random() < options["negativeChance"]) then
+                tree["right"]["value"] = math.random(options["termLowerBound"], -1)
+            else
+                tree["right"]["value"] = math.random(0 ,options["termUpperBound"])
+            end
+        else
+            tree["right"]["value"] = math.random(options["termLowerBound"], options["termUpperBound"])
+        end
         tree["right"]["equation"] = tree["right"]["value"]
         if tree["right"]["value"] < 0 then
             tree["right"]["equation"] = "(" .. tree["right"]["equation"] .. ")"
@@ -150,6 +166,7 @@ function EVENT:GenerateEquation(first, time)
     elseif (iteration == 8) then
         difficulty_options["terms"] = 5
     elseif (iteration == 9) then
+        difficulty_options["negativeChance"] = 0.33
         difficulty_options["answerLowerBound"] = -1000
         difficulty_options["answerUpperBound"] = 1000
     elseif (iteration >= 10 and iteration % 2 == 0) then
@@ -185,6 +202,7 @@ function EVENT:Begin()
     iteration = 0
     difficulty_options = {
         terms = 2,
+        negativeChance = 0.25,
         termLowerBound = 0,
         termUpperBound = 10,
         answerLowerBound = 0,
