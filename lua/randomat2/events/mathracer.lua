@@ -96,11 +96,11 @@ function EVENT:SolveEquationTree(tree)
     if tree["left"]["value"] then
         tree["left"] = self:SolveEquationTree(tree["left"]["value"])
     else
-        if (difficulty_options["termLowerBound"] < 0) then
-            if (math.random() < difficulty_options["negativeChance"]) then
+        if difficulty_options["termLowerBound"] < 0 then
+            if math.random() < difficulty_options["negativeChance"] then
                 tree["left"]["value"] = math.random(difficulty_options["termLowerBound"], -1)
             else
-                tree["left"]["value"] = math.random(0 ,difficulty_options["termUpperBound"])
+                tree["left"]["value"] = math.random(0, difficulty_options["termUpperBound"])
             end
         else
             tree["left"]["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
@@ -115,10 +115,10 @@ function EVENT:SolveEquationTree(tree)
         tree["right"] = self:SolveEquationTree(tree["right"]["value"])
     else
         if difficulty_options["termLowerBound"] < 0 then
-            if (math.random() < difficulty_options["negativeChance"]) then
+            if math.random() < difficulty_options["negativeChance"] then
                 tree["right"]["value"] = math.random(difficulty_options["termLowerBound"], -1)
             else
-                tree["right"]["value"] = math.random(0 ,difficulty_options["termUpperBound"])
+                tree["right"]["value"] = math.random(0, difficulty_options["termUpperBound"])
             end
         else
             tree["right"]["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
@@ -147,33 +147,33 @@ end
 
 function EVENT:GenerateEquation(first, time)
     iteration = iteration + 1
-    if (iteration == 2) then
+    if iteration == 2 then
         difficulty_options["terms"] = 3
-    elseif (iteration == 3) then
+    elseif iteration == 3 then
         difficulty_options["termUpperBound"] = 12
-    elseif (iteration == 4) then
+    elseif iteration == 4 then
         difficulty_options["termLowerBound"] = -12
         difficulty_options["answerLowerBound"] = -100
-    elseif (iteration == 5) then
+    elseif iteration == 5 then
         difficulty_options["terms"] = 4
-    elseif (iteration == 6) then
+    elseif iteration == 6 then
         difficulty_options["answerLowerBound"] = -500
         difficulty_options["answerUpperBound"] = 500
-    elseif (iteration == 7) then
+    elseif iteration == 7 then
         difficulty_options["termLowerBound"] = -15
         difficulty_options["termUpperBound"] = 15
-    elseif (iteration == 8) then
+    elseif iteration == 8 then
         difficulty_options["terms"] = 5
-    elseif (iteration == 9) then
+    elseif iteration == 9 then
         difficulty_options["negativeChance"] = 0.33
         difficulty_options["answerLowerBound"] = -1000
         difficulty_options["answerUpperBound"] = 1000
-    elseif (iteration >= 10 and iteration % 2 == 0) then
+    elseif iteration >= 10 and iteration % 2 == 0 then
         difficulty_options["terms"] = difficulty_options["terms"] + 1
     end
 
     local equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1))
-    while equation == false do
+    while not equation do
         equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1))
     end
 
@@ -183,7 +183,7 @@ function EVENT:GenerateEquation(first, time)
         p:PrintMessage(HUD_PRINTTALK, message)
     end
 
-    if (equation["value"] == -0) then return 0 end
+    if equation["value"] == -0 then return 0 end
     return equation["value"]
 end
 
@@ -248,7 +248,6 @@ function EVENT:Begin()
                     Randomat:Notify(message, nil, p)
                     p:Kill()
                 end
-
             end
 
             table.Empty(safe)
