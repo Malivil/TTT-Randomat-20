@@ -167,6 +167,7 @@ function EVENT:GenerateEquation(first, time)
         p:PrintMessage(HUD_PRINTTALK, message)
     end
 
+    if (equation["value"] == -0) then return 0 end
     return equation["value"]
 end
 
