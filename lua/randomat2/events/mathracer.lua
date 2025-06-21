@@ -92,42 +92,29 @@ function EVENT:IsValidAnswer(answer)
     return true
 end
 
-function EVENT:SolveEquationTree(tree)
-    if tree["left"]["value"] then
-        tree["left"] = self:SolveEquationTree(tree["left"]["value"])
+function EVENT:TraverseEquationTree(node)
+    if node["value"] then
+        node = self:SolveEquationTree(node["value"])
     else
         if difficulty_options["termLowerBound"] < 0 then
             if math.random() < difficulty_options["negativeChance"] then
-                tree["left"]["value"] = math.random(difficulty_options["termLowerBound"], -1)
+                node["value"] = math.random(difficulty_options["termLowerBound"], -1)
             else
-                tree["left"]["value"] = math.random(0, difficulty_options["termUpperBound"])
+                node["value"] = math.random(0, difficulty_options["termUpperBound"])
             end
         else
-            tree["left"]["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
+            node["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
         end
-        tree["left"]["equation"] = tree["left"]["value"]
-        if tree["left"]["value"] < 0 then
-            tree["left"]["equation"] = "(" .. tree["left"]["equation"] .. ")"
+        node["equation"] = node["value"]
+        if node["value"] < 0 then
+            node["equation"] = "(" .. node["equation"] .. ")"
         end
     end
+end
 
-    if tree["right"]["value"] then
-        tree["right"] = self:SolveEquationTree(tree["right"]["value"])
-    else
-        if difficulty_options["termLowerBound"] < 0 then
-            if math.random() < difficulty_options["negativeChance"] then
-                tree["right"]["value"] = math.random(difficulty_options["termLowerBound"], -1)
-            else
-                tree["right"]["value"] = math.random(0, difficulty_options["termUpperBound"])
-            end
-        else
-            tree["right"]["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
-        end
-        tree["right"]["equation"] = tree["right"]["value"]
-        if tree["right"]["value"] < 0 then
-            tree["right"]["equation"] = "(" .. tree["right"]["equation"] .. ")"
-        end
-    end
+function EVENT:SolveEquationTree(tree)
+    self:TraverseEquationTree(tree["left"])
+    self:TraverseEquationTree(tree["right"])
 
     if tree["left"] == false or tree["right"] == false then return false end
 
