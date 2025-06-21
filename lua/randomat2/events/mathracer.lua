@@ -92,29 +92,29 @@ function EVENT:IsValidAnswer(answer)
     return true
 end
 
-function EVENT:TraverseEquationTree(node)
-    if node.value then
-        node = self:SolveEquationTree(node.value)
+function EVENT:TraverseEquationTree(tree, side)
+    if tree[side].value then
+        tree[side] = self:SolveEquationTree(tree[side].value)
     else
         if difficulty_options.termLowerBound < 0 then
             if math.random() < difficulty_options.negativeChance then
-                node.value = math.random(difficulty_options.termLowerBound, -1)
+                tree[side].value = math.random(difficulty_options.termLowerBound, -1)
             else
-                node.value = math.random(0, difficulty_options.termUpperBound)
+                tree[side].value = math.random(0, difficulty_options.termUpperBound)
             end
         else
-            node.value = math.random(difficulty_options.termLowerBound, difficulty_options.termUpperBound)
+            tree[side].value = math.random(difficulty_options.termLowerBound, difficulty_options.termUpperBound)
         end
-        node.equation = node.value
-        if node.value < 0 then
-            node.equation = "(" .. node.equation .. ")"
+        tree[side].equation = tree[side].value
+        if tree[side].value < 0 then
+            tree[side].equation = "(" .. tree[side].equation .. ")"
         end
     end
 end
 
 function EVENT:SolveEquationTree(tree)
-    self:TraverseEquationTree(tree.left)
-    self:TraverseEquationTree(tree.right)
+    self:TraverseEquationTree(tree, "left")
+    self:TraverseEquationTree(tree, "right")
 
     if tree.left == false or tree.right == false then return false end
 
