@@ -9,7 +9,6 @@ CreateConVar("randomat_mathracer_timer", 15, FCVAR_NONE, "The amount of time pla
 CreateConVar("randomat_mathracer_kill_wrong", 1, FCVAR_NONE, "Whether to kill players who type the wrong answer")
 
 local operations = {
-    keys = {"add", "sub", "mul", "div"},
     add = {
         symbol = "+",
         left = "addend",
@@ -50,7 +49,7 @@ local iteration
 local difficulty_options
 
 function EVENT:GenerateEquationNode(type)
-    local operation = operations["keys"][math.random(#operations["keys"])]
+    local operation = difficulty_options["operations"][math.random(#difficulty_options["operations"])]
     return {
         left = {
             value = false,
@@ -84,27 +83,27 @@ function EVENT:GenerateEquationTree(iterations, tree)
     end
 end
 
-function EVENT:IsValidAnswer(answer, options)
+function EVENT:IsValidAnswer(answer)
     if answer == math.huge then return false end
     if answer == -math.huge then return false end
     if answer ~= math.floor(answer) then return false end
-    if answer < options["answerLowerBound"] then return false end
-    if answer > options["answerUpperBound"] then return false end
+    if answer < difficulty_options["answerLowerBound"] then return false end
+    if answer > difficulty_options["answerUpperBound"] then return false end
     return true
 end
 
-function EVENT:SolveEquationTree(tree, options)
+function EVENT:SolveEquationTree(tree)
     if tree["left"]["value"] then
-        tree["left"] = self:SolveEquationTree(tree["left"]["value"], options)
+        tree["left"] = self:SolveEquationTree(tree["left"]["value"])
     else
-        if (options["termLowerBound"] < 0) then
-            if (math.random() < options["negativeChance"]) then
-                tree["left"]["value"] = math.random(options["termLowerBound"], -1)
+        if (difficulty_options["termLowerBound"] < 0) then
+            if (math.random() < difficulty_options["negativeChance"]) then
+                tree["left"]["value"] = math.random(difficulty_options["termLowerBound"], -1)
             else
-                tree["left"]["value"] = math.random(0 ,options["termUpperBound"])
+                tree["left"]["value"] = math.random(0 ,difficulty_options["termUpperBound"])
             end
         else
-            tree["left"]["value"] = math.random(options["termLowerBound"], options["termUpperBound"])
+            tree["left"]["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
         end
         tree["left"]["equation"] = tree["left"]["value"]
         if tree["left"]["value"] < 0 then
@@ -113,16 +112,16 @@ function EVENT:SolveEquationTree(tree, options)
     end
 
     if tree["right"]["value"] then
-        tree["right"] = self:SolveEquationTree(tree["right"]["value"], options)
+        tree["right"] = self:SolveEquationTree(tree["right"]["value"])
     else
-        if options["termLowerBound"] < 0 then
-            if (math.random() < options["negativeChance"]) then
-                tree["right"]["value"] = math.random(options["termLowerBound"], -1)
+        if difficulty_options["termLowerBound"] < 0 then
+            if (math.random() < difficulty_options["negativeChance"]) then
+                tree["right"]["value"] = math.random(difficulty_options["termLowerBound"], -1)
             else
-                tree["right"]["value"] = math.random(0 ,options["termUpperBound"])
+                tree["right"]["value"] = math.random(0 ,difficulty_options["termUpperBound"])
             end
         else
-            tree["right"]["value"] = math.random(options["termLowerBound"], options["termUpperBound"])
+            tree["right"]["value"] = math.random(difficulty_options["termLowerBound"], difficulty_options["termUpperBound"])
         end
         tree["right"]["equation"] = tree["right"]["value"]
         if tree["right"]["value"] < 0 then
@@ -133,7 +132,7 @@ function EVENT:SolveEquationTree(tree, options)
     if tree["left"] == false or tree["right"] == false then return false end
 
     local answer = operations[tree["operation"]]["calc"](tree["left"]["value"], tree["right"]["value"])
-    if not self:IsValidAnswer(answer, options) then return false end
+    if not self:IsValidAnswer(answer) then return false end
 
     local equation = tree["left"]["equation"] .. operations[tree["operation"]]["symbol"] .. tree["right"]["equation"]
     if (tree["parentheses"]) then
@@ -173,9 +172,9 @@ function EVENT:GenerateEquation(first, time)
         difficulty_options["terms"] = difficulty_options["terms"] + 1
     end
 
-    local equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1), difficulty_options)
+    local equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1))
     while equation == false do
-        equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1), difficulty_options)
+        equation = self:SolveEquationTree(self:GenerateEquationTree(difficulty_options["terms"] - 1))
     end
 
     local message = "The " .. (first and "first" or "next") .. " equation is: " .. equation["equation"]
@@ -202,6 +201,7 @@ function EVENT:Begin()
     iteration = 0
     difficulty_options = {
         terms = 2,
+        operations = {"add", "sub", "mul", "div"},
         negativeChance = 0.25,
         termLowerBound = 0,
         termUpperBound = 10,
