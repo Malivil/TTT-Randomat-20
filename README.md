@@ -40,6 +40,7 @@ _ttt_randomat_event_hint_chat_secret_ - Default: 0 - Whether the secret events t
 _cl_randomat_show_active_ - Default: 1 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*
 
 # Latest Events
+1. Mathracer
 1. No one can die from my sight
 1. Cause of Death
 1. Daredevil
@@ -1121,6 +1122,18 @@ _randomat_malfunction_lower_ - Default: 1 - The lower limit for the random timer
 _randomat_malfunction_affectall_ - Default: 0 - Set to 1 for the event to affect everyone at once.\
 _randomat_malfunction_duration_ - Default: 0.5 - Duration of gun malfunction (set to 0 for 1 shot).
 
+## Mathracer
+Type the answer to each equation in chat within the configurable amount of time OR DIE!
+\
+\
+**ConVars**
+\
+_ttt_randomat_mathracer_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_mathracer_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_mathracer_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
+_randomat_mathracer_timer_ - Default: 15 - The amount of time players have to solve each equation.\
+_randomat_mathracer_kill_wrong_ - Default: 1 - Whether to kill players who type the wrong answer.
+
 ## Meet Cute
 Causes players who collide while sprinting to swap inventories
 \
@@ -2056,7 +2069,7 @@ Another thing that was added is the concept of an event "type". This is currentl
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - [Fyxen](https://steamcommunity.com/profiles/76561198810121546/) for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
-- Noxx from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord and the Custom Roles for TTT Discord for the help, support, and many ideas
+- Noxx from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord and the Custom Roles for TTT Discord for the help, support, many ideas, and the "Mathracer" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events and the name of the "Down Under" event
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
