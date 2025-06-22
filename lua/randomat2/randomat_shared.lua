@@ -9,6 +9,7 @@ EVENT_TYPE_GUNSOUNDS = 6
 EVENT_TYPE_JUMPING = 7
 EVENT_TYPE_MUSIC = 8
 EVENT_TYPE_FORCED_DEATH = 9
+EVENT_TYPE_TYPED_RESPONSE = 10
 
 function Randomat:IsEventActive(id)
     for _, v in pairs(Randomat.ActiveEvents) do

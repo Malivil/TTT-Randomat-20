@@ -5,6 +5,7 @@ local EVENT = {}
 EVENT.Title = "Typeracer"
 EVENT.Description = "Type each word/phrase in chat within the configurable amount of time OR DIE!"
 EVENT.id = "typeracer"
+EVENT.Type = EVENT_TYPE_TYPED_RESPONSE
 EVENT.Categories = {"gamemode", "largeimpact"}
 
 CreateConVar("randomat_typeracer_timer", 15, FCVAR_NONE, "The amount of time players have to type each given word", 5, 60)
@@ -286,9 +287,8 @@ function EVENT:End()
 end
 
 -- "Secret" causes this event to essentially just kill everyone, since they can't see the prompts
--- "Mathracer" also essentially kills everyone because answering either the maths or spelling question correctly will incorrectly answer the other
 function EVENT:Condition()
-    return not (Randomat:IsEventActive("secret") or Randomat:IsEventActive("mathracer"))
+    return not Randomat:IsEventActive("secret")
 end
 
 function EVENT:GetConVars()

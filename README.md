@@ -2026,9 +2026,7 @@ To implement support for my dynamic [ULX Module](https://steamcommunity.com/shar
 ## Description Support
 One of the additions made in this version of the Randomat 2.0 is the ability to print a description of an event on screen and/or in chat when the event starts.\
 All existing events have been updated to support this functionality and any external events that exist will still operate as they have done before.\
-If a developer of an external Randomat event would like to add support for this functionality, simply add a `Description` property to the event definition.\
-\
-Another thing that was added is the concept of an event "type". This is currently being used to make sure multiple events that override weapons (like Harpoon, Slam, Prop Hunt, etc.) don't run concurrently. To set your event to not conflict with those as well, set the `Type` property to `EVENT_TYPE_WEAPON_OVERRIDE`.
+If a developer of an external Randomat event would like to add support for this functionality, simply add a `Description` property to the event definition.
 
 # Special Thanks
 - [Dem](https://steamcommunity.com/profiles/76561198076733538) for the "TTT Randomat 2.0" mod which this is an update to
