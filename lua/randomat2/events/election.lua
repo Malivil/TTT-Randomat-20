@@ -419,18 +419,32 @@ function EVENT:SwearIn(winner)
             local target1 = player.GetBySteamID64(winner:GetNWString("TTTCupidTarget1", ""))
             local target2 = player.GetBySteamID64(winner:GetNWString("TTTCupidTarget2", ""))
             if IsPlayer(target1) and IsPlayer(target2) then
-                -- If the lovers are alive, double their max health and heal them
+                -- If the lovers are alive, double their max health and heal them, otherwise respawn them
                 if target1:Alive() and not target1:IsSpec() then
                     target1:SetMaxHealth(target1:GetMaxHealth() * 2)
                     target1:SetHealth(target1:GetMaxHealth())
+                else
+                    local body = target1.server_ragdoll or target1:GetRagdollEntity()
+                    -- Destroy their old body
+                    if IsValid(body) then
+                        body:Remove()
+                    end
+                    target1:SpawnForRound(true)
+                end
+
+                if target2:Alive() and not target2:IsSpec() then
                     target2:SetMaxHealth(target2:GetMaxHealth() * 2)
                     target2:SetHealth(target2:GetMaxHealth())
-                -- Otherwise respawn them
                 else
-                    target1:SpawnForRound(true)
+                    local body = target2.server_ragdoll or target2:GetRagdollEntity()
+                    -- Destroy their old body
+                    if IsValid(body) then
+                        body:Remove()
+                    end
                     target2:SpawnForRound(true)
-                    SendFullStateUpdate()
                 end
+
+                SendFullStateUpdate()
             end
         -- Faker - Wins by using enough fake weapons, give them a fake count (to get them closer to a win) and more credits
         elseif winnerRole == ROLE_FAKER then
