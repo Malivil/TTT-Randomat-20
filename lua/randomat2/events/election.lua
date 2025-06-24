@@ -454,6 +454,7 @@ function EVENT:SwearIn(winner)
             local chosen = voters[math.random(#voters)]
 
             winner:SetNWBool("TTTGuesserWasGuesser", true)
+            Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You have taken " .. chosen:Nick() .. "'s place!")
             hook.Call("TTTPlayerRoleChangedByItem", nil, winner, winner, self)
 
             chosen:SetNWString("TTTGuesserGuessedBy", winner:Nick())
