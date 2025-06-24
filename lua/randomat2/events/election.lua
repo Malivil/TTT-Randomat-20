@@ -222,6 +222,7 @@ function EVENT:SwearIn(winner)
         -- Jester Team
         -- Barrel Mimic - Wins by killing someone with their barrel but we can't really do that so... they just win I guess
         elseif winnerRole == ROLE_BARRELMIMIC then
+            Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You were elected by your peers and no longer feel the need to explode to win... you can just relax =)")
             net.Start("TTT_UpdateBarrelMimicWins")
             net.Broadcast()
         -- Beggar/Hermit - Give a random buyable weapon to have them join a random team
