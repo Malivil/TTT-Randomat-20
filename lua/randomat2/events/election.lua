@@ -192,6 +192,8 @@ function EVENT:SwearIn(winner)
     local credits = GetConVar("randomat_election_winner_credits"):GetInt()
     -- Wait 3 seconds before applying the affect
     timer.Simple(3, function()
+        local winnerRole = winner:GetRole()
+
         -- Innocent - Promote to Detective, give credits
         if Randomat:IsInnocentTeam(winner) then
             Randomat:SetRole(winner, ROLE_DETECTIVE)
@@ -213,56 +215,12 @@ function EVENT:SwearIn(winner)
                 end
             end
         -- Jester Team
-        -- Clown - Kill all of the larger team so the Clown activates immediately
-        elseif winner:GetRole() == ROLE_CLOWN then
-            local innocents = {}
-            local traitors = {}
-            for _, p in ipairs(self:GetAlivePlayers()) do
-                if Randomat:IsInnocentTeam(p) then
-                    table.insert(innocents, p)
-                elseif Randomat:IsTraitorTeam(p) then
-                    table.insert(traitors, p)
-                end
-            end
-
-            local innocentCount = #innocents
-            local traitorCount = #traitors
-
-            -- If there is only one team left, kill a random player instead
-            if innocentCount == 0 or traitorCount == 0 then
-                local sacrifice
-                if innocentCount ~= 0 then
-                    sacrifice = innocents[math.random(#innocents)]
-                else
-                    sacrifice = traitors[math.random(#traitors)]
-                end
-
-                self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! " .. sacrifice:Nick() .. " has been sacrificed to make their victory easier.")
-                sacrifice:Kill()
-            else
-                local largest
-                local team
-                if innocentCount > traitorCount then
-                    largest = innocents
-                    team = "innocent"
-                elseif traitorCount > innocentCount then
-                    largest = traitors
-                    team = "traitor"
-                elseif math.random(0, 1) == 0 then
-                    largest = innocents
-                    team = "innocent"
-                else
-                    largest = traitors
-                    team = "traitor"
-                end
-
-                self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. team .. " team has been sacrificed to make their victory easier.")
-                for _, v in ipairs(largest) do
-                    v:Kill()
-                end
-            end
-        -- Beggar - Give a random buyable weapon to have them join a random team
-        elseif winner:GetRole() == ROLE_BEGGAR then
+        -- Barrel Mimic - Wins by killing someone with their barrel but we can't really do that so... they just win I guess
+        elseif winnerRole == ROLE_BARRELMIMIC then
+            net.Start("TTT_UpdateBarrelMimicWins")
+            net.Broadcast()
+        -- Beggar/Hermit - Give a random buyable weapon to have them join a random team
+        elseif winnerRole == ROLE_BEGGAR or winnerRole == ROLE_HERMIT then
             local role
             local source
             -- Choose a role and find a person to represent that role
@@ -311,7 +269,7 @@ function EVENT:SwearIn(winner)
                     Randomat:CallShopHooks(isequip, id, winner)
                 end)
         -- Bodysnatcher - Choose the role of a random dead player (or a random enabled role if none are dead) and give it to the bodysnatcher
-        elseif winner:GetRole() == ROLE_BODYSNATCHER then
+        elseif winnerRole == ROLE_BODYSNATCHER then
             local role = nil
             for _, ply in ipairs(self:GetDeadPlayers(true)) do
                 role = ply:GetRole()
@@ -349,12 +307,208 @@ function EVENT:SwearIn(winner)
 
             -- Make sure they get their loadout weapons
             hook.Call("PlayerLoadout", GAMEMODE, winner)
+        -- Boxer - Wins by knocking everyone out after they are activated, knock out everyone that voted for them
+        elseif winnerRole == ROLE_BOXER then
+            if winner:Alive() and not winner:IsSpec() then
+                -- Find the people who voted for this person but ignore the winner themselves
+                for voter, votee in pairs(playersvoted) do
+                    if votee ~= winner then continue end
+                    if voter == winner then continue end
+                    if not voter:Alive() or voter:IsSpec() then continue end
+                    voter:BoxerKnockout()
+                    Randomat:PrintMessage(voter, MSG_PRINTBOTH, "You have been knocked out by " .. winner:Nick() .. "!")
+                end
+            end
+        -- Cannibal - Wins by eating everyone remaining, so eat everyone who voted for them
+        elseif winnerRole == ROLE_CANNIBAL then
+            if winner:Alive() and not winner:IsSpec() then
+                local eatSounds = {
+                    "cannibal/eat1.wav",
+                    "cannibal/eat2.wav",
+                    "cannibal/eat3.wav"
+                }
+                -- Find the people who voted for this person but ignore the winner themselves
+                for voter, votee in pairs(playersvoted) do
+                    if votee ~= winner then continue end
+                    if voter == winner then continue end
+                    if not voter:Alive() or voter:IsSpec() then continue end
+
+                    voter:Spectate(OBS_MODE_CHASE)
+                    voter:SpectateEntity(winner)
+                    voter:DrawViewModel(false)
+                    voter:DrawWorldModel(false)
+
+                    local sID64 = voter:SteamID64()
+
+                    CANNIBAL.playerWeapons[sID64] = {}
+
+                    for _, v in pairs(voter:GetWeapons()) do
+                        local class = WEPS.GetClass(v)
+                        table.insert(CANNIBAL.playerWeapons[sID64], {
+                            class = class,
+                            clip1 = v:Clip1(),
+                            clip2 = v:Clip2(),
+                            PAPUpgrade = v.PAPUpgrade
+                        })
+                        voter:StripWeapon(class)
+                    end
+
+                    voter:SetFOV(0, 0.2)
+
+                    voter:SetProperty("TTTCannibalEaten", winner:SteamID64())
+                    Randomat:PrintMessage(voter, MSG_PRINTBOTH, "You have been eaten by " .. winner:Nick() .. "!")
+
+                    winner:EmitSound(eatSounds[math.random(1, #eatSounds)], 100)
+                end
+            end
+        -- Clown/Detectoclown - Kill all of the larger team so they activate immediately
+        elseif winnerRole == ROLE_CLOWN or winnerRole == ROLE_DETECTOCLOWN then
+            local innocents = {}
+            local traitors = {}
+            for _, p in ipairs(self:GetAlivePlayers()) do
+                if Randomat:IsInnocentTeam(p) then
+                    table.insert(innocents, p)
+                elseif Randomat:IsTraitorTeam(p) then
+                    table.insert(traitors, p)
+                end
+            end
+
+            local innocentCount = #innocents
+            local traitorCount = #traitors
+
+            -- If there is only one team left, kill a random player instead
+            if innocentCount == 0 or traitorCount == 0 then
+                local sacrifice
+                if innocentCount ~= 0 then
+                    sacrifice = innocents[math.random(#innocents)]
+                else
+                    sacrifice = traitors[math.random(#traitors)]
+                end
+
+                self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! " .. sacrifice:Nick() .. " has been sacrificed to make their victory easier.")
+                sacrifice:Kill()
+            else
+                local largest
+                local teamName
+                if innocentCount > traitorCount then
+                    largest = innocents
+                    teamName = "innocent"
+                elseif traitorCount > innocentCount then
+                    largest = traitors
+                    teamName = "traitor"
+                elseif math.random(0, 1) == 0 then
+                    largest = innocents
+                    teamName = "innocent"
+                else
+                    largest = traitors
+                    teamName = "traitor"
+                end
+
+                self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. teamName .. " team has been sacrificed to make their victory easier.")
+                for _, v in ipairs(largest) do
+                    v:Kill()
+                end
+            end
+        -- Cupid - Wins by their lovers winning, so double the lovers' health and heal them (or respawn them if they are dead)
+        elseif winnerRole == ROLE_CUPID then
+            local target1 = player.GetBySteamID64(winner:GetNWString("TTTCupidTarget1", ""))
+            local target2 = player.GetBySteamID64(winner:GetNWString("TTTCupidTarget2", ""))
+            if IsPlayer(target1) and IsPlayer(target2) then
+                -- If the lovers are alive, double their max health and heal them
+                if target1:Alive() and not target1:IsSpec() then
+                    target1:SetMaxHealth(target1:GetMaxHealth() * 2)
+                    target1:SetHealth(target1:GetMaxHealth())
+                    target2:SetMaxHealth(target2:GetMaxHealth() * 2)
+                    target2:SetHealth(target2:GetMaxHealth())
+                -- Otherwise respawn them
+                else
+                    target1:SpawnForRound(true)
+                    target2:SpawnForRound(true)
+                    SendFullStateUpdate()
+                end
+            end
+        -- Faker - Wins by using enough fake weapons, give them a fake count (to get them closer to a win) and more credits
+        elseif winnerRole == ROLE_FAKER then
+            winner:SetNWInt("FakerFakeCount", winner:GetNWInt("FakerFakeCount", 0) + 1)
+            winner:AddCredits(credits)
+            Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You've used your influence as President to further your goals (and line your pockets)!")
+        -- Guesser - Wins by switching to a different role, swap roles with one of their voters
+        elseif winnerRole == ROLE_GUESSER then
+            local voters = {}
+            for voter, votee in pairs(playersvoted) do
+                -- Find the people who voted for this person but ignore the winner themselves
+                if votee == winner and voter ~= winner then
+                    table.insert(voters, voter)
+                end
+            end
+
+            for _, v in player.Iterator() do
+                v:SetNWFloat("TTTGuesserDamageDealt", 0)
+            end
+
+            local chosen = voters[math.random(#voters)]
+
+            winner:SetNWBool("TTTGuesserWasGuesser", true)
+            hook.Call("TTTPlayerRoleChangedByItem", nil, winner, winner, self)
+
+            chosen:SetNWString("TTTGuesserGuessedBy", winner:Nick())
+            Randomat:PrintMessage(chosen, MSG_PRINTBOTH, "Your role was guessed by " .. ROLE_STRINGS_EXT[ROLE_GUESSER] .. " and you have taken their place!")
+            hook.Call("TTTPlayerRoleChangedByItem", nil, winner, chosen, self)
+
+            chosen:MoveRoleState(winner)
+
+
+            self:StripRoleWeapons(winner)
+            Randomat:SetRole(winner, chosen:GetRole())
+            hook.Run("PlayerLoadout", winner)
+
+            self:StripRoleWeapons(chosen)
+            Randomat:SetRole(chosen, ROLE_GUESSER)
+            hook.Run("PlayerLoadout", chosen)
+
+            SendFullStateUpdate()
+
+            net.Start("TTT_GuesserGuessed")
+                net.WriteBool(true)
+                net.WriteString(chosen:Nick())
+                net.WriteString(winner:Nick())
+            net.Broadcast()
+        -- Loot Goblin - Wins by surviving, fully heal and double max health
+        elseif winnerRole == ROLE_LOOTGOBLIN then
+            if winner:Alive() and not winner:IsSpec() then
+                winner:SetMaxHealth(winner:GetMaxHealth() * 2)
+                winner:SetHealth(winner:GetMaxHealth())
+                Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You feel healthier and more able to survive!")
+            end
+        -- Wheel Boy - Wins by spinning enough, reduce spin cooldown as far as possible without messing with spin already running
+        elseif winnerRole == ROLE_WHEELBOY then
+            local wheel_time = GetConVar("ttt_wheelboy_wheel_time"):GetInt()
+            local recharge_time = GetConVar("ttt_wheelboy_wheel_recharge_time"):GetInt()
+            local wait_time = GetConVar("ttt_wheelboy_wheel_end_wait_time"):GetInt()
+            local nextSpinTime = winner:GetNWInt("WheelBoyNextSpinTime", 0)
+
+            local curTime = CurTime()
+            local remaining = nextSpinTime - curTime
+            local elapsed = recharge_time - remaining
+            local remainingSpinTime = (elapsed - wheel_time) + wait_time
+
+            -- If enough time has passed that the wheel has already finished spinning
+            -- then set the next spin to now so they can spin immediately
+            if remainingSpinTime <= 0 then
+                winner:SetNWInt("WheelBoyNextSpinTime", curTime)
+                Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You have regained your strength and can spin again!")
+            -- Otherwise set it to let them spin as soon as the wheel finishes spinning
+            else
+                winner:SetNWInt("WheelBoyNextSpinTime", curTime + remainingSpinTime)
+                Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You have regained some of your strength so you can spin sooner.")
+            end
         -- Jester - Kill them, winning the round
+        -- Sponge - Kill them, winning the round
         -- Swapper - Kill them with a random player as the "attacker", swapping their roles
         -- Other Jesters - Kill them, hope that it triggers something
         elseif Randomat:IsJesterTeam(winner) then
             local attacker = self.owner
-            if winner:GetRole() == ROLE_SWAPPER or attacker == winner then
+            if winnerRole == ROLE_SWAPPER or attacker == winner then
                 repeat
                     attacker = self:GetAlivePlayers(true)[1]
                 until attacker ~= winner
@@ -370,8 +524,8 @@ function EVENT:SwearIn(winner)
             winner:TakeDamageInfo(dmginfo)
         -- Independents
         -- Drunk - Have the drunk immediately remember their role
-        elseif winner:GetRole() == ROLE_DRUNK then
-            if ConVarExists("ttt_drunk_become_clown") and GetConVar("ttt_drunk_become_clown"):GetBool() then
+        elseif winnerRole == ROLE_DRUNK then
+            if cvars.Bool("ttt_drunk_become_clown", false) then
                 winner:DrunkRememberRole(ROLE_CLOWN, true)
             elseif winner.SoberDrunk then
                 winner:SoberDrunk()
@@ -400,13 +554,13 @@ function EVENT:SwearIn(winner)
             if timer.Exists("drunkremember") then timer.Remove("drunkremember") end
             if timer.Exists("waitfordrunkrespawn") then timer.Remove("waitfordrunkrespawn") end
         -- Old Man - Silently start "Sudden Death" so everyone is on the same page
-        elseif winner:GetRole() == ROLE_OLDMAN then
+        elseif winnerRole == ROLE_OLDMAN then
             self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! Their frailty has spread to the rest of you.")
 
             local health = GetConVar("ttt_oldman_starting_health"):GetInt()
             Randomat:SilentTriggerEvent("suddendeath", winner, health)
         -- Killer - Kill all non-Jesters/Swappers so they win the round
-        elseif winner:GetRole() == ROLE_KILLER then
+        elseif winnerRole == ROLE_KILLER then
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if v:GetRole() ~= ROLE_JESTER and v:GetRole() ~= ROLE_SWAPPER and v ~= winner then
                     v:Kill()
@@ -428,14 +582,14 @@ function EVENT:SwearIn(winner)
             winner:SetHealth(hp)
         -- Monster Team
         -- Zombie - Silently trigger the RISE FROM YOUR GRAVE event
-        elseif winner:GetRole() == ROLE_ZOMBIE then
+        elseif winnerRole == ROLE_ZOMBIE then
             self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "!")
             Randomat:SilentTriggerEvent("grave", winner)
         -- Vampire - Convert all of the configured team to vampires
-        elseif winner:GetRole() == ROLE_VAMPIRE then
+        elseif winnerRole == ROLE_VAMPIRE then
             local turninnocents = GetConVar("randomat_election_vamp_turn_innocents"):GetBool()
-            local team = turninnocents and "innocent" or "traitor"
-            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. team .. " team has been converted to be their thalls.")
+            local teamName = turninnocents and "innocent" or "traitor"
+            self:SmallNotify("The President is " .. self:GetRoleName(winner):lower() .. "! The " .. teamName .. " team has been converted to be their thralls.")
 
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if turninnocents then
@@ -481,7 +635,7 @@ function EVENT:SwearIn(winner)
             Randomat:PrintMessage(winner, MSG_PRINTBOTH, target:Nick() .. " has been " .. context_str .. "converted to your role")
 
             -- Convert the target to the winner's role
-            Randomat:SetRole(target, winner:GetRole())
+            Randomat:SetRole(target, winnerRole)
             -- If they were dead, respawn them
             if not target:Alive() or target:IsSpec() then
                 local body = target.server_ragdoll or target:GetRagdollEntity()
