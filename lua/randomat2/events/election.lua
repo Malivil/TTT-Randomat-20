@@ -507,11 +507,12 @@ function EVENT:SwearIn(winner)
             local recharge_time = GetConVar("ttt_wheelboy_wheel_recharge_time"):GetInt()
             local wait_time = GetConVar("ttt_wheelboy_wheel_end_wait_time"):GetInt()
             local nextSpinTime = winner:GetNWInt("WheelBoyNextSpinTime", 0)
+            local totalTime = wheel_time + wait_time
 
             local curTime = CurTime()
             local remaining = nextSpinTime - curTime
             local elapsed = recharge_time - remaining
-            local remainingSpinTime = (elapsed - wheel_time) + wait_time
+            local remainingSpinTime = totalTime - elapsed
 
             -- If enough time has passed that the wheel has already finished spinning
             -- then set the next spin to now so they can spin immediately
