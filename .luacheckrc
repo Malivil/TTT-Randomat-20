@@ -1003,9 +1003,11 @@ globals = {
     -- CR Roles
     "ROLE_ARSONIST",
     "ROLE_ASSASSIN",
+    "ROLE_BARRELMIMIC",
     "ROLE_BEGGAR",
     "ROLE_BODYSNATCHER",
     "ROLE_BOXER",
+    "ROLE_CANNIBAL",
     "ROLE_CLOWN",
     "ROLE_CUPID",
     "ROLE_DEPUTY",
@@ -1102,6 +1104,7 @@ globals = {
     "UpdateRoleWeaponState",
 
     -- CR Namespaces
+    "CANNIBAL",
     "CRHUD",
     "DEATHRADAR",
 

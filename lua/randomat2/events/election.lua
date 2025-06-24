@@ -193,6 +193,11 @@ function EVENT:SwearIn(winner)
     -- Wait 3 seconds before applying the affect
     timer.Simple(3, function()
         local winnerRole = winner:GetRole()
+        -- Just in case
+        if winnerRole == -1 then
+            Randomat:EndActiveEvent(self.id)
+            return
+        end
 
         -- Innocent - Promote to Detective, give credits
         if Randomat:IsInnocentTeam(winner) then
