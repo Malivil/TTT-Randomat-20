@@ -844,7 +844,8 @@ function Randomat:SetRole(ply, role, set_max_hp, scale_hp)
     net.Start("TTT_RoleChanged")
     net.WriteString(ply:SteamID64())
     if CR_VERSION then
-        net.WriteInt(role, 8)
+        local roleBits = util.RoleBits and util.RoleBits() or 8
+        net.WriteInt(role, roleBits)
     else
         net.WriteUInt(role, 8)
     end
