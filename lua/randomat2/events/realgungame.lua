@@ -1,3 +1,5 @@
+-- TODO: Give infinite reserve ammo
+
 local EVENT = {}
 
 EVENT.Title = "REAL Gun Game"
@@ -24,7 +26,7 @@ function EVENT:EquipPlayer(ply, wepClass)
     -- Give them their weapon and don't let them drop it
     local wep = ply:Give(wepClass)
     wep.AllowDrop = false
-    wep.OnDrop = function() SafeRemoveEntity(wep) end
+    wep.OnDrop = function() SafeRemoveEntity(self) end
 
     -- Give them enough ammo to fill their clip and their reserve
     if wep.Primary and wep.Primary.ClipSize and wep.Primary.ClipSize > 0 then
@@ -41,6 +43,13 @@ function EVENT:EquipPlayer(ply, wepClass)
         local ammoType = wep:GetPrimaryAmmoType()
         if ammoType >= 0 then
             ply:SetAmmo(amount, ammoType)
+
+            -- Give the player their ammo back every time they reload
+            wep.OldReload = wep.Reload
+            wep.Reload = function()
+                wep:OldReload()
+                ply:SetAmmo(amount, ammoType)
+            end
         end
     end
 end
