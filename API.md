@@ -698,7 +698,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Returns:* `true` if the event id active, `false` otherwise
 
 **Randomat:IsEventCategoryActive(category)** - Determines whether an event with the provided category is current running.\
-*Realm:* Client and Server\
+*Realm:* Server\
 *Parameters:*
 - *category* - The category of event to search for
 
@@ -710,6 +710,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *event* - The event or event id to check in tracking history
 
 *Returns:* `true` if the event is in the tracking history, `false` otherwise
+
+**Randomat:IsEventTypeActive(type)** - Determines whether an event with the provided *EVENT_TYPE_\** is current running.\
+*Realm:* Server\
+*Parameters:*
+- *type* - The *EVENT_TYPE_\** of event to search for
+
+*Returns:* `true` if an event with the given *EVENT_TYPE_\** is active, `false` otherwise
 
 **Randomat:IsDetectiveLike(ply)** - Determines whether the given player is a Detective-like role.\
 *Realm:* Client and Server\

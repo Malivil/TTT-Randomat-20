@@ -774,6 +774,18 @@ function Randomat:GetEventsByType(etype)
     return events
 end
 
+function Randomat:IsEventTypeActive(etype)
+    for _, evt in pairs(Randomat.ActiveEvents) do
+        -- If this event has a list of types and it contains the one we care about
+        -- or its single type is the one we care about, then stop searching
+        if (type(evt.Type) == "table" and table.HasValue(evt.Type, etype))
+            or evt.Type == etype then
+            return true
+        end
+    end
+    return false
+end
+
 -- Players
 
 function Randomat:GetPlayers(shuffle, alive_only, dead_only, dead_includes_spec)
