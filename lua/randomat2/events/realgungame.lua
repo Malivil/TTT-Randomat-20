@@ -9,9 +9,9 @@ EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
 EVENT.Categories = {"gamemode", "rolechange", "item", "largeimpact"}
 
 CreateConVar("randomat_realgungame_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")
-CreateConVar("randomat_realgungame_protect_time", 15, FCVAR_NONE, "How long after player respawns that they are immune to damage. Breaks when they do damage.", 0, 60)
+CreateConVar("randomat_realgungame_protect_time", 15, FCVAR_NONE, "How long after player respawns that they are immune to damage", 0, 60)
 CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_NONE, "How long before a dead player respawns", 0, 60)
-CreateConVar("randomat_realgungame_round_limit", 0, FCVAR_NONE, "How many rounds to limit the game to, maximum (Limited by the number of available weapons). Set to 0 to go through every weapon available")
+CreateConVar("randomat_realgungame_round_limit", 0, FCVAR_NONE, "How many rounds to limit the game to, maximum")
 CreateConVar("randomat_realgungame_teamkill_lose_level", 0, FCVAR_NONE, "Whether you lose a level when killing a member of your team", 0, 1)
 CreateConVar("randomat_realgungame_suicide_lose_level", 1, FCVAR_NONE, "Whether you lose a level when killing yourself", 0, 1)
 
@@ -44,11 +44,14 @@ function EVENT:EquipPlayer(ply, wepClass)
         if ammoType >= 0 then
             ply:SetAmmo(amount, ammoType)
 
-            -- Give the player their ammo back every time they reload
-            wep.OldReload = wep.Reload
-            wep.Reload = function()
-                wep:OldReload()
-                ply:SetAmmo(amount, ammoType)
+            -- TFA weapons don't like when we do this, so use their own hooks to handle infinite ammo
+            if not wep.Base or not string.StartsWith(wep.Base, "tfa") then
+                -- Give the player their ammo back every time they reload
+                wep.OldReload = wep.Reload
+                wep.Reload = function()
+                    wep:OldReload()
+                    ply:SetAmmo(amount, ammoType)
+                end
             end
         end
     end
@@ -338,6 +341,28 @@ function EVENT:Begin()
         local wepClass = weps[wepKind][wepIndex]
         self:EquipPlayer(ply, wepClass)
         ply.RdmtRGGRespawnTime = CurTime()
+    end)
+
+    -- TFA weapons don't like it when we override the Reload method to handle infinite ammo, so use their own hook instead
+    self:AddHook("TFA_CompleteReload", function(wep)
+        if not IsValid(wep) then return end
+        if not wep.Primary or not wep.Primary.ClipSize or wep.Primary.ClipSize <= 0 then return end
+
+        local owner = wep:GetOwner()
+        if not IsPlayer(owner) or not owner:Alive() or owner:IsSpec() then return end
+
+        local amount
+        if wep.Primary.ClipMax and wep.Primary.ClipMax > 0 then
+            amount = wep.Primary.ClipMax
+        else
+            -- If we don't know the max clip size, just give them 3 clips
+            amount = wep.Primary.ClipSize * 3
+        end
+
+        local ammoType = wep:GetPrimaryAmmoType()
+        if ammoType >= 0 then
+            owner:SetAmmo(amount, ammoType)
+        end
     end)
 
     local protect_time = GetConVar("randomat_realgungame_protect_time"):GetInt()
