@@ -432,7 +432,7 @@ function EVENT:GetConVars()
         end
     end
 
-    return checks, checks
+    return sliders, checks
 end
 
 Randomat:register(EVENT)
