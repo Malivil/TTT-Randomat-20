@@ -342,18 +342,27 @@ function EVENT:Begin()
 
     local protect_time = GetConVar("randomat_realgungame_protect_time"):GetInt()
     if protect_time > 0 then
-        self:AddHook("ScalePlayerDamage", function(ply, hitgroup, dmginfo)
-            if not IsValid(ply) or not ply:Alive() or ply:IsSpec() then return end
+        self:AddHook("EntityTakeDamage", function(ent, dmginfo)
+            if not IsPlayer(ent) or not ent:Alive() or ent:IsSpec() then return end
 
             -- If the target has respawn protection, don't let them get damaged
-            if ply.RdmtRGGRespawnTime and (ply.RdmtRGGRespawnTime + protect_time > CurTime()) then
+            if ent.RdmtRGGRespawnTime and (ent.RdmtRGGRespawnTime + protect_time > CurTime()) then
                 dmginfo:SetDamage(0)
                 dmginfo:ScaleDamage(0)
             end
 
             local attacker = dmginfo:GetAttacker()
-            if not IsPlayer(attacker) then return end
-            if not attacker:Alive() or attacker:IsSpec() then return end
+            -- If the attacker in the damage info in not valid, check if we have ignition info with a valid attacker
+            if not IsPlayer(attacker) or not attacker:Alive() or attacker:IsSpec() then
+                local ignite_info = ent.ignite_info
+                if not ignite_info and ent.ignite_info_ext and ent.ignite_info_ext.end_time > CurTime() then
+                    ignite_info = ent.ignite_info_ext
+                end
+
+                attacker = ignite_info.att
+                -- If that one isn't valid either, just bail
+                if not IsPlayer(attacker) or not attacker:Alive() or attacker:IsSpec() then return end
+            end
 
             -- If the attacker was a player, reset their respawn time marker so they aren't immune anymore
             attacker.RdmtRGGRespawnTime = nil
