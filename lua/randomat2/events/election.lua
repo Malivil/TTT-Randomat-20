@@ -529,12 +529,14 @@ function EVENT:SwearIn(winner)
         -- Swapper - Kill them with a random player as the "attacker", swapping their roles
         -- Other Jesters - Kill them, hope that it triggers something
         elseif Randomat:IsJesterTeam(winner) then
-            local attacker = self.owner
-            if winnerRole == ROLE_SWAPPER or attacker == winner then
-                repeat
-                    attacker = self:GetAlivePlayers(true)[1]
-                until attacker ~= winner
+            local voters = {}
+            for voter, votee in pairs(playersvoted) do
+                -- Find the people who voted for this person but ignore the winner themselves
+                if votee == winner and voter ~= winner then
+                    table.insert(voters, voter)
+                end
             end
+            local attacker = voters[math.random(#voters)]
 
             local dmginfo = DamageInfo()
             dmginfo:SetDamage(10000)

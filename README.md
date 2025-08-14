@@ -587,16 +587,23 @@ Starts a two-part election. In the first part, players will nominate other playe
 In the second part of the election, the two nominees with the most nominations will take part in a run-off vote, winner takes all.\
 If a member of the innocent team wins, they are promoted to a Detective and given credits as a reward.\
 If a member of the traitor team wins, all traitors are given credits as a reward, but the new President's role is revealed.\
-If a Jester wins, they are killed by whoever owned the Randomat, winning the round.\
-If a Swapper wins, they are killed by a random player, after which they swap roles.\
-If a Killer wins, all non-Jester/Swapper players are killed, winning the round for the Killer.\
-If a Zombie wins, the RISE FROM YOUR GRAVE event is triggered, silently.\
-If a Vampire wins, the configured team (see _randomat_election_vamp_turn_innocents_ below) are converted to Vampires.\
+If a Barrel Mimic wins, they gain their win condition immediately.\
+If a Beggar or a Hermit wins, an innocent or traitor team member will be chosen randomly to give them a random shop weapon, causing them to join that team.\
+If a Bodysnatcher wins, they are given the role of a random dead player if there are any, or a random enabled role if there are no dead players.\
+If a Boxer wins, they knock out everyone who voted for them, giving them an advantage toward completing their win condition.\
+If a Cannibal wins, they instantly eat anyone who voted for them, giving them an advantage toward completing their win condition.\
+If the Clown or Detectoclown wins, whichever team (Innocent or Traitor) has more players will be killed, causing them to instantly trigger and go on a rampage. If only one team has players alive, a random living player from that team will be sacrificed to help them toward victory.\
+If a Cupid wins, they increase their lovers' max health, and heals and/or resurrects them.\
 If a Drunk wins, they will instantly remember what role they are supposed to be.\
+If a Faker wins, they gain 1 towards their "fakes used" count, giving them an advantage toward completing their win condition.\
+If a Guesser wins, they swap roles with one of the people that voted for them.\
+If a Killer wins, all non-Jester/Swapper players are killed, winning the round for the Killer.\
+If a Loot Goblin wins, they have their max health doubled and are fully healed.\
 If the Old Man wins, everyone else will become as frail as they are (e.g. reduced to 1 health).\
-If the Clown wins, whichever team (Innocent or Traitor) has more players will be killed, causing the Clown to instantly trigger and go on a rampage. If only one team has players alive, a random living player from that team will be sacrificed to help the Clown toward victory.\
-If the Beggar wins, an innocent or traitor team member will be chosen randomly to give the beggar a random shop weapon, causing the beggar to join that team.\
-If the Bodysnatcher wins, they are given the role of a random dead player if there are any, or a random enabled role if there are no dead players.\
+If a Vampire wins, the configured team (see _randomat_election_vamp_turn_innocents_ below) are converted to Vampires.\
+If Wheel Boy wins, their spin cooldown is instantly reset so they can spin again quickly, giving them an advantage toward completing their win condition.\
+If a Zombie wins, the RISE FROM YOUR GRAVE event is triggered, silently.\
+If a member of the jester team (that doesn't have a specific rule above) wins, they are killed by a random person who voted for them, activating their ability.\
 If a member of the independent team (that doesn't have a specific rule above) wins, they are healed to full or given bonus health if they are already near-full.\
 If a member of the monster team (that doesn't have a specific rule above) wins, a random player (preferring a dead one, if there are any) are converted to the same role (and resurrected, if dead).
 \
