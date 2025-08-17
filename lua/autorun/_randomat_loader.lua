@@ -180,17 +180,20 @@ end
 
 for idx=1,10 do
     if idx == 5 then continue end
+    if idx == 9 then break end
     print("For", idx)
 end
 
 local i = 1
 while i <= 10 do
-    if idx == 5 then continue end
-    print("While", idx)
+    if i == 5 then continue end
+    if i == 9 then break end
+    print("While", i)
 end
 
 i = 1
 repeat
-    if idx == 5 then continue end
-    print("Repeat", idx)
+    if i == 5 then continue end
+    if i == 9 then break end
+    print("Repeat", i)
 until i > 10
