@@ -177,3 +177,20 @@ for _, fil in ipairs(sharedfiles) do
     AddServer("randomat2/sh_events/" .. fil)
     AddClient("randomat2/sh_events/" .. fil)
 end
+
+for idx=1,10 do
+    if idx == 5 then continue end
+    print("For", idx)
+end
+
+local i = 1
+while i <= 10 do
+    if idx == 5 then continue end
+    print("While", idx)
+end
+
+i = 1
+repeat
+    if idx == 5 then continue end
+    print("Repeat", idx)
+until i > 10
