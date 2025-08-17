@@ -464,9 +464,15 @@ function Randomat:GetItemName(item, role)
 end
 
 function Randomat:GetWeaponName(item)
+    local wep = util.WeaponForClass(item) or weapons.Get(item)
+    if wep and (wep.PrintName or wep.GetPrintName) then
+        return LANG.TryTranslation(wep.PrintName or wep:GetPrintName())
+    end
+
+    -- Sometimes the direct methods don't seem to work, so we'll do a loop if they fail
     for _, v in ipairs(weapons.GetList()) do
         if item == WEPS.GetClass(v) then
-            return LANG.TryTranslation(v.PrintName)
+            return LANG.TryTranslation(v.GetPrintName and v:GetPrintName() or v.PrintName or item)
         end
     end
 
