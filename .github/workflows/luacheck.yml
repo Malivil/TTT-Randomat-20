@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          repository: 'Malivil/gluacheck'
+          repository: 'impulsh/gluacheck'
           path: 'gluacheck'
 
       - name: Setup ‘lua’
@@ -30,10 +30,10 @@ jobs:
         uses: leafo/gh-actions-luarocks@v4
 
       - name: Setup dependencies
-        run: luarocks install --deps-only gluacheck-dev-1.rockspec
+        run: luarocks install --deps-only luacheck-dev-1.rockspec
 
       - name: Build ‘luacheck’ (bootstrap)
-        run: luarocks make gluacheck-dev-1.rockspec
+        run: luarocks make luacheck-dev-1.rockspec
 
       - name: Run ‘luacheck’ (dogfood)
-        run: lua -e 'package.path="./gluacheck/src/?.lua;./gluacheck/src/?/init.lua;"..package.path' gluacheck/bin/luacheck.lua lua gamemodes
+        run: lua -e 'package.path="./gluacheck/src/?.lua;./gluacheck/src/?/init.lua;"..package.path' gluacheck/bin/luacheck.lua gamemodes scripts
