@@ -107,6 +107,15 @@ function EVENT:Condition()
         end
     end
 
+    -- Or an enhanced paladin with explosion immunity
+    if cvars.Bool("ttt_paladin_explosion_immune", false) then
+        for _, p in ipairs(self:GetAlivePlayers()) do
+            if p:IsPaladin() then
+                return false
+            end
+        end
+    end
+
     local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
     return util.WeaponForClass(weaponid) ~= nil
 end
