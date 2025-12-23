@@ -1,3 +1,49 @@
+local concommand = concommand
+local ents = ents
+local file = file
+local hook = hook
+local ipairs = ipairs
+local IsValid = IsValid
+local math = math
+local net = net
+local pairs = pairs
+local player = player
+local string = string
+local table = table
+local timer = timer
+local util = util
+
+local CallHook = hook.Call
+local EntsCreate = ents.Create
+local EntsFindByClass = ents.FindByClass
+local GetAllPlayers = player.GetAll
+local GetAllEnts = ents.GetAll
+local PlayerIterator = player.Iterator
+
+Randomat.ConVars = {
+    "ttt_randomat_allow_client_list",
+    "ttt_randomat_always_silently_trigger",
+    "ttt_randomat_auto",
+    "ttt_randomat_auto_chance",
+    "ttt_randomat_auto_choose",
+    "ttt_randomat_auto_min_rounds",
+    "ttt_randomat_auto_silent",
+    "ttt_randomat_chooseevent",
+    "ttt_randomat_event_hint",
+    "ttt_randomat_event_hint_chat",
+    "ttt_randomat_event_hint_chat_secret",
+    "ttt_randomat_event_history",
+    "ttt_randomat_event_weight",
+    "ttt_randomat_rebuyable"
+}
+Randomat.Events = Randomat.Events or {}
+Randomat.ActiveEvents = Randomat.ActiveEvents or {}
+
+local randomat_meta =  {}
+randomat_meta.__index = randomat_meta
+
+local COLOR_BLANK = Color(0, 0, 0, 0)
+
 util.AddNetworkString("randomat_message")
 util.AddNetworkString("randomat_message_silent")
 util.AddNetworkString("AlertTriggerFinal")
@@ -11,6 +57,14 @@ util.AddNetworkString("RdmtEventBegin")
 util.AddNetworkString("RdmtEventEnd")
 util.AddNetworkString("TTT_RoleChanged")
 util.AddNetworkString("TTT_LogInfo")
+
+--[[
+ Shims
+]]--
+
+if not FindRespawnLocation then
+    FindRespawnLocation = function(pos) return pos end
+end
 
 ROLE_ASSASSIN = ROLE_ASSASSIN or -1
 ROLE_BARRELMIMIC = ROLE_BARRELMIMIC or -1
@@ -47,51 +101,6 @@ ROLE_VAMPIRE = ROLE_VAMPIRE or -1
 ROLE_VETERAN = ROLE_VETERAN or -1
 ROLE_WHEELBOY = ROLE_WHEELBOY or -1
 ROLE_ZOMBIE = ROLE_ZOMBIE or ROLE_INFECTED or -1
-
-Randomat.ConVars = {
-    "ttt_randomat_allow_client_list",
-    "ttt_randomat_always_silently_trigger",
-    "ttt_randomat_auto",
-    "ttt_randomat_auto_chance",
-    "ttt_randomat_auto_choose",
-    "ttt_randomat_auto_min_rounds",
-    "ttt_randomat_auto_silent",
-    "ttt_randomat_chooseevent",
-    "ttt_randomat_event_hint",
-    "ttt_randomat_event_hint_chat",
-    "ttt_randomat_event_hint_chat_secret",
-    "ttt_randomat_event_history",
-    "ttt_randomat_event_weight",
-    "ttt_randomat_rebuyable"
-}
-Randomat.Events = Randomat.Events or {}
-Randomat.ActiveEvents = Randomat.ActiveEvents or {}
-
-local randomat_meta =  {}
-randomat_meta.__index = randomat_meta
-
-local concommand = concommand
-local ents = ents
-local file = file
-local hook = hook
-local ipairs = ipairs
-local IsValid = IsValid
-local math = math
-local net = net
-local pairs = pairs
-local player = player
-local string = string
-local table = table
-local timer = timer
-
-local CallHook = hook.Call
-local EntsCreate = ents.Create
-local EntsFindByClass = ents.FindByClass
-local GetAllPlayers = player.GetAll
-local GetAllEnts = ents.GetAll
-local PlayerIterator = player.Iterator
-
-local COLOR_BLANK = Color(0, 0, 0, 0)
 
 --[[
  Event History
