@@ -1,5 +1,3 @@
--- TODO: Give infinite reserve ammo
-
 local EVENT = {}
 
 EVENT.Title = "REAL Gun Game"
