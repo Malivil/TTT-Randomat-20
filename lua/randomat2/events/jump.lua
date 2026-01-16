@@ -6,7 +6,7 @@ EVENT.id = "jump"
 EVENT.Type = EVENT_TYPE_JUMPING
 EVENT.Categories = {"largeimpact"}
 
-CreateConVar("randomat_jump_spam", 0, FCVAR_NONE, "Whether to show the message again for a player who doesn't die")
+CreateConVar("randomat_jump_spam", 0, FCVAR_NONE, "Whether to allow the explosion and message to occur multiple times for players who don't die or are revived")
 CreateConVar("randomat_jump_kill_blast_immune", 1, FCVAR_NONE, "Whether to kill players who are immune to blast damage")
 
 local timerIds = {}
