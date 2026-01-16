@@ -1984,7 +1984,7 @@ Kills any player who jumps a second time after this event has triggered
 _ttt_randomat_jump_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_jump_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_jump_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
-_randomat_jump_spam_ - Default: 0 - Whether to show the message again for a player who doesn't die.\
+_randomat_jump_spam_ - Default: 0 - Whether to allow the explosion and message to occur multiple times for players who don't die or are revived.\
 _randomat_jump_kill_blast_immune_ - Default: 1 - Whether to kill players who are immune to blast damage.
 
 ## Zom-Bees!
