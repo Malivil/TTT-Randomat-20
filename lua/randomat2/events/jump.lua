@@ -20,22 +20,33 @@ function EVENT:Begin()
     local killBlastImmune = GetConVar("randomat_jump_kill_blast_immune"):GetBool()
     timer.Create("RdmtJumpStartDelay", 1, 1, function()
         self:AddHook("KeyPress", function(ply, key)
+            if key ~= IN_JUMP then return end
+            if not IsPlayer(ply) then return end
+            if not ply:Alive() or ply:IsSpec() then return end
+
             -- Don't count "jumps" if the player is underwater
-            if key == IN_JUMP and ply:Alive() and not ply:IsSpec() and (ply:WaterLevel() < 3) then
-                if ply.rdmtJumps > 0 and (ply.rdmtJumps == 1 or spam) then
-                    util.BlastDamage(ply, ply, ply:GetPos(), 100, 500)
-                    if not Randomat:ShouldActLikeJester(ply) and killBlastImmune then
-                        local timerId = "RdmtJumpKillDelay_" .. ply:SteamID64()
-                        table.insert(timerIds, timerId)
+            if ply:WaterLevel() >= 3 then return end
+
+            if ply.rdmtJumps > 0 and (ply.rdmtJumps == 1 or spam) then
+                util.BlastDamage(ply, ply, ply:GetPos(), 100, 500)
+                if not Randomat:ShouldActLikeJester(ply) and killBlastImmune then
+                    local timerId = "RdmtJumpKillDelay_" .. ply:SteamID64()
+                    table.insert(timerIds, timerId)
+
+                    -- Delay this by a frame so on-death hooks can trigger first
+                    timer.Create(timerId, 0, 1, function()
+                        if not IsPlayer(ply) then return end
+                        if not ply:Alive() or ply:IsSpec() then return end
+
                         timer.Create(timerId, 0.25, 1, function()
                             ply:Kill()
                         end)
-                    end
-                    self:SmallNotify(ply:Nick() .. " tried to jump twice.")
+                    end)
                 end
-
-                ply.rdmtJumps = ply.rdmtJumps + 1
+                self:SmallNotify(ply:Nick() .. " tried to jump twice.")
             end
+
+            ply.rdmtJumps = ply.rdmtJumps + 1
         end)
     end)
 end
