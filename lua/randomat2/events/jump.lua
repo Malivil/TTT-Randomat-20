@@ -27,7 +27,7 @@ function EVENT:Begin()
                     if not Randomat:ShouldActLikeJester(ply) and killBlastImmune then
                         local timerId = "RdmtJumpKillDelay_" .. ply:SteamID64()
                         table.insert(timerIds, timerId)
-                        timer.Create(timerId, 0.25, 1, function()
+                        timer.Create(timerId, 0.2, 1, function()
                             ply:Kill()
                         end)
                     end
