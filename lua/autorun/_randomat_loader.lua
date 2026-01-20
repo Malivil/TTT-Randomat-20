@@ -93,6 +93,7 @@ if SERVER then
     -- Per The Stig's research, this happens before the server.cfg is loaded so anything we load from the .json will be overwritten by that
     hook.Add("InitPostEntity", "Randomat_LoadConVars_InitPostEntity", function()
         if not file.IsDir("randomat", "DATA") then
+            if file.Exists("randomat", "DATA") then return end
             file.CreateDir("randomat")
         elseif file.Exists("randomat/convars.json", "DATA") then
             local convarsJson = file.Read("randomat/convars.json", "DATA")
@@ -134,6 +135,11 @@ if SERVER then
     end
 
     hook.Add("ShutDown", "Randomat_SaveConVars_ShutDown", function()
+        if not file.IsDir("randomat", "DATA") then
+            if file.Exists("randomat", "DATA") then return end
+            file.CreateDir("randomat")
+        end
+
         local convars = {}
         -- Start with the shared convars
         GetConVarValues(convars, Randomat.ConVars)

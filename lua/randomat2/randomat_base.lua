@@ -141,7 +141,10 @@ local function CheckEventHistoryFile()
 
     -- Make sure the file exists
     if not file.Exists("randomat/history.txt", "DATA") then
-        file.Write("randomat/history.txt", "")
+        if not file.Write("randomat/history.txt", "") then
+            ErrorNoHalt("Failed to create 'randomat/history.txt' in the garrysmod/data directory\n")
+            return false
+        end
     end
 
     return true
@@ -154,7 +157,13 @@ local function LoadEventHistory()
     if not CheckEventHistoryFile() then return end
 
     -- Read each entry from the file and save them
-    local history = string.Split(file.Read("randomat/history.txt", "DATA"), "\n")
+    local historyData = file.Read("randomat/history.txt", "DATA")
+    if not historyData then
+        ErrorNoHalt("Failed to read 'randomat/history.txt' in the garrysmod/data directory\n")
+        return
+    end
+
+    local history = string.Split(historyData, "\n")
     for _, h in ipairs(history) do
         if #h > 0 then
             table.insert(Randomat.EventHistory, h)
