@@ -30,6 +30,7 @@ Enumerations available globally (within the defined realm).
 - EVENT_TYPE_MUSIC - This event plays music
 - EVENT_TYPE_FORCED_DEATH - This event kills players under specific circumstances
 - EVENT_TYPE_TYPED_RESPONSE - This event requires players to type a response to something
+- EVENT_TYPE_TRANSLATED_WEAPONS = This event translates a weapon name within a target player's client code
 
 ## Events
 Creating an Randomat event involves defining the object with its associated methods and properties and then registering it. This section will detail the common methods and properties available when creating your event.
