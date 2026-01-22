@@ -7,6 +7,7 @@ local EVENT = {}
 EVENT.Title = "Cause of Death"
 EVENT.Description = "Display a player's cause of death on screen for everyone"
 EVENT.id = "causeofdeath"
+EVENT.Type = EVENT_TYPE_TRANSLATED_WEAPONS
 EVENT.Categories = {"biased_innocent", "moderateimpact"}
 
 local function TriggerAlert(item, ply, victim_name)

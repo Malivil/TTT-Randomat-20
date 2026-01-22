@@ -3,7 +3,7 @@ local EVENT = {}
 EVENT.Title = "REAL Gun Game"
 EVENT.Description = "Everyone starts with the same weapon. First player to kill with every weapon wins for their team\nEach time you kill the other team, you get the next weapon"
 EVENT.id = "realgungame"
-EVENT.Type = EVENT_TYPE_WEAPON_OVERRIDE
+EVENT.Type = {EVENT_TYPE_WEAPON_OVERRIDE, EVENT_TYPE_TRANSLATED_WEAPONS}
 EVENT.Categories = {"gamemode", "rolechange", "item", "largeimpact"}
 
 CreateConVar("randomat_realgungame_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")

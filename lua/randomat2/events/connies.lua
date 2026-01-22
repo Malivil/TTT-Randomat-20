@@ -9,6 +9,7 @@ CreateConVar("randomat_connies_show_role_weapons", 0, FCVAR_NONE, "Whether to sh
 EVENT.Title = "Got any connies?!"
 EVENT.Description = "Announces players that have shop items after " .. GetConVar("randomat_connies_timer"):GetInt() .. " seconds"
 EVENT.id = "connies"
+EVENT.Type = EVENT_TYPE_TRANSLATED_WEAPONS
 EVENT.Categories = {"biased_innocent", "moderateimpact"}
 EVENT.MinRoundCompletePercent = 10
 
