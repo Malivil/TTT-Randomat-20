@@ -1124,6 +1124,7 @@ globals = {
     "EVENT_TYPE_TYPED_RESPONSE",
     "EVENT_TYPE_VOTING",
     "EVENT_TYPE_WEAPON_OVERRIDE",
+    "EVENT_TYPE_TRANSLATED_WEAPONS",
 
     -- Randomat Namespaces
     "Randomat",
