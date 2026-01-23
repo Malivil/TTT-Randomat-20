@@ -40,13 +40,13 @@ local function GetPlayerEquip(ply)
                 roles = {ROLE_DETECTIVE}
             end
 
-            local _, _, swep_table = Randomat:GetShopEquipment(ply, roles, blocklist, false, ply.deadgiftstries,
+            local _, _, swep_table, _ = Randomat:GetShopEquipment(ply, roles, blocklist, false, ply.deadgiftstries,
                 -- settrackingvar
                 function(value)
                     ply.deadgiftstries = value
                 end, true)
 
-            -- If we haven't gotten a valid weapon (for whatever reason) use the default ofrt his team
+            -- If we haven't gotten a valid weapon (for whatever reason) use the default for this team
             equips[sid] = WEPS.GetClass(swep_table) or default
         end
     end

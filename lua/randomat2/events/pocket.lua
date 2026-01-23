@@ -36,7 +36,7 @@ function EVENT:GiveWep(ply)
             ply.pocketweptries = value
         end,
         -- onitemgiven
-        function(isequip, id)
+        function(isequip, id, itemrole)
             Randomat:CallShopHooks(isequip, id, ply)
         end)
 end

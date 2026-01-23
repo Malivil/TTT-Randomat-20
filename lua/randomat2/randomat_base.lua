@@ -938,24 +938,26 @@ local function GetRandomRoleWeapon(roles, blocklist, droppable_only)
     local tbl = {}
     for _, role in ipairs(roles) do
         for _, i in ipairs(table.Copy(EquipmentItems[role]) or {}) do
-            tbl[i.id] = i
+            tbl[i.id] = {i, role}
         end
 
         for _, v in ipairs(weapons.GetList()) do
             if CanIncludeWeapon(role, v, blocklist, droppable_only) then
-                tbl[v.ClassName] = v
+                tbl[v.ClassName] = {v, role}
             end
         end
     end
 
     if #tbl == 0 then
-        return nil, nil, nil
+        return nil, nil, nil, nil
     end
 
-    local item, _ = table.Random(tbl)
+    local item_data, _ = table.Random(tbl)
+    local item = item_data[1]
+    local item_role = item_data[2]
     local item_id = tonumber(item.id)
     local swep_table = (not item_id) and weapons.GetStored(item.ClassName) or nil
-    return item, item_id, swep_table
+    return item, item_id, swep_table, item_role
 end
 
 function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
@@ -969,11 +971,11 @@ function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tra
     end
 
     if type(tracking) ~= "number" then tracking = 0 end
-    if tracking >= 500 then return nil, nil, nil end
+    if tracking >= 500 then return nil, nil, nil, nil end
     tracking = tracking + 1
     settrackingvar(tracking)
 
-    local item, item_id, swep_table = GetRandomRoleWeapon(roles, blocklist, droppable_only)
+    local item, item_id, swep_table, item_role = GetRandomRoleWeapon(roles, blocklist, droppable_only)
     if item_id then
         -- If this is an item and we shouldn't get players items or the player already has this item, try again
         if not include_equipment or not ply or ply:HasEquipmentItem(item_id) then
@@ -981,13 +983,13 @@ function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tra
         -- Otherwise return it
         else
             settrackingvar(0)
-            return item, item_id, swep_table
+            return item, item_id, swep_table, item_role
         end
     elseif swep_table then
         -- If this player can use this weapon, give it to them
         if not ply or ply:CanCarryWeapon(swep_table) then
             settrackingvar(0)
-            return item, item_id, swep_table
+            return item, item_id, swep_table, item_role
         -- Otherwise try again
         else
             return Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
@@ -999,13 +1001,13 @@ function Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tra
 end
 
 local function GiveWep(ply, roles, blocklist, include_equipment, tracking, settrackingvar, onitemgiven, droppable_only)
-    local item, item_id, swep_table = Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
+    local item, item_id, swep_table, item_role = Randomat:GetShopEquipment(ply, roles, blocklist, include_equipment, tracking, settrackingvar, droppable_only)
     -- Give the player whatever was found
     if item_id then
-        onitemgiven(item_id, item_id)
+        onitemgiven(item_id, item_id, item_role)
         ply:GiveEquipmentItem(item_id)
     elseif swep_table then
-        onitemgiven(nil, item.ClassName)
+        onitemgiven(nil, item.ClassName, item_role)
         ply:Give(item.ClassName)
         if swep_table.WasBought then
             swep_table:WasBought(ply)

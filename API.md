@@ -641,6 +641,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *item* - The item/weapon information from the shop. `nil` if no valid items/weapons are found
 - *item_id* - The item ID (e.g. EQUIP_RADAR) if it's an item, `nil` otherwise
 - *swep_table* - The stored SWEP table for the weapon (if it is one), `nil` otherwise
+- *item_role* - The role that was the source for the randomly selected shop equipment
 
 **Randomat:GetValidRoles(roles, check)** - Gets the list of roles from those provided which pass the given check function.\
 *Realm:* Client and Server\

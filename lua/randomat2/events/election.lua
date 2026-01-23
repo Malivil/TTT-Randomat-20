@@ -270,7 +270,7 @@ function EVENT:SwearIn(winner)
                     winner.electionweptries = value
                 end,
                 -- onitemgiven
-                function(isequip, id)
+                function(isequip, id, itemrole)
                     given = id
                     Randomat:CallShopHooks(isequip, id, winner)
                 end)
