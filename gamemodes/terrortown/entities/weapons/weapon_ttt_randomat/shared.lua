@@ -86,13 +86,17 @@ function SWEP:Initialize()
 end
 
 function SWEP:OnRemove()
-    if CLIENT and IsValid(self:GetOwner()) and self:GetOwner() == LocalPlayer() and self:GetOwner():Alive() then
+    if not CLIENT then return end
+
+    local owner = self:GetOwner()
+    if IsValid(owner) and owner == LocalPlayer() and owner:Alive() then
         RunConsoleCommand("lastinv")
     end
 end
 
 function SWEP:PrimaryAttack()
     if SERVER and IsFirstTimePredicted() then
+        local owner = self:GetOwner()
         if self.EventId then
             local args = {}
             if self.EventId then
@@ -103,19 +107,21 @@ function SWEP:PrimaryAttack()
                 end
             end
             if self.EventSilent then
-                Randomat:SilentTriggerEvent(self.EventId, self:GetOwner(), unpack(args))
+                Randomat:SilentTriggerEvent(self.EventId, owner, unpack(args))
             else
-                Randomat:TriggerEvent(self.EventId, self:GetOwner(), unpack(args))
+                Randomat:TriggerEvent(self.EventId, owner, unpack(args))
             end
         else
             if GetConVar("ttt_randomat_chooseevent"):GetBool() then
-                Randomat:SilentTriggerEvent("choose", self:GetOwner())
+                Randomat:SilentTriggerEvent("choose", owner)
             else
-                Randomat:TriggerRandomEvent(self:GetOwner())
+                Randomat:TriggerRandomEvent(owner)
             end
         end
 
-        DamageLog("RANDOMAT: " .. self:GetOwner():Nick() .. " [" .. self:GetOwner():GetRoleString() .. "] used a Randomat")
+        if IsPlayer(owner) then
+            DamageLog("RANDOMAT: " .. owner:Nick() .. " [" .. owner:GetRoleString() .. "] used a Randomat")
+        end
 
         self:SetNextPrimaryFire(CurTime() + 10)
         self:Remove()
