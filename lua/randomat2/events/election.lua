@@ -201,6 +201,7 @@ function EVENT:SwearIn(winner)
 
         -- Innocent - Promote to Detective, give credits
         if Randomat:IsInnocentTeam(winner) then
+            self:StripRoleWeapons(winner)
             Randomat:SetRole(winner, ROLE_DETECTIVE)
             winner:AddCredits(credits)
             SendFullStateUpdate()
@@ -659,6 +660,7 @@ function EVENT:SwearIn(winner)
             Randomat:PrintMessage(winner, MSG_PRINTBOTH, target:Nick() .. " has been " .. context_str .. "converted to your role")
 
             -- Convert the target to the winner's role
+            self:StripRoleWeapons(target)
             Randomat:SetRole(target, winnerRole)
             -- If they were dead, respawn them
             if not target:Alive() or target:IsSpec() then
