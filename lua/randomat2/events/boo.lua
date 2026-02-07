@@ -54,6 +54,10 @@ function EVENT:Begin()
                 -- Create and deploy ghost
                 local ghost = ents.Create("npc_kleiner")
                 ghost:SetModel(ply:GetModel())
+                ghost:SetSkin(ply:GetSkin())
+                for _, value in pairs(ply:GetBodyGroups()) do
+                    ghost:SetBodygroup(value.id, ply:GetBodygroup(value.id))
+                end
 
                 local pos = target:GetPos()
                 local ang = target:GetAngles()
