@@ -9,7 +9,7 @@ function EVENT:Begin()
     self:AddHook("TTTTargetIDPlayerBlockIcon", function(ply, cli)
         if not IsPlayerValid(cli) or not IsPlayerValid(ply) then return end
 
-        if ply:GetNWBool("RdmtInvisible") then
+        if Randomat:IsPlayerInvisible(ply) then
             return true
         end
     end)
@@ -17,7 +17,7 @@ function EVENT:Begin()
     self:AddHook("TTTTargetIDPlayerBlockInfo", function(ply, cli)
         if not IsPlayerValid(cli) or not IsPlayerValid(ply) then return end
 
-        if ply:GetNWBool("RdmtInvisible") then
+        if Randomat:IsPlayerInvisible(ply) then
             return true
         end
     end)
