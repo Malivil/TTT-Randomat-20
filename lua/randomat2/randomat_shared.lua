@@ -101,7 +101,7 @@ end
 -- Role Functions
 
 function Randomat:CanRoleSpawn(role)
-    if not role or role == -1 then return false end
+    if not role or role == Randomat.MISSING_ROLE then return false end
 
     if util.CanRoleSpawn then
         return util.CanRoleSpawn(role)

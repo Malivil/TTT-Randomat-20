@@ -59,7 +59,7 @@ function EVENT:End()
 end
 
 function EVENT:Condition()
-    if not ROLE_BODYSNATCHER or ROLE_BODYSNATCHER == -1 then return true end
+    if not ROLE_BODYSNATCHER or ROLE_BODYSNATCHER == Randomat.MISSING_ROLE then return true end
 
     local hardmode = GetConVar("randomat_opposite_hardmode"):GetBool()
     if hardmode then

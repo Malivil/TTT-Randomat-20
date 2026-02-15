@@ -194,7 +194,7 @@ function EVENT:SwearIn(winner)
     timer.Simple(3, function()
         local winnerRole = winner:GetRole()
         -- Just in case
-        if winnerRole == -1 then
+        if winnerRole == Randomat.MISSING_ROLE then
             Randomat:EndActiveEvent(self.id)
             return
         end
