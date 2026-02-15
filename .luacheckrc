@@ -1030,6 +1030,7 @@ globals = {
     "ROLE_MARSHAL",
     "ROLE_MEDIUM",
     "ROLE_MERCENARY",
+    "ROLE_MINDGOBLIN",
     "ROLE_OLDMAN",
     "ROLE_PALADIN",
     "ROLE_PARAMEDIC",
