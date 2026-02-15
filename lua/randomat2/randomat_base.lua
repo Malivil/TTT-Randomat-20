@@ -464,6 +464,16 @@ function Randomat:unregister(id)
     Randomat.Events[id] = nil
 end
 
+local spectatorUIRoles = {ROLE_PHANTOM, ROLE_MINDGOBLIN}
+local function CanSpectatorUIEventRun()
+    for _, v in player.Iterator() do
+        if table.HasValue(spectatorUIRoles, v:GetRole()) then
+            return false
+        end
+    end
+    return true
+end
+
 function Randomat:CanEventRun(event, ignore_history)
     if type(event) ~= "table" then
         event = Randomat.Events[event]
@@ -497,8 +507,14 @@ function Randomat:CanEventRun(event, ignore_history)
     -- Don't use the same events over and over again
     if not ignore_history and Randomat:IsEventInHistory(event) then return false, "Event is in recent history" end
 
-    -- Don't allow multiple events of the same type to run at once
     if event.Type ~= EVENT_TYPE_DEFAULT then
+        -- Don't let spectator UI events run if there are roles that also use spectator UIs already in the round
+        if (event.Type == EVENT_TYPE_SPECTATOR_UI or (type(event.Type) == "table" and table.HasValue(event.Type, EVENT_TYPE_SPECTATOR_UI)))
+            and not CanSpectatorUIEventRun() then
+            return false, "Event requires spectator UI and role with that feature is in this round"
+        end
+
+        -- Don't allow multiple events of the same type to run at once
         for _, evt in pairs(Randomat.ActiveEvents) do
             if type(evt.Type) == "table" then
                 -- If both are tables don't allow any matching types
