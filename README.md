@@ -2065,7 +2065,7 @@ If a developer of an external Randomat event would like to add support for this 
 - u/tundrat on Reddit for ideas for improving the "Incriminating Evidence" event
 - u/zoxzix89 on Reddit for the idea for the "Time Warp" event
 - Alex from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the fix for traitors not being completely blinded in the "Blind Traitors" event
-- Alex, Angela, Clockwork_tiger, Dom, Jaakko, Neil, and Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
+- Alex, Angela, Clockwork_tiger, Dom, Jaakko, Neil, Pardzival, Sparth, and Vodrix from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributing sound clips for the "Narration" event
 - Alex, Rhettg32, and Bartez from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flu Season" event
 - Angela from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Ransomat" events
 - Angela, Crimson, Fazzy, Noxx, Spirit, and The Stig from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord and [Fyxen](https://steamcommunity.com/profiles/76561198810121546/) for ideas for improving the "Incriminating Evidence" event

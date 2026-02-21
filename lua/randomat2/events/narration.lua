@@ -24,17 +24,17 @@ local reload_sound_path = "weapons/reload/reload%s.mp3"
 local smashing_glass_sound_path = "smashing_glass/smashing_glass%s.mp3"
 
 -- Sound file counts
-local beeping_sound_count = 7
+local beeping_sound_count = 8
 local blerg_sound_count = 10
-local bones_cracking_sound_count = 5
-local door_opening_sound_count = 5
-local door_closing_sound_count = 5
-local explosion_sound_count = 9
-local footsteps_sound_count = 9
-local gunshot_sound_count = 8
-local jump_sound_count = 5
-local reload_sound_count = 8
-local smashing_glass_sound_count = 8
+local bones_cracking_sound_count = 6
+local door_opening_sound_count = 7
+local door_closing_sound_count = 7
+local explosion_sound_count = 11
+local footsteps_sound_count = 12
+local gunshot_sound_count = 10
+local jump_sound_count = 8
+local reload_sound_count = 10
+local smashing_glass_sound_count = 9
 
 -- Sound patterns and path-count mappings
 local footsteps_pattern = ".*player/footsteps/.*%..*"
