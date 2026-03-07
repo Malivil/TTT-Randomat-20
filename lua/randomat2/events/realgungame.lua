@@ -382,7 +382,9 @@ function EVENT:Begin()
                     ignite_info = ent.ignite_info_ext
                 end
 
-                attacker = ignite_info.att
+                if ignite_info then
+                    attacker = ignite_info.att
+                end
                 -- If that one isn't valid either, just bail
                 if not IsPlayer(attacker) or not attacker:Alive() or attacker:IsSpec() then return end
             end
