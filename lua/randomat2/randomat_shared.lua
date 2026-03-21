@@ -577,10 +577,10 @@ if not MSG_PRINTBOTH then
     MSG_PRINTCENTER = HUD_PRINTCENTER
 end
 
-function Randomat:PrintMessage(ply, msgtype, message)
+function Randomat:PrintMessage(ply, msgtype, message, time, id, predicate)
     -- QueueMessage already handles immediately printing MSG/HUD_PRINTTALK so there's no reason for us to think too much about it here
     if CR_VERSION and msgtype ~= HUD_PRINTCONSOLE then
-        ply:QueueMessage(msgtype, message)
+        ply:QueueMessage(msgtype, message, time, id, predicate)
         return
     end
 

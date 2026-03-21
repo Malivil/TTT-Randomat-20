@@ -857,12 +857,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
   - *fill* - The filled portion of the bar
 - *value* - Decimal number between 0 and 1 representing the percentage this bar should be filled
 
-**Randomat:PrintMessage(ply, msgtype, message)** - Prints te message to given player based on the provided type.\
+**Randomat:PrintMessage(ply, msgtype, message, time, id, predicate))** - Prints te message to given player based on the provided type.\
 *Realm:* Client and Server\
 *Parameters:*
 - *ply* - The player that the message is being printed for
 - *msgtype* - The type of message to print. Can either be a [HUD](https://wiki.facepunch.com/gmod/Enums/HUD) value or a CR4TTT `MSG` enumeration value
 - *message* - The message being printed
+- *time* - The time to display this message (Only used when modern Custom Roles for TTT is installed)
+- *id* - The ID used to mark this message, useful for deduplication (Only used when modern Custom Roles for TTT is installed)
+- *predicate* - The predicate used to determine whether to display a message (Only used when modern Custom Roles for TTT is installed)
 
 **Randomat:register(event)** - Registers the given table as a Randomat event and allows it to be chosen to be selected. **Must be called for event to function**.\
 *Realm:* Server\
