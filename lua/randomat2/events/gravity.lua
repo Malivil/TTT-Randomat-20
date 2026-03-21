@@ -47,7 +47,7 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    timer.Remove("RandomatGravityChange")
+    timer.Remove("RdmtGravityChange")
     SetGravity(defaultGravity)
 end
 
