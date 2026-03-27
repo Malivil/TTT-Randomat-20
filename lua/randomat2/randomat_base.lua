@@ -237,7 +237,8 @@ local function EndEvent(evt, skipNetMessage)
 
     if type(evt.End) == "function" then
         local function End()
-            evt:End()
+            local isActive = Randomat:IsEventActive(evt.Id)
+            evt:End(isActive)
         end
         local function Catch(err)
             ErrorNoHalt("WARNING: Randomat event '" .. evt.Id .. "' caused an error when it was being Ended. Please report to the addon developer with the following error:\n", err, "\n")

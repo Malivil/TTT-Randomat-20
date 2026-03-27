@@ -86,8 +86,10 @@ All methods below are automatically defined for every event but events can overr
 
 *Returns:* The current value of the the automatically-generated `ttt_randomat_{EVENT_ID}` convar. If overridden and changed to return `false`, this event will never start
 
-**EVENT:End()** - Called when an event is stopped. Used to do manual cleanup of processes started in the event.\
-*Realm:* Client and Server
+**EVENT:End(isActive)** - Called when an event is stopped. Also called in `TTTEndRound`, `TTTPrepareRound`, and `ShutDown` hooks. Used to do manual cleanup of processes started in the event.\
+*Realm:* Client and Server\
+*Parameters:*
+- *isActive* - Whether the event was active when this method was called
 
 *NOTE:* **All** events are automatically ended during every round prep phase to ensure leftover event processes are stopped between events
 
