@@ -947,7 +947,9 @@ local function CanIncludeWeapon(role, weap, blocklist, droppable_only)
     -- Must not spawn on the map
     if weap.AutoSpawnable then return false end
     -- Must be droppable if droppable_only is true
-    if droppable_only and not weap.AllowDrop then return false end
+    -- Specifically check AllowDrop for `false` because weapons in `weapons.GetList` don't have the base table
+    -- applied and the base table has AllowDrop defaulting to `true`
+    if droppable_only and weap.AllowDrop == false then return false end
     -- Must be buyable by the given role
     if not Randomat:IsWeaponBuyable(weap) or not table.HasValue(weap.CanBuy, role) then return false end
     -- Must not be blocked
