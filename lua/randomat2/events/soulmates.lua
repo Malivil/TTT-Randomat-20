@@ -93,8 +93,10 @@ function EVENT:Begin(first_target, second_target)
     timer.Create(timer_id, 0.1, 0, function()
         for i = 1, size do
             if not ply1[i]:Alive() and ply2[i]:Alive() then
+                Randomat:PrintMessage(ply2[i], MSG_PRINTBOTH, "You have been killed because your soulmate (" .. ply1[i]:Nick() .. ") has died")
                 ply2[i]:Kill()
             elseif not ply2[i]:Alive() and ply1[i]:Alive() then
+                Randomat:PrintMessage(ply1[i], MSG_PRINTBOTH, "You have been killed because your soulmate (" .. ply2[i]:Nick() .. ") has died")
                 ply1[i]:Kill()
             elseif GetConVar("randomat_soulmates_sharedhealth"):GetBool() then
                 if ply1[i]:Health() ~= ply1_health[i] or ply2[i]:Health() ~= ply2_health[i] then
