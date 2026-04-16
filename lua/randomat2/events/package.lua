@@ -10,10 +10,10 @@ EVENT.Categories = {"entityspawn", "smallimpact"}
 EVENT.ConVars = {"randomat_package_blocklist"}
 
 function EVENT:Begin()
-    local spawns = {}
+    local spawns = GetSpawnEnts(true, false)
     for _, e in ents.Iterator() do
         local entity_class = e:GetClass()
-        if (string.StartsWith(entity_class, "info_") or string.StartsWith(entity_class, "weapon_") or string.StartsWith(entity_class, "item_")) and not IsValid(e:GetParent()) then
+        if (string.StartsWith(entity_class, "weapon_") or string.StartsWith(entity_class, "item_")) and not IsValid(e:GetParent()) then
             table.insert(spawns, e)
         end
     end
