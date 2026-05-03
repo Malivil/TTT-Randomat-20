@@ -204,9 +204,10 @@ function EVENT:Begin()
         -- Add all the role names
         if ROLE_STRINGS then
             for i, r in ipairs(ROLE_STRINGS) do
-                -- Only include default or enabled roles
-                if Randomat:CanRoleSpawn(i) then
-                    table.insert(values, r:lower())
+                local role = r:lower()
+                -- Only include default or enabled roles without special characters
+                if not role:match("%W") and Randomat:CanRoleSpawn(i) then
+                    table.insert(values, role)
                 end
             end
         end
