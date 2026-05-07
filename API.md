@@ -337,6 +337,8 @@ Messages that the Randomat is set up to listen to in the defined realm.
 - *Bool* - Whether the message being displayed should be large
 - *String* - The message being displayed 
 - *UInt(8)* - The number of seconds the message should be displayed for
+- *[Color](https://wiki.facepunch.com/gmod/Color)* - The color the text should be. *(Optional, defaults to `Color(255, 200, 0)`)*
+- *String* - The message tag to use when (optionally) clearing active messages. *(Optional, defaults to `"default"`)*
 
 **randomat_message_silent** - Displays a message on the local player's screen. Does not play a sound.\
 *Realm:* Client\
@@ -344,6 +346,8 @@ Messages that the Randomat is set up to listen to in the defined realm.
 - *Bool* - Whether the message being displayed should be large
 - *String* - The message being displayed 
 - *UInt(8)* - The number of seconds the message should be displayed for
+- *[Color](https://wiki.facepunch.com/gmod/Color)* - The color the text should be. *(Optional, defaults to `Color(255, 200, 0)`)*
+- *String* - The message tag to use when (optionally) clearing active messages. *(Optional, defaults to `"default"`)*
 
 **randomat_message_clear** - Clears messages on the local player's screen. Either clears all messages, or clears messages by tag.\
 *Realm:* Client\
