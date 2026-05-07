@@ -345,6 +345,12 @@ Messages that the Randomat is set up to listen to in the defined realm.
 - *String* - The message being displayed 
 - *UInt(8)* - The number of seconds the message should be displayed for
 
+**randomat_message_clear** - Clears messages on the local player's screen. Either clears all messages, or clears messages by tag.\
+*Realm:* Client\
+*Parameters:*
+- *Bool* - Whether all messages should be cleared
+- *String* - The specific tag to clear; only messages matching this tag will be removed if the bool is `false`
+
 **RdmtRemoveSpeedMultiplier** - Removes a speed multiplier for the local player.\
 *Realm:* Client\
 *Parameters:*
@@ -445,6 +451,12 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *ply* - The player to print for
 - *msg* - The message to print
+
+**Randomat:ClearMessages(targ, tag)** - Clears `Randomat:Notify()` and `Randomat:SmallNotify()` messages. Can do so for all players or a specified player, and all messages or only those with a specified tag.\
+*Realm:* Server\
+*Parameters:*
+- *targ* - The player to clear messages for; `nil` will clear messages for all players
+- *tag* - The tag to clear associated messages for; `nil` will clear all messages
 
 **Randomat:EndActiveEvent(id, skip_error)** - Ends the event with the given ID.\
 *Realm:* Server\
@@ -822,7 +834,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *msg* - The message to log
 
-**Randomat:Notify(msg, length, target, silent, allow_secret, font_color)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
+**Randomat:Notify(msg, length, target, silent, allow_secret, font_color, tag, clear_others)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
 - *msg* - The message to display
@@ -831,6 +843,8 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
 - *allow_secret* - Whether to allow this message to go through even when the `secret` event is running (Optional, defaults to `false`)
 - *font_color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the font (Optional, defaults to rgb(255, 200, 0))
+- *tag* - The tag (as a string) to assign to the notification for subsequent use in `Randomat:ClearMessages(targ, tag)`. (Optional, defaults to `default`)
+- *clear_others* - Whether to clear all other active `Randomat:SmallNotify()` and `Randomat:Notify()` messages before displaying this one. (Optional, defaults to `false`)
 
 **Randomat:OverrideWeaponSound(wep, chosen_sound)** - Overrides the given weapon's `Primary.Sound` property with the given sound.\
 *Realm:* Client and Server\
@@ -1015,7 +1029,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *ply* - The player who caused this event to be started
 
-**Randomat:SmallNotify(msg, length, target, silent, allow_secret, font_color)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
+**Randomat:SmallNotify(msg, length, target, silent, allow_secret, font_color, tag, clear_others)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
 - *msg* - The message to display
@@ -1024,6 +1038,9 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
 - *allow_secret* - Whether to allow this message to go through even when the `secret` event is running (Optional, defaults to `false`)
 - *font_color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the font (Optional, defaults to rgb(255, 200, 0))
+- *tag* - The tag (as a string) to assign to the notification for subsequent use in `Randomat:ClearMessages(targ, tag)`. (Optional, defaults to `default`)
+- *clear_others* - Whether to clear all other active `Randomat:SmallNotify()` and `Randomat:Notify()` messages before displaying this one. (Optional, defaults to `false`)
+
 
 **Randomat:SpawnBarrel(pos, range, min_range, ignore_negative, model_override)** - Spawns an explosive barrel near the provided position.\
 *Realm:* Server\

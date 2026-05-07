@@ -22,7 +22,7 @@ local function ShowMessage()
     if not font_color or font_color.a == 0 then font_color = COLOR_DEFAULT end
 
     local tag = net.ReadString()
-    if tag == "" then tag = "generic" end
+    if tag == "" then tag = "default" end
 
     local panel = vgui.Create("DNotify")
     panel:SetLife(length)

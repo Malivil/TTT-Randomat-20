@@ -906,16 +906,21 @@ end
 
 -- Notifications
 
+function Randomat:ClearMessages(targ, tag)
+    net.Start("randomat_message_clear")
+    -- If there's no tag then send true to clear all
+    net.WriteBool(tag == nil)
+    net.WriteString(tag or "")
+    if not targ then net.Broadcast() else net.Send(targ) end
+end
+
 local function SendNotify(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
     -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
     if not allow_secret and Randomat:IsEventActive("secret") then return end
 
     -- if clear_others then do that before sending new message
     if clear_others then
-        net.Start("randomat_message_clear")
-        net.WriteBool(true)
-        net.WriteString("") 
-        if not targ then net.Broadcast() else net.Send(targ) end
+        Randomat:ClearMessages()
     end
 
     if not isnumber(length) then length = 0 end
@@ -924,14 +929,6 @@ local function SendNotify(msg, big, length, targ, silent, allow_secret, font_col
     net.WriteString(msg)
     net.WriteUInt(length, 8)
     net.WriteColor(font_color or COLOR_BLANK)
-    net.WriteString(tag or "") -- Send the tag
-    if not targ then net.Broadcast() else net.Send(targ) end
-end
-
-function Randomat:ClearMessages(targ, tag)
-    net.Start("randomat_message_clear")
-    -- If there's no tag then send true to clear all
-    net.WriteBool(tag == nil)
     net.WriteString(tag or "")
     if not targ then net.Broadcast() else net.Send(targ) end
 end
