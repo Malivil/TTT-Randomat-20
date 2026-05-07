@@ -64,8 +64,8 @@ end
 local function ClearMessages(all, tag)
     if all then
         for _, panels in pairs(active_messages) do
-            for _, pnl in pairs(panels) do 
-                if ValidPanel(pnl) then 
+            for _, pnl in pairs(panels) do
+                if IsValid(pnl) then
                     pnl:Remove()
                 end
             end
@@ -73,7 +73,7 @@ local function ClearMessages(all, tag)
         active_messages = {}
     elseif tag and active_messages[tag] then
         for _, pnl in pairs(active_messages[tag]) do
-            if ValidPanel(pnl) then
+            if IsValid(pnl) then
                 pnl:Remove()
             end
         end
