@@ -25,6 +25,7 @@ local function ShowMessage()
     if tag == "" then tag = "default" end
 
     local panel = vgui.Create("DNotify")
+    panel.tag = tag
     panel:SetLife(length)
 
     if big then
@@ -39,6 +40,20 @@ local function ShowMessage()
     end
 
     local bg = vgui.Create("DPanel", panel)
+    bg.tag = tag
+    function bg:OnRemove()
+        local parent = bg:GetParent()
+        if not IsValid(parent) then return end
+        if not parent.tag then return end
+
+        -- Remove from the tracking table
+        table.RemoveByValue(active_messages[parent.tag], parent)
+        if table.Count(active_messages[parent.tag]) == 0 then
+            active_messages[parent.tag] = nil
+        end
+        -- And remove the now-unused parent too
+        parent:Remove()
+    end
     bg:SetBackgroundColor(Color(0, 0, 0, 200))
     bg:Dock(FILL)
 
