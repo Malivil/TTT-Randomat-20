@@ -46,6 +46,7 @@ local COLOR_BLANK = Color(0, 0, 0, 0)
 
 util.AddNetworkString("randomat_message")
 util.AddNetworkString("randomat_message_silent")
+util.AddNetworkString("randomat_message_clear")
 util.AddNetworkString("AlertTriggerFinal")
 util.AddNetworkString("alerteventtrigger")
 util.AddNetworkString("RdmtSetSpeedMultiplier")
@@ -905,24 +906,39 @@ end
 
 -- Notifications
 
-local function SendNotify(msg, big, length, targ, silent, allow_secret, font_color)
+function Randomat:ClearMessages(targ, tag)
+    net.Start("randomat_message_clear")
+    -- If there's no tag then send true to clear all
+    net.WriteBool(tag == nil)
+    net.WriteString(tag or "")
+    if not targ then net.Broadcast() else net.Send(targ) end
+end
+
+local function SendNotify(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
     -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
     if not allow_secret and Randomat:IsEventActive("secret") then return end
+
+    -- if clear_others then do that before sending new message
+    if clear_others then
+        Randomat:ClearMessages()
+    end
+
     if not isnumber(length) then length = 0 end
     net.Start(silent and "randomat_message_silent" or "randomat_message")
     net.WriteBool(big)
     net.WriteString(msg)
     net.WriteUInt(length, 8)
     net.WriteColor(font_color or COLOR_BLANK)
+    net.WriteString(tag or "")
     if not targ then net.Broadcast() else net.Send(targ) end
 end
 
-function Randomat:SmallNotify(msg, length, targ, silent, allow_secret, font_color)
-    SendNotify(msg, false, length, targ, silent, allow_secret, font_color)
+function Randomat:SmallNotify(msg, length, targ, silent, allow_secret, font_color, tag, clear_others)
+    SendNotify(msg, false, length, targ, silent, allow_secret, font_color, tag, clear_others)
 end
 
-function Randomat:Notify(msg, length, targ, silent, allow_secret, font_color)
-    SendNotify(msg, true, length, targ, silent, allow_secret, font_color)
+function Randomat:Notify(msg, length, targ, silent, allow_secret, font_color, tag, clear_others)
+    SendNotify(msg, true, length, targ, silent, allow_secret, font_color, tag, clear_others)
 end
 
 function Randomat:EventNotify(title)
