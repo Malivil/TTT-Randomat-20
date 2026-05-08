@@ -11,8 +11,6 @@ surface.CreateFont("RandomatSmallMsg", {
 local COLOR_DEFAULT = Color(255, 200, 0)
 local STACK_GAP = 4
 
-local active_messages = {}
-
 -- Ordered list of all active panels (newest last) with their default Y position (because Notify and SmallNotify have different starting points)
 local message_stack = {}
 
@@ -112,12 +110,6 @@ local function ShowMessage()
         if not IsValid(parent) then return end
         if not parent.tag then return end
 
-        -- Remove from the tracking table
-        table.RemoveByValue(active_messages[parent.tag], parent)
-        if table.Count(active_messages[parent.tag]) == 0 then
-            active_messages[parent.tag] = nil
-        end
-
         -- Remove from the ordered stack table
         for i = #message_stack, 1, -1 do
             if message_stack[i].panel == parent then
@@ -150,10 +142,7 @@ local function ShowMessage()
 
     panel:AddItem(bg)
 
-    active_messages[tag] = active_messages[tag] or {}
-    table.insert(active_messages[tag], panel)
-
-    table.insert(message_stack, { panel = panel, baseY = baseY })
+    table.insert(message_stack, { panel = panel, baseY = baseY, tag = tag })
 
     -- Reposition all messages now that we've added a new one
     RepositionStack()
@@ -161,30 +150,20 @@ end
 
 local function ClearMessages(all, tag)
     if all then
-        for _, panels in pairs(active_messages) do
-            for _, pnl in pairs(panels) do
-                if IsValid(pnl) then
-                    pnl:Remove()
-                end
-            end
+    for _, entry in ipairs(message_stack) do
+        if IsValid(entry.panel) then
+            entry.panel:Remove()
         end
-        active_messages = {}
-        message_stack = {}
-    elseif tag and active_messages[tag] then
-        -- Do some removal bits ourselves first, because otherwise OnRemove() buggers up our stack
+    end
+    message_stack = {}
+    elseif tag then
         for i = #message_stack, 1, -1 do
             local entry = message_stack[i]
-            if IsValid(entry.panel) and entry.panel.tag == tag then
+            if IsValid(entry.panel) and entry.tag == tag then
                 table.remove(message_stack, i)
+                entry.panel:Remove()
             end
         end
-
-        for _, pnl in pairs(active_messages[tag]) do
-            if IsValid(pnl) then
-                pnl:Remove()
-            end
-        end
-        active_messages[tag] = nil
 
         RepositionStack()
     end
