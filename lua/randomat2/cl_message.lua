@@ -114,7 +114,6 @@ local function ShowMessage()
     function bg:OnRemove()
         local parent = bg:GetParent()
         if not IsValid(parent) then return end
-        if not parent.tag then return end
 
         -- Remove from the ordered stack table
         for i = #message_stack, 1, -1 do
