@@ -9,8 +9,73 @@ surface.CreateFont("RandomatSmallMsg", {
 })
 
 local COLOR_DEFAULT = Color(255, 200, 0)
+local STACK_GAP = 4
 
 local active_messages = {}
+
+-- Ordered list of all active panels (newest last) with their default Y position (because Notify and SmallNotify have different starting points)
+local message_stack = {}
+
+
+local function RepositionStack()
+    local count = #message_stack
+    if count == 0 then return end
+
+    local newest = message_stack[count]
+    if not IsValid(newest.panel) then return end
+
+    -- Do a little test run to check whether we're going to overflow
+    local stacksFit = true
+    local testY = newest.baseY
+    for i = count - 1, 1, -1 do
+        local entry = message_stack[i]
+        if not IsValid(entry.panel) then continue end
+        testY = testY - entry.panel:GetTall() - STACK_GAP
+        if testY < 0 then
+            stacksFit = false
+            break
+        end
+    end
+
+    -- If we're not going to overflow then move older messages upwards to make space for the new one
+    if stacksFit then
+        newest.panel:SetY(newest.baseY)
+        for i = count - 1, 1, -1 do
+            local entry = message_stack[i]
+            local below = message_stack[i + 1].panel
+            if not IsValid(entry.panel) or not IsValid(below) then continue end
+            entry.panel:SetY(math.max(below:GetY() - entry.panel:GetTall() - STACK_GAP, 0))
+        end
+    -- If we ARE going to overflow then start putting new messages under the older ones
+    else
+        message_stack[1].panel:SetY(0)
+        for i = 2, count do
+            local entry = message_stack[i]
+            local above = message_stack[i - 1].panel
+            if not IsValid(entry.panel) or not IsValid(above) then continue end
+            entry.panel:SetY(above:GetY() + above:GetTall() + STACK_GAP)
+        end
+
+        -- Safety net so that if a new message would go off the BOTTOM of the screen, the whole stack moves upwards instead
+        local newestPanel = message_stack[count].panel
+        if IsValid(newestPanel) then
+            local overshoot = (newestPanel:GetY() + newestPanel:GetTall()) - (ScrH())
+            if overshoot > 0 then
+                for i = 1, count do
+                    local entry = message_stack[i]
+                    if IsValid(entry.panel) then
+                        local newY = entry.panel:GetY() - overshoot
+                        -- Just let the oldest messages overlap rather than pushing them off the screen (seems like the lesser of two evils)
+                        if newY < 0 then
+                            newY = 0
+                        end
+                        entry.panel:SetY(newY)
+                    end
+                end
+            end
+        end
+    end
+end
 
 local function ShowMessage()
     local big = net.ReadBool()
@@ -38,6 +103,7 @@ local function ShowMessage()
     if not big then
         panel:CenterVertical(0.55)
     end
+    local baseY = panel:GetY()
 
     local bg = vgui.Create("DPanel", panel)
     bg.tag = tag
@@ -51,6 +117,18 @@ local function ShowMessage()
         if table.Count(active_messages[parent.tag]) == 0 then
             active_messages[parent.tag] = nil
         end
+
+        -- Remove from the ordered stack table
+        for i = #message_stack, 1, -1 do
+            if message_stack[i].panel == parent then
+                table.remove(message_stack, i)
+                break
+            end
+        end
+
+        -- Reposition remaining messages now that one has gone
+        RepositionStack()
+
         -- And remove the now-unused parent too
         parent:Remove()
     end
@@ -74,6 +152,11 @@ local function ShowMessage()
 
     active_messages[tag] = active_messages[tag] or {}
     table.insert(active_messages[tag], panel)
+
+    table.insert(message_stack, { panel = panel, baseY = baseY })
+
+    -- Reposition all messages now that we've added a new one
+    RepositionStack()
 end
 
 local function ClearMessages(all, tag)
@@ -86,13 +169,24 @@ local function ClearMessages(all, tag)
             end
         end
         active_messages = {}
+        message_stack = {}
     elseif tag and active_messages[tag] then
+        -- Do some removal bits ourselves first, because otherwise OnRemove() buggers up our stack
+        for i = #message_stack, 1, -1 do
+            local entry = message_stack[i]
+            if IsValid(entry.panel) and entry.panel.tag == tag then
+                table.remove(message_stack, i)
+            end
+        end
+
         for _, pnl in pairs(active_messages[tag]) do
             if IsValid(pnl) then
                 pnl:Remove()
             end
         end
         active_messages[tag] = nil
+
+        RepositionStack()
     end
 end
 
