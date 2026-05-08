@@ -1,7 +1,9 @@
+local math = math
 local surface = surface
 local table = table
 local vgui = vgui
 
+local MathMax = math.max
 local TableInsert = table.insert
 local TableRemove = table.remove
 
@@ -49,7 +51,7 @@ local function RepositionStack()
             local entry = message_stack[i]
             local below = message_stack[i + 1].panel
             if not IsValid(entry.panel) or not IsValid(below) then continue end
-            entry.panel:SetY(math.max(below:GetY() - entry.panel:GetTall() - STACK_GAP, 0))
+            entry.panel:SetY(MathMax(below:GetY() - entry.panel:GetTall() - STACK_GAP, 0))
         end
     -- If we ARE going to overflow then start putting new messages under the older ones
     else
@@ -64,7 +66,7 @@ local function RepositionStack()
         -- Safety net so that if a new message would go off the BOTTOM of the screen, the whole stack moves upwards instead
         local newestPanel = message_stack[count].panel
         if IsValid(newestPanel) then
-            local overshoot = (newestPanel:GetY() + newestPanel:GetTall()) - (ScrH())
+            local overshoot = (newestPanel:GetY() + newestPanel:GetTall()) - ScrH()
             if overshoot > 0 then
                 for i = 1, count do
                     local entry = message_stack[i]

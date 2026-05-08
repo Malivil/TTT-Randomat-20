@@ -456,11 +456,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *ply* - The player to print for
 - *msg* - The message to print
 
-**Randomat:ClearMessages(targ, tag)** - Clears `Randomat:Notify()` and `Randomat:SmallNotify()` messages. Can do so for all players or a specified player, and all messages or only those with a specified tag.\
+**Randomat:ClearMessages(tag, targ)** - Clears `Randomat:Notify()` and `Randomat:SmallNotify()` messages. Can do so for all players or a specified player, and all messages or only those with a specified tag.\
 *Realm:* Server\
 *Parameters:*
-- *targ* - The player to clear messages for; `nil` will clear messages for all players
 - *tag* - The tag to clear associated messages for; `nil` will clear all messages
+- *targ* - The player to clear messages for; `nil` will clear messages for all players
 
 **Randomat:EndActiveEvent(id, skip_error)** - Ends the event with the given ID.\
 *Realm:* Server\

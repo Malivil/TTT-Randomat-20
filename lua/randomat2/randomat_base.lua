@@ -906,7 +906,7 @@ end
 
 -- Notifications
 
-function Randomat:ClearMessages(targ, tag)
+function Randomat:ClearMessages(tag, targ)
     net.Start("randomat_message_clear")
     -- If there's no tag then send true to clear all
     net.WriteBool(tag == nil)
@@ -1658,6 +1658,7 @@ end, nil, "Triggers a random  randomat event", FCVAR_SERVER_CAN_EXECUTE)
 
 hook.Add("TTTEndRound", "RandomatEndRound", function()
     Randomat:EndActiveEvents()
+    Randomat:ClearMessages()
     PrintSecretEventsList()
 end)
 hook.Add("TTTPrepareRound", "RandomatPrepareRound", function()
@@ -1665,7 +1666,9 @@ hook.Add("TTTPrepareRound", "RandomatPrepareRound", function()
     for _, v in pairs(Randomat.Events) do
         EndEvent(v, true)
     end
+    Randomat:ClearMessages()
 end)
 hook.Add("ShutDown", "RandomatMapChange", function()
     Randomat:EndActiveEvents()
+    Randomat:ClearMessages()
 end)
