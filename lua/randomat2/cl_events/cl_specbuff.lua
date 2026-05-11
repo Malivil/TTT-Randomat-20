@@ -21,14 +21,13 @@ net.Receive("RdmtSpecBuffBegin", function()
     local fast_power = net.ReadUInt(8)
     local slow_power = net.ReadUInt(8)
     local slap_power = net.ReadUInt(8)
-    local client = LocalPlayer()
     hook.Add("HUDPaint", "RdmtSpecBuffUI", function()
         local max_power = 100
         local width, height, margin = 200, 25, 20
         local x = ScrW() / 2 - width / 2
         local y = ScrH() - (margin / 2 + height)
 
-        local current_power = client:GetNWInt("RdmtSpecBuffPower", 0)
+        local current_power = Randomat.Client:GetNWInt("RdmtSpecBuffPower", 0)
         local progress_percentage = current_power / max_power
 
         local colors = {
@@ -85,7 +84,7 @@ net.Receive("RdmtSpecBuffBegin", function()
     end)
 
     hook.Add("Think", "RdmtSpecBuffThink", function()
-        Randomat:HandlePlayerSmoke(client, function(v)
+        Randomat:HandlePlayerSmoke(Randomat.Client, function(v)
             return healing[v:SteamID64()]
         end, COLOR_GREEN)
     end)

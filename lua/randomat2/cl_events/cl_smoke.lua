@@ -14,13 +14,12 @@ Randomat:register(EVENT)
 
 net.Receive("RdmtSmokeSignalsBegin", function()
     smokers = {}
-    local client = LocalPlayer()
     hook.Add("HUDPaint", "RdmtSmokeSignalsUI", function()
         local width, height, margin = 200, 25, 20
         local x = ScrW() / 2 - width / 2
         local y = ScrH() - (margin / 2 + height)
 
-        local progress = client:GetNWInt("RdmtSmokeSignalsPower", 0)
+        local progress = Randomat.Client:GetNWInt("RdmtSmokeSignalsPower", 0)
         local progress_percentage = progress / 100
 
         local colors = {
@@ -36,7 +35,7 @@ net.Receive("RdmtSmokeSignalsBegin", function()
     end)
 
     hook.Add("Think", "RdmtSmokeSignalsThink", function()
-        Randomat:HandlePlayerSmoke(client, function(v)
+        Randomat:HandlePlayerSmoke(Randomat.Client, function(v)
             return smokers[v:SteamID64()]
         end)
     end)

@@ -11,15 +11,14 @@ Randomat:register(EVENT)
 net.Receive("RdmtFogOfWarBegin", function()
     local default = net.ReadFloat()
     local traitor = net.ReadFloat()
-    local client = LocalPlayer()
 
-    --Limits the player's view distance like in among us, traitors and innocents can have differing view distances (in among us, impostors typically can see further than crewmates)
+    -- Limits the player's view distance like in among us, traitors and innocents can have differing view distances (in among us, impostors typically can see further than crewmates)
     hook.Add("SetupWorldFog", "RdmtFogOfWarWorldFog", function()
         render.FogMode(MATERIAL_FOG_LINEAR)
         render.FogColor(0, 0, 0)
         render.FogMaxDensity(1)
 
-        if Randomat:IsTraitorTeam(client) then
+        if Randomat:IsTraitorTeam(Randomat.Client) then
             render.FogStart(300 * traitor)
             render.FogEnd(600 * traitor)
         else
@@ -36,7 +35,7 @@ net.Receive("RdmtFogOfWarBegin", function()
         render.FogColor(0, 0, 0)
         render.FogMaxDensity(1)
 
-        if Randomat:IsTraitorTeam(client) then
+        if Randomat:IsTraitorTeam(Randomat.Client) then
             render.FogStart(300 * traitor * scale)
             render.FogEnd(600 * traitor * scale)
         else

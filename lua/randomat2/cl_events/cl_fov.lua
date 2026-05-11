@@ -2,15 +2,14 @@ local EVENT = {}
 EVENT.id = "fov"
 
 function EVENT:Begin()
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
-    if not client.GetActiveWeapon then return end
+    if not IsValid(Randomat.Client) then return end
+    if not Randomat.Client.GetActiveWeapon then return end
 
-    local weap = client:GetActiveWeapon()
+    local weap = Randomat.Client:GetActiveWeapon()
     if not IsValid(weap) or not weap.GetIronsights or not weap:GetIronsights() then return end
 
     weap:SetIronsights(false)
-    client:SetFOV(0, 0)
+    Randomat.Client:SetFOV(0, 0)
 end
 
 Randomat:register(EVENT)

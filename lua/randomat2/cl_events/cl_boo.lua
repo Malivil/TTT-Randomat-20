@@ -10,13 +10,12 @@ EVENT.End = RemoveHook
 Randomat:register(EVENT)
 
 net.Receive("RdmtBooBegin", function()
-    local client = LocalPlayer()
     hook.Add("HUDPaint", "RdmtBooUI", function()
         local width, height, margin = 200, 25, 20
         local x = ScrW() / 2 - width / 2
         local y = ScrH() - (margin / 2 + height)
 
-        local progress = client:GetNWInt("RdmtBooPower", 0)
+        local progress = Randomat.Client:GetNWInt("RdmtBooPower", 0)
         local progress_percentage = progress / 100
 
         local colors = {

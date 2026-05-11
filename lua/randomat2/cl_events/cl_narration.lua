@@ -1,3 +1,8 @@
+local math = math
+local string = string
+
+local MathRandom = math.random
+local StringFind = string.find
 local StringFormat = string.format
 
 local EVENT = {}
@@ -73,10 +78,7 @@ local sound_mapping = {
 }
 
 local function UpdateWeaponSounds()
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
-
-    for _, wep in ipairs(client:GetWeapons()) do
+    for _, wep in ipairs(Randomat.Client:GetWeapons()) do
         local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
         Randomat:OverrideWeaponSound(wep, chosen_sound)
     end
@@ -87,16 +89,16 @@ function EVENT:Begin()
         local current_sound = data.SoundName:lower()
         local new_sound = nil
         for pattern, sounds in pairs(sound_mapping) do
-            if string.find(current_sound, pattern) then
+            if StringFind(current_sound, pattern) then
                 -- If this is a player "footstep"-ing in mid-air, they are jumping or using a ladder
                 if footsteps_pattern == pattern and IsPlayer(data.Entity) and not data.Entity:IsOnGround() then
                     -- Don't replace the sound if the player is on a ladder
                     if data.Entity:GetMoveType() ~= MOVETYPE_LADDER then
-                        new_sound = StringFormat(jump_sound_path, math.random(jump_sound_count))
+                        new_sound = StringFormat(jump_sound_path, MathRandom(jump_sound_count))
                     end
                 else
                     local sound_path = sounds[1]
-                    local sound_index = math.random(sounds[2])
+                    local sound_index = MathRandom(sounds[2])
                     new_sound = StringFormat(sound_path, sound_index)
                 end
                 break
@@ -107,7 +109,7 @@ function EVENT:Begin()
             data.SoundName = new_sound
             return true
         else
-            local chosen_sound = StringFormat(gunshot_sound_path, math.random(gunshot_sound_count))
+            local chosen_sound = StringFormat(gunshot_sound_path, MathRandom(gunshot_sound_count))
             return Randomat:OverrideWeaponSoundData(data, chosen_sound)
         end
     end)
@@ -116,10 +118,12 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
+    -- If we don't have a client it's because we're not loaded yet
+    -- This can happen because the Randomat "ends" all events during the Prep phase so if
+    -- a player is still loading at that point then `LocalPlayer` would return a NULL Entity
+    if not Randomat.Client or not IsPlayer(Randomat.Client) or not Randomat.Client.GetWeapons then return end
 
-    for _, wep in ipairs(client:GetWeapons()) do
+    for _, wep in ipairs(Randomat.Client:GetWeapons()) do
         Randomat:RestoreWeaponSound(wep)
     end
 end

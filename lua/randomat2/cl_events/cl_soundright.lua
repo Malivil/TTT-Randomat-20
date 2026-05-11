@@ -20,10 +20,13 @@ end
 
 function EVENT:End()
     table.Empty(wep_sounds)
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
 
-    for _, wep in ipairs(client:GetWeapons()) do
+    -- If we don't have a client it's because we're not loaded yet
+    -- This can happen because the Randomat "ends" all events during the Prep phase so if
+    -- a player is still loading at that point then `LocalPlayer` would return a NULL Entity
+    if not Randomat.Client or not IsPlayer(Randomat.Client) or not Randomat.Client.GetWeapons then return end
+
+    for _, wep in ipairs(Randomat.Client:GetWeapons()) do
         Randomat:RestoreWeaponSound(wep)
     end
 end
@@ -31,14 +34,11 @@ end
 Randomat:register(EVENT)
 
 net.Receive("RdmtSoundRightUpdate", function()
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
-
     local wep_class = net.ReadString()
     local chosen_sound = net.ReadString()
     wep_sounds[wep_class] = chosen_sound
 
-    for _, wep in ipairs(client:GetWeapons()) do
+    for _, wep in ipairs(Randomat.Client:GetWeapons()) do
         if WEPS.GetClass(wep) == wep_class then
             Randomat:OverrideWeaponSound(wep, chosen_sound)
             return

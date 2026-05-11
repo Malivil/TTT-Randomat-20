@@ -10,11 +10,10 @@ local function IsTargetHighlighted(ply, target)
 end
 
 function EVENT:Begin()
-    local client = LocalPlayer()
     self:AddHook("PreDrawHalos", function()
         local alivePlys = {}
         for k, v in PlayerIterator() do
-            if v:Alive() and not v:IsSpec() and not IsTargetHighlighted(client, v) then
+            if v:Alive() and not v:IsSpec() and not IsTargetHighlighted(Randomat.Client, v) then
                 alivePlys[k] = v
             end
         end

@@ -27,9 +27,8 @@ function EVENT:Begin()
     end)
 
     -- Inverts mouse input to make this event easier to control
-    local client = LocalPlayer()
     self:AddHook("InputMouseApply", function(cmd, x, y, ang)
-        if not IsPlayer(client) or not client:Alive() or client:IsSpec() then return end
+        if not IsPlayer(Randomat.Client) or not Randomat.Client:Alive() or Randomat.Client:IsSpec() then return end
 
         ang.yaw = ang.yaw + (x / 50)
         ang.pitch = math.Clamp(ang.pitch - y / 50, -89, 89)

@@ -6,9 +6,8 @@ local function RemoveHook()
 end
 
 function EVENT:Begin()
-    local client = LocalPlayer()
     hook.Add("HUDPaint", "BlindPlayer", function()
-        if IsValid(client) and client:Alive() and Randomat:IsTraitorTeam(client) then
+        if IsValid(client) and Randomat.Client:Alive() and Randomat:IsTraitorTeam(Randomat.Client) then
             surface.SetDrawColor(0, 0, 0, 255)
             surface.DrawRect(0, 0, ScrW(), ScrH())
         end

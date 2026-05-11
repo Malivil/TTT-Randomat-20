@@ -18,9 +18,8 @@ end
 
 net.Receive("TriggerTunnelVision", function()
     local viewpct = 100 - net.ReadUInt(7)
-    local client = LocalPlayer()
     hook.Add("HUDPaint", "RdmtTunnelVisionHUDPaint", function()
-        if not IsValid(client) or not client:Alive() or client:IsSpec() then return end
+        if not Randomat.Client:Alive() or Randomat.Client:IsSpec() then return end
 
         -- Reset everything to known good
         render.SetStencilWriteMask(0xFF)

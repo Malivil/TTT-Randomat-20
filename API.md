@@ -1100,11 +1100,14 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *id* - The ID of the event being un-registered
 
-### Tables
-Tables which are used to track different data and which are available globally via the `Randomat` namespace
+### Properties
+Properties including tables which are used to track different data and which are available globally via the `Randomat` namespace
 
 **Randomat.ActiveEvents** - Table containing all currently-running events.\
 *Realm:* Server
+
+**Randomat.Client** - The current `LocalPlayer()` value.\
+*Realm:* Client
 
 **Randomat.EventHistory** - Table containing the list of the events that were previously started. Used to prevent running the same events too often.\
 *Realm:* Server

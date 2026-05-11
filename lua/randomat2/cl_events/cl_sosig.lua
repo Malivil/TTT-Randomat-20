@@ -3,10 +3,7 @@ EVENT.id = "sosig"
 
 local sosig_sound = "weapons/sosig.mp3"
 local function UpdateWeaponSounds()
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
-
-    for _, wep in ipairs(client:GetWeapons()) do
+    for _, wep in ipairs(Randomat.Client:GetWeapons()) do
         Randomat:OverrideWeaponSound(wep, sosig_sound)
     end
 end
@@ -20,10 +17,12 @@ function EVENT:Begin()
 end
 
 function EVENT:End()
-    local client = LocalPlayer()
-    if not IsValid(client) then return end
+    -- If we don't have a client it's because we're not loaded yet
+    -- This can happen because the Randomat "ends" all events during the Prep phase so if
+    -- a player is still loading at that point then `LocalPlayer` would return a NULL Entity
+    if not Randomat.Client or not IsPlayer(Randomat.Client) or not Randomat.Client.GetWeapons then return end
 
-    for _, wep in ipairs(client:GetWeapons()) do
+    for _, wep in ipairs(Randomat.Client:GetWeapons()) do
         Randomat:RestoreWeaponSound(wep)
     end
 end

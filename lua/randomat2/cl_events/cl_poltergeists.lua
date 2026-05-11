@@ -14,12 +14,11 @@ local function SetupOverride()
         return not ply:Alive() or ply:IsSpec() or oldCanUseTraitorButton(ply, active_only)
     end
 
-    local client = LocalPlayer()
     -- Render the traitor buttons for dead players
     hook.Add("HUDPaint", "RdmtPoltergeistsHUDPaint", function()
-        if not IsValid(client) or (client:Alive() and not client:IsSpec()) then return end
+        if Randomat.Client:Alive() and not Randomat.Client:IsSpec() then return end
 
-        TBHUD:Draw(client)
+        TBHUD:Draw(Randomat.Client)
     end)
 
     -- Let dead players activate focused traitor buttons
