@@ -13,7 +13,6 @@ Randomat:register(EVENT)
 local revolvers = {}
 
 net.Receive("MurderEventActive", function()
-    local pl = LocalPlayer()
     local allow_shop = net.ReadBool()
 
     local maxpck = net.ReadInt(32)
@@ -21,13 +20,13 @@ net.Receive("MurderEventActive", function()
 
     local blindIdx = 0
     hook.Add("DrawOverlay", "RandomatMurderUI", function()
-        local rl = pl:GetRole()
-        local pks = pl:GetNWInt("MurderWeaponsEquipped")
+        local rl = Randomat.Client:GetRole()
+        local pks = Randomat.Client:GetNWInt("MurderWeaponsEquipped")
         local text = string.format("%i / %02i", pks, maxpck)
 
         local y = ScrH() - 60
 
-        if rl ~= ROLE_TRAITOR and rl ~= ROLE_KILLER and pl:Alive() and not pl:IsSpec() and not pl:GetNWBool("RdmMurderRevolver") then
+        if rl ~= ROLE_TRAITOR and rl ~= ROLE_KILLER and Randomat.Client:Alive() and not Randomat.Client:IsSpec() and not Randomat.Client:GetNWBool("RdmMurderRevolver") then
             local texttable = {}
             texttable.font = "HealthAmmo"
             texttable.color = COLOR_WHITE
@@ -40,7 +39,7 @@ net.Receive("MurderEventActive", function()
             draw.TextShadow(texttable, 2)
         end
 
-        if pl:GetNWBool("RdmtShouldBlind", false) then
+        if Randomat.Client:GetNWBool("RdmtShouldBlind", false) then
             -- This is used below to determine the alpha
             -- Cap it at 51*5 = 255, the maximum alpha possible
             if blindIdx < 51 then
@@ -67,7 +66,7 @@ net.Receive("MurderEventActive", function()
 
     -- Close any menu they may have open and block opening a new one
     if not allow_shop then
-        pl:ConCommand("ttt_cl_traitorpopup_close")
+        Randomat.Client:ConCommand("ttt_cl_traitorpopup_close")
 
         hook.Add("OnContextMenuOpen", "RandomatMurderBlockShop", function()
             return false

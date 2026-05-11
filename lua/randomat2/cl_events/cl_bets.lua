@@ -13,8 +13,6 @@ EVENT.End = CloseFrame
 Randomat:register(EVENT)
 
 net.Receive("RdmtHedgeBetsBegin", function()
-    local ply = LocalPlayer()
-
     betframe = vgui.Create("DFrame")
     betframe:SetPos(10, ScrH() - 800)
     betframe:SetSize(200, 300)
@@ -34,20 +32,20 @@ net.Receive("RdmtHedgeBetsBegin", function()
         -- Skip spectators who weren't in this round
         if (not v:Alive() or v:IsSpec()) and v:GetRole() == ROLE_NONE then continue end
         -- Skip yourself
-        if v == ply then continue end
+        if v == Randomat.Client then continue end
 
         list:AddLine(v:Nick(), 0)
     end
 
     list.OnRowSelected = function(lst, index, pnl)
-        if not ply:Alive() or ply:IsSpec() then
+        if not Randomat.Client:Alive() or Randomat.Client:IsSpec() then
             local bet = pnl:GetColumnText(1)
             net.Start("RdmtHedgeBetsPlayerBet")
             net.WriteString(bet)
             net.SendToServer()
-            ply:PrintMessage(HUD_PRINTTALK, "You bet on: " .. bet)
+            Randomat.Client:PrintMessage(HUD_PRINTTALK, "You bet on: " .. bet)
         else
-            ply:PrintMessage(HUD_PRINTTALK, "Living people can't bet")
+            Randomat.Client:PrintMessage(HUD_PRINTTALK, "Living people can't bet")
         end
 
         if IsValid(betframe) then

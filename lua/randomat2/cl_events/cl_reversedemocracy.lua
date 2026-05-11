@@ -36,13 +36,12 @@ function EVENT:Begin()
     list:OnRequestResize(playerColumn, 125)
 
     list.OnRowSelected = function(lst, index, pnl)
-        local ply = LocalPlayer()
-        if ply:Alive() and not ply:IsSpec() then
+        if Randomat.Client:Alive() and not Randomat.Client:IsSpec() then
             net.Start("ReverseDemocracyPlayerVoted")
             net.WriteString(pnl:GetColumnText(1))
             net.SendToServer()
         else
-            ply:PrintMessage(HUD_PRINTTALK, "Dead people can't vote")
+            Randomat.Client:PrintMessage(HUD_PRINTTALK, "Dead people can't vote")
         end
     end
 

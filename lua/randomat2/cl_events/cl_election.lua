@@ -49,13 +49,12 @@ net.Receive("ElectionNominateBegin", function()
     listView:OnRequestResize(playerColumn, 125)
 
     listView.OnRowSelected = function(lst, index, pnl)
-        local ply = LocalPlayer()
-        if ply:Alive() and not ply:IsSpec() then
+        if Randomat.Client:Alive() and not Randomat.Client:IsSpec() then
             net.Start("ElectionNominateVoted")
             net.WriteString(pnl:GetColumnText(1))
             net.SendToServer()
         else
-            ply:PrintMessage(HUD_PRINTTALK, "Dead people can't vote")
+            Randomat.Client:PrintMessage(HUD_PRINTTALK, "Dead people can't vote")
         end
     end
 
@@ -104,13 +103,12 @@ net.Receive("ElectionVoteBegin", function()
     listView:AddLine(net.ReadString(), 0)
 
     listView.OnRowSelected = function(lst, index, pnl)
-        local ply = LocalPlayer()
-        if ply:Alive() and not ply:IsSpec() then
+        if Randomat.Client:Alive() and not Randomat.Client:IsSpec() then
             net.Start("ElectionVoteVoted")
             net.WriteString(pnl:GetColumnText(1))
             net.SendToServer()
         else
-            ply:PrintMessage(HUD_PRINTTALK, "Dead people can't vote")
+            Randomat.Client:PrintMessage(HUD_PRINTTALK, "Dead people can't vote")
         end
     end
 
