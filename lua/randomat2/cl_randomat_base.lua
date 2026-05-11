@@ -1,22 +1,3 @@
-local draw = draw
-local hook = hook
-local ipairs = ipairs
-local math = math
-local pairs = pairs
-local surface = surface
-local table = table
-local vgui = vgui
-
-local AddHook = hook.Add
-local RemoveHook = hook.Remove
-local MathClamp = math.Clamp
-local MathMax = math.max
-local MathRand = math.Rand
-local MathRandom = math.random
-local TableEmpty = table.Empty
-local TableInsert = table.insert
-local TableRemove = table.remove
-
 Randomat.Events = Randomat.Events or {}
 Randomat.ActiveEvents = Randomat.ActiveEvents or {}
 
@@ -26,7 +7,7 @@ randomat_meta.__index = randomat_meta
 --[[
  Namespace Properties
 ]]--
-AddHook("InitPostEntity", "Randomat_InitPostEntity", function()
+hook.Add("InitPostEntity", "Randomat_InitPostEntity", function()
     Randomat.Client = LocalPlayer()
 end)
 
@@ -64,13 +45,13 @@ function randomat_meta:AddHook(hooktype, callbackfunc, suffix)
     if suffix and type(suffix) == "string" and #suffix > 0 then
         id = id .. ":" .. suffix
     end
-    AddHook(hooktype, id, function(...)
+    hook.Add(hooktype, id, function(...)
         return callbackfunc(...)
     end)
 
     self.Hooks = self.Hooks or {}
 
-    TableInsert(self.Hooks, {hooktype, id})
+    table.insert(self.Hooks, {hooktype, id})
 end
 
 function randomat_meta:RemoveHook(hooktype, suffix)
@@ -80,8 +61,8 @@ function randomat_meta:RemoveHook(hooktype, suffix)
     end
     for idx, ahook in ipairs(self.Hooks or {}) do
         if ahook[1] == hooktype and ahook[2] == id then
-            RemoveHook(ahook[1], ahook[2])
-            TableRemove(self.Hooks, idx)
+            hook.Remove(ahook[1], ahook[2])
+            table.remove(self.Hooks, idx)
             return
         end
     end
@@ -90,10 +71,10 @@ end
 function randomat_meta:CleanUpHooks()
     if not self.Hooks then return end
     for _, ahook in ipairs(self.Hooks) do
-        RemoveHook(ahook[1], ahook[2])
+        hook.Remove(ahook[1], ahook[2])
     end
 
-    TableEmpty(self.Hooks)
+    table.Empty(self.Hooks)
 end
 
 --[[
@@ -128,7 +109,7 @@ net.Receive("RdmtEventBegin", function()
     local event = Randomat.Events[id]
     if not event then return end
 
-    TableInsert(Randomat.ActiveEvents, {
+    table.insert(Randomat.ActiveEvents, {
         id = id,
         Id = id,
         title = title,
@@ -145,7 +126,7 @@ net.Receive("RdmtEventEnd", function()
     -- Remove the first instance of this event from the list
     for i, e in ipairs(Randomat.ActiveEvents) do
         if e.id == id then
-            TableRemove(Randomat.ActiveEvents, i)
+            table.remove(Randomat.ActiveEvents, i)
             break
         end
     end
@@ -154,26 +135,26 @@ net.Receive("RdmtEventEnd", function()
 end)
 
 local function ClearActiveEvents()
-    TableEmpty(Randomat.ActiveEvents)
+    table.Empty(Randomat.ActiveEvents)
     Randomat.ActiveEvents = {}
 end
 
-AddHook("TTTEndRound", "RandomatEndRound", ClearActiveEvents)
-AddHook("TTTPrepareRound", "RandomatPrepareRound", function()
+hook.Add("TTTEndRound", "RandomatEndRound", ClearActiveEvents)
+hook.Add("TTTPrepareRound", "RandomatPrepareRound", function()
     -- End ALL events rather than just active ones to prevent some event effects which maintain over map changes
     for _, v in pairs(Randomat.Events) do
         EndEvent(v)
     end
     ClearActiveEvents()
 end)
-AddHook("ShutDown", "RandomatMapChange", ClearActiveEvents)
+hook.Add("ShutDown", "RandomatMapChange", ClearActiveEvents)
 
-AddHook("Initialize", "RandomatEventTrackingInitialize", function()
+hook.Add("Initialize", "RandomatEventTrackingInitialize", function()
     LANG.AddToLanguage("english", "rdmt_count_hud", "{count} Randomat events active")
 end)
 
 local icon_tex = Material("icon16/rdmt.png")
-AddHook("TTTHUDInfoPaint", "RandomatEventTrackingHUDInfoPaint", function(client, label_left, label_top, active_labels)
+hook.Add("TTTHUDInfoPaint", "RandomatEventTrackingHUDInfoPaint", function(client, label_left, label_top, active_labels)
     if not show_count:GetBool() then return end
     if not allow_client_list:GetBool() then return end
 
@@ -201,12 +182,12 @@ AddHook("TTTHUDInfoPaint", "RandomatEventTrackingHUDInfoPaint", function(client,
 
     -- Track that the label was added so others can position accurately
     if active_labels then
-        TableInsert(active_labels, "rdmt_count")
+        table.insert(active_labels, "rdmt_count")
     end
 end)
 
 local expandState = false
-AddHook("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dtabs)
+hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dtabs)
     if not allow_client_list:GetBool() then return end
     local padding = dtabs:GetPadding()
     padding = padding * 2
@@ -357,13 +338,13 @@ net.Receive("RdmtRemoveSpeedMultipliers", function()
     Randomat:RemoveSpeedMultipliers(key)
 end)
 
-AddHook("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults, sprinting)
+hook.Add("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults, sprinting)
     if ply ~= Randomat.Client or not ply:Alive() or ply:IsSpec() then return end
 
     -- Apply all of these that are valid
     for _, m in pairs(current_mults) do
         if m ~= nil then
-            TableInsert(mults, m)
+            table.insert(mults, m)
         end
     end
 
@@ -371,7 +352,7 @@ AddHook("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults, sprintin
     if sprinting then
         for _, m in pairs(current_mults_sprinting) do
             if m ~= nil then
-                TableInsert(mults, m)
+                table.insert(mults, m)
             end
         end
     end
@@ -382,7 +363,7 @@ AddHook("TTTSpeedMultiplier", "RdmtSpeedModifier", function(ply, mults, sprintin
         local wep_class = wep:GetClass()
         for _, m in pairs(current_mults_withweapon) do
             if m ~= nil and wep_class == m.wep_class then
-                TableInsert(mults, m.mult)
+                table.insert(mults, m.mult)
             end
         end
     end
@@ -405,14 +386,14 @@ function Randomat:HandleEntitySmoke(tbl, client, pred, color, max_dist, min_size
             local pos = v:GetPos() + Vector(0, 0, 30)
             if v.RdmtSmokeNextPart < curTime and client:GetPos():Distance(pos) <= max_dist then
                 v.RdmtSmokeEmitter:SetPos(pos)
-                v.RdmtSmokeNextPart = curTime + MathRand(0.003, 0.01)
-                local vec = Vector(MathRand(-8, 8), MathRand(-8, 8), MathRand(10, 55))
+                v.RdmtSmokeNextPart = curTime + math.Rand(0.003, 0.01)
+                local vec = Vector(math.Rand(-8, 8), math.Rand(-8, 8), math.Rand(10, 55))
                 local particle = v.RdmtSmokeEmitter:Add("particle/snow.vmt", v:LocalToWorld(vec))
                 particle:SetVelocity(Vector(0, 0, 4) + VectorRand() * 3)
-                particle:SetDieTime(MathRand(0.5, 2))
-                particle:SetStartAlpha(MathRandom(150, 220))
+                particle:SetDieTime(math.Rand(0.5, 2))
+                particle:SetStartAlpha(math.random(150, 220))
                 particle:SetEndAlpha(0)
-                local size = MathRandom(min_size, max_size)
+                local size = math.random(min_size, max_size)
                 particle:SetStartSize(size)
                 particle:SetEndSize(size + 1)
                 particle:SetRoll(0)
@@ -460,7 +441,7 @@ function Randomat:RoundedMeter(bs, x, y, w, h, color)
         surface.DrawTexturedRectRotated(x + w - bs / 2, y + bs / 2, bs, bs, 270)
         surface.DrawTexturedRectRotated(x + w - bs / 2, y + h - bs / 2, bs, bs, 180)
     else
-        surface.DrawRect(x + MathMax(w - bs, bs), y, bs / 2, h)
+        surface.DrawRect(x + math.max(w - bs, bs), y, bs / 2, h)
     end
 end
 
@@ -470,7 +451,7 @@ function Randomat:PaintBar(r, x, y, w, h, colors, value)
     draw.RoundedBox(r, x - 1, y - 1, w + 2, h + 2, colors.background)
 
     -- Fill
-    local width = w * MathClamp(value, 0, 1)
+    local width = w * math.Clamp(value, 0, 1)
 
     if width > 0 then
         Randomat:RoundedMeter(r, x, y, width, h, colors.fill)
