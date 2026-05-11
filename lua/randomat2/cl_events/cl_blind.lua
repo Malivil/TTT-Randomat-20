@@ -7,7 +7,7 @@ end
 
 function EVENT:Begin()
     hook.Add("HUDPaint", "BlindPlayer", function()
-        if IsValid(client) and Randomat.Client:Alive() and Randomat:IsTraitorTeam(Randomat.Client) then
+        if Randomat.Client:Alive() and Randomat:IsTraitorTeam(Randomat.Client) then
             surface.SetDrawColor(0, 0, 0, 255)
             surface.DrawRect(0, 0, ScrW(), ScrH())
         end
