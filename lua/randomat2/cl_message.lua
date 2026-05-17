@@ -98,6 +98,7 @@ local function ShowMessage()
 
     local panel = vgui.Create("DNotify")
     panel.tag = tag
+    panel.big = big
     panel:SetLife(length)
 
     if big then
@@ -147,7 +148,12 @@ local function ShowMessage()
 
     panel:AddItem(bg)
 
-    TableInsert(message_stack, { panel = panel, baseY = baseY, tag = tag })
+    -- If this is a big message and the only message in the stack is small, put this in front of the small one so it shows on top
+    if big and #message_stack == 1 and not message_stack[1].panel.big then
+        TableInsert(message_stack, 1, { panel = panel, baseY = baseY, tag = tag })
+    else
+        TableInsert(message_stack, { panel = panel, baseY = baseY, tag = tag })
+    end
 
     -- Reposition all messages now that we've added a new one
     RepositionStack()
