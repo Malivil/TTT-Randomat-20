@@ -19,17 +19,18 @@ surface.CreateFont("RandomatSmallMsg", {
 
 local createdFonts = {}
 
-local function BuildFormattedHeaderFont(bold, italic, underline, strikeout, shadow, outline)
-    local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikeout and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "")
-    local name = "RandomatHeaderFont_" .. (key == "" and "Normal" or key)
+-- Make fonts on-demand
+local function BuildFormattedFont(bold, italic, underline, strikeout, shadow, outline, big)
+    local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikeout and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "") .. (big and "Big" or "Small")
+    local name = "RandomatFont_" .. (key == "" and "Normal" or key)
 
     if not createdFonts[name] then
         surface.CreateFont(name, {
-            font      = "Roboto",
-            size      = 48,
-            weight    = bold and 700 or 500,
-            italic    = italic or false,
-            outline   = outline or false,
+            font = "Roboto",
+            size = big and 48 or 32,
+            weight = bold and 700 or 500,
+            italic = italic or false,
+            outline = outline or false,
         })
         createdFonts[name] = true
     end
@@ -37,158 +38,50 @@ local function BuildFormattedHeaderFont(bold, italic, underline, strikeout, shad
     return name
 end
 
-local function BuildFormattedHeader(segments)
-    local originX = ScrW() / 2
-    local originY = ScrH() / 2
-
-    local padding = 4
-
-    local msgW = 0 
-    local msgH = 0
-
-    for _, segmentData in ipairs(segments) do
-        if segmentData.width then
-            msgW = msgW + segmentData.width
-        end
-
-        if segmentData.height and segmentData.height > msgH then
-            msgH = segmentData.height
-        end
-    end
-
-    local msgX = originX - msgW / 2
-    local msgY = originY - msgH / 2
-
-    local bgW = msgW + 2 + padding
-    local bgH = msgH + 2 + padding
-    local bgX = originX - bgW / 2
-    local bgY = originY - bgH / 2
-
-    local panel = vgui.Create("DNotify")
-    local length = 10
-    panel:SetLife(length)
-
-    panel:SetSize(msgW, msgH)
-    panel:Center()
-
-    local bg = vgui.Create("DPanel", panel)
-    bg:SetBackgroundColor(Color(0, 0, 0, 200))
-    bg:Dock(FILL)
-
-    local content = vgui.Create("DPanel", bg)
-    content:SetSize(msgW, msgH)
-    content:SetBackgroundColor(Color(0, 0, 0, 200))
-    content:Dock(FILL)
-
-    function content:Paint(w, h)
-        local segX = 0
-
-        for _, seg in ipairs(segments) do
-            surface.SetFont(seg.font)
-            surface.SetTextColor(Color(255, 200, 0))
-            surface.SetTextPos(segX, 0)
-            surface.DrawText(seg.text)
-
-            if string.find(seg.font, "St") then
-                surface.SetDrawColor(255, 200, 0)
-
-                local startSpace = nil
-                local endSpace = nil
-                local bothSpace = nil
-                local startOffset = 0
-
-                if string.sub(seg.text, 1, 1) == " " then startSpace = true end
-                if string.sub(seg.text, -1) == " " then endSpace = true end
-                if startSpace and endSpace then bothSpace = true end
-
-                local spaceW, _ = surface.GetTextSize(" ")
-
-                local blankLength = 0
-                if bothSpace then 
-                    blankLength = 2 * spaceW
-                elseif startSpace or endSpace then 
-                    blankLength = spaceW 
-                end
-
-                local lineY = 0 + (0.55 * seg.height)
-                local lineWidth = seg.width - blankLength
-
-                if startSpace then startOffset = spaceW end
-
-                surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
-            end
-
-            if string.find(seg.font, "U") then
-                surface.SetDrawColor(255, 200, 0)
-
-                local startSpace = nil
-                local endSpace = nil
-                local bothSpace = nil
-                local startOffset = 0
-
-                if string.sub(seg.text, 1, 1) == " " then startSpace = true end
-                if string.sub(seg.text, -1) == " " then endSpace = true end
-                if startSpace and endSpace then bothSpace = true end
-
-                local spaceW, _ = surface.GetTextSize(" ")
-
-                local blankLength = 0
-                if bothSpace then 
-                    blankLength = 2 * spaceW
-                elseif startSpace or endSpace then 
-                    blankLength = spaceW 
-                end
-
-                local lineY = 0 + (0.87 * seg.height)
-                local lineWidth = seg.width - blankLength
-
-                if startSpace then startOffset = spaceW end
-
-                surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
-            end
-
-            segX = segX + seg.width
-        end
-    end
-
-    panel:AddItem(bg)
-end
-
-local function ProcessSegments(messageSegments)
+-- Make a nice table with data for all the segments
+local function ProcessFormattedSegments(messageSegments, big)
     local segments = {}
 
     for _, seg in ipairs(messageSegments) do
+        if not seg.text or seg.text == "" then continue end
+
         local bold = seg.bold or false
         local italic = seg.italic or false
         local underline = seg.underline or false
         local strikeout = seg.strikeout or false
-        local rotary = seg.rotary or false
         local shadow = seg.shadow or false
         local outline = seg.outline or false
 
-        local segW = nil 
-        local segH = nil
+        local fontName = BuildFormattedFont(bold, italic, underline, strikeout, shadow, outline, big)
 
-        local fontName = BuildFormattedHeaderFont(bold, italic, underline, strikeout, rotary, shadow, outline)
+        surface.SetFont(fontName)
+        local segW, segH = surface.GetTextSize(seg.text)
 
-        if seg.text and seg.text ~= "" then
-            surface.SetFont(fontName)
-            segW, segH = surface.GetTextSize(seg.text)
-
-            local segmentData = {text = seg.text, font = fontName, width = segW, height = segH}
-
-            table.insert(segments, segmentData)
-        end
+        TableInsert(segments, {
+            text = seg.text,
+            font = fontName,
+            width = segW,
+            height = segH,
+            underline = underline,
+            strikeout = strikeout,
+        })
     end
 
-    BuildFormattedHeader(segments)
+    return segments
 end
 
-net.Receive("TestFormattedRandomatHeader", function()
-    createdFonts = {}
-    messageSegments = net.ReadTable()
-    ProcessSegments(messageSegments)
-end)
+-- Calculate how big the message is
+local function MeasureSegments(segments)
+    local totalW = 0
+    local maxH = 0
+
+    for _, seg in ipairs(segments) do
+        totalW = totalW + seg.width
+        if seg.height > maxH then maxH = seg.height end
+    end
+
+    return totalW, maxH
+end
 
 local COLOR_DEFAULT = Color(255, 200, 0)
 local COLOR_BACKGROUND = Color(0, 0, 0, 200)
@@ -226,6 +119,7 @@ local function RepositionStack()
             if not IsValid(entry.panel) or not IsValid(below) then continue end
             entry.panel:SetY(MathMax(below:GetY() - entry.panel:GetTall() - STACK_GAP, 0))
         end
+
     -- If we ARE going to overflow then start putting new messages under the older ones
     else
         message_stack[1].panel:SetY(0)
@@ -259,7 +153,15 @@ end
 
 local function ShowMessage()
     local big = net.ReadBool()
-    local msg = net.ReadString()
+    local formatted = net.ReadBool()
+
+    local msg
+    if formatted then
+        msg = net.ReadTable()
+    else
+        msg = net.ReadString()
+    end
+
     local length = net.ReadUInt(8)
     if length == 0 then length = 5 end
 
@@ -269,24 +171,33 @@ local function ShowMessage()
     local tag = net.ReadString()
     if tag == "" then tag = "default" end
 
+    local msgW, msgH
+    local segments
+
+    if formatted then
+        createdFonts = {}
+        segments = ProcessFormattedSegments(msg, big)
+        msgW, msgH = MeasureSegments(segments)
+    else
+        surface.SetFont(big and "RandomatHeader" or "RandomatSmallMsg")
+        msgW, msgH = surface.GetTextSize(msg)
+    end
+
     local panel = vgui.Create("DNotify")
     panel.tag = tag
     panel.big = big
     panel:SetLife(length)
-
-    if big then
-        surface.SetFont("RandomatHeader")
-    else
-        surface.SetFont("RandomatSmallMsg")
-    end
-    panel:SetSize(surface.GetTextSize(msg))
+    panel:SetSize(msgW, msgH)
     panel:Center()
+
     if not big then
         panel:CenterVertical(0.55)
     end
+
     local baseY = panel:GetY()
 
     local bg = vgui.Create("DPanel", panel)
+
     function bg:OnRemove()
         local parent = bg:GetParent()
         if not IsValid(parent) then return end
@@ -305,19 +216,83 @@ local function ShowMessage()
         -- And remove the now-unused parent too
         parent:Remove()
     end
+
     bg:SetBackgroundColor(COLOR_BACKGROUND)
     bg:Dock(FILL)
 
-    local lbl = vgui.Create("DLabel", bg)
-    if big then
-        lbl:SetFont("RandomatHeader")
+    local content = vgui.Create("DPanel", bg)
+    content:SetBackgroundColor(Color(0, 0, 0, 0))
+    content:Dock(FILL)
+
+    if formatted then
+        local paintSegments = segments
+
+        function content:Paint(w, h)
+            local segX = 0
+
+            for _, seg in ipairs(paintSegments) do
+                surface.SetFont(seg.font)
+                surface.SetTextColor(font_color)
+                surface.SetTextPos(segX, 0)
+                surface.DrawText(seg.text)
+
+                -- Strikeout line
+                if seg.strikeout then
+                    surface.SetDrawColor(font_color)
+
+                    local startOffset = 0
+                    local blankLength = 0
+                    local spaceW = surface.GetTextSize(" ")
+
+                    local hasLeadSpace = string.sub(seg.text, 1, 1) == " "
+                    local hasTrailSpace = string.sub(seg.text, -1) == " "
+
+                    if hasLeadSpace then blankLength = blankLength + spaceW end
+                    if hasTrailSpace then blankLength = blankLength + spaceW end
+                    if hasLeadSpace then startOffset = spaceW end
+
+                    local lineY = 0.55 * seg.height
+                    local lineWidth = seg.width - blankLength
+
+                    surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
+                end
+
+                -- Underline
+                if seg.underline then
+                    surface.SetDrawColor(font_color)
+
+                    local startOffset = 0
+                    local blankLength = 0
+                    local spaceW = surface.GetTextSize(" ")
+
+                    local hasLeadSpace = string.sub(seg.text, 1, 1) == " "
+                    local hasTrailSpace = string.sub(seg.text, -1) == " "
+
+                    if hasLeadSpace then blankLength = blankLength + spaceW end
+                    if hasTrailSpace then blankLength = blankLength + spaceW end
+                    if hasLeadSpace then startOffset = spaceW end
+
+                    local lineY = 0.87 * seg.height
+                    local lineWidth = seg.width - blankLength
+
+                    surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
+                end
+
+                segX = segX + seg.width
+            end
+        end
+
     else
-        lbl:SetFont("RandomatSmallMsg")
+        local plainFont = big and "RandomatHeader" or "RandomatSmallMsg"
+        local plainMsg = msg
+
+        function content:Paint(w, h)
+            surface.SetFont(plainFont)
+            surface.SetTextColor(font_color)
+            surface.SetTextPos(0, 0)
+            surface.DrawText(plainMsg)
+        end
     end
-    lbl:SetTextColor(font_color)
-    lbl:SetWrap(true)
-    lbl:Dock(FILL)
-    lbl:SetText(msg)
 
     panel:AddItem(bg)
 

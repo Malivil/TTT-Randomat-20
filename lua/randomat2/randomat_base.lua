@@ -59,8 +59,6 @@ util.AddNetworkString("RdmtEventEnd")
 util.AddNetworkString("TTT_RoleChanged")
 util.AddNetworkString("TTT_LogInfo")
 
-util.AddNetworkString("TestFormattedRandomatHeader")
-
 --[[
  Shims
 ]]--
@@ -285,13 +283,9 @@ local function TriggerEvent(event, ply, options, ...)
             return
         end
 
-        if event.Title_formatted then
-            net.Start("TestFormattedRandomatHeader")
-                net.WriteTable(event.Title_formatted)
-            net.Broadcast()
-        else
-            Randomat:EventNotify(event.Title)
-        end
+        local title = event.Title_formatted and event.Title_formatted or event.Title
+
+        Randomat:EventNotify(title)
     end
 
     table.insert(Randomat.ActiveEvents, event)
@@ -311,8 +305,9 @@ local function TriggerEvent(event, ply, options, ...)
         local has_description = event.Description ~= nil and #event.Description > 0
         -- Show description on screen if it has one, the notification is enabled,
         -- and if "secret" is not active or if we're specifically showing the description for "secret"
+        local description = event.Description_formatted and event.Description_formatted or event.Description
         if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() and (not Randomat:IsEventActive("secret") or event.Id == "secret") then
-            Randomat:SmallNotify(event.Description, nil, nil, false, true)
+            Randomat:SmallNotify(description, nil, nil, false, true)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
             for _, p in PlayerIterator() do
@@ -931,11 +926,18 @@ local function SendNotify(msg, big, length, targ, silent, allow_secret, font_col
         Randomat:ClearMessages()
     end
 
+    local formatted = istable(msg)
+
     if not isnumber(length) then length = 0 end
     net.Start(silent and "randomat_message_silent" or "randomat_message")
     net.WriteBool(big)
-    net.WriteString(msg)
-    net.WriteUInt(length, 8)
+    net.WriteBool(formatted)
+    if formatted then
+        net.WriteTable(msg)
+    else
+        net.WriteString(msg)
+    end
+        net.WriteUInt(length, 8)
     net.WriteColor(font_color or COLOR_BLANK)
     net.WriteString(tag or "")
     if not targ then net.Broadcast() else net.Send(targ) end
