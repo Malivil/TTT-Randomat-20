@@ -17,6 +17,157 @@ surface.CreateFont("RandomatSmallMsg", {
     size = 32
 })
 
+local createdFonts = {}
+
+local function BuildFormattedHeaderFont(bold, italic, underline, strikeout, rotary, shadow, outline)
+    local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikeout and "St" or "") .. (rotary and "R" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "")
+    local name = "RandomatHeaderFont_" .. (key == "" and "Normal" or key)
+
+    if not createdFonts[name] then
+        surface.CreateFont(name, {
+            font      = "Roboto",
+            size      = 48,
+            weight    = bold and 700 or 400,
+            italic    = italic or false,
+            underline = underline or false,
+            strikeout = strikeout or false,
+            rotary    = rotary or false,
+            shadow    = shadow or false,
+            outline   = outline or false,
+        })
+        createdFonts[name] = true
+    end
+
+    return name
+end
+
+local function BuildFormattedHeader(segments)
+    local originX = ScrW() / 2
+    local originY = ScrH() / 2
+
+    local padding = 4
+
+    local msgW = 0 
+    local msgH = 0
+
+    for _, segmentData in ipairs(segments) do
+        if segmentData.width then
+            msgW = msgW + segmentData.width
+        end
+
+        if segmentData.height and segmentData.height > msgH then
+            msgH = segmentData.height
+        end
+    end
+
+    local msgX = originX - msgW / 2
+    local msgY = originY - msgH / 2
+
+    local bgW = msgW + 2 + padding
+    local bgH = msgH + 2 + padding
+    local bgX = originX - bgW / 2
+    local bgY = originY - bgH / 2
+
+    local panel = vgui.Create("DNotify")
+    local length = 10
+    panel:SetLife(length)
+
+    panel:SetSize(msgW, msgH)
+    panel:Center()
+
+    local bg = vgui.Create("DPanel", panel)
+    bg:SetBackgroundColor(Color(0, 0, 0, 200))
+    bg:Dock(FILL)
+
+    local content = vgui.Create("DPanel", bg)
+    content:SetSize(msgW, msgH)
+    content:SetBackgroundColor(Color(0, 0, 0, 200))
+    content:Dock(FILL)
+
+    function content:Paint(w, h)
+        local segX = 0
+
+        for _, seg in ipairs(segments) do
+            surface.SetFont(seg.font)
+            surface.SetTextColor(Color(255, 200, 0))
+            surface.SetTextPos(segX, 0)
+            surface.DrawText(seg.text)
+
+            if string.find(seg.font, "St") then
+                surface.SetDrawColor(255, 200, 0)
+
+                local startSpace = nil
+                local endSpace = nil
+                local bothSpace = nil
+                local startOffset = 0
+
+                if string.sub(seg.text, 1, 1) == " " then startSpace = true end
+                if string.sub(seg.text, -1) == " " then endSpace = true end
+                if startSpace and endSpace then bothSpace = true end
+
+                local spaceW, _ = surface.GetTextSize(" ")
+
+                local blankLength = 0
+                if bothSpace then 
+                    blankLength = 2 * spaceW
+                elseif startSpace or endSpace then 
+                    blankLength = spaceW 
+                end
+
+                local lineY = 0 + (seg.height / 2)
+                local lineWidth = seg.width - blankLength
+
+                if startSpace then startOffset = spaceW end
+
+                print("startSpace = " .. tostring(startSpace) .. ", startOffset = " .. tostring(startOffset))
+
+                surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
+            end
+
+            segX = segX + seg.width
+        end
+    end
+
+    -- panel:AddItem(content)
+    panel:AddItem(bg)
+end
+
+local function ProcessSegments(messageSegments)
+    local segments = {}
+
+    for _, seg in ipairs(messageSegments) do
+        local bold = seg.bold or false
+        local italic = seg.italic or false
+        local underline = seg.underline or false
+        local strikeout = seg.strikeout or false
+        local rotary = seg.rotary or false
+        local shadow = seg.shadow or false
+        local outline = seg.outline or false
+
+        local segW = nil 
+        local segH = nil
+
+        local fontName = BuildFormattedHeaderFont(bold, italic, underline, strikeout, rotary, shadow, outline)
+
+        if seg.text and seg.text ~= "" then
+            surface.SetFont(fontName)
+            segW, segH = surface.GetTextSize(seg.text)
+
+            local segmentData = {text = seg.text, font = fontName, width = segW, height = segH}
+
+            table.insert(segments, segmentData)
+        end
+    end
+
+    BuildFormattedHeader(segments)
+end
+
+net.Receive("TestFormattedRandomatHeader", function()
+    createdFonts = {}
+    messageSegments = net.ReadTable()
+    ProcessSegments(messageSegments)
+end)
+
 local COLOR_DEFAULT = Color(255, 200, 0)
 local COLOR_BACKGROUND = Color(0, 0, 0, 200)
 local STACK_GAP = 4

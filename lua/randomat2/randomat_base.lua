@@ -59,6 +59,8 @@ util.AddNetworkString("RdmtEventEnd")
 util.AddNetworkString("TTT_RoleChanged")
 util.AddNetworkString("TTT_LogInfo")
 
+util.AddNetworkString("TestFormattedRandomatHeader")
+
 --[[
  Shims
 ]]--
@@ -283,7 +285,13 @@ local function TriggerEvent(event, ply, options, ...)
             return
         end
 
-        Randomat:EventNotify(event.Title)
+        if event.Title_formatted then
+            net.Start("TestFormattedRandomatHeader")
+                net.WriteTable(event.Title_formatted)
+            net.Broadcast()
+        else
+            Randomat:EventNotify(event.Title)
+        end
     end
 
     table.insert(Randomat.ActiveEvents, event)
