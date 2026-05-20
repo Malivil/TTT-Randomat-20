@@ -20,8 +20,8 @@ surface.CreateFont("RandomatSmallMsg", {
 local createdFonts = {}
 
 -- Make fonts on-demand
-local function BuildFormattedFont(bold, italic, underline, strikeout, shadow, outline, big)
-    local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikeout and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "") .. (big and "Big" or "Small")
+local function BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
+    local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikethrough and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "") .. (big and "Big" or "Small")
     local name = "RandomatFont_" .. (key == "" and "Normal" or key)
 
     if not createdFonts[name] then
@@ -48,11 +48,11 @@ local function ProcessFormattedSegments(messageSegments, big)
         local bold = seg.bold or false
         local italic = seg.italic or false
         local underline = seg.underline or false
-        local strikeout = seg.strikeout or false
+        local strikethrough = seg.strikethrough or false
         local shadow = seg.shadow or false
         local outline = seg.outline or false
 
-        local fontName = BuildFormattedFont(bold, italic, underline, strikeout, shadow, outline, big)
+        local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
 
         surface.SetFont(fontName)
         local segW, segH = surface.GetTextSize(seg.text)
@@ -63,7 +63,7 @@ local function ProcessFormattedSegments(messageSegments, big)
             width = segW,
             height = segH,
             underline = underline,
-            strikeout = strikeout,
+            strikethrough = strikethrough,
         })
     end
 
@@ -236,8 +236,8 @@ local function ShowMessage()
                 surface.SetTextPos(segX, 0)
                 surface.DrawText(seg.text)
 
-                -- Strikeout line
-                if seg.strikeout then
+                -- strikethrough line
+                if seg.strikethrough then
                     surface.SetDrawColor(font_color)
 
                     local startOffset = 0

@@ -841,7 +841,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 **Randomat:Notify(msg, length, target, silent, allow_secret, font_color, tag, clear_others)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
-- *msg* - The message to display
+- *msg* - The message to display. Accepts either a plain string, or a table of segments with formatting flags _(underline)
 - *length* - The length of time (in seconds) the message should be displayed for (Optional, defaults to 5)
 - *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players (Optional)
 - *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
