@@ -19,20 +19,16 @@ surface.CreateFont("RandomatSmallMsg", {
 
 local createdFonts = {}
 
-local function BuildFormattedHeaderFont(bold, italic, underline, strikeout, rotary, shadow, outline)
-    local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikeout and "St" or "") .. (rotary and "R" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "")
+local function BuildFormattedHeaderFont(bold, italic, underline, strikeout, shadow, outline)
+    local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikeout and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "")
     local name = "RandomatHeaderFont_" .. (key == "" and "Normal" or key)
 
     if not createdFonts[name] then
         surface.CreateFont(name, {
             font      = "Roboto",
             size      = 48,
-            weight    = bold and 700 or 400,
+            weight    = bold and 700 or 500,
             italic    = italic or false,
-            underline = underline or false,
-            strikeout = strikeout or false,
-            rotary    = rotary or false,
-            shadow    = shadow or false,
             outline   = outline or false,
         })
         createdFonts[name] = true
@@ -114,12 +110,39 @@ local function BuildFormattedHeader(segments)
                     blankLength = spaceW 
                 end
 
-                local lineY = 0 + (seg.height / 2)
+                local lineY = 0 + (0.55 * seg.height)
                 local lineWidth = seg.width - blankLength
 
                 if startSpace then startOffset = spaceW end
 
-                print("startSpace = " .. tostring(startSpace) .. ", startOffset = " .. tostring(startOffset))
+                surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
+            end
+
+            if string.find(seg.font, "U") then
+                surface.SetDrawColor(255, 200, 0)
+
+                local startSpace = nil
+                local endSpace = nil
+                local bothSpace = nil
+                local startOffset = 0
+
+                if string.sub(seg.text, 1, 1) == " " then startSpace = true end
+                if string.sub(seg.text, -1) == " " then endSpace = true end
+                if startSpace and endSpace then bothSpace = true end
+
+                local spaceW, _ = surface.GetTextSize(" ")
+
+                local blankLength = 0
+                if bothSpace then 
+                    blankLength = 2 * spaceW
+                elseif startSpace or endSpace then 
+                    blankLength = spaceW 
+                end
+
+                local lineY = 0 + (0.87 * seg.height)
+                local lineWidth = seg.width - blankLength
+
+                if startSpace then startOffset = spaceW end
 
                 surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
             end
@@ -128,7 +151,6 @@ local function BuildFormattedHeader(segments)
         end
     end
 
-    -- panel:AddItem(content)
     panel:AddItem(bg)
 end
 
