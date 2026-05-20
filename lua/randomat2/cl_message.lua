@@ -64,6 +64,7 @@ local function ProcessFormattedSegments(messageSegments, big)
             height = segH,
             underline = underline,
             strikethrough = strikethrough,
+            outline = outline,
         })
     end
 
@@ -238,8 +239,6 @@ local function ShowMessage()
 
                 -- strikethrough line
                 if seg.strikethrough then
-                    surface.SetDrawColor(font_color)
-
                     local startOffset = 0
                     local blankLength = 0
                     local spaceW = surface.GetTextSize(" ")
@@ -254,13 +253,17 @@ local function ShowMessage()
                     local lineY = 0.55 * seg.height
                     local lineWidth = seg.width - blankLength
 
+                    if seg.outline then
+                        surface.SetDrawColor(Color(0, 0, 0, 255))
+                        surface.DrawRect(segX + startOffset - 1, lineY - 1, lineWidth + 2, 5)
+                    end
+
+                    surface.SetDrawColor(font_color)
                     surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
                 end
 
                 -- Underline
                 if seg.underline then
-                    surface.SetDrawColor(font_color)
-
                     local startOffset = 0
                     local blankLength = 0
                     local spaceW = surface.GetTextSize(" ")
@@ -275,6 +278,12 @@ local function ShowMessage()
                     local lineY = 0.87 * seg.height
                     local lineWidth = seg.width - blankLength
 
+                    if seg.outline then
+                        surface.SetDrawColor(Color(0, 0, 0, 255))
+                        surface.DrawRect(segX + startOffset - 1, lineY - 1, lineWidth + 2, 5)
+                    end
+
+                    surface.SetDrawColor(font_color)
                     surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
                 end
 

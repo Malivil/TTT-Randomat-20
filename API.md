@@ -242,16 +242,15 @@ Properties used to define and describe an event and its running conditions
 *Realm:* Server
 
 **Example:**\
-Displays the event description `"normal bold italic underline strikethrough outline"` with each text segment having the stated formatting.
+Displays the event description `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
-EVENT.Description_formatted = {
-  {text = "normal "},
-  {text = "bold ", bold = true},
-  {text = "italic ", italic = true},
-  {text = "underline ", underline = true},
-  {text = "strikethrough ", strikethrough = true},
+Randomat:Notify({
+  {text = "Normal, "},
+  {text = "bold and italic,", bold = true, italic = true},
+  {text = "underline, ", underline = true},
+  {text = "strikethrough, ", strikethrough = true},
   {text = "outline", outline = true},
-}
+})
 ```
 
 **ExtDescription** - The extended description for this event. Shown on each event's page in the Randomat 2.0 ULX module instead of the `Description`. Defaults to `nil`.\
@@ -301,16 +300,15 @@ Changing the default after the event has already been loaded on a server will on
 *Realm:* Server
 
 **Example:**\
-Displays the event title `"normal bold italic underline strikethrough outline"` with each text segment having the stated formatting.
+Displays the event title `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
-EVENT.Title_formatted = {
-  {text = "normal "},
-  {text = "bold ", bold = true},
-  {text = "italic ", italic = true},
-  {text = "underline ", underline = true},
-  {text = "strikethrough ", strikethrough = true},
+Randomat:Notify({
+  {text = "Normal, "},
+  {text = "bold and italic,", bold = true, italic = true},
+  {text = "underline, ", underline = true},
+  {text = "strikethrough, ", strikethrough = true},
   {text = "outline", outline = true},
-}
+})
 ```
 
 **Type** - The *EVENT_TYPE_\** value to use for this event.\
@@ -883,14 +881,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *clear_others* - Whether to clear all other active `Randomat:SmallNotify()` and `Randomat:Notify()` messages before displaying this one. (Optional, defaults to `false`)
 
 **Example:**\
-Displays the notification message `"normal bold italic underline strikethrough outline"` with each text segment having the stated formatting.
+Displays the notification message `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
 Randomat:Notify({
-  {text = "normal "},
-  {text = "bold ", bold = true},
-  {text = "italic ", italic = true},
-  {text = "underline ", underline = true},
-  {text = "strikethrough ", strikethrough = true},
+  {text = "Normal, "},
+  {text = "bold and italic,", bold = true, italic = true},
+  {text = "underline, ", underline = true},
+  {text = "strikethrough, ", strikethrough = true},
   {text = "outline", outline = true},
 })
 ```
@@ -1091,14 +1088,13 @@ Randomat:Notify({
 - *clear_others* - Whether to clear all other active `Randomat:SmallNotify()` and `Randomat:Notify()` messages before displaying this one. (Optional, defaults to `false`)
 
 **Example:**\
-Displays the notification message `"normal bold italic underline strikethrough outline"` with each text segment having the stated formatting.
+Displays the notification message `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
 Randomat:Notify({
-  {text = "normal "},
-  {text = "bold ", bold = true},
-  {text = "italic ", italic = true},
-  {text = "underline ", underline = true},
-  {text = "strikethrough ", strikethrough = true},
+  {text = "Normal, "},
+  {text = "bold and italic,", bold = true, italic = true},
+  {text = "underline, ", underline = true},
+  {text = "strikethrough, ", strikethrough = true},
   {text = "outline", outline = true},
 })
 ```
