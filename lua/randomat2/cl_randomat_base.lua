@@ -224,7 +224,7 @@ hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dta
     for i, e in ipairs(Randomat.ActiveEvents) do
         local dtitle = vgui.Create("DLabel", dactive)
         dtitle:SetFont("DermaDefaultBold")
-        dtitle:SetText(i .. ". " .. e.title)
+        dtitle:SetText(i .. ". " .. Randomat:GetEventTitle(e))
         dtitle:SetTextColor(Color(0, 0, 0, 255))
         dactive:AddItem(dtitle)
 

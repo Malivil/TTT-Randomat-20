@@ -223,7 +223,7 @@ function Randomat:ChatDescription(ply, event, has_description)
     local title = Randomat:GetEventTitle(event)
     local description = ""
     if has_description then
-        description = " | " .. event.Description
+        description = " | " .. Randomat:GetEventDescription(event)
     end
 
     ply:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] " .. title .. description)
@@ -283,9 +283,7 @@ local function TriggerEvent(event, ply, options, ...)
             return
         end
 
-        local title = event.Title_formatted and event.Title_formatted or event.Title
-
-        Randomat:EventNotify(title)
+        Randomat:EventNotify(event.Title)
     end
 
     table.insert(Randomat.ActiveEvents, event)
@@ -301,13 +299,12 @@ local function TriggerEvent(event, ply, options, ...)
     Randomat:LogEvent(message)
     MsgN(message)
 
+    local has_description = event.Description ~= nil and #event.Description > 0
     if not silent then
-        local has_description = event.Description ~= nil and #event.Description > 0
         -- Show description on screen if it has one, the notification is enabled,
         -- and if "secret" is not active or if we're specifically showing the description for "secret"
-        local description = event.Description_formatted and event.Description_formatted or event.Description
         if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() and (not Randomat:IsEventActive("secret") or event.Id == "secret") then
-            Randomat:SmallNotify(description, nil, nil, false, true)
+            Randomat:SmallNotify(event.Description, nil, nil, false, true)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
             for _, p in PlayerIterator() do
@@ -326,15 +323,15 @@ local function TriggerEvent(event, ply, options, ...)
     else
         net.WriteString(event.Id)
         net.WriteString(title)
-        net.WriteString(event.Description or "")
+        net.WriteString(Randomat:GetEventDescription(event))
     end
     net.Broadcast()
 
     -- Getting info for printing the names and descriptions of secret randomats in chat if enabled
     if GetConVar("ttt_randomat_event_hint_chat_secret"):GetBool() and should_hide then
         local msg = title
-        if event.Description ~= nil and #event.Description > 0 then
-            msg = msg .. " | " .. event.Description
+        if has_description then
+            msg = msg .. " | " .. Randomat:GetEventDescription(event)
         end
         table.insert(secret_event_chat_msgs, msg)
     end
@@ -371,13 +368,6 @@ function Randomat:EndActiveEvents()
 
         Randomat.ActiveEvents = {}
     end
-end
-
-function Randomat:GetEventTitle(event)
-    if event.Title == "" then
-        return event.AltTitle
-    end
-    return event.Title
 end
 
 function Randomat:register(tbl)
@@ -926,8 +916,7 @@ local function SendNotify(msg, big, length, targ, silent, allow_secret, font_col
         Randomat:ClearMessages()
     end
 
-    local formatted = istable(msg)
-
+    local formatted = type(msg) == "table"
     if not isnumber(length) then length = 0 end
     net.Start(silent and "randomat_message_silent" or "randomat_message")
     net.WriteBool(big)
@@ -937,7 +926,7 @@ local function SendNotify(msg, big, length, targ, silent, allow_secret, font_col
     else
         net.WriteString(msg)
     end
-        net.WriteUInt(length, 8)
+    net.WriteUInt(length, 8)
     net.WriteColor(font_color or COLOR_BLANK)
     net.WriteString(tag or "")
     if not targ then net.Broadcast() else net.Send(targ) end

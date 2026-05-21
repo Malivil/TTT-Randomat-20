@@ -1,31 +1,44 @@
 local math = math
+local net = net
 local surface = surface
+local string = string
 local table = table
 local vgui = vgui
 
 local MathMax = math.max
+local StringSub = string.sub
+local SurfaceCreateFont = surface.CreateFont
+local SurfaceDrawText = surface.DrawText
+local SurfaceDrawRect = surface.DrawRect
+local SurfacePlaySound = surface.PlaySound
+local SurfaceSetDrawColor = surface.SetDrawColor
+local SurfaceSetFont = surface.SetFont
+local SurfaceGetTextSize = surface.GetTextSize
+local SurfaceSetTextColor = surface.SetTextColor
+local SurfaceSetTextPos = surface.SetTextPos
 local TableInsert = table.insert
 local TableRemove = table.remove
+local VguiCreate = vgui.Create
 
-surface.CreateFont("RandomatHeader", {
+SurfaceCreateFont("RandomatHeader", {
     font = "Roboto",
     size = 48
 })
 
-surface.CreateFont("RandomatSmallMsg", {
+SurfaceCreateFont("RandomatSmallMsg", {
     font = "Roboto",
     size = 32
 })
 
 local createdFonts = {}
 
--- Make fonts on-demand
+-- Make and cache fonts on-demand
 local function BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
     local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikethrough and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "") .. (big and "Big" or "Small")
     local name = "RandomatFont_" .. (key == "" and "Normal" or key)
 
     if not createdFonts[name] then
-        surface.CreateFont(name, {
+        SurfaceCreateFont(name, {
             font = "Roboto",
             size = big and 48 or 32,
             weight = bold and 700 or 500,
@@ -54,8 +67,8 @@ local function ProcessFormattedSegments(messageSegments, big)
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
 
-        surface.SetFont(fontName)
-        local segW, segH = surface.GetTextSize(seg.text)
+        SurfaceSetFont(fontName)
+        local segW, segH = SurfaceGetTextSize(seg.text)
 
         TableInsert(segments, {
             text = seg.text,
@@ -86,6 +99,7 @@ end
 
 local COLOR_DEFAULT = Color(255, 200, 0)
 local COLOR_BACKGROUND = Color(0, 0, 0, 200)
+local COLOR_NONE = Color(0, 0, 0, 0)
 local STACK_GAP = 4
 
 -- Ordered list of all active panels (newest last) with their default Y position (because Notify and SmallNotify have different starting points)
@@ -152,6 +166,34 @@ local function RepositionStack()
     end
 end
 
+local function DrawFormattingLine(seg, segX, font_color, offset)
+    local startOffset = 0
+    local blankLength = 0
+    local spaceW = SurfaceGetTextSize(" ")
+
+    local hasLeadSpace = StringSub(seg.text, 1, 1) == " "
+    local hasTrailSpace = StringSub(seg.text, -1) == " "
+
+    if hasLeadSpace then
+        startOffset = spaceW
+        blankLength = blankLength + spaceW
+    end
+    if hasTrailSpace then
+        blankLength = blankLength + spaceW
+    end
+
+    local lineY = offset * seg.height
+    local lineWidth = seg.width - blankLength
+
+    if seg.outline then
+        SurfaceSetDrawColor(COLOR_BLACK)
+        SurfaceDrawRect(segX + startOffset - 1, lineY - 1, lineWidth + 2, 5)
+    end
+
+    SurfaceSetDrawColor(font_color)
+    SurfaceDrawRect(segX + startOffset, lineY, lineWidth, 3)
+end
+
 local function ShowMessage()
     local big = net.ReadBool()
     local formatted = net.ReadBool()
@@ -180,11 +222,11 @@ local function ShowMessage()
         segments = ProcessFormattedSegments(msg, big)
         msgW, msgH = MeasureSegments(segments)
     else
-        surface.SetFont(big and "RandomatHeader" or "RandomatSmallMsg")
-        msgW, msgH = surface.GetTextSize(msg)
+        SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
+        msgW, msgH = SurfaceGetTextSize(msg)
     end
 
-    local panel = vgui.Create("DNotify")
+    local panel = VguiCreate("DNotify")
     panel.tag = tag
     panel.big = big
     panel:SetLife(length)
@@ -197,8 +239,9 @@ local function ShowMessage()
 
     local baseY = panel:GetY()
 
-    local bg = vgui.Create("DPanel", panel)
-
+    local bg = VguiCreate("DPanel", panel)
+    bg:SetBackgroundColor(COLOR_BACKGROUND)
+    bg:Dock(FILL)
     function bg:OnRemove()
         local parent = bg:GetParent()
         if not IsValid(parent) then return end
@@ -218,89 +261,47 @@ local function ShowMessage()
         parent:Remove()
     end
 
-    bg:SetBackgroundColor(COLOR_BACKGROUND)
-    bg:Dock(FILL)
-
-    local content = vgui.Create("DPanel", bg)
-    content:SetBackgroundColor(Color(0, 0, 0, 0))
-    content:Dock(FILL)
 
     if formatted then
+        local content = VguiCreate("DPanel", bg)
+        content:SetBackgroundColor(COLOR_NONE)
+        content:Dock(FILL)
+
         local paintSegments = segments
 
         function content:Paint(w, h)
             local segX = 0
 
             for _, seg in ipairs(paintSegments) do
-                surface.SetFont(seg.font)
-                surface.SetTextColor(font_color)
-                surface.SetTextPos(segX, 0)
-                surface.DrawText(seg.text)
+                SurfaceSetFont(seg.font)
+                SurfaceSetTextColor(font_color)
+                SurfaceSetTextPos(segX, 0)
+                SurfaceDrawText(seg.text)
 
-                -- strikethrough line
+                -- Strike-through line
                 if seg.strikethrough then
-                    local startOffset = 0
-                    local blankLength = 0
-                    local spaceW = surface.GetTextSize(" ")
-
-                    local hasLeadSpace = string.sub(seg.text, 1, 1) == " "
-                    local hasTrailSpace = string.sub(seg.text, -1) == " "
-
-                    if hasLeadSpace then blankLength = blankLength + spaceW end
-                    if hasTrailSpace then blankLength = blankLength + spaceW end
-                    if hasLeadSpace then startOffset = spaceW end
-
-                    local lineY = 0.55 * seg.height
-                    local lineWidth = seg.width - blankLength
-
-                    if seg.outline then
-                        surface.SetDrawColor(Color(0, 0, 0, 255))
-                        surface.DrawRect(segX + startOffset - 1, lineY - 1, lineWidth + 2, 5)
-                    end
-
-                    surface.SetDrawColor(font_color)
-                    surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
+                    DrawFormattingLine(seg, segX, font_color, 0.55)
                 end
 
                 -- Underline
                 if seg.underline then
-                    local startOffset = 0
-                    local blankLength = 0
-                    local spaceW = surface.GetTextSize(" ")
-
-                    local hasLeadSpace = string.sub(seg.text, 1, 1) == " "
-                    local hasTrailSpace = string.sub(seg.text, -1) == " "
-
-                    if hasLeadSpace then blankLength = blankLength + spaceW end
-                    if hasTrailSpace then blankLength = blankLength + spaceW end
-                    if hasLeadSpace then startOffset = spaceW end
-
-                    local lineY = 0.87 * seg.height
-                    local lineWidth = seg.width - blankLength
-
-                    if seg.outline then
-                        surface.SetDrawColor(Color(0, 0, 0, 255))
-                        surface.DrawRect(segX + startOffset - 1, lineY - 1, lineWidth + 2, 5)
-                    end
-
-                    surface.SetDrawColor(font_color)
-                    surface.DrawRect(segX + startOffset, lineY, lineWidth, 3)
+                    DrawFormattingLine(seg, segX, font_color, 0.87)
                 end
 
                 segX = segX + seg.width
             end
         end
-
     else
-        local plainFont = big and "RandomatHeader" or "RandomatSmallMsg"
-        local plainMsg = msg
-
-        function content:Paint(w, h)
-            surface.SetFont(plainFont)
-            surface.SetTextColor(font_color)
-            surface.SetTextPos(0, 0)
-            surface.DrawText(plainMsg)
+        local lbl = vgui.Create("DLabel", bg)
+        if big then
+            lbl:SetFont("RandomatHeader")
+        else
+            lbl:SetFont("RandomatSmallMsg")
         end
+        lbl:SetTextColor(font_color)
+        lbl:SetWrap(true)
+        lbl:Dock(FILL)
+        lbl:SetText(msg)
     end
 
     panel:AddItem(bg)
@@ -339,7 +340,7 @@ end
 
 net.Receive("randomat_message", function()
     ShowMessage()
-    surface.PlaySound("weapons/c4_initiate.mp3")
+    SurfacePlaySound("weapons/c4_initiate.mp3")
 end)
 
 net.Receive("randomat_message_silent", function()

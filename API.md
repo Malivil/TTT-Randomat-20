@@ -236,21 +236,18 @@ Properties used to define and describe an event and its running conditions
 *Realm:* Server
 
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
-*Realm:* Server
-
-**Description_formatted** _(optional)_ - A table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ which displays instead of the description when the event is triggered (see the example below). Will not show anywhere else a plain text `Description` would.\
-*Realm:* Server
-
-**Example:**\
+Optionally, this can be a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ that will be used to build the description string.\
+*Realm:* Server\
+*Example:*\
 Displays the event description `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
-Randomat:Notify({
+EVENT.Description = {
   {text = "Normal, "},
-  {text = "bold and italic,", bold = true, italic = true},
+  {text = "bold and italic, ", bold = true, italic = true},
   {text = "underline, ", underline = true},
   {text = "strikethrough, ", strikethrough = true},
   {text = "outline", outline = true},
-})
+}
 ```
 
 **ExtDescription** - The extended description for this event. Shown on each event's page in the Randomat 2.0 ULX module instead of the `Description`. Defaults to `nil`.\
@@ -294,21 +291,18 @@ Changing the default after the event has already been loaded on a server will on
 *Realm:* Server
 
 **Title** - The title to use for this event. If this is not defined (and `AltTitle` is instead) the automatic "started" notification for this event will not happen.\
-*Realm:* Server
-
-**Title_formatted** _(Optional)_ - A table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ which displays instead of the title when the event is triggered (see the example below). The event **must** still have a plain text `Title` or `AltTitle`.\
-*Realm:* Server
-
-**Example:**\
+Optionally, this can be a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ that will be used to build the title string.\
+*Realm:* Server\
+*Example:*\
 Displays the event title `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
-Randomat:Notify({
+EVENT.Title = {
   {text = "Normal, "},
-  {text = "bold and italic,", bold = true, italic = true},
+  {text = "bold and italic, ", bold = true, italic = true},
   {text = "underline, ", underline = true},
   {text = "strikethrough, ", strikethrough = true},
   {text = "outline", outline = true},
-})
+}
 ```
 
 **Type** - The *EVENT_TYPE_\** value to use for this event.\
@@ -535,8 +529,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* The comma-delimited list of categories for the given event
 
-**Randomat:GetEventTitle(event)** - Gets the given event's `Title` or `AltTitle` property, whichever is defined.\
-*Realm:* Server\
+**Randomat:GetEventDescription(event)** - Gets the given event's `Description` property as a readable string.\
+*Realm:* Client and Server\
+*Parameters:*
+- *event* - The event object whose description is being retrieved
+
+*Returns:* The event's usable description
+
+**Randomat:GetEventTitle(event)** - Gets the given event's `Title` or `AltTitle` property, whichever is defined, as a readable string.\
+*Realm:* Client and Server\
 *Parameters:*
 - *event* - The event object whose title is being retrieved
 
@@ -880,12 +881,12 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *tag* - The tag (as a string) to assign to the notification for subsequent use in `Randomat:ClearMessages(targ, tag)`. (Optional, defaults to `default`)
 - *clear_others* - Whether to clear all other active `Randomat:SmallNotify()` and `Randomat:Notify()` messages before displaying this one. (Optional, defaults to `false`)
 
-**Example:**\
+*Example:*
 Displays the notification message `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
 Randomat:Notify({
   {text = "Normal, "},
-  {text = "bold and italic,", bold = true, italic = true},
+  {text = "bold and italic, ", bold = true, italic = true},
   {text = "underline, ", underline = true},
   {text = "strikethrough, ", strikethrough = true},
   {text = "outline", outline = true},

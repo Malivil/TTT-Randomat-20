@@ -21,6 +21,28 @@ function Randomat:IsEventActive(id)
     return false
 end
 
+function Randomat:GetEventTitle(event)
+    local title = event.Title and event.Title or ""
+    if title == "" then
+        title = event.AltTitle
+    end
+
+    if type(title) == "table" then
+        local titles = table.MemberValuesFromKey(title, "text")
+        return table.concat(titles)
+    end
+    return title
+end
+
+function Randomat:GetEventDescription(event)
+    local description = event.Description and event.Description or ""
+    if type(description) == "table" then
+        local descriptions = table.MemberValuesFromKey(description, "text")
+        return table.concat(descriptions)
+    end
+    return description
+end
+
 -- String Functions
 
 function Randomat:Capitalize(msg, skip_lower)
