@@ -1172,6 +1172,7 @@ std = {
                 KeyFromValue = {},
                 KeysFromValue = {},
                 LookupKeys = {},
+                MemberValuesFromKey = {},
                 Merge = {},
                 Random = {},
                 RemoveByValue = {},
