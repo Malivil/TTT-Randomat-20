@@ -66,6 +66,7 @@ local function ProcessFormattedSegments(messageSegments, big)
         local strikethrough = seg.strikethrough or false
         local shadow = seg.shadow or false
         local outline = seg.outline or false
+        local linebreak = seg.linebreak or false
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
         SurfaceSetFont(fontName)
@@ -90,7 +91,8 @@ local function ProcessFormattedSegments(messageSegments, big)
                     underline = underline,
                     strikethrough = strikethrough,
                     outline = outline,
-                    drop = drop
+                    linebreak = linebreak,
+                    drop = drop,
                 })
             end
 
@@ -105,6 +107,7 @@ local function ProcessFormattedSegments(messageSegments, big)
                 underline = underline,
                 strikethrough = strikethrough,
                 outline = outline,
+                linebreak = linebreak,
             })
         end
     end
@@ -114,17 +117,20 @@ end
 
 -- Calculate how big the message is
 local function MeasureSegments(segments)
+    local baseW = 0
     local totalW = 0
     -- no need to measure maxH for segments as it's always the same
     local totalH = 0
     local baseH = 0
 
     for _, seg in ipairs(segments) do
-        totalW = totalW + seg.width
+        if seg.width > baseW then baseW = seg.width end
+        if not seg.linebreak then totalW = totalW + seg.width end
         if baseH == 0 then baseH = seg.height end
-        if seg.drop then totalH = totalH + seg.height end
+        if seg.drop or seg.linebreak then totalH = totalH + seg.height end
     end
 
+    totalW = math.max(totalW, baseW)
     totalH = totalH + baseH
 
     return totalW, totalH
@@ -306,9 +312,11 @@ local function ShowMessage()
             local segY = 0
 
             for _, seg in ipairs(paintSegments) do
-                if seg.drop then
+                if seg.drop or seg.linebreak then
                     segY = segY + seg.height
                 end
+
+                if seg.linebreak then segX = 0 + (padding / 2) end
 
                 SurfaceSetFont(seg.font)
                 SurfaceSetTextColor(font_color)
