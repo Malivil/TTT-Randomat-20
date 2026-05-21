@@ -215,6 +215,7 @@ local function ShowMessage()
     if tag == "" then tag = "default" end
 
     local msgW, msgH
+    local padding = big and 10 or 8
     local segments
 
     if formatted then
@@ -230,7 +231,7 @@ local function ShowMessage()
     panel.tag = tag
     panel.big = big
     panel:SetLife(length)
-    panel:SetSize(msgW, msgH)
+    panel:SetSize(msgW + padding, msgH)
     panel:Center()
 
     if not big then
@@ -270,7 +271,7 @@ local function ShowMessage()
         local paintSegments = segments
 
         function content:Paint(w, h)
-            local segX = 0
+            local segX = 0 + (padding / 2)
 
             for _, seg in ipairs(paintSegments) do
                 SurfaceSetFont(seg.font)
@@ -300,6 +301,7 @@ local function ShowMessage()
         end
         lbl:SetTextColor(font_color)
         lbl:SetWrap(true)
+        lbl:DockMargin(padding / 2, 0, padding / 2, 0)
         lbl:Dock(FILL)
         lbl:SetText(msg)
     end
