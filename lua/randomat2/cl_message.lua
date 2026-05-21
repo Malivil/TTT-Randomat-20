@@ -99,7 +99,6 @@ end
 
 local COLOR_DEFAULT = Color(255, 200, 0)
 local COLOR_BACKGROUND = Color(0, 0, 0, 200)
-local COLOR_NONE = Color(0, 0, 0, 0)
 local STACK_GAP = 4
 
 -- Ordered list of all active panels (newest last) with their default Y position (because Notify and SmallNotify have different starting points)
