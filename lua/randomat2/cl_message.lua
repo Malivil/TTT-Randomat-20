@@ -265,7 +265,6 @@ local function ShowMessage()
 
     if formatted then
         local content = VguiCreate("DPanel", bg)
-        content:SetBackgroundColor(COLOR_NONE)
         content:Dock(FILL)
 
         local paintSegments = segments
