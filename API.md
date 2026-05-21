@@ -209,6 +209,17 @@ Properties used to define and describe an event and its running conditions
 
 **AltTitle** - The alternate title to use for this event. Used to prevent an event from sending an automatic "started" notification (if `Title` is not defined) and to allow for a second searchable title in the Randomat 2.0 ULX module. Defaults to `nil`.\
 *Realm:* Server
+*Example:*\
+Sets the event alternative title to `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
+```lua
+EVENT.AltTitle = {
+  {text = "Normal, "},
+  {text = "bold and italic, ", bold = true, italic = true},
+  {text = "underline, ", underline = true},
+  {text = "strikethrough, ", strikethrough = true},
+  {text = "outline", outline = true},
+}
+```
 
 **Categories** - What categories this event belongs to. Useful for finding events with specific purposes. Also displayed in the ULX admin menu.\
 *Realm:* Server
@@ -239,7 +250,7 @@ Properties used to define and describe an event and its running conditions
 Optionally, this can be a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ that will be used to build the description string.\
 *Realm:* Server\
 *Example:*\
-Displays the event description `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
+Sets the event description to `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
 EVENT.Description = {
   {text = "Normal, "},
@@ -294,7 +305,7 @@ Changing the default after the event has already been loaded on a server will on
 Optionally, this can be a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ that will be used to build the title string.\
 *Realm:* Server\
 *Example:*\
-Displays the event title `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
+Sets the event title to `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
 EVENT.Title = {
   {text = "Normal, "},
@@ -521,6 +532,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* The list of all used event categories
 
+**Randomat:GetEventAltTitle(event)** - Gets the given event's `AltTitle` property as a readable string.\
+*Realm:* Client and Server\
+*Parameters:*
+- *event* - The event object whose alternative title is being retrieved
+
+*Returns:* The event's usable title
+
 **Randomat:GetEventCategories(event, readable)** - Gets the comma-delimited list of categories for an event.\
 *Realm:* Server\
 *Parameters:*
@@ -536,10 +554,11 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 
 *Returns:* The event's usable description
 
-**Randomat:GetEventTitle(event)** - Gets the given event's `Title` or `AltTitle` property, whichever is defined, as a readable string.\
+**Randomat:GetEventTitle(event, skip_alt_title)** - Gets the given event's `Title` or `AltTitle` (if `skip_alt_title` is `false` or not provided) property, whichever is defined, as a readable string.\
 *Realm:* Client and Server\
 *Parameters:*
 - *event* - The event object whose title is being retrieved
+- *skip_alt_title* - Whether to skip using the `AltTitle` as a fallback if `Title` isn't set. *(Optional, defaults to `false`)*
 
 *Returns:* The event's usable title
 

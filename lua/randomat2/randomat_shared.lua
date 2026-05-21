@@ -21,12 +21,21 @@ function Randomat:IsEventActive(id)
     return false
 end
 
-function Randomat:GetEventTitle(event)
+function Randomat:GetEventTitle(event, skip_alt_title)
     local title = event.Title and event.Title or ""
-    if title == "" then
+    if not skip_alt_title and title == "" then
         title = event.AltTitle
     end
 
+    if type(title) == "table" then
+        local titles = table.MemberValuesFromKey(title, "text")
+        return table.concat(titles)
+    end
+    return title
+end
+
+function Randomat:GetEventAltTitle(event)
+    local title = event.AltTitle and event.AltTitle or ""
     if type(title) == "table" then
         local titles = table.MemberValuesFromKey(title, "text")
         return table.concat(titles)
