@@ -2,16 +2,16 @@ local EVENT = {}
 
 CreateConVar("randomat_explode_timer", 30, FCVAR_NONE, "The time between explosions.", 5, 60)
 
-EVENT.Title = ""
-EVENT.AltTitle = "A Random Person will explode every " .. GetConVar("randomat_explode_timer"):GetInt() .. " seconds! Watch out! (EXCEPT DETECTIVES)"
+EVENT.Title = "A Random Person will explode every " .. GetConVar("randomat_explode_timer"):GetInt() .. " seconds! Watch out! (EXCEPT DETECTIVES)"
 EVENT.id = "explode"
 EVENT.Categories = {"largeimpact"}
 
-function EVENT:Begin()
-    if not self.Silent then
-        Randomat:EventNotifySilent("A Random Person will explode every " .. GetConVar("randomat_explode_timer"):GetInt() .. " seconds! Watch out! (EXCEPT " .. Randomat:GetRolePluralString(ROLE_DETECTIVE):upper() .. ")")
-    end
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    -- Handle updated convar and changed role name
+    self.Title = "A Random Person will explode every " .. GetConVar("randomat_explode_timer"):GetInt() .. " seconds! Watch out! (EXCEPT " .. Randomat:GetRolePluralString(ROLE_DETECTIVE):upper() .. ")"
+end
 
+function EVENT:Begin()
     local effectdata = EffectData()
 
     timer.Create("RandomatExplode",GetConVar("randomat_explode_timer"):GetInt() ,0, function()

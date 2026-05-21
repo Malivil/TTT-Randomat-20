@@ -1,9 +1,9 @@
 local EVENT = {}
 
 EVENT.Title = ""
+EVENT.AltTitle = "Soulmates"
 EVENT.Description = "Pairs players together. When either of the paired players is killed, the other is automatically killed as well"
 EVENT.id = "soulmates"
-EVENT.AltTitle = "Soulmates"
 EVENT.Type = EVENT_TYPE_FORCED_DEATH
 EVENT.Categories = {"biased_traitor", "biased", "largeimpact"}
 EVENT.SingleUse = false
@@ -61,7 +61,7 @@ function EVENT:Begin(first_target, second_target)
     if affect_all then
         size = #ply2
         if not self.Silent then
-            Randomat:EventNotifySilent("Soulmates")
+            Randomat:EventNotify("Soulmates")
         end
 
         for i = 1, #ply2 do
@@ -83,7 +83,7 @@ function EVENT:Begin(first_target, second_target)
             InitializeSharedHealth(1)
         end
         if not self.Silent then
-            Randomat:EventNotifySilent(ply1[1]:Nick() .. " and " .. ply2[1]:Nick() .. " are now soulmates.")
+            Randomat:EventNotify(ply1[1]:Nick() .. " and " .. ply2[1]:Nick() .. " are now soulmates.")
         end
         Randomat:LogEvent("[RANDOMAT] " .. ply1[1]:Nick() .. " and " .. ply2[1]:Nick() .. " are now soulmates.")
     end

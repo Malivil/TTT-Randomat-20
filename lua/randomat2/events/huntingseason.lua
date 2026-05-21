@@ -49,7 +49,7 @@ function EVENT:Begin()
         end
 
         if not self.Silent then
-            Randomat:EventNotifySilent(self.AltTitle)
+            Randomat:EventNotify(self.AltTitle)
         end
     end)
 end

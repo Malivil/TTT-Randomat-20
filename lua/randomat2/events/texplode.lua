@@ -3,19 +3,17 @@ local EVENT = {}
 CreateConVar("randomat_texplode_timer", 60, FCVAR_NONE, "The time before the traitor explodes", 1, 120)
 CreateConVar("randomat_texplode_radius", 600, FCVAR_NONE, "Radius of the traitor explosion", 50, 1000)
 
-EVENT.Title = ""
-EVENT.AltTitle = "A traitor will explode in " .. GetConVar("randomat_texplode_timer"):GetInt() .. " seconds!"
+EVENT.Title = "A traitor will explode in " .. GetConVar("randomat_texplode_timer"):GetInt() .. " seconds!"
 EVENT.ExtDescription = "Chooses a random traitor to explode after a configurable time"
 EVENT.id = "texplode"
 EVENT.Categories = {"biased_innocent", "biased", "largeimpact"}
 
-function EVENT:Begin()
-    local explodetimer = GetConVar("randomat_texplode_timer"):GetInt()
-    if not self.Silent then
-        Randomat:EventNotifySilent("A traitor will explode in " .. explodetimer .. " seconds!")
-    end
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    -- Handle updated convar
+    self.Title = "A traitor will explode in " .. GetConVar("randomat_texplode_timer"):GetInt() .. " seconds!"
+end
 
-    local x = 0
+function EVENT:Begin()
     local tgt = nil
     for _, ply in ipairs(self:GetAlivePlayers(true)) do
         if Randomat:IsTraitorTeam(ply) then
@@ -29,9 +27,10 @@ function EVENT:Begin()
     end
 
     local effectdata = EffectData()
-
+    local x = 0
+    local explodetimer = GetConVar("randomat_texplode_timer"):GetInt()
     timer.Create("RandomatTraitorExplode", 1, explodetimer, function()
-        x = x+1
+        x = x + 1
         if explodetimer >= 45 and x == explodetimer - 30 then
             self:SmallNotify("30 seconds until the traitor explodes!")
         elseif explodetimer >= 20 and x == explodetimer - 10 then

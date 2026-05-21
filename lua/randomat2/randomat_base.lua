@@ -304,7 +304,7 @@ local function TriggerEvent(event, ply, options, ...)
         -- Show description on screen if it has one, the notification is enabled,
         -- and if "secret" is not active or if we're specifically showing the description for "secret"
         if has_description and GetConVar("ttt_randomat_event_hint"):GetBool() and (not Randomat:IsEventActive("secret") or event.Id == "secret") then
-            Randomat:SmallNotify(event.Description, nil, nil, false, true)
+            Randomat:SmallNotify(event.Description, nil, nil, true, true)
         end
         if GetConVar("ttt_randomat_event_hint_chat"):GetBool() then
             for _, p in PlayerIterator() do
@@ -910,6 +910,7 @@ end
 local function SendNotify(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
     -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
     if not allow_secret and Randomat:IsEventActive("secret") then return end
+    if not msg or #msg == 0 then return end
 
     -- if clear_others then do that before sending new message
     if clear_others then

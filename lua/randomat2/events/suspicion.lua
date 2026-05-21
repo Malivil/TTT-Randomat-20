@@ -3,9 +3,9 @@ local EVENT = {}
 CreateConVar("randomat_suspicion_chance", 50, FCVAR_NONE, "The chance of the player being a Jester", 0, 100)
 
 EVENT.Title = ""
+EVENT.AltTitle = "A player is acting suspicious"
 EVENT.Description = "Changes a random player to either a jester or a traitor"
 EVENT.id = "suspicion"
-EVENT.AltTitle = "A player is acting suspicious"
 EVENT.SingleUse = false
 EVENT.Categories = {"rolechange", "moderateimpact"}
 
@@ -33,7 +33,7 @@ function EVENT:Begin()
 
     if suspicionply ~= nil then
         if not self.Silent then
-            Randomat:EventNotifySilent(suspicionply:Nick() .. " is acting suspicious...")
+            Randomat:EventNotify(suspicionply:Nick() .. " is acting suspicious...")
         end
 
         if math.random(1,100) <= GetConVar("randomat_suspicion_chance"):GetInt() then
