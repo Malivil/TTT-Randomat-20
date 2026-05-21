@@ -293,7 +293,7 @@ local function ShowMessage()
             end
         end
     else
-        local lbl = vgui.Create("DLabel", bg)
+        local lbl = VguiCreate("DLabel", bg)
         if big then
             lbl:SetFont("RandomatHeader")
         else
