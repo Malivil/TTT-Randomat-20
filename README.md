@@ -2075,7 +2075,7 @@ If a developer of an external Randomat event would like to add support for this 
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - [Fyxen](https://steamcommunity.com/profiles/76561198810121546/) for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
-- Joel form the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributions to the core messaging system
+- Joel from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributions to the core messaging system
 - Noxx from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord and the Custom Roles for TTT Discord for the help, support, many ideas, and the "Mathracer" event
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events and the name of the "Down Under" event
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
