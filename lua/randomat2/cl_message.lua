@@ -7,6 +7,8 @@ local vgui = vgui
 
 local MathMax = math.max
 local StringSub = string.sub
+local StartsWith = string.StartsWith
+local EndsWith = string.EndsWith
 local SurfaceCreateFont = surface.CreateFont
 local SurfaceDrawText = surface.DrawText
 local SurfaceDrawRect = surface.DrawRect
@@ -170,8 +172,8 @@ local function DrawFormattingLine(seg, segX, font_color, offset)
     local blankLength = 0
     local spaceW = SurfaceGetTextSize(" ")
 
-    local hasLeadSpace = StringSub(seg.text, 1, 1) == " "
-    local hasTrailSpace = StringSub(seg.text, -1) == " "
+    local hasLeadSpace = StartsWith(seg.text, " ")
+    local hasTrailSpace = EndsWith(seg.text, " ")
 
     if hasLeadSpace then
         startOffset = spaceW
