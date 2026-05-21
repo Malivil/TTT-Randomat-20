@@ -68,19 +68,45 @@ local function ProcessFormattedSegments(messageSegments, big)
         local outline = seg.outline or false
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
-
         SurfaceSetFont(fontName)
-        local segW, segH = SurfaceGetTextSize(seg.text)
 
-        TableInsert(segments, {
-            text = seg.text,
-            font = fontName,
-            width = segW,
-            height = segH,
-            underline = underline,
-            strikethrough = strikethrough,
-            outline = outline,
-        })
+        local newLines = string.find(seg.text, "\n", 1)
+        local exploded = {}
+
+        if newLines then
+            local startDrop = StartsWith(seg.text, "\n")
+            exploded = string.Split(seg.text, "\n")
+
+            for i, splitString in ipairs(exploded) do
+                local segW, segH = SurfaceGetTextSize(splitString)
+
+                local drop = Either(i == 1, startDrop, true)
+
+                TableInsert(segments, {
+                    text = splitString,
+                    font = fontName,
+                    width = segW,
+                    height = segH,
+                    underline = underline,
+                    strikethrough = strikethrough,
+                    outline = outline,
+                    drop = drop
+                })
+            end
+
+        else
+            local segW, segH = SurfaceGetTextSize(seg.text)
+
+            TableInsert(segments, {
+                text = seg.text,
+                font = fontName,
+                width = segW,
+                height = segH,
+                underline = underline,
+                strikethrough = strikethrough,
+                outline = outline,
+            })
+        end
     end
 
     return segments
@@ -89,14 +115,19 @@ end
 -- Calculate how big the message is
 local function MeasureSegments(segments)
     local totalW = 0
-    local maxH = 0
+    -- no need to measure maxH for segments as it's always the same
+    local totalH = 0
+    local baseH = 0
 
     for _, seg in ipairs(segments) do
         totalW = totalW + seg.width
-        if seg.height > maxH then maxH = seg.height end
+        if baseH == 0 then baseH = seg.height end
+        if seg.drop then totalH = totalH + seg.height end
     end
 
-    return totalW, maxH
+    totalH = totalH + baseH
+
+    return totalW, totalH
 end
 
 local COLOR_DEFAULT = Color(255, 200, 0)
@@ -272,11 +303,16 @@ local function ShowMessage()
 
         function content:Paint(w, h)
             local segX = 0 + (padding / 2)
+            local segY = 0
 
             for _, seg in ipairs(paintSegments) do
+                if seg.drop then
+                    segY = segY + seg.height
+                end
+
                 SurfaceSetFont(seg.font)
                 SurfaceSetTextColor(font_color)
-                SurfaceSetTextPos(segX, 0)
+                SurfaceSetTextPos(segX, segY)
                 SurfaceDrawText(seg.text)
 
                 -- Strike-through line
