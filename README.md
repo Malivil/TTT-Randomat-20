@@ -1,4 +1,4 @@
-232Thanks to [Dem](https://steamcommunity.com/profiles/76561198076733538) for the 'TTT Randomat 2.0' mod which this is an update to.\
+Thanks to [Dem](https://steamcommunity.com/profiles/76561198076733538) for the 'TTT Randomat 2.0' mod which this is an update to.\
 Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT Randomat' mod which THAT was an update to.
 \
 \
