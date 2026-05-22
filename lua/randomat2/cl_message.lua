@@ -70,6 +70,7 @@ local function ProcessFormattedSegments(messageSegments, big)
         local outline = seg.outline or false
         local newline = seg.newline or false
         local descend = seg.descend or false
+        local ascend = seg.ascend or false
         local vertical = (not seg.descend) and seg.vertical or false
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
@@ -95,6 +96,28 @@ local function ProcessFormattedSegments(messageSegments, big)
                     outline = outline,
                     newline = newline,
                     descend = descend,
+                })
+            end
+        elseif ascend then
+
+            print("Exploding ascend")
+            exploded = string.Split(seg.text, "")
+
+            for i, splitString in ipairs(exploded) do
+                local segW, segH = SurfaceGetTextSize(splitString)
+
+                local ascend = i ~= 1
+
+                TableInsert(segments, {
+                    text = splitString,
+                    font = fontName,
+                    width = segW,
+                    height = segH,
+                    underline = underline,
+                    strikethrough = strikethrough,
+                    outline = outline,
+                    newline = newline,
+                    ascend = ascend,
                 })
             end
         elseif vertical then
@@ -141,20 +164,22 @@ local function MeasureSegments(segments)
     local baseW = 0
     local totalW = 0
     -- no need to measure maxH for segments as it's always the same
-    local totalH = 0
+    local totalDown = 0
+    local totalUp = 0
     local baseH = 0
 
     for _, seg in ipairs(segments) do
         if seg.width > baseW then baseW = seg.width end
         if not seg.newline then totalW = totalW + seg.width end
         if baseH == 0 then baseH = seg.height end
-        if seg.descend or seg.newline or seg.vertical then totalH = totalH + seg.height end
+        if seg.descend or seg.newline or seg.vertical then totalDown = totalDown + seg.height end
+        if seg.ascend then totalUp = totalUp + seg.height end
     end
 
     totalW = math.max(totalW, baseW)
-    totalH = totalH + baseH
+    local totalH = math.max(totalDown, totalUp) + baseH
 
-    return totalW, totalH
+    return totalW, totalDown, totalUp, baseH
 end
 
 local COLOR_DEFAULT = Color(255, 200, 0)
@@ -273,14 +298,21 @@ local function ShowMessage()
     local tag = net.ReadString()
     if tag == "" then tag = "default" end
 
+    local yOffset = nil
     local msgW, msgH
     local padding = big and 10 or 8
     local segments
 
     if formatted then
+        local totalDown
+        local totalUp
+        local baseH
+        
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
-        msgW, msgH = MeasureSegments(segments)
+        msgW, totalDown, totalUp, baseH = MeasureSegments(segments)
+        msgH = math.max(totalDown, totalUp) + baseH
+        yOffset = (totalUp - totalDown) > 0 and (totalUp - totalDown) or 0
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
@@ -330,7 +362,7 @@ local function ShowMessage()
 
         function content:Paint(w, h)
             local segX = 0 + (padding / 2)
-            local segY = 0
+            local segY = 0 + yOffset
             local preceedingCharacterW = 0
             local lastChar = ""
 
@@ -341,6 +373,10 @@ local function ShowMessage()
 
                 if seg.descend or seg.newline then
                     segY = segY + seg.height
+                end
+
+                if seg.ascend then
+                    segY = segY - seg.height
                 end
 
                 if seg.vertical then
