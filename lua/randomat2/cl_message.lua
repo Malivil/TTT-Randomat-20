@@ -68,22 +68,22 @@ local function ProcessFormattedSegments(messageSegments, big)
         local strikethrough = seg.strikethrough or false
         local shadow = seg.shadow or false
         local outline = seg.outline or false
-        local newline = seg.newline or nil
-        local cascade = seg.cascade or nil
-        local vertical = (not cascade) and seg.vertical or nil
+        local newline = seg.newline or false
+        local descend = seg.descend or false
+        local vertical = (not seg.descend) and seg.vertical or false
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
         SurfaceSetFont(fontName)
 
         local exploded = {}
 
-        if cascade then
+        if descend then
             exploded = string.Split(seg.text, "")
 
             for i, splitString in ipairs(exploded) do
                 local segW, segH = SurfaceGetTextSize(splitString)
 
-                local drop = i ~= 1
+                local descend = i ~= 1
 
                 TableInsert(segments, {
                     text = splitString,
@@ -94,10 +94,29 @@ local function ProcessFormattedSegments(messageSegments, big)
                     strikethrough = strikethrough,
                     outline = outline,
                     newline = newline,
-                    drop = drop,
+                    descend = descend,
                 })
             end
+        elseif vertical then
+            exploded = string.Split(seg.text, "")
 
+            for i, splitString in ipairs(exploded) do
+                local segW, segH = SurfaceGetTextSize(splitString)
+
+                local vertical = i ~= 1
+
+                TableInsert(segments, {
+                    text = splitString,
+                    font = fontName,
+                    width = segW,
+                    height = segH,
+                    underline = underline,
+                    strikethrough = strikethrough,
+                    outline = outline,
+                    newline = newline,
+                    vertical = vertical,
+                })
+            end
         else
             local segW, segH = SurfaceGetTextSize(seg.text)
 
@@ -129,7 +148,7 @@ local function MeasureSegments(segments)
         if seg.width > baseW then baseW = seg.width end
         if not seg.newline then totalW = totalW + seg.width end
         if baseH == 0 then baseH = seg.height end
-        if seg.drop or seg.newline then totalH = totalH + seg.height end
+        if seg.descend or seg.newline or seg.vertical then totalH = totalH + seg.height end
     end
 
     totalW = math.max(totalW, baseW)
@@ -206,7 +225,7 @@ local function RepositionStack()
     end
 end
 
-local function DrawFormattingLine(seg, segX, font_color, offset)
+local function DrawFormattingLine(seg, segX, segY, font_color, offset)
     local startOffset = 0
     local blankLength = 0
     local spaceW = SurfaceGetTextSize(" ")
@@ -222,7 +241,7 @@ local function DrawFormattingLine(seg, segX, font_color, offset)
         blankLength = blankLength + spaceW
     end
 
-    local lineY = offset * seg.height
+    local lineY = segY + offset * seg.height
     local lineWidth = seg.width - blankLength
 
     if seg.outline then
@@ -312,30 +331,44 @@ local function ShowMessage()
         function content:Paint(w, h)
             local segX = 0 + (padding / 2)
             local segY = 0
+            local preceedingCharacterW = 0
+            local lastChar = ""
 
             for _, seg in ipairs(paintSegments) do
-                if seg.drop or seg.newline then
+                SurfaceSetFont(seg.font)
+
+                preceedingCharacterW, _ = surface.GetTextSize(lastChar)
+
+                if seg.descend or seg.newline then
                     segY = segY + seg.height
+                end
+
+                if seg.vertical then
+                    segY = segY + seg.height
+                    segX = segX - preceedingCharacterW + ((preceedingCharacterW - seg.width)/2)
                 end
 
                 if seg.newline then segX = 0 + (padding / 2) end
 
-                SurfaceSetFont(seg.font)
                 SurfaceSetTextColor(font_color)
                 SurfaceSetTextPos(segX, segY)
                 SurfaceDrawText(seg.text)
 
                 -- Strike-through line
                 if seg.strikethrough then
-                    DrawFormattingLine(seg, segX, font_color, 0.55)
+                    -- seg.width, _ = surface.GetTextSize(seg.text)
+                    DrawFormattingLine(seg, segX, segY, font_color, 0.55)
                 end
 
                 -- Underline
                 if seg.underline then
-                    DrawFormattingLine(seg, segX, font_color, 0.87)
+                    -- seg.width, _ = surface.GetTextSize(seg.text)
+                    DrawFormattingLine(seg, segX, segY, font_color, 0.87)
                 end
 
                 segX = segX + seg.width
+
+                lastChar = string.sub(seg.text, -1)
             end
         end
     else
