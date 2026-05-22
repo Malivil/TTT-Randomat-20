@@ -58,7 +58,9 @@ local function ProcessFormattedSegments(messageSegments, big)
     local segments = {}
 
     for _, seg in ipairs(messageSegments) do
-        if not seg.text or seg.text == "" then continue end
+        if not seg.text then continue end
+        seg.text = string.Replace(seg.text, "\n", "")
+        if seg.text == "" then continue end
 
         local bold = seg.bold or false
         local italic = seg.italic or false
@@ -66,22 +68,22 @@ local function ProcessFormattedSegments(messageSegments, big)
         local strikethrough = seg.strikethrough or false
         local shadow = seg.shadow or false
         local outline = seg.outline or false
-        local linebreak = seg.linebreak or false
+        local newline = seg.newline or nil
+        local cascade = seg.cascade or nil
+        local vertical = (not cascade) and seg.vertical or nil
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
         SurfaceSetFont(fontName)
 
-        local newLines = string.find(seg.text, "\n", 1)
         local exploded = {}
 
-        if newLines then
-            local startDrop = StartsWith(seg.text, "\n")
-            exploded = string.Split(seg.text, "\n")
+        if cascade then
+            exploded = string.Split(seg.text, "")
 
             for i, splitString in ipairs(exploded) do
                 local segW, segH = SurfaceGetTextSize(splitString)
 
-                local drop = Either(i == 1, startDrop, true)
+                local drop = i ~= 1
 
                 TableInsert(segments, {
                     text = splitString,
@@ -91,7 +93,7 @@ local function ProcessFormattedSegments(messageSegments, big)
                     underline = underline,
                     strikethrough = strikethrough,
                     outline = outline,
-                    linebreak = linebreak,
+                    newline = newline,
                     drop = drop,
                 })
             end
@@ -107,7 +109,7 @@ local function ProcessFormattedSegments(messageSegments, big)
                 underline = underline,
                 strikethrough = strikethrough,
                 outline = outline,
-                linebreak = linebreak,
+                newline = newline,
             })
         end
     end
@@ -125,9 +127,9 @@ local function MeasureSegments(segments)
 
     for _, seg in ipairs(segments) do
         if seg.width > baseW then baseW = seg.width end
-        if not seg.linebreak then totalW = totalW + seg.width end
+        if not seg.newline then totalW = totalW + seg.width end
         if baseH == 0 then baseH = seg.height end
-        if seg.drop or seg.linebreak then totalH = totalH + seg.height end
+        if seg.drop or seg.newline then totalH = totalH + seg.height end
     end
 
     totalW = math.max(totalW, baseW)
@@ -312,11 +314,11 @@ local function ShowMessage()
             local segY = 0
 
             for _, seg in ipairs(paintSegments) do
-                if seg.drop or seg.linebreak then
+                if seg.drop or seg.newline then
                     segY = segY + seg.height
                 end
 
-                if seg.linebreak then segX = 0 + (padding / 2) end
+                if seg.newline then segX = 0 + (padding / 2) end
 
                 SurfaceSetFont(seg.font)
                 SurfaceSetTextColor(font_color)
