@@ -162,24 +162,42 @@ end
 -- Calculate how big the message is
 local function MeasureSegments(segments)
     local baseW = 0
-    local totalW = 0
+    local msgW = 0
     -- no need to measure maxH for segments as it's always the same
-    local totalDown = 0
-    local totalUp = 0
+    local currentY = 0
+    local maxY = 0
+    local minY = 0
     local baseH = 0
 
     for _, seg in ipairs(segments) do
-        if seg.width > baseW then baseW = seg.width end
-        if not seg.newline then totalW = totalW + seg.width end
-        if baseH == 0 then baseH = seg.height end
-        if seg.descend or seg.newline or seg.vertical then totalDown = totalDown + seg.height end
-        if seg.ascend then totalUp = totalUp + seg.height end
+        if seg.width > baseW then
+            baseW = seg.width
+        end
+
+        if not (seg.newline or seg.vertical) then
+            msgW = msgW + seg.width
+        end
+
+        if baseH == 0 then
+            baseH = seg.height
+        end
+
+        if seg.descend or seg.newline or seg.vertical then
+            currentY = currentY + seg.height
+            if currentY > maxY then maxY = currentY end
+        end
+
+        if seg.ascend then
+            currentY = currentY - seg.height
+            if currentY < minY then minY = currentY end
+        end
     end
 
-    totalW = math.max(totalW, baseW)
-    local totalH = math.max(totalDown, totalUp) + baseH
+    msgW = math.max(msgW, baseW)
+    local msgH = maxY - minY + baseH
+    local yOffset = math.abs(minY)
 
-    return totalW, totalDown, totalUp, baseH
+    return msgW, msgH, yOffset
 end
 
 local COLOR_DEFAULT = Color(255, 200, 0)
@@ -310,9 +328,9 @@ local function ShowMessage()
         
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
-        msgW, totalDown, totalUp, baseH = MeasureSegments(segments)
-        msgH = math.max(totalDown, totalUp) + baseH
-        yOffset = (totalUp - totalDown) > 0 and (totalUp - totalDown) or 0
+        msgW, msgH, yOffset = MeasureSegments(segments)
+        -- msgH = totalDown - totalUp + baseH -- math.max(totalDown, totalUp) + baseH
+        -- yOffset = (totalUp - totalDown) > 0 and (totalUp - totalDown) or 0
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
