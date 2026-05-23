@@ -912,7 +912,7 @@ end
 
 local SendNotify, ParseNotifyLines
 
-ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
     local formatted = type(msg) == "table"
     local splitMessages = {}
 
@@ -960,16 +960,23 @@ ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_c
 
     if splitMessages then
         for _, message in ipairs(splitMessages) do
-            SendNotify(message, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+            SendNotify(message, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
         end
     end
 end
 
-SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+local messageGroupCounter = 0
+
+SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
     -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
     if not allow_secret and Randomat:IsEventActive("secret") then return end
     if not msg or #msg == 0 then return end
     local formatted = type(msg) == "table"
+
+    if not group then
+        messageGroupCounter = messageGroupCounter + 1
+        group = messageGroupCounter
+    end
 
     -- Check for `\n` or `newline = true`
     local newlines
@@ -986,7 +993,7 @@ SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, 
     end
 
     if newlines then
-        ParseNotifyLines(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+        ParseNotifyLines(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
         return
     end
 
@@ -1007,6 +1014,7 @@ SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, 
     net.WriteUInt(length, 8)
     net.WriteColor(font_color or COLOR_BLANK)
     net.WriteString(tag or "")
+    net.WriteUInt(group, 32)
     if not targ then net.Broadcast() else net.Send(targ) end
 end
 

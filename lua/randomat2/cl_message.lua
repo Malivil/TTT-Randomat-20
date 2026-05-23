@@ -222,8 +222,16 @@ local function RepositionStack()
     local testY = newest.baseY
     for i = count - 1, 1, -1 do
         local entry = message_stack[i]
+        local below = message_stack[i + 1]
         if not IsValid(entry.panel) then continue end
-        testY = testY - entry.panel:GetTall() - STACK_GAP
+        
+        -- If messages are in the same group, stick them together
+        local thisGap = STACK_GAP
+        if below and entry.group == below.group then
+            thisGap = 0
+        end
+
+        testY = testY - entry.panel:GetTall() - thisGap
         if testY < 0 then
             stacksFit = false
             break
@@ -235,9 +243,16 @@ local function RepositionStack()
         newest.panel:SetY(newest.baseY)
         for i = count - 1, 1, -1 do
             local entry = message_stack[i]
-            local below = message_stack[i + 1].panel
-            if not IsValid(entry.panel) or not IsValid(below) then continue end
-            entry.panel:SetY(MathMax(below:GetY() - entry.panel:GetTall() - STACK_GAP, 0))
+            local below = message_stack[i + 1]
+            if not IsValid(entry.panel) or not IsValid(below.panel) then continue end
+            
+            -- Again, if messages are in the same group, stick them together
+            local thisGap = STACK_GAP
+            if entry.group == below.group then
+                thisGap = 0
+            end
+
+            entry.panel:SetY(MathMax(below.panel:GetY() - entry.panel:GetTall() - thisGap, 0))
         end
 
     -- If we ARE going to overflow then start putting new messages under the older ones
@@ -245,9 +260,16 @@ local function RepositionStack()
         message_stack[1].panel:SetY(0)
         for i = 2, count do
             local entry = message_stack[i]
-            local above = message_stack[i - 1].panel
-            if not IsValid(entry.panel) or not IsValid(above) then continue end
-            entry.panel:SetY(above:GetY() + above:GetTall() + STACK_GAP)
+            local above = message_stack[i - 1]
+            if not IsValid(entry.panel) or not IsValid(above.panel) then continue end
+            
+            -- Yet again, if messages are in the same group, stick them together
+            local thisGap = STACK_GAP
+            if entry.group == above.group then
+                thisGap = 0
+            end
+
+            entry.panel:SetY(above.panel:GetY() + above.panel:GetTall() + thisGap)
         end
 
         -- Safety net so that if a new message would go off the BOTTOM of the screen, the whole stack moves upwards instead
@@ -318,6 +340,8 @@ local function ShowMessage()
 
     local tag = net.ReadString()
     if tag == "" then tag = "default" end
+
+    local group = net.ReadUInt(32)
 
     local yOffset = nil
     local msgW, msgH
@@ -442,9 +466,9 @@ local function ShowMessage()
 
     -- If this is a big message and the only message in the stack is small, put this in front of the small one so it shows on top
     if big and #message_stack == 1 and not message_stack[1].panel.big then
-        TableInsert(message_stack, 1, { panel = panel, baseY = baseY, tag = tag })
+        TableInsert(message_stack, 1, { panel = panel, baseY = baseY, tag = tag, group = group })
     else
-        TableInsert(message_stack, { panel = panel, baseY = baseY, tag = tag })
+        TableInsert(message_stack, { panel = panel, baseY = baseY, tag = tag, group = group })
     end
 
     -- Reposition all messages now that we've added a new one
