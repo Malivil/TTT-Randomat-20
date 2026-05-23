@@ -907,17 +907,91 @@ function Randomat:ClearMessages(tag, targ)
     if not targ then net.Broadcast() else net.Send(targ) end
 end
 
-local function SendNotify(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+local SendNotify, ParseNotifyLines
+
+ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+    local formatted = type(msg) == "table"
+    local splitMessages = {}
+
+    if formatted then
+        local currentLine = {}
+
+        for _, seg in ipairs(msg) do
+            if seg.newline and #currentLine > 0 then
+                table.insert(splitMessages, currentLine)
+                currentLine = {}
+            end
+
+            local textChunks = string.Explode("\n", seg.text or "")
+
+            for i, chunk in ipairs(textChunks) do
+                if chunk ~= "" then
+                    local newSeg = {
+                        text          = chunk,
+                        bold          = seg.bold,
+                        italic        = seg.italic,
+                        underline     = seg.underline,
+                        strikethrough = seg.strikethrough,
+                        shadow        = seg.shadow,
+                        outline       = seg.outline,
+                        descend       = seg.descend,
+                        ascend        = seg.ascend,
+                        vertical      = seg.vertical,
+                    }
+                    table.insert(currentLine, newSeg)
+                end
+
+                if i < #textChunks and #currentLine > 0 then
+                    table.insert(splitMessages, currentLine)
+                    currentLine = {}
+                end
+            end
+        end
+
+        if #currentLine > 0 then
+            table.insert(splitMessages, currentLine)
+        end
+    else
+        splitMessages = string.Explode("\n", msg)
+    end
+
+    if splitMessages then
+        for _, message in ipairs(splitMessages) do
+            SendNotify(message, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+        end
+    end
+end
+
+SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
     -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
     if not allow_secret and Randomat:IsEventActive("secret") then return end
     if not msg or #msg == 0 then return end
+    local formatted = type(msg) == "table"
+
+    -- Check for `\n` or `newline = true`
+    local newlines
+    if formatted then
+        for _, seg in ipairs(msg) do
+            if string.find(seg.text, "\n") or seg.newline then
+                newlines = true
+            end
+        end
+    else
+        if string.find(msg, "\n") then
+            newlines = true
+        end
+    end
+
+    if newlines then
+        ParseNotifyLines(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others)
+        return
+    end
 
     -- if clear_others then do that before sending new message
     if clear_others then
         Randomat:ClearMessages()
     end
 
-    local formatted = type(msg) == "table"
     if not isnumber(length) then length = 0 end
     net.Start(silent and "randomat_message_silent" or "randomat_message")
     net.WriteBool(big)
