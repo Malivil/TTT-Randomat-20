@@ -21,6 +21,9 @@ local SurfaceSetTextPos = surface.SetTextPos
 local TableInsert = table.insert
 local TableRemove = table.remove
 local VguiCreate = vgui.Create
+local StringReplace = string.Replace
+local StringSplit = string.Split
+local MathAbs = math.abs
 
 SurfaceCreateFont("RandomatHeader", {
     font = "Roboto",
@@ -59,7 +62,7 @@ local function ProcessFormattedSegments(messageSegments, big)
 
     for _, seg in ipairs(messageSegments) do
         if not seg.text then continue end
-        seg.text = string.Replace(seg.text, "\n", "")
+        seg.text = StringReplace(seg.text, "\n", "")
         if seg.text == "" then continue end
 
         local bold = seg.bold or false
@@ -79,7 +82,7 @@ local function ProcessFormattedSegments(messageSegments, big)
         local exploded = {}
 
         if descend then
-            exploded = string.Split(seg.text, "")
+            exploded = StringSplit(seg.text, "")
 
             for i, splitString in ipairs(exploded) do
                 local segW, segH = SurfaceGetTextSize(splitString)
@@ -101,7 +104,7 @@ local function ProcessFormattedSegments(messageSegments, big)
         elseif ascend then
 
             print("Exploding ascend")
-            exploded = string.Split(seg.text, "")
+            exploded = StringSplit(seg.text, "")
 
             for i, splitString in ipairs(exploded) do
                 local segW, segH = SurfaceGetTextSize(splitString)
@@ -121,7 +124,7 @@ local function ProcessFormattedSegments(messageSegments, big)
                 })
             end
         elseif vertical then
-            exploded = string.Split(seg.text, "")
+            exploded = StringSplit(seg.text, "")
 
             for i, splitString in ipairs(exploded) do
                 local segW, segH = SurfaceGetTextSize(splitString)
@@ -193,9 +196,9 @@ local function MeasureSegments(segments)
         end
     end
 
-    msgW = math.max(msgW, baseW)
+    msgW = MathMax(msgW, baseW)
     local msgH = maxY - minY + baseH
-    local yOffset = math.abs(minY)
+    local yOffset = MathAbs(minY)
 
     return msgW, msgH, yOffset
 end
@@ -329,8 +332,6 @@ local function ShowMessage()
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
         msgW, msgH, yOffset = MeasureSegments(segments)
-        -- msgH = totalDown - totalUp + baseH -- math.max(totalDown, totalUp) + baseH
-        -- yOffset = (totalUp - totalDown) > 0 and (totalUp - totalDown) or 0
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
@@ -387,7 +388,7 @@ local function ShowMessage()
             for _, seg in ipairs(paintSegments) do
                 SurfaceSetFont(seg.font)
 
-                preceedingCharacterW, _ = surface.GetTextSize(lastChar)
+                preceedingCharacterW, _ = SurfaceGetTextSize(lastChar)
 
                 if seg.descend or seg.newline then
                     segY = segY + seg.height
@@ -410,13 +411,11 @@ local function ShowMessage()
 
                 -- Strike-through line
                 if seg.strikethrough then
-                    -- seg.width, _ = surface.GetTextSize(seg.text)
                     DrawFormattingLine(seg, segX, segY, font_color, 0.55)
                 end
 
                 -- Underline
                 if seg.underline then
-                    -- seg.width, _ = surface.GetTextSize(seg.text)
                     DrawFormattingLine(seg, segX, segY, font_color, 0.87)
                 end
 

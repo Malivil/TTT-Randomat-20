@@ -19,6 +19,9 @@ local EntsFindByClass = ents.FindByClass
 local GetAllPlayers = player.GetAll
 local GetAllEnts = ents.GetAll
 local PlayerIterator = player.Iterator
+local TableInsert = table.insert
+local StringExplode = string.Explode
+local StringFind = string.find
 
 Randomat.ConVars = {
     "ttt_randomat_allow_client_list",
@@ -121,7 +124,7 @@ local function TruncateEventHistory(count)
         local extra = #Randomat.EventHistory - count
         local keep = {}
         for i = extra + 1, #Randomat.EventHistory, 1 do
-            table.insert(keep, Randomat.EventHistory[i])
+            TableInsert(keep, Randomat.EventHistory[i])
         end
         Randomat.EventHistory = keep
     end
@@ -171,7 +174,7 @@ local function LoadEventHistory()
     local history = string.Split(historyData, "\n")
     for _, h in ipairs(history) do
         if #h > 0 then
-            table.insert(Randomat.EventHistory, h)
+            TableInsert(Randomat.EventHistory, h)
         end
     end
 
@@ -200,7 +203,7 @@ function Randomat:AddEventToHistory(event)
     end
     if event == nil then return end
 
-    table.insert(Randomat.EventHistory, event.Id)
+    TableInsert(Randomat.EventHistory, event.Id)
     TruncateEventHistory(count)
     SaveEventHistory()
 end
@@ -286,7 +289,7 @@ local function TriggerEvent(event, ply, options, ...)
         Randomat:EventNotify(event.Title)
     end
 
-    table.insert(Randomat.ActiveEvents, event)
+    TableInsert(Randomat.ActiveEvents, event)
     event.owner = owner
     event.Owner = owner
     event.Silent = silent
@@ -333,7 +336,7 @@ local function TriggerEvent(event, ply, options, ...)
         if has_description then
             msg = msg .. " | " .. Randomat:GetEventDescription(event)
         end
-        table.insert(secret_event_chat_msgs, msg)
+        TableInsert(secret_event_chat_msgs, msg)
     end
 
     -- Let other addons know that an event was started
@@ -421,7 +424,7 @@ function Randomat:register(tbl)
         local lower_cats = {}
         for _, v in ipairs(tbl.Categories) do
             if v and #v > 0 then
-                table.insert(lower_cats, v:lower())
+                TableInsert(lower_cats, v:lower())
             end
         end
         tbl.Categories = lower_cats
@@ -431,9 +434,9 @@ function Randomat:register(tbl)
         tbl.ConVars = {}
     end
     -- And then save the default ones into it
-    table.insert(tbl.ConVars, "ttt_randomat_" .. id)
-    table.insert(tbl.ConVars, "ttt_randomat_" .. id .. "_min_players")
-    table.insert(tbl.ConVars, "ttt_randomat_" .. id .. "_weight")
+    TableInsert(tbl.ConVars, "ttt_randomat_" .. id)
+    TableInsert(tbl.ConVars, "ttt_randomat_" .. id .. "_min_players")
+    TableInsert(tbl.ConVars, "ttt_randomat_" .. id .. "_weight")
 
     setmetatable(tbl, randomat_meta)
 
@@ -554,7 +557,7 @@ local function GetRandomWeightedEvent(events, can_run)
             weight = default_weight
         end
         for _ = 1, weight do
-            table.insert(weighted_events, id)
+            TableInsert(weighted_events, id)
         end
     end
 
@@ -685,7 +688,7 @@ function Randomat:GetReadableCategory(category)
     elseif category == "modelchange" then
         return "Model Change"
     elseif string.StartsWith(category, "biased_") then
-        local parts = string.Explode("_", category)
+        local parts = StringExplode("_", category)
         for k, p in ipairs(parts) do
             parts[k] = Randomat:Capitalize(p)
         end
@@ -708,7 +711,7 @@ function Randomat:GetAllEventCategories(readable)
             end
             if table.HasValue(categories, cat) then continue end
 
-            table.insert(categories, cat)
+            TableInsert(categories, cat)
         end
     end
     return categories
@@ -725,7 +728,7 @@ function Randomat:GetEventCategories(event, readable)
     if readable then
         categories = {}
         for _, c in ipairs(event.Categories) do
-            table.insert(categories, Randomat:GetReadableCategory(c))
+            TableInsert(categories, Randomat:GetReadableCategory(c))
         end
     else
         categories = event.Categories
@@ -747,7 +750,7 @@ function Randomat:GetEventsByCategory(category, active)
     local lower_cat = category:lower()
     for _, e in pairs(tbl) do
         if type(e.Categories) == "table" and table.HasValue(e.Categories, lower_cat) then
-            table.insert(events, e)
+            TableInsert(events, e)
         end
     end
     return events
@@ -775,7 +778,7 @@ function Randomat:GetEventsByCategories(categories, active)
         end
 
         if has_all then
-            table.insert(events, e)
+            TableInsert(events, e)
         end
     end
     return events
@@ -801,7 +804,7 @@ function Randomat:GetEventsByType(etype)
     local events = {}
     for _, e in pairs(Randomat.Events) do
         if (e.Type == etype) or (type(e.Type) == "table" and table.HasValue(e.Type, etype)) then
-            table.insert(events, e)
+            TableInsert(events, e)
         end
     end
     return events
@@ -835,7 +838,7 @@ function Randomat:GetPlayers(shuffle, alive_only, dead_only, dead_includes_spec)
                 (alive_only and (ply:Alive() and not ply:IsSpec())) or
             -- Dead but not spec unless that's enabled
                 (dead_only and (not ply:Alive() or ply:IsSpec()) and (dead_includes_spec or ply:GetRole() ~= ROLE_NONE))) then
-                table.insert(plys, ply)
+                TableInsert(plys, ply)
             end
         end
     end
@@ -918,11 +921,11 @@ ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_c
 
         for _, seg in ipairs(msg) do
             if seg.newline and #currentLine > 0 then
-                table.insert(splitMessages, currentLine)
+                TableInsert(splitMessages, currentLine)
                 currentLine = {}
             end
 
-            local textChunks = string.Explode("\n", seg.text or "")
+            local textChunks = StringExplode("\n", seg.text or "")
 
             for i, chunk in ipairs(textChunks) do
                 if chunk ~= "" then
@@ -938,21 +941,21 @@ ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_c
                         ascend        = seg.ascend,
                         vertical      = seg.vertical,
                     }
-                    table.insert(currentLine, newSeg)
+                    TableInsert(currentLine, newSeg)
                 end
 
                 if i < #textChunks and #currentLine > 0 then
-                    table.insert(splitMessages, currentLine)
+                    TableInsert(splitMessages, currentLine)
                     currentLine = {}
                 end
             end
         end
 
         if #currentLine > 0 then
-            table.insert(splitMessages, currentLine)
+            TableInsert(splitMessages, currentLine)
         end
     else
-        splitMessages = string.Explode("\n", msg)
+        splitMessages = StringExplode("\n", msg)
     end
 
     if splitMessages then
@@ -972,12 +975,12 @@ SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, 
     local newlines
     if formatted then
         for _, seg in ipairs(msg) do
-            if string.find(seg.text, "\n") or seg.newline then
+            if StringFind(seg.text, "\n") or seg.newline then
                 newlines = true
             end
         end
     else
-        if string.find(msg, "\n") then
+        if StringFind(msg, "\n") then
             newlines = true
         end
     end
@@ -1321,7 +1324,7 @@ function randomat_meta:AddHook(hooktype, callbackfunc, suffix)
 
     self.Hooks = self.Hooks or {}
 
-    table.insert(self.Hooks, {hooktype, id})
+    TableInsert(self.Hooks, {hooktype, id})
 end
 
 function randomat_meta:RemoveHook(hooktype, suffix)
@@ -1481,7 +1484,7 @@ function randomat_meta:SwapWeapons(ply, weapon_list)
         new_cr = true
         for _, w in ipairs(ply:GetWeapons()) do
             if w.Category == WEAPON_CATEGORY_ROLE then
-                table.insert(role_weapons, w)
+                TableInsert(role_weapons, w)
             end
         end
     end
@@ -1551,7 +1554,7 @@ function randomat_meta:SetAllPlayerScales(scale)
     self:AddHook("TTTSpeedMultiplier", function(ply, mults)
         if not ply:Alive() or ply:IsSpec() then return end
         local speed_factor = math.Clamp(ply:GetStepSize() / 9, 0.25, 1)
-        table.insert(mults, speed_factor)
+        TableInsert(mults, speed_factor)
     end)
 end
 
@@ -1677,8 +1680,8 @@ local function ClearAutoComplete(cmd, args)
     local name = string.Trim(args):lower()
     local options = {}
     for _, v in pairs(Randomat.ActiveEvents) do
-        if string.find(v.Id:lower(), name) then
-            table.insert(options, cmd .. " " .. v.Id)
+        if StringFind(v.Id:lower(), name) then
+            TableInsert(options, cmd .. " " .. v.Id)
         end
     end
     return options
@@ -1703,8 +1706,8 @@ local function TriggerAutoComplete(cmd, args)
     local name = string.Trim(args):lower()
     local options = {}
     for _, v in pairs(Randomat.Events) do
-        if string.find(v.Id:lower(), name) then
-            table.insert(options, cmd .. " " .. v.Id)
+        if StringFind(v.Id:lower(), name) then
+            TableInsert(options, cmd .. " " .. v.Id)
         end
     end
     return options
