@@ -5,7 +5,10 @@ local string = string
 local table = table
 local vgui = vgui
 
+local MathAbs = math.abs
 local MathMax = math.max
+local StringReplace = string.Replace
+local StringSplit = string.Split
 local StringSub = string.sub
 local StartsWith = string.StartsWith
 local EndsWith = string.EndsWith
@@ -21,9 +24,6 @@ local SurfaceSetTextPos = surface.SetTextPos
 local TableInsert = table.insert
 local TableRemove = table.remove
 local VguiCreate = vgui.Create
-local StringReplace = string.Replace
-local StringSplit = string.Split
-local MathAbs = math.abs
 
 SurfaceCreateFont("RandomatHeader", {
     font = "Roboto",
@@ -35,6 +35,14 @@ SurfaceCreateFont("RandomatSmallMsg", {
     size = 32
 })
 
+
+local COLOR_DEFAULT = Color(255, 200, 0)
+local COLOR_BACKGROUND = Color(0, 0, 0, 200)
+local STACK_GAP = 4
+
+-- Ordered list of all active panels (newest last) with their default Y position (because Notify and SmallNotify have different starting points)
+local messageStack = {}
+-- Cached list of created fonts for formatted text
 local createdFonts = {}
 
 -- Make and cache fonts on-demand
@@ -62,18 +70,16 @@ local function ProcessFormattedSegments(messageSegments, big)
 
     for _, seg in ipairs(messageSegments) do
         if not seg.text then continue end
+
         seg.text = StringReplace(seg.text, "\n", "")
         if seg.text == "" then continue end
 
-        local bold = seg.bold or false
-        local italic = seg.italic or false
         local underline = seg.underline or false
         local strikethrough = seg.strikethrough or false
-        local shadow = seg.shadow or false
         local outline = seg.outline or false
         local newline = seg.newline or false
 
-        local layoutShape = nil
+        local layoutShape
         if seg.descend then
             layoutShape = "descend"
         elseif seg.ascend then
@@ -82,18 +88,14 @@ local function ProcessFormattedSegments(messageSegments, big)
             layoutShape = "vertical"
         end
 
-        local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
+        local fontName = BuildFormattedFont(seg.bold, seg.italic, underline, strikethrough, seg.shadow, outline, big)
         SurfaceSetFont(fontName)
         if layoutShape then
-            local exploded = StringSplit(seg.text, "")
-
-            for i, splitString in ipairs(exploded) do
-                local segW, segH = SurfaceGetTextSize(splitString)
-
-                local hasShape = (i ~= 1)
-
+            local parts = StringSplit(seg.text, "")
+            for i, part in ipairs(parts) do
+                local segW, segH = SurfaceGetTextSize(part)
                 local newSeg = {
-                    text          = splitString,
+                    text          = part,
                     font          = fontName,
                     width         = segW,
                     height        = segH,
@@ -103,13 +105,12 @@ local function ProcessFormattedSegments(messageSegments, big)
                     newline       = newline,
                 }
 
-                newSeg[layoutShape] = hasShape
-
+                -- Track this segment's shape after the first part
+                newSeg[layoutShape] = i ~= 1
                 TableInsert(segments, newSeg)
             end
         else
             local segW, segH = SurfaceGetTextSize(seg.text)
-
             TableInsert(segments, {
                 text = seg.text,
                 font = fontName,
@@ -141,7 +142,7 @@ local function MeasureSegments(segments)
             baseW = seg.width
         end
 
-        if not (seg.newline or seg.vertical) then
+        if not seg.newline and not seg.vertical then
             msgW = msgW + seg.width
         end
 
@@ -160,42 +161,34 @@ local function MeasureSegments(segments)
         end
     end
 
-    msgW = MathMax(msgW, baseW)
     local msgH = maxY - minY + baseH
-    local yOffset = MathAbs(minY)
-
-    return msgW, msgH, yOffset
+    return MathMax(msgW, baseW), msgH, MathAbs(minY)
 end
 
-local COLOR_DEFAULT = Color(255, 200, 0)
-local COLOR_BACKGROUND = Color(0, 0, 0, 200)
-local STACK_GAP = 4
-
--- Ordered list of all active panels (newest last) with their default Y position (because Notify and SmallNotify have different starting points)
-local message_stack = {}
+local function CalculateMessageGap(first, second)
+    -- If messages are in the same group, stick them together
+    if second and first.group == second.group then
+        return 0
+    end
+    return STACK_GAP
+end
 
 local function RepositionStack()
-    local count = #message_stack
+    local count = #messageStack
     if count == 0 then return end
 
-    local newest = message_stack[count]
+    local newest = messageStack[count]
     if not IsValid(newest.panel) then return end
 
     -- Do a little test run to check whether we're going to overflow
     local stacksFit = true
     local testY = newest.baseY
     for i = count - 1, 1, -1 do
-        local entry = message_stack[i]
-        local below = message_stack[i + 1]
+        local entry = messageStack[i]
+        local below = messageStack[i + 1]
         if not IsValid(entry.panel) then continue end
 
-        -- If messages are in the same group, stick them together
-        local thisGap = STACK_GAP
-        if below and entry.group == below.group then
-            thisGap = 0
-        end
-
-        testY = testY - entry.panel:GetTall() - thisGap
+        testY = testY - entry.panel:GetTall() - CalculateMessageGap(entry, below)
         if testY < 0 then
             stacksFit = false
             break
@@ -206,43 +199,30 @@ local function RepositionStack()
     if stacksFit then
         newest.panel:SetY(newest.baseY)
         for i = count - 1, 1, -1 do
-            local entry = message_stack[i]
-            local below = message_stack[i + 1]
+            local entry = messageStack[i]
+            local below = messageStack[i + 1]
             if not IsValid(entry.panel) or not IsValid(below.panel) then continue end
 
-            -- Again, if messages are in the same group, stick them together
-            local thisGap = STACK_GAP
-            if entry.group == below.group then
-                thisGap = 0
-            end
-
-            entry.panel:SetY(MathMax(below.panel:GetY() - entry.panel:GetTall() - thisGap, 0))
+            entry.panel:SetY(MathMax(below.panel:GetY() - entry.panel:GetTall() - CalculateMessageGap(entry, below), 0))
         end
-
     -- If we ARE going to overflow then start putting new messages under the older ones
     else
-        message_stack[1].panel:SetY(0)
+        messageStack[1].panel:SetY(0)
         for i = 2, count do
-            local entry = message_stack[i]
-            local above = message_stack[i - 1]
+            local entry = messageStack[i]
+            local above = messageStack[i - 1]
             if not IsValid(entry.panel) or not IsValid(above.panel) then continue end
 
-            -- Yet again, if messages are in the same group, stick them together
-            local thisGap = STACK_GAP
-            if entry.group == above.group then
-                thisGap = 0
-            end
-
-            entry.panel:SetY(above.panel:GetY() + above.panel:GetTall() + thisGap)
+            entry.panel:SetY(above.panel:GetY() + above.panel:GetTall() + CalculateMessageGap(entry, above))
         end
 
         -- Safety net so that if a new message would go off the BOTTOM of the screen, the whole stack moves upwards instead
-        local newestPanel = message_stack[count].panel
+        local newestPanel = messageStack[count].panel
         if IsValid(newestPanel) then
             local overshoot = (newestPanel:GetY() + newestPanel:GetTall()) - ScrH()
             if overshoot > 0 then
                 for i = 1, count do
-                    local entry = message_stack[i]
+                    local entry = messageStack[i]
                     if IsValid(entry.panel) then
                         local newY = entry.panel:GetY() - overshoot
                         -- Just let the oldest messages overlap rather than pushing them off the screen (seems like the lesser of two evils)
@@ -262,14 +242,11 @@ local function DrawFormattingLine(seg, segX, segY, font_color, offset)
     local blankLength = 0
     local spaceW = SurfaceGetTextSize(" ")
 
-    local hasLeadSpace = StartsWith(seg.text, " ")
-    local hasTrailSpace = EndsWith(seg.text, " ")
-
-    if hasLeadSpace then
+    if StartsWith(seg.text, " ") then
         startOffset = spaceW
         blankLength = blankLength + spaceW
     end
-    if hasTrailSpace then
+    if EndsWith(seg.text, " ") then
         blankLength = blankLength + spaceW
     end
 
@@ -307,9 +284,9 @@ local function ShowMessage()
 
     local group = net.ReadUInt(32)
 
-    local yOffset = nil
-    local msgW, msgH
     local padding = big and 10 or 8
+    local yOffset
+    local msgW, msgH
     local segments
 
     if formatted then
@@ -327,13 +304,11 @@ local function ShowMessage()
     panel:SetLife(length)
     panel:SetSize(msgW + padding, msgH)
     panel:Center()
-
     if not big then
         panel:CenterVertical(0.55)
     end
 
     local baseY = panel:GetY()
-
     local bg = VguiCreate("DPanel", panel)
     bg:SetBackgroundColor(COLOR_BACKGROUND)
     bg:Dock(FILL)
@@ -342,9 +317,9 @@ local function ShowMessage()
         if not IsValid(parent) then return end
 
         -- Remove from the ordered stack table
-        for i = #message_stack, 1, -1 do
-            if message_stack[i].panel == parent then
-                TableRemove(message_stack, i)
+        for i = #messageStack, 1, -1 do
+            if messageStack[i].panel == parent then
+                TableRemove(messageStack, i)
                 break
             end
         end
@@ -365,13 +340,13 @@ local function ShowMessage()
         function content:Paint(w, h)
             local segX = padding / 2
             local segY = yOffset
-            local preceedingCharacterW
+            local lastCharW
             local lastChar = ""
 
             for _, seg in ipairs(paintSegments) do
                 SurfaceSetFont(seg.font)
 
-                preceedingCharacterW, _ = SurfaceGetTextSize(lastChar)
+                lastCharW, _ = SurfaceGetTextSize(lastChar)
 
                 if seg.descend or seg.newline then
                     segY = segY + seg.height
@@ -383,7 +358,7 @@ local function ShowMessage()
 
                 if seg.vertical then
                     segY = segY + seg.height
-                    segX = segX - preceedingCharacterW + ((preceedingCharacterW - seg.width) / 2)
+                    segX = segX - lastCharW + ((lastCharW - seg.width) / 2)
                 end
 
                 if seg.newline then segX = 0 + (padding / 2) end
@@ -403,7 +378,6 @@ local function ShowMessage()
                 end
 
                 segX = segX + seg.width
-
                 lastChar = StringSub(seg.text, -1)
             end
         end
@@ -424,10 +398,10 @@ local function ShowMessage()
     panel:AddItem(bg)
 
     -- If this is a big message and the only message in the stack is small, put this in front of the small one so it shows on top
-    if big and #message_stack == 1 and not message_stack[1].panel.big then
-        TableInsert(message_stack, 1, { panel = panel, baseY = baseY, tag = tag, group = group })
+    if big and #messageStack == 1 and not messageStack[1].panel.big then
+        TableInsert(messageStack, 1, { panel = panel, baseY = baseY, tag = tag, group = group })
     else
-        TableInsert(message_stack, { panel = panel, baseY = baseY, tag = tag, group = group })
+        TableInsert(messageStack, { panel = panel, baseY = baseY, tag = tag, group = group })
     end
 
     -- Reposition all messages now that we've added a new one
@@ -436,17 +410,17 @@ end
 
 local function ClearMessages(all, tag)
     if all then
-        for _, entry in ipairs(message_stack) do
+        for _, entry in ipairs(messageStack) do
             if IsValid(entry.panel) then
                 entry.panel:Remove()
             end
         end
-        message_stack = {}
+        messageStack = {}
     elseif tag then
-        for i = #message_stack, 1, -1 do
-            local entry = message_stack[i]
+        for i = #messageStack, 1, -1 do
+            local entry = messageStack[i]
             if IsValid(entry.panel) and entry.tag == tag then
-                TableRemove(message_stack, i)
+                TableRemove(messageStack, i)
                 entry.panel:Remove()
             end
         end

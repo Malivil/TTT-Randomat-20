@@ -20,7 +20,7 @@ local GetAllPlayers = player.GetAll
 local GetAllEnts = ents.GetAll
 local PlayerIterator = player.Iterator
 local TableInsert = table.insert
-local StringExplode = string.Explode
+local StringSplit = string.Split
 local StringFind = string.find
 
 Randomat.ConVars = {
@@ -171,7 +171,7 @@ local function LoadEventHistory()
         return
     end
 
-    local history = string.Split(historyData, "\n")
+    local history = StringSplit(historyData, "\n")
     for _, h in ipairs(history) do
         if #h > 0 then
             TableInsert(Randomat.EventHistory, h)
@@ -688,7 +688,7 @@ function Randomat:GetReadableCategory(category)
     elseif category == "modelchange" then
         return "Model Change"
     elseif string.StartsWith(category, "biased_") then
-        local parts = StringExplode("_", category)
+        local parts = StringSplit(category, "_")
         for k, p in ipairs(parts) do
             parts[k] = Randomat:Capitalize(p)
         end
@@ -910,13 +910,10 @@ function Randomat:ClearMessages(tag, targ)
     if not targ then net.Broadcast() else net.Send(targ) end
 end
 
-local SendNotify, ParseNotifyLines
-
-ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
-    local formatted = type(msg) == "table"
+local SendNotify
+local function ParseNotifyLines(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
     local splitMessages = {}
-
-    if formatted then
+    if type(msg) == "table" then
         local currentLine = {}
 
         for _, seg in ipairs(msg) do
@@ -925,12 +922,11 @@ ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_c
                 currentLine = {}
             end
 
-            local textChunks = StringExplode("\n", seg.text or "")
-
-            for i, chunk in ipairs(textChunks) do
-                if chunk ~= "" then
+            local parts = StringSplit(seg.text or "", "\n")
+            for i, part in ipairs(parts) do
+                if part ~= "" then
                     local newSeg = {
-                        text          = chunk,
+                        text          = part,
                         bold          = seg.bold,
                         italic        = seg.italic,
                         underline     = seg.underline,
@@ -939,12 +935,12 @@ ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_c
                         outline       = seg.outline,
                         descend       = seg.descend,
                         ascend        = seg.ascend,
-                        vertical      = seg.vertical,
+                        vertical      = seg.vertical
                     }
                     TableInsert(currentLine, newSeg)
                 end
 
-                if i < #textChunks and #currentLine > 0 then
+                if i < #parts and #currentLine > 0 then
                     TableInsert(splitMessages, currentLine)
                     currentLine = {}
                 end
@@ -955,18 +951,15 @@ ParseNotifyLines = function(msg, big, length, targ, silent, allow_secret, font_c
             TableInsert(splitMessages, currentLine)
         end
     else
-        splitMessages = StringExplode("\n", msg)
+        splitMessages = StringSplit(msg, "\n")
     end
 
-    if splitMessages then
-        for _, message in ipairs(splitMessages) do
-            SendNotify(message, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
-        end
+    for _, message in ipairs(splitMessages) do
+        SendNotify(message, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
     end
 end
 
 local messageGroupCounter = 0
-
 SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, tag, clear_others, group)
     -- Don't broadcast anything when "Secret" is running unless we're told to bypass that
     if not allow_secret and Randomat:IsEventActive("secret") then return end
@@ -982,14 +975,13 @@ SendNotify = function(msg, big, length, targ, silent, allow_secret, font_color, 
     local newlines
     if formatted then
         for _, seg in ipairs(msg) do
-            if StringFind(seg.text, "\n") or seg.newline then
+            if seg.newline or StringFind(seg.text, "\n") then
                 newlines = true
+                break
             end
         end
     else
-        if StringFind(msg, "\n") then
-            newlines = true
-        end
+        newlines = StringFind(msg, "\n") ~= nil
     end
 
     if newlines then
