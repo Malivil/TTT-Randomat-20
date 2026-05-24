@@ -84,9 +84,6 @@ local function ProcessFormattedSegments(messageSegments, big)
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
         SurfaceSetFont(fontName)
-
-        local exploded = {}
-
         if layoutShape then
             local exploded = StringSplit(seg.text, "")
 
@@ -191,7 +188,7 @@ local function RepositionStack()
         local entry = message_stack[i]
         local below = message_stack[i + 1]
         if not IsValid(entry.panel) then continue end
-        
+
         -- If messages are in the same group, stick them together
         local thisGap = STACK_GAP
         if below and entry.group == below.group then
@@ -212,7 +209,7 @@ local function RepositionStack()
             local entry = message_stack[i]
             local below = message_stack[i + 1]
             if not IsValid(entry.panel) or not IsValid(below.panel) then continue end
-            
+
             -- Again, if messages are in the same group, stick them together
             local thisGap = STACK_GAP
             if entry.group == below.group then
@@ -229,7 +226,7 @@ local function RepositionStack()
             local entry = message_stack[i]
             local above = message_stack[i - 1]
             if not IsValid(entry.panel) or not IsValid(above.panel) then continue end
-            
+
             -- Yet again, if messages are in the same group, stick them together
             local thisGap = STACK_GAP
             if entry.group == above.group then
@@ -316,10 +313,6 @@ local function ShowMessage()
     local segments
 
     if formatted then
-        local totalDown
-        local totalUp
-        local baseH
-        
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
         msgW, msgH, yOffset = MeasureSegments(segments)
@@ -363,7 +356,6 @@ local function ShowMessage()
         parent:Remove()
     end
 
-
     if formatted then
         local content = VguiCreate("DPanel", bg)
         content:Dock(FILL)
@@ -371,9 +363,9 @@ local function ShowMessage()
         local paintSegments = segments
 
         function content:Paint(w, h)
-            local segX = 0 + (padding / 2)
-            local segY = 0 + yOffset
-            local preceedingCharacterW = 0
+            local segX = padding / 2
+            local segY = yOffset
+            local preceedingCharacterW
             local lastChar = ""
 
             for _, seg in ipairs(paintSegments) do
@@ -391,7 +383,7 @@ local function ShowMessage()
 
                 if seg.vertical then
                     segY = segY + seg.height
-                    segX = segX - preceedingCharacterW + ((preceedingCharacterW - seg.width)/2)
+                    segX = segX - preceedingCharacterW + ((preceedingCharacterW - seg.width) / 2)
                 end
 
                 if seg.newline then segX = 0 + (padding / 2) end
@@ -412,7 +404,7 @@ local function ShowMessage()
 
                 segX = segX + seg.width
 
-                lastChar = string.sub(seg.text, -1)
+                lastChar = StringSub(seg.text, -1)
             end
         end
     else
