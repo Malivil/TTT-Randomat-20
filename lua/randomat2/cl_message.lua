@@ -35,7 +35,6 @@ SurfaceCreateFont("RandomatSmallMsg", {
     size = 32
 })
 
-
 local COLOR_DEFAULT = Color(255, 200, 0)
 local COLOR_BACKGROUND = Color(0, 0, 0, 200)
 local STACK_GAP = 4
