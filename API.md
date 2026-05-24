@@ -208,18 +208,8 @@ All methods below are automatically defined for every event but events can overr
 Properties used to define and describe an event and its running conditions
 
 **AltTitle** - The alternate title to use for this event. Used to prevent an event from sending an automatic "started" notification (if `Title` is not defined) and to allow for a second searchable title in the Randomat 2.0 ULX module. Defaults to `nil`.\
+Optionally, this can be a table of segments with formatting flags that will be used to build the alternative title string. *(See `Randomat:Notify` below)*\
 *Realm:* Server
-*Example:*\
-Sets the event alternative title to `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
-```lua
-EVENT.AltTitle = {
-  {text = "Normal, "},
-  {text = "bold and italic, ", bold = true, italic = true},
-  {text = "underline, ", underline = true},
-  {text = "strikethrough, ", strikethrough = true},
-  {text = "outline", outline = true},
-}
-```
 
 **Categories** - What categories this event belongs to. Useful for finding events with specific purposes. Also displayed in the ULX admin menu.\
 *Realm:* Server
@@ -247,19 +237,8 @@ EVENT.AltTitle = {
 *Realm:* Server
 
 **Description** - The description for this event. Automatically shown on screen and in each player's chat if event notifications are enabled. Also shown on each event's page in the Randomat 2.0 ULX module. Defaults to `nil`.\
-Optionally, this can be a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ that will be used to build the description string.\
-*Realm:* Server\
-*Example:*\
-Sets the event description to `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
-```lua
-EVENT.Description = {
-  {text = "Normal, "},
-  {text = "bold and italic, ", bold = true, italic = true},
-  {text = "underline, ", underline = true},
-  {text = "strikethrough, ", strikethrough = true},
-  {text = "outline", outline = true},
-}
-```
+Optionally, this can be a table of segments with formatting flags that will be used to build the description string. *(See `Randomat:Notify` below)*\
+*Realm:* Server
 
 **ExtDescription** - The extended description for this event. Shown on each event's page in the Randomat 2.0 ULX module instead of the `Description`. Defaults to `nil`.\
 *Realm:* Server
@@ -302,19 +281,8 @@ Changing the default after the event has already been loaded on a server will on
 *Realm:* Server
 
 **Title** - The title to use for this event. If this is not defined (and `AltTitle` is instead) the automatic "started" notification for this event will not happen.\
-Optionally, this can be a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_ that will be used to build the title string.\
-*Realm:* Server\
-*Example:*\
-Sets the event title to `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
-```lua
-EVENT.Title = {
-  {text = "Normal, "},
-  {text = "bold and italic, ", bold = true, italic = true},
-  {text = "underline, ", underline = true},
-  {text = "strikethrough, ", strikethrough = true},
-  {text = "outline", outline = true},
-}
-```
+Optionally, this can be a table of segments with formatting flags that will be used to build the title string. *(See `Randomat:Notify` below)*\
+*Realm:* Server
 
 **Type** - The *EVENT_TYPE_\** value to use for this event.\
 *Realm:* Server
@@ -506,15 +474,15 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 **Randomat:EndActiveEvents()** - Ends all active events.\
 *Realm:* Server
 
-**Randomat:EventNotify(title)** - Displays the given event title on all players' screens. Also plays a sound. If the "secret" event is active, this call is ignored.\
+**Randomat:EventNotify(message)** - Displays the given message on all players' screens. Also plays a sound. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
 *Parameters:*
-- *title* - The event title
+- *message* - The message to display. Accepts either a plain string or a table of segments with formatting flags (See *Formatting* and *Formatting Example* under `Randomat:Notify` below)
 
-**Randomat:EventNotifySilent(title)** - Displays the given event title on all players' screens. Does not play a sound. If the "secret" event is active, this call is ignored.\
+**Randomat:EventNotifySilent(message)** - Displays the given message on all players' screens. Does not play a sound. If the "secret" event is active, this call is ignored.\
 *Realm:* Server\
 *Parameters:*
-- *title* - The event title
+- *message* - The message to display. Accepts either a plain string or a table of segments with formatting flags (See *Formatting* and *Formatting Example* under `Randomat:Notify` below)
 
 **Randomat:ForceResetAllPlayermodels()** - Resets each player's model and associated data back to what it was at the start of the round. Credit to The Stig.\
 *Realm:* Client and Server\
@@ -891,7 +859,7 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 **Randomat:Notify(msg, length, target, silent, allow_secret, font_color, tag, clear_others)** - Displays a notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
-- *msg* - The message to display. Accepts either a plain string, or a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_
+- *msg* - The message to display. Accepts either a plain string or a table of segments with formatting flags (See *Formatting* and *Formatting Example* below)
 - *length* - The length of time (in seconds) the message should be displayed for (Optional, defaults to 5)
 - *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players (Optional)
 - *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
@@ -900,7 +868,56 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 - *tag* - The tag (as a string) to assign to the notification for subsequent use in `Randomat:ClearMessages(targ, tag)`. (Optional, defaults to `default`)
 - *clear_others* - Whether to clear all other active `Randomat:SmallNotify()` and `Randomat:Notify()` messages before displaying this one. (Optional, defaults to `false`)
 
-*Example:*
+*Formatting:*\
+When passing a table as the `msg` parameter, each segment **must** have the following property:
+- *text* - The text to render in this segment
+
+Each segment can have one or more of the following formatting flags:
+- *bold* - Makes all text in this segment **bold**
+- *italic* - Makes all text in this segment *italicized*
+- *underline* - Underlines all text in this segment
+- *strikethrough* - Draws a line through all text in this segment
+- *outline* - Draws a black outline around all text in this segment
+- *newline* - Puts the text in this segment on a new line, rather than continuing after the previous segment. *NOTE*: You can also use `\n` inside the `text` to split it onto a new line in the middle
+
+Additionally, one of the following shape flags can be used:
+- *ascend* - Draws all text in this segment with each letter higher than the next:
+```
+        s
+       i
+      h
+     t
+
+   e
+  k
+ i
+L
+```
+- *descend* - Draws all text in this segment with each letter lower than the next:
+```
+L
+ i
+  k
+   e
+
+     t
+      h
+       i
+        s
+```
+- *vertical* - Draws all text in this segment with each letter directly under the next:
+```
+L
+i
+k
+e
+
+t
+h
+i
+s
+```
+*Formatting Example:*\
 Displays the notification message `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua
 Randomat:Notify({
@@ -908,7 +925,7 @@ Randomat:Notify({
   {text = "bold and italic, ", bold = true, italic = true},
   {text = "underline, ", underline = true},
   {text = "strikethrough, ", strikethrough = true},
-  {text = "outline", outline = true},
+  {text = "outline", outline = true}
 })
 ```
 
@@ -1098,7 +1115,7 @@ Randomat:Notify({
 **Randomat:SmallNotify(msg, length, target, silent, allow_secret, font_color, tag, clear_others)** - Displays a small notification message on all players' screens. If the "secret" event is active, this call is ignored unless `allow_secret` is `true`.\
 *Realm:* Server\
 *Parameters:*
-- *msg* - The message to display. Accepts either a plain string, or a table of segments with formatting flags _(`bold`, `italic`, `underline`, `strikethrough`, `outline`)_
+- *msg* - The message to display. Accepts either a plain string or a table of segments with formatting flags (See *Formatting* and *Formatting Example* under `Randomat:Notify` above)
 - *length* - The length of time (in seconds) the message should be displayed for (Optional, defaults to 5)
 - *target* - The player to send the notification to. If not provided or `nil`, the notification is sent to all players (Optional)
 - *silent* - Whether the notification should not make a sound when it is displayed (Optional, defaults to `false`)
@@ -1106,18 +1123,6 @@ Randomat:Notify({
 - *font_color* - The [Color](https://wiki.facepunch.com/gmod/Color) of the font (Optional, defaults to rgb(255, 200, 0))
 - *tag* - The tag (as a string) to assign to the notification for subsequent use in `Randomat:ClearMessages(targ, tag)`. (Optional, defaults to `default`)
 - *clear_others* - Whether to clear all other active `Randomat:SmallNotify()` and `Randomat:Notify()` messages before displaying this one. (Optional, defaults to `false`)
-
-**Example:**\
-Displays the notification message `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
-```lua
-Randomat:Notify({
-  {text = "Normal, "},
-  {text = "bold and italic,", bold = true, italic = true},
-  {text = "underline, ", underline = true},
-  {text = "strikethrough, ", strikethrough = true},
-  {text = "outline", outline = true},
-})
-```
 
 **Randomat:SpawnBarrel(pos, range, min_range, ignore_negative, model_override)** - Spawns an explosive barrel near the provided position.\
 *Realm:* Server\
