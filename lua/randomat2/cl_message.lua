@@ -72,76 +72,43 @@ local function ProcessFormattedSegments(messageSegments, big)
         local shadow = seg.shadow or false
         local outline = seg.outline or false
         local newline = seg.newline or false
-        local descend = seg.descend or false
-        local ascend = seg.ascend or false
-        local vertical = (not seg.descend) and seg.vertical or false
+
+        local layoutShape = nil
+        if seg.descend then
+            layoutShape = "descend"
+        elseif seg.ascend then
+            layoutShape = "ascend"
+        elseif seg.vertical then
+            layoutShape = "vertical"
+        end
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
         SurfaceSetFont(fontName)
 
         local exploded = {}
 
-        if descend then
-            exploded = StringSplit(seg.text, "")
+        if layoutShape then
+            local exploded = StringSplit(seg.text, "")
 
             for i, splitString in ipairs(exploded) do
                 local segW, segH = SurfaceGetTextSize(splitString)
 
-                local descend = i ~= 1
+                local hasShape = (i ~= 1)
 
-                TableInsert(segments, {
-                    text = splitString,
-                    font = fontName,
-                    width = segW,
-                    height = segH,
-                    underline = underline,
+                local newSeg = {
+                    text          = splitString,
+                    font          = fontName,
+                    width         = segW,
+                    height        = segH,
+                    underline     = underline,
                     strikethrough = strikethrough,
-                    outline = outline,
-                    newline = newline,
-                    descend = descend,
-                })
-            end
-        elseif ascend then
+                    outline       = outline,
+                    newline       = newline,
+                }
 
-            print("Exploding ascend")
-            exploded = StringSplit(seg.text, "")
+                newSeg[layoutShape] = hasShape
 
-            for i, splitString in ipairs(exploded) do
-                local segW, segH = SurfaceGetTextSize(splitString)
-
-                local ascend = i ~= 1
-
-                TableInsert(segments, {
-                    text = splitString,
-                    font = fontName,
-                    width = segW,
-                    height = segH,
-                    underline = underline,
-                    strikethrough = strikethrough,
-                    outline = outline,
-                    newline = newline,
-                    ascend = ascend,
-                })
-            end
-        elseif vertical then
-            exploded = StringSplit(seg.text, "")
-
-            for i, splitString in ipairs(exploded) do
-                local segW, segH = SurfaceGetTextSize(splitString)
-
-                local vertical = i ~= 1
-
-                TableInsert(segments, {
-                    text = splitString,
-                    font = fontName,
-                    width = segW,
-                    height = segH,
-                    underline = underline,
-                    strikethrough = strikethrough,
-                    outline = outline,
-                    newline = newline,
-                    vertical = vertical,
-                })
+                TableInsert(segments, newSeg)
             end
         else
             local segW, segH = SurfaceGetTextSize(seg.text)
