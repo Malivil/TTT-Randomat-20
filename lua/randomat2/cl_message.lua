@@ -7,6 +7,8 @@ local vgui = vgui
 
 local MathMax = math.max
 local StringSub = string.sub
+local StartsWith = string.StartsWith
+local EndsWith = string.EndsWith
 local SurfaceCreateFont = surface.CreateFont
 local SurfaceDrawText = surface.DrawText
 local SurfaceDrawRect = surface.DrawRect
@@ -19,6 +21,9 @@ local SurfaceSetTextPos = surface.SetTextPos
 local TableInsert = table.insert
 local TableRemove = table.remove
 local VguiCreate = vgui.Create
+local StringReplace = string.Replace
+local StringSplit = string.Split
+local MathAbs = math.abs
 
 SurfaceCreateFont("RandomatHeader", {
     font = "Roboto",
@@ -56,7 +61,9 @@ local function ProcessFormattedSegments(messageSegments, big)
     local segments = {}
 
     for _, seg in ipairs(messageSegments) do
-        if not seg.text or seg.text == "" then continue end
+        if not seg.text then continue end
+        seg.text = StringReplace(seg.text, "\n", "")
+        if seg.text == "" then continue end
 
         local bold = seg.bold or false
         local italic = seg.italic or false
@@ -64,21 +71,56 @@ local function ProcessFormattedSegments(messageSegments, big)
         local strikethrough = seg.strikethrough or false
         local shadow = seg.shadow or false
         local outline = seg.outline or false
+        local newline = seg.newline or false
+
+        local layoutShape = nil
+        if seg.descend then
+            layoutShape = "descend"
+        elseif seg.ascend then
+            layoutShape = "ascend"
+        elseif seg.vertical then
+            layoutShape = "vertical"
+        end
 
         local fontName = BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
-
         SurfaceSetFont(fontName)
-        local segW, segH = SurfaceGetTextSize(seg.text)
+        if layoutShape then
+            local exploded = StringSplit(seg.text, "")
 
-        TableInsert(segments, {
-            text = seg.text,
-            font = fontName,
-            width = segW,
-            height = segH,
-            underline = underline,
-            strikethrough = strikethrough,
-            outline = outline,
-        })
+            for i, splitString in ipairs(exploded) do
+                local segW, segH = SurfaceGetTextSize(splitString)
+
+                local hasShape = (i ~= 1)
+
+                local newSeg = {
+                    text          = splitString,
+                    font          = fontName,
+                    width         = segW,
+                    height        = segH,
+                    underline     = underline,
+                    strikethrough = strikethrough,
+                    outline       = outline,
+                    newline       = newline,
+                }
+
+                newSeg[layoutShape] = hasShape
+
+                TableInsert(segments, newSeg)
+            end
+        else
+            local segW, segH = SurfaceGetTextSize(seg.text)
+
+            TableInsert(segments, {
+                text = seg.text,
+                font = fontName,
+                width = segW,
+                height = segH,
+                underline = underline,
+                strikethrough = strikethrough,
+                outline = outline,
+                newline = newline,
+            })
+        end
     end
 
     return segments
@@ -86,15 +128,43 @@ end
 
 -- Calculate how big the message is
 local function MeasureSegments(segments)
-    local totalW = 0
-    local maxH = 0
+    local baseW = 0
+    local msgW = 0
+    -- no need to measure maxH for segments as it's always the same
+    local currentY = 0
+    local maxY = 0
+    local minY = 0
+    local baseH = 0
 
     for _, seg in ipairs(segments) do
-        totalW = totalW + seg.width
-        if seg.height > maxH then maxH = seg.height end
+        if seg.width > baseW then
+            baseW = seg.width
+        end
+
+        if not (seg.newline or seg.vertical) then
+            msgW = msgW + seg.width
+        end
+
+        if baseH == 0 then
+            baseH = seg.height
+        end
+
+        if seg.descend or seg.newline or seg.vertical then
+            currentY = currentY + seg.height
+            if currentY > maxY then maxY = currentY end
+        end
+
+        if seg.ascend then
+            currentY = currentY - seg.height
+            if currentY < minY then minY = currentY end
+        end
     end
 
-    return totalW, maxH
+    msgW = MathMax(msgW, baseW)
+    local msgH = maxY - minY + baseH
+    local yOffset = MathAbs(minY)
+
+    return msgW, msgH, yOffset
 end
 
 local COLOR_DEFAULT = Color(255, 200, 0)
@@ -116,8 +186,16 @@ local function RepositionStack()
     local testY = newest.baseY
     for i = count - 1, 1, -1 do
         local entry = message_stack[i]
+        local below = message_stack[i + 1]
         if not IsValid(entry.panel) then continue end
-        testY = testY - entry.panel:GetTall() - STACK_GAP
+
+        -- If messages are in the same group, stick them together
+        local thisGap = STACK_GAP
+        if below and entry.group == below.group then
+            thisGap = 0
+        end
+
+        testY = testY - entry.panel:GetTall() - thisGap
         if testY < 0 then
             stacksFit = false
             break
@@ -129,9 +207,16 @@ local function RepositionStack()
         newest.panel:SetY(newest.baseY)
         for i = count - 1, 1, -1 do
             local entry = message_stack[i]
-            local below = message_stack[i + 1].panel
-            if not IsValid(entry.panel) or not IsValid(below) then continue end
-            entry.panel:SetY(MathMax(below:GetY() - entry.panel:GetTall() - STACK_GAP, 0))
+            local below = message_stack[i + 1]
+            if not IsValid(entry.panel) or not IsValid(below.panel) then continue end
+
+            -- Again, if messages are in the same group, stick them together
+            local thisGap = STACK_GAP
+            if entry.group == below.group then
+                thisGap = 0
+            end
+
+            entry.panel:SetY(MathMax(below.panel:GetY() - entry.panel:GetTall() - thisGap, 0))
         end
 
     -- If we ARE going to overflow then start putting new messages under the older ones
@@ -139,9 +224,16 @@ local function RepositionStack()
         message_stack[1].panel:SetY(0)
         for i = 2, count do
             local entry = message_stack[i]
-            local above = message_stack[i - 1].panel
-            if not IsValid(entry.panel) or not IsValid(above) then continue end
-            entry.panel:SetY(above:GetY() + above:GetTall() + STACK_GAP)
+            local above = message_stack[i - 1]
+            if not IsValid(entry.panel) or not IsValid(above.panel) then continue end
+
+            -- Yet again, if messages are in the same group, stick them together
+            local thisGap = STACK_GAP
+            if entry.group == above.group then
+                thisGap = 0
+            end
+
+            entry.panel:SetY(above.panel:GetY() + above.panel:GetTall() + thisGap)
         end
 
         -- Safety net so that if a new message would go off the BOTTOM of the screen, the whole stack moves upwards instead
@@ -165,13 +257,13 @@ local function RepositionStack()
     end
 end
 
-local function DrawFormattingLine(seg, segX, font_color, offset)
+local function DrawFormattingLine(seg, segX, segY, font_color, offset)
     local startOffset = 0
     local blankLength = 0
     local spaceW = SurfaceGetTextSize(" ")
 
-    local hasLeadSpace = StringSub(seg.text, 1, 1) == " "
-    local hasTrailSpace = StringSub(seg.text, -1) == " "
+    local hasLeadSpace = StartsWith(seg.text, " ")
+    local hasTrailSpace = EndsWith(seg.text, " ")
 
     if hasLeadSpace then
         startOffset = spaceW
@@ -181,7 +273,7 @@ local function DrawFormattingLine(seg, segX, font_color, offset)
         blankLength = blankLength + spaceW
     end
 
-    local lineY = offset * seg.height
+    local lineY = segY + offset * seg.height
     local lineWidth = seg.width - blankLength
 
     if seg.outline then
@@ -213,6 +305,9 @@ local function ShowMessage()
     local tag = net.ReadString()
     if tag == "" then tag = "default" end
 
+    local group = net.ReadUInt(32)
+
+    local yOffset = nil
     local msgW, msgH
     local padding = big and 10 or 8
     local segments
@@ -220,7 +315,7 @@ local function ShowMessage()
     if formatted then
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
-        msgW, msgH = MeasureSegments(segments)
+        msgW, msgH, yOffset = MeasureSegments(segments)
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
@@ -261,7 +356,6 @@ local function ShowMessage()
         parent:Remove()
     end
 
-
     if formatted then
         local content = VguiCreate("DPanel", bg)
         content:Dock(FILL)
@@ -269,25 +363,48 @@ local function ShowMessage()
         local paintSegments = segments
 
         function content:Paint(w, h)
-            local segX = 0 + (padding / 2)
+            local segX = padding / 2
+            local segY = yOffset
+            local preceedingCharacterW
+            local lastChar = ""
 
             for _, seg in ipairs(paintSegments) do
                 SurfaceSetFont(seg.font)
+
+                preceedingCharacterW, _ = SurfaceGetTextSize(lastChar)
+
+                if seg.descend or seg.newline then
+                    segY = segY + seg.height
+                end
+
+                if seg.ascend then
+                    segY = segY - seg.height
+                end
+
+                if seg.vertical then
+                    segY = segY + seg.height
+                    segX = segX - preceedingCharacterW + ((preceedingCharacterW - seg.width) / 2)
+                end
+
+                if seg.newline then segX = 0 + (padding / 2) end
+
                 SurfaceSetTextColor(font_color)
-                SurfaceSetTextPos(segX, 0)
+                SurfaceSetTextPos(segX, segY)
                 SurfaceDrawText(seg.text)
 
                 -- Strike-through line
                 if seg.strikethrough then
-                    DrawFormattingLine(seg, segX, font_color, 0.55)
+                    DrawFormattingLine(seg, segX, segY, font_color, 0.55)
                 end
 
                 -- Underline
                 if seg.underline then
-                    DrawFormattingLine(seg, segX, font_color, 0.87)
+                    DrawFormattingLine(seg, segX, segY, font_color, 0.87)
                 end
 
                 segX = segX + seg.width
+
+                lastChar = StringSub(seg.text, -1)
             end
         end
     else
@@ -308,9 +425,9 @@ local function ShowMessage()
 
     -- If this is a big message and the only message in the stack is small, put this in front of the small one so it shows on top
     if big and #message_stack == 1 and not message_stack[1].panel.big then
-        TableInsert(message_stack, 1, { panel = panel, baseY = baseY, tag = tag })
+        TableInsert(message_stack, 1, { panel = panel, baseY = baseY, tag = tag, group = group })
     else
-        TableInsert(message_stack, { panel = panel, baseY = baseY, tag = tag })
+        TableInsert(message_stack, { panel = panel, baseY = baseY, tag = tag, group = group })
     end
 
     -- Reposition all messages now that we've added a new one
