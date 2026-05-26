@@ -935,7 +935,8 @@ local function ParseNotifyLines(msg, big, length, targ, silent, allow_secret, fo
                         outline       = seg.outline,
                         descend       = seg.descend,
                         ascend        = seg.ascend,
-                        vertical      = seg.vertical
+                        vertical      = seg.vertical,
+                        verticalup    = seg.verticalup
                     }
                     TableInsert(currentLine, newSeg)
                 end

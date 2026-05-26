@@ -85,6 +85,8 @@ local function ProcessFormattedSegments(messageSegments, big)
             layoutShape = "ascend"
         elseif seg.vertical then
             layoutShape = "vertical"
+        elseif seg.verticalup then
+            layoutShape = "verticalup"
         end
 
         local fontName = BuildFormattedFont(seg.bold, seg.italic, underline, strikethrough, seg.shadow, outline, big)
@@ -126,6 +128,10 @@ local function ProcessFormattedSegments(messageSegments, big)
     return segments
 end
 
+local function IsBreak(seg)
+    return seg.newline or seg.vertical or seg.verticalup
+end
+
 -- Calculate how big the message is
 local function MeasureSegments(segments)
     local baseW = 0
@@ -141,7 +147,7 @@ local function MeasureSegments(segments)
             baseW = seg.width
         end
 
-        if not seg.newline and not seg.vertical then
+        if not IsBreak(seg) then
             msgW = msgW + seg.width
         end
 
@@ -154,7 +160,7 @@ local function MeasureSegments(segments)
             if currentY > maxY then maxY = currentY end
         end
 
-        if seg.ascend then
+        if seg.ascend or seg.verticalup then
             currentY = currentY - seg.height
             if currentY < minY then minY = currentY end
         end
@@ -357,6 +363,11 @@ local function ShowMessage()
 
                 if seg.vertical then
                     segY = segY + seg.height
+                    segX = segX - lastCharW + ((lastCharW - seg.width) / 2)
+                end
+
+                if seg.verticalup then
+                    segY = segY - seg.height
                     segX = segX - lastCharW + ((lastCharW - seg.width) / 2)
                 end
 
