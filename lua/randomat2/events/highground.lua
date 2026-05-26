@@ -4,7 +4,11 @@ CreateConVar("randomat_highground_damage", 1, FCVAR_NONE, "The amount of health 
 CreateConVar("randomat_highground_damage_delay", 10, FCVAR_NONE, "The delay before damage starts", 1, 60)
 CreateConVar("randomat_highground_damage_interval", 2, FCVAR_NONE, "How often the player will take damage", 1, 60)
 
-EVENT.Title = "It's over Anakin! I have the high ground!"
+EVENT.Title = {
+    { text = "It's over Anakin! I have the" },
+    { text = "  ", ascend = true },
+    { text = "high ground!" }
+}
 EVENT.Description = "Does damage over time to the player who is closest to the ground"
 EVENT.id = "highground"
 EVENT.Categories = {"biased_innocent", "smallimpact"}

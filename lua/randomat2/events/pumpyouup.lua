@@ -14,7 +14,11 @@ CreateConVar("randomat_pumpyouup_allow_self_vote", 0, FCVAR_NONE, "Whether to al
 CreateConVar("randomat_pumpyouup_show_votes", 1, FCVAR_NONE, "Whether to show when a target is voted for in chat")
 CreateConVar("randomat_pumpyouup_show_votes_anon", 0, FCVAR_NONE, "Whether to hide who voted in chat")
 
-EVENT.Title = "Pump You Up"
+EVENT.Title = {
+    { text = "Pump " },
+    { text = "You", underline = true },
+    { text = " Up" }
+}
 EVENT.Description = "Vote to buff a player. Votes can be changed at any time"
 EVENT.id = "pumpyouup"
 EVENT.Type = EVENT_TYPE_VOTING

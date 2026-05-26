@@ -3,7 +3,10 @@ local EVENT = {}
 CreateConVar("randomat_intensifies_timer", 20, FCVAR_NONE, "How often (in seconds) a random event will be triggered.", 5, 60)
 CreateConVar("randomat_intensifies_triggerbyotherrandom", 1, FCVAR_NONE, "Allow being triggered by other events like Random xN.")
 
-EVENT.Title = "Randomness Intensifies"
+EVENT.Title = {
+    { text = "Randomness " },
+    { text = "Intensifies", italic = true }
+}
 EVENT.Description = "Continuously triggers random events for the rest of the round"
 EVENT.id = "intensifies"
 EVENT.Categories = {"eventtrigger", "largeimpact"}

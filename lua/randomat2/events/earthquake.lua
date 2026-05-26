@@ -9,6 +9,42 @@ EVENT.SingleUse = false
 EVENT.Categories = {"fun", "smallimpact"}
 EVENT.ConVars = {"randomat_earthquake_blocklist"}
 
+function EVENT:BeforeEventTrigger(ply, options, ...)
+    if type(self.Title) == "string" then
+        local segments = {
+            2,
+            2,
+            2,
+            2
+        }
+        local length = #self.Title
+        local segmentLength = segments[1] + segments[2] + segments[3] + segments[4]
+
+        -- Generate randomized segment lengths totaling the level of the string title
+        repeat
+            local idx = math.random(1, #segments)
+            segments[idx] = segments[idx] + 1
+            segmentLength = segmentLength + 1
+        until segmentLength == length
+
+        local format = {}
+        local startIdx = 1
+        -- Alternate going up and down for each segment
+        for k, v in ipairs(segments) do
+            local endIdx = startIdx + v - 1
+            local text = string.sub(self.Title, startIdx, endIdx)
+            startIdx = endIdx + 1
+            -- Add a space for the segments that mark a transition to bump the letter to a different line than the previous
+            if k ~= 1 then
+                text = " " .. text
+            end
+            format[k] = { text = text, ascend = k % 2 ~= 0, descend = k % 2 == 0 }
+        end
+
+        self.Title = format
+    end
+end
+
 function EVENT:Begin(magnitude)
     if type(magnitude) ~= "number" then
         magnitude = math.random(10)
