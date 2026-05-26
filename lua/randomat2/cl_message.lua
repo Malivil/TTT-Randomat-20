@@ -73,10 +73,10 @@ local function ProcessFormattedSegments(messageSegments, big)
         seg.text = StringReplace(seg.text, "\n", "")
         if seg.text == "" then continue end
 
-        local underline = seg.underline or false
+        local underline     = seg.underline     or false
         local strikethrough = seg.strikethrough or false
-        local outline = seg.outline or false
-        local newline = seg.newline or false
+        local outline       = seg.outline       or false
+        local newline       = seg.newline       or false
 
         local layoutShape
         if seg.descend then
@@ -91,14 +91,23 @@ local function ProcessFormattedSegments(messageSegments, big)
 
         local fontName = BuildFormattedFont(seg.bold, seg.italic, underline, strikethrough, seg.shadow, outline, big)
         SurfaceSetFont(fontName)
+
         if layoutShape then
             local parts = StringSplit(seg.text, "")
+
+            local columnWidth = 0
+            for _, part in ipairs(parts) do
+                local partW = SurfaceGetTextSize(part)
+                if partW > columnWidth then columnWidth = partW end
+            end
+
             for i, part in ipairs(parts) do
                 local segW, segH = SurfaceGetTextSize(part)
                 local newSeg = {
                     text          = part,
                     font          = fontName,
                     width         = segW,
+                    columnWidth   = columnWidth,
                     height        = segH,
                     underline     = underline,
                     strikethrough = strikethrough,
@@ -106,21 +115,20 @@ local function ProcessFormattedSegments(messageSegments, big)
                     newline       = newline,
                 }
 
-                -- Track this segment's shape after the first part
-                newSeg[layoutShape] = i ~= 1
+                newSeg[layoutShape] = i ~= 1 and true or nil
                 TableInsert(segments, newSeg)
             end
         else
             local segW, segH = SurfaceGetTextSize(seg.text)
             TableInsert(segments, {
-                text = seg.text,
-                font = fontName,
-                width = segW,
-                height = segH,
-                underline = underline,
+                text          = seg.text,
+                font          = fontName,
+                width         = segW,
+                height        = segH,
+                underline     = underline,
                 strikethrough = strikethrough,
-                outline = outline,
-                newline = newline,
+                outline       = outline,
+                newline       = newline,
             })
         end
     end
@@ -134,25 +142,40 @@ end
 
 -- Calculate how big the message is
 local function MeasureSegments(segments)
-    local baseW = 0
     local msgW = 0
-    -- no need to measure maxH for segments as it's always the same
     local currentY = 0
     local maxY = 0
     local minY = 0
     local baseH = 0
+    local baseW = 0
 
-    for _, seg in ipairs(segments) do
-        if seg.width > baseW then
-            baseW = seg.width
-        end
+    for i, seg in ipairs(segments) do
 
-        if not IsBreak(seg) then
-            msgW = msgW + seg.width
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("seg.text = " .. seg.text)
+        print("seg.vertical = " .. tostring(seg.vertical))
+        print("seg.verticalup = " .. tostring(seg.verticalup))
+        print("seg.width = " .. seg.width)
+        print("seg.columnWidth = " .. tostring(seg.columnWidth))
+
+        local effectiveW = seg.columnWidth or seg.width
+
+        if effectiveW > baseW then
+            baseW = effectiveW
         end
 
         if baseH == 0 then
             baseH = seg.height
+        end
+
+        if seg.vertical or seg.verticalup then
+            -- don't need to add more width for these
+        elseif seg.newline then
+            -- no width for a new line
+        elseif seg.descend or seg.ascend then
+            msgW = msgW + seg.width
+        else
+            msgW = msgW + (seg.columnWidth or seg.width)
         end
 
         if seg.descend or seg.newline or seg.vertical then
@@ -345,13 +368,16 @@ local function ShowMessage()
         function content:Paint(w, h)
             local segX = padding / 2
             local segY = yOffset
-            local lastCharW
-            local lastChar = ""
 
-            for _, seg in ipairs(paintSegments) do
+            for i, seg in ipairs(paintSegments) do
+                local nextSeg -- = paintSegments[i + 1]
+                if i ~= #paintSegments then
+                    nextSeg = paintSegments[i + 1]
+                end
+
                 SurfaceSetFont(seg.font)
 
-                lastCharW, _ = SurfaceGetTextSize(lastChar)
+                local colW = seg.columnWidth
 
                 if seg.descend or seg.newline then
                     segY = segY + seg.height
@@ -363,32 +389,36 @@ local function ShowMessage()
 
                 if seg.vertical then
                     segY = segY + seg.height
-                    segX = segX - lastCharW + ((lastCharW - seg.width) / 2)
                 end
 
                 if seg.verticalup then
                     segY = segY - seg.height
-                    segX = segX - lastCharW + ((lastCharW - seg.width) / 2)
                 end
 
-                if seg.newline then segX = 0 + (padding / 2) end
+                if seg.newline then segX = padding / 2 end
+
+                local drawX
+                if colW then
+                    drawX = segX + (colW - seg.width) / 2
+                else
+                    drawX = segX
+                end
 
                 SurfaceSetTextColor(font_color)
-                SurfaceSetTextPos(segX, segY)
+                SurfaceSetTextPos(drawX, segY)
                 SurfaceDrawText(seg.text)
 
-                -- Strike-through line
                 if seg.strikethrough then
-                    DrawFormattingLine(seg, segX, segY, font_color, 0.55)
+                    DrawFormattingLine(seg, drawX, segY, font_color, 0.55)
                 end
 
-                -- Underline
                 if seg.underline then
-                    DrawFormattingLine(seg, segX, segY, font_color, 0.87)
+                    DrawFormattingLine(seg, drawX, segY, font_color, 0.87)
                 end
 
-                segX = segX + seg.width
-                lastChar = StringSub(seg.text, -1)
+                if not colW or (colW and (not nextSeg or not nextSeg.columnWidth)) then
+                    segX = segX + seg.width
+                end
             end
         end
     else
