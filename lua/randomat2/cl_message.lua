@@ -326,6 +326,27 @@ local function ShowMessage()
         msgW, msgH = SurfaceGetTextSize(msg)
     end
 
+    if formatted then
+        -- Find the highest-indexed segment that isn't vertical/verticalup
+        local highestNonVerticalSegIndex = nil
+
+        for i = #segments, 1, -1 do
+            local seg = segments[i]
+            if not seg.vertical and not seg.verticalup then
+                highestNonVerticalSegIndex = i
+                break
+            end
+        end
+
+        -- Only do a thing if there's a non-first-entry-, non-vertical segment
+        if not highestNonVerticalSegIndex or (highestNonVerticalSegIndex and highestNonVerticalSegIndex > 1) then
+            local finalSeg = segments[#segments]
+            if finalSeg.vertical or finalSeg.verticalup then
+                msgW = msgW - finalSeg.columnWidth / 2
+            end
+        end
+    end
+
     local panel = VguiCreate("DNotify")
     panel.tag = tag
     panel.big = big
@@ -398,8 +419,10 @@ local function ShowMessage()
                 if seg.newline then segX = padding / 2 end
 
                 local drawX
-                if colW then
+                if colW and i == 1 then
                     drawX = segX + (colW - seg.width) / 2
+                elseif colW and (seg.vertical or seg.verticalup) and segX ~= padding / 2 then
+                    drawX = segX - colW / 2
                 else
                     drawX = segX
                 end
