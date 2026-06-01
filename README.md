@@ -6,7 +6,7 @@ Thanks to [Gamefreak](https://steamcommunity.com/id/realgamefreak) for the 'TTT 
 
 # ConVar Saving and Loading
 ConVar values are automatically saved to `data/randomat/convars.json` on shutdown and loaded on startup. Values placed in the `cfg/server.cfg` (or `cfg/listenserver.cfg`) will overwrite what is loaded from the .json.\
-This replaces the previous behavior which relied on the built-in convar archiving system which saved data to `cfg/server.vdf`. Using this method instead of `cfg/server.vdf` is desirable because large `cfg/server.vdf` can cause connection issues.\
+This replaces the previous behavior which relied on the built-in convar archiving system which saved data to `cfg/server.vdf`. Using this method instead of `cfg/server.vdf` is desirable because large `cfg/server.vdf` can cause connection issues.
 
 # General Commands
 _ttt_randomat_trigger EVENT_ - Triggers a specific randomat event without checking conditions.\
