@@ -66,6 +66,7 @@ end
 -- Make a nice table with data for all the segments
 local function ProcessFormattedSegments(messageSegments, big)
     local segments = {}
+    local shapeGroup = 0
 
     for _, seg in ipairs(messageSegments) do
         if not seg.text then continue end
@@ -93,6 +94,7 @@ local function ProcessFormattedSegments(messageSegments, big)
         SurfaceSetFont(fontName)
 
         if layoutShape then
+            shapeGroup = shapeGroup + 1
             local parts = StringSplit(seg.text, "")
 
             local columnWidth = 0
@@ -113,6 +115,7 @@ local function ProcessFormattedSegments(messageSegments, big)
                     strikethrough = strikethrough,
                     outline       = outline,
                     newline       = newline,
+                    shapeGroup    = shapeGroup,
                 }
 
                 newSeg[layoutShape] = i ~= 1 and true or nil
@@ -157,6 +160,7 @@ local function MeasureSegments(segments)
         print("seg.verticalup = " .. tostring(seg.verticalup))
         print("seg.width = " .. seg.width)
         print("seg.columnWidth = " .. tostring(seg.columnWidth))
+        print("seg.shapeGroup = " .. tostring(seg.shapeGroup))
 
         local effectiveW = seg.columnWidth or seg.width
 
@@ -391,15 +395,9 @@ local function ShowMessage()
             local segY = yOffset
 
             for i, seg in ipairs(paintSegments) do
-                local nextSeg -- = paintSegments[i + 1]
-                if i ~= #paintSegments then
-                    nextSeg = paintSegments[i + 1]
-                end
-
                 SurfaceSetFont(seg.font)
 
-                local colW = seg.columnWidth
-
+                -- Vertical positioning stuff
                 if seg.descend or seg.newline then
                     segY = segY + seg.height
                 end
@@ -416,12 +414,28 @@ local function ShowMessage()
                     segY = segY - seg.height
                 end
 
+                -- Horizontal positioning stuff
                 if seg.newline then segX = padding / 2 end
+
+                local nextSeg
+                if i ~= #paintSegments then
+                    nextSeg = paintSegments[i + 1]
+                end
+
+                local prevSeg
+                if i~= 1 then
+                    prevSeg = paintSegments[i - 1]
+                end
+
+                local colW      = seg.columnWidth
+                local vert      = seg.vertical or seg.verticalup
+                local width     = seg.width
+                local group     = seg.shapeGroup
 
                 local drawX
                 if colW and i == 1 then
-                    drawX = segX + (colW - seg.width) / 2
-                elseif colW and (seg.vertical or seg.verticalup) and segX ~= padding / 2 then
+                    drawX = segX + (colW - width) / 2
+                elseif colW and vert and segX ~= padding / 2 then
                     drawX = segX - colW / 2
                 else
                     drawX = segX
@@ -439,8 +453,45 @@ local function ShowMessage()
                     DrawFormattingLine(seg, drawX, segY, font_color, 0.87)
                 end
 
-                if not colW or (colW and (not nextSeg or not nextSeg.columnWidth)) then
-                    segX = segX + seg.width
+                if nextSeg then
+                    -- print("seg.text = " .. tostring(seg.text))
+                    -- print("vert = " .. tostring(vert))
+                    -- print("nextSeg = " .. tostring(nextSeg))
+                    -- print("nextSeg.vertical = " .. tostring(nextSeg.vertical))
+                    -- print("nextSeg.verticalup = " .. tostring(nextSeg.verticalup))
+                    -- print("group = " .. tostring(group))
+                    -- print("nextSeg.text = " .. tostring(nextSeg.text))
+                    -- print("nextSeg.vertical = " .. tostring(nextSeg.vertical))
+                    -- print("nextSeg.verticalup = " .. tostring(nextSeg.verticalup))
+                    -- print("(nextSeg.vertical or nextSeg.verticalup) = " .. tostring((nextSeg.vertical or nextSeg.verticalup)))
+                    -- print("nextSeg.shapeGroup = " .. tostring(nextSeg.shapeGroup))
+                    -- print("group == nextSeg.shapeGroup = " .. tostring(group == nextSeg.shapeGroup))
+                    -- print("********************************************************************")
+                end
+
+                if vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup and segX == padding / 2 then
+                    segX = segX + width
+                elseif vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup then
+                    segX = segX + width / 2
+                elseif not colW or (colW and (not nextSeg or not (nextSeg.vertical or nextSeg.verticalup))) then
+                    segX = segX + width
+                    -- print(seg.text .. " option 1")
+                elseif not colW or (colW and (not nextSeg or not nextSeg.columnWidth)) or (colW and group ~= nextSeg.shapeGroup) then
+                    segX = segX + nextSeg.width / 2
+                    -- print(seg.text .. " option 2")
+                end
+
+                if not vert and segX ~= padding / 2 then
+                    if nextSeg and ( (nextSeg.vertical or nextSeg.verticalup) and nextSeg.columnWidth ~= nil and group == nextSeg.shapeGroup ) then
+                        -- print("seg.text = " .. tostring(seg.text))
+                        -- print("nextSeg.text = " .. tostring(nextSeg.text))
+                        -- print("nextSeg.vertical = " .. tostring(nextSeg.vertical))
+                        -- print("nextSeg.verticalup = " .. tostring(nextSeg.verticalup))
+                        -- print("nextSeg.columnWidth = " .. tostring(nextSeg.columnWidth))
+                        -- print("seg.shapeGroup = " .. tostring(seg.shapeGroup))
+                        -- print("nextSeg.shapeGroup = " .. tostring(nextSeg.shapeGroup))
+                        segX = segX + seg.width / 2
+                    end
                 end
             end
         end
