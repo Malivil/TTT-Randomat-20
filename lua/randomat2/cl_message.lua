@@ -149,114 +149,64 @@ end
 
 -- Calculate how big the message is
 local function MeasureSegments(segments)
-    local msgW = 0
+    local maxReachedW = 0
     local currentY = 0
     local maxY = 0
     local minY = 0
     local baseH = 0
     local baseW = 0
 
-    local prevSeg
-    local colW      = "columnWidth"
-    local group     = "shapeGroup"
+    -- Start at the same place the paint bit does
+    local padding = 10
+    local segX = padding / 2
 
     for i, seg in ipairs(segments) do
-
-        -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        -- print("seg.text = " .. seg.text)
-        -- print("seg.vertical = " .. tostring(seg.vertical))
-        -- print("seg.verticalup = " .. tostring(seg.verticalup))
-        -- print("seg.width = " .. seg.width)
-        -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
-        -- print("seg.shapeGroup = " .. tostring(seg.shapeGroup))
-
-        if i > 1 then prevSeg = segments[i - 1] end
-
+        -- Track the highest dimensions amongst all segments
         local effectiveW = seg.columnWidth or seg.width
+        if effectiveW > baseW then baseW = effectiveW end
+        if baseH == 0 then baseH = seg.height end
 
-        if effectiveW > baseW then
-            baseW = effectiveW
+        local nextSeg = segments[i + 1]
+        local colW    = seg.columnWidth
+        local vert    = seg.vertical or seg.verticalup
+        local width   = seg.width
+        local group   = seg.shapeGroup
+
+        if seg.newline then segX = padding / 2 end
+
+        local drawX
+        if colW and i == 1 then
+            drawX = segX + (colW - width) / 2
+        elseif colW and vert and segX ~= padding / 2 then
+            drawX = segX - colW / 2
+        else
+            drawX = segX
         end
 
-        if baseH == 0 then
-            baseH = seg.height
+        -- Measure how far across the width of each segment is putting us
+        local visualRightEdge = drawX + width
+        if visualRightEdge > maxReachedW then
+            maxReachedW = visualRightEdge
         end
 
-        -- New width measurey stuff
-        if i == 1 then
-            -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            -- print("Option 1")
-            -- print("seg.text = " .. tostring(seg.text))
-            -- print("IsVert(seg) = " .. tostring(IsVert(seg)))
-
-            -- print("old msgW = " .. tostring(msgW))
-            -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
-            -- print("seg.width = " .. tostring(seg.width))
-            msgW = msgW + (seg.columnWidth or seg.width)
-            -- print("new msgW = " .. tostring(msgW))
-        elseif IsVert(seg) and seg.group == prevSeg.group then
-            -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            -- print("Option 2")
-            -- print("seg.text = " .. tostring(seg.text))
-            -- print("IsVert(seg) = " .. tostring(IsVert(seg)))
-            -- print("seg.group = " .. tostring(seg.group))
-            -- print("prevSeg.text = " .. tostring(prevSeg.text))
-            -- print("IsVert(prevSeg) = " .. tostring(IsVert(prevSeg)))
-            -- print("prevSeg.group = " .. tostring(prevSeg.group))
-
-            -- print("old msgW = " .. tostring(msgW))
-            -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
-            -- print("seg.width = " .. tostring(seg.width))
-            msgW = msgW
-            -- print("new msgW = " .. tostring(msgW))
-        elseif not IsVert(seg) and not seg.columnWidth then
-            msgW = msgW + (seg.columnWidth or seg.width)
-        else -- THIS IS THE BIT THAT'S IMPORTANT I THINK
-            -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            -- print("Option 3")
-            -- print("seg.text = " .. tostring(seg.text))
-            -- print("IsVert(seg) = " .. tostring(IsVert(seg)))
-            -- print("seg.group = " .. tostring(seg.group))
-            -- print("prevSeg.text = " .. tostring(prevSeg.text))
-            -- print("IsVert(prevSeg) = " .. tostring(IsVert(prevSeg)))
-            -- print("prevSeg.group = " .. tostring(prevSeg.group))
-
-            -- print("old msgW = " .. tostring(msgW))
-            -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
-            -- print("seg.width = " .. tostring(seg.width))
-            msgW = msgW + (seg.columnWidth or seg.width) * 1.1 -- This multiplier changes how wrong it is/isn't
-            -- print("new msgW = " .. tostring(msgW))
+        -- Do it like we do in the paint bit
+        if vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup and segX == padding / 2 then
+            segX = segX + width
+        elseif vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup then
+            segX = segX + width / 2
+        elseif not colW or (colW and (not nextSeg or not (nextSeg.vertical or nextSeg.verticalup))) then
+            segX = segX + width
+        elseif not colW or (colW and (not nextSeg or not nextSeg.columnWidth)) or (colW and group ~= nextSeg.shapeGroup) then
+            segX = segX + (nextSeg and nextSeg.width or 0) / 2
         end
-            
-        -- if IsVert(seg) and ((prevSeg.shapeGroup ~= seg.shapeGroup) or (prevSeg and not prevSeg.group)) then
-        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        --     print("seg.text = " .. tostring(seg.text))
-        --     print("IsVert(seg) = " .. tostring(IsVert(seg)))
-        --     print("seg.group = " .. tostring(seg.group))
-        --     print("prevSeg.text = " .. tostring(prevSeg.text))
-        --     print("IsVert(prevSeg) = " .. tostring(IsVert(prevSeg)))
-        --     print("prevSeg.group = " .. tostring(prevSeg.group))
-        --     print("Option 1")
 
-        --     msgW = msgW + seg.columnWidth
-        -- elseif seg.newline then
-        --     -- no width for a new line
-        -- elseif seg.descend or seg.ascend then
-        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        --     print("seg.text = " .. tostring(seg.text))
-        --     print("Option 2")
-        --     msgW = msgW + seg.width
-        -- elseif IsVert(seg) and prevSeg.shapeGroup == seg.shapeGroup then
-        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        --     print("seg.text = " .. tostring(seg.text))
-        --     print("Option 3")
-        -- else
-        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        --     print("seg.text = " .. tostring(seg.text))
-        --     print("Option 4")
-        --     msgW = msgW + (seg.columnWidth or seg.width)
-        -- end
+        if not vert and segX ~= padding / 2 then
+            if nextSeg and ((nextSeg.vertical or nextSeg.verticalup) and nextSeg.columnWidth ~= nil and group == nextSeg.shapeGroup) then
+                segX = segX + width / 2
+            end
+        end
 
+        -- Height measuring
         if seg.descend or seg.newline or seg.vertical then
             currentY = currentY + seg.height
             if currentY > maxY then maxY = currentY end
@@ -269,7 +219,10 @@ local function MeasureSegments(segments)
     end
 
     local msgH = maxY - minY + baseH
-    return MathMax(msgW, baseW), msgH, MathAbs(minY)
+    
+    local finalWidth = MathMax(maxReachedW, baseW)
+
+    return finalWidth, msgH, MathAbs(minY)
 end
 
 local function CalculateMessageGap(first, second)
@@ -400,34 +353,31 @@ local function ShowMessage()
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
         msgW, msgH, yOffset = MeasureSegments(segments)
-        print("*********************************************************************************************************************")
-        print("Returned width = " .. tostring(msgW))
-        print("*********************************************************************************************************************")
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
     end
 
-    if formatted then
-        -- Find the highest-indexed segment that isn't vertical/verticalup
-        local highestNonVerticalSegIndex = nil
-
-        for i = #segments, 1, -1 do
-            local seg = segments[i]
-            if not seg.vertical and not seg.verticalup then
-                highestNonVerticalSegIndex = i
-                break
-            end
-        end
-
-        -- Only do a thing if there's a non-first-entry-, non-vertical segment
-        if not highestNonVerticalSegIndex or (highestNonVerticalSegIndex and highestNonVerticalSegIndex > 1) then
-            local finalSeg = segments[#segments]
-            if finalSeg.vertical or finalSeg.verticalup then
-                msgW = msgW - finalSeg.columnWidth / 2
-            end
-        end
-    end
+    -- if formatted then
+    --     -- Find the highest-indexed segment that isn't vertical/verticalup
+    --     local highestNonVerticalSegIndex = nil
+-- 
+    --     for i = #segments, 1, -1 do
+    --         local seg = segments[i]
+    --         if not seg.vertical and not seg.verticalup then
+    --             highestNonVerticalSegIndex = i
+    --             break
+    --         end
+    --     end
+-- 
+    --     -- Only do a thing if there's a non-first-entry-, non-vertical segment
+    --     if not highestNonVerticalSegIndex or (highestNonVerticalSegIndex and highestNonVerticalSegIndex > 1) then
+    --         local finalSeg = segments[#segments]
+    --         if finalSeg.vertical or finalSeg.verticalup then
+    --             msgW = msgW - finalSeg.columnWidth / 2
+    --         end
+    --     end
+    -- end
 
     local panel = VguiCreate("DNotify")
     panel.tag = tag
@@ -531,43 +481,18 @@ local function ShowMessage()
                     DrawFormattingLine(seg, drawX, segY, font_color, 0.87)
                 end
 
-                if nextSeg then
-                    -- print("seg.text = " .. tostring(seg.text))
-                    -- print("vert = " .. tostring(vert))
-                    -- print("nextSeg = " .. tostring(nextSeg))
-                    -- print("nextSeg.vertical = " .. tostring(nextSeg.vertical))
-                    -- print("nextSeg.verticalup = " .. tostring(nextSeg.verticalup))
-                    -- print("group = " .. tostring(group))
-                    -- print("nextSeg.text = " .. tostring(nextSeg.text))
-                    -- print("nextSeg.vertical = " .. tostring(nextSeg.vertical))
-                    -- print("nextSeg.verticalup = " .. tostring(nextSeg.verticalup))
-                    -- print("(nextSeg.vertical or nextSeg.verticalup) = " .. tostring((nextSeg.vertical or nextSeg.verticalup)))
-                    -- print("nextSeg.shapeGroup = " .. tostring(nextSeg.shapeGroup))
-                    -- print("group == nextSeg.shapeGroup = " .. tostring(group == nextSeg.shapeGroup))
-                    -- print("********************************************************************")
-                end
-
                 if vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup and segX == padding / 2 then
                     segX = segX + width
                 elseif vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup then
                     segX = segX + width / 2
                 elseif not colW or (colW and (not nextSeg or not (nextSeg.vertical or nextSeg.verticalup))) then
                     segX = segX + width
-                    -- print(seg.text .. " option 1")
                 elseif not colW or (colW and (not nextSeg or not nextSeg.columnWidth)) or (colW and group ~= nextSeg.shapeGroup) then
-                    segX = segX + nextSeg.width / 2
-                    -- print(seg.text .. " option 2")
+                    segX = segX + (nextSeg and nextSeg.width or 0) / 2
                 end
 
                 if not vert and segX ~= padding / 2 then
                     if nextSeg and ( (nextSeg.vertical or nextSeg.verticalup) and nextSeg.columnWidth ~= nil and group == nextSeg.shapeGroup ) then
-                        -- print("seg.text = " .. tostring(seg.text))
-                        -- print("nextSeg.text = " .. tostring(nextSeg.text))
-                        -- print("nextSeg.vertical = " .. tostring(nextSeg.vertical))
-                        -- print("nextSeg.verticalup = " .. tostring(nextSeg.verticalup))
-                        -- print("nextSeg.columnWidth = " .. tostring(nextSeg.columnWidth))
-                        -- print("seg.shapeGroup = " .. tostring(seg.shapeGroup))
-                        -- print("nextSeg.shapeGroup = " .. tostring(nextSeg.shapeGroup))
                         segX = segX + seg.width / 2
                     end
                 end
