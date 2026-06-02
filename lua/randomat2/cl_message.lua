@@ -155,64 +155,40 @@ local function MeasureSegments(segments)
     local minY = 0
     local baseH = 0
     local baseW = 0
+    local segX = 0
 
-    -- Start at the same place the paint bit does
-    local padding = 10
-    local segX = padding / 2
-
+    -- Basically do it the same as the paint bit does
     for i, seg in ipairs(segments) do
-        -- Track the highest dimensions amongst all segments
         local effectiveW = seg.columnWidth or seg.width
         if effectiveW > baseW then baseW = effectiveW end
         if baseH == 0 then baseH = seg.height end
 
-        local nextSeg = segments[i + 1]
-        local colW    = seg.columnWidth
-        local vert    = seg.vertical or seg.verticalup
-        local width   = seg.width
-        local group   = seg.shapeGroup
-
         if seg.newline then segX = padding / 2 end
 
-        local drawX
-        if colW and i == 1 then
-            drawX = segX + (colW - width) / 2
-        elseif colW and vert and segX ~= padding / 2 then
-            drawX = segX - colW / 2
-        else
-            drawX = segX
+        local drawX = segX
+        if seg.columnWidth then
+            drawX = segX + (seg.columnWidth - seg.width) / 2
         end
 
-        -- Measure how far across the width of each segment is putting us
-        local visualRightEdge = drawX + width
+        local visualRightEdge = drawX + seg.width
         if visualRightEdge > maxReachedW then
             maxReachedW = visualRightEdge
         end
 
-        -- Do it like we do in the paint bit
-        if vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup and segX == padding / 2 then
-            segX = segX + width
-        elseif vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup then
-            segX = segX + width / 2
-        elseif not colW or (colW and (not nextSeg or not (nextSeg.vertical or nextSeg.verticalup))) then
-            segX = segX + width
-        elseif not colW or (colW and (not nextSeg or not nextSeg.columnWidth)) or (colW and group ~= nextSeg.shapeGroup) then
-            segX = segX + (nextSeg and nextSeg.width or 0) / 2
-        end
-
-        if not vert and segX ~= padding / 2 then
-            if nextSeg and ((nextSeg.vertical or nextSeg.verticalup) and nextSeg.columnWidth ~= nil and group == nextSeg.shapeGroup) then
-                segX = segX + width / 2
+        local nextSeg = segments[i + 1]
+        if nextSeg then
+            if seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend) then
+                -- Do nothing
+            else
+                segX = segX + (seg.columnWidth or seg.width)
             end
         end
 
-        -- Height measuring
+        -- Vertical bits
         if seg.descend or seg.newline or seg.vertical then
             currentY = currentY + seg.height
             if currentY > maxY then maxY = currentY end
-        end
-
-        if seg.ascend or seg.verticalup then
+        elseif seg.ascend or seg.verticalup then
             currentY = currentY - seg.height
             if currentY < minY then minY = currentY end
         end
@@ -358,27 +334,6 @@ local function ShowMessage()
         msgW, msgH = SurfaceGetTextSize(msg)
     end
 
-    -- if formatted then
-    --     -- Find the highest-indexed segment that isn't vertical/verticalup
-    --     local highestNonVerticalSegIndex = nil
--- 
-    --     for i = #segments, 1, -1 do
-    --         local seg = segments[i]
-    --         if not seg.vertical and not seg.verticalup then
-    --             highestNonVerticalSegIndex = i
-    --             break
-    --         end
-    --     end
--- 
-    --     -- Only do a thing if there's a non-first-entry-, non-vertical segment
-    --     if not highestNonVerticalSegIndex or (highestNonVerticalSegIndex and highestNonVerticalSegIndex > 1) then
-    --         local finalSeg = segments[#segments]
-    --         if finalSeg.vertical or finalSeg.verticalup then
-    --             msgW = msgW - finalSeg.columnWidth / 2
-    --         end
-    --     end
-    -- end
-
     local panel = VguiCreate("DNotify")
     panel.tag = tag
     panel.big = big
@@ -425,75 +380,48 @@ local function ShowMessage()
             for i, seg in ipairs(paintSegments) do
                 SurfaceSetFont(seg.font)
 
-                -- Vertical positioning stuff
-                if seg.descend or seg.newline then
+                -- Vertical bits
+                if seg.descend or seg.newline or seg.vertical then
                     segY = segY + seg.height
-                end
-
-                if seg.ascend then
+                elseif seg.ascend or seg.verticalup then
                     segY = segY - seg.height
                 end
 
-                if seg.vertical then
-                    segY = segY + seg.height
+                -- New line
+                if seg.newline then 
+                    segX = padding / 2 
                 end
 
-                if seg.verticalup then
-                    segY = segY - seg.height
+                -- Horizontal bits
+                local drawX = segX
+                if seg.columnWidth then
+                    -- Center all characters in their column
+                    drawX = segX + (seg.columnWidth - seg.width) / 2
                 end
 
-                -- Horizontal positioning stuff
-                if seg.newline then segX = padding / 2 end
-
-                local nextSeg
-                if i ~= #paintSegments then
-                    nextSeg = paintSegments[i + 1]
-                end
-
-                local prevSeg
-                if i~= 1 then
-                    prevSeg = paintSegments[i - 1]
-                end
-
-                local colW      = seg.columnWidth
-                local vert      = seg.vertical or seg.verticalup
-                local width     = seg.width
-                local group     = seg.shapeGroup
-
-                local drawX
-                if colW and i == 1 then
-                    drawX = segX + (colW - width) / 2
-                elseif colW and vert and segX ~= padding / 2 then
-                    drawX = segX - colW / 2
-                else
-                    drawX = segX
-                end
-
+                -- Actually draw the text
                 SurfaceSetTextColor(font_color)
                 SurfaceSetTextPos(drawX, segY)
                 SurfaceDrawText(seg.text)
 
+                -- And any strikethrough/underline lines
                 if seg.strikethrough then
                     DrawFormattingLine(seg, drawX, segY, font_color, 0.55)
                 end
-
                 if seg.underline then
                     DrawFormattingLine(seg, drawX, segY, font_color, 0.87)
                 end
 
-                if vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup and segX == padding / 2 then
-                    segX = segX + width
-                elseif vert and nextSeg and not (nextSeg.vertical or nextSeg.verticalup) and not nextSeg.shapeGroup then
-                    segX = segX + width / 2
-                elseif not colW or (colW and (not nextSeg or not (nextSeg.vertical or nextSeg.verticalup))) then
-                    segX = segX + width
-                elseif not colW or (colW and (not nextSeg or not nextSeg.columnWidth)) or (colW and group ~= nextSeg.shapeGroup) then
-                    segX = segX + (nextSeg and nextSeg.width or 0) / 2
-                end
-
-                if not vert and segX ~= padding / 2 then
-                    if nextSeg and ( (nextSeg.vertical or nextSeg.verticalup) and nextSeg.columnWidth ~= nil and group == nextSeg.shapeGroup ) then
-                        segX = segX + seg.width / 2
+                -- Move segX across
+                local nextSeg = paintSegments[i + 1]
+                if nextSeg then
+                    -- If the next character is part of the same column group, do nothing
+                    if seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend) then
+                        -- Don't do anything
+                    else
+                        -- Otherwise, move segX by the width of what we've just drawn
+                        local finishedBlockWidth = seg.columnWidth or seg.width
+                        segX = segX + finishedBlockWidth
                     end
                 end
             end
