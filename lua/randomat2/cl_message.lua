@@ -63,6 +63,10 @@ local function BuildFormattedFont(bold, italic, underline, strikethrough, shadow
     return name
 end
 
+local function IsVert(seg)
+    return seg.vertical or seg.verticalup
+end
+
 -- Make a nice table with data for all the segments
 local function ProcessFormattedSegments(messageSegments, big)
     local segments = {}
@@ -152,15 +156,21 @@ local function MeasureSegments(segments)
     local baseH = 0
     local baseW = 0
 
+    local prevSeg
+    local colW      = "columnWidth"
+    local group     = "shapeGroup"
+
     for i, seg in ipairs(segments) do
 
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print("seg.text = " .. seg.text)
-        print("seg.vertical = " .. tostring(seg.vertical))
-        print("seg.verticalup = " .. tostring(seg.verticalup))
-        print("seg.width = " .. seg.width)
-        print("seg.columnWidth = " .. tostring(seg.columnWidth))
-        print("seg.shapeGroup = " .. tostring(seg.shapeGroup))
+        -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        -- print("seg.text = " .. seg.text)
+        -- print("seg.vertical = " .. tostring(seg.vertical))
+        -- print("seg.verticalup = " .. tostring(seg.verticalup))
+        -- print("seg.width = " .. seg.width)
+        -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
+        -- print("seg.shapeGroup = " .. tostring(seg.shapeGroup))
+
+        if i > 1 then prevSeg = segments[i - 1] end
 
         local effectiveW = seg.columnWidth or seg.width
 
@@ -172,15 +182,80 @@ local function MeasureSegments(segments)
             baseH = seg.height
         end
 
-        if seg.vertical or seg.verticalup then
-            -- don't need to add more width for these
-        elseif seg.newline then
-            -- no width for a new line
-        elseif seg.descend or seg.ascend then
-            msgW = msgW + seg.width
-        else
+        -- New width measurey stuff
+        if i == 1 then
+            -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            -- print("Option 1")
+            -- print("seg.text = " .. tostring(seg.text))
+            -- print("IsVert(seg) = " .. tostring(IsVert(seg)))
+
+            -- print("old msgW = " .. tostring(msgW))
+            -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
+            -- print("seg.width = " .. tostring(seg.width))
             msgW = msgW + (seg.columnWidth or seg.width)
+            -- print("new msgW = " .. tostring(msgW))
+        elseif IsVert(seg) and seg.group == prevSeg.group then
+            -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            -- print("Option 2")
+            -- print("seg.text = " .. tostring(seg.text))
+            -- print("IsVert(seg) = " .. tostring(IsVert(seg)))
+            -- print("seg.group = " .. tostring(seg.group))
+            -- print("prevSeg.text = " .. tostring(prevSeg.text))
+            -- print("IsVert(prevSeg) = " .. tostring(IsVert(prevSeg)))
+            -- print("prevSeg.group = " .. tostring(prevSeg.group))
+
+            -- print("old msgW = " .. tostring(msgW))
+            -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
+            -- print("seg.width = " .. tostring(seg.width))
+            msgW = msgW
+            -- print("new msgW = " .. tostring(msgW))
+        elseif not IsVert(seg) and not seg.columnWidth then
+            msgW = msgW + (seg.columnWidth or seg.width)
+        else -- THIS IS THE BIT THAT'S IMPORTANT I THINK
+            -- print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            -- print("Option 3")
+            -- print("seg.text = " .. tostring(seg.text))
+            -- print("IsVert(seg) = " .. tostring(IsVert(seg)))
+            -- print("seg.group = " .. tostring(seg.group))
+            -- print("prevSeg.text = " .. tostring(prevSeg.text))
+            -- print("IsVert(prevSeg) = " .. tostring(IsVert(prevSeg)))
+            -- print("prevSeg.group = " .. tostring(prevSeg.group))
+
+            -- print("old msgW = " .. tostring(msgW))
+            -- print("seg.columnWidth = " .. tostring(seg.columnWidth))
+            -- print("seg.width = " .. tostring(seg.width))
+            msgW = msgW + (seg.columnWidth or seg.width) * 1.1 -- This multiplier changes how wrong it is/isn't
+            -- print("new msgW = " .. tostring(msgW))
         end
+            
+        -- if IsVert(seg) and ((prevSeg.shapeGroup ~= seg.shapeGroup) or (prevSeg and not prevSeg.group)) then
+        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        --     print("seg.text = " .. tostring(seg.text))
+        --     print("IsVert(seg) = " .. tostring(IsVert(seg)))
+        --     print("seg.group = " .. tostring(seg.group))
+        --     print("prevSeg.text = " .. tostring(prevSeg.text))
+        --     print("IsVert(prevSeg) = " .. tostring(IsVert(prevSeg)))
+        --     print("prevSeg.group = " .. tostring(prevSeg.group))
+        --     print("Option 1")
+
+        --     msgW = msgW + seg.columnWidth
+        -- elseif seg.newline then
+        --     -- no width for a new line
+        -- elseif seg.descend or seg.ascend then
+        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        --     print("seg.text = " .. tostring(seg.text))
+        --     print("Option 2")
+        --     msgW = msgW + seg.width
+        -- elseif IsVert(seg) and prevSeg.shapeGroup == seg.shapeGroup then
+        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        --     print("seg.text = " .. tostring(seg.text))
+        --     print("Option 3")
+        -- else
+        --     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        --     print("seg.text = " .. tostring(seg.text))
+        --     print("Option 4")
+        --     msgW = msgW + (seg.columnWidth or seg.width)
+        -- end
 
         if seg.descend or seg.newline or seg.vertical then
             currentY = currentY + seg.height
@@ -325,6 +400,9 @@ local function ShowMessage()
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
         msgW, msgH, yOffset = MeasureSegments(segments)
+        print("*********************************************************************************************************************")
+        print("Returned width = " .. tostring(msgW))
+        print("*********************************************************************************************************************")
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
