@@ -9,7 +9,6 @@ local MathAbs = math.abs
 local MathMax = math.max
 local StringReplace = string.Replace
 local StringSplit = string.Split
-local StringSub = string.sub
 local StartsWith = string.StartsWith
 local EndsWith = string.EndsWith
 local SurfaceCreateFont = surface.CreateFont
@@ -63,9 +62,14 @@ local function BuildFormattedFont(bold, italic, underline, strikethrough, shadow
     return name
 end
 
+local function IsVert(seg)
+    return seg.vertical or seg.verticalup
+end
+
 -- Make a nice table with data for all the segments
 local function ProcessFormattedSegments(messageSegments, big)
     local segments = {}
+    local shapeGroup = 0
 
     for _, seg in ipairs(messageSegments) do
         if not seg.text then continue end
@@ -73,10 +77,10 @@ local function ProcessFormattedSegments(messageSegments, big)
         seg.text = StringReplace(seg.text, "\n", "")
         if seg.text == "" then continue end
 
-        local underline = seg.underline or false
+        local underline     = seg.underline     or false
         local strikethrough = seg.strikethrough or false
-        local outline = seg.outline or false
-        local newline = seg.newline or false
+        local outline       = seg.outline       or false
+        local newline       = seg.newline       or false
 
         local layoutShape
         if seg.descend then
@@ -85,40 +89,52 @@ local function ProcessFormattedSegments(messageSegments, big)
             layoutShape = "ascend"
         elseif seg.vertical then
             layoutShape = "vertical"
+        elseif seg.verticalup then
+            layoutShape = "verticalup"
         end
 
         local fontName = BuildFormattedFont(seg.bold, seg.italic, underline, strikethrough, seg.shadow, outline, big)
         SurfaceSetFont(fontName)
+
         if layoutShape then
+            shapeGroup = shapeGroup + 1
             local parts = StringSplit(seg.text, "")
+
+            local columnWidth = 0
+            for _, part in ipairs(parts) do
+                local partW = SurfaceGetTextSize(part)
+                if partW > columnWidth then columnWidth = partW end
+            end
+
             for i, part in ipairs(parts) do
                 local segW, segH = SurfaceGetTextSize(part)
                 local newSeg = {
                     text          = part,
                     font          = fontName,
                     width         = segW,
+                    columnWidth   = columnWidth,
                     height        = segH,
                     underline     = underline,
                     strikethrough = strikethrough,
                     outline       = outline,
                     newline       = newline,
+                    shapeGroup    = shapeGroup,
                 }
 
-                -- Track this segment's shape after the first part
-                newSeg[layoutShape] = i ~= 1
+                newSeg[layoutShape] = i ~= 1 and true or nil
                 TableInsert(segments, newSeg)
             end
         else
             local segW, segH = SurfaceGetTextSize(seg.text)
             TableInsert(segments, {
-                text = seg.text,
-                font = fontName,
-                width = segW,
-                height = segH,
-                underline = underline,
+                text          = seg.text,
+                font          = fontName,
+                width         = segW,
+                height        = segH,
+                underline     = underline,
                 strikethrough = strikethrough,
-                outline = outline,
-                newline = newline,
+                outline       = outline,
+                newline       = newline,
             })
         end
     end
@@ -127,41 +143,67 @@ local function ProcessFormattedSegments(messageSegments, big)
 end
 
 -- Calculate how big the message is
-local function MeasureSegments(segments)
-    local baseW = 0
-    local msgW = 0
-    -- no need to measure maxH for segments as it's always the same
+local function MeasureSegments(segments, padding)
+    local maxReachedW = 0
     local currentY = 0
     local maxY = 0
     local minY = 0
     local baseH = 0
+    local baseW = 0
+    local segX = 0
 
-    for _, seg in ipairs(segments) do
-        if seg.width > baseW then
-            baseW = seg.width
+    -- Basically do it the same as the paint bit does
+    for i, seg in ipairs(segments) do
+        local effectiveW = seg.columnWidth or seg.width
+        if effectiveW > baseW then baseW = effectiveW end
+        if baseH == 0 then baseH = seg.height end
+
+        if seg.newline then segX = padding / 2 end
+
+        local drawX = segX
+        if seg.columnWidth then
+            drawX = segX + (seg.columnWidth - seg.width) / 2
         end
 
-        if not seg.newline and not seg.vertical then
-            msgW = msgW + seg.width
+        local visualRightEdge = drawX + seg.width
+        if visualRightEdge > maxReachedW then
+            maxReachedW = visualRightEdge
         end
 
-        if baseH == 0 then
-            baseH = seg.height
+        -- Horizontal bits
+        local nextSeg = segments[i + 1]
+        local finishedBlockWidth = seg.columnWidth or seg.width
+
+        if nextSeg then
+            if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth and seg.shapeGroup ~= nextSeg.shapeGroup then
+                -- If this segment isn't a column and the next segment IS and the first character is narrower than the
+                -- column width, then shift it all left a bit so that there isn't a space between this segment and the
+                -- top character of the following column
+                segX = (segX + finishedBlockWidth) - ((nextSeg.columnWidth - nextSeg.width) / 2)
+            elseif IsVert(seg) and not nextSeg.columnWidth and seg.width < seg.columnWidth then
+                -- Same as above but for a column transitioning into a non-column
+                segX = (segX + finishedBlockWidth) - ((seg.columnWidth - seg.width) / 2)
+            elseif not (seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend)) then
+                -- Move segX by the width of what we've just drawn
+                segX = segX + finishedBlockWidth
+            end
         end
 
+        -- Vertical bits
         if seg.descend or seg.newline or seg.vertical then
             currentY = currentY + seg.height
             if currentY > maxY then maxY = currentY end
-        end
-
-        if seg.ascend then
+        elseif seg.ascend or seg.verticalup then
             currentY = currentY - seg.height
             if currentY < minY then minY = currentY end
         end
     end
 
     local msgH = maxY - minY + baseH
-    return MathMax(msgW, baseW), msgH, MathAbs(minY)
+
+    local finalWidth = MathMax(maxReachedW, baseW)
+
+    return finalWidth, msgH, MathAbs(minY)
 end
 
 local function CalculateMessageGap(first, second)
@@ -291,7 +333,7 @@ local function ShowMessage()
     if formatted then
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
-        msgW, msgH, yOffset = MeasureSegments(segments)
+        msgW, msgH, yOffset = MeasureSegments(segments, padding)
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
@@ -339,45 +381,60 @@ local function ShowMessage()
         function content:Paint(w, h)
             local segX = padding / 2
             local segY = yOffset
-            local lastCharW
-            local lastChar = ""
 
-            for _, seg in ipairs(paintSegments) do
+            for i, seg in ipairs(paintSegments) do
                 SurfaceSetFont(seg.font)
 
-                lastCharW, _ = SurfaceGetTextSize(lastChar)
-
-                if seg.descend or seg.newline then
+                -- Vertical bits
+                if seg.descend or seg.newline or seg.vertical then
                     segY = segY + seg.height
-                end
-
-                if seg.ascend then
+                elseif seg.ascend or seg.verticalup then
                     segY = segY - seg.height
                 end
 
-                if seg.vertical then
-                    segY = segY + seg.height
-                    segX = segX - lastCharW + ((lastCharW - seg.width) / 2)
+                -- New line
+                if seg.newline then
+                    segX = padding / 2
                 end
 
-                if seg.newline then segX = 0 + (padding / 2) end
+                -- Horizontal bits
+                local drawX = segX
+                if seg.columnWidth then
+                    -- Center all characters in their column
+                    drawX = segX + (seg.columnWidth - seg.width) / 2
+                end
 
+                -- Actually draw the text
                 SurfaceSetTextColor(font_color)
-                SurfaceSetTextPos(segX, segY)
+                SurfaceSetTextPos(drawX, segY)
                 SurfaceDrawText(seg.text)
 
-                -- Strike-through line
+                -- And any strikethrough/underline lines
                 if seg.strikethrough then
-                    DrawFormattingLine(seg, segX, segY, font_color, 0.55)
+                    DrawFormattingLine(seg, drawX, segY, font_color, 0.55)
                 end
-
-                -- Underline
                 if seg.underline then
-                    DrawFormattingLine(seg, segX, segY, font_color, 0.87)
+                    DrawFormattingLine(seg, drawX, segY, font_color, 0.87)
                 end
 
-                segX = segX + seg.width
-                lastChar = StringSub(seg.text, -1)
+                -- Move segX across
+                local nextSeg = paintSegments[i + 1]
+                local finishedBlockWidth = seg.columnWidth or seg.width
+
+                if nextSeg then
+                    if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth and seg.shapeGroup ~= nextSeg.shapeGroup then
+                        -- If this segment isn't a column and the next segment IS and the first character is narrower than the
+                        -- column width, then shift it all left a bit so that there isn't a space between this segment and the
+                        -- top character of the following column
+                        segX = (segX + finishedBlockWidth) - ((nextSeg.columnWidth - nextSeg.width) / 2)
+                    elseif IsVert(seg) and not nextSeg.columnWidth and seg.width < seg.columnWidth then
+                        -- Same as above but for a column transitioning into a non-column
+                        segX = (segX + finishedBlockWidth) - ((seg.columnWidth - seg.width) / 2)
+                    elseif not (seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend)) then
+                        -- Move segX by the width of what we've just drawn
+                        segX = segX + finishedBlockWidth
+                    end
+                end
             end
         end
     else
