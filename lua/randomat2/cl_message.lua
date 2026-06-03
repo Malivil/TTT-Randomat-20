@@ -9,7 +9,6 @@ local MathAbs = math.abs
 local MathMax = math.max
 local StringReplace = string.Replace
 local StringSplit = string.Split
-local StringSub = string.sub
 local StartsWith = string.StartsWith
 local EndsWith = string.EndsWith
 local SurfaceCreateFont = surface.CreateFont
@@ -143,12 +142,8 @@ local function ProcessFormattedSegments(messageSegments, big)
     return segments
 end
 
-local function IsBreak(seg)
-    return seg.newline or seg.vertical or seg.verticalup
-end
-
 -- Calculate how big the message is
-local function MeasureSegments(segments)
+local function MeasureSegments(segments, padding)
     local maxReachedW = 0
     local currentY = 0
     local maxY = 0
@@ -180,7 +175,7 @@ local function MeasureSegments(segments)
         local finishedBlockWidth = seg.columnWidth or seg.width
 
         if nextSeg then
-            if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth then
+            if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth and seg.shapeGroup ~= nextSeg.shapeGroup then
                 -- If this segment isn't a column and the next segment IS and the first character is narrower than the
                 -- column width, then shift it all left a bit so that there isn't a space between this segment and the
                 -- top character of the following column
@@ -188,10 +183,8 @@ local function MeasureSegments(segments)
             elseif IsVert(seg) and not nextSeg.columnWidth and seg.width < seg.columnWidth then
                 -- Same as above but for a column transitioning into a non-column
                 segX = (segX + finishedBlockWidth) - ((seg.columnWidth - seg.width) / 2)
-            elseif seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend) then
-                -- If the next character is part of the same column group, do nothing
-            else
-                -- Otherwise, move segX by the width of what we've just drawn
+            elseif not (seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend)) then
+                -- Move segX by the width of what we've just drawn
                 segX = segX + finishedBlockWidth
             end
         end
@@ -207,7 +200,7 @@ local function MeasureSegments(segments)
     end
 
     local msgH = maxY - minY + baseH
-    
+
     local finalWidth = MathMax(maxReachedW, baseW)
 
     return finalWidth, msgH, MathAbs(minY)
@@ -340,7 +333,7 @@ local function ShowMessage()
     if formatted then
         createdFonts = {}
         segments = ProcessFormattedSegments(msg, big)
-        msgW, msgH, yOffset = MeasureSegments(segments)
+        msgW, msgH, yOffset = MeasureSegments(segments, padding)
     else
         SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
         msgW, msgH = SurfaceGetTextSize(msg)
@@ -400,8 +393,8 @@ local function ShowMessage()
                 end
 
                 -- New line
-                if seg.newline then 
-                    segX = padding / 2 
+                if seg.newline then
+                    segX = padding / 2
                 end
 
                 -- Horizontal bits
@@ -429,7 +422,7 @@ local function ShowMessage()
                 local finishedBlockWidth = seg.columnWidth or seg.width
 
                 if nextSeg then
-                    if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth then
+                    if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth and seg.shapeGroup ~= nextSeg.shapeGroup then
                         -- If this segment isn't a column and the next segment IS and the first character is narrower than the
                         -- column width, then shift it all left a bit so that there isn't a space between this segment and the
                         -- top character of the following column
@@ -437,10 +430,8 @@ local function ShowMessage()
                     elseif IsVert(seg) and not nextSeg.columnWidth and seg.width < seg.columnWidth then
                         -- Same as above but for a column transitioning into a non-column
                         segX = (segX + finishedBlockWidth) - ((seg.columnWidth - seg.width) / 2)
-                    elseif seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend) then
-                        -- If the next character is part of the same column group, do nothing
-                    else
-                        -- Otherwise, move segX by the width of what we've just drawn
+                    elseif not (seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend)) then
+                        -- Move segX by the width of what we've just drawn
                         segX = segX + finishedBlockWidth
                     end
                 end
