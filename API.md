@@ -917,6 +917,18 @@ h
 i
 s
 ```
+- *verticalup* - Draws all text in this segment with each letter directly above the next:
+```
+s
+i
+h
+t
+
+e
+k
+i
+L
+```
 *Formatting Example:*\
 Displays the notification message `"Normal, bold and italic, underline, strikethrough, outline"` with each text segment having the stated formatting.
 ```lua

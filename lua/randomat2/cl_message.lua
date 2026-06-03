@@ -66,6 +66,14 @@ local function IsVert(seg)
     return seg.vertical or seg.verticalup
 end
 
+local function IsGoingDown(seg)
+    return seg.descend or seg.newline or seg.vertical
+end
+
+local function IsGoingUp(seg)
+    return seg.ascend or seg.verticalup
+end
+
 -- Make a nice table with data for all the segments
 local function ProcessFormattedSegments(messageSegments, big)
     local segments = {}
@@ -142,6 +150,25 @@ local function ProcessFormattedSegments(messageSegments, big)
     return segments
 end
 
+local function AdjustSegmentX(seg, nextSeg, segX)
+    local finishedBlockWidth = seg.columnWidth or seg.width
+    if nextSeg then
+        if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth and seg.shapeGroup ~= nextSeg.shapeGroup then
+            -- If this segment isn't a column and the next segment IS and the first character is narrower than the
+            -- column width, then shift it all left a bit so that there isn't a space between this segment and the
+            -- top character of the following column
+            segX = (segX + finishedBlockWidth) - ((nextSeg.columnWidth - nextSeg.width) / 2)
+        elseif IsVert(seg) and not nextSeg.columnWidth and seg.width < seg.columnWidth then
+            -- Same as above but for a column transitioning into a non-column
+            segX = (segX + finishedBlockWidth) - ((seg.columnWidth - seg.width) / 2)
+        elseif not (seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend)) then
+            -- Move segX by the width of what we've just drawn
+            segX = segX + finishedBlockWidth
+        end
+    end
+    return segX
+end
+
 -- Calculate how big the message is
 local function MeasureSegments(segments, padding)
     local maxReachedW = 0
@@ -172,37 +199,20 @@ local function MeasureSegments(segments, padding)
 
         -- Horizontal bits
         local nextSeg = segments[i + 1]
-        local finishedBlockWidth = seg.columnWidth or seg.width
-
-        if nextSeg then
-            if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth and seg.shapeGroup ~= nextSeg.shapeGroup then
-                -- If this segment isn't a column and the next segment IS and the first character is narrower than the
-                -- column width, then shift it all left a bit so that there isn't a space between this segment and the
-                -- top character of the following column
-                segX = (segX + finishedBlockWidth) - ((nextSeg.columnWidth - nextSeg.width) / 2)
-            elseif IsVert(seg) and not nextSeg.columnWidth and seg.width < seg.columnWidth then
-                -- Same as above but for a column transitioning into a non-column
-                segX = (segX + finishedBlockWidth) - ((seg.columnWidth - seg.width) / 2)
-            elseif not (seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend)) then
-                -- Move segX by the width of what we've just drawn
-                segX = segX + finishedBlockWidth
-            end
-        end
+        segX = AdjustSegmentX(seg, nextSeg, segX)
 
         -- Vertical bits
-        if seg.descend or seg.newline or seg.vertical then
+        if IsGoingDown(seg) then
             currentY = currentY + seg.height
             if currentY > maxY then maxY = currentY end
-        elseif seg.ascend or seg.verticalup then
+        elseif IsGoingUp(seg) then
             currentY = currentY - seg.height
             if currentY < minY then minY = currentY end
         end
     end
 
     local msgH = maxY - minY + baseH
-
     local finalWidth = MathMax(maxReachedW, baseW)
-
     return finalWidth, msgH, MathAbs(minY)
 end
 
@@ -386,9 +396,9 @@ local function ShowMessage()
                 SurfaceSetFont(seg.font)
 
                 -- Vertical bits
-                if seg.descend or seg.newline or seg.vertical then
+                if IsGoingDown(seg) then
                     segY = segY + seg.height
-                elseif seg.ascend or seg.verticalup then
+                elseif IsGoingUp(seg) then
                     segY = segY - seg.height
                 end
 
@@ -419,22 +429,7 @@ local function ShowMessage()
 
                 -- Move segX across
                 local nextSeg = paintSegments[i + 1]
-                local finishedBlockWidth = seg.columnWidth or seg.width
-
-                if nextSeg then
-                    if not IsVert(seg) and nextSeg.columnWidth and nextSeg.width < nextSeg.columnWidth and seg.shapeGroup ~= nextSeg.shapeGroup then
-                        -- If this segment isn't a column and the next segment IS and the first character is narrower than the
-                        -- column width, then shift it all left a bit so that there isn't a space between this segment and the
-                        -- top character of the following column
-                        segX = (segX + finishedBlockWidth) - ((nextSeg.columnWidth - nextSeg.width) / 2)
-                    elseif IsVert(seg) and not nextSeg.columnWidth and seg.width < seg.columnWidth then
-                        -- Same as above but for a column transitioning into a non-column
-                        segX = (segX + finishedBlockWidth) - ((seg.columnWidth - seg.width) / 2)
-                    elseif not (seg.shapeGroup and seg.shapeGroup == nextSeg.shapeGroup and not (nextSeg.ascend or nextSeg.descend)) then
-                        -- Move segX by the width of what we've just drawn
-                        segX = segX + finishedBlockWidth
-                    end
-                end
+                segX = AdjustSegmentX(seg, nextSeg, segX)
             end
         end
     else
