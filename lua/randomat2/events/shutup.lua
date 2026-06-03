@@ -1,6 +1,10 @@
 local EVENT = {}
 
-EVENT.Title = "SHUT UP!"
+EVENT.Title = {
+    { text = "SHUT " },
+    { text = "UP", bold = true, underline = true },
+    { text = "!" }
+}
 EVENT.Description = "Disables all sounds for the duration of the event"
 EVENT.id = "shutup"
 EVENT.Categories = {"moderateimpact"}

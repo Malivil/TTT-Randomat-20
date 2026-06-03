@@ -1,6 +1,10 @@
 local EVENT = {}
 
-EVENT.Title = "Dead Men Tell ALL Tales"
+EVENT.Title = {
+    { text = "Dead Men Tell " },
+    { text = "ALL", underline = true },
+    { text = " Tales" }
+}
 EVENT.Description = "Allows dead players to text chat with the living"
 EVENT.id = "deadchat"
 EVENT.Categories = {"spectator", "largeimpact"}

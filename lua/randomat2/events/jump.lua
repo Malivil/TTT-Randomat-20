@@ -1,6 +1,10 @@
 local EVENT = {}
 
-EVENT.Title = "You can only jump once."
+EVENT.Title = {
+    { text = "You can only jump " },
+    { text = "once", underline = true },
+    { text = "." }
+}
 EVENT.ExtDescription = "Explodes players who jump more than once"
 EVENT.id = "jump"
 EVENT.Type = EVENT_TYPE_JUMPING

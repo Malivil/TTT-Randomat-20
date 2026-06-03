@@ -1,6 +1,9 @@
 local EVENT = {}
 
-EVENT.Title = "I'm feeling kinda ILL"
+EVENT.Title = {
+    { text = "I'm feeling kinda " },
+    { text = "ILL", italic = true }
+}
 EVENT.Description = "Causes players to slowly lose health over time"
 EVENT.id = "feelingill"
 EVENT.Categories = {"moderateimpact"}

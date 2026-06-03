@@ -2,7 +2,10 @@ local EVENT = {}
 
 util.AddNetworkString("RdmtSetSensitivityValue")
 
-EVENT.Title = "Don't be so Sensitive"
+EVENT.Title = {
+    { text = "Don't be so " },
+    { text = "Sensitive", italic = true }
+}
 EVENT.Description = "Periodically changes each player's mouse sensitivity"
 EVENT.id = "sensitive"
 EVENT.Categories = {"fun", "largeimpact"}

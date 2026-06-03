@@ -2,7 +2,11 @@ local EVENT = {}
 
 CreateConVar("randomat_imbees_count", 3, FCVAR_NONE, "The amount of bees spawned when someone dies", 1, 10)
 
-EVENT.Title = "Stop, I'm Bees!"
+EVENT.Title = {
+    { text = "Stop, I'm " },
+    { text = "Bees", italic = true, underline = true },
+    { text = "!" }
+}
 EVENT.Description = "Spawns bees when a player is killed"
 EVENT.id = "imbees"
 EVENT.Categories = {"deathtrigger", "entityspawn", "moderateimpact"}
