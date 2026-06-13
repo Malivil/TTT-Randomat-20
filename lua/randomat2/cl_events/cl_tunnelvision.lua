@@ -12,8 +12,6 @@ local function DrawCircle(x, y, radius, seg)
 end
 
 local function DrawScreen(startTime, final, duration, out, onEnd)
-    if not Randomat.Client:Alive() or Randomat.Client:IsSpec() then return end
-
     -- Reset everything to known good
     render.SetStencilWriteMask(0xFF)
     render.SetStencilTestMask(0xFF)
