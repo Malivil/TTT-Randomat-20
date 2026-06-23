@@ -203,6 +203,7 @@ hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dta
         local dsettings = vgui.Create("DForm", drdmt)
         dsettings:SetName("Randomat Client Settings")
         dsettings:CheckBox("Show active Randomat count on UI", "cl_randomat_show_active")
+        dsettings:CheckBox("Center notifications vertically", "cl_randomat_notify_centered")
         drdmt:AddItem(dsettings)
     end
 

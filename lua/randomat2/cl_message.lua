@@ -43,6 +43,8 @@ local messageStack = {}
 -- Cached list of created fonts for formatted text
 local createdFonts = {}
 
+local notify_centered = CreateClientConVar("cl_randomat_notify_centered", "1", true, false, "Whether notification messages are centered vertically", 0, 1)
+
 -- Make and cache fonts on-demand
 local function BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
     local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikethrough and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "") .. (big and "Big" or "Small")
@@ -231,18 +233,21 @@ local function RepositionStack()
     local newest = messageStack[count]
     if not IsValid(newest.panel) then return end
 
-    -- Do a little test run to check whether we're going to overflow
-    local stacksFit = true
-    local testY = newest.baseY
-    for i = count - 1, 1, -1 do
-        local entry = messageStack[i]
-        local below = messageStack[i + 1]
-        if not IsValid(entry.panel) then continue end
+    local stacksFit = false
+    if notify_centered:GetBool() then
+        stacksFit = true
+        -- Do a little test run to check whether we're going to overflow
+        local testY = newest.baseY
+        for i = count - 1, 1, -1 do
+            local entry = messageStack[i]
+            local below = messageStack[i + 1]
+            if not IsValid(entry.panel) then continue end
 
-        testY = testY - entry.panel:GetTall() - CalculateMessageGap(entry, below)
-        if testY < 0 then
-            stacksFit = false
-            break
+            testY = testY - entry.panel:GetTall() - CalculateMessageGap(entry, below)
+            if testY < 0 then
+                stacksFit = false
+                break
+            end
         end
     end
 
@@ -258,7 +263,7 @@ local function RepositionStack()
         end
     -- If we ARE going to overflow then start putting new messages under the older ones
     else
-        messageStack[1].panel:SetY(0)
+        messageStack[1].panel:SetY(STACK_GAP)
         for i = 2, count do
             local entry = messageStack[i]
             local above = messageStack[i - 1]
@@ -278,7 +283,7 @@ local function RepositionStack()
                         local newY = entry.panel:GetY() - overshoot
                         -- Just let the oldest messages overlap rather than pushing them off the screen (seems like the lesser of two evils)
                         if newY < 0 then
-                            newY = 0
+                            newY = STACK_GAP
                         end
                         entry.panel:SetY(newY)
                     end
@@ -354,9 +359,13 @@ local function ShowMessage()
     panel.big = big
     panel:SetLife(length)
     panel:SetSize(msgW + padding, msgH)
-    panel:Center()
-    if not big then
-        panel:CenterVertical(0.55)
+    if notify_centered:GetBool() then
+        panel:Center()
+        if not big then
+            panel:CenterVertical(0.55)
+        end
+    else
+        panel:CenterHorizontal()
     end
 
     local baseY = panel:GetY()
