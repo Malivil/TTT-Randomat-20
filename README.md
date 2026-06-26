@@ -37,8 +37,10 @@ _ttt_randomat_event_hint_chat_secret_ - Default: 0 - Whether the secret events t
 
 # Client ConVars
 *NOTE*: These are manageable in the Randomat tab of the F1 menu.\
-_cl_randomat_show_active_ - Default: 1 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*
-_cl_randomat_notify_centered_ - Default: 1 - Whether notification messages are centered vertically
+_cl_randomat_show_active_ - Default: 1 - Whether to show the "Active Events" label on the UI. *(Only supported in the latest Custom Roles for TTT version)*\
+_cl_randomat_notify_centered_ - Default: 1 - Whether notification messages are centered vertically\
+_cl_randomat_notify_big_size_ - Default: 48 - The font size to make large notification messages\
+_cl_randomat_notify_small_size_ - Default: 32 - The font size to make small notification messages
 
 # Latest Events
 1. Mathracer
