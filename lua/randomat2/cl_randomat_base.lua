@@ -198,14 +198,15 @@ hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dta
     drdmt:SetPadding(10)
     drdmt:SetSpacing(10)
 
-    -- Settings section -- only show when there is actually a setting to use (e.g. new CR for TTT only)
+    -- Settings section
+    local dsettings = vgui.Create("DForm", drdmt)
+    dsettings:SetName("Randomat Client Settings")
+    -- Only show this setting when it is actually used (e.g. new CR for TTT only)
     if CR_VERSION then
-        local dsettings = vgui.Create("DForm", drdmt)
-        dsettings:SetName("Randomat Client Settings")
         dsettings:CheckBox("Show active Randomat count on UI", "cl_randomat_show_active")
-        dsettings:CheckBox("Center notifications vertically", "cl_randomat_notify_centered")
-        drdmt:AddItem(dsettings)
     end
+    dsettings:CheckBox("Center notifications vertically", "cl_randomat_notify_centered")
+    drdmt:AddItem(dsettings)
 
     -- Active Events section
     local dactive = vgui.Create("DForm", drdmt)
