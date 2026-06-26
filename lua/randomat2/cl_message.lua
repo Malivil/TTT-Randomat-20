@@ -44,16 +44,19 @@ local messageStack = {}
 local createdFonts = {}
 
 local notify_centered = CreateClientConVar("cl_randomat_notify_centered", "1", true, false, "Whether notification messages are centered vertically", 0, 1)
+local notify_big_size = CreateClientConVar("cl_randomat_notify_big_size", "48", true, false, "The font size to make large notification messages", 1, 100)
+local notify_small_size = CreateClientConVar("cl_randomat_notify_small_size", "32", true, false, "The font size to make small notification messages", 1, 100)
 
 -- Make and cache fonts on-demand
 local function BuildFormattedFont(bold, italic, underline, strikethrough, shadow, outline, big)
     local key = (bold and "B" or "") .. (italic and "I" or "") .. (underline and "U" or "") .. (strikethrough and "St" or "") .. (shadow and "Sh" or "") .. (outline and "O" or "") .. (big and "Big" or "Small")
-    local name = "RandomatFont_" .. (key == "" and "Normal" or key)
+    local size = big and notify_big_size:GetInt() or notify_small_size:GetInt()
+    local name = "RandomatFont_" .. (key == "" and "Normal" or key) .. size
 
     if not createdFonts[name] then
         SurfaceCreateFont(name, {
             font = "Roboto",
-            size = big and 48 or 32,
+            size = size,
             weight = bold and 700 or 500,
             italic = italic or false,
             outline = outline or false,
@@ -350,7 +353,7 @@ local function ShowMessage()
         segments = ProcessFormattedSegments(msg, big)
         msgW, msgH, yOffset = MeasureSegments(segments, padding)
     else
-        SurfaceSetFont(big and "RandomatHeader" or "RandomatSmallMsg")
+        SurfaceSetFont(BuildFormattedFont(false, false, false, false, false, false, big))
         msgW, msgH = SurfaceGetTextSize(msg)
     end
 
@@ -443,11 +446,7 @@ local function ShowMessage()
         end
     else
         local lbl = VguiCreate("DLabel", bg)
-        if big then
-            lbl:SetFont("RandomatHeader")
-        else
-            lbl:SetFont("RandomatSmallMsg")
-        end
+        lbl:SetFont(BuildFormattedFont(false, false, false, false, false, false, big))
         lbl:SetTextColor(font_color)
         lbl:SetWrap(true)
         lbl:DockMargin(padding / 2, 0, padding / 2, 0)

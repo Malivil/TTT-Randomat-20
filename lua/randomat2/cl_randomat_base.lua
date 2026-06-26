@@ -206,6 +206,8 @@ hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dta
         dsettings:CheckBox("Show active Randomat count on UI", "cl_randomat_show_active")
     end
     dsettings:CheckBox("Center notifications vertically", "cl_randomat_notify_centered")
+    dsettings:NumSlider("Large notification font size", "cl_randomat_notify_big_size", 1, 100, 0)
+    dsettings:NumSlider("Small notification font size", "cl_randomat_notify_small_size", 1, 100, 0)
     drdmt:AddItem(dsettings)
 
     -- Active Events section
