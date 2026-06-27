@@ -106,6 +106,15 @@ net.Receive("RdmtEventBegin", function()
     local title = net.ReadString()
     local desc = net.ReadString()
 
+    table.insert(Randomat.ActiveEvents, {
+        id = id,
+        Id = id,
+        title = title,
+        Title = title,
+        desc = desc,
+        Description = desc
+    })
+
     local event = Randomat.Events[id]
     if not event then return end
 
@@ -113,13 +122,6 @@ net.Receive("RdmtEventBegin", function()
     if not event.Title and not event.AltTitle then
         event.Title = title
     end
-
-    table.insert(Randomat.ActiveEvents, {
-        id = id,
-        Id = id,
-        title = title,
-        desc = desc
-    })
 
     if type(event.Begin) == "function" then
         event:Begin()
@@ -233,7 +235,7 @@ hook.Add("TTTSettingsTabs", "RandomatEventTrackingTTTSettingsTabs", function(dta
     for i, e in ipairs(Randomat.ActiveEvents) do
         local dtitle = vgui.Create("DLabel", dactive)
         dtitle:SetFont("DermaDefaultBold")
-        dtitle:SetText(i .. ". " .. Randomat:GetEventTitle(e))
+        dtitle:SetText(i .. ". " .. e.Title)
         dtitle:SetTextColor(Color(0, 0, 0, 255))
         dactive:AddItem(dtitle)
 
