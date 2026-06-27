@@ -109,6 +109,11 @@ net.Receive("RdmtEventBegin", function()
     local event = Randomat.Events[id]
     if not event then return end
 
+    -- If we don't have a title registered on the client, save it
+    if not event.Title and not event.AltTitle then
+        event.Title = title
+    end
+
     table.insert(Randomat.ActiveEvents, {
         id = id,
         Id = id,
