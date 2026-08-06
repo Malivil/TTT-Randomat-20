@@ -42,7 +42,6 @@ SWEP.Secondary.Delay        = 1.4
 
 SWEP.Kind                   = WEAPON_MELEE
 SWEP.LimitedStock           = true -- only buyable once
-SWEP.WeaponID               = AMMO_KNIFE
 
 SWEP.IsSilent               = true
 
