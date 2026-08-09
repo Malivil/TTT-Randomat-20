@@ -5,6 +5,7 @@ function EVENT:End()
     hook.Remove("DrawOverlay", "RandomatMurderUI")
     hook.Remove("PreDrawHalos", "RandomatMurderGunHighlight")
     hook.Remove("OnContextMenuOpen", "RandomatMurderBlockShop")
+    hook.Remove("TTTHUDInfoPaint", "RandomatMurderUIPos")
     Randomat:RemoveSpeedMultiplier("RdmtMurderSpeed")
 end
 
@@ -19,23 +20,31 @@ net.Receive("MurderEventActive", function()
     surface.CreateFont("HealthAmmo", {font = "Trebuchet24", size = 24, weight = 750})
 
     local blindIdx = 0
+    local x = 19.6
+    local y = ScrH() - 60
+
+    if CR_VERSION then
+        hook.Add("TTTHUDInfoPaint", "RandomatMurderUIPos", function(client, _, _, _, hudx, hudy)
+            x = hudx + 9.6
+            y = hudy + 74
+        end)
+    end
+
     hook.Add("DrawOverlay", "RandomatMurderUI", function()
         local rl = Randomat.Client:GetRole()
         local pks = Randomat.Client:GetNWInt("MurderWeaponsEquipped")
         local text = string.format("%i / %02i", pks, maxpck)
 
-        local y = ScrH() - 60
-
         if rl ~= ROLE_TRAITOR and rl ~= ROLE_KILLER and Randomat.Client:Alive() and not Randomat.Client:IsSpec() and not Randomat.Client:GetNWBool("RdmMurderRevolver") then
             local texttable = {}
             texttable.font = "HealthAmmo"
             texttable.color = COLOR_WHITE
-            texttable.pos = { 230, y+24 }
+            texttable.pos = { x+220, y+24 }
             texttable.text = text
             texttable.xalign = TEXT_ALIGN_RIGHT
             texttable.yalign = TEXT_ALIGN_BOTTOM
-            draw.RoundedBox(8, 19.6, y, 230, 25, Color(0, 0, 0, 175))
-            draw.RoundedBox(8, 19.6, y, (pks/maxpck)*230, 25, Color(205, 155, 0, 255))
+            draw.RoundedBox(8, x, y, 230, 25, Color(0, 0, 0, 175))
+            draw.RoundedBox(8, x, y, (pks/maxpck)*230, 25, Color(205, 155, 0, 255))
             draw.TextShadow(texttable, 2)
         end
 
