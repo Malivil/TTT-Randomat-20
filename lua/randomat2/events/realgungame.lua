@@ -320,6 +320,7 @@ function EVENT:Begin()
             lastUpdate = curTime + 1
             -- Change the round time so it effectively never ends
             SetGlobalFloat("ttt_round_end", curTime + 90000)
+            SetGlobalFloat("ttt_haste_end", curTime + 90000)
         end
     end)
 
