@@ -18,6 +18,11 @@ local function IsEvil(ply)
     return Randomat:IsTraitorTeam(ply) or Randomat:IsIndependentTeam(ply)
 end
 
+local function IsTargetKind(wep)
+    if not wep.Kind then return true end
+    return wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE
+end
+
 function EVENT:StripBannedWeapons(ply)
     -- Let the killer keep their knife since their role does not change
     if ply:GetRole() ~= ROLE_KILLER then
@@ -25,8 +30,8 @@ function EVENT:StripBannedWeapons(ply)
     end
     for _, wep in ipairs(ply:GetWeapons()) do
         local class_name = WEPS.GetClass(wep)
-        if (not WEAPON_CATEGORY_ROLE or wep.Category ~= WEAPON_CATEGORY_ROLE) and (wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE or class_name == "weapon_zm_improvised" or class_name == "weapon_ttt_crowbar_fast" or class_name == "weapon_ttt_innocent_knife" or class_name == "weapon_ttt_wrench")
-             then
+        if (not WEAPON_CATEGORY_ROLE or wep.Category ~= WEAPON_CATEGORY_ROLE) and
+            (IsTargetKind(wep) or class_name == "weapon_zm_improvised" or class_name == "weapon_ttt_crowbar_fast" or class_name == "weapon_ttt_innocent_knife" or class_name == "weapon_ttt_wrench") then
             ply:StripWeapon(class_name)
             -- Reset FOV to unscope
             ply:SetFOV(0, 0.2)
@@ -41,7 +46,7 @@ function EVENT:Begin()
     local wepspawns = 0
 
     for _, v in ents.Iterator() do
-        if v.Base == "weapon_tttbase" and v.AutoSpawnable then
+        if v.AutoSpawnable then
             wepspawns = wepspawns+1
         end
     end
@@ -104,7 +109,7 @@ function EVENT:Begin()
 
     self:AddHook("WeaponEquip", function(wep, ply)
         -- Let the player pick up weapons and nades and count them toward the pieces found
-        if wep.Kind == WEAPON_HEAVY or wep.Kind == WEAPON_PISTOL or wep.Kind == WEAPON_NADE or wep.Kind == WEAPON_NONE then
+        if IsTargetKind(wep) then
             ply:SetNWInt("MurderWeaponsEquipped", ply:GetNWInt("MurderWeaponsEquipped") +1)
         end
     end)
