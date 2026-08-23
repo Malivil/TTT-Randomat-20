@@ -174,6 +174,13 @@ local function GetWeaponLists()
     return weps
 end
 
+local function StopInvulnerability(ply)
+    ply.RdmtRGGRespawnTime = nil
+    if ply.SetInvulnerable then
+        ply:SetInvulnerable(false, false)
+    end
+end
+
 function EVENT:Begin()
     currentWepData = {}
     blocklist = {}
@@ -313,6 +320,7 @@ function EVENT:Begin()
         return wepClass == WEPS.GetClass(wep)
     end)
 
+    local protect_time = GetConVar("randomat_realgungame_protect_time"):GetInt()
     local lastUpdate = nil
     self:AddHook("Think", function()
         local curTime = CurTime()
@@ -321,6 +329,17 @@ function EVENT:Begin()
             -- Change the round time so it effectively never ends
             SetGlobalFloat("ttt_round_end", curTime + 90000)
             SetGlobalFloat("ttt_haste_end", curTime + 90000)
+        end
+
+        if protect_time > 0 then
+            for _, p in player.Iterator() do
+                if not p.RdmtRGGRespawnTime then continue end
+
+                -- Remove invulnerability based on time
+                if curTime >= (p.RdmtRGGRespawnTime + protect_time) then
+                    StopInvulnerability(p)
+                end
+            end
         end
     end)
 
@@ -343,6 +362,9 @@ function EVENT:Begin()
         local wepClass = weps[wepKind][wepIndex]
         self:EquipPlayer(ply, wepClass)
         ply.RdmtRGGRespawnTime = CurTime()
+        if ply.SetInvulnerable then
+            ply:SetInvulnerable(true, false)
+        end
     end)
 
     -- TFA weapons don't like it when we override the Reload method to handle infinite ammo, so use their own hook instead
@@ -367,13 +389,12 @@ function EVENT:Begin()
         end
     end)
 
-    local protect_time = GetConVar("randomat_realgungame_protect_time"):GetInt()
     if protect_time > 0 then
         self:AddHook("EntityTakeDamage", function(ent, dmginfo)
             if not IsPlayer(ent) or not ent:Alive() or ent:IsSpec() then return end
 
             -- If the target has respawn protection, don't let them get damaged
-            if ent.RdmtRGGRespawnTime and (ent.RdmtRGGRespawnTime + protect_time > CurTime()) then
+            if ent.RdmtRGGRespawnTime then
                 dmginfo:SetDamage(0)
                 dmginfo:ScaleDamage(0)
             end
@@ -394,7 +415,7 @@ function EVENT:Begin()
             end
 
             -- If the attacker was a player, reset their respawn time marker so they aren't immune anymore
-            attacker.RdmtRGGRespawnTime = nil
+            StopInvulnerability(attacker)
         end)
     end
 
