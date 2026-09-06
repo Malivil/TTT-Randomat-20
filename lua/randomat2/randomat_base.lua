@@ -1319,9 +1319,7 @@ function randomat_meta:AddHook(hooktype, callbackfunc, suffix)
     if suffix and type(suffix) == "string" and #suffix > 0 then
         id = id .. ":" .. suffix
     end
-    hook.Add(hooktype, id, function(...)
-        return callbackfunc(...)
-    end)
+    hook.Add(hooktype, id, callbackfunc)
 
     self.Hooks = self.Hooks or {}
 
