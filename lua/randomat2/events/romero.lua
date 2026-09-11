@@ -31,8 +31,6 @@ function EVENT:Begin(target)
             target = self.owner
         end
         Randomat:SetRole(target, ROLE_DETECTIVE)
-        self:StripRoleWeapons(target)
-        hook.Call("PlayerLoadout", GAMEMODE, target)
         SendFullStateUpdate()
     end
     target:SetMaxHealth(target:GetMaxHealth() + GetConVar("randomat_romero_bonushealth"):GetInt())

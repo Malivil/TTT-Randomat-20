@@ -1183,6 +1183,12 @@ Randomat:Notify({
 
 *Returns:* The NPC spawned
 
+**Randomat:StripRoleWeapons(ply, skip_add_crowbar)** - Removes all role-specific weapons from the given player and gives them a crowbar (to replace the killer's crowbar).\
+*Realm:* Server\
+*Parameters:*
+- *ply* - The player whose role-specific events are being removed
+- *skip_add_crowbar* - Whether to skip giving the player a replacement crowbar
+
 **Randomat:TriggerEvent(id, ply, ...)** - Triggers the event with the given ID.\
 *Realm:* Server\
 *Parameters:*

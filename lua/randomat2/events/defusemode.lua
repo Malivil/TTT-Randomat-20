@@ -30,20 +30,17 @@ function EVENT:Begin()
         if Randomat:IsTraitorTeam(p) or changing_teams then
             local set_credits = not Randomat:IsTraitorTeam(p)
             Randomat:SetRole(p, ROLE_TRAITOR)
-            self:StripRoleWeapons(p)
             p:Give("weapon_ttt_c4")
             if set_credits then p:SetDefaultCredits() end
         elseif Randomat:IsDetectiveTeam(p) then
             if not p:IsRole(detective_role) then
                 Randomat:SetRole(p, detective_role)
-                self:StripRoleWeapons(p)
                 if detective_role == ROLE_DETECTIVE then
                     p:Give("weapon_ttt_wtester")
                 end
             end
         else
             Randomat:SetRole(p, ROLE_INNOCENT)
-            self:StripRoleWeapons(p)
         end
     end
     SendFullStateUpdate()

@@ -61,8 +61,6 @@ function EVENT:Begin()
             end
         end
 
-        self:StripRoleWeapons(v)
-
         timer.Simple(0.1, function()
             v.glitchweptries = 0
             self:GiveWep(v)

@@ -63,18 +63,12 @@ local function OverrideCvar(name, value)
 end
 
 function EVENT:HandleRoleWeapons(ply)
-    local updated = false
     -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
     if (Randomat:IsTraitorTeam(ply) and ply:GetRole() ~= ROLE_TRAITOR) or Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply) then
         Randomat:SetRole(ply, ROLE_TRAITOR)
-        updated = true
+        return true
     end
-
-    -- Remove role weapons from anyone whose role was changed
-    if updated then
-        self:StripRoleWeapons(ply)
-    end
-    return updated
+    return false
 end
 
 function EVENT:Begin()
@@ -148,8 +142,6 @@ function EVENT:Begin()
             v:SetCredits(0)
             table.insert(messages, "Use the Prop Disguiser to hide from the Traitors!")
         end
-
-        self:StripRoleWeapons(v)
 
         -- Delay the messages so they come after the event notification in chat
         timer.Create(v:Nick() .. "RandomatPropHuntMessageTimer", 1, 1, function()

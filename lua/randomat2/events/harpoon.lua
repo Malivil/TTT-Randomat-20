@@ -46,10 +46,6 @@ function EVENT:HandleRoleWeapons(ply)
         updated = true
     end
 
-    -- Remove role weapons from anyone whose role was changed
-    if updated then
-        self:StripRoleWeapons(ply)
-    end
     return updated, changing_teams
 end
 

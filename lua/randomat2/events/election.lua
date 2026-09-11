@@ -201,7 +201,6 @@ function EVENT:SwearIn(winner)
 
         -- Innocent - Promote to Detective, give credits
         if Randomat:IsInnocentTeam(winner) then
-            self:StripRoleWeapons(winner)
             Randomat:SetRole(winner, ROLE_DETECTIVE)
             winner:AddCredits(credits)
             SendFullStateUpdate()
@@ -308,12 +307,8 @@ function EVENT:SwearIn(winner)
 
             Randomat:PrintMessage(winner, MSG_PRINTBOTH, "You have pulled the knowledge how of to be " .. ROLE_STRINGS_EXT[role] .. " from the ether.")
 
-            self:StripRoleWeapons(winner)
             Randomat:SetRole(winner, role)
             SendFullStateUpdate()
-
-            -- Make sure they get their loadout weapons
-            hook.Call("PlayerLoadout", GAMEMODE, winner)
         -- Boxer - Wins by knocking everyone out after they are activated, knock out everyone that voted for them
         elseif winnerRole == ROLE_BOXER then
             if winner:Alive() and not winner:IsSpec() then
@@ -479,14 +474,8 @@ function EVENT:SwearIn(winner)
 
             chosen:MoveRoleState(winner)
 
-
-            self:StripRoleWeapons(winner)
             Randomat:SetRole(winner, chosen:GetRole())
-            hook.Run("PlayerLoadout", winner)
-
-            self:StripRoleWeapons(chosen)
             Randomat:SetRole(chosen, ROLE_GUESSER)
-            hook.Run("PlayerLoadout", chosen)
 
             SendFullStateUpdate()
 
@@ -619,12 +608,10 @@ function EVENT:SwearIn(winner)
             for _, v in ipairs(self:GetAlivePlayers()) do
                 if turninnocents then
                     if Randomat:IsInnocentTeam(v) then
-                        self:StripRoleWeapons(v)
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end
                 else
                     if Randomat:IsTraitorTeam(v) then
-                        self:StripRoleWeapons(v)
                         Randomat:SetRole(v, ROLE_VAMPIRE)
                     end
                 end
@@ -660,7 +647,6 @@ function EVENT:SwearIn(winner)
             Randomat:PrintMessage(winner, MSG_PRINTBOTH, target:Nick() .. " has been " .. context_str .. "converted to your role")
 
             -- Convert the target to the winner's role
-            self:StripRoleWeapons(target)
             Randomat:SetRole(target, winnerRole)
             -- If they were dead, respawn them
             if not target:Alive() or target:IsSpec() then
@@ -672,9 +658,6 @@ function EVENT:SwearIn(winner)
                 target:SpawnForRound(true)
             end
             SendFullStateUpdate()
-
-            -- Make sure they get their loadout weapons
-            hook.Call("PlayerLoadout", GAMEMODE, target)
         end
 
         Randomat:EndActiveEvent(self.id)

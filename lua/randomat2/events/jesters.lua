@@ -30,8 +30,6 @@ function EVENT:Begin()
                     ply:StripWeapon(wep:GetClass())
                 end
             end
-
-            self:StripRoleWeapons(ply)
         end
     end
 

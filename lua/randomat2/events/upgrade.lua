@@ -150,9 +150,6 @@ net.Receive("RdmtPlayerChoseKiller", function(len, ply)
             ply:SetHealth(new_hp)
         end
     end
-
-    -- Make sure they get their loadout weapons
-    hook.Call("PlayerLoadout", GAMEMODE, ply)
 end)
 
 net.Receive("RdmtPlayerChoseMercenary", function(len, ply)
