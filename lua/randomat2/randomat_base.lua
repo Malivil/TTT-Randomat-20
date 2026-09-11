@@ -866,7 +866,7 @@ function Randomat:SetRole(ply, role, set_max_hp, scale_hp)
     ply:SetRole(role)
     if old_role ~= role and not CRVersion("2.5.4") then
         Randomat:StripRoleWeapons(ply)
-        RunHook("PlayerLoadout", chosen)
+        RunHook("PlayerLoadout", ply)
     end
 
     -- Set the player's max HP for their new role (Defaults to true)
