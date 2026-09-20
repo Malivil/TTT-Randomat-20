@@ -21,13 +21,14 @@ function EVENT:Begin()
             local event = Randomat:GetRandomEvent(true, function(evt)
                 return evt.Id ~= "secret" and not evt.StartSecret and not table.HasValue(chosen, evt.Id) and not table.HasValue(blocklist, evt.Id)
             end)
-            table.insert(chosen, event)
+            table.insert(chosen, event.Id)
         end
 
         -- Tell everyone what's happening
         for _, p in player.Iterator() do
             p:PrintMessage(HUD_PRINTTALK, "[RANDOMAT] One of these events has been started:")
-            for _, e in ipairs(chosen) do
+            for _, id in ipairs(chosen) do
+                local e = Randomat.Events[id]
                 local has_description = e.Description ~= nil and #e.Description > 0
                 Randomat:ChatDescription(p, e, has_description)
             end
@@ -35,7 +36,7 @@ function EVENT:Begin()
 
         -- This is the one we're actually going to run
         local event = chosen[math.random(3)]
-        Randomat:SilentTriggerHiddenEvent(event.Id, self.owner, "This event is hidden by '" .. Randomat:GetEventTitle(EVENT) .. "'")
+        Randomat:SilentTriggerHiddenEvent(event, self.owner, "This event is hidden by '" .. Randomat:GetEventTitle(EVENT) .. "'")
     end)
 end
 
