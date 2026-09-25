@@ -925,8 +925,39 @@ function Randomat:StripRoleWeapons(ply, skip_add_crowbar)
     end
 end
 
-function Randomat:BalanceTeams()
-    if not CR_VERSION then return false, {}, {} end
+function Randomat:BalanceTeams(convert_traitors)
+    if type(convert_traitors) ~= "boolean" then
+        convert_traitors = true
+    end
+
+    local newInnocents = {}
+    local newTraitors = {}
+    if not CR_VERSION then
+        for _, ply in PlayerIterator() do
+            if IsValid(ply) and ply:GetRole() ~= ROLE_NONE then
+                if ply:IsActive() then
+                    local changingTeams = Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply)
+                    if (convert_traitors and Randomat:IsTraitorTeam(ply) and ply:GetRole() ~= ROLE_TRAITOR) or changingTeams then
+                        Randomat:SetRole(ply, ROLE_TRAITOR)
+                        if changingTeams then
+                            TableInsert(newTraitors, ply)
+                        end
+                    elseif Randomat:IsJesterTeam(ply) then
+                        Randomat:SetRole(ply, ROLE_INNOCENT)
+                        TableInsert(newInnocents, ply)
+                    end
+                elseif ply:IsRespawning() then
+                    ply:StopRespawning()
+                end
+            end
+        end
+
+        if #newInnocents > 0 or #newTraitors > 0 then
+            SendFullStateUpdate()
+            return true, newInnocents, newTraitors
+        end
+        return false, {}, {}
+    end
 
     -- Find how much health innocents and traitors currently have
     local players = 0
@@ -941,6 +972,9 @@ function Randomat:BalanceTeams()
                     innocentHealth = innocentHealth + ply:Health()
                 elseif ply:IsTraitorTeam() then
                     traitorHealth = traitorHealth + ply:Health()
+                    if convert_traitors and ply:GetRole() ~= ROLE_TRAITOR then
+                        Randomat:SetRole(ply, ROLE_TRAITOR)
+                    end
                 else
                     TableInsert(jestersIndependentsMonsters, ply)
                 end
@@ -984,7 +1018,7 @@ function Randomat:BalanceTeams()
     local traitorPct = traitors / (players - jestersIndependents - monsters)
 
     -- If a role pack is enabled calculate the expected ratio of innocents to traitors
-    local rolePack = GetConVar("ttt_role_pack"):GetString()
+    local rolePack = ROLEPACKS.GetCurrentRolePackName()
     if #rolePack > 0 then
         local json = file.Read("rolepacks/" .. rolePack .. "/roles.json", "DATA")
         if json then
@@ -1109,8 +1143,6 @@ function Randomat:BalanceTeams()
     end
 
     -- Once we have determined the best split, change players roles to match the chosen split
-    local newInnocents = {}
-    local newTraitors = {}
     for exponent, ply in ipairs(jestersIndependentsMonsters) do
         local plyBit = math.pow(2, exponent - 1)
         if bit.band(bestSplit, plyBit) == plyBit then
