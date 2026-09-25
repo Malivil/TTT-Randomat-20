@@ -1,3 +1,4 @@
+local bit = bit
 local concommand = concommand
 local ents = ents
 local file = file
@@ -922,6 +923,208 @@ function Randomat:StripRoleWeapons(ply, skip_add_crowbar)
     if not skip_add_crowbar then
         ply:Give("weapon_zm_improvised")
     end
+end
+
+function Randomat:BalanceTeams()
+    if not CR_VERSION then return false, {}, {} end
+
+    -- Find how much health innocents and traitors currently have
+    local players = 0
+    local innocentHealth = 0
+    local traitorHealth = 0
+    local jestersIndependentsMonsters = {}
+    for _, ply in PlayerIterator() do
+        if IsValid(ply) and ply:GetRole() ~= ROLE_NONE then
+            players = players + 1
+            if ply:IsActive() then
+                if ply:IsInnocentTeam() then
+                    innocentHealth = innocentHealth + ply:Health()
+                elseif ply:IsTraitorTeam() then
+                    traitorHealth = traitorHealth + ply:Health()
+                else
+                    TableInsert(jestersIndependentsMonsters, ply)
+                end
+            elseif ply:IsRespawning() then
+                ply:StopRespawning()
+            end
+        end
+    end
+
+    -- If there are no jesters, independents or monsters then stop there
+    if #jestersIndependentsMonsters == 0 then return false, {}, {} end
+
+    -- Find the average number of jesters and independents that spawn in each round
+    local jestersIndependents
+    local singleJesIndMax = GetConVar("ttt_single_jester_independent_max_players"):GetInt()
+    local indChance = GetConVar("ttt_independent_chance"):GetFloat()
+    if GetConVar("ttt_multiple_jesters_independents"):GetBool() then
+        -- Multiple jesters and independents
+        jestersIndependents = math.ceil(players * math.Round(GetConVar("ttt_jester_independent_pct"):GetFloat(), 3))
+        jestersIndependents = math.min(jestersIndependents, GetConVar("ttt_jester_independent_max"):GetInt()) * GetConVar("ttt_jester_independent_chance"):GetFloat()
+    elseif not GetConVar("ttt_single_jester_independent"):GetBool() or (singleJesIndMax > 0 and players > singleJesIndMax) then
+        -- One jester AND one independent
+        jestersIndependents = GetConVar("ttt_jester_chance"):GetFloat() + indChance
+    else
+        -- One jester OR one independent
+        jestersIndependents = indChance
+    end
+
+    -- Find the average number of monsters that spawn in each round
+    local monsters = 0
+    if #GetTeamRoles(MONSTER_ROLES) > 0 then
+        monsters = math.ceil(players * math.Round(GetConVar("ttt_monster_pct"):GetFloat(), 3))
+        monsters = math.min(monsters, GetConVar("ttt_monster_max"):GetInt()) * GetConVar("ttt_monster_chance"):GetFloat()
+    end
+
+    -- Find the number of traitors that spawn in each round
+    local traitors = math.ceil(players * math.Round(GetConVar("ttt_traitor_pct"):GetFloat(), 3))
+    traitors = math.min(traitors, GetConVar("ttt_traitor_max"):GetInt())
+
+    -- Find the average percentage of players that are traitors in each round ignoring jesters, independents, and monsters
+    local traitorPct = traitors / (players - jestersIndependents - monsters)
+
+    -- If a role pack is enabled calculate the expected ratio of innocents to traitors
+    local rolePack = GetConVar("ttt_role_pack"):GetString()
+    if #rolePack > 0 then
+        local json = file.Read("rolepacks/" .. rolePack .. "/roles.json", "DATA")
+        if json then
+            local rolePackTable = util.JSONToTable(json)
+            if rolePackTable then
+                local filledSlotCount = 0
+
+                local rolePackInnocents = 0
+                local rolePackTraitors = 0
+                local rolePackMonsters = 0
+                local rolePackJestersIndependents = 0
+
+                for _, slot in ipairs(rolePackTable.slots) do
+                    -- If the slot is empty then we don't need to do any calculations
+                    if #slot == 0 then continue end
+
+                    -- If we have already filled enough slots for each player then don't include later slots in the calculation
+                    if filledSlotCount >= players then
+                        break
+                    end
+                    filledSlotCount = filledSlotCount + 1
+
+                    -- Calculate the number of roles and their weights within this slot that belong to each team
+                    local slotInnocents = 0
+                    local slotTraitors = 0
+                    local slotMonsters = 0
+                    local slotJestersIndependents = 0
+                    for _, roleslot in ipairs(slot) do
+                        local role = ROLE_NONE
+                        for r = ROLE_INNOCENT, ROLE_MAX do
+                            if ROLE_STRINGS_RAW[r] == roleslot.role then
+                                role = r
+                                break
+                            end
+                        end
+                        if role > ROLE_NONE then
+                            if INNOCENT_ROLES[role] then
+                                slotInnocents = slotInnocents + roleslot.weight
+                            elseif TRAITOR_ROLES[role] then
+                                slotTraitors = slotTraitors + roleslot.weight
+                            elseif MONSTER_ROLES[role] then
+                                slotMonsters = slotMonsters + roleslot.weight
+                            else
+                                slotJestersIndependents = slotJestersIndependents + roleslot.weight
+                            end
+                        end
+                    end
+
+                    -- From the summed weights, add the percentage change that this slot will be filled by a role of each team to the totals
+                    local totalSlotWeight = slotInnocents + slotTraitors + slotMonsters + slotJestersIndependents
+                    rolePackInnocents = rolePackInnocents + (slotInnocents / totalSlotWeight)
+                    rolePackTraitors = rolePackTraitors + (slotTraitors / totalSlotWeight)
+                    rolePackMonsters = rolePackMonsters + (slotMonsters / totalSlotWeight)
+                    rolePackJestersIndependents = rolePackJestersIndependents + (slotJestersIndependents / totalSlotWeight)
+                end
+
+                -- If we didn't fill enough slots for each player then we need to calculate what teams would fill the remaining slots using the same order used in regular role spawning (traitor>jester/independent>monster>innocent)
+                if filledSlotCount < players then
+                    local remainingSlots = players - filledSlotCount
+
+                    -- If there should be more traitors then fill as many empty slots as required with traitors
+                    if rolePackTraitors < traitors and remainingSlots > 0 then
+                        local requiredExtraTraitors = math.min(traitors - rolePackTraitors, remainingSlots)
+                        rolePackTraitors = rolePackTraitors + requiredExtraTraitors
+                        remainingSlots = remainingSlots - requiredExtraTraitors
+                    end
+
+                    -- If there should be more jesters/independents then fill as many empty slots as required with jesters/independents
+                    if rolePackJestersIndependents < jestersIndependents and remainingSlots > 0 then
+                        local requiredExtraJestersIndependents = math.min(jestersIndependents - rolePackJestersIndependents, remainingSlots)
+                        -- We don't actually need to know how many jesters/independents there are but we do need to know if any slots have been taken up
+                        remainingSlots = remainingSlots - requiredExtraJestersIndependents
+                    end
+
+                    -- If there should be more monsters then fill as many empty slots as required with monsters
+                    if rolePackMonsters < monsters and remainingSlots > 0 then
+                        local requiredExtraMonsters = math.min(monsters - rolePackMonsters, remainingSlots)
+                        -- We don't actually need to know how many monsters there are but we do need to know if any slots have been taken up
+                        remainingSlots = remainingSlots - requiredExtraMonsters
+                    end
+
+                    -- Any remaining slots would be innocents
+                    rolePackInnocents = rolePackInnocents + remainingSlots
+                end
+
+                -- Find the average percentage of players that are traitors in each round ignoring jesters, independents, and monsters
+                traitorPct = rolePackTraitors / (rolePackInnocents + rolePackTraitors)
+            else
+                ErrorNoHalt("Table decoding failed!\n")
+            end
+        else
+            ErrorNoHalt("No role pack named '" .. rolePack .. "' found!\n")
+        end
+    end
+
+    -- Check all the 2^n possible ways to split the jesters, independents and monsters between the innocent and traitor teams
+    local bestSplit = 0
+    local bestSplitOffset = 1
+    local innocentMaxHealth = GetConVar("ttt_innocent_max_health"):GetInt()
+    local traitorMaxHealth = GetConVar("ttt_traitor_max_health"):GetInt()
+    for split = 0, math.pow(2, #jestersIndependentsMonsters) - 1 do
+        local newInnocentHealth = innocentHealth
+        local newTraitorHealth = traitorHealth
+
+        -- Each jester, independent and monster gets their own bit and we use bitwise and to determine if a player should become an innocent or a traitor
+        for exponent, ply in ipairs(jestersIndependentsMonsters) do
+            local plyBit = math.pow(2, exponent - 1)
+            local health = ply:Health() / ply:GetMaxHealth()
+            if bit.band(split, plyBit) == plyBit then
+                newInnocentHealth = newInnocentHealth + (health * innocentMaxHealth)
+            else
+                newTraitorHealth = newTraitorHealth + (health * traitorMaxHealth)
+            end
+        end
+
+        local newTraitorPct = newTraitorHealth / (newInnocentHealth + newTraitorHealth)
+        local offset = math.abs(newTraitorPct - traitorPct)
+        if offset < bestSplitOffset then
+            bestSplit = split
+            bestSplitOffset = offset
+        end
+    end
+
+    -- Once we have determined the best split, change players roles to match the chosen split
+    local newInnocents = {}
+    local newTraitors = {}
+    for exponent, ply in ipairs(jestersIndependentsMonsters) do
+        local plyBit = math.pow(2, exponent - 1)
+        if bit.band(bestSplit, plyBit) == plyBit then
+            Randomat:SetRole(ply, ROLE_INNOCENT)
+            TableInsert(newInnocents, ply)
+        else
+            Randomat:SetRole(ply, ROLE_TRAITOR)
+            TableInsert(newTraitors, ply)
+        end
+    end
+
+    SendFullStateUpdate()
+
+    return true, newInnocents, newTraitors
 end
 
 -- Notifications
