@@ -1108,6 +1108,7 @@ globals = {
     "CANNIBAL",
     "CRHUD",
     "DEATHRADAR",
+    "ROLEPACKS",
 
     -- TTT2 globals,
     "TTT2",
