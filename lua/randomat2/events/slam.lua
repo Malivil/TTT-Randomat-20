@@ -12,38 +12,17 @@ if GetConVar("randomat_slam_strip"):GetBool() then
 end
 EVENT.Categories = {"item", "rolechange", "largeimpact"}
 
-function EVENT:HandleRoleWeapons(ply)
-    local updated = false
-    local changing_teams = Randomat:IsMonsterTeam(ply) or Randomat:IsIndependentTeam(ply)
-    -- Convert all bad guys to traitors so we don't have to worry about fighting with special weapon replacement logic
-    if (Randomat:IsTraitorTeam(ply) and ply:GetRole() ~= ROLE_TRAITOR) or changing_teams then
-        Randomat:SetRole(ply, ROLE_TRAITOR)
-        updated = true
-    elseif Randomat:IsJesterTeam(ply) then
-        Randomat:SetRole(ply, ROLE_INNOCENT)
-        updated = true
-    end
-    return updated, changing_teams
-end
-
 function EVENT:Begin()
-    local new_traitors = {}
-    for _, v in ipairs(self:GetAlivePlayers()) do
-        local _, new_traitor = self:HandleRoleWeapons(v)
-        Randomat:RemovePhdFlopper(v)
-
-        if new_traitor then
-            table.insert(new_traitors, v)
-        end
-    end
-    SendFullStateUpdate()
-
+    local _, _, new_traitors = Randomat:BalanceTeams()
     self:NotifyTeamChange(new_traitors, ROLE_TEAM_TRAITOR)
+
+    for _, v in ipairs(self:GetAlivePlayers()) do
+        Randomat:RemovePhdFlopper(v)
+    end
 
     local strip = GetConVar("randomat_slam_strip"):GetBool()
     timer.Create("RandomatSlamTimer", GetConVar("randomat_slam_timer"):GetInt(), 0, function()
         local weaponid = GetConVar("randomat_slam_weaponid"):GetString()
-        local updated = false
         for _, ply in ipairs(self:GetAlivePlayers()) do
             if strip then
                 for _, wep in ipairs(ply:GetWeapons()) do
@@ -60,14 +39,6 @@ function EVENT:Begin()
             if not ply:HasWeapon(weaponid) then
                 ply:Give(weaponid)
             end
-
-            -- Workaround the case where people can respawn as Zombies while this is running
-            updated = updated or self:HandleRoleWeapons(ply)
-        end
-
-        -- If anyone's role changed, send the update
-        if updated then
-            SendFullStateUpdate()
         end
     end)
 

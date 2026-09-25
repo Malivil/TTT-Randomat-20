@@ -416,6 +416,13 @@ Methods belonging to the `Randomat` namespace that are available globally, withi
 *Parameters:*
 - *event* - The event or event id to add to tracking history
 
+**Randomat:BalanceTeams()** - Changes jester, independent and monster roles to vanilla innocents and traitors so that the ratio of innocents to traitors is as balanced as possible. (As determined by server config or role pack config)\
+*Realm:* Server\
+*Returns:*
+- *success* - `true` if any players' roles were changed, `false` otherwise
+- *new_innocents* - A table of players whose roles were changed to Innocent
+- *new_traitors* - A table of players whose roles were changed to Traitor
+
 **Randomat:CallShopHooks(isequip, id, ply)** - Calls expected hooks, net messages, and player methods to indicate that a player has bought a weapon. This is used when the Randomat gives a player a weapon.\
 *Realm:* Server\
 *Parameters:*
