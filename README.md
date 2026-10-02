@@ -43,6 +43,7 @@ _cl_randomat_notify_big_size_ - Default: 48 - The font size to make large notifi
 _cl_randomat_notify_small_size_ - Default: 32 - The font size to make small notification messages
 
 # Latest Events
+1. Echolocation
 1. Mathracer
 1. REAL Gun Game
 1. No one can die from my sight
@@ -584,6 +585,16 @@ _ttt_randomat_earthquake_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_earthquake_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_earthquake_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_earthquake_blocklist_ - Default: - The comma-separated list of maps to not allow this map on. For example: "ttt_lego,gm_flatgrass".
+
+## Echolocation
+Blinds all players, but shows sound waves whenever any entity makes a sound
+\
+\
+**ConVars**
+\
+_ttt_randomat_echolocation_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_echolocation_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_echolocation_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Election Day
 Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\
