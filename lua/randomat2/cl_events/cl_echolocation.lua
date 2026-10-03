@@ -3,6 +3,8 @@ EVENT.id = "echolocation"
 
 local maskColor = Color(0, 0, 0, 0)
 local sphereSteps = 12
+local defaultVolumeMod = 0.5
+local playerVolumeMod = 2
 
 local soundWaves = {}
 local lastFrame
@@ -13,10 +15,7 @@ net.Receive("RdmtEcholocationServerSound", function()
     local volume = net.ReadFloat()
     local player = player.GetBySteamID64(net.ReadString())
 
-    local volumeMod = 0.5
-    if player then
-        volumeMod = 2
-    end
+    local volumeMod = player and playerVolumeMod or defaultVolumeMod
     volume = math.min(volume * volumeMod, volumeMod)
     table.insert(soundWaves, {
         ["pos"] = pos,
@@ -32,31 +31,31 @@ function EVENT:Begin()
 
     self:AddHook("EntityEmitSound", function(data)
         local player = false
-        local volumeMod = 0.5
+        local volumeMod = defaultVolumeMod
         if IsPlayer(data.Entity) then
             player = data.Entity
-            volumeMod = 2
+            volumeMod = playerVolumeMod
         elseif IsPlayer(data.Entity:GetOwner()) then
             player = data.Entity:GetOwner()
-            volumeMod = 2
+            volumeMod = playerVolumeMod
         end
 
         local volume = (data.SoundLevel / 75) * (data.Volume / 0.5)
 
         local pos = data.Pos
-        if IsValid(data.Entity) and not pos then
+        if not pos and IsValid(data.Entity) then
             pos = data.Entity:GetPos()
         end
 
+        if not pos then return end
+
         volume = math.min(volume * volumeMod, volumeMod)
-        if pos then
-            table.insert(soundWaves, {
-                ["pos"] = pos,
-                ["volume"] = volume,
-                ["player"] = player,
-                ["distance"] = 0
-            })
-        end
+        table.insert(soundWaves, {
+            ["pos"] = pos,
+            ["volume"] = volume,
+            ["player"] = player,
+            ["distance"] = 0
+        })
     end)
 
     self:AddHook("PostDrawTranslucentRenderables", function()
@@ -128,7 +127,7 @@ function EVENT:Begin()
     self:AddHook("HUDPaint", function()
         if not client then client = LocalPlayer() end
         if not client:IsActive() then return end
-        LocalPlayer():DrawViewModel(false)
+        client:DrawViewModel(false)
     end)
 
     self:AddHook("TTTTargetIDPlayerBlockIcon", function(_, cli)

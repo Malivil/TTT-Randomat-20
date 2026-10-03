@@ -21,14 +21,13 @@ function EVENT:Begin()
         if IsValid(data.Entity) and not pos then
             pos = data.Entity:GetPos()
         end
+        if not pos then return end
 
-        if pos then
-            net.Start("RdmtEcholocationServerSound")
-            net.WriteVector(pos)
-            net.WriteFloat(volume)
-            net.WriteString(player)
-            net.Broadcast()
-        end
+        net.Start("RdmtEcholocationServerSound")
+        net.WriteVector(pos)
+        net.WriteFloat(volume)
+        net.WriteString(player)
+        net.Broadcast()
     end)
 end
 
