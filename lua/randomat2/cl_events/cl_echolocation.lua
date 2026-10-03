@@ -20,7 +20,7 @@ net.Receive("RdmtEcholocationServerSound", function()
     table.insert(soundWaves, {
         ["pos"] = pos,
         ["volume"] = volume,
-        ["player"] = IsPlayer(player) and player or false,
+        ["player"] = IsPlayer(player) and player,
         ["distance"] = 0
     })
 end)
