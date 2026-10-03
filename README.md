@@ -43,6 +43,7 @@ _cl_randomat_notify_big_size_ - Default: 48 - The font size to make large notifi
 _cl_randomat_notify_small_size_ - Default: 32 - The font size to make small notification messages
 
 # Latest Events
+1. Echolocation
 1. Mathracer
 1. REAL Gun Game
 1. No one can die from my sight
@@ -584,6 +585,16 @@ _ttt_randomat_earthquake_ - Default: 1 - Whether this event is enabled.\
 _ttt_randomat_earthquake_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
 _ttt_randomat_earthquake_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.\
 _randomat_earthquake_blocklist_ - Default: - The comma-separated list of maps to not allow this map on. For example: "ttt_lego,gm_flatgrass".
+
+## Echolocation
+Blinds all players, but shows sound waves whenever any entity makes a sound
+\
+\
+**ConVars**
+\
+_ttt_randomat_echolocation_ - Default: 1 - Whether this event is enabled.\
+_ttt_randomat_echolocation_min_players_ - Default: 0 - The minimum number of players required for this event to start.\
+_ttt_randomat_echolocation_weight_ - Default: -1 - The weight this event should use during the randomized event selection process.
 
 ## Election Day
 Starts a two-part election. In the first part, players will nominate other players to become the president. The detective is not allowed to be nominate as they are already a President (per the GET DOWN MR. PRESIDENT Event).\
@@ -2078,8 +2089,8 @@ If a developer of an external Randomat event would like to add support for this 
 - Fazzy from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Bullseye", "Hedge Your Bets", "Typeracer", "Second Chance", "Stick With Me" events
 - [Fyxen](https://steamcommunity.com/profiles/76561198810121546/) for the idea for the "Incriminating Evidence" and "Breadcrumbs" events
 - Hyper from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Olympic Sprint" event and for one of the options in the "Paranormal Activity" event
-- Joel from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributions to the core messaging system
-- Noxx from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord and the Custom Roles for TTT Discord for the help, support, many ideas, and the "Mathracer" event
+- Joel from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for contributions to the core messaging system and bug fixes across too many events to list
+- Noxx from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord and the Custom Roles for TTT Discord for the help, support, many ideas, and the "Mathracer" and "Echolocation" events
 - Pardzival from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Flip the Script", "That Doesn't Sound Right", and "Narration" events and the name of the "Down Under" event
 - Spirit from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Gifts from the Dead" event and the name of the "Breadcrumbs" event
 - Technofrood from the [Lonely Yogs](https://lonely-yogs.co.uk/) Discord for the idea for the "Paranormal Activity" and "They have a cave troll" events
@@ -2098,7 +2109,7 @@ If a developer of an external Randomat event would like to add support for this 
 - [AshuraaHunter](https://github.com/AshuraaHunter) from GitHub for the idea for adding player names to the "Typeracer" event
 - [Guardian954](https://steamcommunity.com/id/guardianreborn) for the initial "Communism! Time to learn how to share..." event
 - [Mattyp92](https://steamcommunity.com/id/mattyp92) for converting Communism for use with "Custom Roles for TTT" instead of "Town of Terror", for the "I don't think you realise the gravity of the situation." event, for the "Ransomat" event, and for the idea for the "Betrayed", "Clownin' Around", and "praW emiT" events
-- [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event
+- [The Stig](https://steamcommunity.com/id/The-Stig-294) for the idea of adding a round time ConVar to the "Prop Hunt" event and for the idea (and code) for the "Fog of War" event as well as many other contributions including new features, convars, and various bug fixes
 - [Freepik](https://www.flaticon.com/authors/freepik) for the "Cut" and "Stones" images used in the "Rock, Paper, Scissors" event
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
 - [Tygron](https://steamcommunity.com/id/Tygron), [The Stig](https://steamcommunity.com/id/The-Stig-294), and [TilSchwantje](https://github.com/TilSchwantje) for providing feedback and verifying bug fixes
