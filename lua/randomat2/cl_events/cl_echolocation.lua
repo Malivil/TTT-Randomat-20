@@ -13,14 +13,14 @@ local client
 net.Receive("RdmtEcholocationServerSound", function()
     local pos = net.ReadVector()
     local volume = net.ReadFloat()
-    local player = player.GetBySteamID64(net.ReadString())
+    local player = net.ReadPlayer()
 
     local volumeMod = player and playerVolumeMod or defaultVolumeMod
     volume = math.min(volume * volumeMod, volumeMod)
     table.insert(soundWaves, {
         ["pos"] = pos,
         ["volume"] = volume,
-        ["player"] = player,
+        ["player"] = IsPlayer(player) and player or false,
         ["distance"] = 0
     })
 end)

@@ -11,9 +11,9 @@ function EVENT:Begin()
     self:AddHook("EntityEmitSound", function(data)
         local player = ""
         if IsPlayer(data.Entity) then
-            player = data.Entity:SteamID64()
+            player = data.Entity
         elseif IsPlayer(data.Entity:GetOwner()) then
-            player = data.Entity:GetOwner():SteamID64()
+            player = data.Entity:GetOwner()
         end
         local volume = (data.SoundLevel / 75) * (data.Volume / 0.5)
 
@@ -26,7 +26,7 @@ function EVENT:Begin()
         net.Start("RdmtEcholocationServerSound")
         net.WriteVector(pos)
         net.WriteFloat(volume)
-        net.WriteString(player)
+        net.WritePlayer(player)
         net.Broadcast()
     end)
 end
