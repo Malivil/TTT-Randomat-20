@@ -478,6 +478,17 @@ local function CanSpectatorUIEventRun()
     return true
 end
 
+local function CanSecretEventRun()
+    for _, evt in pairs(Randomat.ActiveEvents) do
+        -- Secret events cause events with required text (like those that require a player to do a specific response based on a prompt)
+        -- to be impossible, killing (or punishing) all players because the prompts are now hidden
+        if (type(evt.Type) == "table" and table.HasValue(evt.Type, EVENT_TYPE_TYPED_RESPONSE)) or evt.Type == EVENT_TYPE_TYPED_RESPONSE then
+            return false
+        end
+    end
+    return true
+end
+
 function Randomat:CanEventRun(event, ignore_history)
     if type(event) ~= "table" then
         event = Randomat.Events[event]
@@ -542,6 +553,17 @@ function Randomat:CanEventRun(event, ignore_history)
                 return false, "Event with same type (" .. event.Type .. ") is already running"
             end
         end
+    end
+
+    if (event.StartSecret or event.Id == "secret") and not CanSecretEventRun() then
+        return false, "Secret event cannot run because of other event conflicts"
+    end
+
+    -- If the secret event is active and this is an event that requires a typed response,
+    -- don't let it start. The secret event blocks all on-screen text so players will
+    -- not be able to see the prompt and will fail instantly
+    if Randomat:IsEventActive("secret") and ((type(event.Type) == "table" and table.HasValue(event.Type, EVENT_TYPE_TYPED_RESPONSE)) or event.Type == EVENT_TYPE_TYPED_RESPONSE) then
+        return false, "Event cannot run because secret event is active"
     end
 
     return true
