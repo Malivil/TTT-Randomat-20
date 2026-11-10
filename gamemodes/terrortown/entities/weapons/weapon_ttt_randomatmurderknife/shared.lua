@@ -78,7 +78,7 @@ function SWEP:PrimaryAttack()
     local spos  = owner:GetShootPos()
     local sdest = spos + (owner:GetAimVector() * 70)
 
-    tr = util.TraceLine({start = spos, endpos = sdest, filter = owner, mask = MASK_SHOT_HULL})
+    local tr = util.TraceLine({start = spos, endpos = sdest, filter = owner, mask = MASK_SHOT_HULL})
 
     local hit_ent = tr.Entity
 
