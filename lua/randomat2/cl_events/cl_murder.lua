@@ -262,10 +262,10 @@ local function DrawOverlay()
         DrawRoundedBox(0, 0, 0, scrW, scrH, Color(0, 0, 0, alpha))
 
         if client:Alive() and not client:IsSpec() then
-            local title    = nil
-            local subtitle = nil
-            local lines    = nil
-            local colour   = nil
+            local title
+            local subtitle
+            local lines
+            local colour
 
             if IsMurderer(client) then
                 title = "You are a Murderer"
