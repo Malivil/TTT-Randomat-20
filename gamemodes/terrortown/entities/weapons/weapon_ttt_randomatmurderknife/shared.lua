@@ -62,6 +62,10 @@ function SWEP:GetCharge()
 end
 
 function SWEP:PrimaryAttack()
+    if SERVER and self:GetChargeStart() ~= 0 then
+        self:SetChargeStart(0)
+    end
+
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
     self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 
@@ -134,15 +138,6 @@ function SWEP:Think()
     if not owner:KeyDown(IN_ATTACK2) then
         self:ThrowKnife(self:GetCharge())
     end
-end
-
-function SWEP:Reload()
-    -- Reload cancels a charge
-    if SERVER and self:GetChargeStart() ~= 0 then
-        self:SetChargeStart(0)
-    end
-
-    return false
 end
 
 function SWEP:Holster()
