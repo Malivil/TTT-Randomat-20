@@ -307,6 +307,7 @@ local function DrawOverlay()
         local fraction = MathClamp(CurTime() - blindStartTime, 0, 1) * MathClamp(remaining, 0, 1)
         local alpha = 254 * fraction
 
+        local textAlpha = 255
         if alpha ~= 254 then textAlpha = MathMax(0, alpha - 150) end
 
         DrawRoundedBox(0, 0, 0, scrW, scrH, Color(0, 0, 0, alpha))
