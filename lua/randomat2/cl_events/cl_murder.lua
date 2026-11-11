@@ -139,6 +139,7 @@ local blindStartTime = nil
 local tauntMenuOpen  = false
 local deathScreenEnd = 0
 local playerRagdoll  = nil
+local nextKnifeTime = 0
 
 local function IsMurderer(ply)
     return ply:GetRole() == ROLE_TRAITOR
@@ -473,6 +474,18 @@ local function DrawHUD()
         ShadowText("Kill someone to hide", "Rdmt_Murder_Small", scrW / 2, scrH - 80, colours.mustKill, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
     end
 
+    -- Draw gun ban timer
+    if client:GetNWFloat("RdmtMurderGunBanEnd", 0) > CurTime() then
+        local remaining = util.SimpleTime(MathMax(0, client:GetNWFloat("RdmtMurderGunBanEnd", 0) - CurTime()), "%02i:%02i")
+        ShadowText("Gun timeout: " .. remaining, "Rdmt_Murder_Small", 20, 20, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+    end
+
+    -- Draw next knife timer
+    if nextKnifeTime > CurTime() then
+        local remaining = util.SimpleTime(MathMax(0, nextKnifeTime - CurTime()), "%02i:%02i")
+        ShadowText("New knife in: " .. remaining, "Rdmt_Murder_Small", 20, 20, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+    end
+
     -- Draw taunt menu
     if tauntMenuOpen then
         local tauntMenuRadius = MathMin(scrW, scrH) * 0.35
@@ -567,6 +580,11 @@ net.Receive("Rdmt_Murder_Dead", function()
     playerRagdoll = net.ReadEntity()
 end)
 
+net.Receive("Rdmt_Murder_KnifeThrown", function()
+    local cooldown = net.ReadFloat()
+    nextKnifeTime = CurTime() + cooldown
+end)
+
 ------------------------------------------------------
 -- Actual event
 ------------------------------------------------------
@@ -576,6 +594,8 @@ function EVENT:Begin()
     bystanderSprintConVar = GetConVar("randomat_murder_bystander_sprint")
     murdererSprintConVar  = GetConVar("randomat_murder_murderer_sprint")
     carrySlownessConVar   = GetConVar("randomat_murder_carry_slow")
+
+    nextKnifeTime = 0
 
     local override = {
         invnext = true,

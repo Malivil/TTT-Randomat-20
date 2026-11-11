@@ -15,7 +15,6 @@ local tkGunDropConVar        = CreateConVar("randomat_murder_tk_drop_gun",      
 local tkGunBanTimeConVar     = CreateConVar("randomat_murder_tk_pickup_ban",      20, FCVAR_NONE, "Time (s) a gun can't be picked up after a team kill", 0, 300)
 local tkBlindTimeConVar      = CreateConVar("randomat_murder_tk_blind",           5,  FCVAR_NONE, "Blind time (s) after a team kill", 0, 60)
 local tkKilledConVar         = CreateConVar("randomat_murder_tk_kill",            0,  FCVAR_NONE, "Whether a bystander is killed if they team kill")
-local knifeReplaceTimeConVar = CreateConVar("randomat_murder_knife_replace",      30, FCVAR_NONE, "Time (s) without a knife before murderer gets a new one", 1, 300)
 local murdererFogTimeConVar  = CreateConVar("randomat_murder_fog_time",           60, FCVAR_NONE, "Time (s) without killing before murderer is revealed", 0, 900)
 local flashlightTimeConVar   = CreateConVar("randomat_murder_flashlight",         10, FCVAR_NONE, "Time (s) of flashlight battery (0 = infinite)", 0, 120)
 local undiguiseOnKillConVar  = CreateConVar("randomat_murder_undisguise_on_kill", 1,  FCVAR_NONE, "Whether to remove a Murderer's disguise when they kill", 0, 1)
@@ -24,6 +23,7 @@ local lootNeededConVar
 local bystanderSprintConVar
 local murdererSprintConVar
 local carrySpeedConVar
+local knifeReplaceTimeConVar
 
 util.AddNetworkString("Rdmt_Murder_Footstep")
 util.AddNetworkString("Rdmt_Murder_LootSync")
@@ -101,7 +101,7 @@ local function IsMurderer(ply)
 end
 
 local function IsGunBanned(ply)
-    return ply.gunBanEnd > CurTime()
+    return ply:GetNWFloat("RdmtMurderGunBanEnd", 0) > CurTime()
 end
 
 local function SetIdentity(ply, name, colour)
@@ -363,7 +363,7 @@ local function PunishShooter(ply)
 
     local banTime = tkGunBanTimeConVar:GetFloat()
     if banTime > 0 then
-        ply.gunBanEnd = CurTime() + banTime
+        ply:SetNWFloat("RdmtMurderGunBanEnd", CurTime() + banTime)
     end
 
     local blindTime = tkBlindTimeConVar:GetFloat()
@@ -377,10 +377,11 @@ local function PunishShooter(ply)
 end
 
 function EVENT:Begin()
-    lootNeededConVar      = GetConVar("randomat_murder_loot_needed")
-    bystanderSprintConVar = GetConVar("randomat_murder_bystander_sprint")
-    murdererSprintConVar  = GetConVar("randomat_murder_murderer_sprint")
-    carrySpeedConVar      = GetConVar("randomat_murder_carry_slow")
+    lootNeededConVar       = GetConVar("randomat_murder_loot_needed")
+    bystanderSprintConVar  = GetConVar("randomat_murder_bystander_sprint")
+    murdererSprintConVar   = GetConVar("randomat_murder_murderer_sprint")
+    carrySpeedConVar       = GetConVar("randomat_murder_carry_slow")
+    knifeReplaceTimeConVar = GetConVar("randomat_murder_knife_replace")
 
     playerData = {}
     stripWeaponTimer = 0
@@ -436,9 +437,9 @@ function EVENT:Begin()
         ply:SetNWBool("RdmtMurderCarrying", false)
         ply:SetNWFloat("RdmtMurderFlashlightCharge", 1)
         ply:SetNWFloat("RdmtMurderBlindEndTime", 0)
+        ply:SetNWFloat("RdmtMurderGunBanEnd", 0)
 
         ply.FlashlightLocked = 0
-        ply.gunBanEnd = 0
 
         playerData[ply] = {
             name          = name,
@@ -781,8 +782,8 @@ function EVENT:End(isActive)
             ply:SetNWBool("RdmtMurderCarrying", false)
             ply:SetNWFloat("RdmtMurderFlashlightCharge", 1)
             ply:SetNWFloat("RdmtMurderBlindEndTime", 0)
+            ply:SetNWFloat("RdmtMurderGunBanEnd", 0)
 
-            ply.gunBanEnd = nil
             ply.beingGivenGun = nil
 
             for _, wep in ipairs(ply:GetWeapons()) do

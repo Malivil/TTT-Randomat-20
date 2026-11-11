@@ -148,7 +148,14 @@ end
 
 if SERVER then
     function SWEP:ThrowKnife(charge)
+        util.AddNetworkString("Rdmt_Murder_KnifeThrown")
+
         local owner = self:GetOwner()
+
+        if CLIENT then
+            LocalPlayer().nextKnifeTime = CurTime() + GetConVar("randomat_murder_knife_replace"):GetInt()
+        end
+
         self:SetChargeStart(0)
 
         local knifeProjectile = ents.Create("ttt_randomat_murderknife")
@@ -171,6 +178,11 @@ if SERVER then
 
         physObj:SetVelocity(owner:GetAimVector() * (charge * 1000 + 200))
         physObj:AddAngleVelocity(Vector(0, 1500, 0))
+
+        local cooldown = GetConVar("randomat_murder_knife_replace"):GetInt()
+        net.Start("Rdmt_Murder_KnifeThrown")
+            net.WriteFloat(cooldown)
+        net.Send(owner)
 
         -- Switch back to hands
         timer.Simple(0, function()
