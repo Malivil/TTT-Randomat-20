@@ -105,8 +105,8 @@ local function IsGunBanned(ply)
 end
 
 local function SetIdentity(ply, name, colour)
-    ply:SetNWString("Rdmt_Murder_Name", name)
-    ply:SetNWVector("Rdmt_Murder_Colour", colour)
+    ply:SetNWString("RdmtMurderName", name)
+    ply:SetNWVector("RdmtMurderColour", colour)
     ply:SetPlayerColor(colour)
 end
 
@@ -322,7 +322,7 @@ local function CollectLoot(ply, data, lootProp)
     lootProp:Remove()
 
     data.lootCollected = data.lootCollected + 1
-    ply:SetNWInt("Rdmt_Murder_LootCollected", data.lootCollected)
+    ply:SetNWInt("RdmtMurderLootCollected", data.lootCollected)
     ply:EmitSound("ambient/levels/canals/windchime2.wav", 100, math.random(40, 160))
 
     SyncPlayerLoot(ply, data.loot)
@@ -347,7 +347,7 @@ local function CollectLoot(ply, data, lootProp)
 end
 
 local function PunishShooter(ply)
-    Randomat:SmallNotify(ply:GetNWString("Rdmt_Murder_Name", "Someone") .. " killed an innocent Bystander!")
+    Randomat:SmallNotify(ply:GetNWString("RdmtMurderName", "Someone") .. " killed an innocent Bystander!")
 
     if tkGunDropConVar:GetBool() then
         ply:SelectWeapon("weapon_ttt_randomatmurderhands")
@@ -365,7 +365,7 @@ local function PunishShooter(ply)
 
     local blindTime = tkBlindTimeConVar:GetFloat()
     if blindTime > 0 then
-        ply:SetNWFloat("Rdmt_Murder_BlindEndTime", CurTime() + blindTime)
+        ply:SetNWFloat("RdmtMurderBlindEndTime", CurTime() + blindTime)
     end
 
     if tkKilledConVar:GetBool() then
@@ -428,13 +428,13 @@ function EVENT:Begin()
         })
 
         SetIdentity(ply, name, colour)
-        ply:SetNWInt("Rdmt_Murder_LootCollected", 0)
-        ply:SetNWBool("Rdmt_Murder_Fog", false)
-        ply:SetNWBool("Rdmt_Murder_Carrying", false)
-        ply:SetNWFloat("Rdmt_Murder_FlashlightCharge", 1)
-        ply:SetNWFloat("Rdmt_Murder_FlashlightLocked", 0)
-        ply:SetNWFloat("Rdmt_Murder_BlindEndTime", 0)
+        ply:SetNWInt("RdmtMurderLootCollected", 0)
+        ply:SetNWBool("RdmtMurderFog", false)
+        ply:SetNWBool("RdmtMurderCarrying", false)
+        ply:SetNWFloat("RdmtMurderFlashlightCharge", 1)
+        ply:SetNWFloat("RdmtMurderBlindEndTime", 0)
 
+        ply.FlashlightLocked = 0
         ply.gunBanEnd = 0
 
         playerData[ply] = {
@@ -509,7 +509,7 @@ function EVENT:Begin()
             elseif ply:Alive() and not ply:IsSpec() then
                 -- Drain battery if on/recharge at half speed if off
                 if batteryTime > 0 then
-                    local charge = ply:GetNWFloat("Rdmt_Murder_FlashlightCharge", 1)
+                    local charge = ply:GetNWFloat("RdmtMurderFlashlightCharge", 1)
 
                     if ply:FlashlightIsOn() then
                         charge = charge - (0.1 / batteryTime)
@@ -517,13 +517,13 @@ function EVENT:Begin()
                         if charge <= 0 then
                             charge = 0
                             ply:Flashlight(false)
-                            ply:SetNWFloat("Rdmt_Murder_FlashlightLocked", now + 1.5)
+                            ply.FlashlightLocked = now + 1.5
                         end
                     elseif charge < 1 then
                         charge = math.min(1, charge + (0.05 / batteryTime))
                     end
 
-                    ply:SetNWFloat("Rdmt_Murder_FlashlightCharge", charge)
+                    ply:SetNWFloat("RdmtMurderFlashlightCharge", charge)
                 end
 
                 -- Loot replacement
@@ -542,7 +542,7 @@ function EVENT:Begin()
                 if IsMurderer(ply) then
                     -- Murderer fog if they haven't killed in too long
                     if fogTime > 0 and now - data.lastKill >= fogTime then
-                        ply:SetNWBool("Rdmt_Murder_Fog", true)
+                        ply:SetNWBool("RdmtMurderFog", true)
                     end
 
                     -- Replace a thrown knife if the thrower hasn't picked it up after too long
@@ -637,7 +637,7 @@ function EVENT:Begin()
         local attackerData = playerData[attacker]
         if attackerData and IsMurderer(attacker) and attacker ~= victim then
             attackerData.lastKill = CurTime()
-            attacker:SetNWBool("Rdmt_Murder_Fog", false)
+            attacker:SetNWBool("RdmtMurderFog", false)
 
             if attackerData.disguised and undiguiseOnKillConVar:GetBool() then
                 attackerData.disguised = false
@@ -655,10 +655,10 @@ function EVENT:Begin()
     self:AddHook("TTTOnCorpseCreated", function(ragdoll, ply)
         if not IsValid(ragdoll) or not playerData[ply] then return end
 
-        local name = ply:GetNWString("Rdmt_Murder_Name", "Bystander")
-        ragdoll:SetNWString("Rdmt_Murder_Name", name)
-        ragdoll:SetNWVector("Rdmt_Murder_Colour", ply:GetNWVector("Rdmt_Murder_Colour", Vector(1, 1, 1)))
-        ragdoll:SetNWString("Rdmt_Murder_Role", IsMurderer(ply) and "Murderer" or "Bystander")
+        local name = ply:GetNWString("RdmtMurderName", "Bystander")
+        ragdoll:SetNWString("RdmtMurderName", name)
+        ragdoll:SetNWVector("RdmtMurderColour", ply:GetNWVector("RdmtMurderColour", Vector(1, 1, 1)))
+        -- ragdoll:SetNWString("RdmtMurderRole", IsMurderer(ply) and "Murderer" or "Bystander")
 
         CORPSE.SetPlayerNick(ragdoll, name)
     end)
@@ -666,7 +666,7 @@ function EVENT:Begin()
     self:AddHook("PlayerSwitchFlashlight", function(ply, turningOn)
         if not playerData[ply] then return end
 
-        if turningOn and ply:GetNWFloat("Rdmt_Murder_FlashlightLocked", 0) > CurTime() then
+        if turningOn and ply.FlashlightLocked > CurTime() then
             return false
         end
     end)
@@ -683,7 +683,7 @@ function EVENT:Begin()
             table.insert(mults, mult)
         end
 
-        if ply:GetNWBool("Rdmt_Murder_Carrying", false) then
+        if ply:GetNWBool("RdmtMurderCarrying", false) then
             table.insert(mults, 1 - carrySpeedConVar:GetFloat())
         end
     end)
@@ -704,7 +704,7 @@ function EVENT:Begin()
             net.WriteVector(pos)
             net.WriteAngle(ply:GetAimVector():Angle())
             net.WriteBit(foot)
-            local colour = ply:GetNWVector("Rdmt_Murder_Colour", Vector(1, 1, 1))
+            local colour = ply:GetNWVector("RdmtMurderColour", Vector(1, 1, 1))
             net.WriteTable(Color(colour.x * 255, colour.y * 255, colour.z * 255))
             net.WriteUInt(30, 8)
             net.WriteFloat(1) -- Scale
@@ -735,14 +735,14 @@ function EVENT:Begin()
             local ragdoll = tr.Entity
 
             if IsValid(ragdoll) and ragdoll:GetClass() == "prop_ragdoll" then
-                local ragdollName   = ragdoll:GetNWString("Rdmt_Murder_Name", "")
-                local ragdollColour = ragdoll:GetNWVector("Rdmt_Murder_Colour", Vector(1, 1, 1))
+                local ragdollName   = ragdoll:GetNWString("RdmtMurderName", "")
+                local ragdollColour = ragdoll:GetNWVector("RdmtMurderColour", Vector(1, 1, 1))
 
-                if ragdollName ~= ply:GetNWString("Rdmt_Murder_Name") or ragdollColour ~= ply:GetNWVector("Rdmt_Murder_Colour") then
+                if ragdollName ~= ply:GetNWString("RdmtMurderName") or ragdollColour ~= ply:GetNWVector("RdmtMurderColour") then
                     data.disguised = true
                     data.lootCollected = data.lootCollected - 1
 
-                    ply:SetNWInt("Rdmt_Murder_LootCollected", data.lootCollected)
+                    ply:SetNWInt("RdmtMurderLootCollected", data.lootCollected)
                     SetIdentity(ply, ragdollName, ragdollColour)
 
                     return
@@ -772,12 +772,12 @@ function EVENT:End(isActive)
     for _, ply in player.Iterator() do
         if playerData[ply] then
             ply:Freeze(false)
-            ply:SetNWString("Rdmt_Murder_Name", "")
-            ply:SetNWInt("Rdmt_Murder_LootCollected", 0)
-            ply:SetNWBool("Rdmt_Murder_Fog", false)
-            ply:SetNWBool("Rdmt_Murder_Carrying", false)
-            ply:SetNWFloat("Rdmt_Murder_FlashlightCharge", 1)
-            ply:SetNWFloat("Rdmt_Murder_BlindEndTime", 0)
+            ply:SetNWString("RdmtMurderName", "")
+            ply:SetNWInt("RdmtMurderLootCollected", 0)
+            ply:SetNWBool("RdmtMurderFog", false)
+            ply:SetNWBool("RdmtMurderCarrying", false)
+            ply:SetNWFloat("RdmtMurderFlashlightCharge", 1)
+            ply:SetNWFloat("RdmtMurderBlindEndTime", 0)
 
             ply.gunBanEnd = nil
             ply.beingGivenGun = nil

@@ -296,7 +296,7 @@ local function DrawOverlay()
     end
 
     -- Player blindness
-    local remaining = client:GetNWFloat("Rdmt_Murder_BlindEndTime", 0) - CurTime()
+    local remaining = client:GetNWFloat("RdmtMurderBlindEndTime", 0) - CurTime()
 
     if remaining > 0 then
         if not blindStartTime then
@@ -333,7 +333,7 @@ local function DrawHUD()
     local hudSize       = scrW * 0.07
     local hudX          = 20 + hudSize / 2
     local hudY          = scrH - 20 - hudSize / 2
-    local clientColour  = VectorToColour(client:GetNWVector("Rdmt_Murder_Colour", Vector(1, 1, 1)))
+    local clientColour  = VectorToColour(client:GetNWVector("RdmtMurderColour", Vector(1, 1, 1)))
 
     -- Grey ring around the outside
     SurfaceSetDrawColor(80, 80, 80, 255)
@@ -348,16 +348,16 @@ local function DrawHUD()
     DrawCircle(hudX, hudY, MathClamp(client:Health(), 0, 100) / 100 * hudSize * 0.48)
 
     -- Loot collected
-    ShadowText(tostring(client:GetNWInt("Rdmt_Murder_LootCollected", 0)), "Rdmt_Murder_Large", hudX, hudY + 2, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    ShadowText(tostring(client:GetNWInt("RdmtMurderLootCollected", 0)), "Rdmt_Murder_Large", hudX, hudY + 2, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     -- Player name
     local playerNameX = hudX
     local playerNameY = hudY - hudSize / 2 - 4
 
-    local clientName = client:GetNWString("Rdmt_Murder_Name", "")
+    local clientName = client:GetNWString("RdmtMurderName", "")
     ShadowText(clientName, "Rdmt_Murder_Small", playerNameX, playerNameY, clientColour, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 
-    local charge = client:GetNWFloat("Rdmt_Murder_FlashlightCharge", 1)
+    local charge = client:GetNWFloat("RdmtMurderFlashlightCharge", 1)
     local flashlightW = 153
     local flashlightH = 32
     local flashlightX = hudX + hudSize / 2 + 20
@@ -407,17 +407,17 @@ local function DrawHUD()
     -- Show name while looking at another player, then when looking away show for 1 second, then fade out over 2 seconds
     local lookTime = CurTime() - lookStartTime
     if IsValid(lookedAtPlayer) and lookTime < 3 then
-        local playerName   = lookedAtPlayer:GetNWString("Rdmt_Murder_Name", "")
+        local playerName   = lookedAtPlayer:GetNWString("RdmtMurderName", "")
         local alphaMult    = lookTime < 1 and 1 or (1 - (lookTime - 1) / 2)
-        local playerColour = VectorToColour(lookedAtPlayer:GetNWVector("Rdmt_Murder_Colour", Vector(1, 1, 1)), alphaMult * 255)
+        local playerColour = VectorToColour(lookedAtPlayer:GetNWVector("RdmtMurderColour", Vector(1, 1, 1)), alphaMult * 255)
 
         ShadowText(playerName, "Rdmt_Murder_Small", scrW / 2, nameTextY, playerColour, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 
     -- Draw our own corpse name
     if IsValid(hitEnt) and hitEnt:GetClass() == "prop_ragdoll" and tr.HitPos:Distance(tr.StartPos) < 100 then
-        local corpseName = hitEnt:GetNWString("Rdmt_Murder_Name", "Unknown")
-        local corpseColour = VectorToColour(hitEnt:GetNWVector("Rdmt_Murder_Colour", Vector(1, 1, 1)))
+        local corpseName = hitEnt:GetNWString("RdmtMurderName", "Unknown")
+        local corpseColour = VectorToColour(hitEnt:GetNWVector("RdmtMurderColour", Vector(1, 1, 1)))
 
         ShadowText(corpseName, "Rdmt_Murder_Large", scrW / 2, nameTextY, corpseColour, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         ShadowText("Corpse", "Rdmt_Murder_Small", scrW / 2, nameTextY + DrawGetFontHeight("Rdmt_Murder_Large") * 0.7, Color(200, 200, 200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -425,9 +425,9 @@ local function DrawHUD()
 
     -- Show disguise hint when a Murderer looks at a corpse
     if IsMurderer(client) and IsValid(hitEnt) and hitEnt:GetClass() == "prop_ragdoll" and tr.HitPos:Distance(tr.StartPos) < 80 then
-        local rag_name = hitEnt:GetNWString("Rdmt_Murder_Name", "")
+        local rag_name = hitEnt:GetNWString("RdmtMurderName", "")
 
-        if rag_name ~= client:GetNWString("Rdmt_Murder_Name", "") or hitEnt:GetNWVector("Rdmt_Murder_Colour") ~= client:GetNWVector("Rdmt_Murder_Colour") then
+        if rag_name ~= client:GetNWString("RdmtMurderName", "") or hitEnt:GetNWVector("RdmtMurderColour") ~= client:GetNWVector("RdmtMurderColour") then
             local disguiseHintY = nameTextY + DrawGetFontHeight("Rdmt_Murder_Large") * 1.4
             local useKey        = StringUpper(InputLookupBinding("+use"))
 
@@ -436,7 +436,7 @@ local function DrawHUD()
     end
 
     -- Warn a Murderer that they're revealed if they haven't killed in too long
-    if client:GetNWBool("Rdmt_Murder_Fog", false) then
+    if client:GetNWBool("RdmtMurderFog", false) then
         ShadowText("Your evil presence is showing", "Rdmt_Murder_Large", scrW / 2, scrH - 100, colours.murderer, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         ShadowText("Kill someone to hide", "Rdmt_Murder_Small", scrW / 2, scrH - 20, colours.mustKill, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
     end
@@ -661,21 +661,21 @@ end)
 
     self:AddHook("SetupWorldFog", function()
         local client = LocalPlayer()
-        if not (IsValid(client) and client:Alive() and client:GetNWBool("Rdmt_Murder_Fog", false)) then return end
+        if not (IsValid(client) and client:Alive() and client:GetNWBool("RdmtMurderFog", false)) then return end
 
         return SetFog(1)
     end)
 
     self:AddHook("SetupSkyboxFog", function(scale)
         local client = LocalPlayer()
-        if not (IsValid(client) and client:Alive() and client:GetNWBool("Rdmt_Murder_Fog", false)) then return end
+        if not (IsValid(client) and client:Alive() and client:GetNWBool("RdmtMurderFog", false)) then return end
 
         return SetFog(scale)
     end)
 
     -- Murderer smoke if they haven't killed in too long
     self:AddHook("TTTShouldPlayerSmoke", function(v, client, shouldSmoke, smokeColor, smokeParticle, smokeOffset)
-        if v:GetNWBool("Rdmt_Murder_Fog", false) then
+        if v:GetNWBool("RdmtMurderFog", false) then
             return true, Color(0, 0, 0)
         end
     end)
@@ -685,12 +685,12 @@ end)
     end)
 
     self:AddHook("TTTSpeedMultiplier", function(ply, mults, sprinting)
-        if ply:GetNWString("Rdmt_Murder_Name", "") == "" then return end
+        if ply:GetNWString("RdmtMurderName", "") == "" then return end
         if sprinting then
             local mult = IsMurderer(ply) and murdererSprintConVar:GetFloat() or bystanderSprintConVar:GetFloat()
             TableInsert(mults, mult)
         end
-        if ply:GetNWBool("Rdmt_Murder_Carrying", false) then
+        if ply:GetNWBool("RdmtMurderCarrying", false) then
             TableInsert(mults, 1 - carrySlownessConVar:GetFloat())
         end
     end)

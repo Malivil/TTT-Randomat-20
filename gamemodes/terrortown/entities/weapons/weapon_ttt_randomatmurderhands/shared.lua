@@ -129,14 +129,14 @@ function SWEP:Reset(keep_velocity)
 
     local owner = self:GetOwner()
     if SERVER and IsValid(owner) then
-        owner:SetNWBool("Rdmt_Murder_Carrying", false)
+        owner:SetNWBool("RdmtMurderCarrying", false)
     end
 end
 SWEP.reset = SWEP.Reset
 
 function SWEP:CheckValidity()
-    if (not IsValid(self.EntHolding)) or (not IsValid(self.CarryHack)) or (not IsValid(self.Constr)) then
-        if (self.EntHolding or self.CarryHack or self.Constr) then
+    if not IsValid(self.EntHolding) or not IsValid(self.CarryHack) or not IsValid(self.Constr) then
+        if self.EntHolding or self.CarryHack or self.Constr then
             self:Reset()
         end
 
@@ -217,7 +217,7 @@ function SWEP:PrimaryAttack()
     if not IsValid(owner) then return end
 
     -- Don't allow punching if the player is carrying something
-    if IsValid(self.EntHolding) or owner:GetNWBool("Rdmt_Murder_Carrying", false) then return end
+    if IsValid(self.EntHolding) or owner:GetNWBool("RdmtMurderCarrying", false) then return end
 
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
@@ -419,7 +419,7 @@ function SWEP:PickUp()
 
     -- Set the player as carrying something for the movement penalty
     if SERVER and IsValid(ply) then
-        ply:SetNWBool("Rdmt_Murder_Carrying", IsValid(self.EntHolding))
+        ply:SetNWBool("RdmtMurderCarrying", IsValid(self.EntHolding))
     end
 end
 
@@ -427,7 +427,7 @@ local down = Vector(0, 0, -1)
 function SWEP:AllowEntityDrop()
     local ply = self:GetOwner()
     local ent = self.CarryHack
-    if (not IsValid(ply)) or (not IsValid(ent)) then return false end
+    if not IsValid(ply) or not IsValid(ent) then return false end
 
     local ground = ply:GetGroundEntity()
     if ground and (ground:IsWorld() or IsValid(ground)) then return true end
@@ -484,7 +484,7 @@ end
 
 function SWEP:PinRagdoll()
     if not pinRagdollConVar:GetBool() then return end
-    if (not self:GetOwner():IsTraitor()) and (not innocentPinRagdollConVar:GetBool()) then return end
+    if not self:GetOwner():IsTraitor() and not innocentPinRagdollConVar:GetBool() then return end
 
     local rag = self.EntHolding
     local ply = self:GetOwner()
