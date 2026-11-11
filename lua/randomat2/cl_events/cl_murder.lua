@@ -77,6 +77,13 @@ surface.CreateFont("Rdmt_Murder_Small", {
     antialias = true
 })
 
+surface.CreateFont("Rdmt_Murder_Smaller", {
+    font      = "coolvetica",
+    size      = MathCeil(baseFontSize * 0.40),
+    weight    = 100,
+    antialias = true
+})
+
 surface.CreateFont("Rdmt_Murder_Tiny", {
     font      = "coolvetica",
     size      = MathCeil(baseFontSize * 0.30),
@@ -314,6 +321,9 @@ local function DrawOverlay()
             for i, line in ipairs(lines) do
                 ShadowText(line, "Rdmt_Murder_Small", scrW / 2, scrH * 0.75 + (i - 1) * line_height, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
+
+            local reload = StringUpper(input.GetKeyName(input.GetKeyCode(input.LookupBinding("+reload"))))
+            ShadowText("Hint: Hold [" .. reload .. "] to taunt!", "Rdmt_Murder_Smaller", scrW / 2, scrH - 20, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
         end
     end
 
