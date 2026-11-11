@@ -2,4 +2,4 @@ CreateConVar("randomat_murder_bystander_sprint", 1,   FCVAR_REPLICATED, "Bystand
 CreateConVar("randomat_murder_murderer_sprint",  1.3, FCVAR_REPLICATED, "Murderer sprint modifier", 1, 5)
 CreateConVar("randomat_murder_carry_slow",       0.7, FCVAR_REPLICATED, "Speed reduction while carrying something", 0, 0.95)
 CreateConVar("randomat_murder_loot_needed",      5,   FCVAR_REPLICATED, "Loot needed for a gun", 1, 50)
-CreateConVar("randomat_murder_knife_replace",    30,  FCVAR_REPLICATED, "Time (s) without a knife before murderer gets a new one", 1, 300)
+CreateConVar("randomat_murder_knife_replace",    15,  FCVAR_REPLICATED, "Time (s) without a knife before murderer gets a new one", 1, 300)
