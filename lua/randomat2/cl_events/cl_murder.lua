@@ -42,7 +42,9 @@ local StringUpper         = string.upper
 local SurfaceDrawLine     = surface.DrawLine
 local SurfaceDrawPoly     = surface.DrawPoly
 local SurfaceDrawRect     = surface.DrawRect
+local SurfaceGetTextSize = surface.GetTextSize
 local SurfaceSetDrawColor = surface.SetDrawColor
+local SurfaceSetFont = surface.SetFont
 
 local TableInsert = table.insert
 
@@ -61,9 +63,23 @@ surface.CreateFont("Rdmt_Murder_Large", {
     antialias = true
 })
 
+surface.CreateFont("Rdmt_Murder_Medium", {
+    font      = "coolvetica",
+    size      = baseFontSize * 0.75,
+    weight    = 500,
+    antialias = true
+})
+
 surface.CreateFont("Rdmt_Murder_Small", {
     font      = "coolvetica",
     size      = MathCeil(baseFontSize * 0.56),
+    weight    = 100,
+    antialias = true
+})
+
+surface.CreateFont("Rdmt_Murder_Tiny", {
+    font      = "coolvetica",
+    size      = MathCeil(baseFontSize * 0.30),
     weight    = 100,
     antialias = true
 })
@@ -85,8 +101,8 @@ local carrySlownessConVar
 local EVENT = {}
 EVENT.id = "murder"
 
-local introBlackTime = 5
-local introFadeTime  = 7
+local introBlackTime = 1 -- 5
+local introFadeTime  = 1 -- 7
 
 local colours = {
     bystander = Color(20, 120, 255),
@@ -245,6 +261,12 @@ local tkPhrases = {
     {"That wasn't very polite"},
     {"To shreds, you say?"},
     {"I'm not mad, just disappointed"},
+}
+
+local weaponHints = {
+    ["weapon_ttt_randomatmurderhands"]    = {"punch/push", "pick up an item/corpse"},
+    ["weapon_ttt_randomatmurderknife"]    = {"stab/cancel charge", "charge throw"},
+    ["weapon_ttt_randomatmurderrevolver"] = {"shoot", "aim"}
 }
 
 -- Black intro screen and role info/player blindness
@@ -437,8 +459,8 @@ local function DrawHUD()
 
     -- Warn a Murderer that they're revealed if they haven't killed in too long
     if client:GetNWBool("RdmtMurderFog", false) then
-        ShadowText("Your evil presence is showing", "Rdmt_Murder_Large", scrW / 2, scrH - 100, colours.murderer, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        ShadowText("Kill someone to hide", "Rdmt_Murder_Small", scrW / 2, scrH - 20, colours.mustKill, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+        ShadowText("Your evil presence is showing", "Rdmt_Murder_Medium", scrW / 2, scrH - 145, colours.murderer, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        ShadowText("Kill someone to hide", "Rdmt_Murder_Small", scrW / 2, scrH - 80, colours.mustKill, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
     end
 
     -- Draw taunt menu
@@ -484,6 +506,33 @@ local function DrawHUD()
 
             ShadowText(taunt[1], "Rdmt_Murder_Large", textX, textY - 10, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             ShadowText(taunt[2], "Rdmt_Murder_Small", textX, textY + textOffsetY, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
+    end
+
+    -- Weapon hints
+    local attack1 = StringUpper(input.GetKeyName(input.GetKeyCode(input.LookupBinding("+attack"))))
+    local attack2 = StringUpper(input.GetKeyName(input.GetKeyCode(input.LookupBinding("+attack2"))))
+
+    local heldWep = (client:GetActiveWeapon() and client:GetActiveWeapon() ~= NULL) and client:GetActiveWeapon():GetClass() or nil
+    if heldWep and weaponHints[heldWep] then
+        local maxW = 0
+        SurfaceSetFont("Rdmt_Murder_Tiny")
+
+        for _, line in ipairs(weaponHints[heldWep]) do
+            local textW, _ = SurfaceGetTextSize("Mouse 2 to " .. line)
+            if textW > maxW then maxW = textW end
+        end
+
+        local bgW = maxW + 20
+        local bgH = 55
+        local bgX = scrW / 2 - bgW / 2
+        local bgY = scrH - bgH - 5
+
+        DrawRoundedBox(5, bgX, bgY, bgW, bgH, Color(0, 0, 0, 220))
+
+        for i, line in ipairs(weaponHints[heldWep]) do
+            local prefix = i == 1 and attack1 .. " to " or attack2 .. " to "
+            ShadowText(prefix .. line, "Rdmt_Murder_Tiny", scrW / 2, scrH - 50 + 20 * i, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
         end
     end
 end
