@@ -288,7 +288,7 @@ local function FindCollectableLoot(ply, lootProps)
     return foundLoot
 end
 
-local function GiveGun(ply, data)
+local function GiveGun(ply, data, fromLoot)
     if IsMurderer(ply) or ply:HasWeapon("weapon_ttt_randomatmurderrevolver") then return end
 
     if IsGunBanned(ply) then
@@ -309,7 +309,10 @@ local function GiveGun(ply, data)
     end
 
     ply:Give("weapon_ttt_randomatmurderrevolver")
-    -- ply:SelectWeapon("weapon_ttt_randomatmurderrevolver")
+
+    if fromLoot then
+        ply:SelectWeapon("weapon_ttt_randomatmurderrevolver")
+    end
 end
 
 local function CollectLoot(ply, data, lootProp)
@@ -337,11 +340,11 @@ local function CollectLoot(ply, data, lootProp)
         local lootNeeded = lootNeededConVar:GetInt()
 
         if data.lootCollected == lootNeeded and not ply:HasWeapon("weapon_ttt_randomatmurderrevolver") then
-            GiveGun(ply, data)
+            GiveGun(ply, data, true)
         end
 
         if data.lootCollected % (lootNeeded * 3) == 0 and not ply:HasWeapon("weapon_ttt_randomatmurderrevolver") then
-            GiveGun(ply, data)
+            GiveGun(ply, data, true)
         end
     end
 end
