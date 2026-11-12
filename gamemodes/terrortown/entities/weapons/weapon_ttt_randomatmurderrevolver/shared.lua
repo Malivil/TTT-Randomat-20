@@ -71,7 +71,7 @@ function SWEP:PrimaryAttack(worldsnd)
 
     if not self.ForceReload then return end
     timer.Create("RandomatRevolverReload_" .. self:EntIndex(), 0.5, 1, function()
-        if IsPlayer(owner) and owner:GetActiveWeapon().ClassName == "weapon_ttt_randomatrevolver" then
+        if IsPlayer(owner) and owner:GetActiveWeapon().ClassName == "weapon_ttt_randomatmurderrevolver" then
             owner:GetViewModel():SetPlaybackRate(0.5)
         end
 
