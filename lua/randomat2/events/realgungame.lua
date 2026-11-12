@@ -231,19 +231,24 @@ function EVENT:Begin()
     self:AddHook("DoPlayerDeath", function(victim, attacker, dmginfo)
         if not IsPlayer(victim) then return end
 
+        local delay = respawnTime
         if respawnTime > 0 then
             Randomat:PrintMessage(victim, MSG_PRINTBOTH, "Don't worry, you'll respawn in " .. respawnTime .. " second(s)")
-            -- Death is not an escape
-            timer.Create("RealGunGameRespawn_" .. victim:SteamID64(), respawnTime, 1, function()
-                if not IsPlayer(victim) then return end
-
-                victim:SpawnForRound(true)
-                local body = victim.server_ragdoll or victim:GetRagdollEntity()
-                if IsValid(body) then
-                    body:Remove()
-                end
-            end)
+        else
+            Randomat:PrintMessage(victim, MSG_PRINTBOTH, "Don't worry, you'll respawn shortly")
+            delay = 0.1
         end
+
+        -- Death is not an escape
+        timer.Create("RealGunGameRespawn_" .. victim:SteamID64(), delay, 1, function()
+            if not IsPlayer(victim) then return end
+
+            victim:SpawnForRound(true)
+            local body = victim.server_ragdoll or victim:GetRagdollEntity()
+            if IsValid(body) then
+                body:Remove()
+            end
+        end)
 
         if not IsPlayer(attacker) then return end
 
@@ -361,9 +366,12 @@ function EVENT:Begin()
         local wepIndex = wepData.Index
         local wepClass = weps[wepKind][wepIndex]
         self:EquipPlayer(ply, wepClass)
-        ply.RdmtRGGRespawnTime = CurTime()
-        if ply.SetInvulnerable then
-            ply:SetInvulnerable(true, false)
+
+        if protect_time > 0 then
+            ply.RdmtRGGRespawnTime = CurTime()
+            if ply.SetInvulnerable then
+                ply:SetInvulnerable(true, false)
+            end
         end
     end)
 
@@ -458,7 +466,9 @@ function EVENT:End()
     timer.Remove("RealGunGameNoCreditsTimer")
     for _, p in player.Iterator() do
         if not IsPlayer(p) then continue end
-        p.RdmtRGGRespawnTime = nil
+        if p.RdmtRGGRespawnTime then
+            StopInvulnerability(p)
+        end
         timer.Remove("RealGunGameRespawn_" .. p:SteamID64())
     end
 end
