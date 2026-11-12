@@ -730,7 +730,7 @@ function EVENT:Begin()
 
         -- Add dropped knives
         for _, wep in ipairs(EntsFindByClass("weapon_ttt_randomatmurderknife")) do
-            if IsValid(wep) then
+            if IsValid(wep) and not IsValid(wep:GetOwner()) then
                 TableInsert(haloCandidates, wep)
             end
         end
