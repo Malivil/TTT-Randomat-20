@@ -413,7 +413,7 @@ local function DrawHUD()
 
     -- Role name
     local roleX = scrW - 20
-    local roleY = scrH - 3
+    local roleY = IsMurderer(client) and scrH - 3 or scrH - 15
     local roleName = IsMurderer(client) and "Murderer" or "Bystander"
 
     ShadowText(roleName, "Rdmt_Murder_Large", roleX, roleY, roleColour, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
