@@ -47,6 +47,7 @@ local SurfaceSetDrawColor = surface.SetDrawColor
 local SurfaceSetFont = surface.SetFont
 
 local TableInsert = table.insert
+local TableRemove = table.remove
 
 local UtilTraceLine = util.TraceLine
 
@@ -108,8 +109,8 @@ local carrySlownessConVar
 local EVENT = {}
 EVENT.id = "murder"
 
-local introBlackTime = 1 -- 5
-local introFadeTime  = 1 -- 7
+local introBlackTime = 5
+local introFadeTime  = 7
 
 local colours = {
     bystander = Color(20, 120, 255),
@@ -139,7 +140,9 @@ local blindStartTime = nil
 local tauntMenuOpen  = false
 local deathScreenEnd = 0
 local playerRagdoll  = nil
-local nextKnifeTime = 0
+local nextKnifeTime  = 0
+local recentPickups  = {}
+local pickupWidth    = 200
 
 local function IsMurderer(ply)
     return ply:GetRole() == ROLE_TRAITOR
@@ -558,6 +561,72 @@ local function DrawHUD()
             ShadowText(prefix .. line, "Rdmt_Murder_Tiny", scrW / 2, scrH - 50 + 20 * i, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
         end
     end
+
+    -- Pickup history notifications
+    local pickupDuration = 5
+
+    for i = #recentPickups, 1, -1 do
+        if CurTime() >= recentPickups[i].startTime + pickupDuration then
+            TableRemove(recentPickups, i)
+        end
+    end
+
+    if #recentPickups > 0 then
+        local tipColor = IsMurderer(client) and colours.murderer or colours.bystander
+
+        local targetX  = scrW - pickupWidth - 20
+        local anchorY  = scrH * 0.4
+        local maxWidth = 0
+        local count    = #recentPickups
+
+        SurfaceSetFont("Rdmt_Murder_Smaller")
+
+        for i = 1, count do
+            local pickup = recentPickups[i]
+            local now    = CurTime()
+
+            local distanceFromBottom = #recentPickups - i
+            local targetY = anchorY - (distanceFromBottom * 46)
+
+            if pickup.yPos == nil then pickup.yPos = targetY end
+            pickup.yPos = (pickup.yPos * 5 + targetY) / 6
+
+            local timeRemaining = pickup.expiryTime - now
+            local alpha = 255
+
+            -- Fade in/out
+            local fadeInTime  = pickupDuration * 0.15
+            local fadeOutTime = pickupDuration * 0.25
+            local timeElapsed = now - pickup.startTime
+
+            if timeElapsed < fadeInTime then
+                alpha = MathClamp((timeElapsed / fadeInTime) * 255, 0, 255)
+            elseif timeRemaining < fadeOutTime then
+                alpha = MathClamp((timeRemaining / fadeOutTime) * 255, 0, 255)
+            end
+
+            local rowX = targetX + pickupWidth - (pickupWidth * (alpha / 255))
+            local rowY = pickup.yPos
+            local rowW = pickupWidth
+            local rowH = 38
+
+            -- Background
+            DrawRoundedBox(0, rowX, rowY, rowW, rowH, Color(10, 10, 10, MathClamp(alpha, 0, 220)))
+
+            -- Coloured tip
+            local tipWidth = 25
+            DrawRoundedBoxEx(0, rowX, rowY, tipWidth, rowH, Color(tipColor.r, tipColor.g, tipColor.b, alpha), true, false, true, false)
+
+            -- Weapon name
+            local textX = rowX + tipWidth + 12
+            local textY = pickup.yPos + 5
+            ShadowText(pickup.weaponName, "Rdmt_Murder_Smaller", textX, textY, Color(255, 255, 255, alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+
+            maxWidth = MathMax(maxWidth, SurfaceGetTextSize(pickup.weaponName) + 60)
+        end
+
+        pickupWidth = (pickupWidth * 5 + maxWidth) / 6
+    end
 end
 
 local function SetFog(scale)
@@ -597,6 +666,15 @@ function EVENT:Begin()
 
     nextKnifeTime = 0
 
+    introStart     = CurTime()
+    lookedAtPlayer = nil
+    blindStartTime = nil
+
+    OverrideRoleStrings()
+
+    self:AddHook("HUDPaint", DrawHUD)
+    self:AddHook("DrawOverlay", DrawOverlay)
+
     local override = {
         invnext = true,
         invprev = true,
@@ -611,7 +689,8 @@ function EVENT:Begin()
         ["TTTInfoPanel"] = true,
         ["TTTTargetID"]  = true,
         ["TTTMStack"]    = true,
-        ["TTTWSwitch"]   = true
+        ["TTTWSwitch"]   = true,
+        ["TTTPickupHistory"] = true
     }
 
     self:AddHook("HUDShouldDraw", function(elementName)
@@ -625,97 +704,108 @@ function EVENT:Begin()
     originalStartPopupFunction = concommands["ttt_cl_startpopup"]
     concommand.Add("ttt_cl_startpopup", function() end)
 
-self:AddHook("PreDrawHalos", function()
-    local client = LocalPlayer()
-    if not IsValid(client) or not client:Alive() or client:IsSpec() then return end
+    self:AddHook("PreDrawHalos", function()
+        local client = LocalPlayer()
+        if not IsValid(client) or not client:Alive() or client:IsSpec() then return end
 
-    local haloedProps  = {}
-    local haloedKnives = {}
-    local haloedGuns   = {}
-    local eyePos = client:EyePos()
+        local haloedProps  = {}
+        local haloedKnives = {}
+        local haloedGuns   = {}
+        local eyePos = client:EyePos()
 
-    local haloCandidates = {}
+        local haloCandidates = {}
 
-    -- Add player's loot props
-    for _, lootProp in ipairs(playerLoot) do
-        if IsValid(lootProp) then
-            TableInsert(haloCandidates, lootProp)
+        -- Add player's loot props
+        for _, lootProp in ipairs(playerLoot) do
+            if IsValid(lootProp) then
+                TableInsert(haloCandidates, lootProp)
+            end
         end
-    end
 
-    -- Add dropped knives
-    for _, wep in ipairs(EntsFindByClass("weapon_ttt_randomatmurderknife")) do
-        if IsValid(wep) then
-            TableInsert(haloCandidates, wep)
-        end
-    end
-
-    -- Add thrown knives for Murderers
-        for _, wep in ipairs(EntsFindByClass("ttt_randomat_murderknife")) do
+        -- Add dropped knives
+        for _, wep in ipairs(EntsFindByClass("weapon_ttt_randomatmurderknife")) do
             if IsValid(wep) then
                 TableInsert(haloCandidates, wep)
             end
         end
 
-    -- Add dropped revolvers
-    for _, wep in ipairs(EntsFindByClass("weapon_ttt_randomatmurderrevolver")) do
-        if IsValid(wep) and not IsValid(wep:GetOwner()) then
-            TableInsert(haloCandidates, wep)
-        end
-    end
+        -- Add thrown knives for Murderers
+            for _, wep in ipairs(EntsFindByClass("ttt_randomat_murderknife")) do
+                if IsValid(wep) then
+                    TableInsert(haloCandidates, wep)
+                end
+            end
 
-    -- Check whether they're visible
-    for _, ent in ipairs(haloCandidates) do
-        local center = ent:WorldSpaceCenter()
-        local visible = true
-
-        local tr = UtilTraceLine({
-            start  = eyePos,
-            endpos = center,
-            filter = {client, ent},
-            mask   = MASK_VISIBLE_AND_NPCS
-        })
-
-        if tr.Fraction < 1.0 then
-            visible = false
-        end
-
-        local class = ent:GetClass()
-        if visible then
-            if class == "weapon_ttt_randomatmurderknife" or class == "ttt_randomat_murderknife" then
-                TableInsert(haloedKnives, ent)
-            elseif class == "weapon_ttt_randomatmurderrevolver" then
-                TableInsert(haloedGuns, ent)
-            else
-                TableInsert(haloedProps, ent)
+        -- Add dropped revolvers
+        for _, wep in ipairs(EntsFindByClass("weapon_ttt_randomatmurderrevolver")) do
+            if IsValid(wep) and not IsValid(wep:GetOwner()) then
+                TableInsert(haloCandidates, wep)
             end
         end
-    end
 
-    -- Draw halos for visible props
-    if #haloedProps > 0 then
-        HaloAdd(haloedProps, colours.lootHalo, 5, 5, 5, true, false)
-    end
+        -- Check whether they're visible
+        for _, ent in ipairs(haloCandidates) do
+            local center = ent:WorldSpaceCenter()
+            local visible = true
 
-    -- Draw halos for visible knives
-    if #haloedKnives > 0 then
-        HaloAdd(haloedKnives, colours.knifeHalo, 5, 5, 5, true, false)
-    end
+            local tr = UtilTraceLine({
+                start  = eyePos,
+                endpos = center,
+                filter = {client, ent},
+                mask   = MASK_VISIBLE_AND_NPCS
+            })
 
-    -- Draw halos for visible guns
-    if #haloedGuns > 0 then
-        HaloAdd(haloedGuns, colours.gunHalo, 5, 5, 5, true, false)
-    end
-end)
+            if tr.Fraction < 1.0 then
+                visible = false
+            end
 
-    introStart     = CurTime()
-    lookedAtPlayer = nil
-    blindStartTime = nil
+            local class = ent:GetClass()
+            if visible then
+                if class == "weapon_ttt_randomatmurderknife" or class == "ttt_randomat_murderknife" then
+                    TableInsert(haloedKnives, ent)
+                elseif class == "weapon_ttt_randomatmurderrevolver" then
+                    TableInsert(haloedGuns, ent)
+                else
+                    TableInsert(haloedProps, ent)
+                end
+            end
+        end
 
-    OverrideRoleStrings()
+        -- Draw halos for visible props
+        if #haloedProps > 0 then
+            HaloAdd(haloedProps, colours.lootHalo, 5, 5, 5, true, false)
+        end
 
-    self:AddHook("HUDPaint", DrawHUD)
-    self:AddHook("DrawOverlay", DrawOverlay)
+        -- Draw halos for visible knives
+        if #haloedKnives > 0 then
+            HaloAdd(haloedKnives, colours.knifeHalo, 5, 5, 5, true, false)
+        end
+
+        -- Draw halos for visible guns
+        if #haloedGuns > 0 then
+            HaloAdd(haloedGuns, colours.gunHalo, 5, 5, 5, true, false)
+        end
+    end)
+
+    self:AddHook("HUDWeaponPickedUp", function(wep)
+        if not IsValid(wep) then return end
+
+        local weaponName = wep.PrintName
+        if not weaponName or weaponName == "" then
+            weaponName = wep:GetClass()
+        end
+
+        surface.SetFont("Rdmt_Murder_Smaller")
+        local textW, _ = surface.GetTextSize(weaponName)
+
+        TableInsert(recentPickups, {
+            weaponName = weaponName,
+            startTime  = CurTime(),
+            expiryTime = CurTime() + 5,
+            width      = textW,
+            yPos       = nil
+        })
+    end)
 
     -- Death effect (black screen + ragdoll model over the top)
     self:AddHook("RenderScreenspaceEffects", function()
