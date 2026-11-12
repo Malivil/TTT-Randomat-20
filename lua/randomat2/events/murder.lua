@@ -662,7 +662,6 @@ function EVENT:Begin()
         local name = ply:GetNWString("RdmtMurderName", "Bystander")
         ragdoll:SetNWString("RdmtMurderName", name)
         ragdoll:SetNWVector("RdmtMurderColour", ply:GetNWVector("RdmtMurderColour", Vector(1, 1, 1)))
-        -- ragdoll:SetNWString("RdmtMurderRole", IsMurderer(ply) and "Murderer" or "Bystander")
 
         CORPSE.SetPlayerNick(ragdoll, name)
     end)

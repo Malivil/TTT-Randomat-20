@@ -5,6 +5,7 @@ local CamStart3D = cam.Start3D
 local DrawGetFontHeight = draw.GetFontHeight
 local DrawNoTexture     = draw.NoTexture
 local DrawRoundedBox    = draw.RoundedBox
+local DrawRoundedBoxEx  = draw.RoundedBoxEx
 local DrawSimpleText    = draw.SimpleText
 
 local EntsFindByClass = ents.FindByClass
