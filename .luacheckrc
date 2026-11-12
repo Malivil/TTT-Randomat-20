@@ -349,6 +349,7 @@ globals = {
     "IN_ZOOM",
     "KEY_F5",
     "KEY_PAD_ENTER",
+    "KEY_R",
     "KILL_BURN",
     "KILL_FALL",
     "KILL_NORMAL",

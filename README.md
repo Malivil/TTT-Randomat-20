@@ -2114,6 +2114,7 @@ If a developer of an external Randomat event would like to add support for this 
 - [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) for the "Copy" image used in the "Rock, Paper, Scissors" event
 - [Tygron](https://steamcommunity.com/id/Tygron), [The Stig](https://steamcommunity.com/id/The-Stig-294), and [TilSchwantje](https://github.com/TilSchwantje) for providing feedback and verifying bug fixes
 - [Yami Kaiser](https://steamcommunity.com/id/Devil_Yami) for the icon used by the revolver weapon, from their [TTT icon pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2482080782)
+- [Mechanical Mind](https://steamcommunity.com/id/mechanicalmind) for the original [Murder gamemode](https://steamcommunity.com/sharedfiles/filedetails/?id=187073946) that the "Murder" event is based on
 
 # Steam Workshop
 https://steamcommunity.com/sharedfiles/filedetails/?id=2055805086
