@@ -51,11 +51,6 @@ SWEP.Secondary.Delay       = 0.2
 local punchDamage = 20
 
 -- Match magneto stick carry settings EXCEPT, to match Murder, always allow ragdoll carrying and never allow weapon carrying
-local pushForceConVar          = GetConVar("ttt_crowbar_pushforce")
-local carryForceConVar         = GetConVar("ttt_prop_carrying_force")
-local throwConVar              = GetConVar("ttt_no_prop_throwing")
-local pinRagdollConVar         = GetConVar("ttt_ragdoll_pinning")
-local innocentPinRagdollConVar = GetConVar("ttt_ragdoll_pinning_innocents")
 local PIN_RAG_RANGE            = 90
 local CARRY_WEIGHT_LIMIT       = 45
 
@@ -116,7 +111,7 @@ function SWEP:Reset(keep_velocity)
             phys:EnableMotion(true)
         end
 
-        if (not keep_velocity) and (throwConVar:GetBool() or self.EntHolding:GetClass() == "prop_ragdoll") then
+        if (not keep_velocity) and (GetConVar("ttt_no_prop_throwing"):GetBool() or self.EntHolding:GetClass() == "prop_ragdoll") then
             KillVelocity(self.EntHolding)
         end
     end
@@ -268,7 +263,7 @@ function SWEP:PrimaryAttack()
         if SERVER and IsValid(hitEnt) then
             if IsPlayer(hitEnt) then
                 -- Push not damage (taken straight from the crowbar code)
-                local pushVelocity = tr.Normal * pushForceConVar:GetFloat()
+                local pushVelocity = tr.Normal * GetConVar("ttt_crowbar_pushforce"):GetFloat()
 
                 -- Limit the upward force to prevent launching
                 pushVelocity.z = math.Clamp(pushVelocity.z, 50, 100)
@@ -403,7 +398,7 @@ function SWEP:PickUp()
 
             entphys:AddGameFlag(FVPHYSICS_PLAYER_HELD)
             local bone = math.Clamp(trace.PhysicsBone, 0, 1)
-            local max_force = carryForceConVar:GetInt()
+            local max_force = GetConVar("ttt_prop_carrying_force"):GetInt()
 
             if ent:GetClass() == "prop_ragdoll" then
                 self.dt.carried_rag = ent
@@ -459,7 +454,7 @@ function SWEP:Drop()
             phys:AddGameFlag(FVPHYSICS_WAS_THROWN)
         end
 
-        if throwConVar:GetBool() or ent:GetClass() == "prop_ragdoll" then
+        if GetConVar("ttt_no_prop_throwing"):GetBool() or ent:GetClass() == "prop_ragdoll" then
             KillVelocity(ent)
         end
 
@@ -483,8 +478,8 @@ local function RagdollPinnedTakeDamage(rag, dmginfo)
 end
 
 function SWEP:PinRagdoll()
-    if not pinRagdollConVar:GetBool() then return end
-    if not self:GetOwner():IsTraitor() and not innocentPinRagdollConVar:GetBool() then return end
+    if not GetConVar("ttt_ragdoll_pinning"):GetBool() then return end
+    if not self:GetOwner():IsTraitor() and not GetConVar("ttt_ragdoll_pinning_innocents"):GetBool() then return end
 
     local rag = self.EntHolding
     local ply = self:GetOwner()
@@ -535,8 +530,8 @@ end
 
 if SERVER then
     function SWEP:Initialize()
-        self.dt.can_rag_pin = pinRagdollConVar:GetBool()
-        self.dt.can_rag_pin_inno = innocentPinRagdollConVar:GetBool()
+        self.dt.can_rag_pin = GetConVar("ttt_ragdoll_pinning"):GetBool()
+        self.dt.can_rag_pin_inno = GetConVar("ttt_ragdoll_pinning_innocents"):GetBool()
         self.dt.carried_rag = nil
 
         return self.BaseClass.Initialize(self)
@@ -578,7 +573,7 @@ if CLIENT then
     function SWEP:DrawHUD()
         self.BaseClass.DrawHUD(self)
 
-        if pinRagdollConVar:GetBool() and IsValid(self.dt.carried_rag) then
+        if GetConVar("ttt_ragdoll_pinning"):GetBool() and IsValid(self.dt.carried_rag) then
             local client = LocalPlayer()
 
             if not client:IsSpec() then
