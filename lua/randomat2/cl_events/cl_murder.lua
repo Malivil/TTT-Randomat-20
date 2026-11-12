@@ -280,6 +280,9 @@ local weaponHints = {
     ["weapon_ttt_randomatmurderrevolver"] = {"shoot", "aim"}
 }
 
+local reloadKey
+local reloadKeyName = ""
+
 -- Black intro screen and role info/player blindness
 local function DrawOverlay()
     local client = LocalPlayer()
@@ -326,8 +329,7 @@ local function DrawOverlay()
                 ShadowText(line, "Rdmt_Murder_Small", scrW / 2, scrH * 0.75 + (i - 1) * line_height, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
 
-            local reload = StringUpper(input.GetKeyName(input.GetKeyCode(input.LookupBinding("+reload"))))
-            ShadowText("Hint: Hold [" .. reload .. "] to taunt!", "Rdmt_Murder_Smaller", scrW / 2, scrH - 20, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+            ShadowText("Hint: Hold [" .. reloadKeyName .. "] to taunt!", "Rdmt_Murder_Smaller", scrW / 2, scrH - 20, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
         end
     end
 
@@ -670,6 +672,9 @@ function EVENT:Begin()
     lookedAtPlayer = nil
     blindStartTime = nil
 
+    reloadKey     = input.LookupBinding("+reload") and input.GetKeyCode(input.LookupBinding("+reload")) or KEY_R
+    reloadKeyName = StringUpper(input.GetKeyName(reloadKey))
+
     OverrideRoleStrings()
 
     self:AddHook("HUDPaint", DrawHUD)
@@ -868,9 +873,9 @@ function EVENT:Begin()
         return false
     end)
 
-    -- Hold the taunt key to open the menu...
+    -- Hold reload to open the taunt menu...
     self:AddHook("PlayerButtonDown", function(ply, button)
-        if button ~= KEY_R then return end
+        if button ~= reloadKey then return end
         if tauntMenuOpen or ply:IsTyping() or not ply:Alive() or GUIIsGameUIVisible() then return end
 
         tauntMenuOpen = true
@@ -878,9 +883,10 @@ function EVENT:Begin()
         InputSetCursorPos(scrW / 2, scrH / 2)
     end)
 
-    -- ... let go to select
+    -- ... and release to select
     self:AddHook("PlayerButtonUp", function(ply, button)
-        if not tauntMenuOpen or button ~= KEY_R then return end
+        if button ~= reloadKey then return end
+        if not tauntMenuOpen then return end
 
         local selected = GetTauntSelection()
         if selected then
@@ -889,7 +895,6 @@ function EVENT:Begin()
             net.SendToServer()
         end
 
-        if not tauntMenuOpen then return end
         tauntMenuOpen = false
         GUIEnableScreenClicker(false)
     end)
