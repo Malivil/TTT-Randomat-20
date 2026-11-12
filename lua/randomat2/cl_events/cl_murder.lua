@@ -676,6 +676,7 @@ function EVENT:Begin()
     reloadKey     = input.LookupBinding("+reload") and input.GetKeyCode(input.LookupBinding("+reload")) or KEY_R
     reloadKeyName = StringUpper(input.GetKeyName(reloadKey))
 
+    RestoreRoleStrings()
     OverrideRoleStrings()
 
     self:AddHook("HUDPaint", DrawHUD)
@@ -907,9 +908,10 @@ function EVENT:End()
         originalStartPopupFunction = nil
     end
 
-    if not tauntMenuOpen then return end
-    tauntMenuOpen = false
-    GUIEnableScreenClicker(false)
+    if not tauntMenuOpen then
+        tauntMenuOpen = false
+        GUIEnableScreenClicker(false)
+    end
 
     RestoreRoleStrings()
 
