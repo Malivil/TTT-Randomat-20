@@ -292,9 +292,7 @@ local function DrawOverlay()
     local timePassed = CurTime() - introStart
     if timePassed < introBlackTime + introFadeTime then
         local alpha     = timePassed < introBlackTime and 255 or 255 * (1 - (timePassed - introBlackTime) / introFadeTime)
-        local textAlpha = timePassed < 1 and alpha * timePassed or alpha
-        -- Otherwise text lingers way longer than the black background
-        if alpha ~= 255 then textAlpha = MathMax(0, alpha - 150) end
+        local textAlpha = alpha == 255 and 255 or MathMax(0, alpha - 200)
 
         DrawRoundedBox(0, 0, 0, scrW, scrH, Color(0, 0, 0, alpha))
 
@@ -330,7 +328,8 @@ local function DrawOverlay()
                 ShadowText(line, "Rdmt_Murder_Small", scrW / 2, scrH * 0.75 + (i - 1) * line_height, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
 
-            ShadowText("Hint: Hold [" .. reloadKeyName .. "] to taunt!", "Rdmt_Murder_Smaller", scrW / 2, scrH - 20, COLOR_WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+            colour = Color(COLOR_WHITE.r, COLOR_WHITE.g, COLOR_WHITE.b, textAlpha)
+            ShadowText("Hint: Hold [" .. reloadKeyName .. "] to taunt!", "Rdmt_Murder_Smaller", scrW / 2, scrH - 20, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
         end
     end
 
