@@ -12,7 +12,7 @@ EVENT.Categories = {"gamemode", "rolechange", "item", "largeimpact"}
 CreateConVar("randomat_realgungame_blocklist", "", FCVAR_NONE, "The comma-separated list of weapon IDs to not give out")
 CreateConVar("randomat_realgungame_protect_time", 15, FCVAR_NONE, "How long after player respawns that they are immune to damage", 0, 60)
 CreateConVar("randomat_realgungame_respawn_time", 5, FCVAR_NONE, "How long before a dead player respawns", 0, 60)
-CreateConVar("randomat_realgungame_round_limit", 0, FCVAR_NONE, "How many rounds to limit the game to, maximum")
+CreateConVar("randomat_realgungame_round_limit", 25, FCVAR_NONE, "How many rounds to limit the game to, maximum")
 CreateConVar("randomat_realgungame_teamkill_lose_level", 0, FCVAR_NONE, "Whether you lose a level when killing a member of your team", 0, 1)
 CreateConVar("randomat_realgungame_suicide_lose_level", 1, FCVAR_NONE, "Whether you lose a level when killing yourself", 0, 1)
 
